@@ -132,7 +132,9 @@ public class Irc {
 					String r[] = msg.split(" ");
 					player=r[1];
 					this.setPvPlayer(player);
-					s="....";
+					s=".";
+					for (int i=0;i<r[0].length();i++)
+						s+=".";
 					for (int i=0;i<r[1].length();i++)
 						s+=".";
 					msg = "§§"+msg.replaceFirst(s, "");

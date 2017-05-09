@@ -259,8 +259,7 @@ public class RequestThread extends Thread {
 				} catch (Exception e) {
 					System.out.println("Erreur BDD: NOW()");
 				}				
-				long diff = lastDate-10000;	
-				Utils.addChat("Current date: "+new Date(lastDate)+"\n§6Diff date: "+new Date(diff));
+				long diff = lastDate-22000;	
 				String s = "\""+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE).format(new Date(diff))+"\",\""+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE).format(new Date(lastDate))+"\"";
 				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=b0ac0857d55ccb7f52303bc7e440b02e&args="+URLEncoder.encode(s, "UTF-8"));
 				Scanner sc = new Scanner(url.openStream());		

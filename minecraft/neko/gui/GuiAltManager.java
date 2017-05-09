@@ -42,7 +42,6 @@ public class GuiAltManager extends GuiScreen {
 	  private static ArrayList<Account> accounts = new ArrayList();
 	  private GuiList list;
 	  private static String displaytext="";
-	  private static String infoAccount="";
 	  private Client var = Client.getNeko();
 	  private Thread currentThread;
 	  private int lastIndex = -1;
@@ -66,7 +65,7 @@ public class GuiAltManager extends GuiScreen {
 	    this.buttonList.add(new GuiButton(2, this.width / 2 - 50, this.height - 28, 100, 20, "Supprimer")); 
 	    this.buttonList.add(new GuiButton(3, this.width / 2 - 154, this.height - 52, 100, 20, "Login")); 
 	    this.buttonList.add(new GuiButton(4, this.width / 2 - 50, this.height - 52, 100, 20, "McLeaks"));
-	    this.buttonList.add(new GuiButton(5, this.width / 2 - 154, this.height - 28, 100, 20, "Import")); 
+	    this.buttonList.add(new GuiButton(5, this.width / 2 - 154, this.height - 28, 100, 20, "<Futur>")); 
 	    this.buttonList.add(new GuiButton(0, this.width / 2 + 4 + 50, this.height - 28, 100, 20, "Retour"));
 	    this.buttonList.add(new GuiButton(6, this.width - 150, 10, 100, 20, (check ? "§a" : "§c")+"Checker")); 
 	    this.buttonList.add(new GuiButton(7, this.width / 2 - 258, this.height - 28, 100, 20, "Suivant")); 
@@ -145,39 +144,7 @@ public class GuiAltManager extends GuiScreen {
 	    	this.mc.displayGuiScreen(new GuiMcleaks(this));
 		      break;
 	    case 5: 
-	    	String path = System.getenv("APPDATA");
-	        JFileChooser dialogue = new JFileChooser(new File(path));
-	    	File fichier = null;
-	    	dialogue.setDialogTitle("Choisir le fichier de compte");
-	    	if (dialogue.showOpenDialog((Component)null) == JFileChooser.APPROVE_OPTION) {
-	    	    fichier = dialogue.getSelectedFile();
-	    	}
-	            
-	            if (fichier!=null) {
-	            	String tot="";
-	        		try { 
-	                    InputStream ips = new FileInputStream(fichier); 
-	                    InputStreamReader ipsr = new InputStreamReader(ips); 
-	                    try (BufferedReader br = new BufferedReader(ipsr)) {
-	                        String l;
-	                        while ((l = br.readLine()) != null)
-	                        {                	
-	                        	if (l.contains(":")) {
-	                        		String m[] = l.split(":");
-	                        		if (m.length>1)
-	                        			Utils.saveAccount(m[0], m[1]);
-	                        	} else {
-	                        		String m[] = l.replaceFirst(" ", ":").split(" ");
-	                        		if (m.length>1)
-	                        			Utils.saveAccount(m[0], m[1]);
-	                        	}
-	                        	
-	                        }
-	                    
-	        		} catch (Exception e) {}		
-	        		} catch (Exception e) {}
-	        		
-	            }
+	    	
 		      break;
 	    case 6:
 	    	check = !check;
@@ -271,6 +238,9 @@ public class GuiAltManager extends GuiScreen {
 				}	    		    	
 		    });
 		    currentThread.start();
+	    } else if (!check) {
+	    	currentThread.interrupt();
+	    	currentThread.stop();
 	    }
 	  }
 	  
