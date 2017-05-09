@@ -632,7 +632,14 @@ public class Utils {
 	  }	
 
 	public static void checkEC(String user) {
-		
+		try {
+			URI url = URI.create("https://stats.epicube.fr/player/"+user);
+			Desktop.getDesktop().browse(url);
+		} catch (Exception e) {
+			addChat("Erreur");
+			e.printStackTrace();
+		}	
+
 	}
 	
 	public static String getCoord(EntityPlayer p) {
