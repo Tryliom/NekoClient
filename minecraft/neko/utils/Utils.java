@@ -630,29 +630,9 @@ public class Utils {
 	    }
 	    return angle3;
 	  }	
-	
+
 	public static void checkEC(String user) {
-		try {
-			URI url = URI.create("https://stats.epicube.fr/player/"+user);
-			Desktop.getDesktop().browse(url);
-			/*URL url = new URL("https://stats.epicube.fr/player/"+user+".json");
-			URLConnection hc = url.openConnection();
-			Scanner sc = new Scanner(hc.getInputStream());
-			for (int i=1;i<50;i++)
-				System.out.println(sc.nextLine());
-			
-			if (sc.nextLine().contains("\"is_ban\":true")) {
-				addChat(user+":§c Bannis");
-			} else if (sc.nextLine().contains("\"is_ban\":false")) {
-				addChat(user+":§a Non bannis");
-			} else {
-				addChat(user+":§7 Jamais connecté");
-			}
-			sc.close();*/
-		} catch (Exception e) {
-			addChat("Erreur");
-			e.printStackTrace();
-		}		
+		
 	}
 	
 	public static String getCoord(EntityPlayer p) {
@@ -2074,8 +2054,8 @@ public class Utils {
             URLConnection con = (HttpsURLConnection)new URL(link).openConnection();
             con.setConnectTimeout(10000);
             con.setReadTimeout(10000);
-            ((HttpURLConnection) con).setRequestMethod("GET");
-            ((HttpURLConnection) con).setRequestProperty("Content-Type", "application/json");
+            ((HttpsURLConnection) con).setRequestMethod("GET");
+            ((HttpsURLConnection) con).setRequestProperty("Content-Type", "application/json");
             con.setDoOutput(true);
             String line;
             BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -2087,7 +2067,7 @@ public class Utils {
             return result.toString();
         }
         catch (Exception e) {
-        	System.out.println("prepareGet: "+e.getMessage());
+        	System.out.println(e.getMessage());
             return null;
         }
 	}

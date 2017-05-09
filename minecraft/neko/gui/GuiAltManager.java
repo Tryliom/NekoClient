@@ -42,8 +42,10 @@ public class GuiAltManager extends GuiScreen {
 	  private static ArrayList<Account> accounts = new ArrayList();
 	  private GuiList list;
 	  private static String displaytext="";
+	  private static String infoAccount="";
 	  private Client var = Client.getNeko();
 	  private Thread currentThread;
+	  private int lastIndex = -1;
 	  public static boolean check = false;
 	  
 	  public GuiAltManager(GuiScreen gui)
@@ -191,7 +193,7 @@ public class GuiAltManager extends GuiScreen {
 	    	break;
 	    case 8: // Précedent
 	    	if (((this.list.getSelectedSlot() != -1 ? 1 : 0) & (this.list.getSelectedSlot() < this.list.getSize() ? 1 : 0)) != 0) {
-	    		if (this.list.getSelectedSlot()-1 < this.list.getSize())
+	    		if (this.list.getSelectedSlot()-1 < 0)
 	    			this.list.selectedSlot=0;
 	    		else
 	    			this.list.selectedSlot--;
