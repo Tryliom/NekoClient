@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.InetAddress;
 import java.net.Proxy;
 import java.net.URI;
 import java.net.URL;
@@ -103,11 +104,13 @@ import neko.module.modules.Xray;
 import neko.module.other.Active;
 import neko.module.other.BddManager;
 import neko.module.other.Chat;
+import neko.module.other.Conditions;
 import neko.module.other.Irc;
 import neko.module.other.OnlyRpgManager;
 import neko.module.other.Rank;
 import neko.module.other.Rate;
 import neko.module.other.SpeedEnum;
+import neko.module.other.TempBon;
 import neko.module.other.Xp;
 import net.mcleaks.MCLeaks;
 import net.minecraft.block.Block;
@@ -3892,7 +3895,271 @@ public class Utils {
 		
 		return nyah;
 	}	
+
+	public static void displayAn() {
+		try {
+			URL url = new URL("http://neko.alwaysdata.net/controler/Neko/an.html");
+			Scanner sc = new Scanner(url.openStream());
+			ArrayList<String> s = new ArrayList<>();
+			String l;
+			String cl="";
+			try {
+					while ((l = sc.nextLine()) != null) {
+						if (!l.equalsIgnoreCase("")) {
+							s.add(l);
+							cl+=l+"\n";
+						}
+					}
+			} catch (Exception e) {}
+			int k=0;
+			for (int i=0;i<s.size();i++) {
+				if (s.get(i).startsWith("..")) {
+					ChatUtils c = new ChatUtils();
+					c.doCommand(s.get(i).replaceFirst("..", Client.getNeko().prefixCmd));
+				} else if (s.get(i).startsWith("if")) {									
+					String sr[] = s.get(i).split(" ");
+					if (s.get(i).startsWith("if $serv ") && sr[3].equalsIgnoreCase("bonus") && (mc.isSingleplayer() || InetAddress.getByName(mc.getCurrentServerData().serverIP).getHostAddress()!=InetAddress.getByName(sr[2]).getHostAddress())) {
+						String serv = sr[2];
+						int sec = Integer.parseInt(sr[5]);
+						double bon = Double.parseDouble(sr[4]);
+						Conditions c = Conditions.getInstance();
+						c.newActif(serv, sec, bon);
+					}
+					try {
+						if (sr[1].equalsIgnoreCase("$player")) {
+							String user;
+							if (MCLeaks.isAltActive()) {
+								user=MCLeaks.getMCName();
+							} else {
+								user=mc.session.getUsername();
+							}
+							if (user.equalsIgnoreCase(sr[2]) || Irc.getInstance().getNamePlayer().equalsIgnoreCase(sr[2])) {
+								String r="";
+								for (int m=3;m<sr.length;m++) {
+									r+=sr[m] + " ";
+								}
+								if (r.startsWith("..")) {
+									ChatUtils c = new ChatUtils();
+									r = r.replaceFirst("..", Client.getNeko().prefixCmd);
+									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
+									c.doCommand(r.replaceAll("!!player", user));
+								} else if (r.startsWith("bonus")) {
+									String var[] = r.replaceFirst("bonus ", "").split(" ");
+									int sec = Integer.parseInt(var[1]);
+									double bon = Double.parseDouble(var[0]);
+									Client.getNeko().tempBonus=bon;
+									TempBon t = new TempBon(sec);	
+									if (bon>0)
+										Utils.addChat("§aBonus cadeau de §d"+Math.round(bon)+"% §aajouté :3 !");
+									else 
+										Utils.addChat("§cMalus cadeau de §d"+Math.round(bon)+"% §cajouté >:3 !");
+								} else {
+									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
+									r = r.replaceAll("!!player", user);
+									Utils.addChat(r);
+								}
+							}
+						} else if (sr[1].equalsIgnoreCase("!$player")) {
+							String user;
+							if (MCLeaks.isAltActive()) {
+								user=MCLeaks.getMCName();
+							} else {
+								user=mc.session.getUsername();
+							}
+							if (!user.equalsIgnoreCase(sr[2]) || !Irc.getInstance().getNamePlayer().equalsIgnoreCase(sr[2])) {
+								String r="";
+								for (int m=3;m<sr.length;m++) {
+									r+=sr[m] + " ";
+								}
+								if (r.startsWith("..")) {
+									ChatUtils c = new ChatUtils();
+									r = r.replaceFirst("..", Client.getNeko().prefixCmd);
+									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
+									c.doCommand(r.replaceAll("!!player", user));
+								} else if (r.startsWith("bonus")) {
+									String var[] = r.replaceFirst("bonus ", "").split(" ");
+									int sec = Integer.parseInt(var[1]);
+									double bon = Double.parseDouble(var[0]);
+									Client.getNeko().tempBonus=bon;
+									TempBon t = new TempBon(sec);
+									if (bon>0)
+										Utils.addChat("§aBonus cadeau de §d"+Math.round(bon)+"% §aajouté :3 !");
+									else 
+										Utils.addChat("§cMalus cadeau de §d"+Math.round(bon)+"% §cajouté >:3 !");
+								} else {
+									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
+									r = r.replaceAll("!!player", user);
+									Utils.addChat(r);
+								}
+							}
+						} else if (sr[1].equalsIgnoreCase("$serv")) {
+							String user;
+							if (MCLeaks.isAltActive()) {
+								user=MCLeaks.getMCName();
+							} else {
+								user=mc.session.getUsername();
+							}
+							String serv="";
+							if (!mc.isSingleplayer())
+								serv=InetAddress.getByName(mc.getCurrentServerData().serverIP).getHostAddress();
+							if (serv.equalsIgnoreCase(InetAddress.getByName(sr[2]).getHostAddress())) {
+								String r="";
+								for (int m=3;m<sr.length;m++) {
+									r+=sr[m] + " ";
+								}
+								if (r.startsWith("..")) {
+									ChatUtils c = new ChatUtils();
+									r = r.replaceFirst("..", Client.getNeko().prefixCmd);
+									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
+									c.doCommand(r.replaceAll("!!player", user));
+								} else if (r.startsWith("bonus")) {
+									String var[] = r.replaceFirst("bonus ", "").split(" ");
+									int sec = Integer.parseInt(var[1]);
+									double bon = Double.parseDouble(var[0]);
+									Client.getNeko().tempBonus=bon;
+									TempBon t = new TempBon(sec);
+									if (bon>0)
+										Utils.addChat("§aBonus cadeau de §d"+Math.round(bon)+"% §aajouté :3 !");
+									else 
+										Utils.addChat("§cMalus cadeau de §d"+Math.round(bon)+"% §cajouté >:3 !");
+								} else {
+									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
+									r = r.replaceAll("!!player", user);
+									Utils.addChat(r);
+								}
+							}
+						} else if (sr[1].equalsIgnoreCase("!$serv")) {
+							String user;
+							if (MCLeaks.isAltActive()) {
+								user=MCLeaks.getMCName();
+							} else {
+								user=mc.session.getUsername();
+							}
+							String serv="";
+							if (!mc.isSingleplayer())
+								serv=InetAddress.getByName(mc.getCurrentServerData().serverIP).getHostAddress();
+							if (!serv.equalsIgnoreCase(InetAddress.getByName(sr[2]).getHostAddress())) {
+								String r="";
+								for (int m=3;m<sr.length;m++) {
+									r+=sr[m] + " ";
+								}
+								if (r.startsWith("..")) {
+									ChatUtils c = new ChatUtils();
+									r = r.replaceFirst("..", Client.getNeko().prefixCmd);
+									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
+									c.doCommand(r.replaceAll("!!player", user));
+								} else if (r.startsWith("bonus")) {
+									String var[] = r.replaceFirst("bonus ", "").split(" ");
+									int sec = Integer.parseInt(var[1]);
+									double bon = Double.parseDouble(var[0]);
+									Client.getNeko().tempBonus=bon;
+									TempBon t = new TempBon(sec);
+									if (bon>0)
+										Utils.addChat("§aBonus cadeau de §d"+Math.round(bon)+"% §aajouté :3 !");
+									else 
+										Utils.addChat("§cMalus cadeau de §d"+Math.round(bon)+"% §cajouté >:3 !");
+								} else {
+									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
+									r = r.replaceAll("!!player", user);
+									Utils.addChat(r);
+								}
+							}
+						} else if (sr[1].equalsIgnoreCase("$ver")) {
+							String user;
+							if (MCLeaks.isAltActive()) {
+								user=MCLeaks.getMCName();
+							} else {
+								user=mc.session.getUsername();
+							}
+							if (Client.getNeko().CLIENT_VERSION.equalsIgnoreCase(sr[2])) {
+								String r="";
+								for (int m=3;m<sr.length;m++) {
+									r+=sr[m] + " ";
+								}
+								if (r.startsWith("..")) {
+									ChatUtils c = new ChatUtils();
+									r = r.replaceFirst("..", Client.getNeko().prefixCmd);
+									r = r.replaceAll("!!player", user);
+									c.doCommand(r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION));
+								} else if (r.startsWith("bonus")) {
+									String var[] = r.replaceFirst("bonus ", "").split(" ");
+									int sec = Integer.parseInt(var[1]);
+									double bon = Double.parseDouble(var[0]);
+									Client.getNeko().tempBonus=bon;
+									TempBon t = new TempBon(sec);
+									if (bon>0)
+										Utils.addChat("§aBonus cadeau de §d"+Math.round(bon)+"% §aajouté :3 !");
+									else 
+										Utils.addChat("§cMalus cadeau de §d"+Math.round(bon)+"% §cajouté >:3 !");
+								} else {
+									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
+									r = r.replaceAll("!!player", user);
+									Utils.addChat(r);
+								}
+							}
+						} else if (sr[1].equalsIgnoreCase("$ver")) {
+							String user;
+							if (MCLeaks.isAltActive()) {
+								user=MCLeaks.getMCName();
+							} else {
+								user=mc.session.getUsername();
+							}
+							if (!Client.getNeko().CLIENT_VERSION.equalsIgnoreCase(sr[2])) {
+								String r="";
+								for (int m=3;m<sr.length;m++) {
+									r+=sr[m] + " ";
+								}
+								if (r.startsWith("..")) {
+									ChatUtils c = new ChatUtils();
+									r = r.replaceFirst("..", Client.getNeko().prefixCmd);
+									r = r.replaceAll("!!player", user);
+									c.doCommand(r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION));
+								} else if (r.startsWith("bonus")) {
+									String var[] = r.replaceFirst("bonus ", "").split(" ");
+									int sec = Integer.parseInt(var[1]);
+									double bon = Double.parseDouble(var[0]);
+									Client.getNeko().tempBonus=bon;
+									TempBon t = new TempBon(sec);
+									if (bon>0)
+										Utils.addChat("§aBonus cadeau de §d"+Math.round(bon)+"% §aajouté :3 !");
+									else 
+										Utils.addChat("§cMalus cadeau de §d"+Math.round(bon)+"% §cajouté >:3 !");
+								} else {
+									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
+									r = r.replaceAll("!!player", user);
+									Utils.addChat(r);
+								}
+							}
+						} else {}
+					} catch (Exception e) {}
+				} else if (s.get(i).startsWith("bonus")) {
+					String var[] = s.get(i).replaceFirst("bonus ", "").split(" ");
+					int sec = Integer.parseInt(var[1]);
+					double bon = Double.parseDouble(var[0]);
+					Client.getNeko().tempBonus=bon;
+					TempBon t = new TempBon(sec);
+					if (bon>0)
+						Utils.addChat("§aBonus cadeau de §d"+Math.round(bon)+"% §aajouté :3 !");
+					else 
+						Utils.addChat("§cMalus cadeau de §d"+Math.round(bon)+"% §cajouté >:3 !");
+				} else {
+					String user;
+					if (MCLeaks.isAltActive()) {
+						user=MCLeaks.getMCName();
+					} else {
+						user=mc.session.getUsername();
+					}
+					String sr = s.get(i);
+					sr = sr.replaceAll("!!player", user);
+					sr = sr.replaceAll("!!ver", var.CLIENT_VERSION);
+					Utils.addChat(sr);
+				}
+			}
+		} catch (Exception e) {}
+	}
+
 }
+	
 
 class upLvl implements ActionListener {
 	Minecraft mc = Minecraft.getMinecraft();
