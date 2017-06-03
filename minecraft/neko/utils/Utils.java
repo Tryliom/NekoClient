@@ -633,7 +633,7 @@ public class Utils {
 
 	public static void checkEC(String user) {
 		try {
-			URI url = URI.create("https://stats.epicube.fr/player/"+user);
+			URI url = URI.create("http://stats.epicube.fr/player/"+user);
 			Desktop.getDesktop().browse(url);
 		} catch (Exception e) {
 			addChat("Erreur");
@@ -2181,6 +2181,72 @@ public class Utils {
 		}).start();
 	}
 	
+	public static String loginAltManager() {
+		int id=0;
+		boolean useId=false;
+		try {
+			URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=b1889a93d7eea3c3c1e116f40b3d09ac");
+			Scanner sc = new Scanner(url.openStream());		
+			String l;
+			try {
+				while ((l = sc.nextLine()) != null) {
+					if (l.startsWith("id=")) {
+						id=Integer.parseInt(l.replaceFirst("...", "").replace("<br>", ""));
+					}
+				}
+			} catch (Exception e) {}
+			sc.close();
+		} catch (Exception e) {
+			System.out.println("Erreur BDD: GetAltId");
+		}
+		String user="";
+		String pass="";
+		try {
+			URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=f76166a32edd966642fb3c26798af6e7&args=\""+id+"\"");
+			Scanner sc = new Scanner(url.openStream());		
+			String l;
+			
+			try {
+				while ((l = sc.nextLine()) != null) {
+					String s[] = l.split("<br>");
+					if (s.length>1) {
+						if (s[0].startsWith("username=")) {
+							user=s[0].replaceFirst(".........", "");
+						}
+						if (s[1].startsWith("password=")) {
+							pass=s[1].replaceFirst(".........", "");
+						}
+					}
+				}
+			} catch (Exception e) {}
+			sc.close();
+		} catch (Exception e) {
+			System.out.println("Erreur BDD: Log alt");
+		}
+		
+		YggdrasilAuthenticationService authService = new YggdrasilAuthenticationService(Proxy.NO_PROXY, "");
+	    UserAuthentication auth = authService.createUserAuthentication(Agent.MINECRAFT);
+	    if (!pass.isEmpty()) {
+		    auth.setUsername(user);
+		    auth.setPassword(pass);
+		    try {
+				auth.logIn();
+				Minecraft.getMinecraft().session = new Session(auth.getSelectedProfile().getName(), 
+				auth.getSelectedProfile().getId().toString(), auth.getAuthenticatedToken(), "mojang");
+				if (!Friends.isFriend(mc.session.getUsername()))
+					Friends.friend.add(mc.session.getUsername());
+				if (MCLeaks.isAltActive())
+					MCLeaks.remove();
+				return "§aConnecté en tant que "+mc.session.getUsername()+" !";
+			} catch (AuthenticationException e) {
+				return "§cErreur: Email/Username ou mdp incorrect";
+			} catch (Exception e) {
+				Utils.addChat(e.getMessage());
+			}
+	    }
+		return "§cErreur";
+	}
+	
 	//TODO: Account
 	public static void displayAccount() {
 		ArrayList<String> acc = getAllAccount();
@@ -2829,7 +2895,8 @@ public class Utils {
 	                	String t[] = r.split("&&");
 	                	for (int i=0;i<t.length;i++)
 	                		m.addCmd(t[i]);
-	                	ModuleManager.ActiveModule.add(m);
+	                	if (!ModuleManager.ActiveModule.contains(s[0]))
+	                		ModuleManager.ActiveModule.add(m);
                 	}
                 	
                 }

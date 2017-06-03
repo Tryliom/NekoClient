@@ -2981,7 +2981,7 @@ public class ChatUtils {
 										bonus=(double) Math.round(Math.random()*-10*10/10);
 										time=Utils.getRandInt(1200);										
 									} else if (Math.random()<0.3+var.rang.getLotRang()) {
-										if (Utils.getRandInt((int) (5000000-Math.round(5000000*var.rang.getLotRateTitan())))==4) {
+										if (Utils.getRandInt((int) (5000000-Math.round(1000000*var.rang.getLotRateTitan())))==4) {
 											r=Rate.Titan;
 										} else if (Math.random()<0.007+0.007*var.rang.getLotRateSatanique()) {
 											r=Rate.Satanique;

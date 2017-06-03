@@ -118,6 +118,7 @@ public class ModuleManager {
 		this.ActiveModule.add(new FlyBypass()); // Key NONE
 		this.ActiveModule.add(new NekoChat()); // Key NONE
 		this.ActiveModule.add(new Premonition()); // Key NONE
+		this.ActiveModule.add(new Highjump()); // Key NONE
 		
 		
 		// Ajouter les locks | -- = ..;
@@ -157,8 +158,8 @@ public class ModuleManager {
 		// Rank
 		
 		// CrazyLove
-		rang.add(new Rank("Troll", 5000, Rate.CrazyLove, "§9", true, 0));
-		Utils.getRank("Troll").setDesc("Sérieux meilleur que Titan ?!");
+		rang.add(new Rank("La tentacule divine", 5000, Rate.CrazyLove, "§9", true, 0));
+		Utils.getRank("La tentacule divine").setDesc("Si gluante et visqueuse, votre amie pour votre vie de pervy ;3");
 		
 		// Titan
 		rang.add(new Rank("Tryliom", 4000, Rate.Titan, "§4§o", true, 0));
@@ -199,7 +200,7 @@ public class ModuleManager {
 		Utils.getRank("Gardien de la Déesse du neko").setDesc("Protège sa Déesse de tout déesarroi. Il la respecte par la loyauté et la soumission, passe le plus grand de son temps à ses côtés ;3");
 		Utils.getRank("Gardien de la Déesse du neko").setLotRateTitan(1);
 		Utils.getRank("Gardien de la Déesse du neko").setLotRateDivin(0.2);
-		Utils.getRank("Gardien de la Déesse du neko").setRadiusGift(10);		
+		Utils.getRank("Gardien de la Déesse du neko").setRadiusGift(10);
 		
 		
 		// Mythique
@@ -256,11 +257,17 @@ public class ModuleManager {
 		Utils.getRank("TryTry Satanique").setGiftPlus(3);
 		rang.add(new Rank("Satan", 666, Rate.Satanique, "§c§n", true, 0));
 		Utils.getRank("Satan").setDesc("Le roi de l'Enfer, il possède 16 enfants actuellement dont Lucifer");
+		rang.add(new Rank("Maître Satanique", 888, Rate.Satanique, "§c", true, 0));
+		Utils.getRank("Maître Satanique").setDesc("Dresse et punis souvent sa soumise Tianshi au fouet avec passion et plaisir ;3");
+		Utils.getRank("Maître Satanique").setLotRateTitan(1);
+		rang.add(new Rank("Tianshi", 800, Rate.Satanique, "§d§n", true, 0));
+		Utils.getRank("Tianshi").setDesc("Ange démoniaque soumise par un Maître Satanique très méchant qui adore jouer avec ;3");
+		Utils.getRank("Tianshi").setLotRateSatanique(0.5);
 		rang.add(new Rank("Déesse du neko", 800, Rate.Satanique, "§d§n", true, 0));
 		Utils.getRank("Déesse du neko").setDesc("Venant par milliers, ils recherchent tous une chose qu'il ne peuvent trouver qu'ici. Elle est là, trônant en ces lieux avec son Gardien, apaisant ces petits êtres, les nekos.");
 		Utils.getRank("Déesse du neko").setLotRateDivin(0.5);
 		rang.add(new Rank("Lucifer", 632, Rate.Satanique, "§c", true, 0));
-		Utils.getRank("Lucifer").setDesc("7ème esprit démoniaque, enfant de Satan et porteur de la lumière écarlate. Un esprit qui peut vous tuer en 2 secondes !");
+		Utils.getRank("Lucifer").setDesc("7ème esprit démoniaque, enfant de Satan, pure Neko pervy sataniste et porteur de la lumière écarlate. Un esprit qui peut vous tuer en 2 secondes !");
 		Utils.getRank("Lucifer").setLotRateDivin(0.08);
 		rang.add(new Rank("Cavalier de l'Apocalypse: La Guerre", 666, Rate.Satanique, "§4§o", true, 0));
 		Utils.getRank("Cavalier de l'Apocalypse: La Guerre").setDesc("La Guerre, cavalier de l'Apocalypse apportant discorde dans le monde, le désordre instauré par Lucifer sur Terre");
@@ -284,11 +291,20 @@ public class ModuleManager {
 		Utils.getRank("Prince de l'Enfer: Abaddon").setDesc("Lucifer a créé ce chevalier de l'Enfer par le sang. Aussi appelé Apollyon, l'ange exterminateur de l'abîme dans l'Apocalypse, l'ange des ténèbres");
 		Utils.getRank("Prince de l'Enfer: Abaddon").setRadiusGift(4);
 		rang.add(new Rank("Prince de l'Enfer: Ramiel", 975, Rate.Satanique, "§c§o", true, 0));
-		Utils.getRank("Prince de l'Enfer: Ramiel").setDesc("Lucifer, Archange impure, créa ce Prince de l'Enfer à la suite de Lilith. Ils ont assez de pouvoir pour pouvoir rêgner sur tout l'Enfer quand il n'y a plus de Roi... On raconte que tous les Princes vivent maintenant à l'écart des autres démons et de la société Divine");
+		Utils.getRank("Prince de l'Enfer: Ramiel").setDesc("Enfant de Satan, ils ont assez de pouvoir pour pouvoir rêgner sur tout l'Enfer quand il n'y a plus de Roi... On raconte que tous les Princes vivent maintenant à l'écart des autres démons et de la société Divine");
 		Utils.getRank("Prince de l'Enfer: Ramiel").setGiftRang(0.5);
 		rang.add(new Rank("Prince de l'Enfer: Daegon", 975, Rate.Satanique, "§c§o", true, 0));
-		Utils.getRank("Prince de l'Enfer: Daegon").setDesc("Lucifer, Archange impure, créa ce Prince de l'Enfer à la suite de Lilith. Ils ont assez de pouvoir pour pouvoir rêgner sur tout l'Enfer quand il n'y a plus de Roi... On raconte que tous les Princes vivent maintenant à l'écart des autres démons et de la société Divine");
+		Utils.getRank("Prince de l'Enfer: Daegon").setDesc("Enfant de Satan, ils ont assez de pouvoir pour pouvoir rêgner sur tout l'Enfer quand il n'y a plus de Roi... On raconte que tous les Princes vivent maintenant à l'écart des autres démons et de la société Divine");
 		Utils.getRank("Prince de l'Enfer: Daegon").setGiftLotterie(0.5);
+		rang.add(new Rank("Unel", 950, Rate.Satanique, "§c§o", true, 0));
+		Utils.getRank("Unel").setDesc("Enfant de Satan, le plus vieux et est plus puissant que Satan lui-même");
+		Utils.getRank("Unel").setRadiusGift(4);
+		rang.add(new Rank("Khanuel", 900, Rate.Satanique, "§c§o", true, 0));
+		Utils.getRank("Khanuel").setDesc("Enfant de Satan, terriblement sadomasochiste, il est dit si on tend l'oreille, on peut l'entre crier dans les donjons...");
+		Utils.getRank("Khanuel").setGiftAme(5);
+		rang.add(new Rank("Varelle", 920, Rate.Satanique, "§c§o", true, 0));
+		Utils.getRank("Varelle").setDesc("Enfant de Satan, n'a jamais subit de punition avant ce jour terrible...Depuis il reste enfermé dans une pièce sombre...");
+		Utils.getRank("Varelle").setLotUnlock(0.3);
 		rang.add(new Rank("Neko Army Démoniaque", 999, Rate.Satanique, "§c", true, 0));
 		Utils.getRank("Neko Army Démoniaque").setDesc("Armée de Neko maintenue par TryTry Satanique, moins puissante que la CRCRCR mais grandiose quand même");
 		rang.add(new Rank("Empereur du Chaos", 500, Rate.Satanique, "§c", true, 0));
@@ -533,6 +549,8 @@ public class ModuleManager {
 		Utils.getRank("Chanceux").setLotRateUltraRare(0.3);
 		rang.add(new Rank("Bananya", 22, Rate.Rare, "§e", true, 0));
 		Utils.getRank("Bananya").setDesc("Avez-vous vu déjà des neko dans des bananes ? >> Bananya");
+		rang.add(new Rank("atoZ", 20, Rate.Rare, "§e", true, 0));
+		Utils.getRank("atoZ").setDesc("Dans ton fion !");
 		rang.add(new Rank("Geek", 25, Rate.Rare, "§e", true, 0));
 		Utils.getRank("Geek").setDesc("l'exemple parfait serais le créateur qui passe ses journées h24 à coder Neko c:");
 		rang.add(new Rank("Extraordinary", 30, Rate.Rare, "§e", true, 0));
