@@ -315,7 +315,7 @@ public class RequestThread extends Thread {
 								}
 								// Afficher ici
 								Locale loc = new Locale("FR", "CH");
-								Utils.addChat2("§7[§a+§7] "+pName, var.prefixCmd+"connect "+pServer, "§7["+pRankColor+pRank+"§7]\n§d"+pName+"\n§bLvl."+NumberFormat.getNumberInstance(loc).format(pLvl)+" §7["+NumberFormat.getNumberInstance(loc).format(pXp)+"xp§7/"+NumberFormat.getNumberInstance(loc).format(pXpMax)+"xp§7]\n§7Serveur: "+pServer+"\n§7"+pKill+" kills\n§7"+pTime+" de temps de jeu\n§7Version: "+pVer+"\n§7Mode: "+pMode, (pServer.equalsIgnoreCase("Localhost") ? true : false), Chat.Summon);								
+								Utils.addChat2("§7[§a+§7] "+pName+" joue sur §e"+pServer, var.prefixCmd+"connect "+pServer, "§7["+pRankColor+pRank+"§7]\n§d"+pName+"\n§bLvl."+NumberFormat.getNumberInstance(loc).format(pLvl)+" §7["+NumberFormat.getNumberInstance(loc).format(pXp)+"xp§7/"+NumberFormat.getNumberInstance(loc).format(pXpMax)+"xp§7]\n§7Serveur: "+pServer+"\n§7"+pKill+" kills\n§7"+pTime+" de temps de jeu\n§7Version: "+pVer+"\n§7Mode: "+pMode, (pServer.equalsIgnoreCase("Localhost") ? true : false), Chat.Summon);								
 							}
 						}
 					}
@@ -763,6 +763,7 @@ public class RequestThread extends Thread {
 					String pMode="";
 					try {
 						URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=2d29d2cf2a70b4b6112b2afef9276829&args=\""+pid+"\"");
+						System.out.println(url);
 						Scanner sc = new Scanner(url.openStream(), "UTF-8");	
 						String l;					
 						try {
