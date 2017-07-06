@@ -763,7 +763,6 @@ public class RequestThread extends Thread {
 					String pMode="";
 					try {
 						URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=2d29d2cf2a70b4b6112b2afef9276829&args=\""+pid+"\"");
-						System.out.println(url);
 						Scanner sc = new Scanner(url.openStream(), "UTF-8");	
 						String l;					
 						try {
