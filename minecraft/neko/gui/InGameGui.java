@@ -8,6 +8,7 @@ import neko.Client;
 import neko.module.Category;
 import neko.module.Module;
 import neko.module.ModuleManager;
+import neko.module.modules.Blink;
 import neko.module.modules.Friends;
 import neko.module.modules.HUD;
 import neko.module.modules.Radar;
@@ -33,6 +34,7 @@ public class InGameGui {
 	static int yPos = 10;
 	static int multi=0;
 	static Client var = Client.getNeko();
+	public static int hudWid;
 	
 	public static void render() {
 		  Minecraft mc = Minecraft.getMinecraft();
@@ -47,8 +49,11 @@ public class InGameGui {
 		  RenderUtils.drawRect(((GuiScreen.width-var.NekoFont.getStringWidth(color)-90)), yPos-2, ((GuiScreen.width)), yPos+multi*(var.NekoFont.FONT_HEIGHT + 1) - 1, c);
 		  for(Module module : ModuleManager.ActiveModule) {
 		    if(module.getToggled() && module.getCategory() != Category.HIDE && !module.getName().equalsIgnoreCase("VanillaTp")) {
-		       var.NekoFont.drawStringWithShadow(color+module.getName(), ((GuiScreen.width-5)-(var.NekoFont).getStringWidth(color+module.getName())), yPos, 0);
-		       yPos += var.NekoFont.FONT_HEIGHT + 1;
+		    	String s = color+module.getName();
+		    	if (module.getName().equalsIgnoreCase("blink"))
+		    		s+=" ("+Blink.packet.size()+")";
+		    	var.NekoFont.drawStringWithShadow(s, ((GuiScreen.width-5)-(var.NekoFont).getStringWidth(s)), yPos, 0);
+		    	yPos += var.NekoFont.FONT_HEIGHT + 1;
 		    }
 		  }
 		}
@@ -64,6 +69,7 @@ public class InGameGui {
 		  ScaledResolution scaled = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);	
 		  NumberFormat form = null;
 		  Locale loc = new Locale("FR", "CH");
+		  
   		  
 		  
 		  
@@ -103,6 +109,7 @@ public class InGameGui {
 					  
 				  }
 			  }
+			  hudWid=var5;
               boolean var6 = true;
               RenderUtils.drawRect(1, 10 - 1, 2 + var5 + 1, pos - 1, c);
 		  }

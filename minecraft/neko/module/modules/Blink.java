@@ -11,7 +11,6 @@ import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.network.Packet;
 
 public class Blink extends Module {
-	Minecraft mc = Minecraft.getMinecraft();
 	private EntityOtherPlayerMP fakePlayer = null;
 	public static ArrayList<Packet> packet = new ArrayList<Packet>();
 	public static boolean isOn;

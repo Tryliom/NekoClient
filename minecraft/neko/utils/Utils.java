@@ -41,6 +41,7 @@ import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
 import jdk.nashorn.internal.parser.JSONParser;
 import neko.Client;
+import neko.dtb.RequestThread;
 import neko.gui.GuiAltManager;
 import neko.gui.InGameGui;
 import neko.gui.NekoUpdate;
@@ -105,7 +106,9 @@ import neko.module.other.Active;
 import neko.module.other.BddManager;
 import neko.module.other.Chat;
 import neko.module.other.Conditions;
+import neko.module.other.Event;
 import neko.module.other.Irc;
+import neko.module.other.IrcMode;
 import neko.module.other.OnlyRpgManager;
 import neko.module.other.Rank;
 import neko.module.other.Rate;
@@ -1170,8 +1173,7 @@ public class Utils {
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		Irc irc = Irc.getInstance();
 		ModuleManager.values.add("Irc:");
-		ModuleManager.values.add("Irc only:§7 "+(irc.isOnlyIrc() ? "Only" : "Hybride"));
-		ModuleManager.values.add("Irc change:§7 "+(irc.isIrc() ? "Irc" : "Normal"));
+		ModuleManager.values.add("Irc mode:§7 "+irc.getMode());
 		ModuleManager.values.add("Irc messages join/left:§7 "+(irc.isHideJl() ? "Cachés" : "Affichés"));
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		NekoChat nc = NekoChat.getChat();
@@ -1418,7 +1420,7 @@ public class Utils {
         }
     	loadValues();
 	}
-	
+
 	public static boolean isToggle(String module) {
 		try {
 			for (Module mod : ModuleManager.ActiveModule) {
@@ -1871,7 +1873,7 @@ public class Utils {
             try (FileWriter writer = new FileWriter(file)) {
             	Irc	irc = Irc.getInstance();
             	BddManager b = BddManager.getBdd();
-            	s+=irc.getNamePlayer()+"\n"+irc.getPrefix()+"\n"+irc.getIdPlayer()+"\n"+irc.isOn()+"\n"+irc.isIrc()+"\n"+irc.isOnlyIrc()+"\n"+irc.isHideJl()+"\n"+(b.isRemember() ? b.getUser()+"\n"+b.getPass()+"\n" : "");
+            	s+=irc.getNamePlayer()+"\n"+irc.getPrefix()+"\n"+irc.getIdPlayer()+"\n"+irc.isOn()+"\n\n"+irc.getMode()+"\n"+irc.isHideJl()+"\n"+(b.isRemember() ? b.getUser()+"\n"+b.getPass()+"\n" : "");
             	int i = (s.length()+1)*666-111;
             	String res= s+"§"+i;
                 writer.write(res);
@@ -1909,10 +1911,11 @@ public class Utils {
 	                		irc.setIdPlayer(Integer.parseInt(ligne));
 	                	if (i==4)
 	                		irc.setOn(Boolean.parseBoolean(ligne));
-	                	if (i==5)
-	                		irc.setIrc(Boolean.parseBoolean(ligne));
-	                	if (i==6)
-	                		irc.setOnlyIrc(Boolean.parseBoolean(ligne));
+	                	if (i==6) {
+	                		try {
+	                			irc.setMode(IrcMode.valueOf(ligne));
+	                		} catch (Exception e) {}
+	                	}
 	                	if (i==7)
 	                		irc.setHideJl(Boolean.parseBoolean(ligne));
 	                	BddManager b = BddManager.getBdd();

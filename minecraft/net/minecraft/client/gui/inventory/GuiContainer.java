@@ -1,10 +1,22 @@
 package net.minecraft.client.gui.inventory;
 
 import com.google.common.collect.Sets;
+
+import neko.Client;
+import neko.dtb.RequestThread;
+import neko.gui.InGameGui;
+import neko.module.modules.DropShit;
+import neko.module.other.Event;
+import neko.module.other.Irc;
+import neko.module.other.IrcMode;
+import neko.utils.Utils;
+
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Set;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
@@ -90,7 +102,7 @@ public abstract class GuiContainer extends GuiScreen
         super.initGui();
         this.mc.thePlayer.openContainer = this.inventorySlots;
         this.guiLeft = (this.width - this.xSize) / 2;
-        this.guiTop = (this.height - this.ySize) / 2;
+        this.guiTop = (this.height - this.ySize) / 2;        
     }
 
     /**

@@ -1,10 +1,8 @@
 package neko.utils;
 
 import java.io.File;
-import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -15,7 +13,6 @@ import java.util.UUID;
 import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.util.Color;
 
 import com.mojang.authlib.GameProfile;
 
@@ -82,18 +79,17 @@ import neko.module.modules.Xray;
 import neko.module.other.Active;
 import neko.module.other.Bloc;
 import neko.module.other.Chat;
-import neko.module.other.Conditions;
 import neko.module.other.Event;
 import neko.module.other.EventType;
 import neko.module.other.Form;
 import neko.module.other.HackerDetector;
 import neko.module.other.Irc;
+import neko.module.other.IrcMode;
 import neko.module.other.PyroThread;
 import neko.module.other.Rank;
 import neko.module.other.Rate;
 import neko.module.other.RmRank;
 import neko.module.other.SpeedEnum;
-import neko.module.other.TempBon;
 import neko.module.other.Trade;
 import net.mcleaks.Callback;
 import net.mcleaks.MCLeaks;
@@ -134,7 +130,6 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 import net.minecraft.network.play.client.C09PacketHeldItemChange;
 import net.minecraft.network.play.client.C10PacketCreativeInventoryAction;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
@@ -167,20 +162,20 @@ public class ChatUtils {
 				return;
 			}
 		}
-		
-		if (irc.isOn()) {
-			boolean inIrc=false;
-			if (irc.isOnlyIrc() && !var3.startsWith(Client.getNeko().prefixCmd) && (!var3.startsWith("/") || var3.startsWith("//r") || var3.startsWith("//w") || var3.startsWith("//m") || var3.startsWith("//msg"))) {
+		if (irc.isOn() && !var3.startsWith(Client.getNeko().prefixCmd)) {
+			boolean inIrc=false;	
+			
+			if (irc.getMode()==IrcMode.Only && (!var3.startsWith("/") || var3.startsWith("//r") || var3.startsWith("//w") || var3.startsWith("//m") || var3.startsWith("//msg"))) {
 				if (!(var3.startsWith("//r") || var3.startsWith("//w") || var3.startsWith("//m") || var3.startsWith("//msg")))
 					var3=Irc.getInstance().getPrefix()+var3;
 				inIrc=true;			
 			}
-			if (!irc.isOnlyIrc() && (irc.isIrc() && !var3.startsWith(irc.getPrefix()) || !irc.isIrc() && var3.startsWith(irc.getPrefix())) && !var3.startsWith(Client.getNeko().prefixCmd) && (!var3.startsWith("/") || var3.startsWith("//r") || var3.startsWith("//w") || var3.startsWith("//m") || var3.startsWith("//msg"))) {
+			if (irc.getMode()!=IrcMode.Only && (irc.getMode()==IrcMode.Hybride && !var3.startsWith(irc.getPrefix()) || irc.getMode()!=IrcMode.Hybride && var3.startsWith(irc.getPrefix())) && !var3.startsWith(Client.getNeko().prefixCmd) && (!var3.startsWith("/") || var3.startsWith("//r") || var3.startsWith("//w") || var3.startsWith("//m") || var3.startsWith("//msg"))) {
 				var3=Irc.getInstance().getPrefix()+var3;
 				inIrc=true;
 			}
 			// Chat normal sans only
-			if (!irc.isOnlyIrc() && !irc.isIrc() && var3.startsWith(irc.getPrefix()) && !var3.startsWith(Client.getNeko().prefixCmd)) {
+			if (irc.getMode()==IrcMode.Normal && var3.startsWith(irc.getPrefix())) {
 				inIrc=true;
 				String s ="";
 				for (int i=0;i<Irc.getInstance().getPrefix().length();i++)
@@ -188,7 +183,7 @@ public class ChatUtils {
 				
 				var3 = var3.replaceFirst(s, "");
 			}
-			if (!irc.isOnlyIrc() && irc.isIrc() && var3.startsWith(irc.getPrefix()) && !var3.startsWith(var.prefixCmd) && (!var3.startsWith("/") || var3.startsWith("//r") || var3.startsWith("//w") || var3.startsWith("//m") || var3.startsWith("//msg"))) {
+			if (irc.getMode()==IrcMode.Hybride && var3.startsWith(irc.getPrefix()) && (!var3.startsWith("/") || var3.startsWith("//r") || var3.startsWith("//w") || var3.startsWith("//m") || var3.startsWith("//msg"))) {
 				String s ="";
 				for (int i=0;i<Irc.getInstance().getPrefix().length();i++)
 					s+=".";
@@ -331,22 +326,22 @@ public class ChatUtils {
 			
 			if (var3.startsWith(var.prefixCmd+"proxy")) {
 				if (args.length==1) {
-					Utils.addChat("§cErreur, syntaxe correcte: "+Utils.setColor(var.prefixCmd+"proxy <HostIP> <Port (Facultatif)>", "§c"));
+					Utils.addChat("§cErreur, syntaxe correcte: "+Utils.setColor(var.prefixCmd+"proxy <HostIP> <Port>", "§c"));
 				} else if (args[1].equalsIgnoreCase("reset")) {
 					Properties props = System.getProperties();
-			    	props.setProperty("http.proxyHost", "");
-			    	props.setProperty("http.proxyPort", "");
+			    	props.setProperty("socksProxyHost", "");
+			    	props.setProperty("socksProxyPort", "");
 			    	System.setProperties(props);
 					Utils.addChat("§aVous vous êtes déconnecté du proxy");
 				} else {
 					String host = args[1];
-					String port = "80";
+					String port = "1080";
 					if (args.length==3) {
 						port = args[2];
 					}
 					Properties props = System.getProperties();
-			    	props.setProperty("http.proxyHost", host);
-			    	props.setProperty("http.proxyPort", port);
+			    	props.setProperty("socksProxyHost", host);
+			    	props.setProperty("socksProxyPort", port);
 			    	System.setProperties(props);
 					Utils.addChat("§aVous vous êtes connecté à "+host+":"+port);
 				}
@@ -789,9 +784,8 @@ public class ChatUtils {
 					Utils.addChat("§7Vous pouvez écrire en couleur dans l'Irc.");
 					Utils.addChat2("§6"+var.prefixCmd+"Irc", var.prefixCmd+"irc", "§7Active/désactive l'Irc", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Irc name <Pseudo>", var.prefixCmd+"irc name ", "§7Change votre pseudo dans l'Irc", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Irc <Prefix>", var.prefixCmd+"irc ", "§7Change le prefix pour l'irc", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Irc only", var.prefixCmd+"irc only", "§7Affiche QUE le chat de l'IRC", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Irc change", var.prefixCmd+"irc change", "§7Change du chat normal à l'Irc et inversement (Donc sans taper le prefix avant)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Irc prefix <Prefix>", var.prefixCmd+"irc ", "§7Change le prefix pour l'irc", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Irc mode <Hybride:Normal:Only>", var.prefixCmd+"irc mode ", "§7Change le mode de l'irc", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Irc list", var.prefixCmd+"irc list", "§7Affiche la liste des joueurs connectés sur Neko et l'IRC", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Irc hidejl", var.prefixCmd+"irc hidejl", "§7Cache les messages de join/left", false, Chat.Summon);
 					Utils.checkXp(xp);
@@ -1071,7 +1065,7 @@ public class ChatUtils {
 					Utils.addChat2("§6Play.groupezk.com", var.prefixCmd+"co play.groupezk.com", "§7Très agréable pour y jouer, juste éviter d'envoyer trop de paquets", false, Chat.Summon);
 					Utils.addChat2("§6Titaniumcraft-mc.fr", var.prefixCmd+"co titaniumcraft-mc.fr", "§7PvP Faction sans anti-cheat", false, Chat.Summon);
 					Utils.addChat2("§6mc.g-community.com", var.prefixCmd+"co mc.g-community.com", "§7La reach pvp est idéal dessus, pas d'AC", false, Chat.Summon);
-					Utils.addChat2("§6Rushy.fr", var.prefixCmd+"co rushy.fr", "§7Rush sans aucun AC, sauf modo actifs", false, Chat.Summon);
+					Utils.addChat2("§6Play.hazonia.fr", var.prefixCmd+"co play.hazonia.fr", "§7Rush sans aucun AC, sauf modo actifs", false, Chat.Summon);
 					Utils.addChat2("§6Play.golemamc.net", var.prefixCmd+"co play.golemamc.net", "§7Anti-cheat mauvais en détection. Attention en legit vous vous faîtes aussi bien kick/ban", false, Chat.Summon);
 					Utils.checkXp(xp);						
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
@@ -4693,13 +4687,6 @@ public class ChatUtils {
 					ArrayList<String> list = new ArrayList<>();
 					list.add(args[2]);					
 					new RequestThread("nameisfree", list).start();				
-				} else if (args[1].equalsIgnoreCase("change")) {
-					if (irc.isIrc()) {
-						Utils.addChat("§aVous parlez dans le chat normal");
-					} else {
-						Utils.addChat("§aVous parlez dans l'IRC");
-					}
-					irc.setIrc(!irc.isIrc());
 				} else if (args[1].equalsIgnoreCase("hide")) {
 					if (irc.isHideJl()) {
 						Utils.addChat("§aMessage join/left affichés");
@@ -4707,22 +4694,26 @@ public class ChatUtils {
 						Utils.addChat("§aMessage join/left masqués");
 					}
 					irc.setHideJl(!irc.isHideJl());
-				} else if (args[1].equalsIgnoreCase("only")) {
-					if (irc.isOnlyIrc()) {
-						Utils.addChat("§aPassage mode hybride");
-					} else {
-						Utils.addChat("§aPassage mode IRC");
+				} else if (args[1].equalsIgnoreCase("mode")) {
+					try {
+						IrcMode mode = IrcMode.valueOf(args[2]);
+						Irc.getInstance().setMode(mode);
+						Utils.addChat("§aIrc mode changé à "+args[2]+" !");
+					} catch (Exception e) {
+						Utils.addChat("§cErreur, modes disponibles:");
+						Utils.addChat(Utils.setColor("Normal: Vous devez mettre le prefix de l'irc pour parler dans l'irc", "§c"));
+						Utils.addChat(Utils.setColor("Hybride: Vous devez mettre le prefix de l'irc pour parler dans le chat normal", "§c"));
+						Utils.addChat(Utils.setColor("Only: Vous n'avez que l'irc et ne pouvez que parler dedans, aucun message du chat normal n'est affiché", "§c"));
 					}
-					irc.setOnlyIrc(!irc.isOnlyIrc());
 				} else if (args[1].equalsIgnoreCase("list")) {
 					new RequestThread("displaylist", null).start();
-				} else if (args.length==2) {
+				} else if (args[1].equalsIgnoreCase("prefix")) {
 					irc.setPrefix(args[1]);
 					Utils.addChat("§aPrefix de l'irc changé !");
 				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
-			
+
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"coord")) {
 				Utils.addChat("Vos coordonnées: X:"+Math.round(mc.thePlayer.posX)+" Y:"+Math.round(mc.thePlayer.posY)+" Z:"+Math.round(mc.thePlayer.posZ));
 				Utils.checkXp(xp);

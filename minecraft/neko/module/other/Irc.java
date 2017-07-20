@@ -15,8 +15,7 @@ public class Irc {
 	private String namePlayer;
 	private int lastId=-1;
 	private String pvPlayer;
-	private boolean isIrc=false;
-	private boolean onlyIrc=false;
+	private IrcMode mode=IrcMode.Normal;
 	private boolean hideJl=false;
 	private String lastMsg="";
 		
@@ -70,14 +69,6 @@ public class Irc {
 	public void setLastId(int lastId) {
 		this.lastId = lastId;
 	}	
-	
-	public boolean isIrc() {
-		return isIrc;
-	}
-
-	public void setIrc(boolean isIrc) {
-		this.isIrc = isIrc;
-	}
 
 	public String getPvPlayer() {
 		return pvPlayer;
@@ -95,20 +86,20 @@ public class Irc {
 		this.lastMsg = lastMsg;
 	}
 
-	public boolean isOnlyIrc() {
-		return onlyIrc;
-	}
-
-	public void setOnlyIrc(boolean onlyIrc) {
-		this.onlyIrc = onlyIrc;
-	}	
-
 	public boolean isHideJl() {
 		return hideJl;
 	}
 
 	public void setHideJl(boolean hideJl) {
 		this.hideJl = hideJl;
+	}
+	
+	public IrcMode getMode() {
+		return mode;
+	}
+
+	public void setMode(IrcMode mode) {
+		this.mode = mode;
 	}
 
 	public void addChatIrc(String msg) {

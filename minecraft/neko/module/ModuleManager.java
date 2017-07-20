@@ -160,6 +160,8 @@ public class ModuleManager {
 		// CrazyLove
 		rang.add(new Rank("La tentacule divine", 5000, Rate.CrazyLove, "§9", true, 0));
 		Utils.getRank("La tentacule divine").setDesc("Si gluante et visqueuse, votre amie pour votre vie de pervy ;3");
+		rang.add(new Rank("Développeur Neko", 1500, Rate.CrazyLove, "§5", false, 0));
+		Utils.getRank("Développeur Neko").setDesc("");
 		
 		// Titan
 		rang.add(new Rank("Tryliom", 4000, Rate.Titan, "§4§o", true, 0));
@@ -301,7 +303,7 @@ public class ModuleManager {
 		Utils.getRank("Unel").setRadiusGift(4);
 		rang.add(new Rank("Khanuel", 900, Rate.Satanique, "§c§o", true, 0));
 		Utils.getRank("Khanuel").setDesc("Enfant de Satan, terriblement sadomasochiste, il est dit si on tend l'oreille, on peut l'entre crier dans les donjons...");
-		Utils.getRank("Khanuel").setGiftAme(5);
+		Utils.getRank("Khanuel").setGiftAme(0.5);
 		rang.add(new Rank("Varelle", 920, Rate.Satanique, "§c§o", true, 0));
 		Utils.getRank("Varelle").setDesc("Enfant de Satan, n'a jamais subit de punition avant ce jour terrible...Depuis il reste enfermé dans une pièce sombre...");
 		Utils.getRank("Varelle").setLotUnlock(0.3);

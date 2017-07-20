@@ -28,6 +28,7 @@ import neko.module.modules.KillAura;
 import neko.module.modules.Ping;
 import neko.module.modules.Plugins;
 import neko.module.other.Irc;
+import neko.module.other.IrcMode;
 import neko.module.other.PacketPing;
 import neko.utils.Utils;
 import net.mcleaks.MCLeaks;
@@ -977,7 +978,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     		}        	
         }
         
-        if (Irc.getInstance().isOnlyIrc())
+        if (Irc.getInstance().getMode()==IrcMode.Only)
         	return;
         
         if (packetIn.func_179841_c() == 2)

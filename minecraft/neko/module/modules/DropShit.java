@@ -44,7 +44,7 @@ public class DropShit extends Module {
 		
 	}
 	
-	private void drop() {
+	public void drop() {
 		for (int i = 9; i < 45; i++) {
 			if (mc.thePlayer.inventoryContainer.getSlot(i).getStack() != null) {
 				ItemStack is = mc.thePlayer.inventoryContainer.getSlot(i).getStack();

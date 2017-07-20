@@ -354,11 +354,13 @@ public abstract class Render
 	    	if (Friends.isFriend(entity.getName())) {
 	    		p_147906_2_ = "§a" + entity.getName() + "§f";
 	    	}
-	    	if (Nametag.isOn && Utils.isPlayer(p_147906_1_)) {
-	    		p_147906_2_ = p_147906_2_ + " §9[§c" + Math.round(((EntityLivingBase)entity).getHealth()) +"§9] §d"+Utils.getPlayerPing(entity.getName())+"ms";
-	    	}
-	    	if (Nametag.isOn && var.mode.equalsIgnoreCase("Mob")) {
-	    		p_147906_2_ = p_147906_2_ + " §9[§c" + Math.round(((EntityLivingBase)entity).getHealth()) +"§9]";
+	    	if (entity instanceof EntityLivingBase) {
+		    	if (Nametag.isOn && Utils.isPlayer(p_147906_1_)) {
+		    		p_147906_2_ = p_147906_2_ + " §9[§c" + Math.round(((EntityLivingBase)entity).getHealth()) +"§9] §d"+Utils.getPlayerPing(entity.getName())+"ms";
+		    	}
+		    	if (Nametag.isOn && var.mode.equalsIgnoreCase("Mob")) {
+		    		p_147906_2_ = p_147906_2_ + " §9[§c" + Math.round(((EntityLivingBase)entity).getHealth()) +"§9]";
+		    	}
 	    	}
     	}
     	

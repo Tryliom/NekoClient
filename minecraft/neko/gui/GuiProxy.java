@@ -38,7 +38,7 @@ public class GuiProxy extends GuiScreen {
 	    this.host = new GuiTextField(2, this.fontRendererObj, this.width / 2 - 100, 60, 200, 20);
 	    this.port = new GuiTextField(3, this.fontRendererObj, this.width / 2 - 100, 98, 200, 20);
 	    this.host.setText("Adresse Host");
-	    this.port.setText("Port (Facultatif)");
+	    this.port.setText("Port");
 	  }
 	  
 	  public void drawScreen(int mouseX, int mouseY, float partialTicks)
@@ -71,13 +71,13 @@ public class GuiProxy extends GuiScreen {
 	      break;
 	    case 1: 	    	
 	    	String host = this.host.getText();
-	    	String port = (this.port.getText().equalsIgnoreCase("Port (Facultatif)") ? "80" : this.port.getText());
+	    	String port = (this.port.getText().equalsIgnoreCase("Port") ? "1080" : this.port.getText());
 	    	if (host.isEmpty() || host.equalsIgnoreCase("Adresse Host")) {
 	    		this.error="Veuillez remplir ce champs !";
 	    	} else {
 		    	Properties props = System.getProperties();
-		    	props.setProperty("http.proxyHost", host);
-		    	props.setProperty("http.proxyPort", port.isEmpty() ? "80" : port); // Par défaut 80
+		    	props.setProperty("socksProxyHost", host);
+		    	props.setProperty("socksProxyPort", port.isEmpty() ? "1080" : port); // Par défaut 80
 		    	System.setProperties(props);
 		    	this.mc.displayGuiScreen(this.prevGui);
 	    	}
@@ -106,7 +106,7 @@ public class GuiProxy extends GuiScreen {
 			  this.host.textboxKeyTyped(typedChar, keyCode);
 	      }
 		  if (this.port.isFocused()) {
-			  if (this.port.getText().equalsIgnoreCase("Port (Facultatif)"))
+			  if (this.port.getText().equalsIgnoreCase("Port"))
 				  this.port.setText("");
 			  this.port.textboxKeyTyped(typedChar, keyCode);
 	      }

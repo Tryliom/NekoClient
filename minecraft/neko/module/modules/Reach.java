@@ -21,6 +21,7 @@ import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.client.C02PacketUseEntity.Action;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
+import net.minecraft.network.play.client.C09PacketHeldItemChange;
 import net.minecraft.util.BlockPos;
 
 public class Reach extends Module {
@@ -139,9 +140,7 @@ public class Reach extends Module {
 			} else {
 				sendPacket(a, b, c, face);
 			}
-
 			swap(actual, briquet);
-			
 			mc.getNetHandler().addToSendQueue(new C08PacketPlayerBlockPlacement(new BlockPos(bll.getX()+(face==4 ? -1 : face==5 ? 1 : 0), bll.getY()+(face==1 ? 1 : face==0 ? -1 : 0), bll.getZ()+(face==2 ? -1 : face==3 ? 1 : 0)), face, mc.thePlayer.inventory.getCurrentItem(), bll.getX(), bll.getY()+1, bll.getZ()));
 			swap(actual, tnt);
 			// Tp Retour

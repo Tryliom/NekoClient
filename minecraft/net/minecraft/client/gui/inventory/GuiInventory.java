@@ -1,6 +1,10 @@
 package net.minecraft.client.gui.inventory;
 
 import java.io.IOException;
+
+import neko.module.modules.DropShit;
+import neko.module.other.OnlyRpgManager;
+import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.achievement.GuiAchievements;
@@ -56,6 +60,10 @@ public class GuiInventory extends InventoryEffectRenderer
         {
             super.initGui();
         }
+        if (Utils.verif==null) {
+        	if (!OnlyRpgManager.getRpg().isActive())
+        		this.buttonList.add(new GuiButton(2, this.width / 2, 40, 100, 20, "DropShit"));
+		}
     }
 
     /**
@@ -142,6 +150,10 @@ public class GuiInventory extends InventoryEffectRenderer
         if (button.id == 1)
         {
             this.mc.displayGuiScreen(new GuiStats(this, this.mc.thePlayer.getStatFileWriter()));
+        }
+        if (button.id == 2)
+        {
+            DropShit.getShit().drop();
         }
     }
 }
