@@ -7,13 +7,24 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C03PacketPlayer.C05PacketPlayerLook;
 
 public class NoLook extends Module {
+	private static NoLook instance;
+	private float pitch;
+	private float yaw;
+	
+	public static NoLook getLook() {
+		return instance;
+	}
+	
 	public NoLook() {
 		super("NoLook", -1, Category.Special);
+		instance = this;
 	}
 	
 	public void onEnabled() {		
 		if (u.display)
 		u.addChat("§a§oNoLook activé !");
+		pitch = mc.thePlayer.rotationPitch;
+		yaw = mc.thePlayer.rotationYaw;
 		super.onEnabled();
 	}
 	
@@ -22,17 +33,22 @@ public class NoLook extends Module {
 		u.addChat("§c§oNoLook désactivé !");
 		super.onDisabled();
 	}
-	
-	public void onUpdate() {
-		float yaw = mc.thePlayer.rotationYaw%360+180;
-		float pitch = mc.thePlayer.rotationPitch%360+180;
-		
-		if (yaw>360) {
-			yaw-=360;
-		}
-		if (pitch>360) {
-			pitch-=360;
-		}
-		mc.getNetHandler().addToSendQueue(new C05PacketPlayerLook(pitch, yaw, mc.thePlayer.onGround));
+
+	public float getPitch() {
+		return pitch;
 	}
+
+	public void setPitch(float pitch) {
+		this.pitch = pitch;
+	}
+
+	public float getYaw() {
+		return yaw;
+	}
+
+	public void setYaw(float yaw) {
+		this.yaw = yaw;
+	}
+	
+	
 }

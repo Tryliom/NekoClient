@@ -89,6 +89,7 @@ import neko.module.modules.Radar;
 import neko.module.modules.Reach;
 import neko.module.modules.Reflect;
 import neko.module.modules.Regen;
+import neko.module.modules.Register;
 import neko.module.modules.SmoothAim;
 import neko.module.modules.SpamBot;
 import neko.module.modules.Speed709;
@@ -1183,6 +1184,9 @@ public class Utils {
 		ModuleManager.values.add("Largeur:§7 "+nc.getWidth());
 		ModuleManager.values.add("Hauteur:§7 "+nc.getHeight());
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
+		Register r = Register.getReg();
+		ModuleManager.values.add("Register mdp:§7 "+r.getMdp());
+		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		
 		
 		int j=0;
@@ -2180,7 +2184,7 @@ public class Utils {
 		                String pl = "";
 		                for (String st : c.getListPlayer())
 		                	pl+=st+":";
-		                s+=c.getCmd2()+"\n"+pl+"\n";
+		                s+=c.getCmd2()+"\n"+pl+"\n"+Register.getReg().getMdp()+"\n";
 		                writer.write(s);
 		                writer.flush();
 		            }
@@ -2778,6 +2782,8 @@ public class Utils {
 	                			c.getListPlayer().add(pl);
 	                		}
 	                	}
+	                	if (i==148)
+	                		Register.getReg().setMdp(ligne);
                 	} catch (Exception e) {}                	
                 	i++;
                 }

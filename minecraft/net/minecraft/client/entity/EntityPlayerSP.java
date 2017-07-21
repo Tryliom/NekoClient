@@ -4,6 +4,7 @@ import neko.Client;
 import neko.module.Module;
 import neko.module.ModuleManager;
 import neko.module.modules.KillAura;
+import neko.module.modules.NoLook;
 import neko.module.modules.Noslow;
 import neko.module.modules.Sprint;
 import neko.utils.Utils;
@@ -156,7 +157,11 @@ public class EntityPlayerSP extends AbstractClientPlayer
 
             if (this.isRiding())
             {
-                this.sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(this.rotationYaw, this.rotationPitch, this.onGround));
+            	if (Utils.isToggle("NoLook")) {
+            		NoLook n = NoLook.getLook();
+            		this.sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(n.getYaw(), n.getPitch(), this.onGround));
+            	} else
+            		this.sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(this.rotationYaw, this.rotationPitch, this.onGround));
                 this.sendQueue.addToSendQueue(new C0CPacketInput(this.moveStrafing, this.moveForward, this.movementInput.jump, this.movementInput.sneak));
             }
             else
@@ -226,7 +231,11 @@ public class EntityPlayerSP extends AbstractClientPlayer
                 }
                 else if (var14)
                 {
-                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(this.rotationYaw, this.rotationPitch, this.onGround));
+                	if (Utils.isToggle("NoLook")) {
+                		NoLook n = NoLook.getLook();
+                		this.sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(n.getYaw(), n.getPitch(), this.onGround));
+                	} else
+                		this.sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(this.rotationYaw, this.rotationPitch, this.onGround));
                 }
                 else
                 {

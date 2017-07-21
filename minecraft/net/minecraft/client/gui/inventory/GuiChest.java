@@ -1,6 +1,14 @@
 package net.minecraft.client.gui.inventory;
 
+import java.io.IOException;
+
+import neko.gui.InGameGui;
+import neko.module.modules.Cheststealer;
+import neko.module.other.Irc;
+import neko.module.other.OnlyRpgManager;
+import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.inventory.ContainerChest;
 import net.minecraft.inventory.IInventory;
@@ -27,6 +35,9 @@ public class GuiChest extends GuiContainer
         int var4 = var3 - 108;
         this.inventoryRows = p_i46315_2_.getSizeInventory() / 9;
         this.ySize = var4 + this.inventoryRows * 18;
+        if (Utils.verif==null) {
+			this.buttonList.add(new GuiButton(1, this.width / 2, 64, 100, 20, "Cheststealer"));
+		}
     }
 
     /**
@@ -50,4 +61,21 @@ public class GuiChest extends GuiContainer
         this.drawTexturedModalRect(var4, var5, 0, 0, this.xSize, this.inventoryRows * 18 + 17);
         this.drawTexturedModalRect(var4, var5 + this.inventoryRows * 18 + 17, 0, 126, this.xSize, 96);
     }
+    
+    protected void actionPerformed(GuiButton button) throws IOException {
+	    super.actionPerformed(button);
+	    switch (button.id) {
+	    case 1 : {
+	    	Cheststealer.steal();
+	    	break;
+	    }
+	    }
+    }
 }
+
+
+
+
+
+
+

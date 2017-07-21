@@ -17,6 +17,7 @@ import com.google.common.collect.Lists;
 import neko.Client;
 import neko.dtb.RequestThread;
 import neko.gui.InGameGui;
+import neko.module.modules.Register;
 import neko.module.other.Event;
 import neko.module.other.Irc;
 import neko.module.other.IrcMode;
@@ -30,15 +31,13 @@ import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 
-public class GuiChat extends GuiScreen
-{
+public class GuiChat extends GuiScreen {
 	private static final Logger logger = LogManager.getLogger();
 	private String historyBuffer = "";
 
-
 	/**
-	 * keeps position of which chat message you will select when you press up, (does not increase for duplicated
-	 * messages sent immediately after each other)
+	 * keeps position of which chat message you will select when you press up, (does
+	 * not increase for duplicated messages sent immediately after each other)
 	 */
 	private int sentHistoryCursor = -1;
 	private boolean playerNamesFound;
@@ -50,22 +49,22 @@ public class GuiChat extends GuiScreen
 	protected GuiTextField inputField;
 
 	/**
-	 * is the text that appears when you press the chat key and the input box appears pre-filled
+	 * is the text that appears when you press the chat key and the input box
+	 * appears pre-filled
 	 */
 	private String defaultInputFieldText = "";
 
-	public GuiChat() {}
+	public GuiChat() {
+	}
 
-	public GuiChat(String p_i1024_1_)
-	{
+	public GuiChat(String p_i1024_1_) {
 		this.defaultInputFieldText = p_i1024_1_;
 	}
 
 	/**
 	 * Adds the buttons (and other controls) to the screen in question.
 	 */
-	public void initGui()
-	{
+	public void initGui() {
 		Keyboard.enableRepeatEvents(true);
 		this.sentHistoryCursor = this.mc.ingameGUI.getChatGUI().getSentMessages().size();
 		this.inputField = new GuiTextField(0, this.fontRendererObj, 4, this.height - 12, this.width - 4, 12);
@@ -74,25 +73,26 @@ public class GuiChat extends GuiScreen
 		this.inputField.setFocused(true);
 		this.inputField.setText(this.defaultInputFieldText);
 		this.inputField.setCanLoseFocus(false);
-		if (Utils.verif==null) {
-			int wid=InGameGui.hudWid+15;
+		if (Utils.verif == null) {
+			int wid = InGameGui.hudWid + 15;
 			this.buttonList.add(new GuiButton(1, wid, 64, 100, 20, "Message privé"));
-			this.buttonList.add(new GuiButton(2, wid, 40, 100, 20, (Irc.getInstance().isOn() ? "§a" : "§c")+"IRC"));
-			this.buttonList.add(new GuiButton(3, wid + 110, 40, 100, 20, "Mode "+Irc.getInstance().getMode()));
+			this.buttonList.add(new GuiButton(2, wid, 40, 100, 20, (Irc.getInstance().isOn() ? "§a" : "§c") + "IRC"));
+			this.buttonList.add(new GuiButton(3, wid + 110, 40, 100, 20, "Mode " + Irc.getInstance().getMode()));
 			this.buttonList.add(new GuiButton(4, wid + 110, 64, 100, 20, "Prefix Neko"));
 			this.buttonList.add(new GuiButton(5, wid, 16, 100, 20, "Irc List"));
 			this.buttonList.add(new GuiButton(6, wid + 110, 16, 100, 20, "Help"));
 			this.buttonList.add(new GuiButton(7, wid + 220, 16, 100, 20, "Clear"));
-			if (!OnlyRpgManager.getRpg().isActive())
+			if (!OnlyRpgManager.getRpg().isActive()) {
 				this.buttonList.add(new GuiButton(8, wid + 220, 40, 100, 20, "Log List"));
+				this.buttonList.add(new GuiButton(9, wid + 220, 64, 100, 20, "Register"));
+			}
 		}
 	}
 
 	/**
 	 * Called when the screen is unloaded. Used to disable keyboard repeat events
 	 */
-	public void onGuiClosed()
-	{
+	public void onGuiClosed() {
 		Keyboard.enableRepeatEvents(false);
 		this.mc.ingameGUI.getChatGUI().resetScroll();
 	}
@@ -100,91 +100,67 @@ public class GuiChat extends GuiScreen
 	/**
 	 * Called from the main game loop to update the screen.
 	 */
-	public void updateScreen()
-	{
+	public void updateScreen() {
 		this.inputField.updateCursorCounter();
 	}
 
 	/**
-	 * Fired when a key is typed (except F11 who toggle full screen). This is the equivalent of
-	 * KeyListener.keyTyped(KeyEvent e). Args : character (character on the key), keyCode (lwjgl Keyboard key code)
+	 * Fired when a key is typed (except F11 who toggle full screen). This is the
+	 * equivalent of KeyListener.keyTyped(KeyEvent e). Args : character (character
+	 * on the key), keyCode (lwjgl Keyboard key code)
 	 */
-	protected void keyTyped(char typedChar, int keyCode) throws IOException
-	{
+	protected void keyTyped(char typedChar, int keyCode) throws IOException {
 		this.waitingOnAutocomplete = false;
 
-		if (keyCode == 15)
-		{
+		if (keyCode == 15) {
 			this.autocompletePlayerNames();
-		}
-		else
-		{
+		} else {
 			this.playerNamesFound = false;
 		}
 
-		if (keyCode == 1)
-		{
-			this.mc.displayGuiScreen((GuiScreen)null);
-		}
-		else if (keyCode != 28 && keyCode != 156)
-		{
-			if (keyCode == 200)
-			{
+		if (keyCode == 1) {
+			this.mc.displayGuiScreen((GuiScreen) null);
+		} else if (keyCode != 28 && keyCode != 156) {
+			if (keyCode == 200) {
 				this.getSentHistory(-1);
-			}
-			else if (keyCode == 208)
-			{
+			} else if (keyCode == 208) {
 				this.getSentHistory(1);
-			}
-			else if (keyCode == 201)
-			{
+			} else if (keyCode == 201) {
 				this.mc.ingameGUI.getChatGUI().scroll(this.mc.ingameGUI.getChatGUI().getLineCount() - 1);
-			}
-			else if (keyCode == 209)
-			{
+			} else if (keyCode == 209) {
 				this.mc.ingameGUI.getChatGUI().scroll(-this.mc.ingameGUI.getChatGUI().getLineCount() + 1);
-			}
-			else
-			{
+			} else {
 				this.inputField.textboxKeyTyped(typedChar, keyCode);
 			}
-		}
-		else
-		{
-			//TODO: Commandes
+		} else {
+			// TODO: Commandes
 			String var3 = this.inputField.getText().trim();
 
 			if (var3.length() > 0) {
 				ChatUtils c = new ChatUtils();
 				c.doCommand(var3);
 			} else
-				this.mc.displayGuiScreen((GuiScreen)null);
+				this.mc.displayGuiScreen((GuiScreen) null);
 		}
 	}
-	
 
 	/**
 	 * Handles mouse input.
 	 */
-	public void handleMouseInput() throws IOException
-	{
+	public void handleMouseInput() throws IOException {
 		super.handleMouseInput();
 		int var1 = Mouse.getEventDWheel();
 
-		if (var1 != 0)
-		{
-			if (var1 > 1)
-			{
+		if (var1 != 0) {
+			if (var1 > 1) {
 				var1 = 1;
 			}
 
-			if (var1 < -1)
-			{
+			if (var1 < -1) {
 				var1 = -1;
 			}
 
-			if (!isShiftKeyDown())
-			{
+			if (!isShiftKeyDown()) {
 				var1 *= 7;
 			}
 
@@ -195,14 +171,11 @@ public class GuiChat extends GuiScreen
 	/**
 	 * Called when the mouse is clicked. Args : mouseX, mouseY, clickedButton
 	 */
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
-	{
-		if (mouseButton == 0)
-		{
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+		if (mouseButton == 0) {
 			IChatComponent var4 = this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
 
-			if (this.func_175276_a(var4))
-			{
+			if (this.func_175276_a(var4)) {
 				return;
 			}
 		}
@@ -210,121 +183,126 @@ public class GuiChat extends GuiScreen
 		this.inputField.mouseClicked(mouseX, mouseY, mouseButton);
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
-	
+
 	protected void actionPerformed(GuiButton button) throws IOException {
-	    super.actionPerformed(button);
-	    switch (button.id) {
-	    case 1 : {
-	    	mc.displayGuiScreen(new GuiChat(((Irc.getInstance().getMode()==IrcMode.Normal ? Irc.getInstance().getPrefix() : "")+"//w "+this.inputField.getText())));
-	    	break;
-	    }
-	    case 2 : {
-	    	Irc irc = Irc.getInstance();
-	    	if (irc.isOn()) {
+		super.actionPerformed(button);
+		switch (button.id) {
+		case 1: {
+			mc.displayGuiScreen(
+					new GuiChat(((Irc.getInstance().getMode() == IrcMode.Normal ? Irc.getInstance().getPrefix() : "")
+							+ "//w " + this.inputField.getText())));
+			break;
+		}
+		case 2: {
+			Irc irc = Irc.getInstance();
+			if (irc.isOn()) {
 				Utils.addChat("§cIrc désactivé");
 				new RequestThread("insertmsgleft", null).start();
-				irc.setLastId(-1);					
+				irc.setLastId(-1);
 			} else {
 				Utils.addChat("§aIrc activé");
 				new RequestThread("insertmsgjoin", null).start();
-				Event.lastEventId=-1;
+				Event.lastEventId = -1;
 			}
 			irc.setOn(!irc.isOn());
 			mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
-	    	break;
-	    }
-	    case 3 : {
-	    	Irc irc = Irc.getInstance();
-	    	IrcMode m = irc.getMode();
-	    	if (m == IrcMode.Hybride) {
-	    		irc.setMode(IrcMode.Normal);	    		
-	    	}
-	    	if (m == IrcMode.Normal) {
-	    		irc.setMode(IrcMode.Only);	    		
-	    	}
-	    	if (m == IrcMode.Only) {
-	    		irc.setMode(IrcMode.Hybride);	    		
-	    	}
-	    	mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
-	    	break;
-	    }
-	    case 4 : {
-	    	mc.displayGuiScreen(new GuiChat(Client.getNeko().prefixCmd+" "+this.inputField.getText()));
-	    	break;
-	    }
-	    case 5 : {
-	    	new RequestThread("displaylist", null).start();
-	    	mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
-	    	break;
-	    }
-	    case 6 : {
-	    	Utils.displayHelp(1);			
-	    	int xp = Utils.getRandInt(100);
+			break;
+		}
+		case 3: {
+			Irc irc = Irc.getInstance();
+			IrcMode m = irc.getMode();
+			if (m == IrcMode.Hybride) {
+				irc.setMode(IrcMode.Normal);
+			}
+			if (m == IrcMode.Normal) {
+				irc.setMode(IrcMode.Only);
+			}
+			if (m == IrcMode.Only) {
+				irc.setMode(IrcMode.Hybride);
+			}
+			mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
+			break;
+		}
+		case 4: {
+			mc.displayGuiScreen(new GuiChat(Client.getNeko().prefixCmd + " " + this.inputField.getText()));
+			break;
+		}
+		case 5: {
+			new RequestThread("displaylist", null).start();
+			mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
+			break;
+		}
+		case 6: {
+			Utils.displayHelp(1);
+			int xp = Utils.getRandInt(100);
 			Utils.checkXp(xp);
-			int rand = (int) Math.round(Math.random()*1000);
+			int rand = (int) Math.round(Math.random() * 1000);
 			if (!Client.getNeko().achievementHelp) {
-				Client.getNeko().achievementHelp=true;
-				Utils.addChat("§dAchievement Help get !§b +"+rand+"xp !");								
+				Client.getNeko().achievementHelp = true;
+				Utils.addChat("§dAchievement Help get !§b +" + rand + "xp !");
 				Utils.checkXp(rand);
 			}
 
-	    	mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
-	    	break;
-	    }
-	    case 7 : {
-	    	mc.ingameGUI.getChatGUI().clearChatMessages();
-	    	mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
-	    	break;
-	    }
-	    case 8 : {
-	    	Utils.displayAccount();
-	    	mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
-	    	break;
-	    }
-	    }
+			mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
+			break;
+		}
+		case 7: {
+			mc.ingameGUI.getChatGUI().clearChatMessages();
+			mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
+			break;
+		}
+		case 8: {
+			Utils.displayAccount();
+			mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
+			break;
+		}
+		case 9: {
+			// Active une fois le Register
+			Register.getReg().toggleModule();
+			mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
+			break;
+		}
+		}
 	}
 
-	protected void func_175274_a(String p_175274_1_, boolean p_175274_2_)
-	{
-		if (p_175274_2_)
-		{
-			this.inputField.setText(p_175274_1_.startsWith("<>".equalsIgnoreCase(Client.getNeko().prefixCmd) ? "><" : "<>") ? p_175274_1_.replaceFirst("..", "") : p_175274_1_);
-		}
-		else
-		{
+	protected void func_175274_a(String p_175274_1_, boolean p_175274_2_) {
+		if (p_175274_2_) {
+			this.inputField
+					.setText(p_175274_1_.startsWith("<>".equalsIgnoreCase(Client.getNeko().prefixCmd) ? "><" : "<>")
+							? p_175274_1_.replaceFirst("..", "")
+							: p_175274_1_);
+		} else {
 			this.inputField.writeText(p_175274_1_);
 		}
 		if (p_175274_1_.startsWith(Client.getNeko().prefixCmd) && p_175274_2_) {
 			new Thread(new Runnable() {
 				public void run() {
 					try {
-						new Robot().keyPress(KeyEvent.VK_ENTER);	
-						new Robot().keyRelease(KeyEvent.VK_ENTER);	
+						new Robot().keyPress(KeyEvent.VK_ENTER);
+						new Robot().keyRelease(KeyEvent.VK_ENTER);
 						Thread.sleep(50);
 						new Robot().keyPress(KeyEvent.VK_T);
 						new Robot().keyRelease(KeyEvent.VK_T);
-					} catch (Exception e) {}
+					} catch (Exception e) {
+					}
 				}
 			}).start();
-			
+
 		}
 	}
 
-	public void autocompletePlayerNames()
-	{
+	public void autocompletePlayerNames() {
 		String var3;
 
-		if (this.playerNamesFound)
-		{
-			this.inputField.deleteFromCursor(this.inputField.func_146197_a(-1, this.inputField.getCursorPosition(), false) - this.inputField.getCursorPosition());
+		if (this.playerNamesFound) {
+			this.inputField
+					.deleteFromCursor(this.inputField.func_146197_a(-1, this.inputField.getCursorPosition(), false)
+							- this.inputField.getCursorPosition());
 
-			if (this.autocompleteIndex >= this.foundPlayerNames.size())
-			{
+			if (this.autocompleteIndex >= this.foundPlayerNames.size()) {
 				this.autocompleteIndex = 0;
 			}
-		}
-		else
-		{
+		} else {
 			int var1 = this.inputField.func_146197_a(-1, this.inputField.getCursorPosition(), false);
 			this.foundPlayerNames.clear();
 			this.autocompleteIndex = 0;
@@ -332,44 +310,38 @@ public class GuiChat extends GuiScreen
 			var3 = this.inputField.getText().substring(0, this.inputField.getCursorPosition());
 			this.sendAutocompleteRequest(var3, var2);
 
-			if (this.foundPlayerNames.isEmpty())
-			{
+			if (this.foundPlayerNames.isEmpty()) {
 				return;
 			}
 
 			this.playerNamesFound = true;
 			this.inputField.deleteFromCursor(var1 - this.inputField.getCursorPosition());
 		}
-		
-		
-		if (this.foundPlayerNames.size() > 1)
-		{			
-			
+
+		if (this.foundPlayerNames.size() > 1) {
+
 			StringBuilder var4 = new StringBuilder();
 
-			for (Iterator var5 = this.foundPlayerNames.iterator(); var5.hasNext(); var4.append(var3))
-			{
-				var3 = (String)var5.next();
-				if (var4.length() > 0)
-				{
+			for (Iterator var5 = this.foundPlayerNames.iterator(); var5.hasNext(); var4.append(var3)) {
+				var3 = (String) var5.next();
+				if (var4.length() > 0) {
 					var4.append(", ");
 				}
 			}
 
-			this.mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(new ChatComponentText(var4.toString()), 1);
+			this.mc.ingameGUI.getChatGUI().printChatMessageWithOptionalDeletion(new ChatComponentText(var4.toString()),
+					1);
 		}
 
-		this.inputField.writeText((String)this.foundPlayerNames.get(this.autocompleteIndex++));
+		this.inputField.writeText((String) this.foundPlayerNames.get(this.autocompleteIndex++));
 	}
 
-	private void sendAutocompleteRequest(String p_146405_1_, String p_146405_2_)
-	{
-		if (p_146405_1_.length() >= 1)
-		{
+	private void sendAutocompleteRequest(String p_146405_1_, String p_146405_2_) {
+		if (p_146405_1_.length() >= 1) {
 			BlockPos var3 = null;
 
-			if (this.mc.objectMouseOver != null && this.mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
-			{
+			if (this.mc.objectMouseOver != null
+					&& this.mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK) {
 				var3 = this.mc.objectMouseOver.func_178782_a();
 			}
 
@@ -379,81 +351,70 @@ public class GuiChat extends GuiScreen
 	}
 
 	/**
-	 * input is relative and is applied directly to the sentHistoryCursor so -1 is the previous message, 1 is the next
-	 * message from the current cursor position
+	 * input is relative and is applied directly to the sentHistoryCursor so -1 is
+	 * the previous message, 1 is the next message from the current cursor position
 	 */
-	public void getSentHistory(int p_146402_1_)
-	{
+	public void getSentHistory(int p_146402_1_) {
 		int var2 = this.sentHistoryCursor + p_146402_1_;
 		int var3 = this.mc.ingameGUI.getChatGUI().getSentMessages().size();
 		var2 = MathHelper.clamp_int(var2, 0, var3);
 
-		if (var2 != this.sentHistoryCursor)
-		{
-			if (var2 == var3)
-			{
+		if (var2 != this.sentHistoryCursor) {
+			if (var2 == var3) {
 				this.sentHistoryCursor = var3;
 				this.inputField.setText(this.historyBuffer);
-			}
-			else
-			{
-				if (this.sentHistoryCursor == var3)
-				{
+			} else {
+				if (this.sentHistoryCursor == var3) {
 					this.historyBuffer = this.inputField.getText();
 				}
 
-				this.inputField.setText((String)this.mc.ingameGUI.getChatGUI().getSentMessages().get(var2));
+				this.inputField.setText((String) this.mc.ingameGUI.getChatGUI().getSentMessages().get(var2));
 				this.sentHistoryCursor = var2;
 			}
 		}
 	}
 
 	/**
-	 * Draws the screen and all the components in it. Args : mouseX, mouseY, renderPartialTicks
+	 * Draws the screen and all the components in it. Args : mouseX, mouseY,
+	 * renderPartialTicks
 	 */
-	public void drawScreen(int mouseX, int mouseY, float partialTicks)
-	{
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		drawRect(2, this.height - 14, this.width - 2, this.height - 2, Integer.MIN_VALUE);
 		this.inputField.drawTextBox();
 		IChatComponent var4 = this.mc.ingameGUI.getChatGUI().getChatComponent(Mouse.getX(), Mouse.getY());
 
-		if (var4 != null && var4.getChatStyle().getChatHoverEvent() != null)
-		{
+		if (var4 != null && var4.getChatStyle().getChatHoverEvent() != null) {
 			this.func_175272_a(var4, mouseX, mouseY);
 		}
 
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 
-	public void onAutocompleteResponse(String[] p_146406_1_)
-	{
-		if (this.waitingOnAutocomplete)
-		{
+	public void onAutocompleteResponse(String[] p_146406_1_) {
+		if (this.waitingOnAutocomplete) {
 			this.playerNamesFound = false;
 			this.foundPlayerNames.clear();
 			String[] var2 = p_146406_1_;
 			int var3 = p_146406_1_.length;
 
-			for (int var4 = 0; var4 < var3; ++var4)
-			{
+			for (int var4 = 0; var4 < var3; ++var4) {
 				String var5 = var2[var4];
 
-				if (var5.length() > 0)
-				{
+				if (var5.length() > 0) {
 					this.foundPlayerNames.add(var5);
 				}
 			}
 
-			String var6 = this.inputField.getText().substring(this.inputField.func_146197_a(-1, this.inputField.getCursorPosition(), false));
+			String var6 = this.inputField.getText()
+					.substring(this.inputField.func_146197_a(-1, this.inputField.getCursorPosition(), false));
 			String var7 = StringUtils.getCommonPrefix(p_146406_1_);
 
-			if (var7.length() > 0 && !var6.equalsIgnoreCase(var7))
-			{
-				this.inputField.deleteFromCursor(this.inputField.func_146197_a(-1, this.inputField.getCursorPosition(), false) - this.inputField.getCursorPosition());
+			if (var7.length() > 0 && !var6.equalsIgnoreCase(var7)) {
+				this.inputField
+						.deleteFromCursor(this.inputField.func_146197_a(-1, this.inputField.getCursorPosition(), false)
+								- this.inputField.getCursorPosition());
 				this.inputField.writeText(var7);
-			}
-			else if (this.foundPlayerNames.size() > 0)
-			{
+			} else if (this.foundPlayerNames.size() > 0) {
 				this.playerNamesFound = true;
 				this.autocompletePlayerNames();
 			}
@@ -461,10 +422,10 @@ public class GuiChat extends GuiScreen
 	}
 
 	/**
-	 * Returns true if this GUI should pause the game when it is displayed in single-player
+	 * Returns true if this GUI should pause the game when it is displayed in
+	 * single-player
 	 */
-	public boolean doesGuiPauseGame()
-	{
+	public boolean doesGuiPauseGame() {
 		return false;
 	}
 }

@@ -64,6 +64,7 @@ import neko.module.modules.Radar;
 import neko.module.modules.Reach;
 import neko.module.modules.Reflect;
 import neko.module.modules.Regen;
+import neko.module.modules.Register;
 import neko.module.modules.SmoothAim;
 import neko.module.modules.SpamBot;
 import neko.module.modules.Speed709;
@@ -731,6 +732,11 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"ItemESP width <Double>", var.prefixCmd+"itemesp width ", "§7Change l'épaisseur de ligne", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("register") || args[1].equalsIgnoreCase("reg")) {
+					Utils.addChat("========================================");
+					Utils.addChat2("§6"+var.prefixCmd+"Register mdp <Mot de passe>", var.prefixCmd+"register mdp ", "§7Change le mot de passe par défaut", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("enchant")) {
 					Utils.addChat("========================================");
 					Utils.addChat2("§6"+var.prefixCmd+"Enchant", var.prefixCmd+"enchant", "§7Enchante l'item avec tous les enchantements disponible au niveau 127", false, Chat.Summon);
@@ -943,6 +949,21 @@ public class ChatUtils {
 							}
 						}
 						Utils.addChat("Commande: §7"+c.getCmd2());
+					}
+				} catch (Exception e) {
+					Utils.addChat(err);
+				}
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"register") || args[0].equalsIgnoreCase(var.prefixCmd+"reg")) {
+				try {
+					Register r = Register.getReg();
+					if (args.length==1) {
+						Utils.addChat(err);
+					} else if (args[1].equalsIgnoreCase("mdp")) {
+						r.setMdp(args[2]);
+						Utils.addChat("§aMot de passe par défaut changé !");
 					}
 				} catch (Exception e) {
 					Utils.addChat(err);

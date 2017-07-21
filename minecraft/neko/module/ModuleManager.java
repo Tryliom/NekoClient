@@ -121,6 +121,7 @@ public class ModuleManager {
 		this.ActiveModule.add(new Highjump()); // Key NONE
 		this.ActiveModule.add(new NoAnim()); // Key NONE
 		this.ActiveModule.add(new CallCmd()); // Key NONE
+		this.ActiveModule.add(new Register()); // Key NONE
 		
 		
 		// Ajouter les locks | -- = ..;
