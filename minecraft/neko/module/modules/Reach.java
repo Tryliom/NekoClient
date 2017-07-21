@@ -5,6 +5,7 @@ import neko.module.Category;
 import neko.module.Module;
 import neko.module.other.Form;
 import neko.utils.TpUtils;
+import neko.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -15,13 +16,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemBucket;
+import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.client.C02PacketUseEntity.Action;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
-import net.minecraft.network.play.client.C09PacketHeldItemChange;
 import net.minecraft.util.BlockPos;
 
 public class Reach extends Module {
@@ -156,22 +157,28 @@ public class Reach extends Module {
 			} catch (Exception e) {}
 			
 			BlockPos bll = mc.objectMouseOver.func_178782_a();
-			
-			if (bll==null || mc.thePlayer.getDistance(bll.getX(), bll.getY(), bll.getZ())<5 || mc.theWorld.getBlockState(new BlockPos(bll.getX(), bll.getY()+2, bll.getZ())).getBlock().getMaterial() != Material.air || mc.theWorld.getBlockState(new BlockPos(bll.getX(), bll.getY()+3, bll.getZ())).getBlock().getMaterial() != Material.air || mc.theWorld.getBlockState(bll).getBlock().getMaterial() == Material.air || mc.thePlayer.getCurrentEquippedItem()==null || (u.isToggle("Pyro") && hasFire()))
-				return;					
-			
+			boolean pot = (bll==null || mc.pointedEntity==null) && mc.thePlayer.getCurrentEquippedItem()!=null && mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemPotion;
+			try {
+				if (mc.pointedEntity!=null && pot) {
+					bll=new BlockPos(mc.pointedEntity);
+				}
+			} catch (Exception e) {}
+			if (!pot)
+				if (bll==null || mc.thePlayer.getDistance(bll.getX(), bll.getY(), bll.getZ())<5 || (mc.theWorld.getBlockState(new BlockPos(bll.getX(), bll.getY()+2, bll.getZ())).getBlock().getMaterial() != Material.air || mc.theWorld.getBlockState(new BlockPos(bll.getX(), bll.getY()+3, bll.getZ())).getBlock().getMaterial() != Material.air || mc.theWorld.getBlockState(bll).getBlock().getMaterial() == Material.air) || mc.thePlayer.getCurrentEquippedItem()==null || (u.isToggle("Pyro") && hasFire()))
+					return;
 			// Transformer le bloc en entité
 			EntityWitch en1 = new EntityWitch(mc.theWorld);
 			en1.setPosition(bll.getX(), bll.getY()+2, bll.getZ());
 			
 			String retour = doTpAller(en1);
 			try {				
-				if (mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBucket) {
+				if (mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBucket || pot) {
 					mc.getNetHandler().addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(mc.thePlayer.rotationYaw, 95.0F, mc.thePlayer.onGround));	
 			        Minecraft.thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(Minecraft.thePlayer.inventory.getCurrentItem()));
 				}
 			} catch (Exception e) {}
-			mc.getNetHandler().addToSendQueue(new C08PacketPlayerBlockPlacement(new BlockPos(bll.getX(), bll.getY(), bll.getZ()), mc.objectMouseOver.field_178784_b.getIndex(), mc.thePlayer.inventory.getCurrentItem(), bll.getX(), bll.getY(), bll.getZ()));
+			if (mc.pointedEntity==null)
+				mc.getNetHandler().addToSendQueue(new C08PacketPlayerBlockPlacement(new BlockPos(bll.getX(), bll.getY(), bll.getZ()), mc.objectMouseOver.field_178784_b.getIndex(), mc.thePlayer.inventory.getCurrentItem(), bll.getX(), bll.getY(), bll.getZ()));
 			doTpRetour(retour);
 			mc.thePlayer.setPosition(lastX, lastY+0.001*Math.random(), lastZ);
 		}

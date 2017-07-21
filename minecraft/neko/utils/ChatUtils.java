@@ -33,6 +33,7 @@ import neko.module.modules.AutoPot;
 import neko.module.modules.Autoarmor;
 import neko.module.modules.Autosoup;
 import neko.module.modules.Build;
+import neko.module.modules.CallCmd;
 import neko.module.modules.Cheststealer;
 import neko.module.modules.ClickAim;
 import neko.module.modules.Dolphin;
@@ -603,6 +604,14 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Trigger random", var.prefixCmd+"trigger random", "§7Active ou non les cps aléatoire pour le Trigger", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("callcmd")) {
+					Utils.addChat("========================================");
+					Utils.addChat2("§6"+var.prefixCmd+"CallCmd player <Player>", var.prefixCmd+"callcmd player ", "§7Ajoute un joueur à la liste", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"CallCmd cmd <Cmd>", var.prefixCmd+"callcmd cmd ", "§7Change la commande faite si un joueur est détecté", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"CallCmd list", var.prefixCmd+"callcmd list", "§7Affiche la liste des joueurs et la commande faite", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"CallCmd clear", var.prefixCmd+"callcmd clear", "§7Clear la liste des joueurs", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("nekochat") || args[1].equalsIgnoreCase("chat")) {
 					Utils.addChat("========================================");
 					Utils.addChat2("§6"+var.prefixCmd+"Chat color <R> <G> <B> <Alpha optionel>", var.prefixCmd+"chat color ", "§7Change la couleur du chat en fond", false, Chat.Summon);
@@ -905,6 +914,42 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"callcmd")) {
+				try {
+					CallCmd c = CallCmd.getCall();
+					if (args.length==1) {
+						Utils.addChat(err);
+					} else if (args[1].equalsIgnoreCase("player")) {
+						if (!c.getListPlayer().contains(args[2])) {
+							c.getListPlayer().add(args[2]);
+							Utils.addChat("§aJoueur "+args[2]+" ajouté à la blacklist !");
+						} else {
+							c.getListPlayer().removeElement(args[2]);
+							Utils.addChat("§cLe joueur "+args[2]+" a été supprimé de la blacklist !");
+						}
+					} else if (args[1].equalsIgnoreCase("cmd")) {
+						c.setCmd2(args[2]);
+						Utils.addChat("§aCommande mise à jour");
+					} else if (args[1].equalsIgnoreCase("clear")) {
+						c.getListPlayer().clear();
+						Utils.addChat("§aListe des joueurs clear");
+					} else if (args[1].equalsIgnoreCase("list")) {
+						if (c.getListPlayer().size()==0) {
+							Utils.addChat("Pas de joueurs blacklistés");
+						} else {
+							Utils.addChat("Liste des joueurs blacklistés");						
+							for (String s : c.getListPlayer()) {
+								Utils.addChat("§7- "+s);
+							}
+						}
+						Utils.addChat("Commande: §7"+c.getCmd2());
+					}
+				} catch (Exception e) {
+					Utils.addChat(err);
+				}
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"give")) {
 				if (args.length==1) {
 					Utils.addChat(err);
@@ -1063,7 +1108,7 @@ public class ChatUtils {
 					Utils.addChat2("§6Play.rinaorc.com", var.prefixCmd+"co play.rinaorc.com", "§7Anti-cheat minime, agréable à y jouer sur le Warfare", false, Chat.Summon);
 					Utils.addChat2("§6Play.thamos.fr", var.prefixCmd+"co play.thamos.fr", "§7Serveur ouvert au crack. Anti-cheat qui ne fais que kick, minime", false, Chat.Summon);
 					Utils.addChat2("§6Play.groupezk.com", var.prefixCmd+"co play.groupezk.com", "§7Très agréable pour y jouer, juste éviter d'envoyer trop de paquets", false, Chat.Summon);
-					Utils.addChat2("§6Titaniumcraft-mc.fr", var.prefixCmd+"co titaniumcraft-mc.fr", "§7PvP Faction sans anti-cheat", false, Chat.Summon);
+					Utils.addChat2("§6Brwserv.net", var.prefixCmd+"co brwserv.net", "§7Serveur FFA sans AC mais kick pour paquet et modo actifs", false, Chat.Summon);
 					Utils.addChat2("§6mc.g-community.com", var.prefixCmd+"co mc.g-community.com", "§7La reach pvp est idéal dessus, pas d'AC", false, Chat.Summon);
 					Utils.addChat2("§6Play.hazonia.fr", var.prefixCmd+"co play.hazonia.fr", "§7Rush sans aucun AC, sauf modo actifs", false, Chat.Summon);
 					Utils.addChat2("§6Play.golemamc.net", var.prefixCmd+"co play.golemamc.net", "§7Anti-cheat mauvais en détection. Attention en legit vous vous faîtes aussi bien kick/ban", false, Chat.Summon);

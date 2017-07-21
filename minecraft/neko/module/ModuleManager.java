@@ -119,6 +119,8 @@ public class ModuleManager {
 		this.ActiveModule.add(new NekoChat()); // Key NONE
 		this.ActiveModule.add(new Premonition()); // Key NONE
 		this.ActiveModule.add(new Highjump()); // Key NONE
+		this.ActiveModule.add(new NoAnim()); // Key NONE
+		this.ActiveModule.add(new CallCmd()); // Key NONE
 		
 		
 		// Ajouter les locks | -- = ..;

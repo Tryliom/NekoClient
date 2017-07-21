@@ -124,6 +124,7 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 import net.minecraft.network.play.client.C09PacketHeldItemChange;
+import net.minecraft.network.play.client.C0APacketAnimation;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 import net.minecraft.network.play.client.C14PacketTabComplete;
@@ -846,15 +847,15 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     	Minecraft mc = Minecraft.getMinecraft();
     	Client var = Client.getNeko();
     	//TODO: Freecam & Blink & Unicode	
-	    	if (p_147297_1_ instanceof C14PacketTabComplete) {
-	    		if (((C14PacketTabComplete) p_147297_1_).getMessage().startsWith(var.prefixCmd)) {
-	    			String s[] = ((C14PacketTabComplete) p_147297_1_).getMessage().split(" ");
-	    			if (((C14PacketTabComplete) p_147297_1_).getMessage().endsWith(" "))
-	    				p_147297_1_ = new C14PacketTabComplete(s[s.length-1]+" ");
-	    			else
-	    				p_147297_1_ = new C14PacketTabComplete(s[s.length-1]);
-	    		}
-	    	}
+    	if (p_147297_1_ instanceof C14PacketTabComplete) {
+    		if (((C14PacketTabComplete) p_147297_1_).getMessage().startsWith(var.prefixCmd)) {
+    			String s[] = ((C14PacketTabComplete) p_147297_1_).getMessage().split(" ");
+    			if (((C14PacketTabComplete) p_147297_1_).getMessage().endsWith(" "))
+    				p_147297_1_ = new C14PacketTabComplete(s[s.length-1]+" ");
+    			else
+    				p_147297_1_ = new C14PacketTabComplete(s[s.length-1]);
+    		}
+    	}
     	
     	if (Utils.isToggle("Unicode") && p_147297_1_ instanceof C01PacketChatMessage) {
     		C01PacketChatMessage msg = (C01PacketChatMessage) p_147297_1_;
@@ -890,6 +891,10 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     	if ((p_147297_1_ instanceof C00PacketKeepAlive) && Ping.isOn) {
     		if (!Ping.getPing().isFreezer())
     			Utils.onFakePing(((C00PacketKeepAlive) p_147297_1_).getKey(), (Ping.getPing().isRandom() ? Ping.getPing().getDelay()+Utils.getRandInt(Utils.getRandInt(Ping.getPing().getDelay())-Ping.getPing().getDelay()/2) : Ping.getPing().getDelay()));    		
+    		return;
+    	}
+    	
+    	if ((p_147297_1_ instanceof C0APacketAnimation) && Utils.isToggle("NoAnim")) {
     		return;
     	}
     	

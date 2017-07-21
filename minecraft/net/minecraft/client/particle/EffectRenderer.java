@@ -167,13 +167,15 @@ public class EffectRenderer
 
         while (var2.hasNext())
         {
-            EntityParticleEmitter var3 = (EntityParticleEmitter)var2.next();
-            var3.onUpdate();
-
-            if (var3.isDead)
-            {
-                var41.add(var3);
-            }
+            try {
+	        	EntityParticleEmitter var3 = (EntityParticleEmitter)var2.next();
+	            var3.onUpdate();
+	
+	            if (var3.isDead)
+	            {
+	                var41.add(var3);
+	            }
+            } catch (Exception e) {}
         }
 
         this.field_178933_d.removeAll(var41);

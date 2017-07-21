@@ -57,6 +57,7 @@ import neko.module.modules.AutoPot;
 import neko.module.modules.Autoarmor;
 import neko.module.modules.Autosoup;
 import neko.module.modules.Build;
+import neko.module.modules.CallCmd;
 import neko.module.modules.Cheststealer;
 import neko.module.modules.ClickAim;
 import neko.module.modules.Dolphin;
@@ -2175,6 +2176,11 @@ public class Utils {
 		                NekoChat nc = NekoChat.getChat();
 		                s+=p.getDelay()+"\n"+p.isFreezer()+"\n"+p.isRandom()+"\n"+KillAura.nobot+"\n"+SpamBot.getBot().getPseudo()+"\n"+var.animation+"\n";
 		                s+=KillAura.premium+"\n"+GuiAltManager.check+"\n"+var.onlyrpg.isActive()+"\n"+nc.getColor()+"\n"+nc.getHeight()+"\n"+nc.getWidth()+"\n";
+		                CallCmd c = CallCmd.getCall();
+		                String pl = "";
+		                for (String st : c.getListPlayer())
+		                	pl+=st+":";
+		                s+=c.getCmd2()+"\n"+pl+"\n";
 		                writer.write(s);
 		                writer.flush();
 		            }
@@ -2763,6 +2769,15 @@ public class Utils {
 	                		nc.setHeight(Float.parseFloat(ligne));
 	                	if (i==145)
 	                		nc.setWidth(Float.parseFloat(ligne));
+	                	CallCmd c = CallCmd.getCall();
+	                	if (i==146)
+	                		c.setCmd2(ligne);
+	                	if (i==147) {
+	                		String s[] = ligne.split(":");
+	                		for (String pl : s) {
+	                			c.getListPlayer().add(pl);
+	                		}
+	                	}
                 	} catch (Exception e) {}                	
                 	i++;
                 }
