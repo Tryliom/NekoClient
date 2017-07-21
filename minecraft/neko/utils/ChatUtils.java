@@ -1,11 +1,17 @@
 package neko.utils;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
+import java.net.Proxy;
+import java.net.ProxySelector;
+import java.net.SocketAddress;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 import java.util.UUID;
@@ -331,6 +337,7 @@ public class ChatUtils {
 					Utils.addChat("§cErreur, syntaxe correcte: "+Utils.setColor(var.prefixCmd+"proxy <HostIP> <Port>", "§c"));
 				} else if (args[1].equalsIgnoreCase("reset")) {
 					Properties props = System.getProperties();
+					props.setProperty("proxySet", "false" );
 			    	props.setProperty("socksProxyHost", "");
 			    	props.setProperty("socksProxyPort", "");
 			    	System.setProperties(props);
@@ -342,6 +349,7 @@ public class ChatUtils {
 						port = args[2];
 					}
 					Properties props = System.getProperties();
+					props.setProperty("proxySet", "true" );
 			    	props.setProperty("socksProxyHost", host);
 			    	props.setProperty("socksProxyPort", port);
 			    	System.setProperties(props);
@@ -969,7 +977,7 @@ public class ChatUtils {
 					Utils.addChat(err);
 				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
+			} 	
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"give")) {
 				if (args.length==1) {
@@ -1130,7 +1138,7 @@ public class ChatUtils {
 					Utils.addChat2("§6Play.thamos.fr", var.prefixCmd+"co play.thamos.fr", "§7Serveur ouvert au crack. Anti-cheat qui ne fais que kick, minime", false, Chat.Summon);
 					Utils.addChat2("§6Play.groupezk.com", var.prefixCmd+"co play.groupezk.com", "§7Très agréable pour y jouer, juste éviter d'envoyer trop de paquets", false, Chat.Summon);
 					Utils.addChat2("§6Brwserv.net", var.prefixCmd+"co brwserv.net", "§7Serveur FFA sans AC mais kick pour paquet et modo actifs", false, Chat.Summon);
-					Utils.addChat2("§6mc.g-community.com", var.prefixCmd+"co mc.g-community.com", "§7La reach pvp est idéal dessus, pas d'AC", false, Chat.Summon);
+					Utils.addChat2("§6Play.anarchynetwork.eu", var.prefixCmd+"co play.anarchynetwork.eu", "§7Pas d'AC et peu de modo", false, Chat.Summon);
 					Utils.addChat2("§6Play.hazonia.fr", var.prefixCmd+"co play.hazonia.fr", "§7Rush sans aucun AC, sauf modo actifs", false, Chat.Summon);
 					Utils.addChat2("§6Play.golemamc.net", var.prefixCmd+"co play.golemamc.net", "§7Anti-cheat mauvais en détection. Attention en legit vous vous faîtes aussi bien kick/ban", false, Chat.Summon);
 					Utils.checkXp(xp);						
@@ -2089,8 +2097,7 @@ public class ChatUtils {
 				} else if (args.length==2) {
 					if (MCLeaks.isAltActive()) {
 						MCLeaks.remove();
-					}
-						
+					}						
 					try {
 						mc.session = new Session(args[1], "", "", "mojang");
 						Utils.addChat("§aConnecté en tant que "+mc.session.getUsername()+" !");
@@ -2119,7 +2126,7 @@ public class ChatUtils {
 					Utils.lastAccount=0;
 				}
 				Utils.checkXp(xp);
-			}			
+			}		
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"log")) {
 				if (args.length==1) {

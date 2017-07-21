@@ -1655,7 +1655,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             	BlockPos bll = mc.objectMouseOver.func_178782_a();
             	if (bll==null && mc.pointedEntity!=null)
             		bll = new BlockPos(mc.pointedEntity);
-            	if (bll!=null && mc.thePlayer.getDistance(bll.getX(), bll.getY(), bll.getZ())>5 && var5.getItem() instanceof ItemPotion) {
+            	if (bll!=null && mc.thePlayer.getDistance(bll.getX(), bll.getY(), bll.getZ())>5 && var5!=null && var5.getItem() instanceof ItemPotion) {
             		return;
             	}
             }

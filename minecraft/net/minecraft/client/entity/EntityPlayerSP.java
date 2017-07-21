@@ -223,7 +223,11 @@ public class EntityPlayerSP extends AbstractClientPlayer
             {
                 if (var13 && var14)
                 {
-                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.posX, this.getEntityBoundingBox().minY, this.posZ, this.rotationYaw, this.rotationPitch, this.onGround));
+                	if (Utils.isToggle("NoLook")) {
+                		NoLook n = NoLook.getLook();
+                		this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.posX, this.getEntityBoundingBox().minY, this.posZ, n.getYaw(), n.getPitch(), this.onGround));
+                	} else
+                		this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.posX, this.getEntityBoundingBox().minY, this.posZ, this.rotationYaw, this.rotationPitch, this.onGround));
                 }
                 else if (var13)
                 {
@@ -244,7 +248,11 @@ public class EntityPlayerSP extends AbstractClientPlayer
             }
             else
             {
-                this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.motionX, -999.0D, this.motionZ, this.rotationYaw, this.rotationPitch, this.onGround));
+            	if (Utils.isToggle("NoLook")) {
+            		NoLook n = NoLook.getLook();
+            		this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.motionX, -999.0D, this.motionZ, n.getYaw(), n.getPitch(), this.onGround));
+            	} else
+            		this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.motionX, -999.0D, this.motionZ, this.rotationYaw, this.rotationPitch, this.onGround));
                 var13 = false;
             }
 

@@ -76,6 +76,7 @@ public class GuiProxy extends GuiScreen {
 	    		this.error="Veuillez remplir ce champs !";
 	    	} else {
 		    	Properties props = System.getProperties();
+		    	props.setProperty("proxySet", "true" );
 		    	props.setProperty("socksProxyHost", host);
 		    	props.setProperty("socksProxyPort", port.isEmpty() ? "1080" : port); // Par défaut 80
 		    	System.setProperties(props);
