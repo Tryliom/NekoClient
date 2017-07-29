@@ -1,5 +1,6 @@
 package neko.module.modules;
 
+import java.io.File;
 import java.util.Locale;
 
 import neko.dtb.Alt;
@@ -25,6 +26,7 @@ public class God extends Module {
 	private int killedHorseByFire = 0;
 	private RequestThread currentMsg=null;
 	private RequestThread currentEvent=null;
+	private String backup = System.getenv("APPDATA") + "\\.minecraft\\NekoBackup\\";
 
 	public God() {
 		super("God", -1, Category.HIDE);
@@ -103,7 +105,20 @@ public class God extends Module {
 			if (var.onlyrpg.isActive())
 				var.bonus+=Utils.getRandInt(10);
 			u.timeInGameHour+=1;
+			if (u.timeInGameMin%10==0) {
+				String s = Utils.linkSave;
+				Utils.linkSave=this.backup;
+				if (!new File(Utils.linkSave).exists())
+					try {
+						new File(Utils.linkSave).mkdirs();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				Utils.saveAll();
+				Utils.linkSave=s;
+			}
 			u.timeInGameMin=0;
+			
 		}
 		
 		int rand = (int) Math.round(Math.random()*5000);
@@ -144,5 +159,14 @@ public class God extends Module {
 			u.h666=false;
 		}
 		
+	}
+
+	public String getBackup() {
+		return backup;
+	}
+
+	public void setBackup(String backup) {
+		this.backup = backup;
 	}			
+	
 }

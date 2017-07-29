@@ -40,7 +40,7 @@ import net.minecraft.world.storage.WorldInfo;
 public class WorldClient extends World
 {
     /** The packets that need to be sent to the server. */
-    private NetHandlerPlayClient sendQueue;
+    public NetHandlerPlayClient sendQueue;
 
     /** The ChunkProviderClient instance */
     private ChunkProviderClient clientChunkProvider;
@@ -284,9 +284,12 @@ public class WorldClient extends World
     /**
      * If on MP, sends a quitting packet.
      */
-    public void sendQuittingDisconnectingPacket()
+    public void sendQuittingDisconnectingPacket(String...s)
     {
-        this.sendQueue.getNetworkManager().closeChannel(new ChatComponentText("Quitting"));
+    	if (s.length>=1)
+    		this.sendQueue.getNetworkManager().closeChannel(new ChatComponentText(s[0]));
+    	else
+    		this.sendQueue.getNetworkManager().closeChannel(new ChatComponentText("Quitting"));
     }
 
     /**

@@ -35,7 +35,7 @@ public class Client {
 	  public final String CLIENT_AUTHOR = "Tryliom";
 	  public ModuleManager moduleManager;
 	  public GuiManager gui;
-	  public final String CLIENT_VERSION = "1.7Pre3";
+	  public final String CLIENT_VERSION = "1.7.1";
 	  private static final Client Neko = new Client();
 	  public String mode="Player";
 	  public Rank rang;
@@ -131,7 +131,7 @@ public class Client {
 		  gui.setTheme(new SimpleTheme());
 		  gui.setup();
 		  Utils.loadFrame();
-		  n = Utils.getRandInt(3);
+		  n = Utils.getRandInt(10);
 		  switch (n) {
 			  case 0:Display.setTitle("Tu joues à la version divine de Neko :3");break;
 			  case 1:Display.setTitle("Waw quel joueur expérimenté :o");break;
@@ -146,6 +146,13 @@ public class Client {
 					  }
 				  }
 				  break;
+			  case 4:Display.setTitle("Ne touche pas à ça ! NYAAAAAAH");break;
+			  case 5:Display.setTitle("Ce jeu est si malsain...");break;
+			  case 6:Display.setTitle("Coucou petit neko :3");break;
+			  case 7:Display.setTitle("Merci Brwserv pour les boutons reconnect");break;
+			  case 8:Display.setTitle("Je suis un neko tout innocent :3");break;
+			  case 9:Display.setTitle("Je suis un vilain neko ;3");break;
+			  case 10:Display.setTitle("Fire et Enclume nyanyatent ensemble souvent ;3");break;
 		  }
 		  name=CLIENT_NAME+"/vanilla";
 		  

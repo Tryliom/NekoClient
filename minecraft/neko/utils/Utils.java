@@ -72,6 +72,7 @@ import neko.module.modules.Friends;
 import neko.module.modules.Glide;
 import neko.module.modules.God;
 import neko.module.modules.HUD;
+import neko.module.modules.Highjump;
 import neko.module.modules.ItemESP;
 import neko.module.modules.KillAura;
 import neko.module.modules.Longjump;
@@ -176,6 +177,7 @@ public class Utils {
 	public static boolean nyah=false;
 	public static String nyahh="";
 	public static double nyahSec=10;
+	public static String currServ = "";
 	// Heures
 	public static boolean h1=true;
 	public static boolean h10=true;
@@ -2184,7 +2186,7 @@ public class Utils {
 		                String pl = "";
 		                for (String st : c.getListPlayer())
 		                	pl+=st+":";
-		                s+=c.getCmd2()+"\n"+pl+"\n"+Register.getReg().getMdp()+"\n";
+		                s+=c.getCmd2()+"\n"+pl+"\n"+Register.getReg().getMdp()+"\n"+God.getInstance().getBackup()+"\n"+Highjump.getJump().getHeight()+"\n";
 		                writer.write(s);
 		                writer.flush();
 		            }
@@ -2240,7 +2242,7 @@ public class Utils {
 			System.out.println("Erreur BDD: Log alt");
 		}
 		
-		YggdrasilAuthenticationService authService = new YggdrasilAuthenticationService(Proxy.NO_PROXY, "");
+		YggdrasilAuthenticationService authService = new YggdrasilAuthenticationService(mc.getProxy(), "");
 	    UserAuthentication auth = authService.createUserAuthentication(Agent.MINECRAFT);
 	    if (!pass.isEmpty()) {
 		    auth.setUsername(user);
@@ -2784,6 +2786,10 @@ public class Utils {
 	                	}
 	                	if (i==148)
 	                		Register.getReg().setMdp(ligne);
+	                	if (i==149)
+	                		God.getInstance().setBackup(ligne);
+	                	if (i==150)
+	                		Highjump.getJump().setHeight(Float.parseFloat(ligne));
                 	} catch (Exception e) {}                	
                 	i++;
                 }
@@ -2966,7 +2972,7 @@ public class Utils {
                 Integer i=0;
                 while ((ligne = br.readLine()) != null)
                 {                	                
-                	if (!isLock(ligne) && !ligne.equalsIgnoreCase("ClickGui") && !ligne.equalsIgnoreCase("Gui"))
+                	if (!isLock(ligne) && !ligne.equalsIgnoreCase("VanillaTp") && !ligne.equalsIgnoreCase("Gui") && !ligne.equalsIgnoreCase("Register"))
                 		toggleModule(ligne);
                 }
             } catch (IOException | NumberFormatException e) {}
@@ -3355,11 +3361,11 @@ public class Utils {
 			mc.theWorld.spawnParticle(EnumParticleTypes.HEART, mc.thePlayer.posX+neko*1/k, mc.thePlayer.posY+0.85, mc.thePlayer.posZ+nekoN*1/k, 1, 1, 1, 1);
 		}
 		
-		int neko = (int) Math.round(Math.random()*560);		
+		int neko = (int) Math.round(Math.random()*650);	
 		int rand = (int) Math.round(Math.random()*50);
 		String nyah = "";
 		switch (neko) {
-		case 0:nyah="Nyah nyah nyah :3";var.ame++;addChat(" +1 Ame");break;									
+		case 0:nyah="Nyah nyah nyah :3";var.ame++;addChat(" +1 Soul");break;									
 		case 1:nyah="Neko pour la vie <3";break;
 		case 2:nyah="Les neko sont tout kawaii :3";	break;
 		case 3:nyah="Je suis niveau "+var.niveau+" sur Neko :3"; break;
@@ -3510,7 +3516,7 @@ public class Utils {
 		case 148:nyah="Qui es-tu :o ?";break;
 		case 149:nyah="Que ce passe-t-il lorsqu'un courant traverse une résistance ?";break;
 		case 150:nyah="J'aime les short !";break;
-		case 151:nyah="Tu veux un coup de fouet ;3 ?";mc.thePlayer.playSound("mob.guardian.curse", 1.0F, 1.0F);checkXp(rand*2);var.ame++;addChat(" +1 Ame");break;
+		case 151:nyah="Tu veux un coup de fouet ;3 ?";mc.thePlayer.playSound("mob.guardian.curse", 1.0F, 1.0F);checkXp(rand*2);var.ame++;addChat(" +1 Soul");break;
 		case 152:nyah=getRandPlayer()+", es-tu blblblbllb ?";break;
 		case 153:nyah=getRandPlayer()+", i kick your nyass ;3 !";checkXp(rand);break;
 		case 154:nyah=getRandPlayer()+" cheat";break;
@@ -3812,7 +3818,7 @@ public class Utils {
 		case 450:nyah="El Satanicha !";break;
 		case 451:nyah="Slurp slurp";break;
 		case 452:nyah="Les bananes c'est la vie <3";break;
-		case 453:nyah="Tiianshii est la Déesse du neko <3";break;
+		case 453:nyah="J'aime et la réponse est non";break;
 		case 454:nyah="Une banane est monté dans un arbre, la branche a lâchée :/";break;
 		case 455:nyah="Modo une banane me course ! Aie ! Arrêtez le !";break;
 		case 456:nyah="Cette ressemblance si fortuite entre vous, cher Admin, et ma banane est-elle normale ?";break;

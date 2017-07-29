@@ -280,7 +280,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     public final File mcDataDir;
     private final File fileAssets;
     private final String launchedVersion;
-    private final Proxy proxy;
+    private Proxy proxy;
     private ISaveFormat saveLoader;
 
     /**
@@ -390,7 +390,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         ImageIO.setUseCache(false);
         Bootstrap.register();
     }
-
+    
     public void run()
     {
         this.running = true;
@@ -3360,4 +3360,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             }
         }
     }
+
+	public void setProxy(Proxy proxy) {
+		this.proxy = proxy;
+		
+	}
 }

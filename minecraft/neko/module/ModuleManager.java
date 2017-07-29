@@ -163,8 +163,10 @@ public class ModuleManager {
 		// CrazyLove
 		rang.add(new Rank("La tentacule divine", 5000, Rate.CrazyLove, "§9", true, 0));
 		Utils.getRank("La tentacule divine").setDesc("Si gluante et visqueuse, votre amie pour votre vie de pervy ;3");
-		rang.add(new Rank("Développeur Neko", 1500, Rate.CrazyLove, "§5", false, 0));
-		Utils.getRank("Développeur Neko").setDesc("");
+		rang.add(new Rank("Dév Neko", 1000, Rate.CrazyLove, "§2", true, 0));
+		Utils.getRank("Dév Neko").setDesc("Développe chaque jours !");
+		rang.add(new Rank("Amour à Tryliom <3", 5000, Rate.CrazyLove, "§4", true, 0));
+		Utils.getRank("Amour à Tryliom <3").setDesc("Adore son Tryliom, ferais tout pour lui et sa soumise absolue :3");
 		
 		// Titan
 		rang.add(new Rank("Tryliom", 4000, Rate.Titan, "§4§o", true, 0));
@@ -263,11 +265,8 @@ public class ModuleManager {
 		rang.add(new Rank("Satan", 666, Rate.Satanique, "§c§n", true, 0));
 		Utils.getRank("Satan").setDesc("Le roi de l'Enfer, il possède 16 enfants actuellement dont Lucifer");
 		rang.add(new Rank("Maître Satanique", 888, Rate.Satanique, "§c", true, 0));
-		Utils.getRank("Maître Satanique").setDesc("Dresse et punis souvent sa soumise Tianshi au fouet avec passion et plaisir ;3");
+		Utils.getRank("Maître Satanique").setDesc("Punis le Soumis dans des rites sataniques terrifiants");
 		Utils.getRank("Maître Satanique").setLotRateTitan(1);
-		rang.add(new Rank("Tianshi", 800, Rate.Satanique, "§d§n", true, 0));
-		Utils.getRank("Tianshi").setDesc("Ange démoniaque soumise par un Maître Satanique très méchant qui adore jouer avec ;3");
-		Utils.getRank("Tianshi").setLotRateSatanique(0.5);
 		rang.add(new Rank("Déesse du neko", 800, Rate.Satanique, "§d§n", true, 0));
 		Utils.getRank("Déesse du neko").setDesc("Venant par milliers, ils recherchent tous une chose qu'il ne peuvent trouver qu'ici. Elle est là, trônant en ces lieux avec son Gardien, apaisant ces petits êtres, les nekos.");
 		Utils.getRank("Déesse du neko").setLotRateDivin(0.5);
@@ -377,7 +376,7 @@ public class ModuleManager {
 		rang.add(new Rank("AntoZzz", 600, Rate.Divin, "§d", true, 0));
 		Utils.getRank("AntoZzz").setDesc("Après sa mort, il s'est allié aux Neko et devînt ansi leur chinois domestique");
 		Utils.getRank("AntoZzz").setGiftAme(0.5);
-		rang.add(new Rank("La Sainte Reach", 380, Rate.Divin, "§d§k1§d§n", true, 0));
+		rang.add(new Rank("La Sainte Reach", 380, Rate.Divin, "§d§n", true, 0));
 		Utils.getRank("La Sainte Reach").setDesc("Il est écrit qu'elle se montre une fois tous les millénaires et que seul un Neko pur peut la voir. Unique et d'une rareté si divine");
 		rang.add(new Rank("Jean-Pierre alias JP", 255, Rate.Divin, "§d§n", true, 0));
 		Utils.getRank("Jean-Pierre alias JP").setDesc("Notre saint Jean-Pierre de retour avec sa reach divine !");
@@ -634,6 +633,19 @@ public class ModuleManager {
 		Utils.getRank("Vide Intersidéral").setDesc("Je suis le vide...J'avale tout ce qui passe vers moi...Miam miam...");
 		rang.add(new Rank("L'Univers", 600, Rate.Event, "§2", true, 0));
 		Utils.getRank("L'Univers").setDesc("Je te contient et tu m'appartiens...");
+		rang.add(new Rank("Soumis", 500, Rate.Event, "§2", true, 0));
+		Utils.getRank("Soumis").setDesc("J'obéis au Maître");
+		rang.add(new Rank("Maître Pervy", 700, Rate.Event, "§2", true, 0));
+		Utils.getRank("Maître Pervy").setDesc("Alerte pervers");
+		rang.add(new Rank("Maître Sadique", 700, Rate.Event, "§2", true, 0));
+		Utils.getRank("Maître Sadique").setDesc("Alerte Tryliom sadique");
+		rang.add(new Rank("Maître Neko", 700, Rate.Event, "§2", true, 0));
+		Utils.getRank("Maître Neko").setDesc("Alerte N-n-nyaaaah..mais mais...j'ai rien fait...me punis pas maître je faisais que vous décrire..NYAAAAH vous êtes cruel maître ! HSDHSBHD");
+		rang.add(new Rank("Maître Méchant", 700, Rate.Event, "§2", true, 0));
+		Utils.getRank("Maître Méchant").setDesc("Mon Maître est méchant :c");
+		rang.add(new Rank("AntoZzz x Delxer", 600, Rate.Event, "§2", true, 0));
+		Utils.getRank("AntoZzz x Delxer").setDesc("Ils se disputent très souvent mais au fond, ce ne sont que des querelles de couple..Vous n'imaginez pas comment ça dérape en privé..;3");
+		
 		
 		// Neko
 		rang.add(new Rank("Supra Neko", 500, Rate.Supra, "§6", true, 0));

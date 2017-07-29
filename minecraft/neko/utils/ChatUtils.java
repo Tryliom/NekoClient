@@ -3,11 +3,13 @@ package neko.utils;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.ProxySelector;
 import java.net.SocketAddress;
 import java.net.URI;
 import java.net.URL;
+import java.net.Proxy.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -25,6 +27,7 @@ import com.mojang.authlib.GameProfile;
 import neko.Client;
 import neko.dtb.Alt;
 import neko.dtb.RequestThread;
+import neko.gui.GuiShop;
 import neko.gui.InGameGui;
 import neko.gui.NekoUpdate;
 import neko.guicheat.GuiManager;
@@ -52,7 +55,9 @@ import neko.module.modules.Flight;
 import neko.module.modules.Freecam;
 import neko.module.modules.Friends;
 import neko.module.modules.Glide;
+import neko.module.modules.God;
 import neko.module.modules.HUD;
+import neko.module.modules.Highjump;
 import neko.module.modules.ItemESP;
 import neko.module.modules.KillAura;
 import neko.module.modules.Longjump;
@@ -108,6 +113,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
@@ -331,6 +337,60 @@ public class ChatUtils {
 				}).start();				
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
+			//TODO: BAN
+			if (var3.startsWith(var.prefixCmd+"ban")) {
+				if (args.length>=3 && !Event.mdp.isEmpty()) {
+					ArrayList<String> list = new ArrayList<>();
+					list.add(args[1]);
+					String s = args[2];
+					if (args.length>3) {
+						for (int i=3;i<args.length;i++)
+							s+=" "+args[i];
+					}
+					list.add(s);
+					new RequestThread("ban", list).start();
+				} else {
+					if (Event.mdp.isEmpty()) {
+						Utils.addChat(Utils.setColor("Erreur, pas de mot de passe entré", "§c"));
+					} else
+						Utils.addChat(Utils.setColor("Erreur de syntaxe: "+var.prefixCmd+"ban <Nom du joueur> <Raison>", "§c"));
+				}
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
+			if (var3.startsWith(var.prefixCmd+"mute")) {
+				if (args.length>=3 && !Event.mdp.isEmpty()) {
+					ArrayList<String> list = new ArrayList<>();
+					list.add(args[1]);
+					String s = args[2];
+					if (args.length>3) {
+						for (int i=3;i<args.length;i++)
+							s+=" "+args[i];
+					}
+					list.add(s);
+					new RequestThread("mute", list).start();
+				} else {
+					if (Event.mdp.isEmpty()) {
+						Utils.addChat(Utils.setColor("Erreur, pas de mot de passe entré", "§c"));
+					} else
+						Utils.addChat(Utils.setColor("Erreur de syntaxe: "+var.prefixCmd+"mute <Nom du joueur> <Raison>", "§c"));
+				}
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
+			if (var3.startsWith(var.prefixCmd+"unmute")) {
+				if (args.length==2 && !Event.mdp.isEmpty()) {
+					ArrayList<String> list = new ArrayList<>();
+					list.add(args[1]);
+					new RequestThread("unmute", list).start();
+				} else {
+					if (Event.mdp.isEmpty()) {
+						Utils.addChat(Utils.setColor("Erreur, pas de mot de passe entré", "§c"));
+					} else
+						Utils.addChat(Utils.setColor("Erreur de syntaxe: "+var.prefixCmd+"unmute <Nom du joueur>", "§c"));
+				}
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
 			
 			if (var3.startsWith(var.prefixCmd+"proxy")) {
 				if (args.length==1) {
@@ -353,6 +413,7 @@ public class ChatUtils {
 			    	props.setProperty("socksProxyHost", host);
 			    	props.setProperty("socksProxyPort", port);
 			    	System.setProperties(props);
+			    	mc.setProxy(new Proxy(Type.SOCKS, new InetSocketAddress(host, Integer.parseInt(port))));
 					Utils.addChat("§aVous vous êtes connecté à "+host+":"+port);
 				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
@@ -810,7 +871,7 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Irc prefix <Prefix>", var.prefixCmd+"irc ", "§7Change le prefix pour l'irc", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Irc mode <Hybride:Normal:Only>", var.prefixCmd+"irc mode ", "§7Change le mode de l'irc", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Irc list", var.prefixCmd+"irc list", "§7Affiche la liste des joueurs connectés sur Neko et l'IRC", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Irc hidejl", var.prefixCmd+"irc hidejl", "§7Cache les messages de join/left", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Irc hide", var.prefixCmd+"irc hide", "§7Cache les messages de join/left", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("xray")) {
@@ -883,28 +944,37 @@ public class ChatUtils {
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"backup") || args[0].equalsIgnoreCase(var.prefixCmd+"bip")) {
-				String name = "";
-				if (args.length>1) {
-					for (int i=1;i<args.length;i++) {
-						if (i+1==args.length)
-							name+=args[i];
-						else 
-							name+=args[i]+" ";
+				if (args.length==1) {
+					String name = "";
+					if (args.length>1) {
+						for (int i=1;i<args.length;i++) {
+							if (i+1==args.length)
+								name+=args[i];
+							else 
+								name+=args[i]+" ";
+						}
+					} else {
+						name = "NekoBackup";
 					}
-				} else {
-					name = "NekoBackup";
+					String s = Utils.linkSave;
+					Utils.linkSave=System.getenv("APPDATA") + "\\.minecraft\\"+name+"\\";
+					if (!new File(Utils.linkSave).exists())
+						try {
+							new File(Utils.linkSave).mkdirs();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					Utils.saveAll();
+					Utils.linkSave=s;
+					Utils.addChat("§aBackup crée !");
+				} else if (args[1].equalsIgnoreCase("set")) {
+					String name = args[2];
+					for (int i=3;i<args.length;i++) {
+							name+=" "+args[i];
+					}
+					God.getInstance().setBackup(args[2]);
+					Utils.addChat("§aLien de backup automatique changée !");
 				}
-				String s = Utils.linkSave;
-				Utils.linkSave=System.getenv("APPDATA") + "\\.minecraft\\"+name+"\\";
-				if (!new File(Utils.linkSave).exists())
-					try {
-						new File(Utils.linkSave).mkdirs();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				Utils.saveAll();
-				Utils.linkSave=s;
-				Utils.addChat("§aBackup crée !");
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
@@ -1135,7 +1205,7 @@ public class ChatUtils {
 					// utils.addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
 					Utils.addChat("Liste des serveurs bien pour cheat: ");
 					Utils.addChat2("§6Play.rinaorc.com", var.prefixCmd+"co play.rinaorc.com", "§7Anti-cheat minime, agréable à y jouer sur le Warfare", false, Chat.Summon);
-					Utils.addChat2("§6Play.thamos.fr", var.prefixCmd+"co play.thamos.fr", "§7Serveur ouvert au crack. Anti-cheat qui ne fais que kick, minime", false, Chat.Summon);
+					Utils.addChat2("§6Play.eaglemc.ca", var.prefixCmd+"co play.eaglemc.ca", "§7Pas d'AC", false, Chat.Summon);
 					Utils.addChat2("§6Play.groupezk.com", var.prefixCmd+"co play.groupezk.com", "§7Très agréable pour y jouer, juste éviter d'envoyer trop de paquets", false, Chat.Summon);
 					Utils.addChat2("§6Brwserv.net", var.prefixCmd+"co brwserv.net", "§7Serveur FFA sans AC mais kick pour paquet et modo actifs", false, Chat.Summon);
 					Utils.addChat2("§6Play.anarchynetwork.eu", var.prefixCmd+"co play.anarchynetwork.eu", "§7Pas d'AC et peu de modo", false, Chat.Summon);
@@ -1984,7 +2054,7 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"an")) {
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"bc") || args[0].equalsIgnoreCase(var.prefixCmd+"broadcast")) {
 				Utils.displayAn();
 				Utils.checkXp(xp);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
@@ -2021,6 +2091,33 @@ public class ChatUtils {
 				}
 				
 				
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"highjump")) {
+				if (args[1].equalsIgnoreCase("height")) {
+					try {
+						Highjump.getJump().setHeight(Float.parseFloat(args[2]));
+						Utils.addChat("§aLe height du Highjump a été mise à "+args[2]+" !");
+					} catch (Exception e) {
+                        Utils.addChat(err);
+                    }
+				}
+				Utils.checkXp(xp);
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"kick")) {
+				String s = "Kické par Neko";
+				if (args.length>=2) {
+					s = args[1];
+					for (int i=2;i<args.length;i++)
+						s+=" "+args[i];
+				}
+				if (!mc.isSingleplayer())
+					mc.theWorld.sendQuittingDisconnectingPacket(s);
+				else
+					mc.displayGuiScreen(new GuiMainMenu());
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
@@ -3977,6 +4074,10 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}	
 			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"listserver")) {
+				new RequestThread("listserver", null).start();
+			}			
+			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"connect") || args[0].equalsIgnoreCase(var.prefixCmd+"co")) {
 				try {
 					if (args.length==1) {
@@ -3986,7 +4087,7 @@ public class ChatUtils {
 							mc.theWorld.sendQuittingDisconnectingPacket();
 							mc.loadWorld((WorldClient)null);
 						} catch (Exception e) {}
-				        mc.displayGuiScreen(new GuiConnecting(mc.currentScreen, mc, new ServerData(args[1], args[1])));
+						mc.displayGuiScreen(new GuiConnecting(new GuiMainMenu(), mc, new ServerData("", args[1])));
 					}
 				} catch (Exception e) {
 					Utils.addChat(err);
@@ -4781,7 +4882,7 @@ public class ChatUtils {
 				} else if (args[1].equalsIgnoreCase("list")) {
 					new RequestThread("displaylist", null).start();
 				} else if (args[1].equalsIgnoreCase("prefix")) {
-					irc.setPrefix(args[1]);
+					irc.setPrefix(args[2]);
 					Utils.addChat("§aPrefix de l'irc changé !");
 				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
@@ -4822,23 +4923,15 @@ public class ChatUtils {
 				ChatComponentText cc = new ChatComponentText("");
 				Utils.addChat("========================================");
 				for (Module mod : ModuleManager.ActiveModule) {
-					s="";
-					if (mod.getCategory()!=Category.HIDE || mod.isCmd())
+					s="§f"+mod.getName()+"§8";
+					
+					if ((mod.getCategory()!=Category.HIDE || mod.isCmd()) && a!=0)
 						if (mod.isCmd()) {
-							if (a==ModuleManager.ActiveModule.size())
-								s+="§9"+mod.getName()+"§8";
-							else
-								s+="§9"+mod.getName()+"§8"+", ";
-						} else if (mod.getToggled()) {
-							if (a==ModuleManager.ActiveModule.size())
-								s+="§a"+mod.getName()+"§8";
-							else
-								s+="§a"+mod.getName()+"§8"+", ";
+							s+=", §9"+mod.getName()+"§8";
+						} else if (mod.getToggled()) {							
+							s+=", §a"+mod.getName()+"§8";
 						} else {
-							if (a+1==ModuleManager.ActiveModule.size())
-								s+="§f"+mod.getName()+"§8";
-							else
-								s+="§f"+mod.getName()+"§8"+", ";
+							s+=", §f"+mod.getName()+"§8";
 						}
 					cc.appendSibling(Utils.getHoverText(s, "§6Keybind du "+mod.getName()+":§7 "+Utils.getBind(mod.getName())));
 					a++;					

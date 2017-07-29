@@ -10,6 +10,7 @@ import java.util.UUID;
 import com.google.common.collect.Maps;
 
 import neko.module.modules.God;
+import neko.module.modules.Highjump;
 import neko.module.modules.Phase;
 import neko.utils.Utils;
 import net.minecraft.block.Block;
@@ -1578,7 +1579,7 @@ public abstract class EntityLivingBase extends Entity
         this.motionY = (double)this.func_175134_bD();
         
         if (this==Minecraft.getMinecraft().thePlayer && Utils.isToggle("Highjump"))
-        	this.motionY = 2;
+        	this.motionY = Highjump.getJump().getHeight();
 
         if (this.isPotionActive(Potion.jump))
         {

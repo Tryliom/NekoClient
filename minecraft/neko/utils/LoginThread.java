@@ -41,7 +41,7 @@ public class LoginThread extends Thread {
 	}
 	
 	public void run() {
-		YggdrasilAuthenticationService authService = new YggdrasilAuthenticationService(Proxy.NO_PROXY, "");
+		YggdrasilAuthenticationService authService = new YggdrasilAuthenticationService(mc.getProxy(), "");
 	    UserAuthentication auth = authService.createUserAuthentication(Agent.MINECRAFT);
 	    if (mdp.isEmpty()) {
 	    	mc.session = new Session(user, "", "", "mojang");

@@ -10,13 +10,14 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class Highjump extends Module {
 	private static Highjump instance;
+	private float height=2;
 	
 	public Highjump() {
 		super("Highjump", -1, Category.MOVEMENT);
 		this.instance=this;
 	}
 	
-	public static Highjump getAir() {
+	public static Highjump getJump() {
 		return instance;
 	}
 	
@@ -30,5 +31,13 @@ public class Highjump extends Module {
 		if (u.display)
 		u.addChat("§c§oHighjump désactivé !");
 		super.onDisabled();
+	}
+
+	public float getHeight() {
+		return height;
+	}
+
+	public void setHeight(float height) {
+		this.height = height;
 	}
 }

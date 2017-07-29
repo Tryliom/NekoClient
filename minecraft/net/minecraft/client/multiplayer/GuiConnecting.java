@@ -65,7 +65,11 @@ public class GuiConnecting extends GuiScreen
                     {
                         return;
                     }
-
+                    try {
+                        mc.theWorld.sendQuittingDisconnectingPacket();
+                        mc.loadWorld((WorldClient)null);
+                        GuiConnecting.this.networkManager.getNetHandler().onDisconnect(new ChatComponentText(""));
+                	} catch (Exception e) {}
                     var1 = InetAddress.getByName(ip);
                     GuiConnecting.this.networkManager = NetworkManager.provideLanClient(var1, port);
                     GuiConnecting.this.networkManager.setNetHandler(new NetHandlerLoginClient(GuiConnecting.this.networkManager, GuiConnecting.this.mc, GuiConnecting.this.previousGuiScreen));

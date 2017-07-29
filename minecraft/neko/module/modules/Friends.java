@@ -8,6 +8,7 @@ import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class Friends extends Module {
@@ -49,7 +50,7 @@ public class Friends extends Module {
 			}
 		
 		delay++;
-		if (org.lwjgl.input.Mouse.isButtonDown(2) && delay > 20 && !(mc.currentScreen instanceof GuiChat) && !(mc.currentScreen instanceof GuiInventory))
+		if (mc.gameSettings.keyBindPickBlock.getIsKeyPressed() && delay > 20 && !(mc.currentScreen instanceof GuiChat) && !(mc.currentScreen instanceof GuiInventory))
 			if (mc.pointedEntity!=null)
 				if (u.isPlayer(mc.pointedEntity))
 					if (isFriend(mc.pointedEntity.getName())) {

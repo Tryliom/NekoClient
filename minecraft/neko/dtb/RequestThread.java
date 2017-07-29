@@ -1,6 +1,5 @@
 package neko.dtb;
 
-import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.NumberFormat;
@@ -9,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.Vector;
 
 import neko.Client;
 import neko.module.ModuleManager;
@@ -215,6 +215,42 @@ public class RequestThread extends Thread {
 				System.out.println("Erreur BDD: Start Event");
 			}
 		}
+		
+		if (why.equalsIgnoreCase("listServer")) {
+			Vector<String> list = new Vector<String>();
+			try {				
+				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=fc6b407325ab1bf677ea2e0f048e415d");
+				Scanner sc = new Scanner(url.openStream());
+				String l;
+				try {
+					l = sc.nextLine();
+					if ((l = sc.nextLine()) != null) {
+						String ls[] = l.split("<br>");
+						for (int i=0;i<ls.length;i++) {
+							String s = ls[i];
+							if (s.startsWith("server=")) {
+								s = s.replaceFirst(".......", "");
+								boolean cont = true;
+								for (String r : list)
+									if (r.equalsIgnoreCase(s))
+										cont=false;
+								if (cont && !s.equalsIgnoreCase("127.0.0.1") && !s.equalsIgnoreCase("localhost") && !s.equalsIgnoreCase("null")) {
+									list.add(s.toLowerCase());
+								}
+							}
+						}
+					}
+				} catch (Exception e) {}
+				sc.close();
+			} catch (Exception e) {
+				System.out.println("Erreur BDD: List Server");
+			}
+			Utils.addChat("Listes des serveurs utilisés par les Neko:\n");
+			for (String s : list) {
+				Utils.addChat2("-§7 "+s, var.prefixCmd+"co "+s, "§aCliquer pour se connecter !", false, Chat.Summon);
+			}
+			
+		}		
 		
 		if (why.equalsIgnoreCase("stopEvent")) {
 			try {
@@ -452,6 +488,78 @@ public class RequestThread extends Thread {
 				System.out.println("Erreur BDD: Insert Msg");
 			}
 			
+		}
+		
+		if (why.equalsIgnoreCase("ban")) {			
+			String ip = args.get(0);
+			try {
+				URL url=null;
+				url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=842a0df0db96ee5013d0f019cd17f3be&args=\""+URLEncoder.encode(args.get(0), "UTF-8")+"\",\""+Event.mdp+"\"");				
+				Scanner sc = new Scanner(url.openStream());	
+				String l;
+				
+				try {
+					while ((l = sc.nextLine()) != null) {
+						if (l.startsWith("last_ip=")) {
+							ip=l.replaceFirst("........", "").replace("<br>", "");
+						}
+					}
+				} catch (Exception e) {}
+				sc.close();
+			} catch (Exception e) {
+				System.out.println("Erreur BDD: Get ip from player name");
+			}
+			try {
+				URL url=null;
+				url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=2176fb8b9f2efa32292b0e78bb1cefc9&args=\""+URLEncoder.encode(args.get(1), "UTF-8")+"\",\""+ip+"\",\""+Event.mdp+"\"");
+				System.out.println(url.toString());
+				Scanner sc = new Scanner(url.openStream());	
+				sc.close();
+			} catch (Exception e) {
+				System.out.println("Erreur BDD: Ban ("+e.getMessage()+")");
+			}			
+			ArrayList<String> list = new ArrayList<>();
+			list.add(Utils.setColor("§a"+args.get(0)+" a été banni de Neko pour §c"+Utils.setColor(args.get(1), "§c")+" !", "§a"));
+			new RequestThread("alert", list).start();
+		}
+		
+		if (why.equalsIgnoreCase("mute")) {			
+			try {
+				URL url=null;
+				url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=42feba42915810f59f40daa4943b6dc7&args=\""+URLEncoder.encode(args.get(0), "UTF-8")+"\",\""+Event.mdp+"\"");				
+				Scanner sc = new Scanner(url.openStream());	
+				sc.close();
+			} catch (Exception e) {
+				System.out.println("Erreur BDD: Mute player");
+			}		
+			ArrayList<String> list = new ArrayList<>();
+			list.add(Utils.setColor("§a"+args.get(0)+" a été mute de Neko pour §c"+Utils.setColor(args.get(1), "§c")+" !", "§a"));
+			new RequestThread("alert", list).start();
+		}
+		
+		if (why.equalsIgnoreCase("unmute")) {			
+			try {
+				URL url=null;
+				url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=75006a55e8641f6bbfbee9fa9a33846c&args=\""+URLEncoder.encode(args.get(0), "UTF-8")+"\",\""+Event.mdp+"\"");				
+				Scanner sc = new Scanner(url.openStream());	
+				sc.close();
+			} catch (Exception e) {
+				System.out.println("Erreur BDD: Unmute player");
+			}		
+			ArrayList<String> list = new ArrayList<>();
+			list.add(Utils.setColor("§a"+args.get(0)+" a été unmute de Neko !", "§a"));
+			new RequestThread("alert", list).start();
+		}
+		
+		if (why.equalsIgnoreCase("alert")) {			
+			try {
+				URL url=null;
+				url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=fcf5e6d383b81bc275e742a13dec843a&args=\""+URLEncoder.encode(args.get(0), "UTF-8")+"\"&messageInc");				
+				Scanner sc = new Scanner(url.openStream());	
+				sc.close();
+			} catch (Exception e) {
+				System.out.println("Erreur BDD: Alert");
+			}		
 		}
 		
 		if (why.equalsIgnoreCase("nameIsFree")) {
@@ -745,11 +853,27 @@ public class RequestThread extends Thread {
 							m+=s[i]+" ";
 					}
 				}
+				boolean cont = false;
+				try {
+					URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=6f3444869bb758fa613c914a3620f6de&args=\""+pid+"\"");
+					Scanner sc = new Scanner(url.openStream(), "UTF-8");	
+					String l;
+					try {
+						while ((l = sc.nextLine()) != null) {
+							if (l.contains("muted")) {
+								cont = true;
+							} 
+						}
+					} catch (Exception e) {}
+					sc.close();
+				} catch (Exception e) {
+					System.out.println("Erreur BDD: Is Muted\n"+e.getMessage());
+					return;
+				}
 				
 				if (pid==1 && !Irc.getInstance().isHideJl()) {
 					Utils.addChat2Irc(m, "", "§7"+m, true, Chat.Summon);
-				} else {
-					
+				} else if (!cont && pid==1 ? !Irc.getInstance().isHideJl() : true) {					
 					String pRank="";
 					String pRankColor="";
 					String pName="";

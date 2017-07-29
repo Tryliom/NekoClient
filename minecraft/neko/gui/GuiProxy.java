@@ -2,6 +2,10 @@ package neko.gui;
 
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.SocketAddress;
+import java.net.Proxy.Type;
 import java.util.Properties;
 
 import org.lwjgl.input.Keyboard;
@@ -78,8 +82,9 @@ public class GuiProxy extends GuiScreen {
 		    	Properties props = System.getProperties();
 		    	props.setProperty("proxySet", "true" );
 		    	props.setProperty("socksProxyHost", host);
-		    	props.setProperty("socksProxyPort", port.isEmpty() ? "1080" : port); // Par défaut 80
+		    	props.setProperty("socksProxyPort", port.isEmpty() ? "1080" : port);
 		    	System.setProperties(props);
+		    	mc.setProxy(new Proxy(Type.SOCKS, new InetSocketAddress(host, Integer.parseInt(port))));
 		    	this.mc.displayGuiScreen(this.prevGui);
 	    	}
 	    	break;	    

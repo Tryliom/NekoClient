@@ -16,6 +16,7 @@ import com.google.common.collect.Lists;
 
 import neko.Client;
 import neko.dtb.RequestThread;
+import neko.gui.GuiShop;
 import neko.gui.InGameGui;
 import neko.module.modules.Register;
 import neko.module.other.Event;
@@ -188,9 +189,9 @@ public class GuiChat extends GuiScreen {
 		super.actionPerformed(button);
 		switch (button.id) {
 		case 1: {
-			mc.displayGuiScreen(
-					new GuiChat(((Irc.getInstance().getMode() == IrcMode.Normal ? Irc.getInstance().getPrefix() : "")
+			mc.displayGuiScreen(new GuiChat(((Irc.getInstance().getMode() == IrcMode.Normal ? Irc.getInstance().getPrefix() : "")
 							+ "//w " + this.inputField.getText())));
+			// mc.displayGuiScreen(new GuiShop(mc.currentScreen));
 			break;
 		}
 		case 2: {
@@ -224,7 +225,7 @@ public class GuiChat extends GuiScreen {
 			break;
 		}
 		case 4: {
-			mc.displayGuiScreen(new GuiChat(Client.getNeko().prefixCmd + " " + this.inputField.getText()));
+			mc.displayGuiScreen(new GuiChat(Client.getNeko().prefixCmd+this.inputField.getText()));
 			break;
 		}
 		case 5: {
@@ -280,7 +281,7 @@ public class GuiChat extends GuiScreen {
 					try {
 						new Robot().keyPress(KeyEvent.VK_ENTER);
 						new Robot().keyRelease(KeyEvent.VK_ENTER);
-						Thread.sleep(50);
+						Thread.sleep(75);
 						new Robot().keyPress(KeyEvent.VK_T);
 						new Robot().keyRelease(KeyEvent.VK_T);
 					} catch (Exception e) {

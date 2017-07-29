@@ -2,6 +2,9 @@ package net.minecraft.client.gui;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
+
+import neko.utils.Utils;
+
 import java.io.IOException;
 import java.util.List;
 import net.minecraft.client.multiplayer.GuiConnecting;
@@ -403,6 +406,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
     		this.mc.theWorld.sendQuittingDisconnectingPacket();
             this.mc.loadWorld((WorldClient)null);
     	}
+    	Utils.currServ= server.serverIP;
         this.mc.displayGuiScreen(new GuiConnecting(this, this.mc, server));
     }
 
