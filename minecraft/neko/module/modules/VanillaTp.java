@@ -67,9 +67,9 @@ public class VanillaTp extends Module {
                 	}
                 	if (mc.thePlayer.posY % 10 != 0) {
                 		Minecraft.getMinecraft().thePlayer.setPosition(mc.thePlayer.posX, 
-                				Math.round(mc.thePlayer.posY+0.5*Math.random()), mc.thePlayer.posZ);
+                				Math.round(mc.thePlayer.posY+0.7*Math.random()), mc.thePlayer.posZ);
                 		Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C04PacketPlayerPosition(mc.thePlayer.posX, 
-                				Math.round(mc.thePlayer.posY+0.5*Math.random()), mc.thePlayer.posZ, false)); 
+                				Math.round(mc.thePlayer.posY+0.7*Math.random()), mc.thePlayer.posZ, false)); 
                 		mc.thePlayer.posY = Math.round(mc.thePlayer.posY+0.5*Math.random());
                 	}
                 	double neko = -1+Math.random()*20.3;									

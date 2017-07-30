@@ -4923,17 +4923,19 @@ public class ChatUtils {
 				ChatComponentText cc = new ChatComponentText("");
 				Utils.addChat("========================================");
 				for (Module mod : ModuleManager.ActiveModule) {
-					s="§f"+mod.getName()+"§8";
+					if (a==0)
+						s="§f"+mod.getName()+"§8";
 					
 					if ((mod.getCategory()!=Category.HIDE || mod.isCmd()) && a!=0)
 						if (mod.isCmd()) {
-							s+=", §9"+mod.getName()+"§8";
+							s=", §9"+mod.getName()+"§8";
 						} else if (mod.getToggled()) {							
-							s+=", §a"+mod.getName()+"§8";
+							s=", §a"+mod.getName()+"§8";
 						} else {
-							s+=", §f"+mod.getName()+"§8";
+							s=", §f"+mod.getName()+"§8";
 						}
 					cc.appendSibling(Utils.getHoverText(s, "§6Keybind du "+mod.getName()+":§7 "+Utils.getBind(mod.getName())));
+					s="";
 					a++;					
 				}
 				Utils.addChatText(new ChatComponentText(Utils.getNeko()+" Cheats [§7"+a+"§6] : ").appendSibling(cc));

@@ -143,8 +143,7 @@ public class GuiDisconnected extends GuiScreen
     {
         this.drawDefaultBackground();
         this.drawCenteredString(this.fontRendererObj, this.reason, this.width / 2, this.height / 2 - this.field_175353_i / 2 - this.fontRendererObj.FONT_HEIGHT * 2, 11184810);
-        if (AutoReco.active)
-        	this.drawCenteredString(this.fontRendererObj, this.error, this.width / 2, this.height / 2 - this.field_175353_i / 2 - this.fontRendererObj.FONT_HEIGHT * 2 + 96, 11184810);
+        this.drawCenteredString(this.fontRendererObj, this.error, this.width / 2, this.height / 2 - this.field_175353_i / 2 - this.fontRendererObj.FONT_HEIGHT * 2 + 144, 11184810);
         int var4 = this.height / 2 - this.field_175353_i / 2;
 
         if (AutoReco.canGo()) {
