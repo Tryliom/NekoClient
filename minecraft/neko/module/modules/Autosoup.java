@@ -68,9 +68,11 @@ public class Autosoup extends Module {
 		for (int i = 9; i < 45; i++) {
 			if (mc.thePlayer.inventoryContainer.getSlot(i).getStack() != null) {
 				ItemStack is = mc.thePlayer.inventoryContainer.getSlot(i).getStack();
-				Item item = is.getItem();
-				if (Item.getIdFromItem(item) == 282) {
-					return i;
+				if (is!=null) {
+					Item item = is.getItem();
+					if (Item.getIdFromItem(item) == 282) {
+						return i;
+					}
 				}
 			}
 		}

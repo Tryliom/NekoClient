@@ -1,22 +1,18 @@
 package neko.utils;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
-import java.net.ProxySelector;
-import java.net.SocketAddress;
-import java.net.URI;
-import java.net.URL;
 import java.net.Proxy.Type;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 import java.util.UUID;
+import java.util.Vector;
 
 import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.input.Keyboard;
@@ -27,7 +23,6 @@ import com.mojang.authlib.GameProfile;
 import neko.Client;
 import neko.dtb.Alt;
 import neko.dtb.RequestThread;
-import neko.gui.GuiShop;
 import neko.gui.InGameGui;
 import neko.gui.NekoUpdate;
 import neko.guicheat.GuiManager;
@@ -153,15 +148,20 @@ import net.minecraft.world.WorldSettings.GameType;
 public class ChatUtils {
 	Minecraft mc = Minecraft.getMinecraft();
 	Client var = Client.getNeko();
-		
+	String var3;
+	String args[];
+	int xp;
+	String error;
+	String err = "§c§lErreur, valeur incorrecte";
+	Irc irc;
 	
 	public ChatUtils() {}
 	
-	public void doCommand(String var3) {		
-		int xp = Utils.getRandInt(5);
-		String error = "§c§lErreur: Essayez "+var.prefixCmd+"help";
-		String err = "§c§lErreur, valeur incorrecte";
-		Irc irc = Irc.getInstance();
+	public void doCommand(String var1) {	
+		var3 = var1;
+		xp = Utils.getRandInt(5);
+		error = "§c§lErreur: Essayez "+var.prefixCmd+"help";
+		irc = Irc.getInstance();
 		
 		if (var.onlyrpg.isActive()) {
 			boolean valid=false;
@@ -213,7 +213,7 @@ public class ChatUtils {
 		}	
 		
 		if (var3.startsWith(var.prefixCmd) && Utils.verif==null) {
-			final String [] args = var3.split(" ");
+			args = var3.split(" ");
 			if (args[0].equalsIgnoreCase(var.prefixCmd)) {
 				Utils.addChat(error); 
 				Utils.checkXp(xp);
@@ -872,6 +872,7 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Irc mode <Hybride:Normal:Only>", var.prefixCmd+"irc mode ", "§7Change le mode de l'irc", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Irc list", var.prefixCmd+"irc list", "§7Affiche la liste des joueurs connectés sur Neko et l'IRC", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Irc hide", var.prefixCmd+"irc hide", "§7Cache les messages de join/left", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Irc playerclic", var.prefixCmd+"irc playerclic", "§7Change entre la connexion au serveur du joueur ou le contacter par message privé quand on clic dessus", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("xray")) {
@@ -2094,6 +2095,11 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
+		}
+		doCommand2();
+	}
+		public void doCommand2() {
+			if (var3.startsWith(var.prefixCmd) && Utils.verif==null) {
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"highjump")) {
 				if (args[1].equalsIgnoreCase("height")) {
 					try {
@@ -2587,6 +2593,8 @@ public class ChatUtils {
 					Utils.toggleModule("AutoClic");
 				} else {
 					try {		
+						if (Integer.parseInt(args[1])<=0)
+							args[1] = "1";
 						AutoClic.cps=Integer.parseInt(args[1]);
 						Utils.addChat("§aAutoClic mis à "+args[1]+" cps");
 					} catch (Exception e) {
@@ -4552,15 +4560,22 @@ public class ChatUtils {
 					Utils.addChat(Utils.setColor("Pour changer les touches, faire "+var.prefixCmd+"bind <Nom donné> <Nouvelle touche>", "§a"));
 				} else if (args[1].equalsIgnoreCase("remove") || args[1].equalsIgnoreCase("rm") || args[1].equalsIgnoreCase("delete") || args[1].equalsIgnoreCase("del")) {
 					try {
+						Vector<Module> l = new Vector<Module>();
 						for (Module m : ModuleManager.ActiveModule) {
 							if (m.getName().equalsIgnoreCase(args[2]) && m.isCmd()) {
-								Utils.addChat(Utils.setColor(m.getName()+" a été supprimé", "§c"));
-								ModuleManager.ActiveModule.remove(m);
-								mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-								mc.displayGuiScreen((GuiScreen)null);
-								return;
+								l.add(m);
 							}
 						}
+						for (Module m : l) {
+							ModuleManager.ActiveModule.remove(m);
+						}
+						if (l.size()>0)
+							Utils.addChat(Utils.setColor(l.get(0).getName()+" a été supprimé", "§c"));
+						else
+							Utils.addChat(Utils.setColor("Aucuns cmd à supprimer trouvée", "§c"));
+						mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+						mc.displayGuiScreen((GuiScreen)null);
+						return;
 					} catch (Exception e) {
 						Utils.addChat(err);
 					}
@@ -4861,6 +4876,9 @@ public class ChatUtils {
 					ArrayList<String> list = new ArrayList<>();
 					list.add(args[2]);					
 					new RequestThread("nameisfree", list).start();				
+				} else if (args[1].equalsIgnoreCase("playerclic") || args[1].equalsIgnoreCase("pc")) {
+					irc.changePlayerClic();
+					Utils.addChat("§aPlayerClic changé en "+irc.getPClic()+" !");
 				} else if (args[1].equalsIgnoreCase("hide")) {
 					if (irc.isHideJl()) {
 						Utils.addChat("§aMessage join/left affichés");

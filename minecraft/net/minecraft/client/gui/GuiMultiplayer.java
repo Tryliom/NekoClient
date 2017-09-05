@@ -14,6 +14,8 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.network.LanServerDetector;
 import net.minecraft.client.network.OldServerPinger;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.util.ChatComponentText;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
@@ -159,6 +161,7 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
             	try {
 	                this.mc.theWorld.sendQuittingDisconnectingPacket();
 	                this.mc.loadWorld((WorldClient)null);
+	                GuiConnecting.networkManager.getNetHandler().onDisconnect(new ChatComponentText(""));
             	} catch (Exception e) {}
                 this.connectToSelected();
             }
@@ -382,13 +385,12 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
     public void connectToSelected()
     {
     	
-    	if (mc.theWorld!=null) {
-    		this.mc.theWorld.sendQuittingDisconnectingPacket();
-            this.mc.loadWorld((WorldClient)null);
-    	}
+    	
     	
         GuiListExtended.IGuiListEntry var1 = this.serverListSelector.func_148193_k() < 0 ? null : this.serverListSelector.getListEntry(this.serverListSelector.func_148193_k());
-
+		if (mc.theWorld!=null) {
+			Utils.launchConnect(((ServerListEntryNormal)var1).getServerData());
+		}
         if (var1 instanceof ServerListEntryNormal)
         {
             this.connectToServer(((ServerListEntryNormal)var1).getServerData());
@@ -403,11 +405,16 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
     private void connectToServer(ServerData server)
     {
     	if (mc.theWorld!=null) {
-    		this.mc.theWorld.sendQuittingDisconnectingPacket();
-            this.mc.loadWorld((WorldClient)null);
+    		Utils.launchConnect(server);
+    		Utils.currServ= server.serverIP;
+    	} else {
+	    	Utils.currServ= server.serverIP;
+	    	try {
+	    		GuiConnecting.networkManager.closeChannel(null);
+	    		GuiConnecting.networkManager.getNetHandler().setDisconnected(true);
+	    	} catch (Exception e) {}
+	        this.mc.displayGuiScreen(new GuiConnecting(this, this.mc, server));
     	}
-    	Utils.currServ= server.serverIP;
-        this.mc.displayGuiScreen(new GuiConnecting(this, this.mc, server));
     }
 
     public void selectServer(int index)

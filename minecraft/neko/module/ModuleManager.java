@@ -167,6 +167,12 @@ public class ModuleManager {
 		Utils.getRank("Dév Neko").setDesc("Développe chaque jours !");
 		rang.add(new Rank("Amour à Tryliom <3", 5000, Rate.CrazyLove, "§4", true, 0));
 		Utils.getRank("Amour à Tryliom <3").setDesc("Adore son Tryliom, ferais tout pour lui et sa soumise absolue :3");
+		rang.add(new Rank("Admin Neko", 3000, Rate.CrazyLove, "§4", true, 0));
+		Utils.getRank("Admin Neko").setDesc("Administrateur Neko");
+		rang.add(new Rank("Modérateur Neko", 2000, Rate.CrazyLove, "§d", true, 0));
+		Utils.getRank("Modérateur Neko").setDesc("Modérateur Neko");
+		rang.add(new Rank("Helper Neko", 1000, Rate.CrazyLove, "§3", true, 0));
+		Utils.getRank("Helper Neko").setDesc("Helper Neko");
 		
 		// Titan
 		rang.add(new Rank("Tryliom", 4000, Rate.Titan, "§4§o", true, 0));
@@ -263,7 +269,7 @@ public class ModuleManager {
 		Utils.getRank("TryTry Satanique").setLotRateDivin(1);
 		Utils.getRank("TryTry Satanique").setGiftPlus(3);
 		rang.add(new Rank("Satan", 666, Rate.Satanique, "§c§n", true, 0));
-		Utils.getRank("Satan").setDesc("Le roi de l'Enfer, il possède 16 enfants actuellement dont Lucifer");
+		Utils.getRank("Satan").setDesc("Le roi de l'Enfer, il possède 18 enfants");
 		rang.add(new Rank("Maître Satanique", 888, Rate.Satanique, "§c", true, 0));
 		Utils.getRank("Maître Satanique").setDesc("Punis le Soumis dans des rites sataniques terrifiants");
 		Utils.getRank("Maître Satanique").setLotRateTitan(1);

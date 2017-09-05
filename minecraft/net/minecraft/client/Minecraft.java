@@ -371,7 +371,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         this.sessionService = (new YggdrasilAuthenticationService(p_i45547_1_.field_178745_a.field_178751_c, UUID.randomUUID().toString())).createMinecraftSessionService();
         this.session = p_i45547_1_.field_178745_a.field_178752_a;
         logger.info("Setting user: " + this.session.getUsername());
-        logger.info("(Session ID is " + this.session.getSessionID() + ")");
+        logger.info("(Session ID is <hidden>)");
         this.isDemo = p_i45547_1_.field_178741_d.field_178756_a;
         this.displayWidth = p_i45547_1_.field_178743_b.field_178764_a > 0 ? p_i45547_1_.field_178743_b.field_178764_a : 1;
         this.displayHeight = p_i45547_1_.field_178743_b.field_178762_b > 0 ? p_i45547_1_.field_178743_b.field_178762_b : 1;

@@ -506,7 +506,8 @@ public class GuiAltManager extends GuiScreen {
 	    { 
 	    	try {
 		      Account alt = accounts.get(id);
-		      RenderUtils.drawFace(alt.getUsername()==null ? "" : alt.getUsername(), x + 1, y + 1, 24, 24, true);
+		      if (alt.getUsername()!=null)
+		    	  RenderUtils.drawFace(alt.getUsername(), x + 1, y + 1, 24, 24, true);
 		      var.NekoFont.drawString("Email: " + alt.getEmail()+((alt.getUsername()==null || alt.getUsername().isEmpty()) ? (Utils.lastAccount>0 && Utils.lastAccount-1==id && alt.isValid()) ? " ("+mc.session.getUsername()+")" : "" : " ("+alt.getUsername()+")"), x + 31, y + 3, 10526880);
 		      var.NekoFont.drawString(alt.isCracked() ? "§cCracké" : "§aPremium"+((Utils.lastAccount>0 && Utils.lastAccount-1==id && alt.isValid()) ? " §7[§aSélectionné§7]" : ""), x + 31, y + 15, 10526880);
 	    	} catch (Exception e) {}

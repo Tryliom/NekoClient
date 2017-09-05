@@ -92,4 +92,10 @@ public class NetHandlerHandshakeTCP implements INetHandlerHandshakeServer
             }
         }
     }
+
+	@Override
+	public void setDisconnected(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -18,6 +18,7 @@ public class Irc {
 	private IrcMode mode=IrcMode.Normal;
 	private boolean hideJl=false;
 	private String lastMsg="";
+	private String playerClic="connect";
 		
 	public Irc() {
 		if (instance==null)
@@ -101,6 +102,14 @@ public class Irc {
 	public void setMode(IrcMode mode) {
 		this.mode = mode;
 	}
+	
+	public String getPClic() {
+		return this.playerClic;
+	}	
+
+	public void setPlayerClic(String playerClic) {
+		this.playerClic = playerClic;
+	}
 
 	public void addChatIrc(String msg) {
 		if (this.getNamePlayer().isEmpty() || this.idPlayer<=0) {
@@ -148,6 +157,25 @@ public class Irc {
 			}
 			Utils.saveAll();
 		}
+	}
+	
+	public void changePlayerClic() {
+		if (this.playerClic.equalsIgnoreCase("connect")) {
+			this.playerClic = "msg";
+		} else {
+			this.playerClic = "connect";
+		}
+	}
+	
+	public String getPlayerClic(String name, String serv) {
+		String s = "";
+		Client var = Client.getNeko();
+		if (this.playerClic.equalsIgnoreCase("connect")) {
+			s=var.prefixCmd+"connect "+serv;
+		} else {
+			s=(Irc.getInstance().getMode() == IrcMode.Normal ? Irc.getInstance().getPrefix() : "")+"//w "+name+" ";
+		}
+		return s;
 	}
 	
 }

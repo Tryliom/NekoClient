@@ -626,7 +626,7 @@ public class RequestThread extends Thread {
 								} 
 								if (!cmd.isEmpty() && !type.isEmpty()) {									
 									Event.lastEventId++;
-									if (Event.lastEvent==null || !Event.lastEvent.equals(EventType.valueOf(type)+cmd)) {
+									if (Event.lastEvent==null || !Event.lastEvent.equals(EventType.valueOf(type)+" "+cmd)) {
 										list.add(new Event(EventType.valueOf(type), cmd));
 										cmd="";
 										type="";
@@ -860,7 +860,7 @@ public class RequestThread extends Thread {
 					String l;
 					try {
 						while ((l = sc.nextLine()) != null) {
-							if (l.contains("muted")) {
+							if (l.equalsIgnoreCase("muted=muted<br>")) {
 								cont = true;
 							} 
 						}
@@ -873,7 +873,7 @@ public class RequestThread extends Thread {
 				
 				if (pid==1 && !Irc.getInstance().isHideJl()) {
 					Utils.addChat2Irc(m, "", "§7"+m, true, Chat.Summon);
-				} else if (!cont && pid==1 ? !Irc.getInstance().isHideJl() : true) {					
+				} else if (!cont && (pid==1 ? !Irc.getInstance().isHideJl() : true)) {					
 					String pRank="";
 					String pRankColor="";
 					String pName="";
@@ -947,10 +947,12 @@ public class RequestThread extends Thread {
 			        Locale loc = new Locale("FR", "CH");
 			        String first="";
 			        boolean isPv=false;
+			        String msg2 = m;
 			        if (m.contains(Irc.getInstance().getNamePlayer())) {
 			        	m = m.replaceAll(Irc.getInstance().getNamePlayer(), "§d"+Irc.getInstance().getNamePlayer()+"§f");
 			        	mc.thePlayer.playSound("random.successful_hit", 0.5F, 0.5F);
 			        }
+			        
 			        m = m.replaceAll("Â", "");
 			        if (m.startsWith("§§")) {
 			        	isPv=true;
@@ -962,11 +964,11 @@ public class RequestThread extends Thread {
 			        String sec="§7["+pRankColor+pRank+"§7]\n§d"+pName+"\n§bLvl."+NumberFormat.getNumberInstance(loc).format(pLvl)+" §7["+NumberFormat.getNumberInstance(loc).format(pXp)+"xp§7/"+NumberFormat.getNumberInstance(loc).format(pXpMax)+"xp§7]\n§7Serveur: 	"+pServer+"\n§7"+pKill+" kills\n§7"+pTime+" de temps de jeu\n§7Version: "+pVer+"\n§7Mode: "+pMode;
 			        
 			        if (Utils.verif==null && Irc.getInstance().isOn()) {
-				        if (!Irc.getInstance().getLastMsg().equalsIgnoreCase(m) && !isPv)
-				        	Utils.addChat2Irc("§6[§9IRC§6] "+first, var.prefixCmd+"connect "+pServer, sec, pServer.equalsIgnoreCase("Localhost"), Chat.Summon);
-				        else if (!Irc.getInstance().getLastMsg().equalsIgnoreCase(m) && isPv)
+				        if (!Irc.getInstance().getLastMsg().equalsIgnoreCase(msg2) && !isPv)
+				        	Utils.addChat2Irc("§6[§9IRC§6] "+first, Irc.getInstance().getPlayerClic(pName, pServer), sec, Irc.getInstance().getPClic().equalsIgnoreCase("connect") ? pServer.equalsIgnoreCase("Localhost") : false, Chat.Summon);
+				        else if (!Irc.getInstance().getLastMsg().equalsIgnoreCase(msg2) && isPv)
 				        	Utils.addChat2Irc("§6[§9IRC§6] "+first, "//r ", "§7Cliquez pour répondre !", false, Chat.Summon);				        
-					Irc.getInstance().setLastMsg(m);
+					Irc.getInstance().setLastMsg(msg2);
 			        } else 
 						return;
 				}

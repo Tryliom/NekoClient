@@ -17,6 +17,9 @@ public class Blink extends Module {
 	public static double lastPosX;
 	public static double lastPosY;
 	public static double lastPosZ;
+	public static float lastYaw;
+	public static float lastPitch;
+	public static boolean onGround;
 	
 	public Blink() {
 		super("Blink", Keyboard.KEY_NONE, Category.MOVEMENT);
@@ -28,6 +31,9 @@ public class Blink extends Module {
 		lastPosX=mc.thePlayer.posX;
 		lastPosY=mc.thePlayer.posY;
 		lastPosZ=mc.thePlayer.posZ;
+		lastYaw=mc.thePlayer.rotationYaw;
+		lastPitch=mc.thePlayer.rotationPitch;
+		onGround=mc.thePlayer.onGround;
 	    this.fakePlayer = new EntityOtherPlayerMP(mc.theWorld, mc.thePlayer.getGameProfile());
 	    this.fakePlayer.clonePlayer(mc.thePlayer, true);
 	    this.fakePlayer.copyLocationAndAnglesFrom(mc.thePlayer);

@@ -34,4 +34,10 @@ public class NetHandlerStatusServer implements INetHandlerStatusServer
     {
         this.networkManager.sendPacket(new S01PacketPong(packetIn.getClientTime()));
     }
+
+	@Override
+	public void setDisconnected(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
 }

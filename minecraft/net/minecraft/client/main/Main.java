@@ -1,8 +1,6 @@
 package net.minecraft.client.main;
 
-import com.google.gson.GsonBuilder;
-import com.mojang.authlib.properties.PropertyMap;
-import com.mojang.authlib.properties.PropertyMap.Serializer;
+import java.awt.Dimension;
 import java.io.File;
 import java.net.Authenticator;
 import java.net.InetSocketAddress;
@@ -10,11 +8,15 @@ import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.net.Proxy.Type;
 import java.util.List;
+
+import com.google.gson.GsonBuilder;
+import com.mojang.authlib.properties.PropertyMap;
+import com.mojang.authlib.properties.PropertyMap.Serializer;
+
 import joptsimple.ArgumentAcceptingOptionSpec;
 import joptsimple.NonOptionArgumentSpec;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
-import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Session;
 
@@ -38,12 +40,15 @@ public class Main
         ArgumentAcceptingOptionSpec var8 = var1.accepts("proxyPort").withRequiredArg().defaultsTo("8080", new String[0]).ofType(Integer.class);
         ArgumentAcceptingOptionSpec var9 = var1.accepts("proxyUser").withRequiredArg();
         ArgumentAcceptingOptionSpec var10 = var1.accepts("proxyPass").withRequiredArg();
-        ArgumentAcceptingOptionSpec var11 = var1.accepts("username").withRequiredArg().defaultsTo("Luciferounet", new String[0]);
+        ArgumentAcceptingOptionSpec var11 = var1.accepts("username").withRequiredArg().defaultsTo("Dabira", new String[0]);
         ArgumentAcceptingOptionSpec var12 = var1.accepts("uuid").withRequiredArg();
         ArgumentAcceptingOptionSpec var13 = var1.accepts("accessToken").withRequiredArg().required();
-        ArgumentAcceptingOptionSpec var14 = var1.accepts("version").withRequiredArg().required();
-        ArgumentAcceptingOptionSpec var15 = var1.accepts("width").withRequiredArg().ofType(Integer.class).defaultsTo(Integer.valueOf(854), new Integer[0]);
-        ArgumentAcceptingOptionSpec var16 = var1.accepts("height").withRequiredArg().ofType(Integer.class).defaultsTo(Integer.valueOf(480), new Integer[0]);
+        ArgumentAcceptingOptionSpec var14 = var1.accepts("version").withRequiredArg().required();	
+        Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        int height = (int)dimension.getHeight();
+        int width  = (int)dimension.getWidth();
+        ArgumentAcceptingOptionSpec var15 = var1.accepts("width").withRequiredArg().ofType(Integer.class).defaultsTo(Integer.valueOf(1400>width ? 854 : 1400), new Integer[0]);
+        ArgumentAcceptingOptionSpec var16 = var1.accepts("height").withRequiredArg().ofType(Integer.class).defaultsTo(Integer.valueOf(900>height ? 484 : 900), new Integer[0]);
         ArgumentAcceptingOptionSpec var17 = var1.accepts("userProperties").withRequiredArg().required();
         ArgumentAcceptingOptionSpec var18 = var1.accepts("assetIndex").withRequiredArg();
         ArgumentAcceptingOptionSpec var19 = var1.accepts("userType").withRequiredArg().defaultsTo("legacy", new String[0]);

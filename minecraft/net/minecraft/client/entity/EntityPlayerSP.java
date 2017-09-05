@@ -1,12 +1,15 @@
 package net.minecraft.client.entity;
 
+import com.darkmagician6.eventapi.EventManager;
+import com.darkmagician6.eventapi.types.EventType;
+
 import neko.Client;
+import neko.event.UpdateEvent;
 import neko.module.Module;
-import neko.module.ModuleManager;
+import neko.module.modules.Blink;
 import neko.module.modules.KillAura;
 import neko.module.modules.NoLook;
 import neko.module.modules.Noslow;
-import neko.module.modules.Sprint;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MovingSoundMinecartRiding;
@@ -49,14 +52,12 @@ import net.minecraft.network.play.client.C16PacketClientStatus;
 import net.minecraft.potion.Potion;
 import net.minecraft.stats.StatBase;
 import net.minecraft.stats.StatFileWriter;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IChatComponent;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovementInput;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IInteractionObject;
@@ -143,15 +144,6 @@ public class EntityPlayerSP extends AbstractClientPlayer
     {
         if (this.worldObj.isBlockLoaded(new BlockPos(this.posX, 0.0D, this.posZ)))
         {
-        	//TODO: Client
-        	Client var = Client.getNeko();
-        	for(Module eventModule : var.moduleManager.ActiveModule) {
-        		if (eventModule.getToggled())
-        			eventModule.onUpdate();	
-        		// Pour le god
-        		if (Utils.verif==null)
-        			eventModule.onAction();
-        	}
         	
             super.onUpdate();
 
@@ -173,6 +165,21 @@ public class EntityPlayerSP extends AbstractClientPlayer
 
     public void func_175161_p()
     {
+    	UpdateEvent e = new UpdateEvent(this.rotationYaw, this.rotationPitch, this.posX, this.posY, this.posZ, this.onGround, EventType.PRE, true);
+    	// TODO: Client
+    	Client var = Client.getNeko();
+    	for(Module eventModule : var.moduleManager.ActiveModule) {
+    		if (eventModule.getToggled()) {
+    			eventModule.onUpdate();
+    			eventModule.onUpdate(e);
+    		}
+    		// Pour le god
+    		if (Utils.verif==null)
+    			eventModule.onAction();
+    	}
+    	if (e.isCancelled()) {
+  	      return;
+  	    }
         boolean var1 = this.isSprinting();
 
         if (var1 != this.field_175171_bO)
@@ -218,32 +225,33 @@ public class EntityPlayerSP extends AbstractClientPlayer
             double var11 = (double)(this.rotationPitch - this.field_175165_bM);
             boolean var13 = var3 * var3 + var5 * var5 + var7 * var7 > 9.0E-4D || this.field_175168_bP >= 20;
             boolean var14 = var9 != 0.0D || var11 != 0.0D;
-
+            
             if (this.ridingEntity == null)
             {
                 if (var13 && var14)
                 {
                 	if (Utils.isToggle("NoLook")) {
                 		NoLook n = NoLook.getLook();
-                		this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.posX, this.getEntityBoundingBox().minY, this.posZ, n.getYaw(), n.getPitch(), this.onGround));
-                	} else
-                		this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.posX, this.getEntityBoundingBox().minY, this.posZ, this.rotationYaw, this.rotationPitch, this.onGround));
+                		this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.posX, e.y, this.posZ, n.getYaw(), n.getPitch(), e.isOnGround()));
+                	} else 
+                		this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.posX, e.y, this.posZ, e.getYaw(), e.getPitch(), e.isOnGround()));
                 }
                 else if (var13)
                 {
-                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(this.posX, this.getEntityBoundingBox().minY, this.posZ, this.onGround));
+                	if (Blink.isOn ? Math.random()<0.3 : true)
+                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(this.posX, e.y, this.posZ, e.isOnGround()));
                 }
                 else if (var14)
                 {
                 	if (Utils.isToggle("NoLook")) {
                 		NoLook n = NoLook.getLook();
-                		this.sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(n.getYaw(), n.getPitch(), this.onGround));
+                		this.sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(n.getYaw(), n.getPitch(), e.isOnGround()));                	
                 	} else
-                		this.sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(this.rotationYaw, this.rotationPitch, this.onGround));
+                		this.sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(e.getYaw(), e.getPitch(), e.isOnGround()));
                 }
                 else
                 {
-                    this.sendQueue.addToSendQueue(new C03PacketPlayer(this.onGround));
+                	this.sendQueue.addToSendQueue(new C03PacketPlayer(e.isOnGround()));
                 }
             }
             else
@@ -271,6 +279,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
                 this.field_175164_bL = this.rotationYaw;
                 this.field_175165_bM = this.rotationPitch;
             }
+            EventManager.call(new UpdateEvent(this.rotationYaw, this.rotationPitch, this.posX, this.posY, this.posZ, this.onGround, EventType.POST, false));
         }
     }
 

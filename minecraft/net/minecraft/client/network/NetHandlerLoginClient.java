@@ -181,4 +181,10 @@ public class NetHandlerLoginClient implements INetHandlerLoginClient
             this.field_147393_d.setCompressionTreshold(p_180464_1_.func_179731_a());
         }
     }
+
+	@Override
+	public void setDisconnected(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
 }

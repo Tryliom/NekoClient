@@ -878,13 +878,13 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     	}
     	
     	if (Blink.isOn) {
-    		if (p_147297_1_ instanceof C03PacketPlayer || p_147297_1_ instanceof C02PacketUseEntity || p_147297_1_ instanceof C08PacketPlayerBlockPlacement || p_147297_1_ instanceof C07PacketPlayerDigging || p_147297_1_ instanceof C0BPacketEntityAction || p_147297_1_ instanceof C09PacketHeldItemChange) {
+    		if (p_147297_1_ instanceof C03PacketPlayer.C04PacketPlayerPosition || p_147297_1_ instanceof C03PacketPlayer.C06PacketPlayerPosLook || p_147297_1_ instanceof C02PacketUseEntity || p_147297_1_ instanceof C08PacketPlayerBlockPlacement || p_147297_1_ instanceof C07PacketPlayerDigging || p_147297_1_ instanceof C0BPacketEntityAction || p_147297_1_ instanceof C09PacketHeldItemChange) {
     			Blink.packet.add(p_147297_1_);
         		return;
     		}
     	}
     	
-    	if (Utils.isToggle("Freecam") && p_147297_1_ instanceof C03PacketPlayer && !Blink.isOn) {
+    	if (Utils.isToggle("Freecam") && (p_147297_1_ instanceof C03PacketPlayer || p_147297_1_ instanceof C0APacketAnimation) && !Blink.isOn) {
     		return;
     	}
     	
@@ -2418,4 +2418,10 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
             }
         }
     }
+
+	@Override
+	public void setDisconnected(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
 }

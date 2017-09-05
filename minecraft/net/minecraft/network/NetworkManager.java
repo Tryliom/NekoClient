@@ -473,4 +473,8 @@ public class NetworkManager extends SimpleChannelInboundHandler
             this.futureListeners = inFutureListeners;
         }
     }
+    
+    public void setDisconnected(boolean b) {
+    	this.disconnected=b;
+    }
 }

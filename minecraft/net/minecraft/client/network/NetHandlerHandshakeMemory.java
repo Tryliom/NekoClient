@@ -33,4 +33,10 @@ public class NetHandlerHandshakeMemory implements INetHandlerHandshakeServer
      * Invoked when disconnecting, the parameter is a ChatComponent describing the reason for termination
      */
     public void onDisconnect(IChatComponent reason) {}
+
+	@Override
+	public void setDisconnected(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
 }

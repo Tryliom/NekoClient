@@ -58,6 +58,11 @@ public class RealmsServerStatusPinger
                         RealmsServerStatusPinger.LOGGER.error("Can\'t ping " + p_pingServer_1_ + ": " + reason.getUnformattedText());
                     }
                 }
+				@Override
+				public void setDisconnected(boolean b) {
+					// TODO Auto-generated method stub
+					
+				}
             });
 
             try

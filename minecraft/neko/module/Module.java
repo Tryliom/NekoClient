@@ -3,11 +3,11 @@ package neko.module;
 import java.util.ArrayList;
 
 import neko.Client;
+import neko.event.UpdateEvent;
 import neko.gui.InGameGui;
 import neko.utils.ChatUtils;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 
 public class Module 
@@ -127,5 +127,7 @@ public class Module
 	  public void onClick() {}
 	  
 	  public void onRightClick() {}
+	  
+	  public void onUpdate(UpdateEvent event) {}
 	  	  
 }

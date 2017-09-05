@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.Vector;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -32,16 +33,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.ibm.icu.text.SimpleDateFormat;
 import com.mojang.authlib.Agent;
 import com.mojang.authlib.UserAuthentication;
 import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
-import jdk.nashorn.internal.parser.JSONParser;
 import neko.Client;
-import neko.dtb.RequestThread;
 import neko.gui.GuiAltManager;
 import neko.gui.InGameGui;
 import neko.gui.NekoUpdate;
@@ -109,7 +107,6 @@ import neko.module.other.Active;
 import neko.module.other.BddManager;
 import neko.module.other.Chat;
 import neko.module.other.Conditions;
-import neko.module.other.Event;
 import neko.module.other.Irc;
 import neko.module.other.IrcMode;
 import neko.module.other.OnlyRpgManager;
@@ -122,6 +119,10 @@ import net.mcleaks.MCLeaks;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraft.client.multiplayer.GuiConnecting;
+import net.minecraft.client.multiplayer.ServerData;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.enchantment.Enchantment;
@@ -138,13 +139,11 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.play.client.C00PacketKeepAlive;
 import net.minecraft.network.play.client.C03PacketPlayer;
-import net.minecraft.src.Json;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IChatComponent;
-import net.minecraft.util.JsonUtils;
 import net.minecraft.util.Session;
 import net.minecraft.world.WorldSettings.GameType;
 
@@ -647,9 +646,28 @@ public class Utils {
 			Desktop.getDesktop().browse(url);
 		} catch (Exception e) {
 			addChat("Erreur");
-			e.printStackTrace();
 		}	
 
+	}
+	
+	public static void launchConnect(final ServerData sd) {
+		if (mc.theWorld!=null) {
+    		mc.theWorld.sendQuittingDisconnectingPacket();
+            mc.loadWorld((WorldClient)null);      
+    	}
+		GuiConnecting.networkManager.closeChannel(null);
+		GuiConnecting.networkManager.getNetHandler().setDisconnected(true); 
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+					Minecraft.getMinecraft().displayGuiScreen(new GuiMainMenu());
+				try {
+					this.wait(200);
+				} catch (InterruptedException e) {}
+				Minecraft.getMinecraft().displayGuiScreen(new GuiConnecting(Minecraft.getMinecraft().currentScreen, Minecraft.getMinecraft(), sd));
+			}
+		}).start();
 	}
 	
 	public static String getCoord(EntityPlayer p) {
@@ -936,7 +954,7 @@ public class Utils {
 			addChat2("§6"+var.prefixCmd+"Version <String>", var.prefixCmd+"version ", "§7Change la version lancée dans les Snooper Settings", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Gm <Id>", var.prefixCmd+"gm ", "§7Change votre gamemode. Si ça échoue vous le serez quand même mais seulement\n§7pour vous afin de pouvoir exploit", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Invsee <Player>", var.prefixCmd+"invsee ", "§7Affiche l'inventaire du joueur noté", false, Chat.Summon);
-			addChat2("§6"+var.prefixCmd+"GuiOnStart", var.prefixCmd+"guionstart", "§7Active/désactive le fait que le clickgui s'active au démarrage de Neko", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Broadcast", var.prefixCmd+"bc", "§7Affiche les bonus actuelles des serveurs", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Hclip <Int>", var.prefixCmd+"hclip ", "§7Vous téléporte en avant/arrière", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Irc", var.prefixCmd+"help irc", "§7Voir l'help de l'Irc (Cliquez pour afficher)", false, Chat.Summon);
 			break;
@@ -1880,7 +1898,8 @@ public class Utils {
             try (FileWriter writer = new FileWriter(file)) {
             	Irc	irc = Irc.getInstance();
             	BddManager b = BddManager.getBdd();
-            	s+=irc.getNamePlayer()+"\n"+irc.getPrefix()+"\n"+irc.getIdPlayer()+"\n"+irc.isOn()+"\n\n"+irc.getMode()+"\n"+irc.isHideJl()+"\n"+(b.isRemember() ? b.getUser()+"\n"+b.getPass()+"\n" : "");
+            	s+=irc.getNamePlayer()+"\n"+irc.getPrefix()+"\n"+irc.getIdPlayer()+"\n"+irc.isOn()+"\n\n"+irc.getMode()+"\n"+irc.isHideJl()+"\n"+(b.isRemember() ? b.getUser()+"\n"+b.getPass()+"\n" : "\n\n");
+            	s+=irc.getPClic()+"\n";
             	int i = (s.length()+1)*666-111;
             	String res= s+"§"+i;
                 writer.write(res);
@@ -1930,6 +1949,9 @@ public class Utils {
 	                		b.setUser(ligne);
 	                	if (i==9)
 	                		b.setPass(ligne);
+	                	if (i==10)
+	                		irc.setPlayerClic(ligne);	                	
+	                	
 	                	
 	                	if (b.getUser()!=null)
 	                		b.setRemember(true);
@@ -3338,6 +3360,42 @@ public class Utils {
 		}
 	}
 	
+	public static String getSolo() {
+		int randy = (int) Math.round(Math.random()*9);
+		String s = "Solo";
+		switch (randy) {
+			case 0:s="Seul au monde D:";break;
+			case 1:s="Solo";break;
+			case 2:s="§aEspionner les creepers";break;
+			case 3:s="Jouer à chat avec les mobis :3";break;
+			case 4:s="Fuyez pauvres fou !";break;
+			case 5:s="Pas de ban ici !";break;
+			case 6:s="§cApocalypse now !";break;
+			case 7:s="§dNeko à câliner :3";break;
+			case 8:s="<3 Solitaire <3";break;
+		}
+		return s;
+	}
+	
+	public static String getMulti() {
+		int randy = (int) Math.round(Math.random()*11);
+		String s = "Multiplayer";
+		switch (randy) {
+			case 0:s="§eVoler des elos ;3";break;
+			case 1:s="Rekt des noobs";break;
+			case 2:s="Faire voler les joueurs";break;
+			case 3:s="§cYou are banned now !";break;
+			case 4:s="Joue avec des Neko :3";break;
+			case 5:s="§cNe pas appuyer";break;
+			case 6:s="Pas taper D:";break;
+			case 7:s="§bGO §fGO §cGO §d!";break;
+			case 8:s="Nyanyater avec des neko :3";break;
+			case 9:s="Please rekt me :3";break;
+			case 10:s="Ez";break;
+		}
+		return s;
+	}
+	
 	public static String getNyah() {
 		n=true;
 		int randy = (int) Math.round(Math.random()*13);
@@ -4015,6 +4073,42 @@ public class Utils {
 		
 		return nyah;
 	}	
+	
+	public static String getAn() {
+		try {
+			URL url = new URL("http://neko.alwaysdata.net/controler/Neko/an.html");
+			Scanner sc = new Scanner(url.openStream());
+			ArrayList<String> s = new ArrayList<>();
+			String l;
+			String cl="";
+			try {
+					while ((l = sc.nextLine()) != null) {
+						if (!l.equalsIgnoreCase("")) {
+							s.add(l);
+							cl+=l+"\n";
+						}
+					}
+			} catch (Exception e) {}
+			sc.close();
+			String res = "";
+			for (int i=0;i<s.size();i++) {
+				if (!(s.get(i).startsWith("..") || s.get(i).startsWith("if") || s.get(i).startsWith("bonus") || s.get(i).startsWith("="))) {
+					String user;
+					if (MCLeaks.isAltActive()) {
+						user=MCLeaks.getMCName();
+					} else {
+						user=mc.session.getUsername();
+					}
+					String sr = s.get(i);
+					sr = sr.replaceAll("!!player", user);
+					sr = sr.replaceAll("!!ver", var.CLIENT_VERSION);
+					res+=sr+"\n";
+				}					
+			}
+			return res;
+		} catch (Exception e) {}
+		return "§cErreur";
+	}
 
 	public static void displayAn() {
 		try {
@@ -4031,6 +4125,7 @@ public class Utils {
 						}
 					}
 			} catch (Exception e) {}
+			sc.close();
 			int k=0;
 			for (int i=0;i<s.size();i++) {
 				if (s.get(i).startsWith("..")) {

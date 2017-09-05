@@ -228,4 +228,10 @@ public class NetHandlerLoginServer implements INetHandlerLoginServer, IUpdatePla
 
         private LoginState(String p_i45297_1_, int p_i45297_2_) {}
     }
+
+	@Override
+	public void setDisconnected(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
 }

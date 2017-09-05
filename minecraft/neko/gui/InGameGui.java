@@ -12,6 +12,7 @@ import neko.module.modules.Blink;
 import neko.module.modules.Friends;
 import neko.module.modules.HUD;
 import neko.module.modules.Radar;
+import neko.module.modules.Regen;
 import neko.module.other.Active;
 import neko.module.other.Rate;
 import neko.utils.RenderUtils;
@@ -52,6 +53,8 @@ public class InGameGui {
 		    	String s = color+module.getName();
 		    	if (module.getName().equalsIgnoreCase("blink"))
 		    		s+=" ("+Blink.packet.size()+")";
+		    	if (module.getName().equalsIgnoreCase("regen"))
+		    		s+=" ("+Regen.regen+")";
 		    	var.NekoFont.drawStringWithShadow(s, ((GuiScreen.width-5)-(var.NekoFont).getStringWidth(s)), yPos, 0);
 		    	yPos += var.NekoFont.FONT_HEIGHT + 1;
 		    }

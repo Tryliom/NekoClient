@@ -1613,4 +1613,10 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, IUpdatePlaye
             }
         }
     }
+
+	@Override
+	public void setDisconnected(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
 }

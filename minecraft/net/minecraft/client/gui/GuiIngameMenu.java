@@ -7,8 +7,10 @@ import neko.module.other.OnlyRpgManager;
 import neko.utils.Utils;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
+import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.util.ChatComponentText;
 
 public class GuiIngameMenu extends GuiScreen
 {
@@ -71,7 +73,10 @@ public class GuiIngameMenu extends GuiScreen
 	                button.enabled = false;
 	                this.mc.theWorld.sendQuittingDisconnectingPacket();
 	                this.mc.loadWorld((WorldClient)null);
-            	} catch (Exception e) {}
+	                GuiConnecting.networkManager.closeChannel(null);
+            	} catch (Exception e) {
+            		e.printStackTrace();
+            	}
                 this.mc.displayGuiScreen(new GuiMainMenu());
 
             case 2:

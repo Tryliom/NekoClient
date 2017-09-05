@@ -166,6 +166,11 @@ public class OldServerPinger
                     OldServerPinger.this.tryCompatibilityPing(server);
                 }
             }
+			@Override
+			public void setDisconnected(boolean b) {
+				// TODO Auto-generated method stub
+				
+			}
         });
 
         try
