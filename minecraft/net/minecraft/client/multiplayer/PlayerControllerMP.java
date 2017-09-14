@@ -1,7 +1,7 @@
 package net.minecraft.client.multiplayer;
 
+import neko.module.modules.KillAura;
 import neko.module.modules.Reach;
-import neko.module.modules.Trigger;
 import neko.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -506,7 +506,8 @@ public class PlayerControllerMP
     {
         this.syncCurrentPlayItem();
         this.netClientHandler.addToSendQueue(new C02PacketUseEntity(targetEntity, C02PacketUseEntity.Action.ATTACK));
-
+        if (KillAura.ec)
+        	Utils.addChat(targetEntity.getName());
         if (this.currentGameType != WorldSettings.GameType.SPECTATOR)
         {
             playerIn.attackTargetEntityWithCurrentItem(targetEntity);

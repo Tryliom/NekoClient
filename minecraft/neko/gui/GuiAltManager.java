@@ -66,7 +66,7 @@ public class GuiAltManager extends GuiScreen {
 	    this.buttonList.add(new GuiButton(2, this.width / 2 - 50, this.height - 28, 100, 20, "Supprimer")); 
 	    this.buttonList.add(new GuiButton(3, this.width / 2 - 154, this.height - 52, 100, 20, "Login")); 
 	    this.buttonList.add(new GuiButton(4, this.width / 2 - 50, this.height - 52, 100, 20, "McLeaks"));
-	    this.buttonList.add(new GuiButton(5, this.width / 2 - 154, this.height - 28, 100, 20, "Alt Neko")); 
+	    this.buttonList.add(new GuiButton(5, this.width / 2 - 154, this.height - 28, 100, 20, "§cSupprimé")); 
 	    this.buttonList.add(new GuiButton(0, this.width / 2 + 4 + 50, this.height - 28, 100, 20, "Retour"));
 	    this.buttonList.add(new GuiButton(6, this.width - 150, 10, 100, 20, (check ? "§a" : "§c")+"Checker")); 
 	    this.buttonList.add(new GuiButton(7, this.width / 2 - 258, this.height - 28, 100, 20, "Suivant")); 
@@ -143,11 +143,6 @@ public class GuiAltManager extends GuiScreen {
 	      break;
 	    case 4: 
 	    	this.mc.displayGuiScreen(new GuiMcleaks(this));
-		      break;
-	    case 5: 
-	    	String p = mc.session.getUsername();
-	    	// Mettre loginAlt
-	    	this.displaytext = Utils.loginAltManager();
 		      break;
 	    case 6:
 	    	check = !check;
@@ -341,7 +336,6 @@ public class GuiAltManager extends GuiScreen {
 	  private class GuiAdd extends GuiScreen {
 	    private GuiScreen prevGui;
 	    private GuiTextField name_mail;
-	    private GuiTextField password;
 	    private String error="";
 	    
 	    public GuiAdd(GuiScreen gui) {
@@ -352,9 +346,8 @@ public class GuiAltManager extends GuiScreen {
 	      Keyboard.enableRepeatEvents(true);
 	      this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 96 + 12, "Ajouter"));
 	      this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120 + 12, "Retour"));
-	      this.name_mail = new GuiTextField(2, this.fontRendererObj, this.width / 2 - 100, 85, 200, 20);
+	      this.name_mail = new GuiTextField(2, this.fontRendererObj, this.width / 2 - 150, 85, 300, 20);
 	      this.name_mail.setFocused(true);
-	      this.password = new GuiTextField(3, this.fontRendererObj, this.width / 2 - 100, 135, 200, 20);
 	    }
 	    
 	    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -363,10 +356,8 @@ public class GuiAltManager extends GuiScreen {
 	      
 	      drawCenteredString(var.NekoFont, "Alt Manager", this.width / 2, 35, 16777215);
 	      drawCenteredString(var.NekoFont, "§c" + this.error, this.width / 2, 47, 16777215);
-	      drawCenteredString(var.NekoFont, "§7Email/Pseudo", this.width / 2, 67, 16777215);
+	      drawCenteredString(var.NekoFont, "§7Email:Mot de passe (Mettre une virgule pour séparer les comptes)", this.width / 2, 67, 16777215);
 	      this.name_mail.drawTextBox();
-	      drawCenteredString(var.NekoFont, "§7Mot de passe", this.width / 2, 117, 16777215);
-	      this.password.drawTextBox();
 	      super.drawScreen(mouseX, mouseY, partialTicks);
 	    }
 	    
@@ -378,23 +369,29 @@ public class GuiAltManager extends GuiScreen {
 	        break;
 	      case 1: 
 	        try {
-	          String accountasstring = this.name_mail.getText() + " " + this.password.getText();
-	          boolean isList = false;
-	          for (Account account : GuiAltManager.this.accounts) {
-	            if (account.getEmail().equalsIgnoreCase(this.name_mail.getText())) {
-	              isList = true;
-	            }
-	          }
-	          if (isList)
-	          {
-	            this.error = "Le compte a déjà été ajouté...";
-	            return;
-	          }
-	          this.error = "";
-	          String name = this.name_mail.getText();
-		      String pass = this.password.getText();
-	          Utils.saveAccount(name, pass);
-	          displaytext = "Le compte "+name+" a été ajouté !";
+	        	String ms[] = this.name_mail.getText().split(",");
+	        	for (String nm : ms) {
+		        	String s[] = nm.split(":");
+		        	String name = s[0];
+		        	String pass = "";
+		        	if (s.length>1)
+		        		pass = s[1];
+		          String accountasstring = s[0]+" "+pass;
+		          boolean isList = false;
+		          for (Account account : GuiAltManager.this.accounts) {
+		            if (account.getEmail().equalsIgnoreCase(name)) {
+		              isList = true;
+		            }
+		          }
+		          if (isList)
+		          {
+		            this.error = "Le compte a déjà été ajouté...";
+		            return;
+		          }
+		          this.error = "";
+		          Utils.saveAccount(name, pass);
+		          displaytext = "Le compte "+name+" a été ajouté !";
+	        	}
 	          this.mc.displayGuiScreen(this.prevGui);
 	        }
 	        catch (Exception e) {
@@ -406,11 +403,6 @@ public class GuiAltManager extends GuiScreen {
 	    protected void keyTyped(char typedChar, int keyCode) throws IOException {
 	      if (this.name_mail.isFocused())
 	      {
-	    	  if (keyCode == 15) {
-		        	this.password.setFocused(true);
-		        	this.name_mail.setFocused(false);
-		        	return;
-		        }
 	        this.name_mail.textboxKeyTyped(typedChar, keyCode);
 	        try
 	        {
@@ -431,13 +423,6 @@ public class GuiAltManager extends GuiScreen {
 	          e.printStackTrace();
 	        }
 	      }
-	      if (this.password.isFocused()) {
-	    	  if (keyCode == 15) {
-	    		  this.name_mail.setFocused(true);
-	    		  this.password.setFocused(false);
-	    	  } else
-	    		  this.password.textboxKeyTyped(typedChar, keyCode);	        
-	      }
 	      super.keyTyped(typedChar, keyCode);
 	    }
 	    
@@ -445,7 +430,6 @@ public class GuiAltManager extends GuiScreen {
 	      throws IOException
 	    {
 	      this.name_mail.mouseClicked(mouseX, mouseY, mouseButton);
-	      this.password.mouseClicked(mouseX, mouseY, mouseButton);
 	      
 	      super.mouseClicked(mouseX, mouseY, mouseButton);
 	    }

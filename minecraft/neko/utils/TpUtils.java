@@ -1,5 +1,7 @@
 package neko.utils;
 
+import java.util.Vector;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -197,6 +199,41 @@ public class TpUtils {
     		Minecraft.getMinecraft().thePlayer.setPosition(mc.thePlayer.posX+0.5, mc.thePlayer.posY, mc.thePlayer.posZ+0.5);
 			break;
 		}
+	}
+	
+	public int getK(BlockPos target) {
+		int k;
+		double entityPosX = target.getX()-mc.thePlayer.posX;				
+		double entityPosY = target.getY()-mc.thePlayer.posY+1.5;
+		double entityPosZ = target.getZ()-mc.thePlayer.posZ;
+		for (k=1;Utils.verif(entityPosX, k) > 4;k++) {}
+		for (;Utils.verif(entityPosY, k) > 4;k++) {}
+		for (;Utils.verif(entityPosZ, k) > 4;k++) {} 
+		return k;
+	}
+	
+	public String getHow(BlockPos target) {
+		BlockPos player = mc.thePlayer.getPosition();
+		String s="classic";
+		if (target.getY()>player.getY())
+			s="up";
+		else if (target.getY()<player.getY())
+			s="down";
+		return s;
+	}
+	
+	public Vector<Double> getTargetInPos(BlockPos coordTarget) {
+		Vector<Double> v = new Vector<Double>();
+		if (mc.thePlayer!=null) {
+			v.add(coordTarget.getX()-mc.thePlayer.posX);				
+			v.add(coordTarget.getY()-mc.thePlayer.posY);
+			v.add(coordTarget.getZ()-mc.thePlayer.posZ);
+		} else {
+			v.add(1.0);
+			v.add(1.0);
+			v.add(1.0);
+		}
+		return v;
 	}
 
 }

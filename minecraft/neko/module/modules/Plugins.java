@@ -7,7 +7,6 @@ import net.minecraft.network.play.client.C14PacketTabComplete;
 
 public class Plugins extends Module {
 	Minecraft mc = Minecraft.getMinecraft();
-	public static boolean scan=false;
 	public static int count=0;
 	
 	public Plugins() {
@@ -15,10 +14,6 @@ public class Plugins extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (scan) {
-			return;
-		}
-		scan = true;
 		mc.thePlayer.sendQueue.addToSendQueue(new C14PacketTabComplete("/"));
 		super.onEnabled();
 	}
@@ -28,9 +23,9 @@ public class Plugins extends Module {
 			count++;
 		
 		if (count>=120) {
-			scan=false;
 			count=0;
 			u.addChat("§cAucun plugins trouvés");
+			this.toggleModule();
 		}
 	}
 	

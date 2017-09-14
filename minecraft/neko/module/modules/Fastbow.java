@@ -71,7 +71,7 @@ public class Fastbow extends Module {
 				}
 				mc.getNetHandler().addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));			      
 				mc.thePlayer.stopUsingItem();
-			} else if (mc.gameSettings.keyBindUseItem.pressed && nobow && isOn) {
+			} else if (mc.gameSettings.keyBindUseItem.pressed && nobow && isOn && !mc.thePlayer.isSneaking()) {
 				int actual = mc.thePlayer.inventory.currentItem;
 				int bow = getBestBow();
 				if (!hasArrow() || bow<0)

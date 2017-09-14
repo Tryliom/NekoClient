@@ -1,6 +1,7 @@
 package net.minecraft.client.entity;
 
 import com.darkmagician6.eventapi.EventManager;
+import com.darkmagician6.eventapi.events.Event;
 import com.darkmagician6.eventapi.types.EventType;
 
 import neko.Client;
@@ -101,6 +102,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
 
     /** The amount of time an entity has been in a Portal the previous tick */
     public float prevTimeInPortal;
+    public static UpdateEvent e = null;
 
     public EntityPlayerSP(Minecraft mcIn, World worldIn, NetHandlerPlayClient p_i46278_3_, StatFileWriter p_i46278_4_)
     {
@@ -165,7 +167,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
 
     public void func_175161_p()
     {
-    	UpdateEvent e = new UpdateEvent(this.rotationYaw, this.rotationPitch, this.posX, this.posY, this.posZ, this.onGround, EventType.PRE, true);
+    	e = new UpdateEvent(this.rotationYaw, this.rotationPitch, this.posX, this.posY, this.posZ, this.onGround, EventType.PRE, true);
     	// TODO: Client
     	Client var = Client.getNeko();
     	for(Module eventModule : var.moduleManager.ActiveModule) {
@@ -233,13 +235,12 @@ public class EntityPlayerSP extends AbstractClientPlayer
                 	if (Utils.isToggle("NoLook")) {
                 		NoLook n = NoLook.getLook();
                 		this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.posX, e.y, this.posZ, n.getYaw(), n.getPitch(), e.isOnGround()));
-                	} else 
+                	} else
                 		this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.posX, e.y, this.posZ, e.getYaw(), e.getPitch(), e.isOnGround()));
                 }
                 else if (var13)
-                {
-                	if (Blink.isOn ? Math.random()<0.3 : true)
-                    this.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(this.posX, e.y, this.posZ, e.isOnGround()));
+                {                	
+                	this.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(this.posX, e.y, this.posZ, e.isOnGround()));
                 }
                 else if (var14)
                 {
@@ -748,7 +749,8 @@ public class EntityPlayerSP extends AbstractClientPlayer
         {
             if (this.mc.currentScreen != null && !this.mc.currentScreen.doesGuiPauseGame())
             {
-                this.mc.displayGuiScreen((GuiScreen)null);
+            	if (!Utils.isToggle("Exploit"))
+            		this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (this.timeInPortal == 0.0F)

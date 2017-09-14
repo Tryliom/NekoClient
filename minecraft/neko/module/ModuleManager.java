@@ -122,6 +122,8 @@ public class ModuleManager {
 		this.ActiveModule.add(new NoAnim()); // Key NONE
 		this.ActiveModule.add(new CallCmd()); // Key NONE
 		this.ActiveModule.add(new Register()); // Key NONE
+		this.ActiveModule.add(new Flash()); // Key NONE
+		this.ActiveModule.add(new Cancer()); // Key NONE
 		
 		
 		// Ajouter les locks | -- = ..;
@@ -154,6 +156,7 @@ public class ModuleManager {
 		this.Lock.add(new Lock("--reach pvp", 0, "rang", "Commande", "Permet l'activation de la reach pvp", true));
 		this.Lock.add(new Lock("Pyro", 0, "rang", "Cheat", "Enflamme une zone depuis où l'ont vise", true));
 		this.Lock.add(new Lock("TpBack", 50, "souls", "Cheat", "Vous tp sur un bloc choisi quand vous arrivez en dessous du seuil de vie définit", true));
+		this.Lock.add(new Lock("Flash", 0, "???", "Cheat", "Vous retp sur la position set à l'activation", true));
 		
 		
 		
@@ -642,13 +645,13 @@ public class ModuleManager {
 		rang.add(new Rank("Soumis", 500, Rate.Event, "§2", true, 0));
 		Utils.getRank("Soumis").setDesc("J'obéis au Maître");
 		rang.add(new Rank("Maître Pervy", 700, Rate.Event, "§2", true, 0));
-		Utils.getRank("Maître Pervy").setDesc("Alerte pervers");
+		Utils.getRank("Maître Pervy").setDesc("Alerte maître pervers..Il m'attache souvent.. :c (Chut...mais j'adore cha cx )");
 		rang.add(new Rank("Maître Sadique", 700, Rate.Event, "§2", true, 0));
-		Utils.getRank("Maître Sadique").setDesc("Alerte Tryliom sadique");
+		Utils.getRank("Maître Sadique").setDesc("Alerte Tryliom sadique..NON STOP AVEC LE FOUET NAAAAAAAAAAAN..");
 		rang.add(new Rank("Maître Neko", 700, Rate.Event, "§2", true, 0));
-		Utils.getRank("Maître Neko").setDesc("Alerte N-n-nyaaaah..mais mais...j'ai rien fait...me punis pas maître je faisais que vous décrire..NYAAAAH vous êtes cruel maître ! HSDHSBHD");
+		Utils.getRank("Maître Neko").setDesc("Alerte N-n-nyaaaah..mais mais...j'ai rien fait...me punissez pas maître je faisais que vous décrire..NYAAAAH vous êtes cruel maître ! dkjsfhbdbfshj..d'accord d'accord...ze me calme maître..");
 		rang.add(new Rank("Maître Méchant", 700, Rate.Event, "§2", true, 0));
-		Utils.getRank("Maître Méchant").setDesc("Mon Maître est méchant :c");
+		Utils.getRank("Maître Méchant").setDesc("Mon Maître est méchant...help plz..AIIIE CA FAIT MAL MAÎTRE :c");
 		rang.add(new Rank("AntoZzz x Delxer", 600, Rate.Event, "§2", true, 0));
 		Utils.getRank("AntoZzz x Delxer").setDesc("Ils se disputent très souvent mais au fond, ce ne sont que des querelles de couple..Vous n'imaginez pas comment ça dérape en privé..;3");
 		

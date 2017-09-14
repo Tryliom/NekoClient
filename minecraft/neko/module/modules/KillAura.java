@@ -1,5 +1,7 @@
 package neko.module.modules;
 
+import java.awt.AWTException;
+import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -7,17 +9,19 @@ import java.util.ArrayList;
 import org.lwjgl.input.Keyboard;
 
 import neko.Client;
+import neko.event.UpdateEvent;
 import neko.module.Category;
 import neko.module.Module;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSword;
 import net.minecraft.network.play.client.C02PacketUseEntity;
+import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C02PacketUseEntity.Action;
-import net.minecraft.network.play.client.C14PacketTabComplete;
 import net.minecraft.util.MathHelper;
 
 public class KillAura extends Module {
@@ -39,6 +43,7 @@ public class KillAura extends Module {
 	public static boolean verif=true;
 	public static boolean nobot=true;
 	public static boolean premium=false;
+	public static boolean ec=false;
 	public static ArrayList<String> list = new ArrayList<>();
 	public static ArrayList<String> bot = new ArrayList<>();
 	public static String tab="  ";
@@ -90,7 +95,7 @@ public class KillAura extends Module {
 	}
 	
 	
-    public void onUpdate() {    
+    public void onUpdate(UpdateEvent e) {    
     	if (random) {
     		int r = (int) Math.round(8-Math.random()*4);
     		if (cps+r!=0)
@@ -98,7 +103,7 @@ public class KillAura extends Module {
     	} else {
     		if (cps!=0)
     			timer.setDelay(1000/cps);
-    	}    	
+    	}
     }
     
     public static Boolean isViable(EntityLivingBase en) {
@@ -154,36 +159,35 @@ public class KillAura extends Module {
     }
     
     public static synchronized void faceEntity(EntityLivingBase entity) {
-		final float[] rotations = getRotationsNeeded(entity);
-
-		if (rotations != null) {			
-			mc.thePlayer.rotationYaw = (float) (rotations[0] + Math.random() + 0.3);
-			mc.thePlayer.rotationPitch = (float) (rotations[1] + Math.random() + 0.3);
-		}
+    	mc.thePlayer.rotationPitch=((float)(mc.thePlayer.rotationPitch + getPitchChange(entity) / 1.5));
+    	mc.thePlayer.rotationYaw=((float)(mc.thePlayer.rotationYaw + getYawChange(entity) / 1.5));
 	}
-
-	public static float[] getRotationsNeeded(Entity entity) {
-		if (entity == null) {
-			return null;
-		}
-
-		final double diffX = entity.posX - mc.thePlayer.posX;
-		final double diffZ = entity.posZ - mc.thePlayer.posZ;
-		double diffY;
-
-		if (entity instanceof EntityLivingBase) {
-			final EntityLivingBase entityLivingBase = (EntityLivingBase) entity;
-			diffY = entityLivingBase.posY + entityLivingBase.getEyeHeight() - (Minecraft.getMinecraft().thePlayer.posY + Minecraft.getMinecraft().thePlayer.getEyeHeight());
-		} else {
-			diffY = (entity.boundingBox.minY + entity.boundingBox.maxY) / 2.0D - (Minecraft.getMinecraft().thePlayer.posY + Minecraft.getMinecraft().thePlayer.getEyeHeight());
-		}
-
-		final double dist = MathHelper.sqrt_double(diffX * diffX + diffZ * diffZ);
-		final float yaw = (float) (Math.atan2(diffZ, diffX) * 180.0D / Math.PI) - 90.0F;
-		final float pitch = (float) -(Math.atan2(diffY, dist) * 180.0D / Math.PI);
-		return new float[] { Minecraft.getMinecraft().thePlayer.rotationYaw + MathHelper.wrapAngleTo180_float(yaw - Minecraft.getMinecraft().thePlayer.rotationYaw), Minecraft.getMinecraft().thePlayer.rotationPitch + MathHelper.wrapAngleTo180_float(pitch - Minecraft.getMinecraft().thePlayer.rotationPitch) };
-	}
-	
+    
+	 public static float getPitchChange(Entity entity)
+	  {
+	    double deltaX = entity.posX - mc.thePlayer.posX;
+	    double deltaZ = entity.posZ - mc.thePlayer.posZ;
+	    double deltaY = entity.posY - 2.2D + entity.getEyeHeight() - mc.thePlayer.posY;
+	    double distanceXZ = MathHelper.sqrt_double(deltaX * deltaX + deltaZ * deltaZ);
+	    double pitchToEntity = -Math.toDegrees(Math.atan(deltaY / distanceXZ));
+	    return -MathHelper.wrapAngleTo180_float(mc.thePlayer.rotationPitch - (float)pitchToEntity) - 
+	      2.5F;
+	  }
+	  
+	  public static float getYawChange(Entity entity)
+	  {
+	    double deltaX = entity.posX - mc.thePlayer.posX;
+	    double deltaZ = entity.posZ - mc.thePlayer.posZ;
+	    double yawToEntity = 0.0D;
+	    if ((deltaZ < 0.0D) && (deltaX < 0.0D)) {
+	      yawToEntity = 90.0D + Math.toDegrees(Math.atan(deltaZ / deltaX));
+	    } else if ((deltaZ < 0.0D) && (deltaX > 0.0D)) {
+	      yawToEntity = -90.0D + Math.toDegrees(Math.atan(deltaZ / deltaX));
+	    } else {
+	      yawToEntity = Math.toDegrees(-Math.atan(deltaX / deltaZ));
+	    }
+	    return MathHelper.wrapAngleTo180_float(-(mc.thePlayer.rotationYaw - (float)yawToEntity));
+	  }
 	
     }
 
@@ -193,6 +197,27 @@ class cps implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (Utils.sword ? mc.thePlayer.getCurrentEquippedItem()!=null ? mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemSword : false : true) {
+			if (KillAura.ec) {
+				for (Object theObject : mc.theWorld.playerEntities) {
+	                EntityLivingBase entity = (EntityLivingBase) theObject;
+	                if(KillAura.isViable(entity)) {              	                	                   
+	                	if (Utils.isToggle("Crit"))
+	                		Utils.crit();	                	
+	                	KillAura.faceEntity(entity);
+	                	try {
+							Robot r = new Robot();
+							r.mousePress(16);
+							r.mouseRelease(16);
+						} catch (AWTException e) {}	                	
+	            		KillAura.giveMoney(entity);
+	                	
+	                	if (KillAura.mode.equalsIgnoreCase("Multi"))
+	                		continue;
+	                	else
+	                		break;
+	                }
+	        	}
+			} else
 			switch (var.mode) {
 			case "Player" :
 				for (Object theObject : mc.theWorld.playerEntities) {

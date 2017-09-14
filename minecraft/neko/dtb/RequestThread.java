@@ -204,6 +204,100 @@ public class RequestThread extends Thread {
 			}		
 		}
 		
+		if (why.equalsIgnoreCase("getServer")) {
+			Vector<String> list = new Vector<String>();
+			try {				
+				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=f83b3a742a9a97bedb1a3db847248cc2");
+				Scanner sc = new Scanner(url.openStream(), "UTF-8");		
+				String l;
+				
+				try {
+					while ((l = sc.nextLine()) != null) {
+						String sr[] = l.split("<br>");
+						String lc = "";
+						for (int i = 0;i<sr.length;i++) {
+							if (sr[i].startsWith("ip=")) {
+								lc=sr[i].replaceFirst("...", "");
+							}
+							if (sr[i].startsWith("vote=")) {
+								lc+=" "+sr[i].replaceFirst(".....", "");
+							}
+							if (lc.contains(" ")) {
+								list.add(lc);
+							}
+						}
+					}
+				} catch (Exception e) {}
+				sc.close();
+			} catch (Exception e) {
+				System.out.println("Erreur BDD: Get BestServ");
+			}			
+			// Lister les serveurs
+			if (list.isEmpty() || (list.size()-1)<(Integer.parseInt(args.get(0))/2-1)*10) {
+				Utils.addChat("§cPas de serveurs disponibles...");
+			} else {
+				int min = (Integer.parseInt(args.get(0))/2-1)*10;
+				int max = ((Integer.parseInt(args.get(0))/2-1)*10)+10;
+				Utils.addChat("-================-Serveurs - Page "+Integer.parseInt(args.get(0))/2+"-================-");
+				Utils.addChat("Liste des serveurs les mieux votés: ");
+				int i=0;
+				for (String s : list) {
+					i++;
+					if (i>min && i<max) {
+						String l[] = s.split(" ");
+						Utils.addChat2("§e"+l[0]+" - "+l[1]+" vote"+(Integer.parseInt(l[1])>1 ? "s" : ""), var.prefixCmd+"co "+l[0], "Ce serveur a obtenu "+l[1]+" votes !", false, Chat.Summon);
+					}
+				}
+			}
+			
+		}
+		
+		if (why.equalsIgnoreCase("vote")) {
+			// Arg: ip du serveur
+			int vote = 1;
+			try {
+				String s = "\""+args.get(0)+"\"";					
+				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=381d315388f23cb8d6de57378b22987d&args="+URLEncoder.encode(s, "UTF-8"));
+				System.out.println(url.toString());
+				Scanner sc = new Scanner(url.openStream(), "UTF-8");		
+				String l;
+				try {
+					while ((l = sc.nextLine()) != null) {
+						String sr[] = l.split("<br>");
+						if (sr[0].startsWith("vote=")) {
+							vote+=Integer.parseInt(sr[0].replaceFirst(".....", ""));
+							break;
+						}
+					}
+				} catch (Exception e) {}
+				sc.close();
+			} catch (Exception e) {
+				System.out.println("Erreur BDD: Get NbVote");
+			}
+			if (vote==1) {
+				try {
+					String s = "\""+args.get(0)+"\",\""+vote+"\"";					
+					URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=07ee80cc6502bc8e0bd48ceb777e1af2&args="+URLEncoder.encode(s, "UTF-8"));
+					Scanner sc = new Scanner(url.openStream(), "UTF-8");		
+					sc.close();
+				} catch (Exception e) {
+					System.out.println("Erreur BDD: Insert ServerIP & NbVote");
+				}
+			} else {
+				try {
+					String s = "\""+vote+"\",\""+args.get(0)+"\"";				
+					URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=dcd725110b9866d2292b1389f04bb5e6&args="+URLEncoder.encode(s, "UTF-8"));
+					Scanner sc = new Scanner(url.openStream(), "UTF-8");		
+					sc.close();
+				} catch (Exception e) {
+					System.out.println("Erreur BDD: Update NbVote");
+				}
+			}
+			ArrayList<String> list = new ArrayList<>();
+			list.add(Utils.setColor("§a"+Irc.getInstance().getNamePlayer()+" a voté pour le serveur §c"+Utils.setColor(args.get(0), "§c")+" !", "§a"));
+			new RequestThread("alert", list).start();			
+		}
+		
 		if (why.equalsIgnoreCase("startEvent")) {
 			try {
 				String s = "\""+args.get(0)+"\",\""+args.get(1)+"\",\""+Event.mdp+"\"";					
@@ -298,7 +392,7 @@ public class RequestThread extends Thread {
 				long diff = lastDate-22000;	
 				String s = "\""+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE).format(new Date(diff))+"\",\""+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE).format(new Date(lastDate))+"\"";
 				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=b0ac0857d55ccb7f52303bc7e440b02e&args="+URLEncoder.encode(s, "UTF-8"));
-				Scanner sc = new Scanner(url.openStream());		
+				Scanner sc = new Scanner(url.openStream(), "UTF-8");		
 				String l;
 				Utils.addChat("§7--[§aJoueurs connectés§7]--");
 				try {
@@ -351,7 +445,7 @@ public class RequestThread extends Thread {
 								}
 								// Afficher ici
 								Locale loc = new Locale("FR", "CH");
-								Utils.addChat2("§7[§a+§7] "+pName+" joue sur §e"+pServer, var.prefixCmd+"connect "+pServer, "§7["+pRankColor+pRank+"§7]\n§d"+pName+"\n§bLvl."+NumberFormat.getNumberInstance(loc).format(pLvl)+" §7["+NumberFormat.getNumberInstance(loc).format(pXp)+"xp§7/"+NumberFormat.getNumberInstance(loc).format(pXpMax)+"xp§7]\n§7Serveur: "+pServer+"\n§7"+pKill+" kills\n§7"+pTime+" de temps de jeu\n§7Version: "+pVer+"\n§7Mode: "+pMode, (pServer.equalsIgnoreCase("Localhost") ? true : false), Chat.Summon);								
+								Utils.addChat2("§7[§a+§7] "+pName+" joue sur §e"+pServer, Irc.getInstance().getPlayerClic(pName, pServer), "§7["+pRankColor+pRank+"§7]\n§d"+pName+"\n§bLvl."+NumberFormat.getNumberInstance(loc).format(pLvl)+" §7["+NumberFormat.getNumberInstance(loc).format(pXp)+"xp§7/"+NumberFormat.getNumberInstance(loc).format(pXpMax)+"xp§7]\n§7Serveur: "+pServer+"\n§7"+pKill+" kills\n§7"+pTime+" de temps de jeu\n§7Version: "+pVer+"\n§7Mode: "+pMode, pServer.equalsIgnoreCase("Localhost"), Chat.Summon);								
 							}
 						}
 					}
@@ -954,7 +1048,7 @@ public class RequestThread extends Thread {
 			        }
 			        
 			        m = m.replaceAll("Â", "");
-			        if (m.startsWith("§§")) {
+			        if (m.startsWith("§§") && !m.replaceFirst("..", "").isEmpty()) {
 			        	isPv=true;
 			        	first="§9[§e"+pName+" §9-> §cMoi§9]§7 "+Utils.setColor(m.replaceFirst("..", ""), "§7");
 			        	Irc.getInstance().setPvPlayer(pName);

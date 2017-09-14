@@ -24,6 +24,7 @@ import io.netty.buffer.Unpooled;
 import joptsimple.internal.Strings;
 import neko.Client;
 import neko.module.modules.Blink;
+import neko.module.modules.Cancer;
 import neko.module.modules.KillAura;
 import neko.module.modules.Ping;
 import neko.module.modules.Plugins;
@@ -896,6 +897,13 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     	
     	if ((p_147297_1_ instanceof C0APacketAnimation) && Utils.isToggle("NoAnim")) {
     		return;
+    	}
+    	
+    	if (Cancer.isOn) {
+    		if (!(p_147297_1_ instanceof C01PacketChatMessage) && Cancer.attack ? !(p_147297_1_ instanceof C02PacketUseEntity) : true) {
+    			Cancer.packet.add(p_147297_1_);
+        		return;
+    		}
     	}
     	
     	Utils.nbPack++;
@@ -1824,7 +1832,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     public void handleTabComplete(S3APacketTabComplete packetIn)
     {    	    	    	
     	//TODO: Plugins
-    	if (Plugins.scan) {
+    	if (Utils.isToggle("Plugins")) {
     		List<String> plugins = new ArrayList();
     		S3APacketTabComplete packet = packetIn;
             String[] commands = packet.func_149630_c();
@@ -1846,7 +1854,6 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
             	Utils.addChat("Plugins(" + plugins.size() + "): §a" + Strings.join((String[])plugins.toArray(new String[0]), "§8, §a"));
             }
             Utils.toggleModule("Plugins");
-            Plugins.scan=false;
             Plugins.count=0;
     	} else if (KillAura.waitTab) { 
     		S3APacketTabComplete packet = packetIn;

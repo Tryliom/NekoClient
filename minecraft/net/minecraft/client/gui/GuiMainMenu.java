@@ -22,12 +22,13 @@ import com.google.common.collect.Lists;
 
 import neko.Client;
 import neko.gui.GuiAltManager;
-import neko.gui.GuiConnect;
 import neko.gui.GuiProxy;
 import neko.module.other.OnlyRpgManager;
 import neko.module.other.TutoManager;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.GuiConnecting;
+import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -143,7 +144,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
             this.field_92025_p = I18n.format("title.oldgl1", new Object[0]);
             this.field_146972_A = I18n.format("title.oldgl2", new Object[0]);
             this.field_104024_v = "https://help.mojang.com/customer/portal/articles/325948?ref=game";
-        }
+        }        
     }
 
     /**
@@ -173,6 +174,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
      */
     public void initGui()
     {
+    	this.Bc = Utils.getAn();
         this.viewportTexture = new DynamicTexture(256, 256);
         this.field_110351_G = this.mc.getTextureManager().getDynamicTextureLocation("background", this.viewportTexture);
         Calendar var1 = Calendar.getInstance();
@@ -216,10 +218,17 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         	this.buttonList.add(new GuiButton(667, wid, var3-24, 200, 20, "§e"+(!tm.isDone() ? "§k" : "")+"Proxy"));
         if (Utils.verif==null) {
         	this.buttonList.add(new GuiButton(668, wid, var3, 200, 20, "§5Discord Neko"));
-        	this.buttonList.add(new GuiButton(5, wid + 102, var3+104+12, 98, 20, "Langage"));
+        	this.buttonList.add(new GuiButton(5, wid + 102, var3+104+12, 98, 20, "Langue"));
+        	String s[] = this.Bc.split("\n");
+        	int h = 0;
+        	for (int i=1;i<s.length+1;i++) {
+        		if (s[i-1].startsWith("§d") && s[i-1].contains("%")) {
+        			h = 89 + 15 * i;
+            		this.buttonList.add(new GuiButton(771, this.leftPx, h, 200, 11, "§6"+s[i-1]));
+        		}
+        	}
         	if (tm.isDone())
         		this.buttonList.add(new GuiButton(769, 10, 10, 100, 20, "§7Refaire le tuto"));
-        	this.Bc = Utils.getAn();
         } else
         	this.buttonList.add(new GuiButtonLanguage(5, Utils.verif==null ? 100 : this.width / 2 - 124, Utils.verif==null ? var3+104+12 : var3 + 72 + 12));
         Object var4 = this.field_104025_t;
@@ -247,7 +256,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         if (Utils.verif==null && !OnlyRpgManager.getRpg().isActive()) {
         	this.buttonList.add(this.field_175372_K = new GuiButton(666, wid, p_73969_1_ + p_73969_2_ * 2, (!tm.isDone() ? "§k" : "")+"Alt Manager"));
         } else
-        	this.buttonList.add(this.field_175372_K = new GuiButton(14, this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 2, I18n.format("menu.online", new Object[0])));
+        	this.buttonList.add(this.field_175372_K = new GuiButton(14, OnlyRpgManager.getRpg().isActive() ? wid : this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 2, I18n.format("menu.online", new Object[0])));
     }
 
     /**
@@ -288,9 +297,25 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     	
     	if (button.id == 769)
         {
-    		tm.setDone(false);
+    		tm.setDone(false);    		
             this.mc.displayGuiScreen(new GuiMainMenu());
         }
+    	
+    	if (button.id == 770) {
+			try {
+				URI url = URI.create("https://nekohc.fr");
+				Desktop.getDesktop().browse(url);
+				mc.displayGuiScreen(new GuiMainMenu());
+			} catch (Exception e) {}	
+		}
+    	
+    	if (button.id == 771) {
+			String s[] = button.displayString.split(" ");
+			if (s.length>=2) {
+				String ip = s[1].replaceAll("§e", "");
+				mc.displayGuiScreen(new GuiConnecting(this, mc, new ServerData(ip, ip)));
+			}
+		}
     	
         if (button.id == 0)
         {
@@ -311,6 +336,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         {
         	if (!tm.isDone()) {
         		tm.setDone(true);
+        		tm.setPart(1);
         		this.mc.displayGuiScreen(new GuiMainMenu());
         	} else
         		this.mc.displayGuiScreen(new GuiMultiplayer(this));
@@ -592,8 +618,30 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         String var11 = "Copyright Mojang AB. Do not distribute!";
         if (Utils.verif==null) {
         	String s[] = this.Bc.split("\n");
-        	for (int i=1;i<s.length+1;i++)        		
-        		this.drawString(Client.getNeko().NekoFont, "§6"+s[i-1], this.leftPx, 89 + 15 * i, -1);
+        	int h = 0;
+        	for (int i=1;i<s.length+1;i++) {
+        		if (s[i-1].startsWith("§d") && s[i-1].contains("%")) {
+        			h = 89 + 24 * i;
+        		} else {
+        			h = 89 + 15 * i;
+        			this.drawString(Client.getNeko().NekoFont, "§6"+s[i-1], this.leftPx, h, -1);
+        		}
+        	}
+        	
+        	if (!Client.getNeko().ver.isEmpty()) {
+        		this.drawString(Client.getNeko().NekoFont, "§e============================", this.leftPx, h+24, -1);
+        		this.drawString(Client.getNeko().NekoFont, "§eVersion supérieur: "+Client.getNeko().ver, this.leftPx, h+39, -1);
+        		this.drawString(Client.getNeko().NekoFont, "§eAjout principal: "+Client.getNeko().changelog, this.leftPx, h+54, -1);
+        		boolean b = true;
+        		for (Object gb : this.buttonList) {
+        			if (gb instanceof GuiButton) {
+        				if (((GuiButton) gb).id==770)
+        					b = false;
+        			}
+        		}
+        		if (b)
+        			this.buttonList.add(new GuiButton(770, this.leftPx, h+69, 100, 20, "Update"));
+        	}
         	var11="§c§kwui §eBy Tryliom §c§kwui";
         }
         this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, var11, this.width - (Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj).getStringWidth(var11) - 2, this.height - 10, -1);

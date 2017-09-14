@@ -64,8 +64,21 @@ public class Module
 	      this.isToggled = false;
 	    }
 	    if (this.cmd.size()!=0) {
-	    	for (String s : this.cmd)
-	    		new ChatUtils().doCommand(s);
+	    	for (String s : this.cmd) {
+	    		Boolean b = false;
+	    		if (s.startsWith(var.prefixCmd)) {
+	    			s = s.substring(0, s.length()-1);
+	    			String name = s.replaceFirst(var.prefixCmd, "");
+	    			for (Module m : ModuleManager.ActiveModule) {
+	    				if (m.getName().equalsIgnoreCase(name) && s.equalsIgnoreCase(var.prefixCmd+name)) 
+	    					b = true;
+	    			}
+	    		}
+	    		if (b) {
+	    			Utils.toggleModule(s.replaceFirst(var.prefixCmd, ""));
+	    		} else
+	    			new ChatUtils().doCommand(s);
+	    	}
 	    }
 	  }
 	  

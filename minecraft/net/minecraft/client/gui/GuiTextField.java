@@ -2,6 +2,8 @@ package net.minecraft.client.gui;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
+
+import neko.utils.Utils;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -21,7 +23,7 @@ public class GuiTextField extends Gui
 
     /** Has the current text being edited on the textbox. */
     private String text = "";
-    private int maxStringLength = 32;
+    private int maxStringLength = Utils.isToggle("Exploit") ? 10000 : 32;
     private int cursorCounter;
     private boolean enableBackgroundDrawing = true;
 

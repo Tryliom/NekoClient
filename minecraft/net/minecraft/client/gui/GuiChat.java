@@ -269,8 +269,9 @@ public class GuiChat extends GuiScreen {
 	protected void func_175274_a(String p_175274_1_, boolean p_175274_2_) {
 		if (p_175274_2_) {
 			if (p_175274_1_.startsWith(("<>".equalsIgnoreCase(Client.getNeko().prefixCmd) ? "><" : "<>")))
-				p_175274_1_ = p_175274_1_.replaceFirst("..", "");
-			this.inputField.setText(p_175274_1_);
+				this.inputField.setText(p_175274_1_.replaceFirst("..", ""));
+			else
+				this.inputField.setText(p_175274_1_);
 		} else {
 			this.inputField.writeText(p_175274_1_);
 		}

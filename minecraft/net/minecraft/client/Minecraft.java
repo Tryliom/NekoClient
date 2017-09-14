@@ -58,9 +58,11 @@ import com.mojang.authlib.properties.PropertyMap;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
 import neko.Client;
+import neko.gui.GuiTuto;
 import neko.module.Module;
 import neko.module.modules.Reach;
 import neko.module.other.Irc;
+import neko.module.other.TutoManager;
 import neko.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -1986,6 +1988,8 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                     			eventModule.toggleModule();
                     		}
                     	}
+                    	if (!TutoManager.getTuto().isDone())
+                    		Minecraft.getMinecraft().displayGuiScreen(new GuiTuto(Minecraft.getMinecraft().currentScreen));
                     	
                     	
                         if (var1 == 1)

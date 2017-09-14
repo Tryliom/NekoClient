@@ -2,16 +2,15 @@ package neko.module.modules;
 
 import java.util.ArrayList;
 
+import org.lwjgl.input.Keyboard;
+
 import neko.module.Category;
 import neko.module.Module;
-import neko.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.util.BlockPos;
-
-import org.lwjgl.input.Keyboard;
 
 public class Xray extends Module {
 	public static boolean isOn;
@@ -37,7 +36,7 @@ public class Xray extends Module {
 	}
 	
 	public void onUpdate() {
-		if (org.lwjgl.input.Mouse.isButtonDown(2) && delay > 20 && mc.objectMouseOver.func_178782_a()!=null && !(mc.currentScreen instanceof GuiChat) && !(mc.currentScreen instanceof GuiInventory)) {
+		if (mc.gameSettings.keyBindPickBlock.getIsKeyPressed() && delay > 20 && mc.objectMouseOver.func_178782_a()!=null && !(mc.currentScreen instanceof GuiChat) && !(mc.currentScreen instanceof GuiInventory)) {
 			BlockPos bl = mc.objectMouseOver.func_178782_a();
 			int id = Block.getIdFromBlock(mc.theWorld.getBlockState(bl).getBlock());
 			if (xray.contains(id)) {
@@ -51,7 +50,7 @@ public class Xray extends Module {
 				xray.add(id);
 				u.addChat("§aLe bloc "+Block.getBlockById(id).getLocalizedName()+" a été ajouté !");
 			}
-			
+			Minecraft.getMinecraft().renderGlobal.loadRenderers();
 			delay=0;
 		} else
 			delay++;
