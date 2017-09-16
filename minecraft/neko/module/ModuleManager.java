@@ -157,9 +157,7 @@ public class ModuleManager {
 		this.Lock.add(new Lock("Pyro", 0, "rang", "Cheat", "Enflamme une zone depuis où l'ont vise", true));
 		this.Lock.add(new Lock("TpBack", 50, "souls", "Cheat", "Vous tp sur un bloc choisi quand vous arrivez en dessous du seuil de vie définit", true));
 		this.Lock.add(new Lock("Flash", 0, "???", "Cheat", "Vous retp sur la position set à l'activation", true));
-		this.Lock.add(new Lock("Pyro", 0, "rang", "Cheat", "Enflamme une zone depuis ooù l'ont vise", true));
-		this.Lock.add(new Lock("TpBack", 50, "souls", "Cheat", "Vous tp sur un bloc choisi quand vous arrivez en dessous du seuil de vie définit", true));
-		this.Lock.add(new Lock("Flash", 0, "???", "Cheat", "Vous retp sur la position set à l'activation", true));
+		this.Lock.add(new Lock("Punkeel", 0, "???", "Cheat", "Génére un véritable lag suivant vos désirs", true));
 
 		
 		
