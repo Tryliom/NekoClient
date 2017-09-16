@@ -1,6 +1,5 @@
 package neko.utils;
 
-import java.net.Proxy;
 import java.net.URL;
 import java.util.Scanner;
 
@@ -9,7 +8,7 @@ import com.mojang.authlib.UserAuthentication;
 import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
-import neko.module.modules.Friends;
+import neko.module.modules.hide.Friends;
 import net.mcleaks.MCLeaks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Session;

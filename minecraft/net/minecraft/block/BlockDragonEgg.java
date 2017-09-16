@@ -3,7 +3,7 @@ package net.minecraft.block;
 import java.util.Random;
 
 import neko.Client;
-import neko.module.modules.Xray;
+import neko.module.modules.render.Xray;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityFallingBlock;

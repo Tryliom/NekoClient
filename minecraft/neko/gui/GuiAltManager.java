@@ -1,24 +1,13 @@
 package neko.gui;
 
-import java.awt.Component;
 import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.lwjgl.input.Keyboard;
 
 import neko.Client;
-import neko.dtb.RequestThread;
-import neko.module.modules.Friends;
+import neko.module.modules.hide.Friends;
 import neko.module.other.Account;
 import neko.utils.RenderUtils;
 import neko.utils.Utils;

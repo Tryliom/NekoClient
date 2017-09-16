@@ -1,7 +1,7 @@
 package net.minecraft.client.multiplayer;
 
-import neko.module.modules.KillAura;
-import neko.module.modules.Reach;
+import neko.module.modules.combat.KillAura;
+import neko.module.modules.combat.Reach;
 import neko.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

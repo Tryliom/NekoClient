@@ -2,7 +2,7 @@ package net.minecraft.client.gui;
 
 import com.google.common.collect.Lists;
 
-import neko.module.modules.NekoChat;
+import neko.module.modules.render.NekoChat;
 import neko.utils.Utils;
 
 import java.util.Iterator;

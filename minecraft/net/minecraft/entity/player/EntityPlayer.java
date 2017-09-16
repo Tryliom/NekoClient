@@ -5,9 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
-import neko.module.modules.NoFall;
-import neko.module.modules.Speed709;
-import neko.module.modules.Sprint;
+import neko.module.modules.movements.NoFall;
+import neko.module.modules.movements.Sprint;
 import neko.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;

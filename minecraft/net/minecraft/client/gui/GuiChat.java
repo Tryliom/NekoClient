@@ -16,9 +16,8 @@ import com.google.common.collect.Lists;
 
 import neko.Client;
 import neko.dtb.RequestThread;
-import neko.gui.GuiShop;
 import neko.gui.InGameGui;
-import neko.module.modules.Register;
+import neko.module.modules.misc.Register;
 import neko.module.other.Event;
 import neko.module.other.Irc;
 import neko.module.other.IrcMode;

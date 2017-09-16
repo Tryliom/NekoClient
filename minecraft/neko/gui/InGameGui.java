@@ -1,6 +1,5 @@
 package neko.gui;
 
-import java.awt.Color;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -9,24 +8,19 @@ import neko.Client;
 import neko.module.Category;
 import neko.module.Module;
 import neko.module.ModuleManager;
-import neko.module.modules.Blink;
-import neko.module.modules.Friends;
-import neko.module.modules.HUD;
-import neko.module.modules.Radar;
-import neko.module.modules.Regen;
+import neko.module.modules.movements.Blink;
+import neko.module.modules.hide.Friends;
+import neko.module.modules.render.HUD;
+import neko.module.modules.render.Radar;
+import neko.module.modules.combat.Regen;
 import neko.module.other.Active;
 import neko.module.other.Rate;
 import neko.utils.RenderUtils;
 import neko.utils.Utils;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.BlockPos;
 
 public class InGameGui {
 	public static String color="§3";

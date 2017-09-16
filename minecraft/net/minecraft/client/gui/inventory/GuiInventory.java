@@ -2,7 +2,7 @@ package net.minecraft.client.gui.inventory;
 
 import java.io.IOException;
 
-import neko.module.modules.DropShit;
+import neko.module.modules.special.DropShit;
 import neko.module.other.OnlyRpgManager;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;

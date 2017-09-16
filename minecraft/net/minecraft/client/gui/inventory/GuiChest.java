@@ -2,10 +2,7 @@ package net.minecraft.client.gui.inventory;
 
 import java.io.IOException;
 
-import neko.gui.InGameGui;
-import neko.module.modules.Cheststealer;
-import neko.module.other.Irc;
-import neko.module.other.OnlyRpgManager;
+import neko.module.modules.player.Cheststealer;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;

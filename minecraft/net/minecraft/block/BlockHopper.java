@@ -5,7 +5,7 @@ import com.google.common.base.Predicate;
 import java.util.List;
 
 import neko.Client;
-import neko.module.modules.Xray;
+import neko.module.modules.render.Xray;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;

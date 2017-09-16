@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import neko.Client;
-import neko.module.modules.Xray;
+import neko.module.modules.render.Xray;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;

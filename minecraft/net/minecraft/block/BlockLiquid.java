@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 import neko.Client;
-import neko.module.modules.Xray;
+import neko.module.modules.render.Xray;
 import neko.utils.Utils;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;

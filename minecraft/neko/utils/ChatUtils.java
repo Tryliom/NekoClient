@@ -16,6 +16,7 @@ import java.util.Scanner;
 import java.util.UUID;
 import java.util.Vector;
 
+import neko.module.modules.misc.*;
 import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -31,61 +32,55 @@ import neko.lock.Lock;
 import neko.module.Category;
 import neko.module.Module;
 import neko.module.ModuleManager;
-import neko.module.modules.Antiafk;
-import neko.module.modules.AutoClic;
-import neko.module.modules.AutoMLG;
-import neko.module.modules.AutoPot;
-import neko.module.modules.Autoarmor;
-import neko.module.modules.Autosoup;
-import neko.module.modules.Build;
-import neko.module.modules.CallCmd;
-import neko.module.modules.Cheststealer;
-import neko.module.modules.ClickAim;
-import neko.module.modules.Dolphin;
-import neko.module.modules.DropShit;
-import neko.module.modules.Fastbow;
-import neko.module.modules.Fasteat;
-import neko.module.modules.Fire;
-import neko.module.modules.FireTrail;
-import neko.module.modules.Flight;
-import neko.module.modules.Freecam;
-import neko.module.modules.Friends;
-import neko.module.modules.Glide;
-import neko.module.modules.God;
-import neko.module.modules.HUD;
-import neko.module.modules.Highjump;
-import neko.module.modules.ItemESP;
-import neko.module.modules.KillAura;
-import neko.module.modules.Longjump;
-import neko.module.modules.Lot;
-import neko.module.modules.NekoChat;
-import neko.module.modules.NoClip;
-import neko.module.modules.Nuker;
-import neko.module.modules.Paint;
-import neko.module.modules.Phase;
-import neko.module.modules.Ping;
-import neko.module.modules.Power;
-import neko.module.modules.Punkeel;
-import neko.module.modules.PushUp;
-import neko.module.modules.Pyro;
-import neko.module.modules.Radar;
-import neko.module.modules.Reach;
-import neko.module.modules.Reflect;
-import neko.module.modules.Regen;
-import neko.module.modules.Register;
-import neko.module.modules.SmoothAim;
-import neko.module.modules.SpamBot;
-import neko.module.modules.Speed709;
-import neko.module.modules.Step;
-import neko.module.modules.TpBack;
-import neko.module.modules.Tracers;
-import neko.module.modules.Trigger;
-import neko.module.modules.VanillaTp;
-import neko.module.modules.Velocity;
-import neko.module.modules.Wallhack;
-import neko.module.modules.Water;
-import neko.module.modules.WorldTime;
-import neko.module.modules.Xray;
+import neko.module.modules.combat.AutoClic;
+import neko.module.modules.combat.AutoPot;
+import neko.module.modules.player.Autoarmor;
+import neko.module.modules.combat.Autosoup;
+import neko.module.modules.player.Build;
+import neko.module.modules.player.Cheststealer;
+import neko.module.modules.combat.ClickAim;
+import neko.module.modules.movements.Dolphin;
+import neko.module.modules.special.DropShit;
+import neko.module.modules.combat.Fastbow;
+import neko.module.modules.player.Fasteat;
+import neko.module.modules.player.Fire;
+import neko.module.modules.special.FireTrail;
+import neko.module.modules.movements.Flight;
+import neko.module.modules.movements.Freecam;
+import neko.module.modules.hide.Friends;
+import neko.module.modules.movements.Glide;
+import neko.module.modules.hide.God;
+import neko.module.modules.render.HUD;
+import neko.module.modules.movements.Highjump;
+import neko.module.modules.render.ItemESP;
+import neko.module.modules.combat.KillAura;
+import neko.module.modules.movements.Longjump;
+import neko.module.modules.hide.Lot;
+import neko.module.modules.render.NekoChat;
+import neko.module.modules.movements.NoClip;
+import neko.module.modules.player.Nuker;
+import neko.module.modules.render.Paint;
+import neko.module.modules.render.Power;
+import neko.module.modules.special.Punkeel;
+import neko.module.modules.player.PushUp;
+import neko.module.modules.special.Pyro;
+import neko.module.modules.render.Radar;
+import neko.module.modules.combat.Reach;
+import neko.module.modules.special.Reflect;
+import neko.module.modules.combat.Regen;
+import neko.module.modules.combat.SmoothAim;
+import neko.module.modules.special.SpamBot;
+import neko.module.modules.movements.Speed709;
+import neko.module.modules.movements.Step;
+import neko.module.modules.special.TpBack;
+import neko.module.modules.render.Tracers;
+import neko.module.modules.combat.Trigger;
+import neko.module.modules.special.VanillaTp;
+import neko.module.modules.player.Velocity;
+import neko.module.modules.render.Wallhack;
+import neko.module.modules.render.Water;
+import neko.module.modules.render.WorldTime;
+import neko.module.modules.render.Xray;
 import neko.module.other.Active;
 import neko.module.other.Bloc;
 import neko.module.other.Chat;
@@ -3897,20 +3892,20 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"meteore")) {
 				if (args.length==1) {
-					if (neko.module.modules.Render.active) {
-						neko.module.modules.Render.active=false;
+					if (neko.module.modules.render.Render.active) {
+						neko.module.modules.render.Render.active=false;
 						Utils.addChat(Utils.setColor("Affichage et apparition des météores désactivés", "§c"));
-					} else if (!neko.module.modules.Render.active) {
-						neko.module.modules.Render.active=true;
+					} else if (!neko.module.modules.render.Render.active) {
+						neko.module.modules.render.Render.active=true;
 						Utils.addChat(Utils.setColor("Affichage et apparition des météores activés", "§a"));
 					}
 				} else if (args[1].equalsIgnoreCase("xp")) {
-					if (neko.module.modules.Render.xp) {
+					if (neko.module.modules.render.Render.xp) {
 						Utils.addChat(Utils.setColor("Affichage et apparition des météores d'xp désactivés", "§c"));
 					} else {
 						Utils.addChat(Utils.setColor("Affichage et apparition des météores d'xp activés", "§a"));
 					}
-					neko.module.modules.Render.xp=!neko.module.modules.Render.xp;
+					neko.module.modules.render.Render.xp=!neko.module.modules.render.Render.xp;
 				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
@@ -4892,7 +4887,7 @@ public class ChatUtils {
 						if (time<=0) {
 							time=0.1F;
 						}
-						neko.module.modules.Timer.time=time;
+						Timer.time=time;
 						Utils.addChat("§aLa vitesse du timer a été mis à "+time+" !");
 					} catch (Exception e) {
                         Utils.addChat(err);
@@ -5035,7 +5030,7 @@ public class ChatUtils {
 			}							
 			
 			if (var3.equalsIgnoreCase(var.prefixCmd+"resetRpg")) {
-				neko.module.modules.Render.bonusCount=0;
+				neko.module.modules.render.Render.bonusCount=0;
 				Utils.removeAllLock();
 				Utils.removeAllRank();
             	Utils.setRank("Petit Neko Novice");
