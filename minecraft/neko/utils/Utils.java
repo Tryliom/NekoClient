@@ -152,8 +152,8 @@ import net.minecraft.world.WorldSettings.GameType;
 
 public class Utils {
 	/*
-	 * UtilitÃ© de cette classe:
-	 * Sert pour les mÃ©thodes pratiques utilisÃ©es partout et variables 
+	 * Utilité de cette classe:
+	 * Sert pour les méthodes pratiques utilisées partout et variables 
 	 */	
 	public static Minecraft mc = Minecraft.getMinecraft();
 	public static boolean warn=false;
@@ -208,7 +208,7 @@ public class Utils {
 	
 	public static void addChat(String m) {
 		if (verif==null)
-			mc.ingameGUI.getChatGUI().printChatMessage(new ChatComponentText("Â§8[Â§9NekoÂ§8]Â§6 " + m));
+			mc.ingameGUI.getChatGUI().printChatMessage(new ChatComponentText("§8[§9Neko§8]§6 " + m));
 	}	
 	
 	public static void toChat(String m) {
@@ -223,11 +223,11 @@ public class Utils {
 	
 	
 	/**
-	 * txt: Texte Ã  afficher
-	 * cmd: Commande Ã  executer si action == Chat.Click
+	 * txt: Texte à afficher
+	 * cmd: Commande à executer si action == Chat.Click
 	 * desc: Description du hover
-	 * onlyHover: Pour dÃ©tÃ©rminer si c'est juste afficher une description sans commandes
-	 * action: DÃ©tÃ©rmine l'action entre Click, Summon (Sans executÃ©) ou Link (Ouvre un lien internet)
+	 * onlyHover: Pour détérminer si c'est juste afficher une description sans commandes
+	 * action: Détérmine l'action entre Click, Summon (Sans executé) ou Link (Ouvre un lien internet)
 	 */
 	public static void addChat2(String txt, String cmd, String desc, boolean onlyHover, Chat action) {
 		if (verif==null) {
@@ -262,18 +262,18 @@ public class Utils {
 	}
 	
 	public static String getNeko() {
-		return "Â§8[Â§9NekoÂ§8]Â§6 ";
+		return "§8[§9Neko§8]§6 ";
 	}
 	
 	/**
-	 * 	Envoie une phrase dans le chat cÃ´tÃ© client.
-	 * 	cmd: commande Ã  executÃ© ou texte Ã  afficher hover.
-	 * 	isCmd: Est une commande Ã  executÃ© ou texte Ã  afficher en hover.
+	 * 	Envoie une phrase dans le chat cÃ´té client.
+	 * 	cmd: commande à executé ou texte à afficher hover.
+	 * 	isCmd: Est une commande à executé ou texte à afficher en hover.
 	 */	
 	public static void addChatCmd(String m, String cmd, boolean neko, boolean isCmd) {
 		// GuiScreen
 		if (verif==null) {
-			ChatComponentText c = new ChatComponentText((neko ? "Â§8[Â§9NekoÂ§8]Â§6 " : "")+m);
+			ChatComponentText c = new ChatComponentText((neko ? "§8[§9Neko§8]§6 " : "")+m);
 			if (isCmd)
 				c.setChatStyle(new ChatStyle().setChatClickEvent(new ClickEvent(Action.SUGGEST_COMMAND, cmd)));
 			else
@@ -284,14 +284,14 @@ public class Utils {
 	
 	public static ChatComponentText getLink(String m, String link, boolean neko) {
 		// GuiChat : func_175274_a
-		ChatComponentText c = new ChatComponentText((neko ? "Â§8[Â§9NekoÂ§8]Â§6 " : "")+m);
+		ChatComponentText c = new ChatComponentText((neko ? "§8[§9Neko§8]§6 " : "")+m);
 		c.setChatStyle(new ChatStyle().setChatClickEvent((new ClickEvent(Action.OPEN_URL, link))));
 		return c;
 	}
 	
 	public static void addWarn(String m) {
 		if (verif==null) {
-			Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText("Â§8[Â§9NekoÂ§8]Â§c "+m+"Â§6 n'as pas encore Ã©tÃ© dÃ©bloquÃ© !"));
+			Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText("§8[§9Neko§8]§c "+m+"§6 n'as pas encore été débloqué !"));
 			mc.thePlayer.playSound("mob.villager.no", 1.0F, 1.0F);
 		}
 	}
@@ -363,11 +363,11 @@ public class Utils {
 				r.setLvl(r.getLvl()+1);
 				r.setLock(false);
 				if (isLock("--reach pvp") && (r.getName().contains("JP") || r.getName().contains("Jean-Pierre"))) {
-					addChat("Â§cReach pvp Â§adÃ©bloquÃ©e !");
+					addChat("§cReach pvp §adébloquée !");
 					unlock("--reach pvp");					
 				}
 				if (r.getName().equalsIgnoreCase("Pyroman") && isLock("Pyro")) {
-					addChat("Â§dPyro dÃ©bloquÃ© !");
+					addChat("§dPyro débloqué !");
 					unlock("Pyro");					
 				}
 				return true;
@@ -381,7 +381,7 @@ public class Utils {
 			if (r.getName().equalsIgnoreCase(rang) && !r.isLock()) {
 				var.rang=r;
 				if (isLock("--reach pvp") && (r.getName().contains("JP") || r.getName().contains("Jean-Pierre"))) {
-					addChat("Â§cReach pvp Â§adÃ©bloquÃ©e !");
+					addChat("§cReach pvp §adébloquée !");
 					unlock("--reach pvp");					
 				}
 				return true;
@@ -396,7 +396,7 @@ public class Utils {
 				return r.getColor();
 			}
 		}
-		return "Â§f";
+		return "§f";
 	}
 	
 	public static Rank getRank(String s) {
@@ -454,10 +454,10 @@ public class Utils {
 	public static void getLock(String name) {
 		for (Lock lock : ModuleManager.Lock) {
 			if (lock.getName().equalsIgnoreCase(name)) {
-				addChat("Â§6=Â§b-Â§6=Â§b-Â§6=Â§b-Â§7 "+setColor(lock.getName().replaceAll("--", var.prefixCmd), "Â§6")+" Â§b-Â§6=Â§b-Â§6=Â§b-Â§6=");
-				addChat("Description: Â§7"+setColor(lock.getDesc().replaceAll("--", var.prefixCmd), "Â§7"));
-				addChat("Type: Â§7"+lock.getType());
-				addChat("CoÃ»t: Â§7"+(lock.getUnit().equalsIgnoreCase("???") ? "???" : lock.getCout()+" "+lock.getUnit())+" "+(lock.isLock() ? "Â§cBloquÃ©" : "Â§aDÃ©bloquÃ©"));
+				addChat("§6=§b-§6=§b-§6=§b-§7 "+setColor(lock.getName().replaceAll("--", var.prefixCmd), "§6")+" §b-§6=§b-§6=§b-§6=");
+				addChat("Description: §7"+setColor(lock.getDesc().replaceAll("--", var.prefixCmd), "§7"));
+				addChat("Type: §7"+lock.getType());
+				addChat("CoÃ»t: §7"+(lock.getUnit().equalsIgnoreCase("???") ? "???" : lock.getCout()+" "+lock.getUnit())+" "+(lock.isLock() ? "§cBloqué" : "§aDébloqué"));
 			}
 		}
 	}
@@ -476,21 +476,21 @@ public class Utils {
 				if (lock.isLock() && lock.getUnit().equalsIgnoreCase("???")) {
 					if (i==j) {
 						unlock(lock.getName());
-						addChat("Â§c"+lock.getName().replaceAll("--", var.prefixCmd)+"Â§6 a Ã©tÃ© dÃ©bloquÃ© !!");
+						addChat("§c"+lock.getName().replaceAll("--", var.prefixCmd)+"§6 a été débloqué !!");
 						if (lock.getName().equalsIgnoreCase("--rankmanager"))
-							addChat("Â§aDe nouvelle commandes sont disponibles dans le "+var.prefixCmd+"trade !");
+							addChat("§aDe nouvelle commandes sont disponibles dans le "+var.prefixCmd+"trade !");
 					}
 					i++;
 				}
 			}
 		} else {
-			addChat("Â§aVous avez dÃ©jÃ  tout dÃ©bloquÃ© !");
+			addChat("§aVous avez déjà tout débloqué !");
 			if (Math.random()<0.3) {
 				int xp = getRandInt(1500);
 				checkXp(xp);
-				addChat("Â§cVous recevez donc la somme de Â§b"+xp+"Â§cxp !");
+				addChat("§cVous recevez donc la somme de §b"+xp+"§cxp !");
 			} else {
-				addChat("Â§cVous recevez donc 10 tickets de lotterie !");
+				addChat("§cVous recevez donc 10 tickets de lotterie !");
 				var.lot+=10;
 			}
 		}
@@ -695,7 +695,7 @@ public class Utils {
 		                  }		                                  
 		              }
 		              if (!enchs.isEmpty())
-		            	  return setColor(enchs, "Â§7");
+		            	  return setColor(enchs, "§7");
 				}
 			}
 		
@@ -710,7 +710,7 @@ public class Utils {
 				if (p.getCurrentEquippedItem().getMaxDamage()==0) {
 					return res;
 				} else
-				return res + " Â§c" + (p.getCurrentEquippedItem().getMaxDamage()-p.getCurrentEquippedItem().getItemDamage()) + "/" + p.getCurrentEquippedItem().getMaxDamage();
+				return res + " §c" + (p.getCurrentEquippedItem().getMaxDamage()-p.getCurrentEquippedItem().getItemDamage()) + "/" + p.getCurrentEquippedItem().getMaxDamage();
 			}
 		} catch (Exception e) {}
 		return "Rien";
@@ -722,9 +722,9 @@ public class Utils {
 			if (p.getCurrentArmor(l).getMaxDamage()==0) {
 				return res;
 			} else
-			return res + " Â§c" + (p.getCurrentArmor(l).getMaxDamage()-p.getCurrentArmor(l).getItemDamage()) + "/" + p.getCurrentArmor(l).getMaxDamage();
+			return res + " §c" + (p.getCurrentArmor(l).getMaxDamage()-p.getCurrentArmor(l).getItemDamage()) + "/" + p.getCurrentArmor(l).getMaxDamage();
 		}
-		return "Pas d'Ã©quippement";
+		return "Pas d'équippement";
 	}	
 	
 	public static String getItemEnchant(EntityPlayer p) {
@@ -746,10 +746,10 @@ public class Utils {
                               
             }
             if (!enchs.isEmpty())
-            	return setColor(enchs, "Â§7");
+            	return setColor(enchs, "§7");
 			}
 		}		
-		return "Â§7Aucun Â§7enchantement Â§7d'armes/outils";		
+		return "§7Aucun §7enchantement §7d'armes/outils";		
 	}
 	
 	public static Boolean isInFov(EntityLivingBase entity, double fov) {
@@ -871,125 +871,125 @@ public class Utils {
 	}	
 	
 	public static void displayHelp(int num) {
-		// addChat2("Â§6"+var.prefixCmd+"", var.prefixCmd+"", "Â§7", false, Chat.Summon);
+		// addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
 		if (num>maxHelp) {
-			addChat("Â§cErreur, derniÃ¨re page actuelle: "+maxHelp);
+			addChat("§cErreur, dernière page actuelle: "+maxHelp);
 			return;
 		}
 		if (var.onlyrpg.isActive()) {
 			String ch="";
 			for (String c : var.onlyrpg.getCheat()) {
-				ch+="Â§7"+c+"Â§6, ";
+				ch+="§7"+c+"§6, ";
 			}
 			ch = ch.substring(0, ch.length()-2);
-			addChat("Cheat autorisÃ©s en OnlyRpg: "+ch);
+			addChat("Cheat autorisés en OnlyRpg: "+ch);
 			ch="";
 			for (String c : var.onlyrpg.getCmd()) {
-				ch+="Â§7"+c+"Â§6, ";
+				ch+="§7"+c+"§6, ";
 			}
 			ch = ch.substring(0, ch.length()-2);
-			addChat("Commandes autorisÃ©es en OnlyRpg: "+ch);			
+			addChat("Commandes autorisées en OnlyRpg: "+ch);			
 			return;
 		}
 		addChat("========================================");
-		addChat("Â§9Â§oHelp "+num+"/"+maxHelp);
+		addChat("§9§oHelp "+num+"/"+maxHelp);
 		switch (num) {
 		case 1 :	
-			addChat2("Â§6"+var.prefixCmd+"Help <Commande>", var.prefixCmd+"help ", "Â§7Affiche la commande en dÃ©tail", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Info", var.prefixCmd+"info ", "Â§7Affiche les caractÃ©risque du Client. Avec le info <player>, affiche les infos du joueur visÃ©", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Keybind", var.prefixCmd+"keybind", "Â§7Affiche quel cheat est assignÃ© Ã  quel touche", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Option", var.prefixCmd+"option ", "Â§7Quelques petits gadjets intressants", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Mcleaks <Token>", var.prefixCmd+"mcleaks ", "Â§7Permet de se connecter Ã  un compte MCLeaks", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Login <User> <Mdp>", var.prefixCmd+"login ", "Â§7Vous connecte Ã  un compte.\nÂ§7Si vous laissez vide le champs du mot de passe, le compte devient un crack", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Log", var.prefixCmd+"log ", "Â§7AltManager qui permet de gÃ©rer les comptes.", false, Chat.Summon);
-			addChat2("Â§7Le help log vous aidera pour toutes ses commandes", var.prefixCmd+"help log", "Â§7Cliquez pour afficher le help complet sur le log", false, Chat.Click);
-			addChat2("Â§6"+var.prefixCmd+"Locklvl", var.prefixCmd+"locklvl", "Â§7Affiche ce qui est dÃ©bloquÃ© Ã  quel lvl", false, Chat.Summon);								
+			addChat2("§6"+var.prefixCmd+"Help <Commande>", var.prefixCmd+"help ", "§7Affiche la commande en détail", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Info", var.prefixCmd+"info ", "§7Affiche les caractérisque du Client. Avec le info <player>, affiche les infos du joueur visé", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Keybind", var.prefixCmd+"keybind", "§7Affiche quel cheat est assigné à quel touche", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Option", var.prefixCmd+"option ", "§7Quelques petits gadjets intressants", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Mcleaks <Token>", var.prefixCmd+"mcleaks ", "§7Permet de se connecter à un compte MCLeaks", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Login <User> <Mdp>", var.prefixCmd+"login ", "§7Vous connecte à un compte.\n§7Si vous laissez vide le champs du mot de passe, le compte devient un crack", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Log", var.prefixCmd+"log ", "§7AltManager qui permet de gérer les comptes.", false, Chat.Summon);
+			addChat2("§7Le help log vous aidera pour toutes ses commandes", var.prefixCmd+"help log", "§7Cliquez pour afficher le help complet sur le log", false, Chat.Click);
+			addChat2("§6"+var.prefixCmd+"Locklvl", var.prefixCmd+"locklvl", "§7Affiche ce qui est débloqué à quel lvl", false, Chat.Summon);								
 			break;
 			
 		case 2:
-			addChat2("Â§6"+var.prefixCmd+"Lvl", var.prefixCmd+"lvl", "Â§7Indique votre niveau par un joli message dans le chat :3", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Prefix <String>", var.prefixCmd+"prefix ", "Â§7Change le prefix des commandes.\nÂ§7Actuellement '"+var.prefixCmd+"'", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Verif <String>", var.prefixCmd+"verif ", "Â§7Neko se dÃ©sactive de maniÃ¨re non dÃ©finitive.", false, Chat.Summon);
-			addChat2("Â§7Essayez "+var.prefixCmd+"help verif pour l'explication complÃ¨te ;)", var.prefixCmd+"help verif", "Â§7Cliquez pour afficher l'aide complÃ¨te sur le verif", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Tp <player>", var.prefixCmd+"tp ", "Â§7Vous tÃ©lÃ©porte Ã  un joueur", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Fov <Double>", var.prefixCmd+"fov ", "Â§7Change votre fov, mÃªme au dela des limites", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Clear", var.prefixCmd+"clear", "Â§7Efface le chat", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Mode <Player:Mob:All>", var.prefixCmd+"mode ", "Â§7Change la cible pour les cheats qui utilise ce fonctionnement", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"MyPing ou Lag", var.prefixCmd+"ping", "Â§7Affiche votre ping rÃ©el par rapport au serveur", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Lvl", var.prefixCmd+"lvl", "§7Indique votre niveau par un joli message dans le chat :3", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Prefix <String>", var.prefixCmd+"prefix ", "§7Change le prefix des commandes.\n§7Actuellement '"+var.prefixCmd+"'", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Verif <String>", var.prefixCmd+"verif ", "§7Neko se désactive de manière non définitive.", false, Chat.Summon);
+			addChat2("§7Essayez "+var.prefixCmd+"help verif pour l'explication complète ;)", var.prefixCmd+"help verif", "§7Cliquez pour afficher l'aide complète sur le verif", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Tp <player>", var.prefixCmd+"tp ", "§7Vous téléporte à un joueur", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Fov <Double>", var.prefixCmd+"fov ", "§7Change votre fov, même au dela des limites", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Clear", var.prefixCmd+"clear", "§7Efface le chat", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Mode <Player:Mob:All>", var.prefixCmd+"mode ", "§7Change la cible pour les cheats qui utilise ce fonctionnement", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"MyPing ou Lag", var.prefixCmd+"ping", "§7Affiche votre ping réel par rapport au serveur", false, Chat.Summon);
 			break;
 			
 		case 3:
-			addChat2("Â§6"+var.prefixCmd+"Ip", var.prefixCmd+"ip", "Â§7Affiche l'ip du serveur actuel", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Disc <String>", var.prefixCmd+"disc ", "Â§7Joue le disc choisi", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Nyah", var.prefixCmd+"nyah", "Â§7Envoie un message chelou dans le chat, essayez ;3", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Server", var.prefixCmd+"server", "Â§7Affiche une liste de serveur bien pour cheat", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Tppos <X> <Y> <Z>", var.prefixCmd+"tppos ", "Â§7Vous tÃ©lÃ©porte aux coordonnÃ©es entrÃ©es", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Fps <Int>", var.prefixCmd+"fps ", "Â§7Augmente vos fps fictivement", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Trade", var.prefixCmd+"trade", "Â§7Affiche la liste de gains de jeu", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Coord", var.prefixCmd+"coord", "Â§7Affiche vos coordonnÃ©es actuelles", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Panic", var.prefixCmd+"panic", "Â§7DÃ©sactive tous les cheats activÃ©s", false, Chat.Summon);		
+			addChat2("§6"+var.prefixCmd+"Ip", var.prefixCmd+"ip", "§7Affiche l'ip du serveur actuel", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Disc <String>", var.prefixCmd+"disc ", "§7Joue le disc choisi", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Nyah", var.prefixCmd+"nyah", "§7Envoie un message chelou dans le chat, essayez ;3", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Server", var.prefixCmd+"server", "§7Affiche une liste de serveur bien pour cheat", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Tppos <X> <Y> <Z>", var.prefixCmd+"tppos ", "§7Vous téléporte aux coordonnées entrées", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Fps <Int>", var.prefixCmd+"fps ", "§7Augmente vos fps fictivement", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Trade", var.prefixCmd+"trade", "§7Affiche la liste de gains de jeu", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Coord", var.prefixCmd+"coord", "§7Affiche vos coordonnées actuelles", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Panic", var.prefixCmd+"panic", "§7Désactive tous les cheats activés", false, Chat.Summon);		
 			break;
 		
 		case 4:	
-			addChat2("Â§6"+var.prefixCmd+"Bind <Cheat> <Touche>", var.prefixCmd+"bind ", "Â§7Change les cheats de touche", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Toggle <Cheat>", var.prefixCmd+"toggle ", "Â§7Active/dÃ©sactive un cheat. le "+var.prefixCmd+"<Cheat> fonctionne aussi", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Values", var.prefixCmd+"values", "Â§7Affiche tous les rÃ©glages des cheats", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Reset", var.prefixCmd+"reset", "Â§7Remet tous les rÃ©glages Ã  leurs bases", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"List", var.prefixCmd+"list", "Â§7Dresse une liste de tous les cheats de Neko, en vert ceux actifs", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Vclip <Double>", var.prefixCmd+"vclip ", "Â§7Vous tÃ©lÃ©porte au dessus ou en dessous de vous", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"CheckEC", var.prefixCmd+"checkec", "Â§7Affiche la page de stats d'Ã©picube pour savoir si vous Ãªtes bannis ou non", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Damage", var.prefixCmd+"damage", "Â§7Vous vous infligez 0.5 Ã  1 coeur de dÃ©gÃ¢t", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Bind <Cheat> <Touche>", var.prefixCmd+"bind ", "§7Change les cheats de touche", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Toggle <Cheat>", var.prefixCmd+"toggle ", "§7Active/désactive un cheat. le "+var.prefixCmd+"<Cheat> fonctionne aussi", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Values", var.prefixCmd+"values", "§7Affiche tous les réglages des cheats", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Reset", var.prefixCmd+"reset", "§7Remet tous les réglages à leurs bases", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"List", var.prefixCmd+"list", "§7Dresse une liste de tous les cheats de Neko, en vert ceux actifs", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Vclip <Double>", var.prefixCmd+"vclip ", "§7Vous téléporte au dessus ou en dessous de vous", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"CheckEC", var.prefixCmd+"checkec", "§7Affiche la page de stats d'épicube pour savoir si vous êtes bannis ou non", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Damage", var.prefixCmd+"damage", "§7Vous vous infligez 0.5 à 1 coeur de dégÃ¢t", false, Chat.Summon);
 			break;
 						
 		case 5:		
-			addChat2("Â§6"+var.prefixCmd+"Info <Player>", var.prefixCmd+"info ", "Â§7Permet de voir les caractÃ©ristiques du joueur", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Update", var.prefixCmd+"update", "Â§7Check s'il y a une mise Ã  jour disponible", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Sword", var.prefixCmd+"sword", "Â§7Permet d'activer certains cheat que si le joueur a une Ã©pÃ©e dans la main", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Fov3 <Double>", var.prefixCmd+"fov3 ", "Â§7Change la distance Ã  laquelle vous voyez Ã  la 3Ã¨me personne", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Enchant", var.prefixCmd+"help enchant", "Â§7Voir l'help de l'enchant (Cliquez pour l'afficher)", false, Chat.Click);
-			addChat2("Â§6"+var.prefixCmd+"Limit", var.prefixCmd+"help limit", "Â§7Voir l'help du Limit (Cliquez pour l'afficher)", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Config", var.prefixCmd+"config", "Â§7Cliquer pour affiche le Config Manager", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Meteore", var.prefixCmd+"meteore", "Â§7Affiche ou non les mÃ©tÃ©ores (Cubes coloriÃ©s) sur le monde", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Info <Player>", var.prefixCmd+"info ", "§7Permet de voir les caractéristiques du joueur", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Update", var.prefixCmd+"update", "§7Check s'il y a une mise à jour disponible", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Sword", var.prefixCmd+"sword", "§7Permet d'activer certains cheat que si le joueur a une épée dans la main", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Fov3 <Double>", var.prefixCmd+"fov3 ", "§7Change la distance à laquelle vous voyez à la 3ème personne", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Enchant", var.prefixCmd+"help enchant", "§7Voir l'help de l'enchant (Cliquez pour l'afficher)", false, Chat.Click);
+			addChat2("§6"+var.prefixCmd+"Limit", var.prefixCmd+"help limit", "§7Voir l'help du Limit (Cliquez pour l'afficher)", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Config", var.prefixCmd+"config", "§7Cliquer pour affiche le Config Manager", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Meteore", var.prefixCmd+"meteore", "§7Affiche ou non les météores (Cubes coloriés) sur le monde", false, Chat.Summon);
 			break;
 			
 		case 6:
-			addChat2("Â§6"+var.prefixCmd+"Reload", var.prefixCmd+"reload", "Â§7Reload Neko", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Detector", var.prefixCmd+"detector", "Â§7Permet de dÃ©tÃ©cter les joueurs qui sont trop rapides (Cheateurs)", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Version <String>", var.prefixCmd+"version ", "Â§7Change la version lancÃ©e dans les Snooper Settings", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Gm <Id>", var.prefixCmd+"gm ", "Â§7Change votre gamemode. Si Ã§a Ã©choue vous le serez quand mÃªme mais seulement\nÂ§7pour vous afin de pouvoir exploit", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Invsee <Player>", var.prefixCmd+"invsee ", "Â§7Affiche l'inventaire du joueur notÃ©", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Broadcast", var.prefixCmd+"bc", "Â§7Affiche les bonus actuelles des serveurs", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Hclip <Int>", var.prefixCmd+"hclip ", "Â§7Vous tÃ©lÃ©porte en avant/arriÃ¨re", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Irc", var.prefixCmd+"help irc", "Â§7Voir l'help de l'Irc (Cliquez pour afficher)", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Reload", var.prefixCmd+"reload", "§7Reload Neko", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Detector", var.prefixCmd+"detector", "§7Permet de détécter les joueurs qui sont trop rapides (Cheateurs)", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Version <String>", var.prefixCmd+"version ", "§7Change la version lancée dans les Snooper Settings", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Gm <Id>", var.prefixCmd+"gm ", "§7Change votre gamemode. Si ça échoue vous le serez quand même mais seulement\n§7pour vous afin de pouvoir exploit", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Invsee <Player>", var.prefixCmd+"invsee ", "§7Affiche l'inventaire du joueur noté", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Broadcast", var.prefixCmd+"bc", "§7Affiche les bonus actuelles des serveurs", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Hclip <Int>", var.prefixCmd+"hclip ", "§7Vous téléporte en avant/arrière", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Irc", var.prefixCmd+"help irc", "§7Voir l'help de l'Irc (Cliquez pour afficher)", false, Chat.Summon);
 			break;
 			
 		case 7:
-			addChat2("Â§6"+var.prefixCmd+"Alt", var.prefixCmd+"alt", "Â§7Vous connecte Ã  un compte\nÂ§7Commande disponible toutes les 15 secondes\nÂ§7Comptes mis Ã  jour toutes les 2 heures", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Cmd", var.prefixCmd+"cmd ", "Â§7Permet d'assigner des commandes Ã  des touches\nÂ§7Cmd <Nom> <Touche> <Commande>", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"UnBindAll", var.prefixCmd+"unbindall", "Â§7Met tous les cheats sur la touche 'None'", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Saveall", var.prefixCmd+"saveall", "Â§7Save vos donnÃ©es manuellement", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Backup", var.prefixCmd+"backup", "Â§7CrÃ©e une backup", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"ListPing", var.prefixCmd+"listping", "Â§7Affiche le ping de tous les joueurs autour de vous", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"LvlUp", var.prefixCmd+"lvlup", "Â§7Active/dÃ©sactive l'animation quand on augmente de lvl", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Classement", var.prefixCmd+"Classement", "Â§7Affiche le top 10 des joueurs de Neko en terme de lvl", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"Namemc <Pseudo>", var.prefixCmd+"Namemc ", "Â§7Affiche l'historique des pseudos de la personne", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Alt", var.prefixCmd+"alt", "§7Vous connecte à un compte\n§7Commande disponible toutes les 15 secondes\n§7Comptes mis à jour toutes les 2 heures", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Cmd", var.prefixCmd+"cmd ", "§7Permet d'assigner des commandes à des touches\n§7Cmd <Nom> <Touche> <Commande>", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"UnBindAll", var.prefixCmd+"unbindall", "§7Met tous les cheats sur la touche 'None'", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Saveall", var.prefixCmd+"saveall", "§7Save vos données manuellement", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Backup", var.prefixCmd+"backup", "§7Crée une backup", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"ListPing", var.prefixCmd+"listping", "§7Affiche le ping de tous les joueurs autour de vous", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"LvlUp", var.prefixCmd+"lvlup", "§7Active/désactive l'animation quand on augmente de lvl", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Classement", var.prefixCmd+"Classement", "§7Affiche le top 10 des joueurs de Neko en terme de lvl", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Namemc <Pseudo>", var.prefixCmd+"Namemc ", "§7Affiche l'historique des pseudos de la personne", false, Chat.Summon);
 			break;															
 			
 		case -1:
-			addChat2("Â§6"+var.prefixCmd+"", var.prefixCmd+"", "Â§7", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"", var.prefixCmd+"", "Â§7", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"", var.prefixCmd+"", "Â§7", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"", var.prefixCmd+"", "Â§7", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"", var.prefixCmd+"", "Â§7", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"", var.prefixCmd+"", "Â§7", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"", var.prefixCmd+"", "Â§7", false, Chat.Summon);
-			addChat2("Â§6"+var.prefixCmd+"", var.prefixCmd+"", "Â§7", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
 			break;
 			
 		}
 		if (num!=maxHelp)
-			addChat2("Â§9-> Prochaine page", var.prefixCmd+"help "+(num+1), "Â§7Affiche la prochaine page", false, Chat.Click);
-		addChat2("Â§9Document Neko disponible ici", "http://nekohc.fr/wiki.php", "Â§7Cliquez ici pour afficher le document complet sur Neko", false, Chat.Link);
+			addChat2("§9-> Prochaine page", var.prefixCmd+"help "+(num+1), "§7Affiche la prochaine page", false, Chat.Click);
+		addChat2("§9Document Neko disponible ici", "http://nekohc.fr/wiki.php", "§7Cliquez ici pour afficher le document complet sur Neko", false, Chat.Link);
 	}
 	
 	public static Boolean verifBlock(Block id) {
@@ -1051,166 +1051,166 @@ public class Utils {
 	
 	public static void displayValues(int page) {
 		ModuleManager.values.clear();
-		ModuleManager.values.add("Â§nListes des valeurs actuelles:\n");
-		ModuleManager.values.add("Vitesse du Dolphin:Â§7 "+Dolphin.dolph);
+		ModuleManager.values.add("§nListes des valeurs actuelles:\n");
+		ModuleManager.values.add("Vitesse du Dolphin:§7 "+Dolphin.dolph);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Vitesse du Flight:Â§7 "+Flight.speed);
-		ModuleManager.values.add("Mode 'blink':Â§7 "+Flight.getBlink());
+		ModuleManager.values.add("Vitesse du Flight:§7 "+Flight.speed);
+		ModuleManager.values.add("Mode 'blink':§7 "+Flight.getBlink());
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		ModuleManager.values.add("Kill Aura:");
-		ModuleManager.values.add("Mode:Â§7 "+KillAura.mode);
-		ModuleManager.values.add("Cps:Â§7 "+KillAura.cps);
-		ModuleManager.values.add("Range:Â§7 "+KillAura.range);
-		ModuleManager.values.add("Fov :Â§7 "+KillAura.fov+"Â°");
-		ModuleManager.values.add("Lockview:Â§7 "+(KillAura.lockView ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
-		ModuleManager.values.add("Temps avant de taper une cible:Â§7 "+KillAura.live/20+"sec");
-		ModuleManager.values.add("Invisible:Â§7 "+(KillAura.invi ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
-		ModuleManager.values.add("OnGround:Â§7 "+(KillAura.onground ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
-		ModuleManager.values.add("NoArmor:Â§7 "+(KillAura.noarmor ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
-		ModuleManager.values.add("Random:Â§7 "+(KillAura.random ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
-		ModuleManager.values.add("Double vÃ©rification:Â§7 "+(KillAura.verif ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
-		ModuleManager.values.add("NoBot:Â§7 "+(KillAura.nobot ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
-		ModuleManager.values.add("Premium:Â§7 "+(KillAura.premium ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
-		ModuleManager.values.add("Bypass EC:Â§7 "+(KillAura.ec ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
+		ModuleManager.values.add("Mode:§7 "+KillAura.mode);
+		ModuleManager.values.add("Cps:§7 "+KillAura.cps);
+		ModuleManager.values.add("Range:§7 "+KillAura.range);
+		ModuleManager.values.add("Fov :§7 "+KillAura.fov+"Â°");
+		ModuleManager.values.add("Lockview:§7 "+(KillAura.lockView ? "§aActivé" : "§cDésactivé"));
+		ModuleManager.values.add("Temps avant de taper une cible:§7 "+KillAura.live/20+"sec");
+		ModuleManager.values.add("Invisible:§7 "+(KillAura.invi ? "§aActivé" : "§cDésactivé"));
+		ModuleManager.values.add("OnGround:§7 "+(KillAura.onground ? "§aActivé" : "§cDésactivé"));
+		ModuleManager.values.add("NoArmor:§7 "+(KillAura.noarmor ? "§aActivé" : "§cDésactivé"));
+		ModuleManager.values.add("Random:§7 "+(KillAura.random ? "§aActivé" : "§cDésactivé"));
+		ModuleManager.values.add("Double vérification:§7 "+(KillAura.verif ? "§aActivé" : "§cDésactivé"));
+		ModuleManager.values.add("NoBot:§7 "+(KillAura.nobot ? "§aActivé" : "§cDésactivé"));
+		ModuleManager.values.add("Premium:§7 "+(KillAura.premium ? "§aActivé" : "§cDésactivé"));
+		ModuleManager.values.add("Bypass EC:§7 "+(KillAura.ec ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Taille nametag:Â§7 "+Render.varNeko);
+		ModuleManager.values.add("Taille nametag:§7 "+Render.varNeko);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Vitesse du NoClip:Â§7 "+NoClip.speed);
+		ModuleManager.values.add("Vitesse du NoClip:§7 "+NoClip.speed);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		ModuleManager.values.add("Regen:");
-		ModuleManager.values.add("Paquets:Â§7 "+Regen.regen);
-		ModuleManager.values.add("Bypass:Â§7 "+(Regen.bypass ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
+		ModuleManager.values.add("Paquets:§7 "+Regen.regen);
+		ModuleManager.values.add("Bypass:§7 "+(Regen.bypass ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Vitesse du Speed:Â§7 "+Speed709.getSpeed().getSpe());
-		ModuleManager.values.add("Mode Speed:Â§7 "+Speed709.getSpeed().getMode());
+		ModuleManager.values.add("Vitesse du Speed:§7 "+Speed709.getSpeed().getSpe());
+		ModuleManager.values.add("Mode Speed:§7 "+Speed709.getSpeed().getMode());
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Hauteur du Step:Â§7 "+Step.step);
+		ModuleManager.values.add("Hauteur du Step:§7 "+Step.step);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Multiplicateur du Timer:Â§7 "+Timer.time);
+		ModuleManager.values.add("Multiplicateur du Timer:§7 "+Timer.time);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		Velocity v = Velocity.getVelocity();
 		ModuleManager.values.add("Velocity:");
-		ModuleManager.values.add("Coefficient horizontal:Â§7 "+v.getHcoeff());
-		ModuleManager.values.add("Coefficient vertical:Â§7 "+v.getVcoeff());
+		ModuleManager.values.add("Coefficient horizontal:§7 "+v.getHcoeff());
+		ModuleManager.values.add("Coefficient vertical:§7 "+v.getVcoeff());
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		ModuleManager.values.add("Trigger:");
-		ModuleManager.values.add("Range:Â§7 "+Trigger.dist);
-		ModuleManager.values.add("Cps:Â§7 "+Trigger.cps);
-		ModuleManager.values.add("Random:Â§7 "+(Trigger.random ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
+		ModuleManager.values.add("Range:§7 "+Trigger.dist);
+		ModuleManager.values.add("Cps:§7 "+Trigger.cps);
+		ModuleManager.values.add("Random:§7 "+(Trigger.random ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Distance de la Reach:Â§7 "+Reach.dist);
-		ModuleManager.values.add("Reach pvp:Â§7 "+(Reach.pvp ? "Â§aActivÃ©e" : "Â§cDÃ©sactivÃ©e"));
-		ModuleManager.values.add("Reach sur les blocs:Â§7 "+(Reach.bloc ? "Â§aActivÃ©e" : "Â§cDÃ©sactivÃ©e"));
-		ModuleManager.values.add("Reach classic:Â§7 "+(Reach.classic ? "Â§aActivÃ©e" : "Â§cDÃ©sactivÃ©e"));
-		ModuleManager.values.add("Reach aimbot:Â§7 "+(Reach.aimbot ? "Â§aActivÃ©e" : "Â§cDÃ©sactivÃ©e"));
-		ModuleManager.values.add("Reach fov:Â§7 "+Reach.fov+"Â°");
-		ModuleManager.values.add("Reach tnt:Â§7 "+(Reach.tnt ? "Â§aActivÃ©e" : "Â§cDÃ©sactivÃ©e"));
+		ModuleManager.values.add("Distance de la Reach:§7 "+Reach.dist);
+		ModuleManager.values.add("Reach pvp:§7 "+(Reach.pvp ? "§aActivée" : "§cDésactivée"));
+		ModuleManager.values.add("Reach sur les blocs:§7 "+(Reach.bloc ? "§aActivée" : "§cDésactivée"));
+		ModuleManager.values.add("Reach classic:§7 "+(Reach.classic ? "§aActivée" : "§cDésactivée"));
+		ModuleManager.values.add("Reach aimbot:§7 "+(Reach.aimbot ? "§aActivée" : "§cDésactivée"));
+		ModuleManager.values.add("Reach fov:§7 "+Reach.fov+"Â°");
+		ModuleManager.values.add("Reach tnt:§7 "+(Reach.tnt ? "§aActivée" : "§cDésactivée"));
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		ModuleManager.values.add("ClickAim:");
-		ModuleManager.values.add("Distance de frappe:Â§7 "+ClickAim.dist);
-		ModuleManager.values.add("MultiAura:Â§7 "+(ClickAim.multiAura ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));	
+		ModuleManager.values.add("Distance de frappe:§7 "+ClickAim.dist);
+		ModuleManager.values.add("MultiAura:§7 "+(ClickAim.multiAura ? "§aActivé" : "§cDésactivé"));	
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		ModuleManager.values.add("VanillaTp:");
-		ModuleManager.values.add("Air:Â§7 "+(VanillaTp.air ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
-		ModuleManager.values.add("Classic:Â§7 "+(VanillaTp.classic ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
-		ModuleManager.values.add("Top:Â§7 "+(VanillaTp.top ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
+		ModuleManager.values.add("Air:§7 "+(VanillaTp.air ? "§aActivé" : "§cDésactivé"));
+		ModuleManager.values.add("Classic:§7 "+(VanillaTp.classic ? "§aActivé" : "§cDésactivé"));
+		ModuleManager.values.add("Top:§7 "+(VanillaTp.top ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Autoarmor dÃ©sactivÃ© sur Epicube:Â§7 "+(Autoarmor.ec ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
+		ModuleManager.values.add("Autoarmor désactivé sur Epicube:§7 "+(Autoarmor.ec ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Cheststealer tick:Â§7 "+Cheststealer.waitTime);
+		ModuleManager.values.add("Cheststealer tick:§7 "+Cheststealer.waitTime);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		ModuleManager.values.add("SmoothAim:");
-		ModuleManager.values.add("Range:Â§7 "+SmoothAim.range);
-		ModuleManager.values.add("Fov:Â§7 "+SmoothAim.degrees+"Â°");
-		ModuleManager.values.add("Speed:Â§7 "+SmoothAim.speed);
+		ModuleManager.values.add("Range:§7 "+SmoothAim.range);
+		ModuleManager.values.add("Fov:§7 "+SmoothAim.degrees+"Â°");
+		ModuleManager.values.add("Speed:§7 "+SmoothAim.speed);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		ModuleManager.values.add("Autosoup:");
-		ModuleManager.values.add("Seuil de vie sensible:Â§7 "+Autosoup.heal);
-		ModuleManager.values.add("Drop les soupes vide:Â§7 "+(Autosoup.drop ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
+		ModuleManager.values.add("Seuil de vie sensible:§7 "+Autosoup.heal);
+		ModuleManager.values.add("Drop les soupes vide:§7 "+(Autosoup.drop ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		ModuleManager.values.add("Autonyah: "+isNyah());
-		ModuleManager.values.add("Prefix du nyah:Â§7 "+nyahh);
-		ModuleManager.values.add("Temps entre chaque nyah:Â§7 "+nyahSec+"s");	
+		ModuleManager.values.add("Prefix du nyah:§7 "+nyahh);
+		ModuleManager.values.add("Temps entre chaque nyah:§7 "+nyahSec+"s");	
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("AutoClic cps:Â§7 "+AutoClic.cps);
+		ModuleManager.values.add("AutoClic cps:§7 "+AutoClic.cps);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Nuker range:Â§7 "+Nuker.nukerRadius);
+		ModuleManager.values.add("Nuker range:§7 "+Nuker.nukerRadius);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Freecam speed:Â§7 "+Freecam.speed);
+		ModuleManager.values.add("Freecam speed:§7 "+Freecam.speed);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Longjump speed:Â§7 "+Longjump.speed);
+		ModuleManager.values.add("Longjump speed:§7 "+Longjump.speed);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Radar Affichage des friends:Â§7 "+(Radar.fr ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
+		ModuleManager.values.add("Radar Affichage des friends:§7 "+(Radar.fr ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Mode sword: "+(sword ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
+		ModuleManager.values.add("Mode sword: "+(sword ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("WorldTime:Â§7 "+WorldTime.time);
+		ModuleManager.values.add("WorldTime:§7 "+WorldTime.time);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Total de bonus ramassÃ©: "+neko.module.modules.Render.bonusCount);
+		ModuleManager.values.add("Total de bonus ramassé: "+neko.module.modules.Render.bonusCount);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		ModuleManager.values.add("HUD:");
-		ModuleManager.values.add("Coord: "+(HUD.coord ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
-		ModuleManager.values.add("Fps: "+(HUD.fps ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
-		ModuleManager.values.add("Xp: "+(HUD.fall ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
-		ModuleManager.values.add("Item: "+(HUD.item ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
-		ModuleManager.values.add("Time: "+(HUD.time ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
-		ModuleManager.values.add("Select: "+(HUD.select ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
-		ModuleManager.values.add("Couleur R:Â§7 "+HUD.cR);
-		ModuleManager.values.add("Couleur G:Â§7 "+HUD.cG);
-		ModuleManager.values.add("Couleur B:Â§7 "+HUD.cB);
-		ModuleManager.values.add("Epaisseur bord:Â§7 "+HUD.width);
+		ModuleManager.values.add("Coord: "+(HUD.coord ? "§aActivé" : "§cDésactivé"));
+		ModuleManager.values.add("Fps: "+(HUD.fps ? "§aActivé" : "§cDésactivé"));
+		ModuleManager.values.add("Xp: "+(HUD.fall ? "§aActivé" : "§cDésactivé"));
+		ModuleManager.values.add("Item: "+(HUD.item ? "§aActivé" : "§cDésactivé"));
+		ModuleManager.values.add("Time: "+(HUD.time ? "§aActivé" : "§cDésactivé"));
+		ModuleManager.values.add("Select: "+(HUD.select ? "§aActivé" : "§cDésactivé"));
+		ModuleManager.values.add("Couleur R:§7 "+HUD.cR);
+		ModuleManager.values.add("Couleur G:§7 "+HUD.cG);
+		ModuleManager.values.add("Couleur B:§7 "+HUD.cB);
+		ModuleManager.values.add("Epaisseur bord:§7 "+HUD.width);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		ModuleManager.values.add("Wallhack:");
-		ModuleManager.values.add("Couleur R:Â§7 "+Wallhack.cR);
-		ModuleManager.values.add("Couleur G:Â§7 "+Wallhack.cG);
-		ModuleManager.values.add("Couleur B:Â§7 "+Wallhack.cB);
-		ModuleManager.values.add("Couleur de ligne R:Â§7 "+Wallhack.clR);
-		ModuleManager.values.add("Couleur de ligne G:Â§7 "+Wallhack.clG);
-		ModuleManager.values.add("Couleur de ligne B:Â§7 "+Wallhack.clB);
-		ModuleManager.values.add("Epaisseur de ligne:Â§7 "+Wallhack.width);
+		ModuleManager.values.add("Couleur R:§7 "+Wallhack.cR);
+		ModuleManager.values.add("Couleur G:§7 "+Wallhack.cG);
+		ModuleManager.values.add("Couleur B:§7 "+Wallhack.cB);
+		ModuleManager.values.add("Couleur de ligne R:§7 "+Wallhack.clR);
+		ModuleManager.values.add("Couleur de ligne G:§7 "+Wallhack.clG);
+		ModuleManager.values.add("Couleur de ligne B:§7 "+Wallhack.clB);
+		ModuleManager.values.add("Epaisseur de ligne:§7 "+Wallhack.width);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		ModuleManager.values.add("Tracers:");
-		ModuleManager.values.add("Couleur de ligne R:Â§7 "+Tracers.cR);
-		ModuleManager.values.add("Couleur de ligne G:Â§7 "+Tracers.cG);
-		ModuleManager.values.add("Couleur de ligne B:Â§7 "+Tracers.cB);
-		ModuleManager.values.add("Epaisseur de ligne:Â§7 "+Tracers.width);
-		ModuleManager.values.add("Friend: "+(Tracers.friend ? "Â§aAffichÃ©" : "Â§cCachÃ©"));
+		ModuleManager.values.add("Couleur de ligne R:§7 "+Tracers.cR);
+		ModuleManager.values.add("Couleur de ligne G:§7 "+Tracers.cG);
+		ModuleManager.values.add("Couleur de ligne B:§7 "+Tracers.cB);
+		ModuleManager.values.add("Epaisseur de ligne:§7 "+Tracers.width);
+		ModuleManager.values.add("Friend: "+(Tracers.friend ? "§aAffiché" : "§cCaché"));
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Limit: "+(limite ? "Â§aActivÃ©e" : "Â§cDÃ©sactivÃ©e"));
+		ModuleManager.values.add("Limit: "+(limite ? "§aActivée" : "§cDésactivée"));
 		ModuleManager.values.add("Limite de paquet: "+limit);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		ModuleManager.values.add("AutoPot:");
-		ModuleManager.values.add("Seuil de vie sensible:Â§7 "+AutoPot.heal);
+		ModuleManager.values.add("Seuil de vie sensible:§7 "+AutoPot.heal);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		ModuleManager.values.add("Pyro:");
-		ModuleManager.values.add("Mode:Â§7 "+Pyro.mode);
+		ModuleManager.values.add("Mode:§7 "+Pyro.mode);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		TpBack tp = TpBack.getInstance();
 		ModuleManager.values.add("TpBack:");		
-		ModuleManager.values.add("Seuil de vie:Â§7 "+tp.getVie());
-		ModuleManager.values.add("Classic:Â§7 "+(tp.isClassic() ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
-		ModuleManager.values.add("Top:Â§7 "+(tp.isTop() ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©"));
-		ModuleManager.values.add("Spawn:Â§7 X:"+tp.getSpawn().getX()+" Y:"+tp.getSpawn().getY()+" Z:"+tp.getSpawn().getZ());
+		ModuleManager.values.add("Seuil de vie:§7 "+tp.getVie());
+		ModuleManager.values.add("Classic:§7 "+(tp.isClassic() ? "§aActivé" : "§cDésactivé"));
+		ModuleManager.values.add("Top:§7 "+(tp.isTop() ? "§aActivé" : "§cDésactivé"));
+		ModuleManager.values.add("Spawn:§7 X:"+tp.getSpawn().getX()+" Y:"+tp.getSpawn().getY()+" Z:"+tp.getSpawn().getZ());
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		Ping p = Ping.getPing();
 		ModuleManager.values.add("Ping:");
-		ModuleManager.values.add("Fake ms:Â§7 "+p.getDelay());
-		ModuleManager.values.add("Freezer:Â§7 "+p.isFreezer());
-		ModuleManager.values.add("Random:Â§7 "+p.isRandom());
+		ModuleManager.values.add("Fake ms:§7 "+p.getDelay());
+		ModuleManager.values.add("Freezer:§7 "+p.isFreezer());
+		ModuleManager.values.add("Random:§7 "+p.isRandom());
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		Irc irc = Irc.getInstance();
 		ModuleManager.values.add("Irc:");
-		ModuleManager.values.add("Irc mode:Â§7 "+irc.getMode());
-		ModuleManager.values.add("Irc messages join/left:Â§7 "+(irc.isHideJl() ? "CachÃ©s" : "AffichÃ©s"));
+		ModuleManager.values.add("Irc mode:§7 "+irc.getMode());
+		ModuleManager.values.add("Irc messages join/left:§7 "+(irc.isHideJl() ? "Cachés" : "Affichés"));
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		NekoChat nc = NekoChat.getChat();
 		ModuleManager.values.add("NekoChat:");
-		ModuleManager.values.add("Color:Â§7 "+nc.getColor());
-		ModuleManager.values.add("Largeur:Â§7 "+nc.getWidth());
-		ModuleManager.values.add("Hauteur:Â§7 "+nc.getHeight());
+		ModuleManager.values.add("Color:§7 "+nc.getColor());
+		ModuleManager.values.add("Largeur:§7 "+nc.getWidth());
+		ModuleManager.values.add("Hauteur:§7 "+nc.getHeight());
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		Register r = Register.getReg();
-		ModuleManager.values.add("Register mdp:Â§7 "+r.getMdp());
+		ModuleManager.values.add("Register mdp:§7 "+r.getMdp());
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		ModuleManager.values.add("Cancer:");
 		ModuleManager.values.add("Delay: "+Cancer.delay+"sec");
@@ -1229,13 +1229,13 @@ public class Utils {
 			j++;
 		}
 		if (k==i) {
-			addChat("Â§aPour afficher la page suivante, taper "+var.prefixCmd+"value "+(page+1)+" !");
+			addChat("§aPour afficher la page suivante, taper "+var.prefixCmd+"value "+(page+1)+" !");
 		}
 		
 	}
 	
 	public static String isNyah() {
-		return nyah ? "Â§aActivÃ©" : "Â§cDÃ©sactivÃ©";
+		return nyah ? "§aActivé" : "§cDésactivé";
 		
 	}
 	
@@ -1279,10 +1279,10 @@ public class Utils {
 					if (Utils.getTotRankRate(rt)==Utils.getTotRankRateUnlock(rt))
 						if (r.isLock()) {
 							setRank("Supra "+rt.name());
-							addChat("Â§dÂ§kouiÂ§cRang Â§6Supra "+rt.name()+"Â§c dÃ©bloquÃ© !!Â§dÂ§koui");
+							addChat("§d§koui§cRang §6Supra "+rt.name()+"§c débloqué !!§d§koui");
 						} else if (isAllRateHaveLvl(getRank("Supra "+rt.name()).getLvl()+1, rt)) {
 							setRank("Supra "+rt.name());
-							addChat("Â§dÂ§kouiÂ§cRang Â§6Supra "+rt.name()+"Â§c a atteint le lvl "+getRank("Supra "+rt.name()).getLvl()+" !!Â§dÂ§koui");
+							addChat("§d§koui§cRang §6Supra "+rt.name()+"§c a atteint le lvl "+getRank("Supra "+rt.name()).getLvl()+" !!§d§koui");
 						}
 				}
 			
@@ -1291,14 +1291,14 @@ public class Utils {
 				if (r.isLock()) {
 					if (!getRank("Neko Army").isLock() && !getRank("JP Originel").isLock() && !getRank("Last Neko Judgement").isLock() && rang>=66) {
 						setRank(r.getName());
-						addChat("Â§4Â§kooooÂ§cRang Â§5Nyaaw MythiqueÂ§c dÃ©bloquÃ© !!Â§4Â§koooo");
+						addChat("§4§koooo§cRang §5Nyaaw Mythique§c débloqué !!§4§koooo");
 						mc.thePlayer.playSound("mob.enderdragon.end", 0.5F, 0.5F);
 					}
 				} else {
 					int lvl = getRank("Nyaaw Mythique").getLvl()+1;
 					if (getRank("Neko Army").getLvl()==lvl && getRank("JP Originel").getLvl()==lvl && getRank("Last Neko Judgement").getLvl()==lvl) {							
 						setRank(r.getName());
-						addChat("Â§4Â§kooooÂ§cRang Â§5Nyaaw MythiqueÂ§c a atteint le lvl "+getRank("Nyaaw Mythique").getLvl()+" !!Â§4Â§koooo");
+						addChat("§4§koooo§cRang §5Nyaaw Mythique§c a atteint le lvl "+getRank("Nyaaw Mythique").getLvl()+" !!§4§koooo");
 						mc.thePlayer.playSound("mob.enderdragon.end", 0.5F, 0.5F);
 					}
 				}				
@@ -1308,14 +1308,14 @@ public class Utils {
 				if (r.isLock()) {
 					if (!getRank("Jean-Pierre").isLock() && !getRank("Jean-Pierre alias JP").isLock() && !getRank("Jean-Pierre chanceux").isLock() && rang>=15) {
 						setRank(r.getName());
-						addChat("Â§4Â§kooooÂ§cRang Â§dJP OriginelÂ§c dÃ©bloquÃ© !!Â§4Â§koooo");
+						addChat("§4§koooo§cRang §dJP Originel§c débloqué !!§4§koooo");
 						mc.thePlayer.playSound("mob.enderdragon.end", 0.5F, 0.5F);
 					}
 				} else {
 					int lvl = getRank("JP Originel").getLvl()+1;
 					if (getRank("Jean-Pierre").getLvl()==lvl && getRank("Jean-Pierre alias JP").getLvl()==lvl && getRank("Jean-Pierre chanceux").getLvl()==lvl) {							
 						setRank(r.getName());
-						addChat("Â§4Â§kooooÂ§cRang Â§dJP OriginelÂ§c a atteint le lvl "+getRank("JP Originel").getLvl()+" !!Â§4Â§koooo");
+						addChat("§4§koooo§cRang §dJP Originel§c a atteint le lvl "+getRank("JP Originel").getLvl()+" !!§4§koooo");
 						mc.thePlayer.playSound("mob.enderdragon.end", 0.5F, 0.5F);
 					}
 				}
@@ -1323,16 +1323,16 @@ public class Utils {
 			
 			if (r.getName().equalsIgnoreCase("Neko Army")) {
 				if (r.isLock()) {
-					if (!getRank("TryTry Satanique").isLock() && !getRank("Neko AngÃ©lique").isLock() && !getRank("Arakiel").isLock() && !getRank("DÃ©mon reconverti").isLock() && neko.module.modules.Render.bonusCount>=100) {
+					if (!getRank("TryTry Satanique").isLock() && !getRank("Neko Angélique").isLock() && !getRank("Arakiel").isLock() && !getRank("Démon reconverti").isLock() && neko.module.modules.Render.bonusCount>=100) {
 						setRank(r.getName());
-						addChat("Â§4Â§kooooÂ§cRang Â§dNeko ArmyÂ§c dÃ©bloquÃ© !!Â§4Â§koooo");
+						addChat("§4§koooo§cRang §dNeko Army§c débloqué !!§4§koooo");
 						mc.thePlayer.playSound("mob.enderdragon.end", 0.5F, 0.5F);
 					}
 				} else {
 					int lvl = getRank("Neko Army").getLvl()+1;
-					if (getRank("TryTry Satanique").getLvl()==lvl && getRank("Neko AngÃ©lique").getLvl()==lvl && getRank("Arakiel").getLvl()==lvl && getRank("DÃ©mon reconverti").getLvl()==lvl) {							
+					if (getRank("TryTry Satanique").getLvl()==lvl && getRank("Neko Angélique").getLvl()==lvl && getRank("Arakiel").getLvl()==lvl && getRank("Démon reconverti").getLvl()==lvl) {							
 						setRank(r.getName());
-						addChat("Â§4Â§kooooÂ§cRang Â§dNeko ArmyÂ§c a atteint le lvl "+getRank("Neko Army").getLvl()+" !!Â§4Â§koooo");
+						addChat("§4§koooo§cRang §dNeko Army§c a atteint le lvl "+getRank("Neko Army").getLvl()+" !!§4§koooo");
 						mc.thePlayer.playSound("mob.enderdragon.end", 0.5F, 0.5F);
 					}
 				}
@@ -1342,19 +1342,19 @@ public class Utils {
 				unlock("Pyro");
 			}
 			
-			// // Last Neko Judgement : TryTry Divin, plus de 20 rangs gagnÃ©s, + 2 autres rangs
+			// // Last Neko Judgement : TryTry Divin, plus de 20 rangs gagnés, + 2 autres rangs
 			if (r.getName().equalsIgnoreCase("Last Neko Judgement")) {
 				if (r.isLock()) {
 					if (!getRank("TryTry Divin").isLock() && !getRank("Succube").isLock() && !getRank("Neko Satanique").isLock() && rang>=20) {
 						setRank(r.getName());
-						addChat("Â§4Â§kooooÂ§cRang Â§dLast Neko JudgementÂ§c dÃ©bloquÃ© !!Â§4Â§koooo");
+						addChat("§4§koooo§cRang §dLast Neko Judgement§c débloqué !!§4§koooo");
 						mc.thePlayer.playSound("mob.enderdragon.end", 0.5F, 0.5F);
 					}
 				} else {
 					int lvl = getRank("Last Neko Judgement").getLvl()+1;
 					if (getRank("TryTry Divin").getLvl()==lvl && getRank("Succube").getLvl()==lvl && getRank("Neko Satanique").getLvl()==lvl) {							
 						setRank(r.getName());
-						addChat("Â§4Â§kooooÂ§cRang Â§dLast Â§dNeko Â§dJudgementÂ§c a atteint le lvl "+getRank("Last Neko Jugdement").getLvl()+" !!Â§4Â§koooo");
+						addChat("§4§koooo§cRang §dLast §dNeko §dJudgement§c a atteint le lvl "+getRank("Last Neko Jugdement").getLvl()+" !!§4§koooo");
 						mc.thePlayer.playSound("mob.enderdragon.end", 0.5F, 0.5F);
 					}
 				}
@@ -1373,7 +1373,7 @@ public class Utils {
 					}
 					if (cat==69) {
 						setRank(r.getName());
-						addChat("Â§4Â§kooooÂ§cRang Â§cÂ§k55Â§dTryliomÂ§cÂ§k55 dÃ©bloquÃ© !!Â§4Â§koooo");
+						addChat("§4§koooo§cRang §c§k55§dTryliom§c§k55 débloqué !!§4§koooo");
 						for (Object o : mc.theWorld.loadedEntityList) {
 							if (o instanceof EntityOcelot) {
 								EntityOcelot en = (EntityOcelot) o;
@@ -1392,7 +1392,7 @@ public class Utils {
 						}
 					}
 					if (cat==69) {
-						addChat("Â§4Â§kooooÂ§cRang Â§cÂ§k55Â§dTryliomÂ§cÂ§k55 atteint le lvl Â§d"+(r.getLvl()+1)+" !!Â§4Â§koooo");
+						addChat("§4§koooo§cRang §c§k55§dTryliom§c§k55 atteint le lvl §d"+(r.getLvl()+1)+" !!§4§koooo");
 						r.setLvl(r.getLvl()+1);
 						for (Object o : mc.theWorld.loadedEntityList) {
 							if (o instanceof EntityOcelot) {
@@ -1638,16 +1638,16 @@ public class Utils {
 		xp+=xp*getTotBonus();
 		if (mc.isSingleplayer()) {
 			if (Math.random()<0.01)
-				addChat("Â§cGains d'xp rÃ©duit de 90% en singlePlayer /!\\");
+				addChat("§cGains d'xp réduit de 90% en singlePlayer /!\\");
 			xp-=xp*0.9;
 		}
 		if (Utils.xp)
-			addChat("Â§b+"+xp+"xp");
+			addChat("§b+"+xp+"xp");
 		
 		if (Math.random()<0.0001) {
 			double b= getRandInt(20);
 			var.bonus+=b;
-			addChat("Â§5Â§kiiÂ§5Bonus de Â§d"+b+"%Â§5 ajoutÃ© !Â§5Â§kii");
+			addChat("§5§kii§5Bonus de §d"+b+"%§5 ajouté !§5§kii");
 			doWin(10);
 		}		
 		
@@ -1680,8 +1680,8 @@ public class Utils {
             {                	
             	i++;            	
             	name="";
-            	if (ligne.startsWith("Â§")) {
-            		l = Integer.parseInt(ligne.replaceFirst("Â§", ""))-69;
+            	if (ligne.startsWith("§")) {
+            		l = Integer.parseInt(ligne.replaceFirst("§", ""))-69;
             		l/=555;
             	} else {
 	            	str+=ligne.length()+1;            	
@@ -1706,7 +1706,7 @@ public class Utils {
             	}
             }
         	if (l!=str) {
-        		System.out.println("Fichier modifiÃ© dÃ©tÃ©ctÃ©: Reset du Rpg !");
+        		System.out.println("Fichier modifié détécté: Reset du Rpg !");
         		resetRpg();
         	}
         
@@ -1728,7 +1728,7 @@ public class Utils {
             		s+=k.getName()+" "+k.isLock()+" "+k.getLvl()+"\n";
             	}
             	int i = (s.length()+1)*555-69;
-            	String res= s+"Â§"+i;
+            	String res= s+"§"+i;
                 writer.write(res);
                 writer.flush();
             }
@@ -1749,7 +1749,7 @@ public class Utils {
             			s+=lock.getName()+" "+lock.isLock()+"\n";
             	}
             	int i = (s.length()+1)*666-111;
-            	String res= s+"Â§"+i;
+            	String res= s+"§"+i;
                 writer.write(res);
                 writer.flush();
             }
@@ -1769,8 +1769,8 @@ public class Utils {
                 int str=0;
                 while ((ligne = br.readLine()) != null)
                 {       
-                	if (ligne.startsWith("Â§")) {
-                		j = Integer.parseInt(ligne.replaceFirst("Â§", ""))-111;
+                	if (ligne.startsWith("§")) {
+                		j = Integer.parseInt(ligne.replaceFirst("§", ""))-111;
                 		j/=666;
                 	} else {
 	                	str+=ligne.length()+1;
@@ -1794,7 +1794,7 @@ public class Utils {
                 	}
                 }
             	if (j!=str) {
-            		System.out.println("Fichier modifiÃ© dÃ©tÃ©ctÃ©: Reset du Rpg !");
+            		System.out.println("Fichier modifié détécté: Reset du Rpg !");
             		resetRpg();
             	}
                 
@@ -1806,7 +1806,7 @@ public class Utils {
 	}
 	
 	public static void saveFrame(String...fi) {
-		if (verif!=null)
+		if (verif!=null || var.gui==null)
 			return;
 		String s="";
 		File file = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"frame.neko");
@@ -1820,7 +1820,7 @@ public class Utils {
             		int y = f.getY();
             		s+=name+" "+x+" "+y+" "+f.isMinimized()+"\n";
             	}
-            	s+="Â§"+SimpleTheme.font;
+            	s+="§"+SimpleTheme.font;
                 writer.write(s);
                 writer.flush();
             }
@@ -1910,7 +1910,7 @@ public class Utils {
             	s+=irc.getNamePlayer()+"\n"+irc.getPrefix()+"\n"+irc.getIdPlayer()+"\n"+irc.isOn()+"\n\n"+irc.getMode()+"\n"+irc.isHideJl()+"\n"+(b.isRemember() ? b.getUser()+"\n"+b.getPass()+"\n" : "\n\n");
             	s+=irc.getPClic()+"\n";
             	int i = (s.length()+1)*666-111;
-            	String res= s+"Â§"+i;
+            	String res= s+"§"+i;
                 writer.write(res);
                 writer.flush();
             }
@@ -1933,8 +1933,8 @@ public class Utils {
                 while ((ligne = br.readLine()) != null)
                 {       
                 	i++;
-                	if (ligne.startsWith("Â§")) {
-                		j = Integer.parseInt(ligne.replaceFirst("Â§", ""))-111;
+                	if (ligne.startsWith("§")) {
+                		j = Integer.parseInt(ligne.replaceFirst("§", ""))-111;
                 		j/=666;
                 	} else {
 	                	str+=ligne.length()+1;
@@ -1967,7 +1967,7 @@ public class Utils {
                 	}
                 }
             	if (j!=str) {
-            		System.out.println("Fichier modifiÃ© dÃ©tÃ©ctÃ©: Reset de l'Irc !");
+            		System.out.println("Fichier modifié détécté: Reset de l'Irc !");
             		irc.setNamePlayer(mc.session.getUsername());
             		irc.setPrefix("$");
             		irc.setIdPlayer(0);
@@ -1995,7 +1995,7 @@ public class Utils {
             	for (int i=0;i<ch.length;i++) {
             		sum+=ch[i];
             	}
-            	writer.write(var.rang.getName() + "\n" + var.niveau + "\n" + var.xp + "\n" + var.xpMax + "\n" + var.achievementHelp + "\n" + var.prefixCmd + "\n" + var.mode + "\n" + var.ame + "\n" + var.bonus+"\nÂ§"+sum+"\n"+var.chance+"\n"+var.lot+"\n"+Active.bonus+"\n"+Active.time+"\n"+var.CLIENT_VERSION+"\n"+Lot.nbLot);
+            	writer.write(var.rang.getName() + "\n" + var.niveau + "\n" + var.xp + "\n" + var.xpMax + "\n" + var.achievementHelp + "\n" + var.prefixCmd + "\n" + var.mode + "\n" + var.ame + "\n" + var.bonus+"\n§"+sum+"\n"+var.chance+"\n"+var.lot+"\n"+Active.bonus+"\n"+Active.time+"\n"+var.CLIENT_VERSION+"\n"+Lot.nbLot);
                 writer.flush();
             }
 
@@ -2287,21 +2287,21 @@ public class Utils {
 					Friends.friend.add(mc.session.getUsername());
 				if (MCLeaks.isAltActive())
 					MCLeaks.remove();
-				return "Â§aConnectÃ© en tant que "+mc.session.getUsername()+" !";
+				return "§aConnecté en tant que "+mc.session.getUsername()+" !";
 			} catch (AuthenticationException e) {
-				return "Â§cErreur: Email/Username ou mdp incorrect";
+				return "§cErreur: Email/Username ou mdp incorrect";
 			} catch (Exception e) {
 				Utils.addChat(e.getMessage());
 			}
 	    }
-		return "Â§cErreur";
+		return "§cErreur";
 	}
 	
 	//TODO: Account
 	public static void displayAccount() {
 		ArrayList<String> acc = getAllAccount();
 		if (acc.size()==0) {
-			addChat("Â§cPas de comptes enregistrÃ©s...");			
+			addChat("§cPas de comptes enregistrés...");			
 		} else {
 			addChat("=========Account=========");
 			String tab[] = new String[2];
@@ -2316,8 +2316,8 @@ public class Utils {
         		if (k+1!=lastAccount)
         			msg+="["+(k+1)+"] "+tab[0]+" "+mdp;
         		else
-        			msg+="["+(k+1)+"] "+tab[0]+" "+mdp+" - UtilisÃ©";
-        		addChat2("Â§6"+msg, var.prefixCmd+"log "+(k+1), "Â§7Cliquez ici pour vous log dans le compte nÂ°"+(k+1), false, Chat.Click);
+        			msg+="["+(k+1)+"] "+tab[0]+" "+mdp+" - Utilisé";
+        		addChat2("§6"+msg, var.prefixCmd+"log "+(k+1), "§7Cliquez ici pour vous log dans le compte nÂ°"+(k+1), false, Chat.Click);
         	}
 			addChat("=========================");
 		}
@@ -2429,7 +2429,7 @@ public class Utils {
                 	i++;
                 }               
             }
-		} catch (Exception e) {addChat("Â§cErreur");}
+		} catch (Exception e) {addChat("§cErreur");}
 		}
 		return null;
 	}
@@ -3054,11 +3054,11 @@ public class Utils {
 					else
 						m.setBind(Keyboard.getKeyIndex(d.toUpperCase()));
 					char ch[] = d.toUpperCase().toCharArray();
-					addChat(m.getName()+" a Ã©tÃ© assignÃ© Ã  la touche "+d.toLowerCase().replaceFirst(".", String.valueOf(ch[0])));
+					addChat(m.getName()+" a été assigné à la touche "+d.toLowerCase().replaceFirst(".", String.valueOf(ch[0])));
 				}
 			}
 		} catch (Exception e) {
-			addChat("Â§cErreur de syntax...");
+			addChat("§cErreur de syntax...");
 		}		
 	}
 	
@@ -3140,7 +3140,7 @@ public class Utils {
 		  Utils.display=false;
 		  loadMod();
 		  Utils.display=dis;
-		  addChat("Â§aReload Complete !");
+		  addChat("§aReload Complete !");
 	}
 	
 	public static void loadBind(String...fi) {
@@ -3267,13 +3267,13 @@ public class Utils {
                 
                 if (before16) {
 	                if ((somme-323924)/382!=var.niveau) {
-	                	System.out.println("Fichier modifiÃ© dÃ©tÃ©ctÃ© <1.6: Reset du Rpg !");
+	                	System.out.println("Fichier modifié détécté <1.6: Reset du Rpg !");
 	                	resetRpg();
 	                	return false;
 	                }
                 } else {
                 	if (sum!=somme) {
-	                	System.out.println("Fichier modifiÃ© dÃ©tÃ©ctÃ© >1.6: Reset du Rpg !");
+	                	System.out.println("Fichier modifié détécté >1.6: Reset du Rpg !");
 	                	resetRpg();
 	                	return false;
                 	}
@@ -3388,12 +3388,12 @@ public class Utils {
 		switch (randy) {
 			case 0:s="Seul au monde D:";break;
 			case 1:s="Solo";break;
-			case 2:s="Â§aEspionner les creepers";break;
-			case 3:s="Jouer Ã  chat avec les mobis :3";break;
+			case 2:s="§aEspionner les creepers";break;
+			case 3:s="Jouer à chat avec les mobis :3";break;
 			case 4:s="Fuyez pauvres fou !";break;
 			case 5:s="Pas de ban ici !";break;
-			case 6:s="Â§cApocalypse now !";break;
-			case 7:s="Â§dNeko Ã  cÃ¢liner :3";break;
+			case 6:s="§cApocalypse now !";break;
+			case 7:s="§dNeko à cÃ¢liner :3";break;
 			case 8:s="<3 Solitaire <3";break;
 		}
 		return s;
@@ -3403,14 +3403,14 @@ public class Utils {
 		int randy = (int) Math.round(Math.random()*11);
 		String s = "Multiplayer";
 		switch (randy) {
-			case 0:s="Â§eVoler des elos ;3";break;
+			case 0:s="§eVoler des elos ;3";break;
 			case 1:s="Rekt des noobs";break;
 			case 2:s="Faire voler les joueurs";break;
-			case 3:s="Â§cYou are banned now !";break;
+			case 3:s="§cYou are banned now !";break;
 			case 4:s="Joue avec des Neko :3";break;
-			case 5:s="Â§cNe pas appuyer";break;
+			case 5:s="§cNe pas appuyer";break;
 			case 6:s="Pas taper D:";break;
-			case 7:s="Â§bGO Â§fGO Â§cGO Â§d!";break;
+			case 7:s="§bGO §fGO §cGO §d!";break;
 			case 8:s="Nyanyater avec des neko :3";break;
 			case 9:s="Please rekt me :3";break;
 			case 10:s="Ez";break;
@@ -3450,17 +3450,17 @@ public class Utils {
 		case 2:nyah="Les neko sont tout kawaii :3";	break;
 		case 3:nyah="Je suis niveau "+var.niveau+" sur Neko :3"; break;
 		case 4:nyah="Plein de petits neko pour twa <3";mc.thePlayer.playSound("mob.cat.purreow", 1.0F, 1.0F);break;
-		case 5:nyah="Le coeur des neko te rÃ©chauferont <3";break;
+		case 5:nyah="Le coeur des neko te réchauferont <3";break;
 		case 6:nyah="Les neko te font des bisous partout <3";mc.thePlayer.playSound("liquid.lava", 1.0F, 1.0F);break;
-		case 7:nyah="Ne dit jamais non Ã  Neko !";break;
+		case 7:nyah="Ne dit jamais non à Neko !";break;
 		case 8:nyah="Les neko sont plus kawaii que les moutons de SkyLouna :3";break;
-		case 9:nyah="CalÃ®nez ce gentil "+var.rang.getName()+" :3 *hug*";break;
-		case 10:nyah="Je suis un nyah trÃ¨s rare :3";checkXp(rand*4);break;
+		case 9:nyah="Calînez ce gentil "+var.rang.getName()+" :3 *hug*";break;
+		case 10:nyah="Je suis un nyah très rare :3";checkXp(rand*4);break;
 		case 11:nyah="Owwww comme il est kawaii le petit "+getRandPlayer()+" :3";break;
 		case 12:nyah="Haaawn kawaii desu ne *-*";break;
 		case 13:nyah="Senpaiiii~ Daisuki /*w*/";checkXp(rand);break;
-		case 14:nyah="Bonjour, je suis quelqu'un de trÃ¨s chelou.";break;
-		case 15:nyah="En rÃ©alitÃ© je hais les chats *facepalm* (Je dÃ©conne je les adore <3)";mc.thePlayer.playSound("records.11", 10.0F, 1.0F);break;
+		case 14:nyah="Bonjour, je suis quelqu'un de très chelou.";break;
+		case 15:nyah="En réalité je hais les chats *facepalm* (Je déconne je les adore <3)";mc.thePlayer.playSound("records.11", 10.0F, 1.0F);break;
 		case 16:nyah="J'ai besoin d'aide...help...:C";mc.thePlayer.playSound("mob.ghast.scream", 1.0F, 1.0F);break;
 		case 17:nyah="Grrrrrr *griffe* nyah ! /~*w*/~";	break;
 		case 18:nyah="Grrrrrr *mord* nyark !";	break;
@@ -3475,9 +3475,9 @@ public class Utils {
 		case 27:nyah="Petits pervers ! Les neko ne sont pas des jouets !";break;
 		case 28:nyah=mc.thePlayer.getName()+" vous a tous converti au Nyanisme \\o/ !";break;
 		case 29:nyah="Neko-sama, prions Neko-sama pour obtenir son ultime pouvoir =w=";break;
-		case 30:nyah="Neko-sama m'a accordÃ© son ultime pouvoir /*w*/";break;
+		case 30:nyah="Neko-sama m'a accordé son ultime pouvoir /*w*/";break;
 		case 31:nyah="La mort va vous attendre ici, par le pouvoir du Nyah !";mc.thePlayer.playSound("mob.enderdragon.end", 1.0F, 1.0F);break;
-		case 32:nyah="Ces monstres ne rÃ©sisteront pas Ã  Neko ! /*3*/";checkXp(rand);break;
+		case 32:nyah="Ces monstres ne résisteront pas à Neko ! /*3*/";checkXp(rand);break;
 		case 33:nyah="Force bleu ! Force rouge ! Force jaune ! Force Nyaaaah !";break;
 		case 34:nyah="Par le pouvor du nyah, je vais te nyanyater =w=";break;
 		case 35:nyah="Qui est ce petit Neko aux couleurs bleu :o";break;
@@ -3485,20 +3485,20 @@ public class Utils {
 		case 37:nyah="Oppai :3";break;
 		case 38:nyah="Ka-ka-ka-kawaii Â°wÂ° !";break;
 		case 39:nyah="Quelle belle baleine.";mc.thePlayer.playSound("mob.guardian.curse", 1.0F, 1.0F);checkXp(rand);break;
-		case 40:nyah="Bonjour, je suis tout Ã  fait sain d'esprit.";break;
+		case 40:nyah="Bonjour, je suis tout à fait sain d'esprit.";break;
 		case 41:nyah="'^'";break;
 		case 42:nyah="Nyaaah /*w*/";break;
 		case 43:nyah="Blblbllblblblbllblbblbllblblb";mc.thePlayer.playSound("mob.guardian.flop", 1.0F, 1.0F);break;
 		case 44:nyah="Sluuurp ;3";break;
 		case 45:nyah="Quel bon lait blanc";mc.thePlayer.playSound("mob.guardian.flop", 1.0F, 1.0F);break;
 		case 46:nyah="J'aime la banane au chocolat ;3";break;
-		case 47:nyah="C'est 'Nyaaah', espÃ¨ce d'illÃ©trÃ© !";break;
+		case 47:nyah="C'est 'Nyaaah', espèce d'illétré !";break;
 		case 48:nyah="La bonne aubergine ;3";break;
-		case 49:nyah="Cet acte est revendiquÃ© par Neko !";break;
-		case 50:nyah="Cet acte est revendiquÃ© par Tryliom !";checkXp(rand);break;
-		case 51:nyah="Qu'est ce que tu touches lÃ  :o ?";mc.thePlayer.playSound("mob.guardian.curse", 1.0F, 1.0F);break;
-		case 52:nyah="Eh bien, c'est pas piquÃ© des neko !";break;
-		case 53:nyah="Bonjour, j'habite Ã  gland, au revoir chers glandu.";break;
+		case 49:nyah="Cet acte est revendiqué par Neko !";break;
+		case 50:nyah="Cet acte est revendiqué par Tryliom !";checkXp(rand);break;
+		case 51:nyah="Qu'est ce que tu touches là :o ?";mc.thePlayer.playSound("mob.guardian.curse", 1.0F, 1.0F);break;
+		case 52:nyah="Eh bien, c'est pas piqué des neko !";break;
+		case 53:nyah="Bonjour, j'habite à gland, au revoir chers glandu.";break;
 		case 54:nyah="Coucou, tu veux voir mon neko ?";break;
 		case 55:nyah="cc C popi";break;
 		case 56:nyah="Les lances d'or des Neko vont tous vous convertir !";break;
@@ -3512,26 +3512,26 @@ public class Utils {
 		case 64:nyah="Hi, i'm a kawai and scary neko, do you would play with me Â°wÂ° ?";break;
 		case 65:nyah="Bonjour, le hentai est ma passion, au revoir.";break;
 		case 66:nyah="Je suis un chaton sataniste Nyark Nyark Nyark Â°wÂ°";mc.thePlayer.playSound("mob.enderdragon.end", 1.0F, 1.0F);checkXp(rand);break;
-		case 67:nyah="Un autre Neko ici ?! OÃ¹ Ã§a ?!";break;
+		case 67:nyah="Un autre Neko ici ?! OÃ¹ ça ?!";break;
 		case 68:nyah="Linux est libre comme Neko !";break;
 		case 69:nyah="C'est parti pour un 69 entre neko Nyaaaah !";checkXp(rand);break;
-		case 70:nyah="Nous avons consommÃ© de la drogue, nyaaaah";break;
+		case 70:nyah="Nous avons consommé de la drogue, nyaaaah";break;
 		case 71:nyah="Rt si tu veux ces neko kawaii";break;
-		case 72:nyah="Le yuri entre neko Ã§a existe :o";checkXp(rand);break;
-		case 73:nyah="Notre lapin rose fait du trapÃ¨ze";mc.thePlayer.playSound("records.cat", 1.0F, 1.0F);break;
+		case 72:nyah="Le yuri entre neko ça existe :o";checkXp(rand);break;
+		case 73:nyah="Notre lapin rose fait du trapèze";mc.thePlayer.playSound("records.cat", 1.0F, 1.0F);break;
 		case 74:nyah="T'as un joli cube ;3";break;
 		case 75:nyah="Attention neko dangereux /!\'";break;
-		case 76:nyah="On sort les griffes, on sort les crocs, Neko, Ã  l'attaque Nyaaaaah !!";break;
+		case 76:nyah="On sort les griffes, on sort les crocs, Neko, à l'attaque Nyaaaaah !!";break;
 		case 77:nyah="Bwaaaaaah *griffe* Nyaaaaaah xC";break;
 		case 78:nyah="Boku wa a kawaii no scary neko-chan :3";break;
 		case 79:nyah=getRandPlayer()+", tu veux une sucette :3 ?";break;
-		case 80:nyah="Les poulpes sont gÃ©niaux avec leurs tentacules ;3";mc.thePlayer.playSound("mob.guardian.plop", 1.0F, 1.0F);checkXp(rand);break;
-		case 81:nyah="Alors comme Ã§a tu fais pleurer des neko, je vais te nyanyater mwa !";break;
+		case 80:nyah="Les poulpes sont géniaux avec leurs tentacules ;3";mc.thePlayer.playSound("mob.guardian.plop", 1.0F, 1.0F);checkXp(rand);break;
+		case 81:nyah="Alors comme ça tu fais pleurer des neko, je vais te nyanyater mwa !";break;
 		case 82:nyah="Nyaaa...nyaa...nya...Nyaaah !";break;
 		case 83:nyah="Un <3 pour twa <3";break;
 		case 84:nyah="Si tu continues je vais te griffer ! ;3";break;
-		case 85:nyah="Que le neko se dÃ©nonce !";break;
-		case 86:nyah="OÃ¹ Ãªtes-vous cachÃ© mes petits ;3 ?";break;
+		case 85:nyah="Que le neko se dénonce !";break;
+		case 86:nyah="OÃ¹ êtes-vous caché mes petits ;3 ?";break;
 		case 87:nyah="Tellement kawaii Â°WÂ°";break;
 		case 88:nyah="J'ai perdu mon neko qui fait du Metal :C";mc.thePlayer.playSound("records.mellohi", 1.0F, 1.0F);break;
 		case 89:nyah="NyanNyanNyanNyanNyanNyanNyanNyanNyanNyanNyan";checkXp(rand);mc.thePlayer.playSound("mob.creeper.say", 1.0F, 1.0F);break;
@@ -3539,7 +3539,7 @@ public class Utils {
 		case 91:nyah="Kawaii desu ne ? =w=/";break;
 		case 92:nyah="Comment nyah ?";break;
 		case 93:nyah=getRandPlayer()+", je suis ton hentai...";checkXp(rand);break;
-		case 94:nyah="ma seule rÃ©ponse: hentai";break;
+		case 94:nyah="ma seule réponse: hentai";break;
 		case 95:nyah="Nyaaaah...pas ici =/////=";break;
 		case 96:nyah="Neko est ma drogue";break;
 		case 97:nyah="J'invoque le Neko Powa !!!";mc.thePlayer.playSound("mob.wither.death", 1.0F, 1.0F);break;
@@ -3550,7 +3550,7 @@ public class Utils {
 		case 102:nyah="A l'aide on me viole :c";break;
 		case 103:nyah="A l'aide on me visite :c";checkXp(rand);break;
 		case 104:nyah="Neko>>>All";break;
-		case 105:nyah="Neko>Toi>Ta mÃ¨re";break;
+		case 105:nyah="Neko>Toi>Ta mère";break;
 		case 106:nyah="Big boobs";break;
 		case 107:nyah="Milk ! I want milk !";break;
 		case 108:nyah="Nekopara with patch R18 is awesome *-*";break;
@@ -3558,10 +3558,10 @@ public class Utils {
 		case 110:nyah="Kono hentai !";break;
 		case 111:nyah="Warden c'est mon potow tout bypass avec nekow *3*";break;
 		case 112:nyah="200+ phrases chelou sur le "+var.prefixCmd+"nyah :o";break;
-		case 113:nyah="Les neko mÃ¨nent une dictature sur Epicube !";break;
+		case 113:nyah="Les neko mènent une dictature sur Epicube !";break;
 		case 114:nyah="J'ai peur d'utiliser nyah maintenant :s";break;
 		case 115:nyah="Die die die !";break;
-		case 116:nyah="Tu as Ã©tÃ© bÃ©ni par un Saint Neko";checkXp(rand*3);break;
+		case 116:nyah="Tu as été béni par un Saint Neko";checkXp(rand*3);break;
 		case 117:nyah="Comme ma... '^'";mc.thePlayer.playSound("liquid.lava", 1.0F, 1.0F);break;
 		case 118:nyah="Diversity <3";break;
 		case 119:nyah="Neko>Ton lapin rose>"+getRandPlayer();break;
@@ -3570,15 +3570,15 @@ public class Utils {
 		case 122:nyah="Pika pika !";break;
 		case 123:nyah="Pikachuuuu :3 !";break;
 		case 124:nyah="Noragami <3";break;
-		case 125:nyah="Les neko gÃ¨rent notre Ã©conomie";break;
+		case 125:nyah="Les neko gèrent notre économie";break;
 		case 126:nyah="Nous sommes des illuminatis '^'";break;
 		case 127:nyah="Les neko sont des illuminatis '^'";break;
 		case 128:nyah="Un coup de cravache pour twa <3";checkXp(rand);break;
-		case 129:nyah="AchÃ¨te twa un neko <3";break;
+		case 129:nyah="Achète twa un neko <3";break;
 		case 130:nyah="Ze veux du poisson /^~^/";break;
-		case 131:nyah="Selon une Ã©tude californienne, les neko sont creepy";break;
-		case 132:nyah="Selon une Ã©tude californienne, les neko sont kawaii";break;
-		case 133:nyah="Selon une Ã©tude californienne, les neko sont chelou";break;
+		case 131:nyah="Selon une étude californienne, les neko sont creepy";break;
+		case 132:nyah="Selon une étude californienne, les neko sont kawaii";break;
+		case 133:nyah="Selon une étude californienne, les neko sont chelou";break;
 		case 134:nyah="Love Java <3";break;
 		case 135:nyah="I drink Java every day <3";break;
 		case 136:nyah="I eat Java, i drink Java, i'm Java '^'";break;
@@ -3586,39 +3586,39 @@ public class Utils {
 		case 138:nyah="The satanic Neko is back !";break;
 		case 139:nyah="Keep calm and love Neko !";break;
 		case 140:nyah="Keep calm and nyaaah !";break;
-		case 141:nyah="Attention, un Kevin s'est Ã©vadÃ© !";break;
-		case 142:nyah="Ã§a va rester dans les anals...";mc.thePlayer.playSound("dig.gravel", 1.0F, 1.0F);break;
+		case 141:nyah="Attention, un Kevin s'est évadé !";break;
+		case 142:nyah="ça va rester dans les anals...";mc.thePlayer.playSound("dig.gravel", 1.0F, 1.0F);break;
 		case 143:nyah="Break meeeee !";break;
 		case 144:nyah="Je suis le vide '^'";break;
 		case 145:nyah="I'm a satanic Teemo";mc.thePlayer.playSound("mob.enderdragon.end", 1.0F, 1.0F);break;
 		case 146:nyah="Un bisous, tu veux un bisous ? Aller un bisous *3*";checkXp(rand);break;
 		case 147:nyah="CAliiiiiin *hug*";break;
 		case 148:nyah="Qui es-tu :o ?";break;
-		case 149:nyah="Que ce passe-t-il lorsqu'un courant traverse une rÃ©sistance ?";break;
+		case 149:nyah="Que ce passe-t-il lorsqu'un courant traverse une résistance ?";break;
 		case 150:nyah="J'aime les short !";break;
 		case 151:nyah="Tu veux un coup de fouet ;3 ?";mc.thePlayer.playSound("mob.guardian.curse", 1.0F, 1.0F);checkXp(rand*2);var.ame++;addChat(" +1 Soul");break;
 		case 152:nyah=getRandPlayer()+", es-tu blblblbllb ?";break;
 		case 153:nyah=getRandPlayer()+", i kick your nyass ;3 !";checkXp(rand);break;
 		case 154:nyah=getRandPlayer()+" cheat";break;
 		case 155:nyah=getRandPlayer()+" est un bg ;3";break;
-		case 156:nyah=getRandPlayer()+" a complotÃ© avec les nekos :o";break;
+		case 156:nyah=getRandPlayer()+" a comploté avec les nekos :o";break;
 		case 157:nyah=getRandPlayer()+" est un sataniste !";break;
 		case 158:nyah="J'ai vu "+getRandPlayer()+" fly !";break;
-		case 159:nyah=getRandPlayer()+" a Ã©tÃ© trÃ¨s mÃ©chant";break;
-		case 160:nyah=getRandPlayer()+" m'a violÃ© dans sa cave :c";break;
-		case 161:nyah="La maman de "+getRandPlayer()+" m'a violÃ© :c";break;
+		case 159:nyah=getRandPlayer()+" a été très méchant";break;
+		case 160:nyah=getRandPlayer()+" m'a violé dans sa cave :c";break;
+		case 161:nyah="La maman de "+getRandPlayer()+" m'a violé :c";break;
 		case 162:nyah="La maman de "+getRandPlayer()+" est bonne ;3";break;
 		case 163:nyah="On avait pas dit les mamans "+getRandPlayer()+" :c";break;
 		case 164:nyah="Beeeh"+getRandPlayer()+", beeeeeh";break;
-		case 165:nyah=getRandPlayer()+", "+getRandPlayer()+" et "+getRandPlayer()+" ont volÃ© mon goÃ»ter :c";checkXp(rand);break;
+		case 165:nyah=getRandPlayer()+", "+getRandPlayer()+" et "+getRandPlayer()+" ont volé mon goÃ»ter :c";checkXp(rand);break;
 		case 166:nyah="Un gentil "+getRandPlayer()+" m'a fait un cÃ¢lin tout doux <3";break;
 		case 167:nyah="Mon petit "+getRandPlayer()+" m'a fait un bisous sur la joue =////= <3";checkXp(rand);break;
 		case 168:nyah="L'intrus est "+getRandPlayer()+" !";break;
 		case 169:nyah="Nyah nyah nyah Bat"+getRandPlayer()+"Nyaaah, nyah nyah nyah Bat"+getRandPlayer()+"Nyaaah !";break;
-		case 170:nyah="Mon sensei s'appelle "+getRandPlayer()+"  mais chut faut pas le dire Ã  "+getRandPlayer()+" Â°wÂ°";checkXp(rand);break;
+		case 170:nyah="Mon sensei s'appelle "+getRandPlayer()+"  mais chut faut pas le dire à "+getRandPlayer()+" Â°wÂ°";checkXp(rand);break;
 		case 171:nyah=getRandPlayer()+" veut un cookie de "+getRandPlayer();break;
-		case 172:nyah="J'ai sucÃ© "+getRandPlayer()+" et c'Ã©tais blbllbl Â°oÂ°";checkXp(rand);break;
-		case 173:nyah=getRandPlayer()+" m'a volÃ© mon innocence Â°wÂ°";break;
+		case 172:nyah="J'ai sucé "+getRandPlayer()+" et c'étais blbllbl Â°oÂ°";checkXp(rand);break;
+		case 173:nyah=getRandPlayer()+" m'a volé mon innocence Â°wÂ°";break;
 		case 174:nyah=getRandPlayer()+", ma bite est grande en toi";break;
 		case 175:nyah="Je t'aime "+getRandPlayer()+", tu es tout kawaii nyaaaah *W*";checkXp(rand);break;
 		case 176:nyah="Ogenki desu ka "+getRandPlayer()+"-san ?";break;
@@ -3626,26 +3626,26 @@ public class Utils {
 		case 178:nyah="Oh non ! "+getRandPlayer()+" m'a rendu toute collante :c";checkXp(rand);break;
 		case 179:nyah=getRandPlayer()+" ? Tu es dispo ce soir ?";break;
 		case 180:nyah="Je veux mes deux "+getRandPlayer()+" et "+getRandPlayer()+" dans mon lit ! *w*";checkXp(rand);break;
-		case 181:nyah="Vous Ãªtes fatiguÃ©s ? C'est un lupus !";break;
+		case 181:nyah="Vous êtes fatigués ? C'est un lupus !";break;
 		case 182:nyah="Vous vous sentez trop plein ? C'est un lupus !";break;
-		case 183:nyah="Un jour peut-Ãªtre je serai le meilleeeeeeur";break;
-		case 184:nyah="J'ai glissÃ© "+getRandPlayer()+" !";break;
-		case 185:nyah="Oh non c'est tout mouillÃ© maintenant :c";break;
-		case 186:nyah="Ã§a va glisser !";break;
-		case 187:nyah="Ã§a va chauffer !";break;
+		case 183:nyah="Un jour peut-être je serai le meilleeeeeeur";break;
+		case 184:nyah="J'ai glissé "+getRandPlayer()+" !";break;
+		case 185:nyah="Oh non c'est tout mouillé maintenant :c";break;
+		case 186:nyah="ça va glisser !";break;
+		case 187:nyah="ça va chauffer !";break;
 		case 188:nyah="Chaaaauuuud devant !";break;
-		case 189:nyah="Ã§a colle...";break;
+		case 189:nyah="ça colle...";break;
 		case 190:nyah="Lick lick lick ;3";break;
-		case 191:nyah="Jean-robert ! ArrÃªte de jouer avec Ã§a !";break;
+		case 191:nyah="Jean-robert ! Arrête de jouer avec ça !";break;
 		case 192:nyah="Je vous l'avais dit...";break;
 		case 193:nyah="Qui allons-nous torturer aujourd'hui nyark nyark nyark >:3 ?";mc.thePlayer.playSound("mob.wither.idle", 1.0F, 1.0F);break;
-		case 194:nyah="Ã§a a l'air appÃ©tissant Â°wÂ°";break;
+		case 194:nyah="ça a l'air appétissant Â°wÂ°";break;
 		case 195:nyah="Kono baka !";break;
 		case 196:nyah="Kono butsu !";break;
 		case 197:nyah="Bandes de pervers !";break;
 		case 198:nyah="Et un coup de martinet ! Un !";break;
 		case 199:nyah="Shak Shak Shhhhhh...";break;
-		case 200:nyah="Le dÃ©sÃ©spoir t'envahit doucement >:3";break;
+		case 200:nyah="Le déséspoir t'envahit doucement >:3";break;
 		case 201:nyah="C'est humide par ici '^'";break;
 		case 202:nyah="Mange tes brocolis "+getRandPlayer()+" !";break;
 		case 203:nyah="On avait dit pas les mamans... >:c";break;
@@ -3657,9 +3657,9 @@ public class Utils {
 		case 209:nyah="Je peux deviner que sous ton t-shirt tu es bien batti "+getRandPlayer()+" ;3";break;
 		case 210:nyah="Petite perverse ! Coquine ;3 !";break;
 		case 211:nyah="Petit pervers ! Coquin va ;3 !";break;
-		case 212:nyah="Tu me met mal Ã  l'aise avec ton skin bizarre "+getRandPlayer()+" >:s";mc.thePlayer.playSound("mob.wither.idle", 1.0F, 1.0F);break;
-		case 213:nyah="T'as changÃ©, je ne te reconnais plus "+getRandPlayer()+" !";break;
-		case 214:nyah="ArrÃªte Ã§a c'est sensible ici... Naaaaah =///=";break;
+		case 212:nyah="Tu me met mal à l'aise avec ton skin bizarre "+getRandPlayer()+" >:s";mc.thePlayer.playSound("mob.wither.idle", 1.0F, 1.0F);break;
+		case 213:nyah="T'as changé, je ne te reconnais plus "+getRandPlayer()+" !";break;
+		case 214:nyah="Arrête ça c'est sensible ici... Naaaaah =///=";break;
 		case 215:nyah="Â°WÂ° C'est mal Â°WÂ°";break;
 		case 216:nyah="Â°WÂ° ^W^ Nyah ^W^ Â°WÂ°";break;
 		case 217:nyah="Mais, mais ! C'est mamie qui l'a fait !";break;
@@ -3670,45 +3670,45 @@ public class Utils {
 		case 222:nyah="nekohc.fr is a good website";break;
 		case 223:nyah="Qui veut des cookies :3 ?";break;
 		case 224:nyah="Zlatanons ensemble !";break;
-		case 225:nyah="Je t'offre une biÃ¨re !";break;
+		case 225:nyah="Je t'offre une bière !";break;
 		case 226:nyah="Mmmmh la bonne baguette ;3";break;
-		case 227:nyah="Att je vais trempÃ© mon biscuit dans le lait";break;
+		case 227:nyah="Att je vais trempé mon biscuit dans le lait";break;
 		case 228:nyah="Donne moi ton biscuit !";break;
 		case 229:nyah="Clitorions nous !";break;
 		case 230:nyah="Pedoneko is here !";break;
 		case 231:nyah="Sale cheateur";break;
 		case 232:nyah="Ohayo mon coquinou :3";break;
-		case 233:nyah="J'ai adorÃ© la nuit que j'ai passÃ©e avec toi "+getRandPlayer()+" :3";break;
+		case 233:nyah="J'ai adoré la nuit que j'ai passée avec toi "+getRandPlayer()+" :3";break;
 		case 234:nyah="Owiii plus fort ! Vas-y plus fort "+getRandPlayer()+" >:3 !";break;
 		case 235:nyah="Pousse pousse !";break;
-		case 236:nyah="Comme c'est Ã©troit ici Â°wÂ°";break;
+		case 236:nyah="Comme c'est étroit ici Â°wÂ°";break;
 		case 237:nyah="Ce sera notre petit secret...";break;
 		case 238:nyah="Bonjour, je suis le nÂ°"+rand*neko;break;
-		case 239:nyah="Aaaaah ! il fait tout noir lÃ  dedans :c";break;
+		case 239:nyah="Aaaaah ! il fait tout noir là dedans :c";break;
 		case 240:nyah="Elle est vachement grosse :o";mc.thePlayer.playSound("mob.wither.idle", 1.0F, 1.0F);break;
 		case 241:nyah="Toute dur owww :3";break;
-		case 242:nyah="L'excitation est Ã  son comble !";break;
+		case 242:nyah="L'excitation est à son comble !";break;
 		case 243:nyah="Hammer time !";break;
 		case 244:nyah="Owi vas-y, enfonce tout d'un tout je veux tout sentir "+getRandPlayer()+" ;3";break;
-		case 245:nyah="ArrÃªtez de penser Ã  des choses perverses !";break;
+		case 245:nyah="Arrêtez de penser à des choses perverses !";break;
 		case 246:nyah="Ce n'est pas un double sens !";break;
 		case 247:nyah="Neko, pour les purs gaullois sorti de l'asile psychiatrique...";break;
 		case 248:nyah="Kiss me "+getRandPlayer()+" *3* !";break;
-		case 249:nyah="Gang bang rÃ©ussi !";break;
+		case 249:nyah="Gang bang réussi !";break;
 		case 250:nyah="C'est quoi toutes ces capotes :o ?!";mc.thePlayer.playSound("mob.wither.idle", 1.0F, 1.0F);break;
 		case 251:nyah="Va baver ailleurs !";break;
-		case 252:nyah="Que tu peux Ãªtre vicieux dÃ¨s fois twa ;3 !";mc.thePlayer.playSound("mob.guardian.flop", 1.0F, 1.0F);break;
+		case 252:nyah="Que tu peux être vicieux dès fois twa ;3 !";mc.thePlayer.playSound("mob.guardian.flop", 1.0F, 1.0F);break;
 		case 253:nyah="Si je le fais c'est bien parce que tu me plait...";break;
 		case 254:nyah="J'aime les <3 pas toi ? <3";break;
-		case 255:nyah="Un dieu Neko est descendu et m'a nyanyatÃ© Ã  l'oreille lorsque je consommais de la Magical Drugs +W+";break;
+		case 255:nyah="Un dieu Neko est descendu et m'a nyanyaté à l'oreille lorsque je consommais de la Magical Drugs +W+";break;
 		case 256:nyah="Neko girl un jour, Neko girl toujours ! Hyaaaaaaaw ! <3";break;
 		case 257:nyah="C'est dur de tout avaler "+getRandPlayer()+" :c";break;
 		case 258:nyah="Les jours de pluie je pense au TryTry Satanique qui me violente dans sa cabane... /o/";break;
-		case 259:nyah="L'homme habillÃ© en rose paillete dans les bois m'a choquÃ© Ã  vie Â°pÂ°";break;
-		case 260:nyah="Oh naaaaan...Je l'ai encore mouillÃ©...c'est tout collant maintenant :c";mc.thePlayer.playSound("mob.guardian.flop", 1.0F, 1.0F);break;
-		case 261:nyah="Diversity me berce jusqu'Ã  l'extase Â°wÂ°";break;
-		case 262:nyah="J'ai trop consommÃ© de cette drogue, elle me perverti doucement...he-help me !";break;
-		case 263:nyah="Ah bah bravo "+getRandPlayer()+", t'as tout gagnÃ© ! Vu tout ce que t'as sortis... :o";mc.thePlayer.playSound("mob.guardian.flop", 1.0F, 1.0F);break;
+		case 259:nyah="L'homme habillé en rose paillete dans les bois m'a choqué à vie Â°pÂ°";break;
+		case 260:nyah="Oh naaaaan...Je l'ai encore mouillé...c'est tout collant maintenant :c";mc.thePlayer.playSound("mob.guardian.flop", 1.0F, 1.0F);break;
+		case 261:nyah="Diversity me berce jusqu'à l'extase Â°wÂ°";break;
+		case 262:nyah="J'ai trop consommé de cette drogue, elle me perverti doucement...he-help me !";break;
+		case 263:nyah="Ah bah bravo "+getRandPlayer()+", t'as tout gagné ! Vu tout ce que t'as sortis... :o";mc.thePlayer.playSound("mob.guardian.flop", 1.0F, 1.0F);break;
 		case 264:nyah="Owi ce beau jet";break;
 		case 265:nyah="OwO";break;
 		case 266:nyah=">////>";break;
@@ -3719,25 +3719,25 @@ public class Utils {
 		case 271:nyah=getRandPlayer()+", je te purgerais !";break;
 		case 272:nyah=getRandPlayer()+", je te purgerais de ton espris sale !";break;
 		case 273:nyah="Monsieur les modos, "+getRandPlayer()+" me traite de pervers :c";break;
-		case 274:nyah="Coucou mon petit, tu as l'air tellement appÃ©tissant ;3";break;
+		case 274:nyah="Coucou mon petit, tu as l'air tellement appétissant ;3";break;
 		case 275:nyah="Le Pervers m'a fais disciple...Je suis maintenant votre parfait chasseur c: !";break;
 		case 276:nyah="La Perverse m'a fais disciple...Je suis maintenant votre parfaite chasseresse c: !";break;
-		case 277:nyah="Le culte du Nyanysme est Ã  prendre au sÃ©rieux ! Nous sommes une secte reconnue !";break;
-		case 278:nyah="J'adore m'habiller en rose fluo les vendredi soir et m'exposer Ã  la lune !";break;
-		case 279:nyah="Le fouet, une arme de domination, mais je l'utilise aussi Ã  mes propres fins ;3";break;
-		case 280:nyah="J'ai achetÃ© hier un fouet en cuir Ã  l'Amoureux du Fouet, trÃ¨s efficace sur vous ;3";break;
-		case 281:nyah="Le hentai est ma meilleur drogue, aprÃ¨s la Magical Drugs...";break;
+		case 277:nyah="Le culte du Nyanysme est à prendre au sérieux ! Nous sommes une secte reconnue !";break;
+		case 278:nyah="J'adore m'habiller en rose fluo les vendredi soir et m'exposer à la lune !";break;
+		case 279:nyah="Le fouet, une arme de domination, mais je l'utilise aussi à mes propres fins ;3";break;
+		case 280:nyah="J'ai acheté hier un fouet en cuir à l'Amoureux du Fouet, très efficace sur vous ;3";break;
+		case 281:nyah="Le hentai est ma meilleur drogue, après la Magical Drugs...";break;
 		case 282:nyah="Plus sataniste que moi y a pas !";break;
-		case 283:nyah="Avec mon Fouet LÃ©gendaire, vous allez arborer des souffrances si jouissives pour ma personne >:3";break;
-		case 284:nyah="Alors comme Ã§a on se touche la nouille..mai-mais..arrÃªtez ces immondices >:c !";break;
+		case 283:nyah="Avec mon Fouet Légendaire, vous allez arborer des souffrances si jouissives pour ma personne >:3";break;
+		case 284:nyah="Alors comme ça on se touche la nouille..mai-mais..arrêtez ces immondices >:c !";break;
 		case 285:nyah="Le liquide visqueux est bizarre...>o<";mc.thePlayer.playSound("mob.guardian.flop", 1.0F, 1.0F);break;
-		case 286:nyah="WHAT C'Ã©tais quoi Ã§a Oo ?";break;
+		case 286:nyah="WHAT C'étais quoi ça Oo ?";break;
 		case 287:nyah="\\WoW/";break;
 		case 288:nyah="Une gentille Succube m'a fait des choses bizarres...";break;
 		case 289:nyah="Je suis atteint du Nyanysme, c'est incurable et terriblement transmissible ! Fuyez pauvres fous !";break;
-		case 290:nyah="Je suis choquÃ©.";break;
-		case 291:nyah="T'y vas pas de main mort toi he-HAAAAN Pas ici ! Non ! ArrÃªte ! >:C";mc.thePlayer.playSound("mob.guardian.flop", 1.0F, 1.0F);break;
-		case 292:nyah="C'est gÃªnant :x";break;
+		case 290:nyah="Je suis choqué.";break;
+		case 291:nyah="T'y vas pas de main mort toi he-HAAAAN Pas ici ! Non ! Arrête ! >:C";mc.thePlayer.playSound("mob.guardian.flop", 1.0F, 1.0F);break;
+		case 292:nyah="C'est gênant :x";break;
 		case 293:nyah="He bien c'est pas les pervers qui manque par ici...";break;
 		case 294:nyah="Si proche, tu es si proche de-blblbllbl *splotch splotch*";break;
 		case 295:nyah="7r Et j'aime bien aussi ce que tu me fais :3";mc.thePlayer.playSound("mob.guardian.flop", 1.0F, 1.0F);break;
@@ -3745,76 +3745,76 @@ public class Utils {
 		case 297:nyah="7r Suce moi et je dirais rien ;3";break;
 		case 298:nyah="Pervers en herbe ! Je suis un pro mwa !";break;
 		case 299:nyah="Le Neko ne se repose jamais, toujours du boulot !";break;
-		case 300:nyah="Je suis un Neko tellement sataniste que je vais vous parler Ã  voix basse en latin ancien !";break;
+		case 300:nyah="Je suis un Neko tellement sataniste que je vais vous parler à voix basse en latin ancien !";break;
 		case 301:nyah="Et un esprit perverti en moins ! Un !";break;
 		case 302:nyah="Et un esprit perverti en plus >:3 ! Un !";break;
-		case 303:nyah="Ã§a rend accro tout Ã§a...Je vais encore finir tout sale...";break;
+		case 303:nyah="ça rend accro tout ça...Je vais encore finir tout sale...";break;
 		case 304:nyah="La Neko Army recrute ! Envoyez vos CV sur neko.fr/forum.php !";break;
-		case 305:nyah="Je suis un Ãªtre normal dotÃ© d'une conscience trÃ¨s sale";break;
-		case 306:nyah="J'ai vu des choses...que je n'aurais pas voulu voir lÃ  bas :c";break;
+		case 305:nyah="Je suis un être normal doté d'une conscience très sale";break;
+		case 306:nyah="J'ai vu des choses...que je n'aurais pas voulu voir là bas :c";break;
 		case 307:nyah="C'est dangereux de se promener seul la nuit...Tryliom pourrait vous violer sur le chemin...";break;
 		case 308:nyah="Blblblblblblbl /+w+/ Sluuuuuuurp +p+";break;
-		case 309:nyah="7r Je pensais pas que les modos seraient aussi facile Ã  corrompre tu vois xD";break;
-		case 310:nyah="7r Tu utilises Huzuni et tu sais mÃªme pas ouvrir le menu Oo";break;
+		case 309:nyah="7r Je pensais pas que les modos seraient aussi facile à corrompre tu vois xD";break;
+		case 310:nyah="7r Tu utilises Huzuni et tu sais même pas ouvrir le menu Oo";break;
 		case 311:nyah="J'ai fait blblblblblbl dans les fesses de "+getRandPlayer();break;
 		case 312:nyah="Ulkior est grand quand il est ******";break;
 		case 313:nyah="7r Si le mien pouvais autant grossir je pourrais rivaliser... :c";break;
 		case 314:nyah="I like peeeeeee peeeeeeeee peeeeee on you.";break;
 		case 315:nyah="My lord, please hit me, i love when you hit me <3";break;
 		case 316:nyah="Mon amour, embrasse moi ! <3";break;
-		case 317:nyah="Les Neko m'ont hackÃ© pendant que je fappais :c";break;
+		case 317:nyah="Les Neko m'ont hacké pendant que je fappais :c";break;
 		case 318:nyah="Send nude plz";break;
-		case 319:nyah="Je suis le sÃ»preme et gÃ©nial: "+var.rang.getName()+" !";break;
+		case 319:nyah="Je suis le sÃ»preme et génial: "+var.rang.getName()+" !";break;
 		case 320:nyah="-[Tryliom reviens toujours]-";break;
-		case 321:nyah="Ã§a rentre toujours pas, aide mwa :c";break;
+		case 321:nyah="ça rentre toujours pas, aide mwa :c";break;
 		case 322:nyah="Trop proche...Trop proche trop proche troooop prooooche Aaaaah D:";break;
 		case 323:nyah="Nyaaaaaaw <3";break;
-		case 324:nyah="Les "+var.rang.getName()+" sont trÃ¨s dangereux !";break;
-		case 325:nyah="Les "+var.rang.getName()+" sont prÃªt Ã  tout afin de vous dominer !";break;
+		case 324:nyah="Les "+var.rang.getName()+" sont très dangereux !";break;
+		case 325:nyah="Les "+var.rang.getName()+" sont prêt à tout afin de vous dominer !";break;
 		case 326:nyah="J'aime tout ce qui est collant mon chou..Un peu comme toi ;3";break;
-		case 327:nyah="C'est pas tout Ã§a mais j'ai un fouet Ã  me prendre mwa...";break;
-		case 328:nyah="GÃ©rer tous ces Nekos est dur, vous me comprenez ? Je souffre :'c";break;
+		case 327:nyah="C'est pas tout ça mais j'ai un fouet à me prendre mwa...";break;
+		case 328:nyah="Gérer tous ces Nekos est dur, vous me comprenez ? Je souffre :'c";break;
 		case 329:nyah="7r Pleurons ensemble :'c";break;
-		case 330:nyah=":r Ce serai vraiment con qu'ils te chopent aprÃ¨s tout ce que t'as pris";break;
-		case 331:nyah=":r Que Ã§a reste entre nous, c'est trÃ¨s privÃ© cette histoire";break;
-		case 332:nyah="Ayzoh lÃ¨che tellement bien :o";break;
+		case 330:nyah=":r Ce serai vraiment con qu'ils te chopent après tout ce que t'as pris";break;
+		case 331:nyah=":r Que ça reste entre nous, c'est très privé cette histoire";break;
+		case 332:nyah="Ayzoh lèche tellement bien :o";break;
 		case 333:nyah="Mazoow a fait une tÃ¢che sur mon pantalon >:c";break;
 		case 334:nyah="La punition ? C'est maintenant !";break;
 		case 335:nyah="Le carnage fait rage >:3";break;
-		case 336:nyah="C'est pas comme si j'y Ã©tait forcÃ© mais Ã§a a son intÃ©rÃªt";break;
-		case 337:nyah="Les mignonneries Ã§a se respecte bande de truant >:c !";break;
+		case 336:nyah="C'est pas comme si j'y était forcé mais ça a son intérêt";break;
+		case 337:nyah="Les mignonneries ça se respecte bande de truant >:c !";break;
 		case 338:nyah="Je suis un "+var.rang.getName()+" et je vais vous violer tellement longtemps que vos sequels seront immortels";break;
-		case 339:nyah="Ookami et Neko se sont livrÃ© un combat sanglant de mignonnerie le dernier siÃ¨cle, je suis un survivant";break;
+		case 339:nyah="Ookami et Neko se sont livré un combat sanglant de mignonnerie le dernier siècle, je suis un survivant";break;
 		case 340:nyah="La victoire m'appartient ! Nyaaaaaaah !";break;
-		case 341:nyah="Mon nombre fÃ©tiche est le 69, il me fait mouiller de plaisir ;3";break;
+		case 341:nyah="Mon nombre fétiche est le 69, il me fait mouiller de plaisir ;3";break;
 		case 342:nyah="Plaisir, plaisir, oh mon grand plaisir de ***** ! QwQ";break;
-		case 343:nyah="C'est trÃ¨s perturbant >w>";break;
-		case 344:nyah="J'Ã©touffe, j'Ã©touffe, help help ! Monsieur les modos j'ai activÃ© un truc chelou :c";break;
-		case 345:nyah="C'est si dÃ©licat de ta part de m'en faire prendre connaissance";break;
-		case 346:nyah="TrÃ¨s intÃ©ressant tout Ã§a :o";break;
-		case 347:nyah="Je peux Ãªtre trÃ¨s percutant si je le dÃ©sir !";break;
-		case 348:nyah="7r Jpeux y aller ? :c Ã§a commence Ã  devenir gÃ©nant ce que tu fais :c";break;
+		case 343:nyah="C'est très perturbant >w>";break;
+		case 344:nyah="J'étouffe, j'étouffe, help help ! Monsieur les modos j'ai activé un truc chelou :c";break;
+		case 345:nyah="C'est si délicat de ta part de m'en faire prendre connaissance";break;
+		case 346:nyah="Très intéressant tout ça :o";break;
+		case 347:nyah="Je peux être très percutant si je le désir !";break;
+		case 348:nyah="7r Jpeux y aller ? :c ça commence à devenir génant ce que tu fais :c";break;
 		case 349:nyah="-==[Neko Powa]==-";break;
 		case 350:nyah="It's too ecchi for me :c !";break;
-		case 351:nyah="La Neko Army a encore frappÃ© !";break;
-		case 352:nyah=getRandPlayer()+" m'a montrÃ© un truc Ã©norme :o !";break;
+		case 351:nyah="La Neko Army a encore frappé !";break;
+		case 352:nyah=getRandPlayer()+" m'a montré un truc énorme :o !";break;
 		case 353:nyah="Plus c'est long, plus c'est bon ;3";break;
-		case 354:nyah="Comment Ã§a tu veux pas ? Aller avale tout";break;
+		case 354:nyah="Comment ça tu veux pas ? Aller avale tout";break;
 		case 355:nyah="LoliPower +w+";break;
-		case 356:nyah=":r et quand Ã§a a finit d'installer tu le sÃ©lectionnes et normalement tu vas avoir un menu tout joli";break;
-		case 357:nyah="Et pouf ! Ã§a fait des Chocapic !";break;
+		case 356:nyah=":r et quand ça a finit d'installer tu le sélectionnes et normalement tu vas avoir un menu tout joli";break;
+		case 357:nyah="Et pouf ! ça fait des Chocapic !";break;
 		case 358:nyah="Merci beaucoup "+getRandPlayer()+", j'avais super soif :3";break;
-		case 359:nyah="Pas ici, "+getRandPlayer()+", Ã§a va devenir tout mouillÃ© si tu continues :c";break;
+		case 359:nyah="Pas ici, "+getRandPlayer()+", ça va devenir tout mouillé si tu continues :c";break;
 		case 360:nyah="I need more, "+getRandPlayer()+", of your milk :3";break;
-		case 361:nyah=getRandPlayer()+", ton goÃ»ter est servi, j'ai mis un ingrÃ©dient mystÃ¨re de ma conception ;3";break;
-		case 362:nyah="Viens vÃ©rif "+getRandPlayer()+", ton cheat est cramÃ©...";break;
-		case 363:nyah=getRandPlayer()+", j'ai un gros jouet Ã  te faire voir ;3";break;
+		case 361:nyah=getRandPlayer()+", ton goÃ»ter est servi, j'ai mis un ingrédient mystère de ma conception ;3";break;
+		case 362:nyah="Viens vérif "+getRandPlayer()+", ton cheat est cramé...";break;
+		case 363:nyah=getRandPlayer()+", j'ai un gros jouet à te faire voir ;3";break;
 		case 364:nyah="C'est pas dans mes habitudes de le faire mais bon je vais me hÃ¢ter de le faire sortir...";break;
 		case 365:nyah="Tais-toi et suce c:";break;
-		case 366:nyah="ArrÃªte de lÃ©cher Ã§a comme Ã§a !";break;
+		case 366:nyah="Arrête de lécher ça comme ça !";break;
 		case 367:nyah="Je suis un pur "+var.rang.getName()+" !";break;
-		case 368:nyah="Je suis un Ãªtre si vicieux que tu ne pourras pas me repÃ©rer avant le coup sale que je vais te mettre ;3";break;
-		case 369:nyah="Tape moi Ã§a, bien juteux !";break;
+		case 368:nyah="Je suis un être si vicieux que tu ne pourras pas me repérer avant le coup sale que je vais te mettre ;3";break;
+		case 369:nyah="Tape moi ça, bien juteux !";break;
 		case 370:nyah="Je cheat pas, par contre "+getRandPlayer()+" a une grosse reach";break;
 		case 371:nyah="Loli-chan est magnifique *w*";break;
 		case 372:nyah="Stop me frapper ici ! :c";break;
@@ -3822,11 +3822,11 @@ public class Utils {
 		case 374:nyah="Quel type de loli es-tu :o ?";break;
 		case 375:nyah="7r T'aime bien ma queue de fer ;3 ?";break;
 		case 376:nyah=":r Fais gaffe avec ce que t'envoie des gens pourrait la voir :x";break;
-		case 377:nyah="C'est tombÃ© tout seul !";break;
-		case 378:nyah=":r Grrrrr Tu m'as touchÃ© au mauvais endroit vilain !";break;
-		case 379:nyah=":r dÃ©solÃ© mais c'est trop petit, je prÃ©fÃ¨re les gros :3";break;
-		case 380:nyah="Ce n'est pas dans mon intÃ©rÃªt mais...Je trouve Ã§a joli :3";break;
-		case 381:nyah="Les Neko ont apportÃ©s aux Titans l'Ã©loquence du savoir Neko";break;
+		case 377:nyah="C'est tombé tout seul !";break;
+		case 378:nyah=":r Grrrrr Tu m'as touché au mauvais endroit vilain !";break;
+		case 379:nyah=":r désolé mais c'est trop petit, je préfère les gros :3";break;
+		case 380:nyah="Ce n'est pas dans mon intérêt mais...Je trouve ça joli :3";break;
+		case 381:nyah="Les Neko ont apportés aux Titans l'éloquence du savoir Neko";break;
 		case 382:nyah="I love KKK";break;
 		case 383:nyah="It's an accident !";break;
 		case 384:nyah="C'est pas mwa, c'est "+getRandPlayer()+" !";break;
@@ -3838,77 +3838,77 @@ public class Utils {
 		case 390:nyah="Ma seul erreur est de ne pas t'avoir ****** avant ce jour...";break;
 		case 391:nyah="Tryliom a fait de moi ce que je suis aujourd'hui :3";break;
 		case 392:nyah="ki connai trylium ?";break;
-		case 393:nyah=":r tu sais, c'est si facile de te dox, fais attention Ã  ce que tu dis ;)";break;
-		case 394:nyah="Les petites pillules bleu ? Oui je les ai prise, Ã§a me rend tout bizarre maintenant...";break;
+		case 393:nyah=":r tu sais, c'est si facile de te dox, fais attention à ce que tu dis ;)";break;
+		case 394:nyah="Les petites pillules bleu ? Oui je les ai prise, ça me rend tout bizarre maintenant...";break;
 		case 395:nyah="Je suis loin, si loin de toi...Et pourtant je me sens si proche...";break;
-		case 396:nyah="Ma culotte est tout mouillÃ©e :c";break;
+		case 396:nyah="Ma culotte est tout mouillée :c";break;
 		case 397:nyah="Montre moi encore plus de toi ;3";break;
 		case 398:nyah="Reviens ici ! Tu auras un bon goÃ»ter !";break;
-		case 399:nyah="J'ai vu un LÃ©viathan, il est tellement choquant :c Et il y avait un gars chelou dessus :s";break;
+		case 399:nyah="J'ai vu un Léviathan, il est tellement choquant :c Et il y avait un gars chelou dessus :s";break;
 		case 400:nyah="Oh Oh Oh my little boy Oh Oh Oh";break;
 		case 401:nyah="Oui, un peu comme ma b*** >////>";break;
 		case 402:nyah="Aaaah...DragonaÃ¯f...";break;
 		case 403:nyah="Tu es si naÃ¯f mon petit ;3";break;
 		case 404:nyah="Tu crois que je fais quoi depuis tout ce temps voyons c:";break;
-		case 405:nyah="Que la nature humaine peut me paraÃ®tre si infÃ©rieure...";break;
-		case 406:nyah="MisÃ©rables humains ! Je vous maudis !";break;
+		case 405:nyah="Que la nature humaine peut me paraître si inférieure...";break;
+		case 406:nyah="Misérables humains ! Je vous maudis !";break;
 		case 407:nyah="Tu seras maudit !";break;
-		case 408:nyah="La noirceur de ce monde te teindra jusqu'Ã  la fin !";break;
-		case 409:nyah="L'Armagedon est si proche...Si dÃ©licieuse ;33";break;
+		case 408:nyah="La noirceur de ce monde te teindra jusqu'à la fin !";break;
+		case 409:nyah="L'Armagedon est si proche...Si délicieuse ;33";break;
 		case 410:nyah="Je ne vois que la destruction autour de toi...";break;
-		case 411:nyah="Fafnir saurait te recadrer s'il Ã©tait lÃ ...";break;
+		case 411:nyah="Fafnir saurait te recadrer s'il était là...";break;
 		case 412:nyah="Oui je l'avoue je suis un Dragomaniac !";break;
-		case 413:nyah="C'est si difficile Ã  comprendre que Ã§a ?";break;
+		case 413:nyah="C'est si difficile à comprendre que ça ?";break;
 		case 414:nyah="Mais...pourtant... :(";break;
 		case 415:nyah="Oui je vois ton gros bÃ¢ton ;3";break;
-		case 416:nyah="L'Armagedon approche Ã  grand pas...Soyez prÃªt...";break;
-		case 417:nyah="Sors de lÃ  et bats toi !";break;
-		case 418:nyah="Ã©.Ã¨";break;
+		case 416:nyah="L'Armagedon approche à grand pas...Soyez prêt...";break;
+		case 417:nyah="Sors de là et bats toi !";break;
+		case 418:nyah="é.è";break;
 		case 419:nyah="Que le chaos engloutisse ce monde !";break;
-		case 420:nyah="Votre rÃ©sistance est vaine par ce Chaos !";break;
+		case 420:nyah="Votre résistance est vaine par ce Chaos !";break;
 		case 421:nyah="Serviteur du Chaos, "+Utils.getRandPlayer()+", je te maudit !";break;
-		case 422:nyah="Ne te mÃ©prend pas !";break;
-		case 423:nyah="Mes intentions sont diaboliques Ã  souhait ;3";break;
-		case 424:nyah="Mes intentions sont divines Ã  souhait ;3";break;
-		case 425:nyah="Mes intentions sont chaotiques Ã  souhait ;3";break;
-		case 426:nyah="Mes intentions sont titanesques Ã  souhait ;3";break;
+		case 422:nyah="Ne te méprend pas !";break;
+		case 423:nyah="Mes intentions sont diaboliques à souhait ;3";break;
+		case 424:nyah="Mes intentions sont divines à souhait ;3";break;
+		case 425:nyah="Mes intentions sont chaotiques à souhait ;3";break;
+		case 426:nyah="Mes intentions sont titanesques à souhait ;3";break;
 		case 427:nyah="La situation n'est-elle pas la meilleur pour ce genre de chose ? ;3";break;
 		case 428:nyah="C'est le chat ! C'est pas moi !";break;
-		case 429:nyah="Qui pourra apporter ce vent de destruction si demandÃ© ?";break;
+		case 429:nyah="Qui pourra apporter ce vent de destruction si demandé ?";break;
 		case 430:nyah="Je veut ma brioche !";break;
-		case 431:nyah="Je vous tuerais tous ! Mon feu destructeur vous dÃ©truira !";break;
-		case 432:nyah="Cette fois est la derniÃ¨re "+Utils.getRandPlayer()+"-chan !";break;
+		case 431:nyah="Je vous tuerais tous ! Mon feu destructeur vous détruira !";break;
+		case 432:nyah="Cette fois est la dernière "+Utils.getRandPlayer()+"-chan !";break;
 		case 433:nyah="Ooooooh qu'elle est mimi cette loli *fond* +w+";break;
-		case 434:nyah="La valeur de cet acte n'a donc aucune valeur Ã  vos yeux ?";break;
-		case 435:nyah="Tu me fais pitiÃ©...Kono busu";break;
+		case 434:nyah="La valeur de cet acte n'a donc aucune valeur à vos yeux ?";break;
+		case 435:nyah="Tu me fais pitié...Kono busu";break;
 		case 436:nyah="Konran wa, anata no sekai ni kimasu !";break;
-		case 437:nyah="Kono hiretsuna kÅi wa norowa remasu !";break;
-		case 438:nyah="Dono yÅ ni anata wa watashi ni anata o toru tame ni aete !?";break;
+		case 437:nyah="Kono hiretsuna kui wa norowa remasu !";break;
+		case 438:nyah="Dono yu ni anata wa watashi ni anata o toru tame ni aete !?";break;
 		case 439:nyah="Harumagedon wa, kono jaakuna sekai o hakai shimasu !";break;
 		case 440:nyah="Lucifer vous punira tous ! >:D";break;
-		case 441:nyah="Lucifer, un bel Archange Ã  la base, qui a donnÃ© naissance aux dÃ©mons, n'as pas si mal tournÃ© que Ã§a...";break;
+		case 441:nyah="Lucifer, un bel Archange à la base, qui a donné naissance aux démons, n'as pas si mal tourné que ça...";break;
 		case 442:nyah="Menteur !";break;
 		case 443:nyah="Ils sont si bons mmmmmmmh ! Refait en moi s'il te plait :3";break;
 		case 444:nyah="Est ce que les helpers aiment le couscous ?";break;
 		case 445:nyah="Mmmmh que c'est gros...Heum heum pardon";break;
-		case 446:nyah="C'est si visible que Ã§a ?";break;
-		case 447:nyah="Comment aurais-je pu faire Ã§a ? Je n'ai pas encore atteint ce niveau !";break;
+		case 446:nyah="C'est si visible que ça ?";break;
+		case 447:nyah="Comment aurais-je pu faire ça ? Je n'ai pas encore atteint ce niveau !";break;
 		case 448:nyah="Je vais te bouffer...Mmmmh ;3";break;
-		case 449:nyah="Ta cuisse est dÃ©licieuse";break;
+		case 449:nyah="Ta cuisse est délicieuse";break;
 		case 450:nyah="El Satanicha !";break;
 		case 451:nyah="Slurp slurp";break;
 		case 452:nyah="Les bananes c'est la vie <3";break;
-		case 453:nyah="J'aime et la rÃ©ponse est non";break;
-		case 454:nyah="Une banane est montÃ© dans un arbre, la branche a lÃ¢chÃ©e :/";break;
-		case 455:nyah="Modo une banane me course ! Aie ! ArrÃªtez le !";break;
+		case 453:nyah="J'aime et la réponse est non";break;
+		case 454:nyah="Une banane est monté dans un arbre, la branche a lÃ¢chée :/";break;
+		case 455:nyah="Modo une banane me course ! Aie ! Arrêtez le !";break;
 		case 456:nyah="Cette ressemblance si fortuite entre vous, cher Admin, et ma banane est-elle normale ?";break;
 		case 457:nyah="L'achat de banane domestique est-il possible "+getRandPlayer()+" ?";break;
 		case 458:nyah=getRandPlayer()+" t'es pas beau";break;
 		case 459:nyah="Au coin ;3";break;
-		case 460:nyah=":r Aller viens par lÃ  que tu subisses ta punition ;3";break;
+		case 460:nyah=":r Aller viens par là que tu subisses ta punition ;3";break;
 		case 461:nyah="J'avoue...";break;
-		case 462:nyah="Et j'aime Ã§a ;3";break;
-		case 463:nyah="Ã§a devrais Ãªtre lÃ©gal..";break;
+		case 462:nyah="Et j'aime ça ;3";break;
+		case 463:nyah="ça devrais être légal..";break;
 		case 464:nyah="J'aimerais pat des loli <3";break;
 		case 465:nyah="I'm gandalf !";break;
 		case 466:nyah="The Lord of The Neko ^>.<^";break;
@@ -3922,64 +3922,64 @@ public class Utils {
 		case 474:nyah="Nous sommes dans un endroit sombre et dangereux...";break;
 		case 475:nyah="Attention ! La banane mord !";break;
 		case 476:nyah="Owwww mon petit neko :3";break;
-		case 477:nyah="Tu es si mignon quand tu t'Ã©nerves :3 <3";break;
-		case 478:nyah="Cette loi s'applique Ã  tous !";break;
-		case 479:nyah="Oh grand dieu des bananes Delxer, voulez vous bien m'octroyer un de vos fidÃ¨les :3 ?";break;
+		case 477:nyah="Tu es si mignon quand tu t'énerves :3 <3";break;
+		case 478:nyah="Cette loi s'applique à tous !";break;
+		case 479:nyah="Oh grand dieu des bananes Delxer, voulez vous bien m'octroyer un de vos fidèles :3 ?";break;
 		case 480:nyah="Banane Powa !";break;
 		case 481:nyah="C'est si inabituel de te voir dans cette tenue :o";break;
-		case 482:nyah="Je vois touuuuut Ã©.Ã¨";break;
+		case 482:nyah="Je vois touuuuut é.è";break;
 		case 483:nyah="*Blush* >///>";break;
 		case 484:nyah="Il existe donc :O !";break;
-		case 485:nyah="OÃ¹ est-il !? Le grand ambassadeur doit-Ãªtre ici !";break;
+		case 485:nyah="OÃ¹ est-il !? Le grand ambassadeur doit-être ici !";break;
 		case 486:nyah="Co-que..que fais-tu >////> !?";break;
 		case 487:nyah=":r Tu n'est pas encore assez bon, je vais t'apprendre voyons :3";break;
 		case 488:nyah="La VR est magique Â°wÂ°";break;
 		case 489:nyah="Les "+var.rang.getName()+" domineront !";break;
 		case 490:nyah="Je suis une fille innocente toute mimi :3";break;
 		case 491:nyah="I'm a cute little girl :3";break;
-		case 492:nyah="OÃ¹ est ma crÃ¨Ã¨Ã¨Ã¨Ã¨me ??!";break;
+		case 492:nyah="OÃ¹ est ma crèèèèème ??!";break;
 		case 493:nyah="Elle peut tout faire ;3";break;
 		case 494:nyah="Viens goÃ»ter mon bon miel :3";break;
-		case 495:nyah="J'ai fais une rÃ©serve de glands pour le dieu des bananes Delxer, j'espÃ¨re qu'il va apprÃ©cier mon prÃ©sent :3";break;
+		case 495:nyah="J'ai fais une réserve de glands pour le dieu des bananes Delxer, j'espère qu'il va apprécier mon présent :3";break;
 		case 496:nyah="C'est si dur de s'appeler Jean-Robert ?";break;
 		case 497:nyah="Ta petite bouille est tellement mignonne :3 <3";break;
-		case 498:nyah=":r Comment va ton Ã©levage de bananes ?";break;
-		case 499:nyah="Je n'ai pas reÃ§u ta requÃªte apparemment :o";break;
+		case 498:nyah=":r Comment va ton élevage de bananes ?";break;
+		case 499:nyah="Je n'ai pas reçu ta requête apparemment :o";break;
 		case 500:nyah="Quel projet ?";break;
 		case 501:nyah="7r c'est quoi les devoirs pour demain ?";break;
 		case 502:nyah="Noob ou pas, j'y vais !";break;
-		case 503:nyah="Est-ce que tu as tout bien compris ? Vas-y Ã  fond maintenant ! ;3";break;
+		case 503:nyah="Est-ce que tu as tout bien compris ? Vas-y à fond maintenant ! ;3";break;
 		case 504:nyah=":r att, tu verras le temps que j'allume ;3";break;
 		case 505:nyah="J'aime pas ce que tu envoies :c";break;
 		case 506:nyah="Cette fois ci j'y arriverais !";break;
-		case 507:nyah="Les bananes n'ont pas de pitiÃ©s !";break;
-		case 508:nyah="Le Gardien des Neko protÃ¨ge la Sainte DÃ©esse avec loyautÃ© !";break;
-		case 509:nyah="Le Gardien des Neko protÃ¨ge la Sainte DÃ©esse avec soumission !";break;
+		case 507:nyah="Les bananes n'ont pas de pitiés !";break;
+		case 508:nyah="Le Gardien des Neko protège la Sainte Déesse avec loyauté !";break;
+		case 509:nyah="Le Gardien des Neko protège la Sainte Déesse avec soumission !";break;
 		case 510:nyah="Je dirigerais ces hommes avec ordre !";break;
 		case 511:nyah="Soyez sans crainte !";break;
 		case 512:nyah="*Tape";break;
 		case 513:nyah="C'est fort :x !";break;
-		case 514:nyah="C'est pas comme Ã§a que tu dois faire !";break;
+		case 514:nyah="C'est pas comme ça que tu dois faire !";break;
 		case 515:nyah="Elle plane bien cette banane, il aurait pas dÃ» sauter dans le tas de coke :o";break;
-		case 516:nyah="Je plane depuis que j'ai glissÃ© dans ce tas de coke";break;
-		case 517:nyah="Donne Ã  goÃ»ter....Argh dÃ©geu...";break;
+		case 516:nyah="Je plane depuis que j'ai glissé dans ce tas de coke";break;
+		case 517:nyah="Donne à goÃ»ter....Argh dégeu...";break;
 		case 518:nyah="Le furet, le furet, le furet se glisse partout...";break;
 		case 519:nyah="It's "+new SimpleDateFormat("HH:mm:ss", Locale.FRANCE).format(new Date())+" and i'm hungry ;3";break;
 		case 520:nyah="Pourquoi tu trembles comme cha :o ?";break;
-		case 521:nyah="Je t'ai si Ã©mue que Ã§a awwww :3";break;
+		case 521:nyah="Je t'ai si émue que ça awwww :3";break;
 		case 522:nyah="Tu es tellement chouuuue je crack !";break;
-		case 523:nyah="Je veux une banane bien fraÃ®che !";break;
+		case 523:nyah="Je veux une banane bien fraîche !";break;
 		case 524:nyah="J'aime les bananes :3";break;
-		case 525:nyah="7r mdp: toto fais du vÃ©lo";break;
+		case 525:nyah="7r mdp: toto fais du vélo";break;
 		case 526:nyah="J'aime quand ils sont bien mou et arrondi :3";break;
 		case 527:nyah="That's weird...";break;
 		case 528:nyah="L'aimez vous ? :3";break;
-		case 529:nyah="Ã§a a glissÃ© :o";break;
-		case 530:nyah="J'aime ce que tu me dis lÃ  ;3";break;
+		case 529:nyah="ça a glissé :o";break;
+		case 530:nyah="J'aime ce que tu me dis là ;3";break;
 		case 531:nyah="Je ne suis plus innocent voyons !";break;
 		case 532:nyah="Je me suis perdu...OÃ¹ est la gare Montparnasse svp ?";break;
 		case 533:nyah=":r Mais tu sais et faiden avec ses promesses et toujours son ac de caca on rit xD";break;
-		case 534:nyah="As-tu la chose que je t'ai demandÃ© ? Supeeeerbe ;3";break;
+		case 534:nyah="As-tu la chose que je t'ai demandé ? Supeeeerbe ;3";break;
 		case 535:nyah="Mmmh tellement moelleux _w_ *bave*";break;
 		case 536:nyah="-w-";break;
 		case 537:nyah="Vilaine petite fille...Il va falloir te punir maintenant...";break;
@@ -3989,102 +3989,102 @@ public class Utils {
 		case 551:nyah="Krkrkrkkrkrkrk";break;
 		case 552:nyah="J'en bave rien que d'imaginer Â°^Â°";break;
 		case 553:nyah="Excitant";break;
-		case 554:nyah="Je les aimes grillÃ©s ;3";break;
+		case 554:nyah="Je les aimes grillés ;3";break;
 		case 555:nyah="Je les aimes rebondissantes ;3";break;
 		case 556:nyah="C'est moi qui choisis !";break;
 		case 557:nyah="Neko et Ecureuils, main dans la main, pervertirons jeunes et grands !";break;
-		case 558:nyah="C'Ã©tait petit...";break;
+		case 558:nyah="C'était petit...";break;
 		case 559:nyah="Plus c'est gros mieux c'est ;3";break;
 		case 560:nyah="Montre la moi :3";break;
-		case 561:nyah="Eteins la lumiÃ¨re "+Utils.getRandPlayer()+", j'ai pas envie que tu me vois nue :3";break;
+		case 561:nyah="Eteins la lumière "+Utils.getRandPlayer()+", j'ai pas envie que tu me vois nue :3";break;
 		case 562:nyah="Neko is loading";break;
-		case 563:nyah="Le maÃ®tre punis trÃ¨s fort !";break;
+		case 563:nyah="Le maître punis très fort !";break;
 		case 564:nyah="AntoZzz ne sait pas coder !";break;
 		case 565:nyah="La soumise hurle souvent dans sa chambre";break;
 		case 566:nyah="AntoZzz + Discord = 10'000";break;
-		case 567:nyah="Tu as Ã©tÃ© une mÃ©chante fille...";break;
+		case 567:nyah="Tu as été une méchante fille...";break;
 		case 568:nyah="Oh qu'il est beau ce collier de bondage ;3";break;
 		case 569:nyah="Quelque chose de vilain a jaillit de ma queue :o";break;
-		case 570:nyah="Ã§a brille...C'est quoiii ?";break;
-		case 571:nyah="AttachÃ©e ! Tu vas Ãªtre attachÃ©e !";break;
+		case 570:nyah="ça brille...C'est quoiii ?";break;
+		case 571:nyah="Attachée ! Tu vas être attachée !";break;
 		case 572:nyah="J'aime cette corde, elle est bien jolie...";break;
 		case 573:nyah="Je vois des modos partout c'est horrible D:";break;
-		case 574:nyah="J'attache trÃ¨s bien tu sais ;3";break;
+		case 574:nyah="J'attache très bien tu sais ;3";break;
 		case 575:nyah="J'aime les noeuds de cette corde ;3";break;
 		case 576:nyah="Nyan nyan nyan ~";break;
 		case 577:nyah="Je suis assistante neko !";break;
 		case 578:nyah="BONSOUAR";break;
 		case 579:nyah="Le hentai c'est la vie x3";break;
-		case 580:nyah="Le hentai m'a bien accueili et aider Ã  tout faire sortir :3";break;
+		case 580:nyah="Le hentai m'a bien accueili et aider à tout faire sortir :3";break;
 		case 581:nyah="Elle est trop grosse cette banane ds,fjndsjknfd";break;
-		case 582:nyah="J'ai coupÃ© ta banane en deux >:3";break;
+		case 582:nyah="J'ai coupé ta banane en deux >:3";break;
 		case 583:nyah="Du bon jus y sort >:3";break;
-		case 584:nyah="Pensez au chinois qui travaille bien lÃ  haut";break;
+		case 584:nyah="Pensez au chinois qui travaille bien là haut";break;
 		case 585:nyah="Issou";break;
 		case 586:nyah="Je suis venu en paix !";break;
 		case 587:nyah="Ne pas me victimiser svp :c";break;
 		case 588:nyah="Mange mon ba...Tacos !";break;
-		case 589:nyah="J'ai adoptÃ© une banane taille XXL...elle rentre pas :c";break;
+		case 589:nyah="J'ai adopté une banane taille XXL...elle rentre pas :c";break;
 		case 590:nyah="C'est trop ptit !";break;
-		case 591:nyah="Je suis un soumis et j'adore Ã§a ! :333";break;
-		case 592:nyah="Fouettez moi ! J'adore Ã§a !";break;
+		case 591:nyah="Je suis un soumis et j'adore ça ! :333";break;
+		case 592:nyah="Fouettez moi ! J'adore ça !";break;
 		case 593:nyah="Non.";break;
 		case 594:nyah="Oui.";break;
 		case 595:nyah="Neko pour vous servir";break;
-		case 596:nyah="Je suis Ã©tÃ© en feu";break;
+		case 596:nyah="Je suis été en feu";break;
 		case 597:nyah="Pardon monsieur mais je ne connais pas ce mot";break;
 		case 598:nyah="Tryliom le sadique !";break;
 		case 599:nyah="Didi est la soumise absolue de Tryliom et lui appartient !";break;
 		case 600:nyah="Miaou";break;
-		case 601:nyah="Ã§a ban fort";break;
-		case 602:nyah="Neko tout prÃªt !";break;
+		case 601:nyah="ça ban fort";break;
+		case 602:nyah="Neko tout prêt !";break;
 		case 603:nyah="Je m'enfuie pas je voooole :D";break;
-		case 604:nyah="J'ai de grandes ailes noires...Ã§a voooole";break;
-		case 605:nyah="La belle maman Ã  Tryliom est une sorciÃ¨re >:D";break;
+		case 604:nyah="J'ai de grandes ailes noires...ça voooole";break;
+		case 605:nyah="La belle maman à Tryliom est une sorcière >:D";break;
 		case 606:nyah="Give plz";break;
 		case 607:nyah="AntoZzz le chinois >:3";break;
 		case 608:nyah="Oh j'en ai assez...Je me casse...";break;
-		case 609:nyah="Le sadique s'est encore amusÃ© avec moi :c";break;
-		case 610:nyah="J'ai trop jouÃ© avec Ã§a...je suis toute sale D:";break;
-		case 611:nyah=":r J'arrive pas Ã  le retirer je l'ai glissÃ© tout au fond D:";break;
+		case 609:nyah="Le sadique s'est encore amusé avec moi :c";break;
+		case 610:nyah="J'ai trop joué avec ça...je suis toute sale D:";break;
+		case 611:nyah=":r J'arrive pas à le retirer je l'ai glissé tout au fond D:";break;
 		case 612:nyah="Ma banane est malade D:";break;
 		case 613:nyah="Elle a noirci...j'ai peur maman :c";break;
-		case 614:nyah="Qui peut m'aider Ã  la rendre plus dur ?";break;
-		case 615:nyah="Je veux Ãªtre plus fort maman !";break;
-		case 616:nyah="Ze veux de ton attention MaÃ®tre >w<";break;
-		case 617:nyah="Ze veux de ton attention MaÃ®tresse >w<";break;
+		case 614:nyah="Qui peut m'aider à la rendre plus dur ?";break;
+		case 615:nyah="Je veux être plus fort maman !";break;
+		case 616:nyah="Ze veux de ton attention Maître >w<";break;
+		case 617:nyah="Ze veux de ton attention Maîtresse >w<";break;
 		case 618:nyah="Ze te donne de gros cÃ¢lins <3";break;
 		case 619:nyah="*Pat pat pat* :3";break;
-		case 620:nyah="AntoZzz est un pÃ©dophile qui aime les tokens , il les garde comme des petits enfants...";break;
+		case 620:nyah="AntoZzz est un pédophile qui aime les tokens , il les garde comme des petits enfants...";break;
 		case 621:nyah="AntoZzz et Tacos aime se battre entre eux";break;
-		case 622:nyah="AntoZzz a bouffÃ© Tacos un jour :o";break;
+		case 622:nyah="AntoZzz a bouffé Tacos un jour :o";break;
 		case 623:nyah="Vape c'est bien...Neko c'est encore mieux en plus pervy ;3 !";break;
-		case 624:nyah="TwitSander a demandÃ© 1000% de bonus d'xp sur Hazonia ! Applaudissez le :D !";break;
+		case 624:nyah="TwitSander a demandé 1000% de bonus d'xp sur Hazonia ! Applaudissez le :D !";break;
 		case 625:nyah="J'aime pas les chinois";break;
-		case 626:nyah="Le riz c'est dÃ©gueu";break;
+		case 626:nyah="Le riz c'est dégueu";break;
 		case 627:nyah="Fire la POUTINE LEGENDAIRE";break;
 		case 628:nyah="AntoZzz code avec son cul mais c'est un bon chinois :3";break;
-		case 629:nyah="AntoZzz crÃ©Ã© des bugs mais travaille bien :3";break;
+		case 629:nyah="AntoZzz créé des bugs mais travaille bien :3";break;
 		case 630:nyah="Whoaaaaaaa c'est quoi cette reach ?";break;
-		case 631:nyah="Le tacos est lÃ©gendaire (C'est faux)";break;
-		case 632:nyah="AntoZzz est chinois, mais ne sais pas faire du riz de bonne qualitÃ©...";break;
+		case 631:nyah="Le tacos est légendaire (C'est faux)";break;
+		case 632:nyah="AntoZzz est chinois, mais ne sais pas faire du riz de bonne qualité...";break;
 		case 633:nyah="Montre moi ton NYAAAAAW";break;
 		case 634:nyah=":r Et toi, oui toi la, send des nyaw ^^";break;
 		case 635:nyah="Traffic d'objets sale, pas venir !";break;
-		case 636:nyah="Tacos et AntoZzz se chammaillent comme des frÃ¨res...mais sous la couette c'est autre chose ;3";break;
-		case 637:nyah="Ã  force de s'embÃªter, AntoZzz et Tacos ont commencÃ©s Ã  se rapprocher dangereusement :o";break;
-		case 638:nyah="Fire...Ã  force d'observer AntoZzz et Tacos si proches...s'est rapprochÃ© de leurs trucs sale...";break;
-		case 639:nyah="Tacos est parti dÃ©mouler un de ces trucs bizarres dans sa cave...y a encore des cris...";break;
-		case 640:nyah="Sucer des glands ne fera pas de toi un Ã©cureuil ! #Jiessel";break;
-		case 641:nyah="Le tacos se fait souvent remettre a l'ordre par ses MaÃ®tres sadiques ;3";break;
-		case 642:nyah="On peut reconnaÃ®tre Tacos Ã  ses tÃ¢ches de sauce blanche sur le coin de la bouche :o";break;
-		case 643:nyah="Tacos demande tous les soirs de la sauce blanche Ã  son confident AntoZzz :3";break;
-		case 644:nyah="Delxer se croit le maÃ®tre mais finit souvent sous le bureau de l'Ã©lÃ¨ve";break;
-		case 645:nyah="Ã§a envoie des nude en pv oulÃ ";break;
+		case 636:nyah="Tacos et AntoZzz se chammaillent comme des frères...mais sous la couette c'est autre chose ;3";break;
+		case 637:nyah="à force de s'embêter, AntoZzz et Tacos ont commencés à se rapprocher dangereusement :o";break;
+		case 638:nyah="Fire...à force d'observer AntoZzz et Tacos si proches...s'est rapproché de leurs trucs sale...";break;
+		case 639:nyah="Tacos est parti démouler un de ces trucs bizarres dans sa cave...y a encore des cris...";break;
+		case 640:nyah="Sucer des glands ne fera pas de toi un écureuil ! #Jiessel";break;
+		case 641:nyah="Le tacos se fait souvent remettre a l'ordre par ses Maîtres sadiques ;3";break;
+		case 642:nyah="On peut reconnaître Tacos à ses tÃ¢ches de sauce blanche sur le coin de la bouche :o";break;
+		case 643:nyah="Tacos demande tous les soirs de la sauce blanche à son confident AntoZzz :3";break;
+		case 644:nyah="Delxer se croit le maître mais finit souvent sous le bureau de l'élève";break;
+		case 645:nyah="ça envoie des nude en pv oulà";break;
 		case 646:nyah="AntoZzz aime le riz...Tacos aime bouffer son riz avec son soumis Fury quand ils sont ensemble ;3";break;
-		case 647:nyah="AntoZzz a dominÃ© le Tacos lors de la fÃªte du riz";break;
-		case 648:nyah="Ma soumise a Ã©tÃ© trÃ¨s gentille aujourd'hui, elle a droit Ã  sa rÃ©compense :3";break;
-		case 649:nyah="J'ai torturÃ© mon soumis pendant toute la soirÃ©e >:D";break;
+		case 647:nyah="AntoZzz a dominé le Tacos lors de la fête du riz";break;
+		case 648:nyah="Ma soumise a été très gentille aujourd'hui, elle a droit à sa récompense :3";break;
+		case 649:nyah="J'ai torturé mon soumis pendant toute la soirée >:D";break;
 		case 650:nyah="Ne miaule pas !";break;
 		
 		case -1:nyah="";break;
@@ -4129,7 +4129,7 @@ public class Utils {
 			}
 			return res;
 		} catch (Exception e) {}
-		return "Â§cErreur";
+		return "§cErreur";
 	}
 
 	public static void displayAn() {
@@ -4187,9 +4187,9 @@ public class Utils {
 									Client.getNeko().tempBonus=bon;
 									TempBon t = new TempBon(sec);	
 									if (bon>0)
-										Utils.addChat("Â§aBonus cadeau de Â§d"+Math.round(bon)+"% Â§aajoutÃ© :3 !");
+										Utils.addChat("§aBonus cadeau de §d"+Math.round(bon)+"% §aajouté :3 !");
 									else 
-										Utils.addChat("Â§cMalus cadeau de Â§d"+Math.round(bon)+"% Â§cajoutÃ© >:3 !");
+										Utils.addChat("§cMalus cadeau de §d"+Math.round(bon)+"% §cajouté >:3 !");
 								} else {
 									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
 									r = r.replaceAll("!!player", user);
@@ -4220,9 +4220,9 @@ public class Utils {
 									Client.getNeko().tempBonus=bon;
 									TempBon t = new TempBon(sec);
 									if (bon>0)
-										Utils.addChat("Â§aBonus cadeau de Â§d"+Math.round(bon)+"% Â§aajoutÃ© :3 !");
+										Utils.addChat("§aBonus cadeau de §d"+Math.round(bon)+"% §aajouté :3 !");
 									else 
-										Utils.addChat("Â§cMalus cadeau de Â§d"+Math.round(bon)+"% Â§cajoutÃ© >:3 !");
+										Utils.addChat("§cMalus cadeau de §d"+Math.round(bon)+"% §cajouté >:3 !");
 								} else {
 									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
 									r = r.replaceAll("!!player", user);
@@ -4256,9 +4256,9 @@ public class Utils {
 									Client.getNeko().tempBonus=bon;
 									TempBon t = new TempBon(sec);
 									if (bon>0)
-										Utils.addChat("Â§aBonus cadeau de Â§d"+Math.round(bon)+"% Â§aajoutÃ© :3 !");
+										Utils.addChat("§aBonus cadeau de §d"+Math.round(bon)+"% §aajouté :3 !");
 									else 
-										Utils.addChat("Â§cMalus cadeau de Â§d"+Math.round(bon)+"% Â§cajoutÃ© >:3 !");
+										Utils.addChat("§cMalus cadeau de §d"+Math.round(bon)+"% §cajouté >:3 !");
 								} else {
 									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
 									r = r.replaceAll("!!player", user);
@@ -4292,9 +4292,9 @@ public class Utils {
 									Client.getNeko().tempBonus=bon;
 									TempBon t = new TempBon(sec);
 									if (bon>0)
-										Utils.addChat("Â§aBonus cadeau de Â§d"+Math.round(bon)+"% Â§aajoutÃ© :3 !");
+										Utils.addChat("§aBonus cadeau de §d"+Math.round(bon)+"% §aajouté :3 !");
 									else 
-										Utils.addChat("Â§cMalus cadeau de Â§d"+Math.round(bon)+"% Â§cajoutÃ© >:3 !");
+										Utils.addChat("§cMalus cadeau de §d"+Math.round(bon)+"% §cajouté >:3 !");
 								} else {
 									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
 									r = r.replaceAll("!!player", user);
@@ -4325,9 +4325,9 @@ public class Utils {
 									Client.getNeko().tempBonus=bon;
 									TempBon t = new TempBon(sec);
 									if (bon>0)
-										Utils.addChat("Â§aBonus cadeau de Â§d"+Math.round(bon)+"% Â§aajoutÃ© :3 !");
+										Utils.addChat("§aBonus cadeau de §d"+Math.round(bon)+"% §aajouté :3 !");
 									else 
-										Utils.addChat("Â§cMalus cadeau de Â§d"+Math.round(bon)+"% Â§cajoutÃ© >:3 !");
+										Utils.addChat("§cMalus cadeau de §d"+Math.round(bon)+"% §cajouté >:3 !");
 								} else {
 									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
 									r = r.replaceAll("!!player", user);
@@ -4358,9 +4358,9 @@ public class Utils {
 									Client.getNeko().tempBonus=bon;
 									TempBon t = new TempBon(sec);
 									if (bon>0)
-										Utils.addChat("Â§aBonus cadeau de Â§d"+Math.round(bon)+"% Â§aajoutÃ© :3 !");
+										Utils.addChat("§aBonus cadeau de §d"+Math.round(bon)+"% §aajouté :3 !");
 									else 
-										Utils.addChat("Â§cMalus cadeau de Â§d"+Math.round(bon)+"% Â§cajoutÃ© >:3 !");
+										Utils.addChat("§cMalus cadeau de §d"+Math.round(bon)+"% §cajouté >:3 !");
 								} else {
 									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
 									r = r.replaceAll("!!player", user);
@@ -4376,9 +4376,9 @@ public class Utils {
 					Client.getNeko().tempBonus=bon;
 					TempBon t = new TempBon(sec);
 					if (bon>0)
-						Utils.addChat("Â§aBonus cadeau de Â§d"+Math.round(bon)+"% Â§aajoutÃ© :3 !");
+						Utils.addChat("§aBonus cadeau de §d"+Math.round(bon)+"% §aajouté :3 !");
 					else 
-						Utils.addChat("Â§cMalus cadeau de Â§d"+Math.round(bon)+"% Â§cajoutÃ© >:3 !");
+						Utils.addChat("§cMalus cadeau de §d"+Math.round(bon)+"% §cajouté >:3 !");
 				} else {
 					String user;
 					if (MCLeaks.isAltActive()) {
