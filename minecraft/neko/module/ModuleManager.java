@@ -157,7 +157,10 @@ public class ModuleManager {
 		this.Lock.add(new Lock("Pyro", 0, "rang", "Cheat", "Enflamme une zone depuis où l'ont vise", true));
 		this.Lock.add(new Lock("TpBack", 50, "souls", "Cheat", "Vous tp sur un bloc choisi quand vous arrivez en dessous du seuil de vie définit", true));
 		this.Lock.add(new Lock("Flash", 0, "???", "Cheat", "Vous retp sur la position set à l'activation", true));
-		
+		this.Lock.add(new Lock("Pyro", 0, "rang", "Cheat", "Enflamme une zone depuis oÃ¹ l'ont vise", true));
+		this.Lock.add(new Lock("TpBack", 50, "souls", "Cheat", "Vous tp sur un bloc choisi quand vous arrivez en dessous du seuil de vie dÃ©finit", true));
+		this.Lock.add(new Lock("Flash", 0, "???", "Cheat", "Vous retp sur la position set Ã  l'activation", true));
+
 		
 		
 		// Utils.getRank("").setDesc("");
@@ -642,6 +645,7 @@ public class ModuleManager {
 		Utils.getRank("Vide Intersidéral").setDesc("Je suis le vide...J'avale tout ce qui passe vers moi...Miam miam...");
 		rang.add(new Rank("L'Univers", 600, Rate.Event, "§2", true, 0));
 		Utils.getRank("L'Univers").setDesc("Je te contient et tu m'appartiens...");
+<<<<<<< HEAD
 		rang.add(new Rank("Soumis", 500, Rate.Event, "§2", true, 0));
 		Utils.getRank("Soumis").setDesc("J'obéis au Maître");
 		rang.add(new Rank("Maître Pervy", 700, Rate.Event, "§2", true, 0));
@@ -654,6 +658,20 @@ public class ModuleManager {
 		Utils.getRank("Maître Méchant").setDesc("Mon Maître est méchant...help plz..AIIIE CA FAIT MAL MAÎTRE :c");
 		rang.add(new Rank("AntoZzz x Delxer", 600, Rate.Event, "§2", true, 0));
 		Utils.getRank("AntoZzz x Delxer").setDesc("Ils se disputent très souvent mais au fond, ce ne sont que des querelles de couple..Vous n'imaginez pas comment ça dérape en privé..;3");
+=======
+		rang.add(new Rank("Soumis", 500, Rate.Event, "Â§2", true, 0));
+		Utils.getRank("Soumis").setDesc("J'obÃ©is au MaÃ®tre");
+		rang.add(new Rank("MaÃ®tre Pervy", 700, Rate.Event, "Â§2", true, 0));
+		Utils.getRank("MaÃ®tre Pervy").setDesc("Alerte maÃ®tre pervers..Il m'attache souvent.. :c (Chut...mais j'adore cha cx )");
+		rang.add(new Rank("MaÃ®tre Sadique", 700, Rate.Event, "Â§2", true, 0));
+		Utils.getRank("MaÃ®tre Sadique").setDesc("Alerte Tryliom sadique..NON STOP AVEC LE FOUET NAAAAAAAAAAAN..");
+		rang.add(new Rank("MaÃ®tre Neko", 700, Rate.Event, "Â§2", true, 0));
+		Utils.getRank("MaÃ®tre Neko").setDesc("Alerte N-n-nyaaaah..mais mais...j'ai rien fait...me punissez pas maÃ®tre je faisais que vous dÃ©crire..NYAAAAH vous Ãªtes cruel maÃ®tre ! dkjsfhbdbfshj..d'accord d'accord...ze me calme maÃ®tre..");
+		rang.add(new Rank("MaÃ®tre MÃ©chant", 700, Rate.Event, "Â§2", true, 0));
+		Utils.getRank("MaÃ®tre MÃ©chant").setDesc("Mon MaÃ®tre est mÃ©chant...help plz..AIIIE CA FAIT MAL MAÃŽTRE :c");
+		rang.add(new Rank("AntoZzz x Delxer", 600, Rate.Event, "Â§2", true, 0));
+		Utils.getRank("AntoZzz x Delxer").setDesc("Ils se disputent trÃ¨s souvent mais au fond, ce ne sont que des querelles de couple..Vous n'imaginez pas comment Ã§a dÃ©rape en privÃ©..;3");
+>>>>>>> c7fc7d465eec37e1ff0d71492fc6db1158abe753
 		
 		
 		// Neko
