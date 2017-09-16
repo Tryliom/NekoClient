@@ -659,14 +659,6 @@ public class ModuleManager {
 		Utils.getRank("AntoZzz x Delxer").setDesc("Ils se disputent tr�s souvent mais au fond, ce ne sont que des querelles de couple..Vous n'imaginez pas comment �a d�rape en priv�..;3");
 		rang.add(new Rank("Soumis", 500, Rate.Event, "§2", true, 0));
 		Utils.getRank("Soumis").setDesc("J'obéis au Maître");
-		rang.add(new Rank("Maître Pervy", 700, Rate.Event, "§2", true, 0));
-		Utils.getRank("Maître Pervy").setDesc("Alerte maître pervers..Il m'attache souvent.. :c (Chut...mais j'adore cha cx )");
-		rang.add(new Rank("Maître Sadique", 700, Rate.Event, "§2", true, 0));
-		Utils.getRank("Maître Sadique").setDesc("Alerte Tryliom sadique..NON STOP AVEC LE FOUET NAAAAAAAAAAAN..");
-		rang.add(new Rank("Maître Neko", 700, Rate.Event, "§2", true, 0));
-		Utils.getRank("Maître Neko").setDesc("Alerte N-n-nyaaaah..mais mais...j'ai rien fait...me punissez pas maître je faisais que vous décrire..NYAAAAH vous êtes cruel maître ! dkjsfhbdbfshj..d'accord d'accord...ze me calme maître..");
-		rang.add(new Rank("Maître Méchant", 700, Rate.Event, "§2", true, 0));
-		Utils.getRank("Maître Méchant").setDesc("Mon Maître est méchant...help plz..AIIIE CA FAIT MAL MAÎTRE :c");
 		rang.add(new Rank("AntoZzz x Delxer", 600, Rate.Event, "§2", true, 0));
 		Utils.getRank("AntoZzz x Delxer").setDesc("Ils se disputent très souvent mais au fond, ce ne sont que des querelles de couple..Vous n'imaginez pas comment ça dérape en privé..;3");
 
