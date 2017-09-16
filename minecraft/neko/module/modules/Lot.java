@@ -76,49 +76,49 @@ public class Lot extends Module {
 				if (gain.equalsIgnoreCase("bonus")) {
 					if (Active.time==0) {
 						Active a1 = new Active(b.getBonus(), b.getTime());
-						u.addChat("Â§5Vous avez reÃ§u un bonus de Â§d"+a1.getBonus()+"%\nÂ§aActif pendant encore "+a1.getTime()/60+" minutes");
+						u.addChat("§5Vous avez reçu un bonus de §d"+a1.getBonus()+"%\n§aActif pendant encore "+a1.getTime()/60+" minutes");
 					} else {
-						u.addChat("Â§aVotre temps et bonus s'additionnent Ã  celui déjÃ  actif !");
+						u.addChat("§aVotre temps et bonus s'additionnent à  celui déjà  actif !");
 						Active.bonus+=b.getBonus();
 						Active.time+=b.getTime();
 					}										
 				} else if (gain.equalsIgnoreCase("malus")) {
 					if (Active.time==0) {
 						Active a1 = new Active(b.getBonus(), b.getTime());
-						u.addChat("Â§cVous avez reÃ§u un impÃ´t de Â§d"+a1.getBonus()+"%\nÂ§aActif pendant encore "+a1.getTime()/60+" minutes");
+						u.addChat("§cVous avez reçu un impôt de §d"+a1.getBonus()+"%\n§aActif pendant encore "+a1.getTime()/60+" minutes");
 					} else {
-						u.addChat("Â§cVotre temps et bonus s'additionnent Ã  celui déjÃ  actif !");
+						u.addChat("§cVotre temps et bonus s'additionnent à celui déjà actif !");
 						Active.bonus+=b.getBonus();
 						Active.time+=b.getTime();
 					}	
 				} else if (gain.equalsIgnoreCase("rang")) {
 					String s = u.getRandRank(b.getRate());
 					u.setRank(s);
-					u.addChat("Â§5Vous débloquez le rang "+u.getRankColor(s)+s+"Â§5 au lvl "+u.getRankColor(s)+u.getRank(s).getLvl()+"Â§5 !");
+					u.addChat("§5Vous débloquez le rang "+u.getRankColor(s)+s+"§5 au lvl "+u.getRankColor(s)+u.getRank(s).getLvl()+"§5 !");
 					int rang=0;
 					for (Rank r : ModuleManager.rang) {
 						if (!r.isLock())
 							rang++;
 					}							
 					if (rang==10 && Utils.getRank(s).getLvl()==1) {
-						u.addChat("Â§5Â§k77Â§c10 rangs débloqués !Â§5Â§k88");
-						u.addChat("Â§5Â§k77Â§c10 billets de lotterie gagnés !Â§5Â§k88");
+						u.addChat("§5§k77§c10 rangs débloqués !§5§k88");
+						u.addChat("§5§k77§c10 billets de lotterie gagnés !§5§k88");
 						var.lot+=10;
 					} else if (rang==25 && Utils.getRank(s).getLvl()==1) {
-						u.addChat("Â§5Â§k77Â§c25 rangs débloqués !Â§5Â§k88");
-						u.addChat("Â§5Â§k77Â§c15 billets de lotterie gagnés !Â§5Â§k88");
+						u.addChat("§5§k77§c25 rangs débloqués !§5§k88");
+						u.addChat("§5§k77§c15 billets de lotterie gagnés !§5§k88");
 						var.lot+=15;
 					} else if (rang==50 && Utils.getRank(s).getLvl()==1) {
-						u.addChat("Â§5Â§k77Â§c50 rangs débloqués !Â§5Â§k88");
-						u.addChat("Â§5Â§k77Â§c20 billets de lotterie gagnés !Â§5Â§k88");
+						u.addChat("§5§k77§c50 rangs débloqués !§5§k88");
+						u.addChat("§5§k77§c20 billets de lotterie gagnés !§5§k88");
 						var.lot+=20;
 					} else if (rang==100 && Utils.getRank(s).getLvl()==1) {
-						u.addChat("Â§5Â§k77Â§c100 rangs débloqués !Â§5Â§k88");
-						u.addChat("Â§5Â§k77Â§c25 billets de lotterie gagnés !Â§5Â§k88");
+						u.addChat("§5§k77§c100 rangs débloqués !§5§k88");
+						u.addChat("§5§k77§c25 billets de lotterie gagnés !§5§k88");
 						var.lot+=25;
 					} else if (rang==150 && Utils.getRank(s).getLvl()==1) {
-						u.addChat("Â§5Â§k77Â§c150 rangs débloqués !Â§5Â§k88");
-						u.addChat("Â§5Â§k77Â§c30 billets de lotterie gagnés !Â§5Â§k88");
+						u.addChat("§5§k77§c150 rangs débloqués !§5§k88");
+						u.addChat("§5§k77§c30 billets de lotterie gagnés !§5§k88");
 						var.lot+=30;
 					}
 				} else if (gain.equalsIgnoreCase("unlock")) {					
@@ -131,49 +131,49 @@ public class Lot extends Module {
 					switch (count) {
 					case 0:
 						int r = Utils.getRandInt(8)+1;
-						Utils.addChat("Â§dâ˜…  Â§7-> Â§9Tu as gagné "+r+" souls !");
+						Utils.addChat("§d˜…  §7-> §9Tu as gagné "+r+" souls !");
 						var.ame+=r;
 						break;
 					case 1:
-						Utils.addChat("Â§dâ˜…â˜…  Â§7-> Â§9Tu as gagné 25 souls !");
+						Utils.addChat("§d˜…˜…  §7-> §9Tu as gagné 25 souls !");
 						var.ame+=25;
 						break;
 					case 2:
-						Utils.addChat("Â§dâ˜…â˜…â˜…  Â§7-> Â§9Tu as gagné 50 souls !");
+						Utils.addChat("§d˜…˜…˜…  §7-> §9Tu as gagné 50 souls !");
 						var.ame+=50;
 						break;
 					case 3:
-						Utils.addChat("Â§dâ˜…â˜…â˜…â˜… Â§7-> Â§9Tu as gagné 100 souls !");
+						Utils.addChat("§d˜…˜…˜…˜… §7-> §9Tu as gagné 100 souls !");
 						var.ame+=100;
 						break;
 					case 4:
-						Utils.addChat("Â§dâ˜…â˜…â˜…â˜…â˜…  Â§7-> Â§9Tu as gagné 500 souls !");
+						Utils.addChat("§d˜…˜…˜…˜…˜…  §7-> §9Tu as gagné 500 souls !");
 						var.ame+=500;
 						break;
 					case 5:
-						Utils.addChat("Â§dâ˜…â˜…â˜…â˜…â˜…â˜…  Â§7-> Â§9Tu as gagné 750 souls !");
+						Utils.addChat("§d˜…˜…˜…˜…˜…˜…  §7-> §9Tu as gagné 750 souls !");
 						var.ame+=750;
 						break;
 					case 6:
-						Utils.addChat("Â§dâ˜…â˜…â˜…â˜…â˜…â˜…â˜…  Â§7-> Â§9Tu as gagné 1000 souls !");
+						Utils.addChat("§d˜…˜…˜…˜…˜…˜…˜…  §7-> §9Tu as gagné 1000 souls !");
 						var.ame+=1000;
 						break;
 					case 7:
-						Utils.addChat("Â§dâ˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…  Â§7-> Â§9Tu as gagné 1500 souls !");
+						Utils.addChat("§d˜…˜…˜…˜…˜…˜…˜…˜…  §7-> §9Tu as gagné 1500 souls !");
 						var.ame+=1500;
 						break;
 					case 8:
-						Utils.addChat("Â§dâ˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…  Â§7-> Â§9Tu as gagné 2000 souls !");
+						Utils.addChat("§d˜…˜…˜…˜…˜…˜…˜…˜…˜…  §7-> §9Tu as gagné 2000 souls !");
 						var.ame+=2000;
 						break;
 					case 9:
-						Utils.addChat("Â§dâ˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…â˜…  Â§7-> Â§9Tu as gagné 2500 souls !");
+						Utils.addChat("§d˜…˜…˜…˜…˜…˜…˜…˜…˜…˜…  §7-> §9Tu as gagné 2500 souls !");
 						var.ame+=2500;
 						break;
 					}
 					
 				} else {
-					u.addChat(u.setColor("Les écureuils vous livre un pack d'xp !", "Â§cÂ§o"));
+					u.addChat(u.setColor("Les nekos vous livre un pack d'xp !", "§c§o"));
 					u.checkXp(u.getRandInt((int) Math.round(700+700*var.rang.getGiftXp())));
 				}								
 				a=false;			
@@ -261,40 +261,40 @@ public class Lot extends Module {
 					break;
 				}
 			}
-			String c1="Â§a";
-			String c2="Â§7";
-			String c3="Â§a";
-			Utils.addChat("Â§6Lots ratés:");
+			String c1="§a";
+			String c2="§7";
+			String c3="§a";
+			Utils.addChat("§6Lots ratés:");
 			if (xp>0)
-				Utils.addChat(c1+"-> Â§aXp"+c2+" ["+c3+xp+c2+"]");
+				Utils.addChat(c1+"-> §aXp"+c2+" ["+c3+xp+c2+"]");
 			if (malus>0)
-				Utils.addChat(c1+"-> Â§cMalus"+c2+" ["+c3+malus+c2+"]");
+				Utils.addChat(c1+"-> §cMalus"+c2+" ["+c3+malus+c2+"]");
 			if (bonus>0)
-				Utils.addChat(c1+"-> Â§aBonus"+c2+" ["+c3+bonus+c2+"]"); //  
+				Utils.addChat(c1+"-> §aBonus"+c2+" ["+c3+bonus+c2+"]"); //  
 			if (unlock>0)
-				Utils.addChat(c1+"-> Â§dUnlock"+c2+" ["+c3+unlock+c2+"]");
+				Utils.addChat(c1+"-> §dUnlock"+c2+" ["+c3+unlock+c2+"]");
 			if (souls>0)
-				Utils.addChat(c1+"-> Â§9Souls"+c2+" ["+c3+souls+c2+"]");
+				Utils.addChat(c1+"-> §9Souls"+c2+" ["+c3+souls+c2+"]");
 			if (Ordinaire>0)
-				Utils.addChat(c1+"-> Â§7Rang Ordinaire"+c2+" ["+c3+Ordinaire+c2+"]");
+				Utils.addChat(c1+"-> §7Rang Ordinaire"+c2+" ["+c3+Ordinaire+c2+"]");
 			if (Rare>0)
-				Utils.addChat(c1+"-> Â§eRang Rare"+c2+" ["+c3+Rare+c2+"]");
+				Utils.addChat(c1+"-> §eRang Rare"+c2+" ["+c3+Rare+c2+"]");
 			if (UltraRare>0)
-				Utils.addChat(c1+"-> Â§bRang UltraRare"+c2+" ["+c3+UltraRare+c2+"]");
+				Utils.addChat(c1+"-> §bRang UltraRare"+c2+" ["+c3+UltraRare+c2+"]");
 			if (Magical>0)
-				Utils.addChat(c1+"-> Â§dRang Magical"+c2+" ["+c3+Magical+c2+"]");
+				Utils.addChat(c1+"-> §dRang Magical"+c2+" ["+c3+Magical+c2+"]");
 			if (Divin>0)
-				Utils.addChat(c1+"-> Â§dÂ§oRang Divin"+c2+" ["+c3+Divin+c2+"]");
+				Utils.addChat(c1+"-> §d§oRang Divin"+c2+" ["+c3+Divin+c2+"]");
 			if (Satanique>0)
-				Utils.addChat(c1+"-> Â§cRang Satanique"+c2+" ["+c3+Satanique+c2+"]");
+				Utils.addChat(c1+"-> §cRang Satanique"+c2+" ["+c3+Satanique+c2+"]");
 			if (Légendaire>0)
-				Utils.addChat(c1+"-> Â§5Rang Légendaire"+c2+" ["+c3+Légendaire+c2+"]");
+				Utils.addChat(c1+"-> §5Rang Légendaire"+c2+" ["+c3+Légendaire+c2+"]");
 			if (Mythique>0)
-				Utils.addChat(c1+"-> Â§2Rang Mythique"+c2+" ["+c3+Mythique+c2+"]");
+				Utils.addChat(c1+"-> §2Rang Mythique"+c2+" ["+c3+Mythique+c2+"]");
 			if (Titan>0)
-				Utils.addChat(c1+"-> Â§4Â§oRang Titan"+c2+" ["+c3+Titan+c2+"]");
+				Utils.addChat(c1+"-> §4§oRang Titan"+c2+" ["+c3+Titan+c2+"]");
 			if (Neko>0)
-				Utils.addChat(c1+"-> Â§5Rang Neko"+c2+" ["+c3+Neko+c2+"]");
+				Utils.addChat(c1+"-> §5Rang Neko"+c2+" ["+c3+Neko+c2+"]");
 			list2=(ArrayList<Bloc>) list.clone();
 			list.clear();
 		}
