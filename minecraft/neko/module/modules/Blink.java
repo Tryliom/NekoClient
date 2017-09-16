@@ -26,8 +26,6 @@ public class Blink extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oBlink activé !");
 		lastPosX=mc.thePlayer.posX;
 		lastPosY=mc.thePlayer.posY;
 		lastPosZ=mc.thePlayer.posZ;
@@ -44,8 +42,6 @@ public class Blink extends Module {
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oBlink désactivé !");
 	    mc.theWorld.removeEntityFromWorld(-2);
 	    this.fakePlayer = null;
 	    isOn=false;

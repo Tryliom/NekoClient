@@ -34,14 +34,10 @@ public class God extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oGod activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oGod désactivé !");
 		super.onDisabled();
 	}		
 	

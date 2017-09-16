@@ -23,14 +23,10 @@ public class Fasteat extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oFasteat activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oFasteat désactivé !");		
 		super.onDisabled();
 	}
 	

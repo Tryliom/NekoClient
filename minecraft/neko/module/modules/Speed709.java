@@ -28,14 +28,10 @@ public class Speed709 extends Module {
 	}
 	
 	public void onEnabled() {
-		if (u.display)
-		u.addChat("§a§oSpeed activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oSpeed désactivé !");
 		mc.thePlayer.speedInAir=0.02F;
 		for (Block b : list) {
 			b.slipperiness=0.6F;

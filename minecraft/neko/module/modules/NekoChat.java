@@ -22,15 +22,11 @@ public class NekoChat extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-			u.addChat("§a§oNekoChat activé !");
 		newChat();
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-			u.addChat("§c§oNekoChat désactivé !");
 		super.onDisabled();
 	}		
 	

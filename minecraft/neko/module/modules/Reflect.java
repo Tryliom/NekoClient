@@ -21,15 +21,11 @@ public class Reflect extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oReflect activé !");
 		enColl=mc.thePlayer.entityCollisionReduction;
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oReflect désactivé !");
 		mc.thePlayer.entityCollisionReduction=enColl;
 		super.onDisabled();
 	}

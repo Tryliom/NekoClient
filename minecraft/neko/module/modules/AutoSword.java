@@ -18,14 +18,10 @@ public class AutoSword extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oAutoSword activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oAutoSword désactivé !");
 		super.onDisabled();
 	}
 	

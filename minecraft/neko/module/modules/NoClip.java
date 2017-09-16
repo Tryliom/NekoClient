@@ -17,14 +17,10 @@ public class NoClip extends Module {
 	}
 	
 	public void onEnabled() {
-		if (u.display)
-		u.addChat("§a§oNoclip activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oNoclip désactivé !");
 		Minecraft.getMinecraft().thePlayer.noClip = false;
 		super.onDisabled();
 	}

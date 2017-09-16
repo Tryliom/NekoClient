@@ -29,8 +29,6 @@ public class Flash extends Module {
 	public void onEnabled() {		
 		if (u.isLock(this.getName()))
 			return;
-		if (u.display)
-			u.addChat("§a§oFlash activé !");
 		this.lastPos=mc.thePlayer.getPosition();
 	    this.fakePlayer = new EntityOtherPlayerMP(mc.theWorld, mc.thePlayer.getGameProfile());
 	    this.fakePlayer.clonePlayer(mc.thePlayer, true);
@@ -41,8 +39,6 @@ public class Flash extends Module {
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oFlash désactivé !");
 	    mc.theWorld.removeEntityFromWorld(-3);
 	    this.fakePlayer = null;
 	    back();

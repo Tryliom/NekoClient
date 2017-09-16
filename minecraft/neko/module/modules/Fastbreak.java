@@ -19,14 +19,10 @@ public class Fastbreak extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oFastbreak activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oFastbreak désactivé !");
 		super.onDisabled();
 	}
 	

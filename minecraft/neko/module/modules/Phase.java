@@ -20,14 +20,10 @@ public class Phase extends Module {
 	}
 	
 	public void onEnabled() {
-		if (u.display)
-		u.addChat("§a§oPhase activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oPhase désactivé !");
 		super.onDisabled();
 	}
 	

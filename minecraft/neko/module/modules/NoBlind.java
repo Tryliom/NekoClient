@@ -16,14 +16,10 @@ public class NoBlind extends Module {
 	}
 	
 	public void onEnabled() {
-		if (u.display)
-			u.addChat("§a§oNoBlind activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-			u.addChat("§c§oNoBlind désactivé !");
 		super.onDisabled();
 	}
 	

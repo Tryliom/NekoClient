@@ -25,15 +25,11 @@ public class SmoothAim extends Module {
 	}
 	
 	public void onEnabled() {
-		if (u.display)
-			u.addChat("§a§oSmoothAim activé !");
 		this.target = null;
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-			u.addChat("§c§oSmoothAim désactivé !");
 		super.onDisabled();
 	}
 	

@@ -15,14 +15,10 @@ public class Sprint extends Module {
 	
 	
 	public void onEnabled() {
-		if (u.display)
-		u.addChat("§a§oSprint activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oSprint désactivé !");
 		super.onDisabled();
 	}
 	

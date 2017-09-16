@@ -24,14 +24,10 @@ public class AutoPot extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oAutoPot activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oAutoPot désactivé !");
 		super.onDisabled();
 	}
 	

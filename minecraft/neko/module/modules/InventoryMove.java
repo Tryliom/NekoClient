@@ -19,14 +19,10 @@ public class InventoryMove extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oInventoryMove activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oInventoryMove désactivé !");
 		super.onDisabled();
 	}
 	

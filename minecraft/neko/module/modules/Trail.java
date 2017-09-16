@@ -20,14 +20,10 @@ public class Trail extends Module {
 	public void onEnabled() {	
 		if (u.isLock(this.getName()))
 			return;
-		if (u.display)
-		u.addChat("§a§oTrail activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oTrail désactivé !");
 		list.clear();
 		super.onDisabled();
 	}

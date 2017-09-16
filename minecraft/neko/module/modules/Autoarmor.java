@@ -28,14 +28,10 @@ public class Autoarmor extends Module {
 	}
 	
 	public void onEnabled() {
-		if (u.display)
-		u.addChat("§a§oAutoarmor activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oAutoarmor désactivé !");
 		super.onDisabled();
 	}
 	

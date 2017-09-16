@@ -13,14 +13,10 @@ public class Timer extends Module {
 	}
 	
 	public void onEnabled() {
-		if (u.display)
-		u.addChat("§a§oTimer activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oTimer désactivé !");
 		net.minecraft.util.Timer.timerSpeed = 1.0F;
 		super.onDisabled();
 	}

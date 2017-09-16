@@ -31,15 +31,11 @@ public class Pyro extends Module {
 	public void onEnabled() {
 		if (u.isLock(this.getName()))
 			return;
-		if (u.display)
-		u.addChat("§a§oPyro activée !");
 		isOn=true;
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oPyro désactivée !");
 		isOn=false;
 		super.onDisabled();
 	}

@@ -27,14 +27,10 @@ public class Scaffold extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-			u.addChat("§a§oScaffold activé !");		
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-			u.addChat("§c§oScaffold désactivé !");
 		Safewalk.isOn=false;
 		super.onDisabled();
 	}		

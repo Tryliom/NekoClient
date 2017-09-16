@@ -17,14 +17,10 @@ public class NoFall extends Module {
 
 	
 	public void onEnabled() {
-		if (u.display)
-		u.addChat("§a§oNofall activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oNofall désactivé !");
 		super.onDisabled();
 	}
 	

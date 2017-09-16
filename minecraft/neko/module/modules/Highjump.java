@@ -22,14 +22,10 @@ public class Highjump extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oHighjump activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oHighjump désactivé !");
 		super.onDisabled();
 	}
 

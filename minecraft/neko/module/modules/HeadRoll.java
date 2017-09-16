@@ -10,14 +10,10 @@ public class HeadRoll extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oHeadRoll activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oHeadRoll désactivé !");
 		super.onDisabled();
 	}
 	

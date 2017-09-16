@@ -21,14 +21,10 @@ public class Test extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oTest activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oTest désactivé !");		
 		super.onDisabled();
 	}
 	

@@ -14,14 +14,10 @@ public class Switch extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oSwitch activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oSwitch désactivé !");
 		super.onDisabled();
 	}
 	

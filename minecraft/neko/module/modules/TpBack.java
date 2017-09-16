@@ -27,14 +27,10 @@ public class TpBack extends Module {
 	}
     
 	public void onEnabled() {
-		if (u.display)
-		u.addChat("§a§oTpBack activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oTpBack désactivé !");
 		super.onDisabled();
 	}
 	

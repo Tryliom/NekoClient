@@ -17,8 +17,6 @@ public class Flight extends Module {
 	}
 	
 	public void onEnabled() {
-		if (u.display)
-		u.addChat("§a§oFlight activé !");
 		if (blink && !Blink.isOn) {
 			Blink.isOn=true; 
 			v=false;
@@ -28,8 +26,6 @@ public class Flight extends Module {
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oFlight désactivé !");
 		if (blink)
 			Blink.isOn=v;		
 		super.onDisabled();

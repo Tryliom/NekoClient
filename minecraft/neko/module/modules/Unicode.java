@@ -13,14 +13,10 @@ public class Unicode extends Module {
 	public void onEnabled() {	
 		if (u.isLock(this.getName()))
 			return;
-		if (u.display)
-		u.addChat("§a§oUnicode activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oUnicode désactivé !");
 		super.onDisabled();
 	}	
 	

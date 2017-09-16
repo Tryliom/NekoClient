@@ -33,14 +33,10 @@ public class Premonition extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-			u.addChat("§a§oPremonition activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-			u.addChat("§c§oPremonition désactivé !");
 		super.onDisabled();
 	}
 	

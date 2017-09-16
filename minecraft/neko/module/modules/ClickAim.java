@@ -21,14 +21,10 @@ public class ClickAim extends Module {
 	}
 	
 	public void onEnabled() {
-		if (u.display)
-			u.addChat("§a§oClickAim activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-			u.addChat("§c§oClickAim désactivé !");
 		super.onDisabled();
 	}
 	

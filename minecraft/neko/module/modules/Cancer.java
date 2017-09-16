@@ -18,7 +18,7 @@ public class Cancer extends Module {
 	public static boolean attack = false;
 	
 	public Cancer() {
-		super("Cancer", -1, Category.Special);
+		super("PunKeel", -1, Category.Special);
 	}
 	
 	public void onEnabled() {	
@@ -30,16 +30,12 @@ public class Cancer extends Module {
 			u.addWarn(this.getName());
 			return;
 		} 
-		if (u.display)
-			u.addChat("§a§oCancer activé !");
 	    isOn=true;
 	    this.count = 0;	    
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oCancer désactivé !");
 	    sendPacket();
 	    isOn=false;
 	    mc.theWorld.updateEntities();

@@ -10,14 +10,10 @@ public class AntiFire extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oAntiFire activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oAntiFire désactivé !");
 		super.onDisabled();
 	}
 	

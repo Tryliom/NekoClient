@@ -30,15 +30,11 @@ public class Ping extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oPing activé !");
 		isOn=true;
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oPing désactivé !");
 		isOn=false;
 		super.onDisabled();
 	}	

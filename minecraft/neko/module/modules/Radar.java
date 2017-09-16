@@ -12,14 +12,10 @@ public class Radar extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oRadar activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oRadar désactivé !");
 		super.onDisabled();
 	}
 	

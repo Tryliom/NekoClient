@@ -21,14 +21,10 @@ public class Paint extends Module {
 	}	
 	
 	public void onEnabled() {
-		if (u.display)
-		u.addChat("§a§oPaint activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oPaint désactivé !");
 		pain.clear();
 		super.onDisabled();
 	}

@@ -9,14 +9,10 @@ public class Fastladder extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oFastladder activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oFastladder désactivé !");
 		super.onDisabled();
 	}
 }

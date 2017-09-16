@@ -53,15 +53,11 @@ public class Reach extends Module {
 	public void onEnabled() {
 		if (u.isLock(this.getName()))
 			return;
-		if (u.display)
-		u.addChat("§a§oReach activée !");
 		isOn=true;
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oReach désactivée !");
 		isOn=false;
 		super.onDisabled();
 	}

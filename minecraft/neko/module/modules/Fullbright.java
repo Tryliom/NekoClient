@@ -15,14 +15,10 @@ public class Fullbright extends Module {
 
 	
 	public void onEnabled() {
-		if (u.display)
-		u.addChat("§a§oFullbright activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oFullbright désactivé !");
 		super.onDisabled();
 	}
 	

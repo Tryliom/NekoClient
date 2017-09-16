@@ -55,8 +55,6 @@ public class KillAura extends Module {
 	}
 	
 	public void onEnabled() {
-		if (Utils.display)
-			Utils.addChat("§a§oKill Aura activé !");
 		if (cps!=0)
 			timer.setDelay(1000/cps);
 		else
@@ -66,8 +64,6 @@ public class KillAura extends Module {
 	}
 	
 	public void onDisabled() {
-		if (Utils.display)
-			Utils.addChat("§c§oKill Aura désactivé !");
 		list.clear();
 		timer.setDelay(1000/cps);
 		timer.stop();

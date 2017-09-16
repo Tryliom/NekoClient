@@ -14,14 +14,10 @@ public class FastPlace extends Module {
 	}
 	
 	public void onEnabled() {
-		if (u.display)
-		u.addChat("§a§oFastPlace activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oFastPlace désactivé !");
 		super.onDisabled();
 	}
 	

@@ -18,14 +18,10 @@ public class Regen extends Module {
 	
 	
 	public void onEnabled() {
-		if (u.display)
-		u.addChat("§a§oRegen activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oRegen désactivé !");
 		super.onDisabled();
 	}
 	

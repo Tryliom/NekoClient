@@ -18,14 +18,10 @@ public class Antiafk extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-			u.addChat("§a§oAntiafk activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-			u.addChat("§c§oAntiafk désactivé !");
 		super.onDisabled();
 	}
 	

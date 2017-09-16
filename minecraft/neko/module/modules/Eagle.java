@@ -20,14 +20,10 @@ public class Eagle extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-			u.addChat("§a§oEagle activé !");		
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-			u.addChat("§c§oEagle désactivé !");
 		if ((mc.gameSettings.keyBindSneak.pressed & !Keyboard.isKeyDown(this.mc.gameSettings.keyBindSneak.getKeyCode()))) {
 			mc.gameSettings.keyBindSneak.pressed = false;
 		}

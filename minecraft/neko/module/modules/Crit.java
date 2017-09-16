@@ -12,14 +12,10 @@ public class Crit extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oCrit activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oCrit désactivé !");
 		super.onDisabled();
 	}	
 	

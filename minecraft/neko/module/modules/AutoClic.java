@@ -13,14 +13,10 @@ public class AutoClic extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oAutoClic activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oAutoClic désactivé !");
 		super.onDisabled();
 	}					
 	

@@ -27,14 +27,10 @@ public class HUD extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oHUD activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oHUD désactivé !");
 		super.onDisabled();
 	}
 	

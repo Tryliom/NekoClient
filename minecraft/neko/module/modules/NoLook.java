@@ -21,16 +21,12 @@ public class NoLook extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oNoLook activé !");
 		pitch = mc.thePlayer.rotationPitch;
 		yaw = mc.thePlayer.rotationYaw;
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oNoLook désactivé !");
 		super.onDisabled();
 	}
 

@@ -37,14 +37,10 @@ public class Nuker extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oNuker activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oNuker désactivé !");
 		super.onDisabled();
 	}	
 	

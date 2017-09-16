@@ -12,14 +12,10 @@ public class ArrayList extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oArrayList activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oArrayList désactivé !");
 		super.onDisabled();
 	}
 	

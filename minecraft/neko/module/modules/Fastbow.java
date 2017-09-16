@@ -25,15 +25,11 @@ public class Fastbow extends Module {
 	public void onEnabled() {
 		if (u.isLock(this.getName()))
 			return;
-		if (u.display)
-		u.addChat("§a§oFastbow activé !");
 		isOn=true;
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oFastbow désactivé !");
 		isOn=false;
 		super.onDisabled();
 	}		

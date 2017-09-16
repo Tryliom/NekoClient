@@ -14,15 +14,11 @@ public class Safewalk extends Module {
 	}
 	
 	public void onEnabled() {
-		if (u.display)
-		u.addChat("§a§oSafewalk activé !");
 		this.isOn=true;
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oSafewalk désactivé !");
 		this.isOn=false;
 		super.onDisabled();
 	}

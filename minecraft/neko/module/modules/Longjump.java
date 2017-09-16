@@ -13,14 +13,10 @@ public class Longjump extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oLongjump activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oLongjump désactivé !");
 		super.onDisabled();
 	}
 	

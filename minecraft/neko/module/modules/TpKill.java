@@ -38,14 +38,10 @@ public class TpKill extends Module {
 		if (u.isLock(this.getName()))
 			return;
 		
-		if (u.display)
-		u.addChat("§a§oTpKill activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oTpKill désactivé !");
 		super.onDisabled();
 	}
 	

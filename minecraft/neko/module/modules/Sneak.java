@@ -17,14 +17,10 @@ public class Sneak extends Module {
 	public void onEnabled() {
 		if (u.isLock(this.getName()))
 			return;
-		if (u.display)
-		u.addChat("§a§oSneak activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oSneak désactivé !");
 		mc.thePlayer.sendQueue.addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SNEAKING));
 		super.onDisabled();
 	}

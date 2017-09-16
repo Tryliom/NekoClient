@@ -12,14 +12,10 @@ public class WorldTime extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oWorldTime activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oWorldTime désactivé !");
 		super.onDisabled();
 	}
 	

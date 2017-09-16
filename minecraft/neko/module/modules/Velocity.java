@@ -20,14 +20,10 @@ public class Velocity extends Module {
 	}
 	
 	public void onEnabled() {
-		if (u.display)
-		u.addChat("§a§oVelocity activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oVelocity désactivé !");
 		super.onDisabled();
 	}
 

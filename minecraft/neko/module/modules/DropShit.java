@@ -25,14 +25,10 @@ public class DropShit extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oDropShit activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oDropShit désactivé !");
 		super.onDisabled();
 	}
 	

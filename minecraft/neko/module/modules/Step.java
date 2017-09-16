@@ -17,14 +17,10 @@ public class Step extends Module {
 	}
 	
 	public void onEnabled() {
-		if (u.display)
-		u.addChat("§a§oStep activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oStep désactivé !");
 		Minecraft.getMinecraft().thePlayer.stepHeight = 0.5F;
 		super.onDisabled();
 	}

@@ -18,14 +18,10 @@ public class Glide extends Module {
 	}
 		
 	public void onEnabled() {
-		if (u.display)
-		u.addChat("§a§oGlide activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oGlide désactivé !");
 		super.onDisabled();
 	}
 	

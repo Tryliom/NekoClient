@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import neko.Client;
 import neko.event.UpdateEvent;
 import neko.gui.InGameGui;
+import neko.module.modules.*;
 import neko.utils.ChatUtils;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -120,11 +121,21 @@ public class Module
 	  }
 	  
 	  public void onToggle() {}
-	  
-	  public void onEnabled() {}
-	  
-	  public void onDisabled() {}
-	  
+
+	public void onEnabled() {
+
+		if(shouldChat(this))
+			Utils.addChat("§a§o" + getName() + " activé !");
+
+	}
+
+	public void onDisabled() {
+
+		if(shouldChat(this))
+			Utils.addChat("§c§o" + getName() + " désactivé !");
+
+	}
+
 	  public void onUpdate() {}
 	  
 	  public void onAction() {}
@@ -142,5 +153,26 @@ public class Module
 	  public void onRightClick() {}
 	  
 	  public void onUpdate(UpdateEvent event) {}
-	  	  
+
+    /**
+     * Util
+     */
+
+    private boolean shouldChat(Module module) {
+
+        if(module.getName().getClass().equals(Fire.class)
+                || module.getName().getClass().equals(Friends.class)
+                || module.getName().getClass().equals(Gui.class)
+                || module.getName().getClass().equals(Lot.class)
+                || module.getName().getClass().equals(Plugins.class)
+                || module.getName().getClass().equals(Power.class)
+                || module.getName().getClass().equals(Register.class)
+                || module.getName().getClass().equals(Render.class)
+                || module.getName().getClass().equals(VanillaTp.class)
+                || module.getName().getClass().equals(Water.class)) return false;
+
+        return true;
+
+    }
+
 }

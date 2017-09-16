@@ -15,14 +15,10 @@ public class Noslow extends Module {
 	
 	public void onEnabled() {
 		isOn=true;
-		if (u.display)
-		u.addChat("§a§oNoslow activé !");
 	}
 
 	public void onDisabled() {
 		isOn=false;
-		if (u.display)
-		u.addChat("§c§oNoslow désactivé !");
 	}
 	
 	public void onUpdate() {

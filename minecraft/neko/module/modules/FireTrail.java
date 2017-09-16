@@ -24,14 +24,10 @@ public class FireTrail extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-			u.addChat("§a§oFireTrail activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-			u.addChat("§c§oFireTrail désactivé !");
 		super.onDisabled();
 	}		
 	

@@ -18,14 +18,10 @@ public class Autoeat extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oAutoeat activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oAutoeat désactivé !");
 		super.onDisabled();
 	}
 	

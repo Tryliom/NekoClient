@@ -19,14 +19,10 @@ public class Tracers extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oTracers activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oTracers désactivé !");
 		super.onDisabled();
 	}
 	

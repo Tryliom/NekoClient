@@ -28,14 +28,10 @@ public class Wallhack extends Module {
 		if (u.isLock(this.getName()))
 			return;
 		
-		if (u.display)
-			u.addChat("§a§oWallhack activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-			u.addChat("§c§oWallhack désactivé !");
 		super.onDisabled();
 	}
 	

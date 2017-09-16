@@ -25,14 +25,10 @@ public class ItemESP extends Module {
 		if (u.isLock(this.getName()))
 			return;
 		
-		if (u.display)
-			u.addChat("§a§oItemESP activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-			u.addChat("§c§oItemESP désactivé !");
 		super.onDisabled();
 	}
 	

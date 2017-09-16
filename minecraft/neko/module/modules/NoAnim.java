@@ -21,14 +21,10 @@ public class NoAnim extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oNoAnim activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oNoAnim désactivé !");
 		super.onDisabled();
 	}
 		

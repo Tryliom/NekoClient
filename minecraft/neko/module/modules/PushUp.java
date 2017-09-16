@@ -20,14 +20,10 @@ public class PushUp extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oPushUp activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oPushUp désactivé !");
 		super.onDisabled();
 	}
 	

@@ -32,14 +32,10 @@ public class Build extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-			u.addChat("§a§oBuild activé !");		
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-			u.addChat("§c§oBuild désactivé !");
 		super.onDisabled();
 	}		
 	

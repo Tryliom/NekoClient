@@ -24,15 +24,11 @@ public class Xray extends Module {
 	public void onEnabled() {
 		isOn = true;
 		Minecraft.getMinecraft().renderGlobal.loadRenderers();
-		if (u.display)
-		u.addChat("§a§oXray activé !");
 	}
 
 	public void onDisabled() {
 		isOn = false;
 		Minecraft.getMinecraft().renderGlobal.loadRenderers();
-		if (u.display)
-		u.addChat("§c§oXray désactivé !");
 	}
 	
 	public void onUpdate() {

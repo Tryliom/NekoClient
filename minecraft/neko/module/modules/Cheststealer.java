@@ -22,14 +22,10 @@ public class Cheststealer extends Module {
 	}
 
 	public void onEnabled() {
-		if (u.display)
-			u.addChat("§a§oCheststealer activé !");
 		super.onEnabled();
 	}
 
 	public void onDisabled() {
-		if (u.display)
-			u.addChat("§c§oCheststealer désactivé !");
 		super.onDisabled();
 	}
 

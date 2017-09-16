@@ -15,14 +15,10 @@ public class Dolphin extends Module {
 	}
 		
 	public void onEnabled() {
-		if (u.display)
-		u.addChat("§a§oDolphin activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oDolphin désactivé !");
 		super.onDisabled();
 	}
 	

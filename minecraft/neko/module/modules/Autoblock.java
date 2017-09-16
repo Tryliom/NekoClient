@@ -13,14 +13,10 @@ public class Autoblock extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oAutoblock activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oAutoblock désactivé !");
 		super.onDisabled();
 	}
 	

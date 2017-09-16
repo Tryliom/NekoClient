@@ -32,14 +32,10 @@ public class SpamBot extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-			u.addChat("§a§oSpamBot activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-			u.addChat("§c§oSpamBot désactivé !");
 		super.onDisabled();
 	}
 	

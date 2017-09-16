@@ -21,8 +21,6 @@ public class Freecam extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oFreecam activé !");
 	    this.oldX = mc.thePlayer.posX;
 	    this.oldY = mc.thePlayer.posY;
 	    this.oldZ = mc.thePlayer.posZ;
@@ -35,8 +33,6 @@ public class Freecam extends Module {
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oFreecam désactivé !");
 	    mc.thePlayer.setPositionAndRotation(this.oldX, this.oldY, this.oldZ, mc.thePlayer.rotationYaw, mc.thePlayer.rotationPitch);
 	    mc.theWorld.removeEntityFromWorld(-2);
 	    this.fakePlayer = null;

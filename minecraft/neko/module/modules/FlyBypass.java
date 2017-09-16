@@ -13,14 +13,10 @@ public class FlyBypass extends Module {
 	}
 	
 	public void onEnabled() {
-		if (u.display)
-		u.addChat("§a§oFlyBypass activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oFlyBypass désactivé !");	
 		super.onDisabled();
 	}
 	

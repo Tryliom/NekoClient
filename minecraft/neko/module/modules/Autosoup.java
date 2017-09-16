@@ -22,14 +22,10 @@ public class Autosoup extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-		u.addChat("§a§oAutosoup activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-		u.addChat("§c§oAutosoup désactivé !");
 		super.onDisabled();
 	}
 	

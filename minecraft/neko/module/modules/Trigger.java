@@ -28,15 +28,11 @@ public class Trigger extends Module {
 	}
 	
 	public void onEnabled() {
-		if (Utils.display)
-		Utils.addChat("§a§oTrigger activé !");
 		timer.start();
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (Utils.display)
-		Utils.addChat("§c§oTrigger désactivé !");
 		timer.stop();
 		super.onDisabled();
 	}

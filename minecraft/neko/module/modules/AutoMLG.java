@@ -23,14 +23,10 @@ public class AutoMLG extends Module {
 	}
 	
 	public void onEnabled() {		
-		if (u.display)
-			u.addChat("§a§oAutoMLG activé !");		
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (u.display)
-			u.addChat("§c§oAutoMLG désactivé !");
 		super.onDisabled();
 	}		
 	
