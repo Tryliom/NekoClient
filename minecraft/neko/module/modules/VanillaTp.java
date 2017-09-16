@@ -38,7 +38,7 @@ public class VanillaTp extends Module {
 			u.addWarn(this.getName());
 			return;
 		}    	
-
+    	this.isToggled=false;
         if (mc.thePlayer.isSneaking()) {
         	return;        	
         }        

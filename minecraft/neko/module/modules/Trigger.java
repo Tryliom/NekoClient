@@ -1,5 +1,7 @@
 package neko.module.modules;
 
+import java.awt.AWTException;
+import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -90,13 +92,20 @@ class attack implements ActionListener {
 		        		Utils.crit();
 		        		                			
 		        		if (Reach.pvp && Trigger.dist>6) {
-		        			mc.clickMouse();
+		        			try {
+								Robot r = new Robot();
+								r.mousePress(16);
+								r.mouseRelease(16);
+							} catch (AWTException e) {}
 		        		} else if (Utils.isToggle("FastDura")) {
 		    				FastDura.doDura(entity);
 		    				mc.thePlayer.swingItem();
 		    			} else {
-		    				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));
-		    				mc.thePlayer.swingItem();
+		    				try {
+								Robot r = new Robot();
+								r.mousePress(16);
+								r.mouseRelease(16);
+							} catch (AWTException e) {}
 		    			}
 				}
 			}

@@ -1,5 +1,5 @@
 package neko.module.other;
 
 public enum Rate {
-	Ordinaire, Rare, Satanique, Divin, Neko, UltraRare, Magical, Légendaire, Mythique, Titan, Supra, Event, CrazyLove;
+	Ordinaire, Rare, UltraRare, Magical, Divin, Satanique, Légendaire, Mythique, Titan, CrazyLove, Neko, Supra, Event;
 }

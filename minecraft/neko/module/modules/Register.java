@@ -21,6 +21,7 @@ public class Register extends Module {
 		ChatUtils c = new ChatUtils();
 		c.doCommand("/register "+mdp+" "+mdp);
 		c.doCommand("/login "+mdp);
+		this.isToggled = false;
 	}
 
 	public String getMdp() {

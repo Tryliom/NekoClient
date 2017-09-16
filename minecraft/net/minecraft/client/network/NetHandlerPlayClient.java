@@ -24,6 +24,7 @@ import io.netty.buffer.Unpooled;
 import joptsimple.internal.Strings;
 import neko.Client;
 import neko.module.modules.Blink;
+import neko.module.modules.Cancer;
 import neko.module.modules.KillAura;
 import neko.module.modules.Ping;
 import neko.module.modules.Plugins;
@@ -866,7 +867,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     			msg.getMessage().replaceAll("/r ", "");
     		}
     		for (char chr : msg.getMessage().toCharArray()) {
-    		      if ((chr >= '!') && (chr <= 'Â€') && 
+    		      if ((chr >= '!') && (chr <= '€') && 
     		        (!"(){}[]|!*@$".contains(Character.toString(chr)))) {
     		        out = out + new String(Character.toChars(chr + 65248));
     		      } else {
@@ -896,6 +897,13 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     	
     	if ((p_147297_1_ instanceof C0APacketAnimation) && Utils.isToggle("NoAnim")) {
     		return;
+    	}
+    	
+    	if (Cancer.isOn) {
+    		if (!(p_147297_1_ instanceof C01PacketChatMessage) && Cancer.attack ? !(p_147297_1_ instanceof C02PacketUseEntity) : true) {
+    			Cancer.packet.add(p_147297_1_);
+        		return;
+    		}
     	}
     	
     	Utils.nbPack++;
@@ -940,11 +948,11 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         PacketThreadUtil.func_180031_a(packetIn, this, this.getGameController());  
         ArrayList<String> list = new ArrayList<>();
         list.add("was slain by ");
-        list.add("s'est fait dÃ©foncer par ");
+        list.add("s'est fait défoncer par ");
         list.add("s'est fait poutrer par ");
-        list.add("s'est fait dÃ©molir par ");
-        list.add("s'est fait dÃ©monter par ");
-        list.add("s'est fait dÃ©gommer par ");
+        list.add("s'est fait démolir par ");
+        list.add("s'est fait démonter par ");
+        list.add("s'est fait dégommer par ");
         list.add("s'est fait violer par ");
         list.add("s'est fait abattre par ");
         list.add("s'est fait massacrer par ");
@@ -953,7 +961,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         list.add("s'est fait faucher par ");
         list.add("s'est fait liquider par ");
         for (String s : list)
-        if (packetIn.func_148915_c().getUnformattedText().contains(s+mc.session.getUsername()) || packetIn.func_148915_c().getUnformattedText().contains(s+(MCLeaks.isAltActive() ? MCLeaks.getMCName() : "Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§Â§")) && packetIn.func_148915_c().getUnformattedText().split(" ").length==5) {        	
+        if (packetIn.func_148915_c().getUnformattedText().contains(s+mc.session.getUsername()) || packetIn.func_148915_c().getUnformattedText().contains(s+(MCLeaks.isAltActive() ? MCLeaks.getMCName() : "§§§§§§§§§§§§§§")) && packetIn.func_148915_c().getUnformattedText().split(" ").length==5) {        	
         	
         	if (Math.random()<0.1) {
     			var.ame++;    			    			
@@ -1824,7 +1832,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     public void handleTabComplete(S3APacketTabComplete packetIn)
     {    	    	    	
     	//TODO: Plugins
-    	if (Plugins.scan) {
+    	if (Utils.isToggle("Plugins")) {
     		List<String> plugins = new ArrayList();
     		S3APacketTabComplete packet = packetIn;
             String[] commands = packet.func_149630_c();
@@ -1841,12 +1849,11 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
             }
             Collections.sort(plugins);
             if (plugins.isEmpty()) {
-            	Utils.addChat("Â§cAucun plugins trouvÃ©s");
+            	Utils.addChat("§cAucun plugins trouvés");
             } else {
-            	Utils.addChat("Plugins(" + plugins.size() + "): Â§a" + Strings.join((String[])plugins.toArray(new String[0]), "Â§8, Â§a"));
+            	Utils.addChat("Plugins(" + plugins.size() + "): §a" + Strings.join((String[])plugins.toArray(new String[0]), "§8, §a"));
             }
             Utils.toggleModule("Plugins");
-            Plugins.scan=false;
             Plugins.count=0;
     	} else if (KillAura.waitTab) { 
     		S3APacketTabComplete packet = packetIn;

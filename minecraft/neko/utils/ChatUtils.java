@@ -1,11 +1,14 @@
 package neko.utils;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.Proxy.Type;
+import java.net.URI;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -24,7 +27,6 @@ import neko.Client;
 import neko.dtb.Alt;
 import neko.dtb.RequestThread;
 import neko.gui.InGameGui;
-import neko.gui.NekoUpdate;
 import neko.guicheat.GuiManager;
 import neko.lock.Lock;
 import neko.module.Category;
@@ -38,6 +40,7 @@ import neko.module.modules.Autoarmor;
 import neko.module.modules.Autosoup;
 import neko.module.modules.Build;
 import neko.module.modules.CallCmd;
+import neko.module.modules.Cancer;
 import neko.module.modules.Cheststealer;
 import neko.module.modules.ClickAim;
 import neko.module.modules.Dolphin;
@@ -840,6 +843,7 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Nuker range <double>", var.prefixCmd+"nuker range ", "§7Change la distance d'atteinte des blocs", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Nuker clear", var.prefixCmd+"nuker clear", "§7Vide votre liste", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Nuker list", var.prefixCmd+"nuker list", "§7Affiche la liste", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Nuker safe", var.prefixCmd+"nuker safe", "§7Ne casse pas le bloc en dessous de vous", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("step")) {
@@ -1198,22 +1202,22 @@ public class ChatUtils {
 			}	
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"server")) {
+				String page = "1";
+				if (args.length>=2)
+					page = args[1];
 				if (Utils.isLock("--server")) {
 					Utils.addWarn("Server");
 					mc.thePlayer.playSound("mob.villager.no", 1.0F, 1.0F);
-				} else {
-					Utils.addChat("-================-Serveurs-================-");
-					// utils.addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
-					Utils.addChat("Liste des serveurs bien pour cheat: ");
-					Utils.addChat2("§6Play.rinaorc.com", var.prefixCmd+"co play.rinaorc.com", "§7Anti-cheat minime, agréable à y jouer sur le Warfare", false, Chat.Summon);
-					Utils.addChat2("§6Play.eaglemc.ca", var.prefixCmd+"co play.eaglemc.ca", "§7Pas d'AC", false, Chat.Summon);
-					Utils.addChat2("§6Play.groupezk.com", var.prefixCmd+"co play.groupezk.com", "§7Très agréable pour y jouer, juste éviter d'envoyer trop de paquets", false, Chat.Summon);
-					Utils.addChat2("§6Brwserv.net", var.prefixCmd+"co brwserv.net", "§7Serveur FFA sans AC mais kick pour paquet et modo actifs", false, Chat.Summon);
-					Utils.addChat2("§6Play.anarchynetwork.eu", var.prefixCmd+"co play.anarchynetwork.eu", "§7Pas d'AC et peu de modo", false, Chat.Summon);
-					Utils.addChat2("§6Play.hazonia.fr", var.prefixCmd+"co play.hazonia.fr", "§7Rush sans aucun AC, sauf modo actifs", false, Chat.Summon);
-					Utils.addChat2("§6Play.golemamc.net", var.prefixCmd+"co play.golemamc.net", "§7Anti-cheat mauvais en détection. Attention en legit vous vous faîtes aussi bien kick/ban", false, Chat.Summon);
+				} else if (Utils.isInteger(page)){		
+					int p = Integer.parseInt(page);
+					page = ""+p*2;
+					ArrayList<String> list = new ArrayList<>();
+					list.add(page);
+					new RequestThread("getServer", list).start();
 					Utils.checkXp(xp);						
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else {
+					Utils.addChat("§cErreur");
 				}
 			}
 			
@@ -1372,8 +1376,8 @@ public class ChatUtils {
 						boolean dis = Utils.display;
 						Utils.display = false;
 						Utils.panic();
-						Utils.loadBind(fi);
 						Utils.loadCmd(fi);
+						Utils.loadBind(fi);						
 						Utils.loadFriends(fi);
 						Utils.loadMod(fi);
 						Utils.loadNuker(fi);
@@ -1395,20 +1399,25 @@ public class ChatUtils {
 						Utils.addChat("§cErreur, la config n'existe pas...");
 					}
 				} else if (args[1].equalsIgnoreCase("list")) {
-					String fi = Utils.linkSave+(mc.isRunningOnMac ? "/Config/" : "\\Config\\");
-					String [] list; 
-					String totConfig="";
-					int i; 
-					list=new File(fi).list(); 					
-					for(i=0;i<list.length;i++) {
-						if (!new File(fi+list[i]).isFile())
-							totConfig+=list[i]+", ";
-					}
-					if (totConfig.isEmpty()) {
+					try {
+						String fi = Utils.linkSave+(mc.isRunningOnMac ? "/Config/" : "\\Config\\");
+						String [] list; 
+						String totConfig="";
+						int i; 
+						list=new File(fi).list(); 					
+						for(i=0;i<list.length;i++) {
+							if (!new File(fi+list[i]).isFile())
+								totConfig+=list[i]+", ";
+						}
+						if (totConfig.isEmpty()) {
+							Utils.addChat("§cAucunes config disponibles...");
+						} else {
+							Utils.addChat("Configs disponibles: "+Utils.setColor(totConfig.substring(0,totConfig.length()-2), "§7"));
+						}
+					} catch (Exception e) {
 						Utils.addChat("§cAucunes config disponibles...");
-					} else {
-						Utils.addChat("Configs disponibles: "+Utils.setColor(totConfig.substring(0,totConfig.length()-2), "§7"));
 					}
+					
 				}
 				
 				
@@ -1561,7 +1570,7 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"update")) {
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"update")) {				
 				  try {
 						URL url = new URL("http://neko.alwaysdata.net/ver.html");
 						Scanner sc = new Scanner(url.openStream());
@@ -1574,7 +1583,13 @@ public class ChatUtils {
 						} catch (Exception e) {}
 						
 						if (!s.get(0).equals(var.CLIENT_VERSION)) {
-							new NekoUpdate(s.get(0), var.CLIENT_VERSION, s).setVisible(true);				
+							Client.getNeko().ver=s.get(0);
+							Client.getNeko().changelog=s.get(1);
+							try {
+								URI url1 = URI.create("https://nekohc.fr");
+								Desktop.getDesktop().browse(url1);
+								mc.displayGuiScreen(new GuiMainMenu());
+							} catch (Exception e) {}
 						} else {
 							Utils.addChat("§dVersion à jour !");
 						}
@@ -1683,6 +1698,13 @@ public class ChatUtils {
 				} catch (Exception e) {
 					Utils.addChat(err);
 				}
+			} else if (args[1].equalsIgnoreCase("safe")) {
+				if (Nuker.safe) {
+					Utils.addChat("§cNuker safe désactivé !");
+				} else {
+					Utils.addChat("§aNuker safe activé !");
+				}
+				Nuker.safe=!Nuker.safe;
 			} else if (args[1].equalsIgnoreCase("list")) {
 				try {
 					if (Nuker.nuke.size()==0) {
@@ -1933,6 +1955,26 @@ public class ChatUtils {
 					} catch (Exception e) {
                         Utils.addChat(err);
                     }
+				}
+				Utils.checkXp(xp);
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"vote")) {
+				if (args.length==1) {
+					Utils.addChat("§cUtilisation correcte: "+var.prefixCmd+"vote <Ip de serveur>");
+					mc.thePlayer.playSound("mob.villager.haggle", 1.0F, 1.0F);
+				} else if (args.length>=2) {
+					String ip = args[1];
+					// vérif que c'est bien un serveur					
+					if (!ip.equalsIgnoreCase("Localhost") && !ip.equalsIgnoreCase("127.0.0.1") && !Utils.ipVote.contains(ip) && Utils.isIP(ip) && Utils.ipVote.size()<=10) {
+						ArrayList<String> list = new ArrayList<>();
+						list.add(ip);
+						new RequestThread("vote", list).start();
+						Utils.ipVote.add(ip);
+					} else {
+						Utils.addChat("§cErreur, le serveur a déjà été voté ou ip invalide..");
+					}
 				}
 				Utils.checkXp(xp);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
@@ -4091,11 +4133,7 @@ public class ChatUtils {
 					if (args.length==1) {
 						Utils.addChat(err);
 					} else {
-						try {
-							mc.theWorld.sendQuittingDisconnectingPacket();
-							mc.loadWorld((WorldClient)null);
-						} catch (Exception e) {}
-						mc.displayGuiScreen(new GuiConnecting(new GuiMainMenu(), mc, new ServerData("", args[1])));
+						Utils.launchConnect(new ServerData("", args[1]));
 					}
 				} catch (Exception e) {
 					Utils.addChat(err);
@@ -4329,6 +4367,13 @@ public class ChatUtils {
 						KillAura.invi=true;
 						Utils.addChat("Le Kill Aura ne tape plus les invisibles !");
 					}
+				} else if (args[1].equalsIgnoreCase("ec")) {
+					if (KillAura.ec) {
+						Utils.addChat("§cKill Aura bypass EC désactivé !");
+					} else {
+						Utils.addChat("§aKill Aura bypass EC activé !");
+					}
+					KillAura.ec=!KillAura.ec;
 				} else if (args[1].equalsIgnoreCase("premium")) {
 					if (KillAura.premium) {
 						Utils.addChat("Le Kill Aura tape les crackés !");
@@ -4506,6 +4551,26 @@ public class ChatUtils {
 					} catch (Exception e) {
                         Utils.addChat(err);
                     }
+				}
+				Utils.checkXp(xp);
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"cancer")) {
+				if (args.length>=2) {
+					// Attack et delay
+					if (args[1].equalsIgnoreCase("attack")) {
+						if (Cancer.attack) {
+							Utils.addChat("§cMode Attack du Cancer désactivé !");
+						} else {
+							Utils.addChat("§aMode Attack du Cancer activé !");
+						}
+						Cancer.attack=!Cancer.attack;
+					} else if (args[1].equalsIgnoreCase("delay") && args.length>=3 && Utils.isDouble(args[2])) {
+						Cancer.delay = Double.parseDouble(args[2]);
+						Utils.addChat("§aDelay du cancer mis à "+args[2]+"sec !");
+					}
+					
 				}
 				Utils.checkXp(xp);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);

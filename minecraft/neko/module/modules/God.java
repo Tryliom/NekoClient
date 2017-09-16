@@ -1,20 +1,16 @@
 package neko.module.modules;
 
 import java.io.File;
-import java.util.Locale;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import neko.dtb.Alt;
 import neko.dtb.RequestThread;
 import neko.gui.InGameGui;
 import neko.module.Category;
 import neko.module.Module;
-import neko.module.other.Event;
 import neko.module.other.Irc;
-import neko.module.other.Rank;
 import neko.utils.Utils;
-import net.minecraft.entity.passive.EntityOcelot;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
 
 public class God extends Module {
 	public static int count=0;
@@ -50,7 +46,8 @@ public class God extends Module {
 	}		
 	
 	public void onAction() {		
-		
+		if (new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date()).equalsIgnoreCase("00:00:00"))
+			Utils.ipVote.clear();
 		if (u.isToggle("Timer")) {
 			
 			if (count>=Math.round(Timer.time)) {			

@@ -78,7 +78,7 @@ public class Lot extends Module {
 						Active a1 = new Active(b.getBonus(), b.getTime());
 						u.addChat("§5Vous avez reçu un bonus de §d"+a1.getBonus()+"%\n§aActif pendant encore "+a1.getTime()/60+" minutes");
 					} else {
-						u.addChat("§aVotre temps et bonus s'additionnent à celui déjà actif !");
+						u.addChat("§aVotre temps et bonus s'additionnent à celui d�jà actif !");
 						Active.bonus+=b.getBonus();
 						Active.time+=b.getTime();
 					}										
@@ -87,38 +87,38 @@ public class Lot extends Module {
 						Active a1 = new Active(b.getBonus(), b.getTime());
 						u.addChat("§cVous avez reçu un impôt de §d"+a1.getBonus()+"%\n§aActif pendant encore "+a1.getTime()/60+" minutes");
 					} else {
-						u.addChat("§cVotre temps et bonus s'additionnent à celui déjà actif !");
+						u.addChat("§cVotre temps et bonus s'additionnent à celui d�jà actif !");
 						Active.bonus+=b.getBonus();
 						Active.time+=b.getTime();
 					}	
 				} else if (gain.equalsIgnoreCase("rang")) {
 					String s = u.getRandRank(b.getRate());
 					u.setRank(s);
-					u.addChat("§5Vous débloquez le rang "+u.getRankColor(s)+s+"§5 au lvl "+u.getRankColor(s)+u.getRank(s).getLvl()+"§5 !");
+					u.addChat("§5Vous d�bloquez le rang "+u.getRankColor(s)+s+"§5 au lvl "+u.getRankColor(s)+u.getRank(s).getLvl()+"§5 !");
 					int rang=0;
 					for (Rank r : ModuleManager.rang) {
 						if (!r.isLock())
 							rang++;
 					}							
 					if (rang==10 && Utils.getRank(s).getLvl()==1) {
-						u.addChat("§5§k77§c10 rangs débloqués !§5§k88");
-						u.addChat("§5§k77§c10 billets de lotterie gagnés !§5§k88");
+						u.addChat("§5§k77§c10 rangs d�bloqu�s !§5§k88");
+						u.addChat("§5§k77§c10 billets de lotterie gagn�s !§5§k88");
 						var.lot+=10;
 					} else if (rang==25 && Utils.getRank(s).getLvl()==1) {
-						u.addChat("§5§k77§c25 rangs débloqués !§5§k88");
-						u.addChat("§5§k77§c15 billets de lotterie gagnés !§5§k88");
+						u.addChat("§5§k77§c25 rangs d�bloqu�s !§5§k88");
+						u.addChat("§5§k77§c15 billets de lotterie gagn�s !§5§k88");
 						var.lot+=15;
 					} else if (rang==50 && Utils.getRank(s).getLvl()==1) {
-						u.addChat("§5§k77§c50 rangs débloqués !§5§k88");
-						u.addChat("§5§k77§c20 billets de lotterie gagnés !§5§k88");
+						u.addChat("§5§k77§c50 rangs d�bloqu�s !§5§k88");
+						u.addChat("§5§k77§c20 billets de lotterie gagn�s !§5§k88");
 						var.lot+=20;
 					} else if (rang==100 && Utils.getRank(s).getLvl()==1) {
-						u.addChat("§5§k77§c100 rangs débloqués !§5§k88");
-						u.addChat("§5§k77§c25 billets de lotterie gagnés !§5§k88");
+						u.addChat("§5§k77§c100 rangs d�bloqu�s !§5§k88");
+						u.addChat("§5§k77§c25 billets de lotterie gagn�s !§5§k88");
 						var.lot+=25;
 					} else if (rang==150 && Utils.getRank(s).getLvl()==1) {
-						u.addChat("§5§k77§c150 rangs débloqués !§5§k88");
-						u.addChat("§5§k77§c30 billets de lotterie gagnés !§5§k88");
+						u.addChat("§5§k77§c150 rangs d�bloqu�s !§5§k88");
+						u.addChat("§5§k77§c30 billets de lotterie gagn�s !§5§k88");
 						var.lot+=30;
 					}
 				} else if (gain.equalsIgnoreCase("unlock")) {					
@@ -131,49 +131,49 @@ public class Lot extends Module {
 					switch (count) {
 					case 0:
 						int r = Utils.getRandInt(8)+1;
-						Utils.addChat("§d★  §7-> §9Tu as gagné "+r+" souls !");
+						Utils.addChat("§d★  §7-> §9Tu as gagn� "+r+" souls !");
 						var.ame+=r;
 						break;
 					case 1:
-						Utils.addChat("§d★★  §7-> §9Tu as gagné 25 souls !");
+						Utils.addChat("§d★★  §7-> §9Tu as gagn� 25 souls !");
 						var.ame+=25;
 						break;
 					case 2:
-						Utils.addChat("§d★★★  §7-> §9Tu as gagné 50 souls !");
+						Utils.addChat("§d★★★  §7-> §9Tu as gagn� 50 souls !");
 						var.ame+=50;
 						break;
 					case 3:
-						Utils.addChat("§d★★★★ §7-> §9Tu as gagné 100 souls !");
+						Utils.addChat("§d★★★★ §7-> §9Tu as gagn� 100 souls !");
 						var.ame+=100;
 						break;
 					case 4:
-						Utils.addChat("§d★★★★★  §7-> §9Tu as gagné 500 souls !");
+						Utils.addChat("§d★★★★★  §7-> §9Tu as gagn� 500 souls !");
 						var.ame+=500;
 						break;
 					case 5:
-						Utils.addChat("§d★★★★★★  §7-> §9Tu as gagné 750 souls !");
+						Utils.addChat("§d★★★★★★  §7-> §9Tu as gagn� 750 souls !");
 						var.ame+=750;
 						break;
 					case 6:
-						Utils.addChat("§d★★★★★★★  §7-> §9Tu as gagné 1000 souls !");
+						Utils.addChat("§d★★★★★★★  §7-> §9Tu as gagn� 1000 souls !");
 						var.ame+=1000;
 						break;
 					case 7:
-						Utils.addChat("§d★★★★★★★★  §7-> §9Tu as gagné 1500 souls !");
+						Utils.addChat("§d★★★★★★★★  §7-> §9Tu as gagn� 1500 souls !");
 						var.ame+=1500;
 						break;
 					case 8:
-						Utils.addChat("§d★★★★★★★★★  §7-> §9Tu as gagné 2000 souls !");
+						Utils.addChat("§d★★★★★★★★★  §7-> §9Tu as gagn� 2000 souls !");
 						var.ame+=2000;
 						break;
 					case 9:
-						Utils.addChat("§d★★★★★★★★★★  §7-> §9Tu as gagné 2500 souls !");
+						Utils.addChat("§d★★★★★★★★★★  §7-> §9Tu as gagn� 2500 souls !");
 						var.ame+=2500;
 						break;
 					}
 					
 				} else {
-					u.addChat(u.setColor("Les écureuils vous livre un pack d'xp !", "§c§o"));
+					u.addChat(u.setColor("Les �cureuils vous livre un pack d'xp !", "§c§o"));
 					u.checkXp(u.getRandInt((int) Math.round(700+700*var.rang.getGiftXp())));
 				}								
 				a=false;			
@@ -194,14 +194,14 @@ public class Lot extends Module {
 			int bonus=0;
 			int unlock=0;
 			int souls=0;
-			// Rareté rang
+			// Raret� rang
 			int Ordinaire=0;
 			int Rare=0;
 			int UltraRare=0;
 			int Magical=0;
 			int Divin=0;
 			int Satanique=0;
-			int Légendaire=0;
+			int L�gendaire=0;
 			int Mythique=0;
 			int Titan=0;
 			int Neko=0;
@@ -245,8 +245,8 @@ public class Lot extends Module {
 					case "Satanique":
 						Satanique++;
 						break;
-					case "Légendaire":
-						Légendaire++;
+					case "L�gendaire":
+						L�gendaire++;
 						break;
 					case "Mythique":
 						Mythique++;
@@ -264,7 +264,7 @@ public class Lot extends Module {
 			String c1="§a";
 			String c2="§7";
 			String c3="§a";
-			Utils.addChat("§6Lots ratés:");
+			Utils.addChat("§6Lots rat�s:");
 			if (xp>0)
 				Utils.addChat(c1+"-> §aXp"+c2+" ["+c3+xp+c2+"]");
 			if (malus>0)
@@ -287,8 +287,8 @@ public class Lot extends Module {
 				Utils.addChat(c1+"-> §d§oRang Divin"+c2+" ["+c3+Divin+c2+"]");
 			if (Satanique>0)
 				Utils.addChat(c1+"-> §cRang Satanique"+c2+" ["+c3+Satanique+c2+"]");
-			if (Légendaire>0)
-				Utils.addChat(c1+"-> §5Rang Légendaire"+c2+" ["+c3+Légendaire+c2+"]");
+			if (L�gendaire>0)
+				Utils.addChat(c1+"-> §5Rang L�gendaire"+c2+" ["+c3+L�gendaire+c2+"]");
 			if (Mythique>0)
 				Utils.addChat(c1+"-> §2Rang Mythique"+c2+" ["+c3+Mythique+c2+"]");
 			if (Titan>0)

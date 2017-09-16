@@ -17,6 +17,7 @@ import java.net.Proxy;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
@@ -42,7 +43,6 @@ import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import neko.Client;
 import neko.gui.GuiAltManager;
 import neko.gui.InGameGui;
-import neko.gui.NekoUpdate;
 import neko.guicheat.GuiManager;
 import neko.lock.Lock;
 import neko.module.Category;
@@ -54,8 +54,10 @@ import neko.module.modules.AutoMLG;
 import neko.module.modules.AutoPot;
 import neko.module.modules.Autoarmor;
 import neko.module.modules.Autosoup;
+import neko.module.modules.Blink;
 import neko.module.modules.Build;
 import neko.module.modules.CallCmd;
+import neko.module.modules.Cancer;
 import neko.module.modules.Cheststealer;
 import neko.module.modules.ClickAim;
 import neko.module.modules.Dolphin;
@@ -114,6 +116,7 @@ import neko.module.other.Rank;
 import neko.module.other.Rate;
 import neko.module.other.SpeedEnum;
 import neko.module.other.TempBon;
+import neko.module.other.TutoManager;
 import neko.module.other.Xp;
 import net.mcleaks.MCLeaks;
 import net.minecraft.block.Block;
@@ -201,6 +204,7 @@ public class Utils {
 	public static int B=213;
 	public static String linkSave = mc.isRunningOnMac ? System.getProperty("user.home") + "/Library/Application Support/minecraft" : System.getenv("APPDATA") + "\\.minecraft\\Neko\\";
 	public static Client var = Client.getNeko();
+	public static Vector<String> ipVote = new Vector<String>();
 	
 	public static void addChat(String m) {
 		if (verif==null)
@@ -656,12 +660,12 @@ public class Utils {
             mc.loadWorld((WorldClient)null);      
     	}
 		GuiConnecting.networkManager.closeChannel(null);
-		GuiConnecting.networkManager.getNetHandler().setDisconnected(true); 
+		GuiConnecting.networkManager.getNetHandler().setDisconnected(true);
 		new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
-					Minecraft.getMinecraft().displayGuiScreen(new GuiMainMenu());
+				Minecraft.getMinecraft().displayGuiScreen(new GuiMainMenu());
 				try {
 					this.wait(200);
 				} catch (InterruptedException e) {}
@@ -1067,6 +1071,7 @@ public class Utils {
 		ModuleManager.values.add("Double vérification:§7 "+(KillAura.verif ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("NoBot:§7 "+(KillAura.nobot ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("Premium:§7 "+(KillAura.premium ? "§aActivé" : "§cDésactivé"));
+		ModuleManager.values.add("Bypass EC:§7 "+(KillAura.ec ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		ModuleManager.values.add("Taille nametag:§7 "+Render.varNeko);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
@@ -1206,6 +1211,10 @@ public class Utils {
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		Register r = Register.getReg();
 		ModuleManager.values.add("Register mdp:§7 "+r.getMdp());
+		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
+		ModuleManager.values.add("Cancer:");
+		ModuleManager.values.add("Delay: "+Cancer.delay+"sec");
+		ModuleManager.values.add("Attack: "+Cancer.attack);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		
 		
@@ -2209,6 +2218,7 @@ public class Utils {
 		                for (String st : c.getListPlayer())
 		                	pl+=st+":";
 		                s+=c.getCmd2()+"\n"+pl+"\n"+Register.getReg().getMdp()+"\n"+God.getInstance().getBackup()+"\n"+Highjump.getJump().getHeight()+"\n";
+		                s+=TutoManager.getTuto().isDone()+"\n"+Nuker.safe+"\n"+KillAura.ec+"\n"+Cancer.attack+"\n"+Cancer.delay+"\n";
 		                writer.write(s);
 		                writer.flush();
 		            }
@@ -2390,10 +2400,11 @@ public class Utils {
         try {
             file.createNewFile();            
             try (FileWriter writer = new FileWriter(file)) {
-            	String res = "";            	            
-            	for (int k=0;k<s.size();k++) {
-            		res+=s.get(k) +"\n";
-            	}
+            	String res = "";          
+            	if (s.size()>0)
+	            	for (int k=0;k<s.size();k++) {
+	            		res+=s.get(k) +"\n";
+	            	}
             	res+=user+" "+mdp+"\n";   
             	writer.write(res);
                 writer.flush();
@@ -2812,6 +2823,16 @@ public class Utils {
 	                		God.getInstance().setBackup(ligne);
 	                	if (i==150)
 	                		Highjump.getJump().setHeight(Float.parseFloat(ligne));
+	                	if (i==151)
+	                		TutoManager.getTuto().setDone(Boolean.parseBoolean(ligne));
+	                	if (i==152)
+	                		Nuker.safe=Boolean.parseBoolean(ligne);
+	                	if (i==153)
+	                		KillAura.ec=Boolean.parseBoolean(ligne);
+	                	if (i==154)
+	                		Cancer.attack=Boolean.parseBoolean(ligne);
+	                	if (i==155)
+	                		Cancer.delay=Double.parseDouble(ligne);
                 	} catch (Exception e) {}                	
                 	i++;
                 }
@@ -2926,11 +2947,20 @@ public class Utils {
             }
 
         } catch (IOException ex) {
-            
+
         }
 	}
 	
+	@SuppressWarnings("unlikely-arg-type")
 	public static void loadCmd(String...fi) {
+		Vector<Module> vm = new Vector<Module>();
+		for (Module m : ModuleManager.ActiveModule) {
+			if (m.isCmd())
+				vm.add(m);
+		}
+		for (Module m : vm) {
+			ModuleManager.ActiveModule.remove(m);
+		}
 		File dir = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"cmd.neko");
 		if (dir.exists()) {
 		try {
@@ -3019,7 +3049,10 @@ public class Utils {
 			for (Module m : ModuleManager.ActiveModule) {
 				if (m.getName().equalsIgnoreCase(mod)) {
 					int n = m.getBind();
-					m.setBind(Keyboard.getKeyIndex(d.toUpperCase()));
+					if (d.equalsIgnoreCase("none"))
+						m.setBind(-1);
+					else
+						m.setBind(Keyboard.getKeyIndex(d.toUpperCase()));
 					char ch[] = d.toUpperCase().toCharArray();
 					addChat(m.getName()+" a été assigné à la touche "+d.toLowerCase().replaceFirst(".", String.valueOf(ch[0])));
 				}
@@ -3063,71 +3096,51 @@ public class Utils {
 	public static void reload() {
 		if (var.time.isRunning())
 			var.time.stop();
-		var.time.start();
-		  try {
-			URL url = new URL("http://neko.alwaysdata.net/ver.html");
-			Scanner sc = new Scanner(url.openStream());
-			ArrayList<String> s = new ArrayList<>();
-			String l;
-			try {
-				while ((l = sc.nextLine()) != null) {
-					s.add(l);
+		var.time.start();			  
+	  	var.moduleManager = new ModuleManager();
+	    var.gui = new GuiManager();
+	    var.gui.setTheme(new SimpleTheme());
+	    var.gui.setup();
+		File f = new File(System.getenv("APPDATA") + "\\.minecraft\\Neko");
+	  	if (!f.exists())
+	  		f.mkdirs();
+	  	loadRank();
+		  for (Rank r : ModuleManager.rang) {
+				if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {
+					Client.getNeko().rang=r;
+					r.setLvl(r.getLvl()!=1 ? r.getLvl() : 1);
+					r.setLock(false);
 				}
-			} catch (Exception e) {}
-			
-			if (!s.get(0).equals(var.CLIENT_VERSION)) {
-				new NekoUpdate(s.get(0), var.CLIENT_VERSION, s).setVisible(true);
-			} else {
-				System.out.println("Version à jour !");
-			}
-			sc.close();
-			} catch (Exception e) {
-				System.out.println("Adresse inateignable :c");
-			}				  
-		  	var.moduleManager = new ModuleManager();
-		    var.gui = new GuiManager();
-		    var.gui.setTheme(new SimpleTheme());
-		    var.gui.setup();
-			File f = new File(System.getenv("APPDATA") + "\\.minecraft\\Neko");
-		  	if (!f.exists())
-		  		f.mkdirs();
-		  	loadRank();
+		  }
+		  boolean legit = loadRpg();
+		  loadFriends();
+		  loadBind();
+		  loadXray();
+		  if (legit)
+			  loadLock();
+		  if (!legit) {
 			  for (Rank r : ModuleManager.rang) {
 					if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {
 						Client.getNeko().rang=r;
-						r.setLvl(r.getLvl()!=1 ? r.getLvl() : 1);
+						r.setLvl(1);
 						r.setLock(false);
+					} else {
+						r.setLvl(1);
+						r.setLock(true);
 					}
 			  }
-			  boolean legit = loadRpg();
-			  loadFriends();
-			  loadBind();
-			  loadXray();
-			  if (legit)
-				  loadLock();
-			  if (!legit) {
-				  for (Rank r : ModuleManager.rang) {
-						if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {
-							Client.getNeko().rang=r;
-							r.setLvl(1);
-							r.setLock(false);
-						} else {
-							r.setLvl(1);
-							r.setLock(true);
-						}
-				  }
-			  }			  
-			  var.onlyrpg = OnlyRpgManager.getRpg();
-			  loadValues();
-			  loadNuker();
-			  loadIrc();
-			  loadFrame();
-			  loadCmd();       
-			  boolean dis = Utils.display;
-			  Utils.display=false;
-			  loadMod();
-			  Utils.display=dis;
-		addChat("§aReload Complete !");
+		  }			  
+		  var.onlyrpg = OnlyRpgManager.getRpg();
+		  loadValues();
+		  loadNuker();
+		  loadIrc();
+		  loadFrame();
+		  loadCmd();       
+		  boolean dis = Utils.display;
+		  Utils.display=false;
+		  loadMod();
+		  Utils.display=dis;
+		  addChat("§aReload Complete !");
 	}
 	
 	public static void loadBind(String...fi) {
@@ -3358,6 +3371,15 @@ public class Utils {
                 
     		}
 		}
+	}
+	
+	public static Boolean isIP(String ip) {
+		try {
+			InetAddress.getByName(ip).getHostAddress();
+		} catch (UnknownHostException e) {
+			return false;
+		}
+		return true;
 	}
 	
 	public static String getSolo() {

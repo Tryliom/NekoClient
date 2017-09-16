@@ -14,7 +14,6 @@ import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.opengl.Display;
 
 import neko.dtb.RequestThread;
-import neko.gui.NekoUpdate;
 import neko.guicheat.GuiManager;
 import neko.module.ModuleManager;
 import neko.module.other.Conditions;
@@ -35,7 +34,7 @@ public class Client {
 	  public final String CLIENT_AUTHOR = "Tryliom";
 	  public ModuleManager moduleManager;
 	  public GuiManager gui;
-	  public final String CLIENT_VERSION = "1.7.3";
+	  public final String CLIENT_VERSION = "1.7.3 BT";
 	  private static final Client Neko = new Client();
 	  public String mode="Player";
 	  public Rank rang;
@@ -59,6 +58,8 @@ public class Client {
 	  public boolean animation=true;
 	  public RequestThread currentThread = null;
 	  public static OnlyRpgManager onlyrpg;
+	  public String ver = "";
+	  public String changelog = "";
 	  
 	  public void startClient() {
 		  time.start();
@@ -74,7 +75,8 @@ public class Client {
 			} catch (Exception e) {}
 			
 			if (!s.get(0).equals(CLIENT_VERSION)) {
-				new NekoUpdate(s.get(0), CLIENT_VERSION, s).setVisible(true);
+				ver=s.get(0);
+				changelog=s.get(1);
 			} else {
 				System.out.println("Version à jour !");
 			}
@@ -154,8 +156,7 @@ public class Client {
 			  case 9:Display.setTitle("Je suis un vilain neko ;3");break;
 			  case 10:Display.setTitle("Fire et Enclume nyanyatent ensemble souvent ;3");break;
 		  }
-		  name=CLIENT_NAME+"/vanilla";
-		  
+		  name=CLIENT_NAME+"/vanilla";  
 	  }
 	  public static final Client getNeko() {
 		  return Neko;

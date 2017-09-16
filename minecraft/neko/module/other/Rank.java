@@ -244,7 +244,7 @@ public class Rank {
 			list.add(color1+"+Météores d'xp : "+color2+this.giftXp*100+"%");
 		}
 		if (this.radiusGift>0) {
-			list.add(color1+"+Météores d'xp : "+color2+this.radiusGift*100+"%");
+			list.add(color1+"+Radius pour prendre les météores : "+color2+this.radiusGift*100+"%");
 		}
 		if (this.lotRang>0) {
 			list.add(color1+"+Rangs dans les lots : "+color2+this.lotRang*100+"%");

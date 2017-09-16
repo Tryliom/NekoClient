@@ -38,8 +38,6 @@ public class SmoothAim extends Module {
 	}
 	
 	public void onUpdate() {
-		if (!this.getToggled())
-			return;
 		for (Object o : mc.theWorld.loadedEntityList) {
 	        if ((o instanceof EntityLivingBase))
 	        {
@@ -51,8 +49,10 @@ public class SmoothAim extends Module {
 	          }
 	          if (this.target != null)
 	          {
-	            EntityPlayerSP tmp98_95 = mc.thePlayer;tmp98_95.rotationPitch = ((float)(tmp98_95.rotationPitch + getPitchChange(this.target) / this.speed)); EntityPlayerSP 
-	              tmp125_122 = mc.thePlayer;tmp125_122.rotationYaw = ((float)(tmp125_122.rotationYaw + getYawChange(this.target) / this.speed));
+	            EntityPlayerSP tmp98_95 = mc.thePlayer;
+	            tmp98_95.rotationPitch = ((float)(tmp98_95.rotationPitch + getPitchChange(this.target) / this.speed));
+	            EntityPlayerSP tmp125_122 = mc.thePlayer;
+	            tmp125_122.rotationYaw = ((float)(tmp125_122.rotationYaw + getYawChange(this.target) / this.speed));
 	          }
 	        }
 	      }

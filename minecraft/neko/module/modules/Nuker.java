@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import neko.module.Category;
 import neko.module.Module;
 import neko.utils.RenderUtils;
+import neko.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
@@ -27,6 +28,7 @@ public class Nuker extends Module {
 	  public float nukerG = 0.2F;
 	  public float nukerB = 0.15F;
 	  public static ArrayList<Integer> nuke = new ArrayList<Integer>();
+	  public static boolean safe = true;
 
 	private int delayNuker=0;
 	
@@ -48,7 +50,7 @@ public class Nuker extends Module {
 	
 	public void onUpdate() {	
 		
-		if (org.lwjgl.input.Mouse.isButtonDown(2) && delay > 20 && mc.objectMouseOver.func_178782_a()!=null && !(mc.currentScreen instanceof GuiChat) && !(mc.currentScreen instanceof GuiInventory)) {
+		if (mc.gameSettings.keyBindPickBlock.getIsKeyPressed() && delay > 20 && mc.objectMouseOver.func_178782_a()!=null && !(mc.currentScreen instanceof GuiChat) && !(mc.currentScreen instanceof GuiInventory)) {
 			BlockPos bl = mc.objectMouseOver.func_178782_a();
 			int id = Block.getIdFromBlock(mc.theWorld.getBlockState(bl).getBlock());
 			if (nuke.contains(id)) {
@@ -82,7 +84,7 @@ public class Nuker extends Module {
 		          this.xPos = ((int)Math.round(this.mc.thePlayer.posX + x));
 		          this.yPos = ((int)Math.round(this.mc.thePlayer.posY + y));
 		          this.zPos = ((int)Math.round(this.mc.thePlayer.posZ + z));
-		          	          
+		          
 		          BlockPos b = new BlockPos(this.xPos, this.yPos, this.zPos);
 		          Chunk var2 = mc.theWorld.getChunkFromBlockCoords(b);
 		          Block blockId = var2.getBlock(this.xPos, this.yPos, this.zPos);		          
@@ -100,10 +102,11 @@ public class Nuker extends Module {
 		      for (int z = (int)-this.nukerRadius; z <= this.nukerRadius; z++) {
 		        for (int x = (int)-this.nukerRadius; x <= this.nukerRadius; x++)
 		        {
+		        	if (safe && x>=-1 && x<=1 && y==-1 && z>=-1 && z<=1)
+			        	  continue;
 		          this.xPos = ((int)Math.round(this.mc.thePlayer.posX + x));
 		          this.yPos = ((int)Math.round(this.mc.thePlayer.posY + y));
 		          this.zPos = ((int)Math.round(this.mc.thePlayer.posZ + z));
-		          	          
 		          BlockPos b = new BlockPos(this.xPos, this.yPos, this.zPos);
 		          Chunk var2 = mc.theWorld.getChunkFromBlockCoords(b);
 		          Block blockId = var2.getBlock(this.xPos, this.yPos, this.zPos);		          
@@ -132,6 +135,8 @@ public class Nuker extends Module {
 		      for (int z = (int)-nukerRadius; z <= nukerRadius; z++) {
 		        for (int x = (int)-nukerRadius; x <= nukerRadius; x++)
 		        {
+		        	if (safe && x>=-1 && x<=1 && y==-1 && z>=-1 && z<=1)
+			        	  continue;
 		          this.xPos = ((int)Math.round(this.mc.thePlayer.posX + x));
 		          this.yPos = ((int)Math.round(this.mc.thePlayer.posY + y));
 		          this.zPos = ((int)Math.round(this.mc.thePlayer.posZ + z));
