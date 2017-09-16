@@ -266,7 +266,7 @@ public class Utils {
 	}
 	
 	/**
-	 * 	Envoie une phrase dans le chat cÃ´té client.
+	 * 	Envoie une phrase dans le chat côté client.
 	 * 	cmd: commande à executé ou texte à afficher hover.
 	 * 	isCmd: Est une commande à executé ou texte à afficher en hover.
 	 */	
@@ -457,7 +457,7 @@ public class Utils {
 				addChat("§6=§b-§6=§b-§6=§b-§7 "+setColor(lock.getName().replaceAll("--", var.prefixCmd), "§6")+" §b-§6=§b-§6=§b-§6=");
 				addChat("Description: §7"+setColor(lock.getDesc().replaceAll("--", var.prefixCmd), "§7"));
 				addChat("Type: §7"+lock.getType());
-				addChat("CoÃ»t: §7"+(lock.getUnit().equalsIgnoreCase("???") ? "???" : lock.getCout()+" "+lock.getUnit())+" "+(lock.isLock() ? "§cBloqué" : "§aDébloqué"));
+				addChat("Coût: §7"+(lock.getUnit().equalsIgnoreCase("???") ? "???" : lock.getCout()+" "+lock.getUnit())+" "+(lock.isLock() ? "§cBloqué" : "§aDébloqué"));
 			}
 		}
 	}
@@ -938,7 +938,7 @@ public class Utils {
 			addChat2("§6"+var.prefixCmd+"List", var.prefixCmd+"list", "§7Dresse une liste de tous les cheats de Neko, en vert ceux actifs", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Vclip <Double>", var.prefixCmd+"vclip ", "§7Vous téléporte au dessus ou en dessous de vous", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"CheckEC", var.prefixCmd+"checkec", "§7Affiche la page de stats d'épicube pour savoir si vous êtes bannis ou non", false, Chat.Summon);
-			addChat2("§6"+var.prefixCmd+"Damage", var.prefixCmd+"damage", "§7Vous vous infligez 0.5 à 1 coeur de dégÃ¢t", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Damage", var.prefixCmd+"damage", "§7Vous vous infligez 0.5 à 1 coeur de dégât", false, Chat.Summon);
 			break;
 						
 		case 5:		
@@ -3393,7 +3393,7 @@ public class Utils {
 			case 4:s="Fuyez pauvres fou !";break;
 			case 5:s="Pas de ban ici !";break;
 			case 6:s="§cApocalypse now !";break;
-			case 7:s="§dNeko à cÃ¢liner :3";break;
+			case 7:s="§dNeko à câliner :3";break;
 			case 8:s="<3 Solitaire <3";break;
 		}
 		return s;
@@ -3512,7 +3512,7 @@ public class Utils {
 		case 64:nyah="Hi, i'm a kawai and scary neko, do you would play with me Â°wÂ° ?";break;
 		case 65:nyah="Bonjour, le hentai est ma passion, au revoir.";break;
 		case 66:nyah="Je suis un chaton sataniste Nyark Nyark Nyark Â°wÂ°";mc.thePlayer.playSound("mob.enderdragon.end", 1.0F, 1.0F);checkXp(rand);break;
-		case 67:nyah="Un autre Neko ici ?! OÃ¹ ça ?!";break;
+		case 67:nyah="Un autre Neko ici ?! Où ça ?!";break;
 		case 68:nyah="Linux est libre comme Neko !";break;
 		case 69:nyah="C'est parti pour un 69 entre neko Nyaaaah !";checkXp(rand);break;
 		case 70:nyah="Nous avons consommé de la drogue, nyaaaah";break;
@@ -3531,7 +3531,7 @@ public class Utils {
 		case 83:nyah="Un <3 pour twa <3";break;
 		case 84:nyah="Si tu continues je vais te griffer ! ;3";break;
 		case 85:nyah="Que le neko se dénonce !";break;
-		case 86:nyah="OÃ¹ êtes-vous caché mes petits ;3 ?";break;
+		case 86:nyah="Où êtes-vous caché mes petits ;3 ?";break;
 		case 87:nyah="Tellement kawaii Â°WÂ°";break;
 		case 88:nyah="J'ai perdu mon neko qui fait du Metal :C";mc.thePlayer.playSound("records.mellohi", 1.0F, 1.0F);break;
 		case 89:nyah="NyanNyanNyanNyanNyanNyanNyanNyanNyanNyanNyan";checkXp(rand);mc.thePlayer.playSound("mob.creeper.say", 1.0F, 1.0F);break;
@@ -3610,8 +3610,8 @@ public class Utils {
 		case 162:nyah="La maman de "+getRandPlayer()+" est bonne ;3";break;
 		case 163:nyah="On avait pas dit les mamans "+getRandPlayer()+" :c";break;
 		case 164:nyah="Beeeh"+getRandPlayer()+", beeeeeh";break;
-		case 165:nyah=getRandPlayer()+", "+getRandPlayer()+" et "+getRandPlayer()+" ont volé mon goÃ»ter :c";checkXp(rand);break;
-		case 166:nyah="Un gentil "+getRandPlayer()+" m'a fait un cÃ¢lin tout doux <3";break;
+		case 165:nyah=getRandPlayer()+", "+getRandPlayer()+" et "+getRandPlayer()+" ont volé mon goûter :c";checkXp(rand);break;
+		case 166:nyah="Un gentil "+getRandPlayer()+" m'a fait un câlin tout doux <3";break;
 		case 167:nyah="Mon petit "+getRandPlayer()+" m'a fait un bisous sur la joue =////= <3";checkXp(rand);break;
 		case 168:nyah="L'intrus est "+getRandPlayer()+" !";break;
 		case 169:nyah="Nyah nyah nyah Bat"+getRandPlayer()+"Nyaaah, nyah nyah nyah Bat"+getRandPlayer()+"Nyaaah !";break;
@@ -3764,7 +3764,7 @@ public class Utils {
 		case 316:nyah="Mon amour, embrasse moi ! <3";break;
 		case 317:nyah="Les Neko m'ont hacké pendant que je fappais :c";break;
 		case 318:nyah="Send nude plz";break;
-		case 319:nyah="Je suis le sÃ»preme et génial: "+var.rang.getName()+" !";break;
+		case 319:nyah="Je suis le sûpreme et génial: "+var.rang.getName()+" !";break;
 		case 320:nyah="-[Tryliom reviens toujours]-";break;
 		case 321:nyah="ça rentre toujours pas, aide mwa :c";break;
 		case 322:nyah="Trop proche...Trop proche trop proche troooop prooooche Aaaaah D:";break;
@@ -3778,7 +3778,7 @@ public class Utils {
 		case 330:nyah=":r Ce serai vraiment con qu'ils te chopent après tout ce que t'as pris";break;
 		case 331:nyah=":r Que ça reste entre nous, c'est très privé cette histoire";break;
 		case 332:nyah="Ayzoh lèche tellement bien :o";break;
-		case 333:nyah="Mazoow a fait une tÃ¢che sur mon pantalon >:c";break;
+		case 333:nyah="Mazoow a fait une tâche sur mon pantalon >:c";break;
 		case 334:nyah="La punition ? C'est maintenant !";break;
 		case 335:nyah="Le carnage fait rage >:3";break;
 		case 336:nyah="C'est pas comme si j'y était forcé mais ça a son intérêt";break;
@@ -3806,10 +3806,10 @@ public class Utils {
 		case 358:nyah="Merci beaucoup "+getRandPlayer()+", j'avais super soif :3";break;
 		case 359:nyah="Pas ici, "+getRandPlayer()+", ça va devenir tout mouillé si tu continues :c";break;
 		case 360:nyah="I need more, "+getRandPlayer()+", of your milk :3";break;
-		case 361:nyah=getRandPlayer()+", ton goÃ»ter est servi, j'ai mis un ingrédient mystère de ma conception ;3";break;
+		case 361:nyah=getRandPlayer()+", ton goûter est servi, j'ai mis un ingrédient mystère de ma conception ;3";break;
 		case 362:nyah="Viens vérif "+getRandPlayer()+", ton cheat est cramé...";break;
 		case 363:nyah=getRandPlayer()+", j'ai un gros jouet à te faire voir ;3";break;
-		case 364:nyah="C'est pas dans mes habitudes de le faire mais bon je vais me hÃ¢ter de le faire sortir...";break;
+		case 364:nyah="C'est pas dans mes habitudes de le faire mais bon je vais me hâter de le faire sortir...";break;
 		case 365:nyah="Tais-toi et suce c:";break;
 		case 366:nyah="Arrête de lécher ça comme ça !";break;
 		case 367:nyah="Je suis un pur "+var.rang.getName()+" !";break;
@@ -3843,12 +3843,12 @@ public class Utils {
 		case 395:nyah="Je suis loin, si loin de toi...Et pourtant je me sens si proche...";break;
 		case 396:nyah="Ma culotte est tout mouillée :c";break;
 		case 397:nyah="Montre moi encore plus de toi ;3";break;
-		case 398:nyah="Reviens ici ! Tu auras un bon goÃ»ter !";break;
+		case 398:nyah="Reviens ici ! Tu auras un bon goûter !";break;
 		case 399:nyah="J'ai vu un Léviathan, il est tellement choquant :c Et il y avait un gars chelou dessus :s";break;
 		case 400:nyah="Oh Oh Oh my little boy Oh Oh Oh";break;
 		case 401:nyah="Oui, un peu comme ma b*** >////>";break;
-		case 402:nyah="Aaaah...DragonaÃ¯f...";break;
-		case 403:nyah="Tu es si naÃ¯f mon petit ;3";break;
+		case 402:nyah="Aaaah...Dragonaîf...";break;
+		case 403:nyah="Tu es si naîf mon petit ;3";break;
 		case 404:nyah="Tu crois que je fais quoi depuis tout ce temps voyons c:";break;
 		case 405:nyah="Que la nature humaine peut me paraître si inférieure...";break;
 		case 406:nyah="Misérables humains ! Je vous maudis !";break;
@@ -3860,7 +3860,7 @@ public class Utils {
 		case 412:nyah="Oui je l'avoue je suis un Dragomaniac !";break;
 		case 413:nyah="C'est si difficile à comprendre que ça ?";break;
 		case 414:nyah="Mais...pourtant... :(";break;
-		case 415:nyah="Oui je vois ton gros bÃ¢ton ;3";break;
+		case 415:nyah="Oui je vois ton gros bâton ;3";break;
 		case 416:nyah="L'Armagedon approche à grand pas...Soyez prêt...";break;
 		case 417:nyah="Sors de là et bats toi !";break;
 		case 418:nyah="é.è";break;
@@ -3899,7 +3899,7 @@ public class Utils {
 		case 451:nyah="Slurp slurp";break;
 		case 452:nyah="Les bananes c'est la vie <3";break;
 		case 453:nyah="J'aime et la réponse est non";break;
-		case 454:nyah="Une banane est monté dans un arbre, la branche a lÃ¢chée :/";break;
+		case 454:nyah="Une banane est monté dans un arbre, la branche a lâchée :/";break;
 		case 455:nyah="Modo une banane me course ! Aie ! Arrêtez le !";break;
 		case 456:nyah="Cette ressemblance si fortuite entre vous, cher Admin, et ma banane est-elle normale ?";break;
 		case 457:nyah="L'achat de banane domestique est-il possible "+getRandPlayer()+" ?";break;
@@ -3930,16 +3930,16 @@ public class Utils {
 		case 482:nyah="Je vois touuuuut é.è";break;
 		case 483:nyah="*Blush* >///>";break;
 		case 484:nyah="Il existe donc :O !";break;
-		case 485:nyah="OÃ¹ est-il !? Le grand ambassadeur doit-être ici !";break;
+		case 485:nyah="Où est-il !? Le grand ambassadeur doit-être ici !";break;
 		case 486:nyah="Co-que..que fais-tu >////> !?";break;
 		case 487:nyah=":r Tu n'est pas encore assez bon, je vais t'apprendre voyons :3";break;
 		case 488:nyah="La VR est magique Â°wÂ°";break;
 		case 489:nyah="Les "+var.rang.getName()+" domineront !";break;
 		case 490:nyah="Je suis une fille innocente toute mimi :3";break;
 		case 491:nyah="I'm a cute little girl :3";break;
-		case 492:nyah="OÃ¹ est ma crèèèèème ??!";break;
+		case 492:nyah="Où est ma crèèèèème ??!";break;
 		case 493:nyah="Elle peut tout faire ;3";break;
-		case 494:nyah="Viens goÃ»ter mon bon miel :3";break;
+		case 494:nyah="Viens goûter mon bon miel :3";break;
 		case 495:nyah="J'ai fais une réserve de glands pour le dieu des bananes Delxer, j'espère qu'il va apprécier mon présent :3";break;
 		case 496:nyah="C'est si dur de s'appeler Jean-Robert ?";break;
 		case 497:nyah="Ta petite bouille est tellement mignonne :3 <3";break;
@@ -3960,9 +3960,9 @@ public class Utils {
 		case 512:nyah="*Tape";break;
 		case 513:nyah="C'est fort :x !";break;
 		case 514:nyah="C'est pas comme ça que tu dois faire !";break;
-		case 515:nyah="Elle plane bien cette banane, il aurait pas dÃ» sauter dans le tas de coke :o";break;
+		case 515:nyah="Elle plane bien cette banane, il aurait pas dû sauter dans le tas de coke :o";break;
 		case 516:nyah="Je plane depuis que j'ai glissé dans ce tas de coke";break;
-		case 517:nyah="Donne à goÃ»ter....Argh dégeu...";break;
+		case 517:nyah="Donne à goûter....Argh dégeu...";break;
 		case 518:nyah="Le furet, le furet, le furet se glisse partout...";break;
 		case 519:nyah="It's "+new SimpleDateFormat("HH:mm:ss", Locale.FRANCE).format(new Date())+" and i'm hungry ;3";break;
 		case 520:nyah="Pourquoi tu trembles comme cha :o ?";break;
@@ -3977,7 +3977,7 @@ public class Utils {
 		case 529:nyah="ça a glissé :o";break;
 		case 530:nyah="J'aime ce que tu me dis là ;3";break;
 		case 531:nyah="Je ne suis plus innocent voyons !";break;
-		case 532:nyah="Je me suis perdu...OÃ¹ est la gare Montparnasse svp ?";break;
+		case 532:nyah="Je me suis perdu...Où est la gare Montparnasse svp ?";break;
 		case 533:nyah=":r Mais tu sais et faiden avec ses promesses et toujours son ac de caca on rit xD";break;
 		case 534:nyah="As-tu la chose que je t'ai demandé ? Supeeeerbe ;3";break;
 		case 535:nyah="Mmmh tellement moelleux _w_ *bave*";break;
@@ -4053,7 +4053,7 @@ public class Utils {
 		case 615:nyah="Je veux être plus fort maman !";break;
 		case 616:nyah="Ze veux de ton attention Maître >w<";break;
 		case 617:nyah="Ze veux de ton attention Maîtresse >w<";break;
-		case 618:nyah="Ze te donne de gros cÃ¢lins <3";break;
+		case 618:nyah="Ze te donne de gros câlins <3";break;
 		case 619:nyah="*Pat pat pat* :3";break;
 		case 620:nyah="AntoZzz est un pédophile qui aime les tokens , il les garde comme des petits enfants...";break;
 		case 621:nyah="AntoZzz et Tacos aime se battre entre eux";break;
@@ -4077,7 +4077,7 @@ public class Utils {
 		case 639:nyah="Tacos est parti démouler un de ces trucs bizarres dans sa cave...y a encore des cris...";break;
 		case 640:nyah="Sucer des glands ne fera pas de toi un écureuil ! #Jiessel";break;
 		case 641:nyah="Le tacos se fait souvent remettre a l'ordre par ses Maîtres sadiques ;3";break;
-		case 642:nyah="On peut reconnaître Tacos à ses tÃ¢ches de sauce blanche sur le coin de la bouche :o";break;
+		case 642:nyah="On peut reconnaître Tacos à ses tâches de sauce blanche sur le coin de la bouche :o";break;
 		case 643:nyah="Tacos demande tous les soirs de la sauce blanche à son confident AntoZzz :3";break;
 		case 644:nyah="Delxer se croit le maître mais finit souvent sous le bureau de l'élève";break;
 		case 645:nyah="ça envoie des nude en pv oulà";break;

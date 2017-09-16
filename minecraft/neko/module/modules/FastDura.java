@@ -25,13 +25,13 @@ public class FastDura extends Module {
 		if (u.isLock(this.getName()))
 			return;
 		if (u.display)
-		u.addChat("Â§aÂ§oFastDura activÃ© !");
+		u.addChat("§a§oFastDura activé !");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
 		if (u.display)
-		u.addChat("Â§cÂ§oFastDura dÃ©sactivÃ© !");
+		u.addChat("§c§oFastDura désactivé !");
 		super.onDisabled();
 	}	
 	
@@ -57,7 +57,7 @@ public class FastDura extends Module {
 	
 	public static void doDura(Entity en) {
 		int itemSlot;
-		// 36 Ã  44 (En les comptant avec
+		// 36 à 44 (En les comptant avec
 		
 		if (mc.thePlayer.getCurrentEquippedItem()!=null ? mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemTool : false) {
 			int i = getItemLess();

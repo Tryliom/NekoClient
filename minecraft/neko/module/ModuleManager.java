@@ -157,9 +157,9 @@ public class ModuleManager {
 		this.Lock.add(new Lock("Pyro", 0, "rang", "Cheat", "Enflamme une zone depuis où l'ont vise", true));
 		this.Lock.add(new Lock("TpBack", 50, "souls", "Cheat", "Vous tp sur un bloc choisi quand vous arrivez en dessous du seuil de vie définit", true));
 		this.Lock.add(new Lock("Flash", 0, "???", "Cheat", "Vous retp sur la position set à l'activation", true));
-		this.Lock.add(new Lock("Pyro", 0, "rang", "Cheat", "Enflamme une zone depuis oÃ¹ l'ont vise", true));
-		this.Lock.add(new Lock("TpBack", 50, "souls", "Cheat", "Vous tp sur un bloc choisi quand vous arrivez en dessous du seuil de vie dÃ©finit", true));
-		this.Lock.add(new Lock("Flash", 0, "???", "Cheat", "Vous retp sur la position set Ã  l'activation", true));
+		this.Lock.add(new Lock("Pyro", 0, "rang", "Cheat", "Enflamme une zone depuis ooù l'ont vise", true));
+		this.Lock.add(new Lock("TpBack", 50, "souls", "Cheat", "Vous tp sur un bloc choisi quand vous arrivez en dessous du seuil de vie définit", true));
+		this.Lock.add(new Lock("Flash", 0, "???", "Cheat", "Vous retp sur la position set à l'activation", true));
 
 		
 		
@@ -658,9 +658,9 @@ public class ModuleManager {
 		rang.add(new Rank("AntoZzz x Delxer", 600, Rate.Event, "§2", true, 0));
 		Utils.getRank("AntoZzz x Delxer").setDesc("Ils se disputent très souvent mais au fond, ce ne sont que des querelles de couple..Vous n'imaginez pas comment ça dérape en privé..;3");
 		rang.add(new Rank("Soumis", 500, Rate.Event, "Â§2", true, 0));
-		Utils.getRank("Soumis").setDesc("J'obÃ©is au MaÃ®tre");
+		Utils.getRank("Soumis").setDesc("J'obéis au Maître");
 		rang.add(new Rank("AntoZzz x Delxer", 600, Rate.Event, "Â§2", true, 0));
-		Utils.getRank("AntoZzz x Delxer").setDesc("Ils se disputent trÃ¨s souvent mais au fond, ce ne sont que des querelles de couple..Vous n'imaginez pas comment Ã§a dÃ©rape en privÃ©..;3");
+		Utils.getRank("AntoZzz x Delxer").setDesc("Ils se disputent très souvent mais au fond, ce ne sont que des querelles de couple..Vous n'imaginez pas comment ça dérape en privé..;3");
 
 		
 		// Neko
