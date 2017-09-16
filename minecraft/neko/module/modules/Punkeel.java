@@ -10,15 +10,15 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.network.Packet;
 
-public class Cancer extends Module {
+public class Punkeel extends Module {
 	public static ArrayList<Packet> packet = new ArrayList<Packet>();
 	public static boolean isOn;
 	private int count;
 	public static Double delay = 1.0;
 	public static boolean attack = false;
 	
-	public Cancer() {
-		super("PunKeel", -1, Category.Special);
+	public Punkeel() {
+		super("Punkeel", -1, Category.Special);
 	}
 	
 	public void onEnabled() {	
@@ -44,11 +44,6 @@ public class Cancer extends Module {
 	
 	public void onUpdate() {
 		if (u.isLock(this.getName())) {
-			boolean display = u.display;
-			u.display=false;
-			this.isToggled=false;
-			u.display=display;
-			u.addWarn(this.getName());
 			return;
 		}
 		if (this.count>this.delay*20) {

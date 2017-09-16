@@ -123,7 +123,7 @@ public class ModuleManager {
 		this.ActiveModule.add(new CallCmd()); // Key NONE
 		this.ActiveModule.add(new Register()); // Key NONE
 		this.ActiveModule.add(new Flash()); // Key NONE
-		this.ActiveModule.add(new Cancer()); // Key NONE
+		this.ActiveModule.add(new Punkeel()); // Key NONE
 		
 		
 		// Ajouter les locks | -- = ..;

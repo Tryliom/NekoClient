@@ -8,7 +8,6 @@ import java.net.Proxy;
 import java.net.Proxy.Type;
 import java.net.URI;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -40,7 +39,6 @@ import neko.module.modules.Autoarmor;
 import neko.module.modules.Autosoup;
 import neko.module.modules.Build;
 import neko.module.modules.CallCmd;
-import neko.module.modules.Cancer;
 import neko.module.modules.Cheststealer;
 import neko.module.modules.ClickAim;
 import neko.module.modules.Dolphin;
@@ -67,6 +65,7 @@ import neko.module.modules.Paint;
 import neko.module.modules.Phase;
 import neko.module.modules.Ping;
 import neko.module.modules.Power;
+import neko.module.modules.Punkeel;
 import neko.module.modules.PushUp;
 import neko.module.modules.Pyro;
 import neko.module.modules.Radar;
@@ -115,10 +114,8 @@ import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerAddress;
 import net.minecraft.client.multiplayer.ServerData;
-import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.network.NetHandlerLoginClient;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.EntityRenderer;
@@ -698,9 +695,16 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Proxy reset", var.prefixCmd+"proxy reset ", "§7Vous déconnecte de votre proxy", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-				} else if (args[1].equalsIgnoreCase("fastbow")) {
+				} else if (args[1].equalsIgnoreCase("fastbow") || args[1].equalsIgnoreCase("fb")) {
 					Utils.addChat("========================================");
 					Utils.addChat2("§6"+var.prefixCmd+"Fastbow NoBow", var.prefixCmd+"fastbow nobow", "§7Permet de tirer des flèches si l'on possède au moins un arc + flèche dans l'inventaire.\n§7Pour les joueurs vous gardez votre item actuel dans la main en tirant, have fun.", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Fastbow Packet <Int>", var.prefixCmd+"fastbow packet ", "§7Modifie le nombre de paquet envoyé par le fastbow par flèche, de base à 20", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("punkeel")) {
+					Utils.addChat("========================================");
+					Utils.addChat2("§6"+var.prefixCmd+"Punkeel Delay <Double>", var.prefixCmd+"punkeel delay ", "§7Modifie le delay entre les tp, par ex 0.5 donne un VRAI lag de 500ms, les joueurs vous voit vous tp tous les 0.5sec", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Punkeel Attack", var.prefixCmd+"punkeel attack ", "§7Fais que quand on frappe le packet d'attaque s'envoie tout de suite au lieu des ms normaux", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("automlg") || args[1].equalsIgnoreCase("mlg")) {
@@ -1430,16 +1434,20 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}						
 			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"fastbow")) {
-				if (args.length==1) {
-					Utils.toggleModule("Fastbow");
-				} else if (args[1].equalsIgnoreCase("nobow")) {
-					if (Fastbow.nobow) {
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"fastbow") || args[0].equalsIgnoreCase(var.prefixCmd+"fb")) {
+				if (args[1].equalsIgnoreCase("nobow")) {
+					if (Fastbow.getFast().isNobow()) {
 						Utils.addChat("§cFastbow nobow désactivé");
 					} else {
 						Utils.addChat("§aFastbow nobow activé");
 					}
-					Fastbow.nobow=!Fastbow.nobow;
+					Fastbow.getFast().setNobow(!Fastbow.getFast().isNobow());
+				} else if (args[1].equalsIgnoreCase("packet") && args.length>=3) {
+					if (Utils.isInteger(args[2])) {
+						Fastbow.getFast().setPacket(Integer.parseInt(args[2]));
+					} else {
+						Utils.addChat(err);
+					}
 				}
 				Utils.checkXp(xp);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
@@ -4556,18 +4564,18 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"cancer")) {
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"punkeel")) {
 				if (args.length>=2) {
 					// Attack et delay
 					if (args[1].equalsIgnoreCase("attack")) {
-						if (Cancer.attack) {
+						if (Punkeel.attack) {
 							Utils.addChat("§cMode Attack du Cancer désactivé !");
 						} else {
 							Utils.addChat("§aMode Attack du Cancer activé !");
 						}
-						Cancer.attack=!Cancer.attack;
+						Punkeel.attack=!Punkeel.attack;
 					} else if (args[1].equalsIgnoreCase("delay") && args.length>=3 && Utils.isDouble(args[2])) {
-						Cancer.delay = Double.parseDouble(args[2]);
+						Punkeel.delay = Double.parseDouble(args[2]);
 						Utils.addChat("§aDelay du cancer mis à "+args[2]+"sec !");
 					}
 					

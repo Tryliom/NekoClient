@@ -57,7 +57,7 @@ import neko.module.modules.Autosoup;
 import neko.module.modules.Blink;
 import neko.module.modules.Build;
 import neko.module.modules.CallCmd;
-import neko.module.modules.Cancer;
+import neko.module.modules.Punkeel;
 import neko.module.modules.Cheststealer;
 import neko.module.modules.ClickAim;
 import neko.module.modules.Dolphin;
@@ -1213,8 +1213,8 @@ public class Utils {
 		ModuleManager.values.add("Register mdp:§7 "+r.getMdp());
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		ModuleManager.values.add("Cancer:");
-		ModuleManager.values.add("Delay: "+Cancer.delay+"sec");
-		ModuleManager.values.add("Attack: "+Cancer.attack);
+		ModuleManager.values.add("Delay: "+Punkeel.delay+"sec");
+		ModuleManager.values.add("Attack: "+Punkeel.attack);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		
 		
@@ -2202,7 +2202,7 @@ public class Utils {
 		                s+=Tracers.friend+"\n"+Reach.bloc+"\n";
 		                s+=VanillaTp.classic+"\n"+Reach.classic+"\n"+Reach.aimbot+"\n"+Reach.fov+"\n";
 		                s+=limit+"\n"+limite+"\n"+version+"\n"+kills+"\n"+HUD.stuff+"\n";
-		                s+=R+"\n"+G+"\n"+B+"\n"+neko.module.modules.Render.xp+"\n"+Reach.tnt+"\n"+Fastbow.nobow+"\n";
+		                s+=R+"\n"+G+"\n"+B+"\n"+neko.module.modules.Render.xp+"\n"+Reach.tnt+"\n"+Fastbow.getFast().isNobow()+"\n";
 		                s+=AutoPot.heal+"\n"+Pyro.mode+"\n"+Reach.mode+"\n"+Antiafk.getInstance().getSec()+"\n";
 		                s+=ItemESP.cR+"\n"+ItemESP.cG+"\n"+ItemESP.cB+"\n"+ItemESP.clR+"\n"+ItemESP.clG+"\n"+ItemESP.clB+"\n"+ItemESP.width+"\n";
 		                s+=VanillaTp.top+"\n"+tp.getSpawn().toLong()+"\n"+tp.isClassic()+"\n"+tp.isTop()+"\n"+tp.getVie()+"\n\n"+Glide.getGlide().getSpeed()+"\n"+FireTrail.getFireTrail().isLarge()+"\n";
@@ -2218,7 +2218,7 @@ public class Utils {
 		                for (String st : c.getListPlayer())
 		                	pl+=st+":";
 		                s+=c.getCmd2()+"\n"+pl+"\n"+Register.getReg().getMdp()+"\n"+God.getInstance().getBackup()+"\n"+Highjump.getJump().getHeight()+"\n";
-		                s+=TutoManager.getTuto().isDone()+"\n"+Nuker.safe+"\n"+KillAura.ec+"\n"+Cancer.attack+"\n"+Cancer.delay+"\n";
+		                s+=TutoManager.getTuto().isDone()+"\n"+Nuker.safe+"\n"+KillAura.ec+"\n"+Punkeel.attack+"\n"+Punkeel.delay+"\n"+Fastbow.getFast().getPacket()+"\n";
 		                writer.write(s);
 		                writer.flush();
 		            }
@@ -2719,7 +2719,7 @@ public class Utils {
 	                	if (i==102)
 	                		Reach.tnt=Boolean.parseBoolean(ligne);
 	                	if (i==103)
-	                		Fastbow.nobow=Boolean.parseBoolean(ligne);
+	                		Fastbow.getFast().setNobow(Boolean.parseBoolean(ligne));
 	                	if (i==104)
 	                		AutoPot.heal=Integer.parseInt(ligne);
 	                	if (i==105)
@@ -2830,9 +2830,11 @@ public class Utils {
 	                	if (i==153)
 	                		KillAura.ec=Boolean.parseBoolean(ligne);
 	                	if (i==154)
-	                		Cancer.attack=Boolean.parseBoolean(ligne);
+	                		Punkeel.attack=Boolean.parseBoolean(ligne);
 	                	if (i==155)
-	                		Cancer.delay=Double.parseDouble(ligne);
+	                		Punkeel.delay=Double.parseDouble(ligne);
+	                	if (i==156)
+	                		Fastbow.getFast().setPacket(Integer.parseInt(ligne));
                 	} catch (Exception e) {}                	
                 	i++;
                 }

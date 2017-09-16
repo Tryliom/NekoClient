@@ -15,11 +15,18 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 
 public class Fastbow extends Module {
-	public static boolean nobow=false;
+	private boolean nobow=false;
+	private int packet=20;
 	private boolean isOn=false;
+	private static Fastbow instance = null;
 
 	public Fastbow() {
 		super("Fastbow", -1, Category.COMBAT);
+		instance=this;
+	}
+	
+	public static Fastbow getFast() {
+		return instance;
 	}
 	
 	public void onEnabled() {
@@ -62,19 +69,19 @@ public class Fastbow extends Module {
 			}
 			
 			if (mc.thePlayer.isUsingItem() && Item.getIdFromItem(mc.thePlayer.getCurrentEquippedItem().getItem())==261) {
-				for (int i=0;i<20;i++) {
+				for (int i=0;i<this.packet;i++) {
 					mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer());
 				}
 				mc.getNetHandler().addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));			      
 				mc.thePlayer.stopUsingItem();
-			} else if (mc.gameSettings.keyBindUseItem.pressed && nobow && isOn && !mc.thePlayer.isSneaking()) {
+			} else if (mc.gameSettings.keyBindUseItem.pressed && nobow && isOn && !mc.thePlayer.getFoodStats().needFood()) {
 				int actual = mc.thePlayer.inventory.currentItem;
 				int bow = getBestBow();
 				if (!hasArrow() || bow<0)
 					return;
 				swap(actual, bow);
 				mc.rightClickMouse();
-				for (int i=0;i<20;i++) {
+				for (int i=0;i<this.packet;i++) {
 					mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer());
 				}
 				mc.getNetHandler().addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));			      
@@ -85,11 +92,11 @@ public class Fastbow extends Module {
 		} catch (Exception ex) {}
 	}
 	
-	public void swap(int prochainItem, int ancienItem) {
+	private void swap(int prochainItem, int ancienItem) {
 		mc.playerController.windowClick(mc.thePlayer.inventoryContainer.windowId, ancienItem, prochainItem, 2, mc.thePlayer);
 	}
 	
-	public int getBestBow() {
+	private int getBestBow() {
 		java.util.ArrayList<Integer> list = new java.util.ArrayList<>();
 		for (int i = 9; i < 45; i++) {
 			if (mc.thePlayer.inventoryContainer.getSlot(i) != null) {
@@ -132,7 +139,7 @@ public class Fastbow extends Module {
 		return bestSlot;	
 	}
 	
-	public boolean hasArrow() {
+	private boolean hasArrow() {
 		for (int i = 9; i < 45; i++) {
 			if (mc.thePlayer.inventoryContainer.getSlot(i) != null) {
 				ItemStack is = mc.thePlayer.inventoryContainer.getSlot(i).getStack();
@@ -145,5 +152,21 @@ public class Fastbow extends Module {
 			}
 		}
 		return false;	
+	}
+
+	public boolean isNobow() {
+		return nobow;
+	}
+
+	public void setNobow(boolean nobow) {
+		this.nobow = nobow;
+	}
+
+	public int getPacket() {
+		return packet;
+	}
+
+	public void setPacket(int packet) {
+		this.packet = packet;
 	}
 }
