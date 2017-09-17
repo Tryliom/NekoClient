@@ -1850,7 +1850,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
             if (plugins.isEmpty()) {
             	Utils.addChat("§cAucun plugins trouvés");
             } else {
-            	Utils.addChat("Plugins(" + plugins.size() + "): §a" + Strings.join((String[])plugins.toArray(new String[0]), "§8, §a"));
+            	Utils.addChat("Plugins (" + plugins.size() + "): §a" + Strings.join((String[])plugins.toArray(new String[0]), "§8, §a"));
             }
             Utils.toggleModule("Plugins");
             Plugins.count=0;
