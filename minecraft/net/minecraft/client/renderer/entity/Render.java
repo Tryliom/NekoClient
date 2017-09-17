@@ -3,12 +3,11 @@ package net.minecraft.client.renderer.entity;
 import java.util.Iterator;
 
 import neko.Client;
-import neko.module.modules.Friends;
-import neko.module.modules.Nametag;
+import neko.module.modules.hide.Friends;
+import neko.module.modules.render.Nametag;
 import neko.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;

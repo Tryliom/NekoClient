@@ -3,7 +3,13 @@ package neko.module;
 import java.util.ArrayList;
 
 import neko.lock.Lock;
-import neko.module.modules.*;
+import neko.module.modules.combat.*;
+import neko.module.modules.hide.*;
+import neko.module.modules.misc.*;
+import neko.module.modules.movements.*;
+import neko.module.modules.player.*;
+import neko.module.modules.render.*;
+import neko.module.modules.special.*;
 import neko.module.other.Conditions;
 import neko.module.other.Rank;
 import neko.module.other.Rate;
@@ -72,7 +78,7 @@ public class ModuleManager {
 		this.ActiveModule.add(new Unicode()); // Key NONE
 		this.ActiveModule.add(new Autonyah()); // Key NONE
 		this.ActiveModule.add(new Plugins()); // Key NONE
-		this.ActiveModule.add(new neko.module.modules.ArrayList()); // Key NONE
+		this.ActiveModule.add(new neko.module.modules.render.ArrayList()); // Key NONE
 		this.ActiveModule.add(new HUD()); // Key NONE
 		this.ActiveModule.add(new Radar()); // Key NONE
 		this.ActiveModule.add(new Sneak()); // Key NONE

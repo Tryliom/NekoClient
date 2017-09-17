@@ -1,8 +1,5 @@
 package net.minecraft.client.renderer;
 
-import neko.Client;
-import neko.module.modules.Xray;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

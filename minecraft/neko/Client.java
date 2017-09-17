@@ -133,7 +133,7 @@ public class Client {
 		  gui.setTheme(new SimpleTheme());
 		  gui.setup();
 		  Utils.loadFrame();
-		  n = Utils.getRandInt(10);
+		  n = Utils.getRandInt(11);
 		  switch (n) {
 			  case 0:Display.setTitle("Tu joues à la version divine de Neko :3");break;
 			  case 1:Display.setTitle("Waw quel joueur expérimenté :o");break;
@@ -155,6 +155,7 @@ public class Client {
 			  case 8:Display.setTitle("Je suis un neko tout innocent :3");break;
 			  case 9:Display.setTitle("Je suis un vilain neko ;3");break;
 			  case 10:Display.setTitle("Fire et Enclume nyanyatent ensemble souvent ;3");break;
+			  case 11:Display.setTitle("Github > Gitlab :3");break;
 		  }
 		  name=CLIENT_NAME+"/vanilla";  
 	  }

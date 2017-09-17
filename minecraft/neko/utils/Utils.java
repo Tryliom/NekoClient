@@ -48,63 +48,62 @@ import neko.lock.Lock;
 import neko.module.Category;
 import neko.module.Module;
 import neko.module.ModuleManager;
-import neko.module.modules.Antiafk;
-import neko.module.modules.AutoClic;
-import neko.module.modules.AutoMLG;
-import neko.module.modules.AutoPot;
-import neko.module.modules.Autoarmor;
-import neko.module.modules.Autosoup;
-import neko.module.modules.Blink;
-import neko.module.modules.Build;
-import neko.module.modules.CallCmd;
-import neko.module.modules.Punkeel;
-import neko.module.modules.Cheststealer;
-import neko.module.modules.ClickAim;
-import neko.module.modules.Dolphin;
-import neko.module.modules.DropShit;
-import neko.module.modules.Fastbow;
-import neko.module.modules.Fasteat;
-import neko.module.modules.Fire;
-import neko.module.modules.FireTrail;
-import neko.module.modules.Flight;
-import neko.module.modules.Freecam;
-import neko.module.modules.Friends;
-import neko.module.modules.Glide;
-import neko.module.modules.God;
-import neko.module.modules.HUD;
-import neko.module.modules.Highjump;
-import neko.module.modules.ItemESP;
-import neko.module.modules.KillAura;
-import neko.module.modules.Longjump;
-import neko.module.modules.Lot;
-import neko.module.modules.NekoChat;
-import neko.module.modules.NoClip;
-import neko.module.modules.Nuker;
-import neko.module.modules.Paint;
-import neko.module.modules.Phase;
-import neko.module.modules.Ping;
-import neko.module.modules.Power;
-import neko.module.modules.PushUp;
-import neko.module.modules.Pyro;
-import neko.module.modules.Radar;
-import neko.module.modules.Reach;
-import neko.module.modules.Reflect;
-import neko.module.modules.Regen;
-import neko.module.modules.Register;
-import neko.module.modules.SmoothAim;
-import neko.module.modules.SpamBot;
-import neko.module.modules.Speed709;
-import neko.module.modules.Step;
-import neko.module.modules.Timer;
-import neko.module.modules.TpBack;
-import neko.module.modules.Tracers;
-import neko.module.modules.Trigger;
-import neko.module.modules.VanillaTp;
-import neko.module.modules.Velocity;
-import neko.module.modules.Wallhack;
-import neko.module.modules.Water;
-import neko.module.modules.WorldTime;
-import neko.module.modules.Xray;
+import neko.module.modules.misc.Antiafk;
+import neko.module.modules.combat.AutoClic;
+import neko.module.modules.misc.AutoMLG;
+import neko.module.modules.combat.AutoPot;
+import neko.module.modules.player.Autoarmor;
+import neko.module.modules.combat.Autosoup;
+import neko.module.modules.player.Build;
+import neko.module.modules.misc.CallCmd;
+import neko.module.modules.special.Punkeel;
+import neko.module.modules.player.Cheststealer;
+import neko.module.modules.combat.ClickAim;
+import neko.module.modules.movements.Dolphin;
+import neko.module.modules.special.DropShit;
+import neko.module.modules.combat.Fastbow;
+import neko.module.modules.player.Fasteat;
+import neko.module.modules.player.Fire;
+import neko.module.modules.special.FireTrail;
+import neko.module.modules.movements.Flight;
+import neko.module.modules.movements.Freecam;
+import neko.module.modules.hide.Friends;
+import neko.module.modules.movements.Glide;
+import neko.module.modules.hide.God;
+import neko.module.modules.render.HUD;
+import neko.module.modules.movements.Highjump;
+import neko.module.modules.render.ItemESP;
+import neko.module.modules.combat.KillAura;
+import neko.module.modules.movements.Longjump;
+import neko.module.modules.hide.Lot;
+import neko.module.modules.render.NekoChat;
+import neko.module.modules.movements.NoClip;
+import neko.module.modules.player.Nuker;
+import neko.module.modules.render.Paint;
+import neko.module.modules.misc.Phase;
+import neko.module.modules.misc.Ping;
+import neko.module.modules.render.Power;
+import neko.module.modules.player.PushUp;
+import neko.module.modules.special.Pyro;
+import neko.module.modules.render.Radar;
+import neko.module.modules.combat.Reach;
+import neko.module.modules.special.Reflect;
+import neko.module.modules.combat.Regen;
+import neko.module.modules.misc.Register;
+import neko.module.modules.combat.SmoothAim;
+import neko.module.modules.special.SpamBot;
+import neko.module.modules.movements.Speed709;
+import neko.module.modules.movements.Step;
+import neko.module.modules.misc.Timer;
+import neko.module.modules.special.TpBack;
+import neko.module.modules.render.Tracers;
+import neko.module.modules.combat.Trigger;
+import neko.module.modules.special.VanillaTp;
+import neko.module.modules.player.Velocity;
+import neko.module.modules.render.Wallhack;
+import neko.module.modules.render.Water;
+import neko.module.modules.render.WorldTime;
+import neko.module.modules.render.Xray;
 import neko.module.other.Active;
 import neko.module.other.BddManager;
 import neko.module.other.Chat;
@@ -1146,7 +1145,7 @@ public class Utils {
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		ModuleManager.values.add("WorldTime:§7 "+WorldTime.time);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Total de bonus ramassé: "+neko.module.modules.Render.bonusCount);
+		ModuleManager.values.add("Total de bonus ramassé: "+ neko.module.modules.render.Render.bonusCount);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		ModuleManager.values.add("HUD:");
 		ModuleManager.values.add("Coord: "+(HUD.coord ? "§aActivé" : "§cDésactivé"));
@@ -1323,7 +1322,7 @@ public class Utils {
 			
 			if (r.getName().equalsIgnoreCase("Neko Army")) {
 				if (r.isLock()) {
-					if (!getRank("TryTry Satanique").isLock() && !getRank("Neko Angélique").isLock() && !getRank("Arakiel").isLock() && !getRank("Démon reconverti").isLock() && neko.module.modules.Render.bonusCount>=100) {
+					if (!getRank("TryTry Satanique").isLock() && !getRank("Neko Angélique").isLock() && !getRank("Arakiel").isLock() && !getRank("Démon reconverti").isLock() && neko.module.modules.render.Render.bonusCount>=100) {
 						setRank(r.getName());
 						addChat("§4§koooo§cRang §dNeko Army§c débloqué !!§4§koooo");
 						mc.thePlayer.playSound("mob.enderdragon.end", 0.5F, 0.5F);
@@ -2192,17 +2191,17 @@ public class Utils {
 		                s+=WorldTime.time+"\n";
 		                s+=Wallhack.cR+"\n"+Wallhack.cG+"\n"+Wallhack.cB+"\n"+Wallhack.clR+"\n"+Wallhack.clG+"\n"+Wallhack.clB+"\n"+Wallhack.width+"\n";
 		                s+=Tracers.cR+"\n"+Tracers.cG+"\n"+Tracers.cB+"\n"+Tracers.width+"\n";
-		                s+=neko.module.modules.Render.bonusCount+"\n"+HUD.time+"\n"+HUD.select+"\n";
+		                s+= neko.module.modules.render.Render.bonusCount+"\n"+HUD.time+"\n"+HUD.select+"\n";
 		                s+=HUD.cR+"\n"+HUD.cG+"\n"+HUD.cB+"\n"+HUD.width+"\n";   
 		                s+=Reach.pvp+"\n";
 		                s+=KillAura.verif+"\n";
 		                s+=Paint.cR+"\n"+Paint.cG+"\n"+Paint.cB+"\n"+Paint.alpha+"\n";
-		                s+=neko.module.modules.Render.active+"\n";
+		                s+= neko.module.modules.render.Render.active+"\n";
 		                s+=changeRank+"\n";
 		                s+=Tracers.friend+"\n"+Reach.bloc+"\n";
 		                s+=VanillaTp.classic+"\n"+Reach.classic+"\n"+Reach.aimbot+"\n"+Reach.fov+"\n";
 		                s+=limit+"\n"+limite+"\n"+version+"\n"+kills+"\n"+HUD.stuff+"\n";
-		                s+=R+"\n"+G+"\n"+B+"\n"+neko.module.modules.Render.xp+"\n"+Reach.tnt+"\n"+Fastbow.getFast().isNobow()+"\n";
+		                s+=R+"\n"+G+"\n"+B+"\n"+ neko.module.modules.render.Render.xp+"\n"+Reach.tnt+"\n"+Fastbow.getFast().isNobow()+"\n";
 		                s+=AutoPot.heal+"\n"+Pyro.mode+"\n"+Reach.mode+"\n"+Antiafk.getInstance().getSec()+"\n";
 		                s+=ItemESP.cR+"\n"+ItemESP.cG+"\n"+ItemESP.cB+"\n"+ItemESP.clR+"\n"+ItemESP.clG+"\n"+ItemESP.clB+"\n"+ItemESP.width+"\n";
 		                s+=VanillaTp.top+"\n"+tp.getSpawn().toLong()+"\n"+tp.isClassic()+"\n"+tp.isTop()+"\n"+tp.getVie()+"\n\n"+Glide.getGlide().getSpeed()+"\n"+FireTrail.getFireTrail().isLarge()+"\n";
@@ -2645,7 +2644,7 @@ public class Utils {
 	                	if (i==71)
 	                		Tracers.width=Float.parseFloat(ligne);
 	                	if (i==72)
-	                		neko.module.modules.Render.bonusCount=Integer.parseInt(ligne);
+	                		neko.module.modules.render.Render.bonusCount=Integer.parseInt(ligne);
 	                	if (i==73)
 	                		HUD.time=Boolean.parseBoolean(ligne);
 	                	if (i==74) {
@@ -2679,7 +2678,7 @@ public class Utils {
 	                	if (i==84)
 	                		Paint.alpha=Float.parseFloat(ligne);
 	                	if (i==85)
-	                		neko.module.modules.Render.active=Boolean.parseBoolean(ligne);
+	                		neko.module.modules.render.Render.active=Boolean.parseBoolean(ligne);
 	                	if (i==86) {
 	                		if (!isLock("--rankmanager"))
 	                			changeRank=Boolean.parseBoolean(ligne);
@@ -2715,7 +2714,7 @@ public class Utils {
 	                	if (i==100)
 	                		B=Integer.parseInt(ligne);
 	                	if (i==101)
-	                		neko.module.modules.Render.xp=Boolean.parseBoolean(ligne);
+	                		neko.module.modules.render.Render.xp=Boolean.parseBoolean(ligne);
 	                	if (i==102)
 	                		Reach.tnt=Boolean.parseBoolean(ligne);
 	                	if (i==103)

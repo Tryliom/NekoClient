@@ -60,7 +60,7 @@ import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import neko.Client;
 import neko.gui.GuiTuto;
 import neko.module.Module;
-import neko.module.modules.Reach;
+import neko.module.modules.combat.Reach;
 import neko.module.other.Irc;
 import neko.module.other.TutoManager;
 import neko.utils.Utils;

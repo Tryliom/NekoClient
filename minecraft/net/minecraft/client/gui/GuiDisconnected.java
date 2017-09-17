@@ -1,16 +1,14 @@
 package net.minecraft.client.gui;
 
 import java.io.IOException;
-import java.net.Socket;
 import java.util.Iterator;
 import java.util.List;
 
 import com.mojang.authlib.Agent;
 import com.mojang.authlib.UserAuthentication;
-import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
-import neko.module.modules.Friends;
+import neko.module.modules.hide.Friends;
 import neko.module.other.AutoReco;
 import neko.utils.Utils;
 import net.mcleaks.MCLeaks;

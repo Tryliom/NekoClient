@@ -1,16 +1,14 @@
 package net.minecraft.client.entity;
 
 import com.darkmagician6.eventapi.EventManager;
-import com.darkmagician6.eventapi.events.Event;
 import com.darkmagician6.eventapi.types.EventType;
 
 import neko.Client;
 import neko.event.UpdateEvent;
 import neko.module.Module;
-import neko.module.modules.Blink;
-import neko.module.modules.KillAura;
-import neko.module.modules.NoLook;
-import neko.module.modules.Noslow;
+import neko.module.modules.combat.KillAura;
+import neko.module.modules.special.NoLook;
+import neko.module.modules.player.Noslow;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MovingSoundMinecartRiding;

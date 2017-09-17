@@ -12,7 +12,7 @@ import java.util.Vector;
 
 import neko.Client;
 import neko.module.ModuleManager;
-import neko.module.modules.Render;
+import neko.module.modules.render.Render;
 import neko.module.other.Chat;
 import neko.module.other.Event;
 import neko.module.other.EventType;

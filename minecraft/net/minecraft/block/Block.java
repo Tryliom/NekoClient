@@ -1,8 +1,7 @@
 package net.minecraft.block;
 
 import neko.Client;
-import neko.module.ModuleManager;
-import neko.module.modules.Xray;
+import neko.module.modules.render.Xray;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;

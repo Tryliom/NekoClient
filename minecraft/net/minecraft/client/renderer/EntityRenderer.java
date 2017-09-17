@@ -13,7 +13,7 @@ import java.util.concurrent.Callable;
 
 import neko.Client;
 import neko.module.Module;
-import neko.module.modules.Reach;
+import neko.module.modules.combat.Reach;
 import neko.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
