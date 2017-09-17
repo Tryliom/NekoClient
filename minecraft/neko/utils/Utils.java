@@ -3386,36 +3386,36 @@ public class Utils {
 	
 	public static String getSolo() {
 		int randy = (int) Math.round(Math.random()*9);
-		String s = "Solo";
+		String s = "Solo - ";
 		switch (randy) {
-			case 0:s="Seul au monde D:";break;
-			case 1:s="Solo";break;
-			case 2:s="§aEspionner les creepers";break;
-			case 3:s="Jouer à chat avec les mobis :3";break;
-			case 4:s="Fuyez pauvres fou !";break;
-			case 5:s="Pas de ban ici !";break;
-			case 6:s="§cApocalypse now !";break;
-			case 7:s="§dNeko à câliner :3";break;
-			case 8:s="<3 Solitaire <3";break;
+			case 0:s+="Seul au monde D:";break;
+			case 1:s+="Nooon";break;
+			case 2:s+="§aEspionner les creepers";break;
+			case 3:s+="Jouer à chat avec les mobis :3";break;
+			case 4:s+="Fuyez pauvres fou !";break;
+			case 5:s+="Pas de ban ici !";break;
+			case 6:s+="§cApocalypse now !";break;
+			case 7:s+="§dNeko à câliner :3";break;
+			case 8:s+="<3 Solitaire <3";break;
 		}
 		return s;
 	}
 	
 	public static String getMulti() {
 		int randy = (int) Math.round(Math.random()*11);
-		String s = "Multiplayer";
+		String s = "Multi - ";
 		switch (randy) {
-			case 0:s="§eVoler des elos ;3";break;
-			case 1:s="Rekt des noobs";break;
-			case 2:s="Faire voler les joueurs";break;
-			case 3:s="§cYou are banned now !";break;
-			case 4:s="Joue avec des Neko :3";break;
-			case 5:s="§cNe pas appuyer";break;
-			case 6:s="Pas taper D:";break;
-			case 7:s="§bGO §fGO §cGO §d!";break;
-			case 8:s="Nyanyater avec des neko :3";break;
-			case 9:s="Please rekt me :3";break;
-			case 10:s="Ez";break;
+			case 0:s+="§eVoler des elos ;3";break;
+			case 1:s+="Rekt des noobs";break;
+			case 2:s+="Faire voler les joueurs";break;
+			case 3:s+="§cYou are banned now !";break;
+			case 4:s+="Joue avec des Neko :3";break;
+			case 5:s+="§cNe pas appuyer";break;
+			case 6:s+="Pas taper D:";break;
+			case 7:s+="§bGO §fGO §cGO §d!";break;
+			case 8:s+="Nyanyater avec des neko :3";break;
+			case 9:s+="Please rekt me :3";break;
+			case 10:s+="Ez";break;
 		}
 		return s;
 	}
@@ -3440,7 +3440,7 @@ public class Utils {
 			double neko = -1+Math.random()*2;	
 			double nekoN = -1+Math.random()*2;
 			if (mc.thePlayer!=null)
-			mc.theWorld.spawnParticle(EnumParticleTypes.HEART, mc.thePlayer.posX+neko*1/k, mc.thePlayer.posY+0.85, mc.thePlayer.posZ+nekoN*1/k, 1, 1, 1, 1);
+				mc.theWorld.spawnParticle(EnumParticleTypes.HEART, mc.thePlayer.posX+neko*1/k, mc.thePlayer.posY+0.85, mc.thePlayer.posZ+nekoN*1/k, 1, 1, 1, 1);
 		}
 		
 		int neko = (int) Math.round(Math.random()*650);	
@@ -4088,6 +4088,56 @@ public class Utils {
 		case 648:nyah="Ma soumise a été très gentille aujourd'hui, elle a droit à sa récompense :3";break;
 		case 649:nyah="J'ai torturé mon soumis pendant toute la soirée >:D";break;
 		case 650:nyah="Ne miaule pas !";break;
+		case 651:nyah="Elle est tellement belle..je fond..";break;
+		case 652:nyah="";break;
+		case 653:nyah="";break;
+		case 654:nyah="";break;
+		case 655:nyah="";break;
+		case 656:nyah="";break;
+		case 657:nyah="";break;
+		case 658:nyah="";break;
+		case 659:nyah="";break;
+		case 660:nyah="";break;
+		case 661:nyah="";break;
+		case 662:nyah="";break;
+		case 663:nyah="";break;
+		case 664:nyah="";break;
+		case 665:nyah="";break;
+		case 666:nyah="";break;
+		case 667:nyah="";break;
+		case 668:nyah="";break;
+		case 669:nyah="";break;
+		case 670:nyah="";break;
+		case 671:nyah="";break;
+		case 672:nyah="";break;
+		case 673:nyah="";break;
+		case 674:nyah="";break;
+		case 675:nyah="";break;
+		case 676:nyah="";break;
+		case 677:nyah="";break;
+		case 678:nyah="";break;
+		case 679:nyah="";break;
+		case 680:nyah="";break;
+		case 681:nyah="";break;
+		case 682:nyah="";break;
+		case 683:nyah="";break;
+		case 684:nyah="";break;
+		case 685:nyah="";break;
+		case 686:nyah="";break;
+		case 687:nyah="";break;
+		case 688:nyah="";break;
+		case 689:nyah="";break;
+		case 690:nyah="";break;
+		case 691:nyah="";break;
+		case 692:nyah="";break;
+		case 693:nyah="";break;
+		case 694:nyah="";break;
+		case 695:nyah="";break;
+		case 696:nyah="";break;
+		case 697:nyah="";break;
+		case 698:nyah="";break;
+		case 699:nyah="";break;
+		case 700:nyah="";break;
 		
 		case -1:nyah="";break;
 		}
