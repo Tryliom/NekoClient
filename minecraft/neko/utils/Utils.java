@@ -676,19 +676,25 @@ public class Utils {
 			@Override
 			public void run() {
 				try {
-					if (mc.theWorld!=null) {
-			    		mc.theWorld.sendQuittingDisconnectingPacket();
-			            mc.loadWorld((WorldClient)null);      
-			    	}
-					GuiConnecting.networkManager.closeChannel(null);
-					GuiConnecting.networkManager.getNetHandler().setDisconnected(true);
-					mc.displayGuiScreen(new GuiMainMenu());
+					try {
+		                mc.theWorld.sendQuittingDisconnectingPacket();
+		                mc.loadWorld((WorldClient)null);		                
+	            	} catch (Exception e) {}
+					try {
+						GuiConnecting.networkManager.getNetHandler().onDisconnect(new ChatComponentText(""));
+					} catch (Exception e) {}
+					try {
+						GuiConnecting.networkManager.closeChannel(null);
+					} catch (Exception e) {}
+					try {
+						GuiConnecting.networkManager.getNetHandler().setDisconnected(true);
+					} catch (Exception e) {}
 					try {
 						this.wait(200);
 					} catch (InterruptedException e) {}
-					Minecraft.getMinecraft().displayGuiScreen(new GuiConnecting(Minecraft.getMinecraft().currentScreen, Minecraft.getMinecraft(), sd));
+					mc.displayGuiScreen(new GuiConnecting(mc.currentScreen, mc, sd));
 				} catch (Exception e) {
-					mc.displayGuiScreen(new GuiMainMenu());
+					mc.displayGuiScreen(null);
 				}
 			}
 		}).start();
