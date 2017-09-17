@@ -70,12 +70,14 @@ import neko.module.modules.movements.Freecam;
 import neko.module.modules.hide.Friends;
 import neko.module.modules.movements.Glide;
 import neko.module.modules.hide.God;
+import neko.module.modules.hide.Gui;
 import neko.module.modules.render.HUD;
 import neko.module.modules.movements.Highjump;
 import neko.module.modules.render.ItemESP;
 import neko.module.modules.combat.KillAura;
 import neko.module.modules.movements.Longjump;
 import neko.module.modules.hide.Lot;
+import neko.module.modules.hide.Plugins;
 import neko.module.modules.render.NekoChat;
 import neko.module.modules.movements.NoClip;
 import neko.module.modules.player.Nuker;
@@ -517,6 +519,22 @@ public class Utils {
 		return false;
 	}
 	
+    public static boolean shouldChat(Module module) {
+        if(module.getClass().equals(Fire.class)
+                || module.getClass().equals(Friends.class)
+                || module.getClass().equals(Gui.class)
+                || module.getClass().equals(Lot.class)
+                || module.getClass().equals(Plugins.class)
+                || module.getClass().equals(Power.class)
+                || module.getClass().equals(Register.class)
+                || module.getClass().equals(Render.class)
+                || module.getClass().equals(VanillaTp.class)
+                || module.getClass().equals(Water.class)
+                || !Utils.display
+                || Utils.isLock(module.getName())) return false;
+        return true;
+    }
+	
 	public static void toggleModule(String module) {
 		try {
 			for (Module mod : ModuleManager.ActiveModule) {
@@ -654,21 +672,24 @@ public class Utils {
 	}
 	
 	public static void launchConnect(final ServerData sd) {
-		if (mc.theWorld!=null) {
-    		mc.theWorld.sendQuittingDisconnectingPacket();
-            mc.loadWorld((WorldClient)null);      
-    	}
-		GuiConnecting.networkManager.closeChannel(null);
-		GuiConnecting.networkManager.getNetHandler().setDisconnected(true);
-		new Thread(new Runnable() {
-			
+		new Thread(new Runnable() {			
 			@Override
 			public void run() {
-				Minecraft.getMinecraft().displayGuiScreen(new GuiMainMenu());
 				try {
-					this.wait(200);
-				} catch (InterruptedException e) {}
-				Minecraft.getMinecraft().displayGuiScreen(new GuiConnecting(Minecraft.getMinecraft().currentScreen, Minecraft.getMinecraft(), sd));
+					if (mc.theWorld!=null) {
+			    		mc.theWorld.sendQuittingDisconnectingPacket();
+			            mc.loadWorld((WorldClient)null);      
+			    	}
+					GuiConnecting.networkManager.closeChannel(null);
+					GuiConnecting.networkManager.getNetHandler().setDisconnected(true);
+					mc.displayGuiScreen(new GuiMainMenu());
+					try {
+						this.wait(200);
+					} catch (InterruptedException e) {}
+					Minecraft.getMinecraft().displayGuiScreen(new GuiConnecting(Minecraft.getMinecraft().currentScreen, Minecraft.getMinecraft(), sd));
+				} catch (Exception e) {
+					mc.displayGuiScreen(new GuiMainMenu());
+				}
 			}
 		}).start();
 	}
@@ -1212,9 +1233,9 @@ public class Utils {
 		Register r = Register.getReg();
 		ModuleManager.values.add("Register mdp:§7 "+r.getMdp());
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Cancer:");
+		ModuleManager.values.add("Punkeel:");
 		ModuleManager.values.add("Delay: "+Punkeel.delay+"sec");
-		ModuleManager.values.add("Attack: "+Punkeel.attack);
+		ModuleManager.values.add("Attack: "+(Punkeel.attack ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		
 		

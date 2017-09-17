@@ -133,14 +133,14 @@ public class Module
 
 	public void onEnabled() {
 
-		if(shouldChat(this))
+		if(Utils.shouldChat(this))
 			Utils.addChat("§a§o" + getName() + " activé !");
 
 	}
 
 	public void onDisabled() {
 
-		if(shouldChat(this))
+		if(Utils.shouldChat(this))
 			Utils.addChat("§c§o" + getName() + " désactivé !");
 
 	}
@@ -162,27 +162,5 @@ public class Module
 	  public void onRightClick() {}
 	  
 	  public void onUpdate(UpdateEvent event) {}
-
-    /**
-     * Util
-     */
-
-    private boolean shouldChat(Module module) {
-
-        if(module.getName().getClass().equals(Fire.class)
-                || module.getName().getClass().equals(Friends.class)
-                || module.getName().getClass().equals(Gui.class)
-                || module.getName().getClass().equals(Lot.class)
-                || module.getName().getClass().equals(Plugins.class)
-                || module.getName().getClass().equals(Power.class)
-                || module.getName().getClass().equals(Register.class)
-                || module.getName().getClass().equals(Render.class)
-                || module.getName().getClass().equals(VanillaTp.class)
-                || module.getName().getClass().equals(Water.class)
-                || Utils.display) return false;
-
-        return true;
-
-    }
 
 }

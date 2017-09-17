@@ -94,7 +94,7 @@ public class GuiManager extends AbstractGuiManager  {
 								@Override
 								public void update() {
 									if (!m.isCmd())
-										setForegroundColor(m.getToggled() ? new Color(120, 190, 120, 220) : new Color(120, 120, 190, 220));
+										setForegroundColor(m.getToggled() ? Utils.shouldChat(m) ? new Color(120, 190, 120, 220) : new Color(120, 120, 190, 220) : new Color(120, 120, 190, 220));
 								}
 							};
 							button.addButtonListener(new ButtonListener(){
@@ -102,7 +102,7 @@ public class GuiManager extends AbstractGuiManager  {
 								public void onButtonPress(Button button){
 									m.toggleModule();
 									if (!m.isCmd())
-										button.setForegroundColor(m.getToggled() ? new Color(120, 190, 120, 220) : new Color(120, 120, 190, 220));
+										button.setForegroundColor(m.getToggled() ? Utils.shouldChat(m) ? new Color(120, 190, 120, 220) : button.getForegroundColor() : new Color(120, 120, 190, 220));
 								}
 							});
 							frame.add(button, HorizontalGridConstraint.FILL);
@@ -112,15 +112,15 @@ public class GuiManager extends AbstractGuiManager  {
 						@Override
 						public void update() {
 							if (!m.isCmd())
-								setForegroundColor(m.getToggled() ? new Color(120, 190, 120, 220) : new Color(120, 120, 190, 220));
+								setForegroundColor(m.getToggled() ? Utils.shouldChat(m) ? new Color(120, 190, 120, 220) : new Color(120, 120, 190, 220) : new Color(120, 120, 190, 220));
 						}
 					};
 					button.addButtonListener(new ButtonListener(){
 						@Override
-						public void onButtonPress(Button button){
+						public void onButtonPress(Button button) {							
 							m.toggleModule();
 							if (!m.isCmd())
-								button.setForegroundColor(m.getToggled() ? new Color(120, 190, 120, 220) : new Color(120, 120, 190, 220));
+								button.setForegroundColor(m.getToggled() ? Utils.shouldChat(m) ? new Color(120, 190, 120, 220) : button.getForegroundColor() : new Color(120, 120, 190, 220));
 						}
 					});
 					frame.add(button, HorizontalGridConstraint.FILL);

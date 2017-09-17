@@ -130,6 +130,7 @@ public class ModuleManager {
 		this.ActiveModule.add(new Register()); // Key NONE
 		this.ActiveModule.add(new Flash()); // Key NONE
 		this.ActiveModule.add(new Punkeel()); // Key NONE
+		this.ActiveModule.add(new Crasher()); // Key NONE
 		
 		
 		// Ajouter les locks | -- = ..;

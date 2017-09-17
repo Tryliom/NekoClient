@@ -4561,18 +4561,20 @@ public class ChatUtils {
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"punkeel")) {
-				if (args.length>=2) {
+				if (Utils.isLock("Punkeel")) {
+					Utils.addWarn("Punkeel");
+				} else if (args.length>=2) {
 					// Attack et delay
 					if (args[1].equalsIgnoreCase("attack")) {
 						if (Punkeel.attack) {
-							Utils.addChat("§cMode Attack du Cancer désactivé !");
+							Utils.addChat("§cMode Attack du Punkeel désactivé !");
 						} else {
-							Utils.addChat("§aMode Attack du Cancer activé !");
+							Utils.addChat("§aMode Attack du Punkeel activé !");
 						}
 						Punkeel.attack=!Punkeel.attack;
 					} else if (args[1].equalsIgnoreCase("delay") && args.length>=3 && Utils.isDouble(args[2])) {
 						Punkeel.delay = Double.parseDouble(args[2]);
-						Utils.addChat("§aDelay du cancer mis à "+args[2]+"sec !");
+						Utils.addChat("§aDelay du Punkeel mis à "+args[2]+"sec !");
 					}
 					
 				}
