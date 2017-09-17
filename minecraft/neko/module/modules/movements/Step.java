@@ -8,12 +8,17 @@ import net.minecraft.client.Minecraft;
 
 
 public class Step extends Module {
-	Minecraft mc = Minecraft.getMinecraft();
-
-	public static double step=50;
+	private boolean bypass=false;
+	private double step=50;
+	private static Step instance=null;
 	
 	public Step() {
 		super("Step", Keyboard.KEY_I, Category.MOVEMENT);
+		instance = this;
+	}
+	
+	public static Step getStep() {
+		return instance;
 	}
 	
 	public void onEnabled() {
@@ -21,15 +26,23 @@ public class Step extends Module {
 	}
 	
 	public void onDisabled() {
-		Minecraft.getMinecraft().thePlayer.stepHeight = 0.5F;
+		mc.thePlayer.stepHeight = 0.5F;
 		super.onDisabled();
 	}
 	
 	public void onUpdate() {
-		if (this.getToggled()) {
-			Minecraft.getMinecraft().thePlayer.stepHeight = (float) step;				    		
-		}
-		
-	}	
+		mc.thePlayer.stepHeight = (float) step;				    						
+	}
 
+	public boolean isBypass() {
+		return bypass;
+	}
+
+	public void setBypass(boolean bypass) {
+		this.bypass = bypass;
+	}
+
+	public void setStep(double step) {
+		this.step = step;
+	}	
 }

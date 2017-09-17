@@ -178,7 +178,8 @@ public class Module
                 || module.getName().getClass().equals(Register.class)
                 || module.getName().getClass().equals(Render.class)
                 || module.getName().getClass().equals(VanillaTp.class)
-                || module.getName().getClass().equals(Water.class)) return false;
+                || module.getName().getClass().equals(Water.class)
+                || Utils.display) return false;
 
         return true;
 

@@ -847,7 +847,8 @@ public class ChatUtils {
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("step")) {
 					Utils.addChat("========================================");
-					Utils.addChat2("§6"+var.prefixCmd+"Step <Double", var.prefixCmd+"step ", "§7Change le maximum de hauteur de bloc grimpable avec le Step", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Step <Double>", var.prefixCmd+"step ", "§7Change le maximum de hauteur de bloc grimpable avec le Step", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Step bypass", var.prefixCmd+"step bypass", "§7Met le step en mode bypass", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("speed")) {
@@ -4676,11 +4677,22 @@ public class ChatUtils {
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"step")) {
-				if (args.length==1) {
-					Utils.toggleModule("Step");
+				if (args[1].equalsIgnoreCase("bypass")) {
+					Step s = Step.getStep();
+					if (Utils.isLock("--step bypass")) {
+						Utils.addWarn("Step bypass");
+						mc.thePlayer.playSound("mob.villager.no", 1.0F, 1.0F);
+					} else {
+						if (s.isBypass()) {
+							Utils.addChat("§cStep bypass désactivé");
+						} else {
+							Utils.addChat("§aStep bypass activé");
+						}
+						s.setBypass(!s.isBypass());
+					}					
 				} else {
 					try {
-						Step.step=Double.parseDouble(args[1]);
+						Step.getStep().setStep(Double.parseDouble(args[1]));
 						Utils.addChat("§aLa hauteur du step a été mis à "+args[1]+" !");
 					} catch (Exception e) {
                         Utils.addChat(err);

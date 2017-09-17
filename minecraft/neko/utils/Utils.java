@@ -1083,7 +1083,8 @@ public class Utils {
 		ModuleManager.values.add("Vitesse du Speed:§7 "+Speed709.getSpeed().getSpe());
 		ModuleManager.values.add("Mode Speed:§7 "+Speed709.getSpeed().getMode());
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Hauteur du Step:§7 "+Step.step);
+		ModuleManager.values.add("Hauteur du Step:§7 "+Step.getStep().getStep());
+		ModuleManager.values.add("Bypass step:§7 "+Step.getStep().isBypass());
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
 		ModuleManager.values.add("Multiplicateur du Timer:§7 "+Timer.time);
 		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
@@ -2144,7 +2145,7 @@ public class Utils {
 		            	s+=NoClip.speed+"\n";
 		            	s+=Regen.regen+"\n";
 		            	s+=Speed709.getSpeed().getSpe()+"\n";
-		            	s+=Step.step+"\n";
+		            	s+=Step.getStep().getStep()+"\n";
 		            	s+=Timer.time+"\n";
 		            	s+=v.getHcoeff()+":"+v.getVcoeff()+"\n";
 		            	s+=display+"\n";
@@ -2218,6 +2219,7 @@ public class Utils {
 		                	pl+=st+":";
 		                s+=c.getCmd2()+"\n"+pl+"\n"+Register.getReg().getMdp()+"\n"+God.getInstance().getBackup()+"\n"+Highjump.getJump().getHeight()+"\n";
 		                s+=TutoManager.getTuto().isDone()+"\n"+Nuker.safe+"\n"+KillAura.ec+"\n"+Punkeel.attack+"\n"+Punkeel.delay+"\n"+Fastbow.getFast().getPacket()+"\n";
+		                s+=Step.getStep().isBypass()+"\n";
 		                writer.write(s);
 		                writer.flush();
 		            }
@@ -2483,7 +2485,7 @@ public class Utils {
 	                	if (i==8)
 	                		Speed709.getSpeed().setSpe(Double.parseDouble(ligne));
 	                	if (i==9)
-	                		Step.step=Double.parseDouble(ligne);
+	                		Step.getStep().setStep(Double.parseDouble(ligne));
 	                	if (i==10) 
 	                		Timer.time=Float.parseFloat(ligne);
 	                	if (i==11) {
@@ -2834,6 +2836,8 @@ public class Utils {
 	                		Punkeel.delay=Double.parseDouble(ligne);
 	                	if (i==156)
 	                		Fastbow.getFast().setPacket(Integer.parseInt(ligne));
+	                	if (i==157)
+	                		Step.getStep().setBypass(Boolean.parseBoolean(ligne));
                 	} catch (Exception e) {}                	
                 	i++;
                 }
@@ -3442,7 +3446,7 @@ public class Utils {
 				mc.theWorld.spawnParticle(EnumParticleTypes.HEART, mc.thePlayer.posX+neko*1/k, mc.thePlayer.posY+0.85, mc.thePlayer.posZ+nekoN*1/k, 1, 1, 1, 1);
 		}
 		
-		int neko = (int) Math.round(Math.random()*650);	
+		int neko = (int) Math.round(Math.random()*700);	
 		int rand = (int) Math.round(Math.random()*50);
 		String nyah = "";
 		switch (neko) {
@@ -4088,55 +4092,55 @@ public class Utils {
 		case 649:nyah="J'ai torturé mon soumis pendant toute la soirée >:D";break;
 		case 650:nyah="Ne miaule pas !";break;
 		case 651:nyah="Elle est tellement belle..je fond..";break;
-		case 652:nyah="";break;
-		case 653:nyah="";break;
-		case 654:nyah="";break;
-		case 655:nyah="";break;
-		case 656:nyah="";break;
-		case 657:nyah="";break;
-		case 658:nyah="";break;
-		case 659:nyah="";break;
-		case 660:nyah="";break;
-		case 661:nyah="";break;
-		case 662:nyah="";break;
-		case 663:nyah="";break;
-		case 664:nyah="";break;
-		case 665:nyah="";break;
-		case 666:nyah="";break;
-		case 667:nyah="";break;
-		case 668:nyah="";break;
-		case 669:nyah="";break;
-		case 670:nyah="";break;
-		case 671:nyah="";break;
-		case 672:nyah="";break;
-		case 673:nyah="";break;
-		case 674:nyah="";break;
-		case 675:nyah="";break;
-		case 676:nyah="";break;
-		case 677:nyah="";break;
-		case 678:nyah="";break;
-		case 679:nyah="";break;
-		case 680:nyah="";break;
-		case 681:nyah="";break;
-		case 682:nyah="";break;
-		case 683:nyah="";break;
-		case 684:nyah="";break;
-		case 685:nyah="";break;
-		case 686:nyah="";break;
-		case 687:nyah="";break;
-		case 688:nyah="";break;
-		case 689:nyah="";break;
-		case 690:nyah="";break;
-		case 691:nyah="";break;
-		case 692:nyah="";break;
-		case 693:nyah="";break;
-		case 694:nyah="";break;
-		case 695:nyah="";break;
-		case 696:nyah="";break;
-		case 697:nyah="";break;
-		case 698:nyah="";break;
-		case 699:nyah="";break;
-		case 700:nyah="";break;
+		case 652:nyah="C'est tout noir...j'ai laissé trop longtemps mon morceau de chocolat au micro-onde, y a de belles flammes oranges '^'";break;
+		case 653:nyah="Plz help...mon maître veut me punir..NYAAAH !";break;
+		case 654:nyah="Le channel musique est très bizarre..>.<";break;
+		case 655:nyah="J'y suis peut-être allé trop fort..mmmh c'est un peu rouge..";break;
+		case 656:nyah="Ah bon ? C'est si rare ici :o";break;
+		case 657:nyah="Et oui ! Je l'ai enfin obtenu !";break;
+		case 658:nyah="PunKeel a de grand bras";break;
+		case 659:nyah="PunKeel lag beaucoup :o";break;
+		case 660:nyah="L'enfer te prendra !";break;
+		case 661:nyah="Mes démons viendront te prendre ^°w°^";break;
+		case 662:nyah="Les Neko sont des démons !";break;
+		case 663:nyah="J'ai vu...Lilith lécher Lucifer..moi choqué +w+";break;
+		case 664:nyah="Lucifer est le pire des traîtres !";break;
+		case 665:nyah="Satan nous a déjà envahi !";break;
+		case 666:nyah="Satan prend nos âmes !";break;
+		case 667:nyah="Satan est une patate !";break;
+		case 668:nyah="Satanou m'a rendu visite..dans le mauvais sens ;w;";break;
+		case 669:nyah="Ruby est une perverse ! NYAAAAH stoooop plz plz punis pas ;w;";break;
+		case 670:nyah="Bael alias la mouche, va te kill à ma place nyah";break;
+		case 671:nyah="Le dieu de l'enfer s'impose ici !";break;
+		case 672:nyah="Satan utilise Neko irl";break;
+		case 673:nyah="Lucifer utilise Neko à tous les jours";break;
+		case 674:nyah="Lucifer miaule souvent avec Satanounet ;3";break;
+		case 675:nyah="Maco Varelle camado !";break;
+		case 676:nyah="It's time to punish !";break;
+		case 677:nyah="I love Bevo";break;
+		case 678:nyah="J'adore les punitions !";break;
+		case 679:nyah="Jami "+getRandPlayer()+" >:c !";break;
+		case 680:nyah="J'ai vendu mon âme à Khanuel pour obtenir le Saint Neko !";break;
+		case 681:nyah="Sois un bon chien, et va chercher ! Aller dans le ravin petit démon !";break;
+		case 682:nyah="Tu veux goûter à ma force ?";break;
+		case 683:nyah="Ne crie pas petite ;3";break;
+		case 684:nyah="Ne faites pas attention aux cris venant de la cave...°w°";break;
+		case 685:nyah="Tu veux venir dans ma cave ma petite ;3 ?";break;
+		case 686:nyah="Apparemment je fais peur..venez petit petit ;w;";break;
+		case 687:nyah="Mais mais, je suis innocent !";break;
+		case 688:nyah="Vous l'avez vraiment fait...terrifiant..";break;
+		case 689:nyah="Neko est un cauchemard..";break;
+		case 690:nyah="Réveillez moi ! Sortez moi d'ici !";break;
+		case 691:nyah="Tr-trop pro-ooche.. NYAH !!";break;
+		case 692:nyah="Tu l'as vu ? Ben tu la verras plus tant que j'aurais pas le droit de...";break;
+		case 693:nyah="Un deuxième dév sur Neko ? OUI";break;
+		case 694:nyah="Tain y en a 700, tu savais petit ?";break;
+		case 695:nyah="Regarde derrière toi, y a une ombre noire ;o";break;
+		case 696:nyah="Attention à l'ombre noire qui est passée derrière toi, c'est dangereux :x";break;
+		case 697:nyah="Quel personne démoniaque tu es :o";break;
+		case 698:nyah="Sale démon !";break;
+		case 699:nyah="Oh tain que c'est gros..waw";break;
+		case 700:nyah="ça tire loin quand même c'te truc :x";break;
 		
 		case -1:nyah="";break;
 		}
