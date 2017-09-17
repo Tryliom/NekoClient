@@ -9,7 +9,7 @@ public class Register extends Module {
 	private String mdp = "neko123";
 	
 	public Register() {
-		super("Register", -1, Category.OTHER);
+		super("Register", -1, Category.MISC);
 		this.instance=this;
 	}
 	

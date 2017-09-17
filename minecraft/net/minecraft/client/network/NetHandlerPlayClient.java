@@ -866,7 +866,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     			msg.getMessage().replaceAll("/r ", "");
     		}
     		for (char chr : msg.getMessage().toCharArray()) {
-    		      if ((chr >= '!') && (chr <= '?') && 
+    		      if ((chr >= '!') && (chr <= ' ') &&
     		        (!"(){}[]|!*@$".contains(Character.toString(chr)))) {
     		        out = out + new String(Character.toChars(chr + 65248));
     		      } else {
@@ -947,11 +947,19 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         PacketThreadUtil.func_180031_a(packetIn, this, this.getGameController());  
         ArrayList<String> list = new ArrayList<>();
         list.add("was slain by ");
+<<<<<<< HEAD
         list.add("s'est fait d?foncer par ");
         list.add("s'est fait poutrer par ");
         list.add("s'est fait d?molir par ");
         list.add("s'est fait d?monter par ");
         list.add("s'est fait d?gommer par ");
+=======
+        list.add("s'est fait défoncer par ");
+        list.add("s'est fait poutrer par ");
+        list.add("s'est fait démolir par ");
+        list.add("s'est fait démonter par ");
+        list.add("s'est fait dégommer par ");
+>>>>>>> 643bb838d4c424ceaf9d02b6786ccb7b4ef2cc84
         list.add("s'est fait violer par ");
         list.add("s'est fait abattre par ");
         list.add("s'est fait massacrer par ");
@@ -960,7 +968,11 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         list.add("s'est fait faucher par ");
         list.add("s'est fait liquider par ");
         for (String s : list)
+<<<<<<< HEAD
         if (packetIn.func_148915_c().getUnformattedText().contains(s+mc.session.getUsername()) || packetIn.func_148915_c().getUnformattedText().contains(s+(MCLeaks.isAltActive() ? MCLeaks.getMCName() : "??????????????")) && packetIn.func_148915_c().getUnformattedText().split(" ").length==5) {        	
+=======
+        if (packetIn.func_148915_c().getUnformattedText().contains(s+mc.session.getUsername()) || packetIn.func_148915_c().getUnformattedText().contains(s+(MCLeaks.isAltActive() ? MCLeaks.getMCName() : "éééééééééééééé")) && packetIn.func_148915_c().getUnformattedText().split(" ").length==5) {        	
+>>>>>>> 643bb838d4c424ceaf9d02b6786ccb7b4ef2cc84
         	
         	if (Math.random()<0.1) {
     			var.ame++;    			    			
@@ -1848,9 +1860,15 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
             }
             Collections.sort(plugins);
             if (plugins.isEmpty()) {
+<<<<<<< HEAD
             	Utils.addChat("?cAucun plugins trouv?s");
             } else {
             	Utils.addChat("Plugins(" + plugins.size() + "): ?a" + Strings.join((String[])plugins.toArray(new String[0]), "?8, ?a"));
+=======
+            	Utils.addChat("§cAucun plugins trouvés");
+            } else {
+            	Utils.addChat("Plugins(" + plugins.size() + "): §a" + Strings.join((String[])plugins.toArray(new String[0]), "§8, §a"));
+>>>>>>> 643bb838d4c424ceaf9d02b6786ccb7b4ef2cc84
             }
             Utils.toggleModule("Plugins");
             Plugins.count=0;

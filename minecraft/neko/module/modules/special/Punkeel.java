@@ -44,8 +44,12 @@ public class Punkeel extends Module {
 	
 	public void onUpdate() {
 		if (u.isLock(this.getName())) {
+			boolean display = u.display;
+			u.display=false;
+			this.isToggled=false;
+			u.display=display;
 			return;
-		}
+		} 
 		if (this.count>this.delay*20) {
 			this.count=0;
 			this.sendPacket();

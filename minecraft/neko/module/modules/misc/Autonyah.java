@@ -8,7 +8,7 @@ public class Autonyah extends Module {
 	Minecraft mc = Minecraft.getMinecraft();
 
 	public Autonyah() {
-		super("Autonyah", -1, Category.OTHER);
+		super("Autonyah", -1, Category.MISC);
 	}
 	
 	public void onEnabled() {		
