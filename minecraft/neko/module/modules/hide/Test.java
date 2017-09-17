@@ -2,6 +2,7 @@ package neko.module.modules.hide;
 
 import neko.module.Category;
 import neko.module.Module;
+import neko.utils.Utils;
 
 public class Test extends Module {
 	private static Test instance;
@@ -15,8 +16,9 @@ public class Test extends Module {
 		return instance;
 	}
 	
-	public void onEnabled() {		
-		super.onEnabled();
+	public void onEnabled() {
+
+        super.onEnabled();
 	}
 	
 	public void onDisabled() {
