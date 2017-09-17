@@ -344,7 +344,10 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
 
         if (button.id == 14 && this.field_175372_K.visible)
         {
-            this.switchToRealms();
+        	if (!OnlyRpgManager.getRpg().isActive())
+        		this.switchToRealms();
+        	else
+        		mc.displayGuiScreen(new GuiMainMenu());
         }
 
         if (button.id == 4)

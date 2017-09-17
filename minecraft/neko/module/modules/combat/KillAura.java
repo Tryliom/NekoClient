@@ -43,7 +43,7 @@ public class KillAura extends Module {
 	public static boolean verif=true;
 	public static boolean nobot=true;
 	public static boolean premium=false;
-	public static boolean ec=false;
+	public static Double speed=1.5;
 	public static ArrayList<String> list = new ArrayList<>();
 	public static ArrayList<String> bot = new ArrayList<>();
 	public static String tab="  ";
@@ -155,8 +155,8 @@ public class KillAura extends Module {
     }
     
     public static synchronized void faceEntity(EntityLivingBase entity) {
-    	mc.thePlayer.rotationPitch=((float)(mc.thePlayer.rotationPitch + getPitchChange(entity) / 1.5));
-    	mc.thePlayer.rotationYaw=((float)(mc.thePlayer.rotationYaw + getYawChange(entity) / 1.5));
+    	mc.thePlayer.rotationPitch=((float)(mc.thePlayer.rotationPitch + getPitchChange(entity) / speed+1*Math.random()));
+    	mc.thePlayer.rotationYaw=((float)(mc.thePlayer.rotationYaw + getYawChange(entity) / speed+1*Math.random()));
 	}
     
 	 public static float getPitchChange(Entity entity)
@@ -193,27 +193,6 @@ class cps implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (Utils.sword ? mc.thePlayer.getCurrentEquippedItem()!=null ? mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemSword : false : true) {
-			if (KillAura.ec) {
-				for (Object theObject : mc.theWorld.playerEntities) {
-	                EntityLivingBase entity = (EntityLivingBase) theObject;
-	                if(KillAura.isViable(entity)) {              	                	                   
-	                	if (Utils.isToggle("Crit"))
-	                		Utils.crit();	                	
-	                	KillAura.faceEntity(entity);
-	                	try {
-							Robot r = new Robot();
-							r.mousePress(16);
-							r.mouseRelease(16);
-						} catch (AWTException e) {}	                	
-	            		KillAura.giveMoney(entity);
-	                	
-	                	if (KillAura.mode.equalsIgnoreCase("Multi"))
-	                		continue;
-	                	else
-	                		break;
-	                }
-	        	}
-			} else
 			switch (var.mode) {
 			case "Player" :
 				for (Object theObject : mc.theWorld.playerEntities) {
@@ -228,8 +207,14 @@ class cps implements ActionListener {
                 		Minecraft.getMinecraft().thePlayer.swingItem();
                 		if (Utils.isToggle("FastDura")) {
             				FastDura.doDura(entity);
-            			} else
+            			} else if (KillAura.lockView) {
             				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));
+            			} else
+            				try {
+    							Robot r = new Robot();
+    							r.mousePress(16);
+    							r.mouseRelease(16);
+    						} catch (AWTException e) {}
 
 	            		KillAura.giveMoney(entity);
 	                	
@@ -261,10 +246,15 @@ class cps implements ActionListener {
                             	
     	                		if (Utils.isToggle("FastDura")) {
     	            				FastDura.doDura(entity);
-    	            			} else
+    	            			} else if (KillAura.lockView) {
     	            				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));
+    	            			} else
+    	            				try {
+    	    							Robot r = new Robot();
+    	    							r.mousePress(16);
+    	    							r.mouseRelease(16);
+    	    						} catch (AWTException e) {}
     	                		Minecraft.getMinecraft().thePlayer.swingItem();
-                            	
                             	if (entity.getHealth()<2) {
                             		Utils.checkXp(4);
                             	}
@@ -291,8 +281,14 @@ class cps implements ActionListener {
                         	
 	                		if (Utils.isToggle("FastDura")) {
 	            				FastDura.doDura(entity);
-	            			} else
+	            			} else if (KillAura.lockView) {
 	            				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));
+	            			} else
+	            				try {
+	    							Robot r = new Robot();
+	    							r.mousePress(16);
+	    							r.mouseRelease(16);
+	    						} catch (AWTException e) {}
 	                		Minecraft.getMinecraft().thePlayer.swingItem();
                         	
                         	KillAura.giveMoney(entity);

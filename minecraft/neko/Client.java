@@ -172,7 +172,7 @@ class ch implements ActionListener {
 		Client neko = Client.getNeko();
 		
 		// ça set l'id tout seul
-		if (Irc.getInstance().isOn() && mc.thePlayer!=null && Utils.verif==null && (neko.currentThread==null ? true : !neko.currentThread.isAlive())) {
+		if (mc.thePlayer!=null && Utils.verif==null && (neko.currentThread==null ? true : !neko.currentThread.isAlive())) {
 			neko.currentThread = new RequestThread("majPlayer", null);
 			neko.currentThread.start();
 		}

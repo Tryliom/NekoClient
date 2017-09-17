@@ -749,6 +749,7 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Ka noarmor", var.prefixCmd+"ka noarmor", "§7Frappe ou non les joueurs sans armures", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Ka nobot", var.prefixCmd+"ka nobot", "§7Anti-bot avancé", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Ka premium", var.prefixCmd+"ka premium", "§7Activé: Ne frappe que les joueurs en premium", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Ka speed <Double>", var.prefixCmd+"ka speed ", "§7Modifie la vitesse à laquelle on tourne la tête avec le lockview", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("verif")) {
@@ -2713,13 +2714,7 @@ public class ChatUtils {
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"values") || args[0].equalsIgnoreCase(var.prefixCmd+"v")) {
-				if (args.length==1) {
-					Utils.displayValues(1);
-				} else if (Utils.isInteger(args[1]))
-					Utils.displayValues(Integer.parseInt(args[1]));
-				else
-					Utils.addChat("§cErreur, aucun numéro de page donné");
-				Utils.checkXp(xp);
+				Utils.displayValues();
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
@@ -4371,13 +4366,13 @@ public class ChatUtils {
 						KillAura.invi=true;
 						Utils.addChat("Le Kill Aura ne tape plus les invisibles !");
 					}
-				} else if (args[1].equalsIgnoreCase("ec")) {
-					if (KillAura.ec) {
-						Utils.addChat("§cKill Aura bypass EC désactivé !");
-					} else {
-						Utils.addChat("§aKill Aura bypass EC activé !");
-					}
-					KillAura.ec=!KillAura.ec;
+				} else if (args[1].equalsIgnoreCase("speed")) {
+					try {
+						KillAura.speed=Double.parseDouble(args[2]);
+						Utils.addChat("§aSpeed du Kill Aura mis à "+args[2]+" !");
+					} catch (Exception e) {
+                        Utils.addChat(err);
+                    }
 				} else if (args[1].equalsIgnoreCase("premium")) {
 					if (KillAura.premium) {
 						Utils.addChat("Le Kill Aura tape les crackés !");

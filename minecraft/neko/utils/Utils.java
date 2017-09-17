@@ -1075,19 +1075,36 @@ public class Utils {
 		saveCmd();
 	}
 	
-	public static void displayValues(int page) {
+	public static boolean isModule(String cheat) {
+		Boolean b = false;
+		for (Module m : ModuleManager.ActiveModule)
+			if (m.getName().equalsIgnoreCase(cheat))
+				b=true;
+		return b;
+	}
+	
+	public static void disV(String cheat) {
+		String l = "";
+		for (int i=0;i<ModuleManager.values.size();i++)
+			if ((i+1)==ModuleManager.values.size())
+				l+="§6"+ModuleManager.values.get(i);
+			else
+				l+="§6"+ModuleManager.values.get(i)+"\n";
+		Utils.addChat2("===§e"+cheat+"§6===", "", l, true, Chat.Click);
 		ModuleManager.values.clear();
-		ModuleManager.values.add("§nListes des valeurs actuelles:\n");
-		ModuleManager.values.add("Vitesse du Dolphin:§7 "+Dolphin.dolph);
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Vitesse du Flight:§7 "+Flight.speed);
+	}
+	
+	public static void displayValues() {
+		ModuleManager.values.clear();
+		ModuleManager.values.add("Vitesse:§7 "+Dolphin.dolph);
+		disV("Dolphin");
+		ModuleManager.values.add("Vitesse:§7 "+Flight.speed);
+		disV("Flight");
 		ModuleManager.values.add("Mode 'blink':§7 "+Flight.getBlink());
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Kill Aura:");
 		ModuleManager.values.add("Mode:§7 "+KillAura.mode);
 		ModuleManager.values.add("Cps:§7 "+KillAura.cps);
 		ModuleManager.values.add("Range:§7 "+KillAura.range);
-		ModuleManager.values.add("Fov :§7 "+KillAura.fov+"Â°");
+		ModuleManager.values.add("Fov :§7 "+KillAura.fov+"°");
 		ModuleManager.values.add("Lockview:§7 "+(KillAura.lockView ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("Temps avant de taper une cible:§7 "+KillAura.live/20+"sec");
 		ModuleManager.values.add("Invisible:§7 "+(KillAura.invi ? "§aActivé" : "§cDésactivé"));
@@ -1097,85 +1114,76 @@ public class Utils {
 		ModuleManager.values.add("Double vérification:§7 "+(KillAura.verif ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("NoBot:§7 "+(KillAura.nobot ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("Premium:§7 "+(KillAura.premium ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("Bypass EC:§7 "+(KillAura.ec ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Taille nametag:§7 "+Render.varNeko);
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Vitesse du NoClip:§7 "+NoClip.speed);
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Regen:");
+		ModuleManager.values.add("Speed:§7 "+KillAura.speed);
+		disV("KillAura");
+		ModuleManager.values.add("Taille des pseudos:§7 "+Render.varNeko);
+		disV("Nametag");
+		ModuleManager.values.add("Vitesse:§7 "+NoClip.speed);
+		disV("Noclip");
 		ModuleManager.values.add("Paquets:§7 "+Regen.regen);
 		ModuleManager.values.add("Bypass:§7 "+(Regen.bypass ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Vitesse du Speed:§7 "+Speed709.getSpeed().getSpe());
-		ModuleManager.values.add("Mode Speed:§7 "+Speed709.getSpeed().getMode());
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Hauteur du Step:§7 "+Step.getStep().getStep());
-		ModuleManager.values.add("Bypass step:§7 "+Step.getStep().isBypass());
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Multiplicateur du Timer:§7 "+Timer.time);
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
+		disV("Regen");
+		ModuleManager.values.add("Vitesse:§7 "+Speed709.getSpeed().getSpe());
+		ModuleManager.values.add("Mode:§7 "+Speed709.getSpeed().getMode());
+		disV("Speed");
+		ModuleManager.values.add("Hauteur de bloc:§7 "+Step.getStep().getStep());
+		ModuleManager.values.add("Bypass:§7 "+Step.getStep().isBypass());
+		disV("Step");
+		ModuleManager.values.add("Multiplicateur de temps:§7 "+Timer.time);
+		disV("Timer");
 		Velocity v = Velocity.getVelocity();
-		ModuleManager.values.add("Velocity:");
 		ModuleManager.values.add("Coefficient horizontal:§7 "+v.getHcoeff());
 		ModuleManager.values.add("Coefficient vertical:§7 "+v.getVcoeff());
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Trigger:");
+		disV("Velocity");
 		ModuleManager.values.add("Range:§7 "+Trigger.dist);
 		ModuleManager.values.add("Cps:§7 "+Trigger.cps);
 		ModuleManager.values.add("Random:§7 "+(Trigger.random ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Distance de la Reach:§7 "+Reach.dist);
-		ModuleManager.values.add("Reach pvp:§7 "+(Reach.pvp ? "§aActivée" : "§cDésactivée"));
-		ModuleManager.values.add("Reach sur les blocs:§7 "+(Reach.bloc ? "§aActivée" : "§cDésactivée"));
-		ModuleManager.values.add("Reach classic:§7 "+(Reach.classic ? "§aActivée" : "§cDésactivée"));
-		ModuleManager.values.add("Reach aimbot:§7 "+(Reach.aimbot ? "§aActivée" : "§cDésactivée"));
-		ModuleManager.values.add("Reach fov:§7 "+Reach.fov+"Â°");
-		ModuleManager.values.add("Reach tnt:§7 "+(Reach.tnt ? "§aActivée" : "§cDésactivée"));
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("ClickAim:");
+		disV("Trigger");
+		ModuleManager.values.add("Distance:§7 "+Reach.dist);
+		ModuleManager.values.add("Pvp:§7 "+(Reach.pvp ? "§aActivée" : "§cDésactivée"));
+		ModuleManager.values.add("Bloc:§7 "+(Reach.bloc ? "§aActivée" : "§cDésactivée"));
+		ModuleManager.values.add("Mode tp classic:§7 "+(Reach.classic ? "§aActivée" : "§cDésactivée"));
+		ModuleManager.values.add("Aimbot:§7 "+(Reach.aimbot ? "§aActivée" : "§cDésactivée"));
+		ModuleManager.values.add("Fov:§7 "+Reach.fov+"°");
+		ModuleManager.values.add("Tnt:§7 "+(Reach.tnt ? "§aActivée" : "§cDésactivée"));
+		disV("Reach");
 		ModuleManager.values.add("Distance de frappe:§7 "+ClickAim.dist);
-		ModuleManager.values.add("MultiAura:§7 "+(ClickAim.multiAura ? "§aActivé" : "§cDésactivé"));	
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("VanillaTp:");
+		ModuleManager.values.add("MultiAura:§7 "+(ClickAim.multiAura ? "§aActivé" : "§cDésactivé"));
+		disV("ClickAim");
 		ModuleManager.values.add("Air:§7 "+(VanillaTp.air ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("Classic:§7 "+(VanillaTp.classic ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("Top:§7 "+(VanillaTp.top ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Autoarmor désactivé sur Epicube:§7 "+(Autoarmor.ec ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Cheststealer tick:§7 "+Cheststealer.waitTime);
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("SmoothAim:");
+		disV("VanillaTp");
+		ModuleManager.values.add("Désactivé sur Epicube:§7 "+(Autoarmor.ec ? "§aActivé" : "§cDésactivé"));
+		disV("AutoArmor");
+		ModuleManager.values.add("Tick:§7 "+Cheststealer.waitTime);
+		disV("Cheststealer");
 		ModuleManager.values.add("Range:§7 "+SmoothAim.range);
-		ModuleManager.values.add("Fov:§7 "+SmoothAim.degrees+"Â°");
+		ModuleManager.values.add("Fov:§7 "+SmoothAim.degrees+"°");
 		ModuleManager.values.add("Speed:§7 "+SmoothAim.speed);
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Autosoup:");
+		disV("SmoothAim");
 		ModuleManager.values.add("Seuil de vie sensible:§7 "+Autosoup.heal);
 		ModuleManager.values.add("Drop les soupes vide:§7 "+(Autosoup.drop ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Autonyah: "+isNyah());
+		disV("Autosoup");
+		ModuleManager.values.add(isNyah());
 		ModuleManager.values.add("Prefix du nyah:§7 "+nyahh);
 		ModuleManager.values.add("Temps entre chaque nyah:§7 "+nyahSec+"s");	
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
+		disV("AutoNyah");
 		ModuleManager.values.add("AutoClic cps:§7 "+AutoClic.cps);
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Nuker range:§7 "+Nuker.nukerRadius);
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Freecam speed:§7 "+Freecam.speed);
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Longjump speed:§7 "+Longjump.speed);
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Radar Affichage des friends:§7 "+(Radar.fr ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Mode sword: "+(sword ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("WorldTime:§7 "+WorldTime.time);
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Total de bonus ramassé: "+ neko.module.modules.render.Render.bonusCount);
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("HUD:");
+		disV("AutoClic");
+		ModuleManager.values.add("Range:§7 "+Nuker.nukerRadius);
+		ModuleManager.values.add("Safe:§7 "+(Nuker.safe ? "§aActivé" : "§cDésactivé"));
+		disV("Nuker");
+		ModuleManager.values.add("Speed:§7 "+Freecam.speed);
+		disV("Freecam");
+		ModuleManager.values.add("Speed:§7 "+Longjump.speed);
+		disV("Longjump");
+		ModuleManager.values.add("Affichage des friends:§7 "+(Radar.fr ? "§aActivé" : "§cDésactivé"));
+		disV("Radar");
+		ModuleManager.values.add(sword ? "§aActivé" : "§cDésactivé");
+		disV("Sword");
+		ModuleManager.values.add("Temps du monde:§7 "+WorldTime.time);
+		disV("WorldTime");
 		ModuleManager.values.add("Coord: "+(HUD.coord ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("Fps: "+(HUD.fps ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("Xp: "+(HUD.fall ? "§aActivé" : "§cDésactivé"));
@@ -1186,8 +1194,7 @@ public class Utils {
 		ModuleManager.values.add("Couleur G:§7 "+HUD.cG);
 		ModuleManager.values.add("Couleur B:§7 "+HUD.cB);
 		ModuleManager.values.add("Epaisseur bord:§7 "+HUD.width);
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Wallhack:");
+		disV("HUD");
 		ModuleManager.values.add("Couleur R:§7 "+Wallhack.cR);
 		ModuleManager.values.add("Couleur G:§7 "+Wallhack.cG);
 		ModuleManager.values.add("Couleur B:§7 "+Wallhack.cB);
@@ -1195,70 +1202,53 @@ public class Utils {
 		ModuleManager.values.add("Couleur de ligne G:§7 "+Wallhack.clG);
 		ModuleManager.values.add("Couleur de ligne B:§7 "+Wallhack.clB);
 		ModuleManager.values.add("Epaisseur de ligne:§7 "+Wallhack.width);
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Tracers:");
+		disV("WallHack");
 		ModuleManager.values.add("Couleur de ligne R:§7 "+Tracers.cR);
 		ModuleManager.values.add("Couleur de ligne G:§7 "+Tracers.cG);
 		ModuleManager.values.add("Couleur de ligne B:§7 "+Tracers.cB);
 		ModuleManager.values.add("Epaisseur de ligne:§7 "+Tracers.width);
 		ModuleManager.values.add("Friend: "+(Tracers.friend ? "§aAffiché" : "§cCaché"));
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Limit: "+(limite ? "§aActivée" : "§cDésactivée"));
+		disV("Tracers");
+		ModuleManager.values.add(limite ? "§aActivée" : "§cDésactivée");
 		ModuleManager.values.add("Limite de paquet: "+limit);
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("AutoPot:");
+		disV("Limit");
 		ModuleManager.values.add("Seuil de vie sensible:§7 "+AutoPot.heal);
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Pyro:");
+		disV("AutoPot");
 		ModuleManager.values.add("Mode:§7 "+Pyro.mode);
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
+		disV("Pyro");
 		TpBack tp = TpBack.getInstance();
-		ModuleManager.values.add("TpBack:");		
 		ModuleManager.values.add("Seuil de vie:§7 "+tp.getVie());
 		ModuleManager.values.add("Classic:§7 "+(tp.isClassic() ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("Top:§7 "+(tp.isTop() ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("Spawn:§7 X:"+tp.getSpawn().getX()+" Y:"+tp.getSpawn().getY()+" Z:"+tp.getSpawn().getZ());
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
+		disV("TpBack");
 		Ping p = Ping.getPing();
-		ModuleManager.values.add("Ping:");
 		ModuleManager.values.add("Fake ms:§7 "+p.getDelay());
 		ModuleManager.values.add("Freezer:§7 "+p.isFreezer());
 		ModuleManager.values.add("Random:§7 "+p.isRandom());
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
+		disV("Ping");
 		Irc irc = Irc.getInstance();
-		ModuleManager.values.add("Irc:");
 		ModuleManager.values.add("Irc mode:§7 "+irc.getMode());
 		ModuleManager.values.add("Irc messages join/left:§7 "+(irc.isHideJl() ? "Cachés" : "Affichés"));
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
+		ModuleManager.values.add("Irc playerclic:§7 "+irc.getPClic());
+		ModuleManager.values.add("Irc prefix:§7 "+irc.getPrefix());
+		disV("Irc");
 		NekoChat nc = NekoChat.getChat();
-		ModuleManager.values.add("NekoChat:");
 		ModuleManager.values.add("Color:§7 "+nc.getColor());
 		ModuleManager.values.add("Largeur:§7 "+nc.getWidth());
 		ModuleManager.values.add("Hauteur:§7 "+nc.getHeight());
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
+		disV("NekoChat");
 		Register r = Register.getReg();
-		ModuleManager.values.add("Register mdp:§7 "+r.getMdp());
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
-		ModuleManager.values.add("Punkeel:");
+		ModuleManager.values.add("Mdp de base:§7 "+r.getMdp());
+		disV("Register");
 		ModuleManager.values.add("Delay: "+Punkeel.delay+"sec");
 		ModuleManager.values.add("Attack: "+(Punkeel.attack ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("- - - - - - - - - - - - - - - - -");
+		disV("Punkeel");
 		
 		
-		int j=0;
-		int k=0;
-		int i=30;
-		for (String s : ModuleManager.values) {
-			if ((page-1)*i<=j && (page)*i>j) {
-				addChat(s);
-				k++;
-			}
-			j++;
-		}
-		if (k==i) {
-			addChat("§aPour afficher la page suivante, taper "+var.prefixCmd+"value "+(page+1)+" !");
-		}
 		
+		ModuleManager.values.add("Total de bonus ramassé: "+ neko.module.modules.render.Render.bonusCount);
+		disV("Statistics");
 	}
 	
 	public static String isNyah() {
@@ -2245,7 +2235,7 @@ public class Utils {
 		                for (String st : c.getListPlayer())
 		                	pl+=st+":";
 		                s+=c.getCmd2()+"\n"+pl+"\n"+Register.getReg().getMdp()+"\n"+God.getInstance().getBackup()+"\n"+Highjump.getJump().getHeight()+"\n";
-		                s+=TutoManager.getTuto().isDone()+"\n"+Nuker.safe+"\n"+KillAura.ec+"\n"+Punkeel.attack+"\n"+Punkeel.delay+"\n"+Fastbow.getFast().getPacket()+"\n";
+		                s+=TutoManager.getTuto().isDone()+"\n"+Nuker.safe+"\n"+KillAura.speed+"\n"+Punkeel.attack+"\n"+Punkeel.delay+"\n"+Fastbow.getFast().getPacket()+"\n";
 		                s+=Step.getStep().isBypass()+"\n";
 		                writer.write(s);
 		                writer.flush();
@@ -2345,7 +2335,7 @@ public class Utils {
         			msg+="["+(k+1)+"] "+tab[0]+" "+mdp;
         		else
         			msg+="["+(k+1)+"] "+tab[0]+" "+mdp+" - Utilisé";
-        		addChat2("§6"+msg, var.prefixCmd+"log "+(k+1), "§7Cliquez ici pour vous log dans le compte nÂ°"+(k+1), false, Chat.Click);
+        		addChat2("§6"+msg, var.prefixCmd+"log "+(k+1), "§7Cliquez ici pour vous log dans le compte n°"+(k+1), false, Chat.Click);
         	}
 			addChat("=========================");
 		}
@@ -2856,7 +2846,7 @@ public class Utils {
 	                	if (i==152)
 	                		Nuker.safe=Boolean.parseBoolean(ligne);
 	                	if (i==153)
-	                		KillAura.ec=Boolean.parseBoolean(ligne);
+	                		KillAura.speed=Double.parseDouble(ligne);
 	                	if (i==154)
 	                		Punkeel.attack=Boolean.parseBoolean(ligne);
 	                	if (i==155)
@@ -3415,7 +3405,7 @@ public class Utils {
 	}
 	
 	public static String getSolo() {
-		int randy = (int) Math.round(Math.random()*9);
+		int randy = (int) Math.round(Math.random()*8);
 		String s = "Solo - ";
 		switch (randy) {
 			case 0:s+="Seul au monde D:";break;
@@ -3432,7 +3422,7 @@ public class Utils {
 	}
 	
 	public static String getMulti() {
-		int randy = (int) Math.round(Math.random()*11);
+		int randy = (int) Math.round(Math.random()*10);
 		String s = "Multi - ";
 		switch (randy) {
 			case 0:s+="§eVoler des elos ;3";break;
@@ -3496,7 +3486,7 @@ public class Utils {
 		case 16:nyah="J'ai besoin d'aide...help...:C";mc.thePlayer.playSound("mob.ghast.scream", 1.0F, 1.0F);break;
 		case 17:nyah="Grrrrrr *griffe* nyah ! /~*w*/~";	break;
 		case 18:nyah="Grrrrrr *mord* nyark !";	break;
-		case 19:nyah="Groar I'm a bear \\Â°oÂ°/";	break;
+		case 19:nyah="Groar I'm a bear \\°o°/";	break;
 		case 20:nyah="Ce smiley veut tout dire: ;3";mc.thePlayer.playSound("mob.villager.yes", 1.0F, 1.0F);break;
 		case 21:nyah="J'aime mon pays madame oui !";mc.thePlayer.playSound("records.strad", 1.0F, 1.0F);checkXp(rand);break;
 		case 22:nyah="Soyons en paix";checkXp(rand);break;
@@ -3513,9 +3503,9 @@ public class Utils {
 		case 33:nyah="Force bleu ! Force rouge ! Force jaune ! Force Nyaaaah !";break;
 		case 34:nyah="Par le pouvor du nyah, je vais te nyanyater =w=";break;
 		case 35:nyah="Qui est ce petit Neko aux couleurs bleu :o";break;
-		case 36:nyah="Pantsuuuu~ \'Â°wÂ°/";break;
+		case 36:nyah="Pantsuuuu~ \'°w°/";break;
 		case 37:nyah="Oppai :3";break;
-		case 38:nyah="Ka-ka-ka-kawaii Â°wÂ° !";break;
+		case 38:nyah="Ka-ka-ka-kawaii °w° !";break;
 		case 39:nyah="Quelle belle baleine.";mc.thePlayer.playSound("mob.guardian.curse", 1.0F, 1.0F);checkXp(rand);break;
 		case 40:nyah="Bonjour, je suis tout à fait sain d'esprit.";break;
 		case 41:nyah="'^'";break;
@@ -3541,9 +3531,9 @@ public class Utils {
 		case 61:nyah="Comment cha ? Tu n'as pas pris tes neko quotidiens !?";break;
 		case 62:nyah="Mon petit, les neko ne t'en voudront pas si tu nyanyates en public static :3";break;
 		case 63:nyah="Do you speak Neko ?";break;
-		case 64:nyah="Hi, i'm a kawai and scary neko, do you would play with me Â°wÂ° ?";break;
+		case 64:nyah="Hi, i'm a kawai and scary neko, do you would play with me °w° ?";break;
 		case 65:nyah="Bonjour, le hentai est ma passion, au revoir.";break;
-		case 66:nyah="Je suis un chaton sataniste Nyark Nyark Nyark Â°wÂ°";mc.thePlayer.playSound("mob.enderdragon.end", 1.0F, 1.0F);checkXp(rand);break;
+		case 66:nyah="Je suis un chaton sataniste Nyark Nyark Nyark °w°";mc.thePlayer.playSound("mob.enderdragon.end", 1.0F, 1.0F);checkXp(rand);break;
 		case 67:nyah="Un autre Neko ici ?! Où ça ?!";break;
 		case 68:nyah="Linux est libre comme Neko !";break;
 		case 69:nyah="C'est parti pour un 69 entre neko Nyaaaah !";checkXp(rand);break;
@@ -3564,7 +3554,7 @@ public class Utils {
 		case 84:nyah="Si tu continues je vais te griffer ! ;3";break;
 		case 85:nyah="Que le neko se dénonce !";break;
 		case 86:nyah="Où êtes-vous caché mes petits ;3 ?";break;
-		case 87:nyah="Tellement kawaii Â°WÂ°";break;
+		case 87:nyah="Tellement kawaii °W°";break;
 		case 88:nyah="J'ai perdu mon neko qui fait du Metal :C";mc.thePlayer.playSound("records.mellohi", 1.0F, 1.0F);break;
 		case 89:nyah="NyanNyanNyanNyanNyanNyanNyanNyanNyanNyanNyan";checkXp(rand);mc.thePlayer.playSound("mob.creeper.say", 1.0F, 1.0F);break;
 		case 90:nyah="Nya + nyah = Kawaii";break;
@@ -3647,10 +3637,10 @@ public class Utils {
 		case 167:nyah="Mon petit "+getRandPlayer()+" m'a fait un bisous sur la joue =////= <3";checkXp(rand);break;
 		case 168:nyah="L'intrus est "+getRandPlayer()+" !";break;
 		case 169:nyah="Nyah nyah nyah Bat"+getRandPlayer()+"Nyaaah, nyah nyah nyah Bat"+getRandPlayer()+"Nyaaah !";break;
-		case 170:nyah="Mon sensei s'appelle "+getRandPlayer()+"  mais chut faut pas le dire à "+getRandPlayer()+" Â°wÂ°";checkXp(rand);break;
+		case 170:nyah="Mon sensei s'appelle "+getRandPlayer()+"  mais chut faut pas le dire à "+getRandPlayer()+" °w°";checkXp(rand);break;
 		case 171:nyah=getRandPlayer()+" veut un cookie de "+getRandPlayer();break;
-		case 172:nyah="J'ai sucé "+getRandPlayer()+" et c'étais blbllbl Â°oÂ°";checkXp(rand);break;
-		case 173:nyah=getRandPlayer()+" m'a volé mon innocence Â°wÂ°";break;
+		case 172:nyah="J'ai sucé "+getRandPlayer()+" et c'étais blbllbl °o°";checkXp(rand);break;
+		case 173:nyah=getRandPlayer()+" m'a volé mon innocence °w°";break;
 		case 174:nyah=getRandPlayer()+", ma bite est grande en toi";break;
 		case 175:nyah="Je t'aime "+getRandPlayer()+", tu es tout kawaii nyaaaah *W*";checkXp(rand);break;
 		case 176:nyah="Ogenki desu ka "+getRandPlayer()+"-san ?";break;
@@ -3671,7 +3661,7 @@ public class Utils {
 		case 191:nyah="Jean-robert ! Arrête de jouer avec ça !";break;
 		case 192:nyah="Je vous l'avais dit...";break;
 		case 193:nyah="Qui allons-nous torturer aujourd'hui nyark nyark nyark >:3 ?";mc.thePlayer.playSound("mob.wither.idle", 1.0F, 1.0F);break;
-		case 194:nyah="ça a l'air appétissant Â°wÂ°";break;
+		case 194:nyah="ça a l'air appétissant °w°";break;
 		case 195:nyah="Kono baka !";break;
 		case 196:nyah="Kono butsu !";break;
 		case 197:nyah="Bandes de pervers !";break;
@@ -3692,8 +3682,8 @@ public class Utils {
 		case 212:nyah="Tu me met mal à l'aise avec ton skin bizarre "+getRandPlayer()+" >:s";mc.thePlayer.playSound("mob.wither.idle", 1.0F, 1.0F);break;
 		case 213:nyah="T'as changé, je ne te reconnais plus "+getRandPlayer()+" !";break;
 		case 214:nyah="Arrête ça c'est sensible ici... Naaaaah =///=";break;
-		case 215:nyah="Â°WÂ° C'est mal Â°WÂ°";break;
-		case 216:nyah="Â°WÂ° ^W^ Nyah ^W^ Â°WÂ°";break;
+		case 215:nyah="°W° C'est mal °W°";break;
+		case 216:nyah="°W° ^W^ Nyah ^W^ °W°";break;
 		case 217:nyah="Mais, mais ! C'est mamie qui l'a fait !";break;
 		case 218:nyah="Taco Power !";break;
 		case 219:nyah="Taco Powa !";break;
@@ -3713,9 +3703,9 @@ public class Utils {
 		case 233:nyah="J'ai adoré la nuit que j'ai passée avec toi "+getRandPlayer()+" :3";break;
 		case 234:nyah="Owiii plus fort ! Vas-y plus fort "+getRandPlayer()+" >:3 !";break;
 		case 235:nyah="Pousse pousse !";break;
-		case 236:nyah="Comme c'est étroit ici Â°wÂ°";break;
+		case 236:nyah="Comme c'est étroit ici °w°";break;
 		case 237:nyah="Ce sera notre petit secret...";break;
-		case 238:nyah="Bonjour, je suis le nÂ°"+rand*neko;break;
+		case 238:nyah="Bonjour, je suis le n°"+rand*neko;break;
 		case 239:nyah="Aaaaah ! il fait tout noir là dedans :c";break;
 		case 240:nyah="Elle est vachement grosse :o";mc.thePlayer.playSound("mob.wither.idle", 1.0F, 1.0F);break;
 		case 241:nyah="Toute dur owww :3";break;
@@ -3736,9 +3726,9 @@ public class Utils {
 		case 256:nyah="Neko girl un jour, Neko girl toujours ! Hyaaaaaaaw ! <3";break;
 		case 257:nyah="C'est dur de tout avaler "+getRandPlayer()+" :c";break;
 		case 258:nyah="Les jours de pluie je pense au TryTry Satanique qui me violente dans sa cabane... /o/";break;
-		case 259:nyah="L'homme habillé en rose paillete dans les bois m'a choqué à vie Â°pÂ°";break;
+		case 259:nyah="L'homme habillé en rose paillete dans les bois m'a choqué à vie °p°";break;
 		case 260:nyah="Oh naaaaan...Je l'ai encore mouillé...c'est tout collant maintenant :c";mc.thePlayer.playSound("mob.guardian.flop", 1.0F, 1.0F);break;
-		case 261:nyah="Diversity me berce jusqu'à l'extase Â°wÂ°";break;
+		case 261:nyah="Diversity me berce jusqu'à l'extase °w°";break;
 		case 262:nyah="J'ai trop consommé de cette drogue, elle me perverti doucement...he-help me !";break;
 		case 263:nyah="Ah bah bravo "+getRandPlayer()+", t'as tout gagné ! Vu tout ce que t'as sortis... :o";mc.thePlayer.playSound("mob.guardian.flop", 1.0F, 1.0F);break;
 		case 264:nyah="Owi ce beau jet";break;
@@ -3965,7 +3955,7 @@ public class Utils {
 		case 485:nyah="Où est-il !? Le grand ambassadeur doit-être ici !";break;
 		case 486:nyah="Co-que..que fais-tu >////> !?";break;
 		case 487:nyah=":r Tu n'est pas encore assez bon, je vais t'apprendre voyons :3";break;
-		case 488:nyah="La VR est magique Â°wÂ°";break;
+		case 488:nyah="La VR est magique °w°";break;
 		case 489:nyah="Les "+var.rang.getName()+" domineront !";break;
 		case 490:nyah="Je suis une fille innocente toute mimi :3";break;
 		case 491:nyah="I'm a cute little girl :3";break;
@@ -4019,7 +4009,7 @@ public class Utils {
 		case 539:nyah="HIAAA";break;
 		case 540:nyah="Crcrcrcrcrcr";break;
 		case 551:nyah="Krkrkrkkrkrkrk";break;
-		case 552:nyah="J'en bave rien que d'imaginer Â°^Â°";break;
+		case 552:nyah="J'en bave rien que d'imaginer °^°";break;
 		case 553:nyah="Excitant";break;
 		case 554:nyah="Je les aimes grillés ;3";break;
 		case 555:nyah="Je les aimes rebondissantes ;3";break;

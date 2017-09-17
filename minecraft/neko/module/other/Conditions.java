@@ -36,15 +36,17 @@ public class Conditions extends Module {
 		if (count>=20 && this.isActive) {
 			count=0;
 			if (!mc.isSingleplayer()) {
-				if (mc.getCurrentServerData().serverIP.equalsIgnoreCase(this.serv) && !this.serv.equalsIgnoreCase(this.activeServer)) {
-					var.tempBonus=this.bonus;
-					TempBon t = new TempBon(sec);
-					this.activeServer=this.serv;
-					if (this.bonus>0)
-						u.addChat("§aBonus cadeau de §d"+Math.round(bonus)+"% §aajouté :3 !");
-					else 
-						u.addChat("§cMalus cadeau de §d"+Math.round(bonus)+"% §cajouté >:3 !");
-				}
+				try {
+					if (mc.getCurrentServerData().serverIP.equalsIgnoreCase(this.serv) && !this.serv.equalsIgnoreCase(this.activeServer)) {
+						var.tempBonus=this.bonus;
+						TempBon t = new TempBon(sec);
+						this.activeServer=this.serv;
+						if (this.bonus>0)
+							u.addChat("§aBonus cadeau de §d"+Math.round(bonus)+"% §aajouté :3 !");
+						else 
+							u.addChat("§cMalus cadeau de §d"+Math.round(bonus)+"% §cajouté >:3 !");
+					}
+				} catch (Exception e) {}
 			}
 			
 			

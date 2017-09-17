@@ -73,7 +73,7 @@ class checkXp implements ActionListener {
 					var.xp-=var.xpMax;
 					var.xpMax+=Utils.getRandInt(var.niveau*80);
 					for (Lock lock : ModuleManager.Lock) {
-						if (lock.getUnit().equalsIgnoreCase("Lvl") && lock.getCout()==var.niveau && lock.isLock()) {
+						if (lock.getUnit().equalsIgnoreCase("Lvl") && lock.getCout()<=var.niveau && lock.isLock()) {
 							Utils.unlock(lock.getName());
 							Utils.addChat("§d"+lock.getType()+" "+lock.getName().replaceAll("--", var.prefixCmd)+" débloqué"+(lock.getType().equalsIgnoreCase("Commande") ? "e" : "" )+" !");
 						}
