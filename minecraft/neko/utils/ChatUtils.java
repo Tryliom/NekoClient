@@ -1442,6 +1442,7 @@ public class ChatUtils {
 				} else if (args[1].equalsIgnoreCase("packet") && args.length>=3) {
 					if (Utils.isInteger(args[2])) {
 						Fastbow.getFast().setPacket(Integer.parseInt(args[2]));
+						Utils.addChat("§aLes paquets envoyés sont mis à "+args[2]+" !");
 					} else {
 						Utils.addChat(err);
 					}
