@@ -155,8 +155,8 @@ public class KillAura extends Module {
     }
     
     public static synchronized void faceEntity(EntityLivingBase entity) {
-    	mc.thePlayer.rotationPitch=((float)(mc.thePlayer.rotationPitch + getPitchChange(entity) / speed+1*Math.random()));
-    	mc.thePlayer.rotationYaw=((float)(mc.thePlayer.rotationYaw + getYawChange(entity) / speed+1*Math.random()));
+    	mc.thePlayer.rotationPitch=((float)(mc.thePlayer.rotationPitch + getPitchChange(entity) / (speed+1*Math.random())));
+    	mc.thePlayer.rotationYaw=((float)(mc.thePlayer.rotationYaw + getYawChange(entity) / (speed+1*Math.random())));
 	}
     
 	 public static float getPitchChange(Entity entity)

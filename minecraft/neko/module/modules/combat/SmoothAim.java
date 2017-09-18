@@ -47,9 +47,9 @@ public class SmoothAim extends Module {
 	          if (this.target != null)
 	          {
 	            EntityPlayerSP tmp98_95 = mc.thePlayer;
-	            tmp98_95.rotationPitch = ((float)(tmp98_95.rotationPitch + getPitchChange(this.target) / this.speed));
+	            tmp98_95.rotationPitch = ((float)(tmp98_95.rotationPitch + getPitchChange(this.target) / (this.speed+1*Math.random())));
 	            EntityPlayerSP tmp125_122 = mc.thePlayer;
-	            tmp125_122.rotationYaw = ((float)(tmp125_122.rotationYaw + getYawChange(this.target) / this.speed));
+	            tmp125_122.rotationYaw = ((float)(tmp125_122.rotationYaw + getYawChange(this.target) / (this.speed+1*Math.random())));
 	          }
 	        }
 	      }

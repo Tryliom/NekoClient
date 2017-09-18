@@ -1241,13 +1241,16 @@ public class Utils {
 		Register r = Register.getReg();
 		ModuleManager.values.add("Mdp de base:§7 "+r.getMdp());
 		disV("Register");
-		ModuleManager.values.add("Delay: "+Punkeel.delay+"sec");
-		ModuleManager.values.add("Attack: "+(Punkeel.attack ? "§aActivé" : "§cDésactivé"));
+		ModuleManager.values.add("Delay:§7 "+Punkeel.delay+"sec");
+		ModuleManager.values.add("Attack:§7 "+(Punkeel.attack ? "§aActivé" : "§cDésactivé"));
 		disV("Punkeel");
 		
 		
 		
-		ModuleManager.values.add("Total de bonus ramassé: "+ neko.module.modules.render.Render.bonusCount);
+		ModuleManager.values.add("Total de bonus ramassé:§7 "+ neko.module.modules.render.Render.bonusCount);
+		ModuleManager.values.add("Bonus d'xp permanent:§7 "+ var.bonus+"%");
+		ModuleManager.values.add("Bonus d'xp du rang:§7 "+ var.rang.getBonus()+"%");
+		ModuleManager.values.add("Autre bonus d'xp:§7 "+ var.tempBonus+"%");
 		disV("Statistics");
 	}
 	
