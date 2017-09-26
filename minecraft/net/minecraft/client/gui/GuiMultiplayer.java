@@ -163,7 +163,8 @@ public class GuiMultiplayer extends GuiScreen implements GuiYesNoCallback
             	try {
 	                this.mc.theWorld.sendQuittingDisconnectingPacket();
 	                this.mc.loadWorld((WorldClient)null);
-	                GuiConnecting.networkManager.getNetHandler().onDisconnect(new ChatComponentText(""));
+	                if (!mc.isSingleplayer())
+	                	GuiConnecting.networkManager.getNetHandler().onDisconnect(new ChatComponentText(""));
             	} catch (Exception e) {}
                 this.connectToSelected();
             } else if (button.id == -1)

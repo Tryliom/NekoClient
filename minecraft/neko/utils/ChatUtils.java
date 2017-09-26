@@ -223,7 +223,7 @@ public class ChatUtils {
 						mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 						this.mc.displayGuiScreen((GuiScreen)null);
 						return;
-					} else if (Utils.isLock(m.getName())) {
+					} else if (m.getName().toLowerCase().equalsIgnoreCase(s) && Utils.isLock(m.getName())) {
 						Utils.addWarn(m.getName());
 					}
 				}
@@ -232,7 +232,7 @@ public class ChatUtils {
 			
 			for (Lock l : ModuleManager.Lock) {
 				String s = l.getName();
-				if (s.startsWith(var3) && Utils.isLock(s)) {
+				if (var3.startsWith(var.prefixCmd+s) && Utils.isLock(s)) {
 					Utils.addWarn(s);
 					return;
 				}

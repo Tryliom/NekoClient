@@ -49,64 +49,64 @@ import neko.lock.Lock;
 import neko.module.Category;
 import neko.module.Module;
 import neko.module.ModuleManager;
-import neko.module.modules.misc.Antiafk;
 import neko.module.modules.combat.AutoClic;
-import neko.module.modules.misc.AutoMLG;
 import neko.module.modules.combat.AutoPot;
-import neko.module.modules.player.Autoarmor;
 import neko.module.modules.combat.Autosoup;
-import neko.module.modules.player.Build;
-import neko.module.modules.misc.CallCmd;
-import neko.module.modules.special.PunKeel;
-import neko.module.modules.player.Cheststealer;
 import neko.module.modules.combat.ClickAim;
-import neko.module.modules.movements.Dolphin;
-import neko.module.modules.special.DropShit;
 import neko.module.modules.combat.Fastbow;
-import neko.module.modules.player.Fasteat;
-import neko.module.modules.player.Fire;
-import neko.module.modules.special.FireTrail;
-import neko.module.modules.movements.Flight;
-import neko.module.modules.movements.Freecam;
+import neko.module.modules.combat.KillAura;
+import neko.module.modules.combat.Reach;
+import neko.module.modules.combat.Regen;
+import neko.module.modules.combat.SmoothAim;
+import neko.module.modules.combat.Trigger;
 import neko.module.modules.hide.Friends;
-import neko.module.modules.movements.Glide;
 import neko.module.modules.hide.God;
 import neko.module.modules.hide.Gui;
-import neko.module.modules.render.HUD;
-import neko.module.modules.movements.Highjump;
-import neko.module.modules.render.ItemESP;
-import neko.module.modules.combat.KillAura;
-import neko.module.modules.movements.Longjump;
 import neko.module.modules.hide.Lot;
 import neko.module.modules.hide.Plugins;
-import neko.module.modules.render.NekoChat;
-import neko.module.modules.movements.NoClip;
-import neko.module.modules.player.Nuker;
-import neko.module.modules.render.Paint;
+import neko.module.modules.misc.Antiafk;
+import neko.module.modules.misc.AutoMLG;
+import neko.module.modules.misc.CallCmd;
 import neko.module.modules.misc.Phase;
 import neko.module.modules.misc.Ping;
-import neko.module.modules.render.Power;
-import neko.module.modules.player.PushUp;
-import neko.module.modules.special.Pyro;
-import neko.module.modules.render.Radar;
-import neko.module.modules.combat.Reach;
-import neko.module.modules.special.Reflect;
-import neko.module.modules.combat.Regen;
 import neko.module.modules.misc.Register;
-import neko.module.modules.combat.SmoothAim;
-import neko.module.modules.special.SpamBot;
+import neko.module.modules.misc.Timer;
+import neko.module.modules.movements.Dolphin;
+import neko.module.modules.movements.Flight;
+import neko.module.modules.movements.Freecam;
+import neko.module.modules.movements.Glide;
+import neko.module.modules.movements.Highjump;
+import neko.module.modules.movements.Longjump;
+import neko.module.modules.movements.NoClip;
 import neko.module.modules.movements.Speed709;
 import neko.module.modules.movements.Step;
-import neko.module.modules.misc.Timer;
-import neko.module.modules.special.TpBack;
-import neko.module.modules.render.Tracers;
-import neko.module.modules.combat.Trigger;
-import neko.module.modules.special.VanillaTp;
+import neko.module.modules.player.Autoarmor;
+import neko.module.modules.player.Build;
+import neko.module.modules.player.Cheststealer;
+import neko.module.modules.player.Fasteat;
+import neko.module.modules.player.Fire;
+import neko.module.modules.player.Nuker;
+import neko.module.modules.player.PushUp;
 import neko.module.modules.player.Velocity;
+import neko.module.modules.render.HUD;
+import neko.module.modules.render.ItemESP;
+import neko.module.modules.render.NekoChat;
+import neko.module.modules.render.Paint;
+import neko.module.modules.render.Power;
+import neko.module.modules.render.Radar;
+import neko.module.modules.render.Tracers;
 import neko.module.modules.render.Wallhack;
 import neko.module.modules.render.Water;
 import neko.module.modules.render.WorldTime;
 import neko.module.modules.render.Xray;
+import neko.module.modules.special.DropShit;
+import neko.module.modules.special.FireTrail;
+import neko.module.modules.special.PunKeel;
+import neko.module.modules.special.Pyro;
+import neko.module.modules.special.Reflect;
+import neko.module.modules.special.SpamBot;
+import neko.module.modules.special.TpBack;
+import neko.module.modules.special.VanillaTp;
 import neko.module.other.Active;
 import neko.module.other.BddManager;
 import neko.module.other.Chat;
@@ -125,6 +125,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiMainMenu;
+import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -149,6 +150,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IChatComponent;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.Session;
 import net.minecraft.world.WorldSettings.GameType;
 
@@ -292,7 +294,7 @@ public class Utils {
 	}
 	
 	public static void addWarn(String m) {
-		if (verif==null) {
+		if (verif==null && display) {
 			Minecraft.getMinecraft().ingameGUI.getChatGUI().printChatMessage(new ChatComponentText("§8[§9Neko§8]§c "+m+"§6 n'as pas encore été débloqué !"));
 			mc.thePlayer.playSound("mob.villager.no", 1.0F, 1.0F);
 		}
@@ -681,25 +683,85 @@ public class Utils {
 		                mc.theWorld.sendQuittingDisconnectingPacket();
 		                mc.loadWorld((WorldClient)null);		                
 	            	} catch (Exception e) {}
-					try {
-						GuiConnecting.networkManager.getNetHandler().onDisconnect(new ChatComponentText(""));
-					} catch (Exception e) {}
-					try {
-						GuiConnecting.networkManager.closeChannel(null);
-					} catch (Exception e) {}
-					try {
-						GuiConnecting.networkManager.getNetHandler().setDisconnected(true);
-					} catch (Exception e) {}
+					if (!mc.isSingleplayer()) {
+						try {
+							GuiConnecting.networkManager.getNetHandler().onDisconnect(new ChatComponentText(""));
+						} catch (Exception e) {}
+						try {
+							GuiConnecting.networkManager.closeChannel(null);
+						} catch (Exception e) {}
+						try {
+							GuiConnecting.networkManager.getNetHandler().setDisconnected(true);
+						} catch (Exception e) {}
+					}
 					try {
 						this.wait(200);
 					} catch (InterruptedException e) {}
-					mc.displayGuiScreen(new GuiConnecting(mc.currentScreen, mc, sd));
+					mc.displayGuiScreen(new GuiConnecting(new GuiMultiplayer(new GuiMainMenu()), mc, sd));
 				} catch (Exception e) {
 					mc.displayGuiScreen(null);
 				}
 			}
 		}).start();
 	}
+	
+	public static void faceEntity(EntityLivingBase entity) {
+    	mc.thePlayer.rotationPitch=((float)(mc.thePlayer.rotationPitch + getPitchChange(entity) / (1+1*Math.random())));
+    	mc.thePlayer.rotationYaw=((float)(mc.thePlayer.rotationYaw + getYawChange(entity) / (1+1*Math.random())));
+	}
+    
+	 public static float getPitchChange(Entity entity)
+	  {
+	    double deltaX = entity.posX - mc.thePlayer.posX;
+	    double deltaZ = entity.posZ - mc.thePlayer.posZ;
+	    double deltaY = entity.posY - 2.2D + entity.getEyeHeight() - mc.thePlayer.posY;
+	    double distanceXZ = MathHelper.sqrt_double(deltaX * deltaX + deltaZ * deltaZ);
+	    double pitchToEntity = -Math.toDegrees(Math.atan(deltaY / distanceXZ));
+	    return -MathHelper.wrapAngleTo180_float(mc.thePlayer.rotationPitch - (float)pitchToEntity) - 
+	      2.5F;
+	  }
+	  
+	  public static float getYawChange(Entity entity)
+	  {
+	    double deltaX = entity.posX - mc.thePlayer.posX;
+	    double deltaZ = entity.posZ - mc.thePlayer.posZ;
+	    double yawToEntity = 0.0D;
+	    if ((deltaZ < 0.0D) && (deltaX < 0.0D)) {
+	      yawToEntity = 90.0D + Math.toDegrees(Math.atan(deltaZ / deltaX));
+	    } else if ((deltaZ < 0.0D) && (deltaX > 0.0D)) {
+	      yawToEntity = -90.0D + Math.toDegrees(Math.atan(deltaZ / deltaX));
+	    } else {
+	      yawToEntity = Math.toDegrees(-Math.atan(deltaX / deltaZ));
+	    }
+	    return MathHelper.wrapAngleTo180_float(-(mc.thePlayer.rotationYaw - (float)yawToEntity));
+	  }
+	
+	public static void faceBowEntityClient(Entity target)
+	  {
+	    int bowCharge = mc.thePlayer.getItemInUseCount();
+	    float velocity = bowCharge / 20;
+	    velocity = (velocity * velocity + velocity * 2.0F) / 3.0F;
+	    if (velocity < 0.1D)
+	    {
+	      if ((target instanceof EntityLivingBase)) {
+	        faceEntity((EntityLivingBase) target);
+	      }
+	      return;
+	    }
+	    if (velocity > 1.0F) {
+	      velocity = 1.0F;
+	    }
+	    double posX = target.posX + (target.posX - target.prevPosX) * 5.0D - mc.thePlayer.posX;
+	    double posY = target.posY + (target.posY - target.prevPosY) * 5.0D + target.getEyeHeight() - 0.15D - mc.thePlayer.posY - mc.thePlayer.getEyeHeight();
+	    double posZ = target.posZ + (target.posZ - target.prevPosZ) * 5.0D - mc.thePlayer.posZ;
+	    float yaw = (float)(Math.atan2(posZ, posX) * 180.0D / 3.141592653589793D) - 90.0F;
+	    double y2 = Math.sqrt(posX * posX + posZ * posZ);
+	    float g = 0.006F;
+	    float tmp = (float)(velocity * velocity * velocity * velocity - g * (g * (y2 * y2) + 2.0D * posY * (velocity * velocity)));
+	    float pitch = (float)-Math.toDegrees(Math.atan((velocity * velocity - Math.sqrt(tmp)) / (g * y2)));
+	    mc.thePlayer.rotationYaw = yaw;
+	    mc.thePlayer.rotationPitch = pitch;
+	  }
 	
 	public static String getCoord(EntityPlayer p) {
 		return "X: "+Math.round(p.posX)+" Y: "+Math.round(p.posY)+" Z: "+Math.round(p.posZ);

@@ -1986,7 +1986,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                     	for(Module eventModule : var.moduleManager.ActiveModule) {
                     		if(Keyboard.getEventKey() == eventModule.getBind() && Utils.verif==null && !Utils.isLock(eventModule.getName())) {
                     			eventModule.toggleModule();
-                    		} else if (Utils.isLock(eventModule.getName())) {
+                    		} else if (Keyboard.getEventKey() == eventModule.getBind() && Utils.verif==null && Utils.isLock(eventModule.getName())) {
                     			Utils.addWarn(eventModule.getName());
                     		}
                     	}

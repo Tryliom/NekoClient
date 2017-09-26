@@ -100,7 +100,10 @@ public class GuiManager extends AbstractGuiManager  {
 							button.addButtonListener(new ButtonListener(){
 								@Override
 								public void onButtonPress(Button button){
-									m.toggleModule();
+									if (!Utils.isLock(m.getName()))
+										m.toggleModule();
+									else
+										Utils.addWarn(m.getName());
 									if (!m.isCmd())
 										button.setForegroundColor(m.getToggled() ? Utils.shouldChat(m) ? new Color(120, 190, 120, 220) : button.getForegroundColor() : new Color(120, 120, 190, 220));
 								}
@@ -118,7 +121,10 @@ public class GuiManager extends AbstractGuiManager  {
 					button.addButtonListener(new ButtonListener(){
 						@Override
 						public void onButtonPress(Button button) {							
-							m.toggleModule();
+							if (!Utils.isLock(m.getName()))
+								m.toggleModule();
+							else
+								Utils.addWarn(m.getName());
 							if (!m.isCmd())
 								button.setForegroundColor(m.getToggled() ? Utils.shouldChat(m) ? new Color(120, 190, 120, 220) : button.getForegroundColor() : new Color(120, 120, 190, 220));
 						}
