@@ -33,7 +33,7 @@ public class Tracers extends Module {
 		for (Object o : var.mode.equals("Player") ? mc.theWorld.playerEntities : mc.theWorld.loadedEntityList) {
 			if (o instanceof EntityLivingBase) {
 				EntityLivingBase entity = (EntityLivingBase) o;     
-	        	if (!entity.isDead && entity!=mc.thePlayer && (friend ? true : !Friends.isFriend(entity.getName())) && (var.mode.equals("Mob") ? !u.isPlayer(entity) : true)) {
+	        	if (!entity.isDead && entity!=mc.thePlayer && !entity.getName().isEmpty() && (friend ? true : !Friends.isFriend(entity.getName())) && (var.mode.equals("Mob") ? !u.isPlayer(entity) : true)) {
 	        		RenderUtils.drawTracerLine(u.getX(entity), u.getY(entity) + 1F, u.getZ(entity), cR, cG, cB, 0.5F, width);
 	        	}
 			}
