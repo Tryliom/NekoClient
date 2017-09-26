@@ -10,15 +10,15 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.network.Packet;
 
-public class Punkeel extends Module {
+public class PunKeel extends Module {
 	public static ArrayList<Packet> packet = new ArrayList<Packet>();
 	public static boolean isOn;
 	private int count;
 	public static Double delay = 1.0;
 	public static boolean attack = false;
 	
-	public Punkeel() {
-		super("Punkeel", -1, Category.Special);
+	public PunKeel() {
+		super("PunKeel", -1, Category.Special);
 	}
 	
 	public void onEnabled() {	

@@ -61,7 +61,7 @@ import neko.module.modules.movements.NoClip;
 import neko.module.modules.player.Nuker;
 import neko.module.modules.render.Paint;
 import neko.module.modules.render.Power;
-import neko.module.modules.special.Punkeel;
+import neko.module.modules.special.PunKeel;
 import neko.module.modules.player.PushUp;
 import neko.module.modules.special.Pyro;
 import neko.module.modules.render.Radar;
@@ -4562,14 +4562,14 @@ public class ChatUtils {
 				} else if (args.length>=2) {
 					// Attack et delay
 					if (args[1].equalsIgnoreCase("attack")) {
-						if (Punkeel.attack) {
+						if (PunKeel.attack) {
 							Utils.addChat("§cMode Attack du Punkeel désactivé !");
 						} else {
 							Utils.addChat("§aMode Attack du Punkeel activé !");
 						}
-						Punkeel.attack=!Punkeel.attack;
+						PunKeel.attack=!PunKeel.attack;
 					} else if (args[1].equalsIgnoreCase("delay") && args.length>=3 && Utils.isDouble(args[2])) {
-						Punkeel.delay = Double.parseDouble(args[2]);
+						PunKeel.delay = Double.parseDouble(args[2]);
 						Utils.addChat("§aDelay du Punkeel mis à "+args[2]+"sec !");
 					}
 					

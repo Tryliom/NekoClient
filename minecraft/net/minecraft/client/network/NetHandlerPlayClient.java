@@ -24,7 +24,7 @@ import io.netty.buffer.Unpooled;
 import joptsimple.internal.Strings;
 import neko.Client;
 import neko.module.modules.movements.Blink;
-import neko.module.modules.special.Punkeel;
+import neko.module.modules.special.PunKeel;
 import neko.module.modules.combat.KillAura;
 import neko.module.modules.misc.Ping;
 import neko.module.modules.hide.Plugins;
@@ -898,9 +898,9 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     		return;
     	}
     	
-    	if (Punkeel.isOn) {
-    		if (!(p_147297_1_ instanceof C01PacketChatMessage) && Punkeel.attack ? !(p_147297_1_ instanceof C02PacketUseEntity) : true) {
-    			Punkeel.packet.add(p_147297_1_);
+    	if (PunKeel.isOn) {
+    		if (!(p_147297_1_ instanceof C01PacketChatMessage) && PunKeel.attack ? !(p_147297_1_ instanceof C02PacketUseEntity) : true) {
+    			PunKeel.packet.add(p_147297_1_);
         		return;
     		}
     	}
