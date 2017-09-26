@@ -23,9 +23,7 @@ public class Flash extends Module {
 		return instance;
 	}
 	
-	public void onEnabled() {		
-		if (u.isLock(this.getName()))
-			return;
+	public void onEnabled() {
 		this.lastPos=mc.thePlayer.getPosition();
 	    this.fakePlayer = new EntityOtherPlayerMP(mc.theWorld, mc.thePlayer.getGameProfile());
 	    this.fakePlayer.clonePlayer(mc.thePlayer, true);

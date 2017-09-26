@@ -217,15 +217,25 @@ public class ChatUtils {
 			if (args.length==1) {
 				String s = args[0].replaceFirst(var.prefixCmd, "").toLowerCase();		
 				for (Module m : ModuleManager.ActiveModule) {
-					if (m.getName().toLowerCase().equalsIgnoreCase(s)) {
+					if (m.getName().toLowerCase().equalsIgnoreCase(s) && !Utils.isLock(m.getName())) {
 						Utils.toggleModule(s);
 						Utils.checkXp(xp);
 						mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 						this.mc.displayGuiScreen((GuiScreen)null);
 						return;
+					} else if (Utils.isLock(m.getName())) {
+						Utils.addWarn(m.getName());
 					}
 				}
 				
+			}
+			
+			for (Lock l : ModuleManager.Lock) {
+				String s = l.getName();
+				if (s.startsWith(var3) && Utils.isLock(s)) {
+					Utils.addWarn(s);
+					return;
+				}
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd + "mode")) {

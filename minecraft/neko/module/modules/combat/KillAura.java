@@ -141,6 +141,8 @@ public class KillAura extends Module {
     	
     	if (premium && Utils.isPremium((en instanceof EntityPlayer) ? (EntityPlayer) en : null))
     		return false;
+    	if (en.getName().isEmpty())
+    		return false;
     	
     	return true;
     }

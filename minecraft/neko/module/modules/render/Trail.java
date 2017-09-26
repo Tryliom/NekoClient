@@ -18,8 +18,6 @@ public class Trail extends Module {
 	}
 	
 	public void onEnabled() {	
-		if (u.isLock(this.getName()))
-			return;
 		super.onEnabled();
 	}
 	
@@ -35,14 +33,6 @@ public class Trail extends Module {
 	}
 	
 	public void onUpdate() {
-		if (u.isLock(this.getName())) {
-			boolean display = u.display;
-			u.display=false;
-			this.isToggled=false;
-			u.display=display;
-			u.addWarn(this.getName());
-			return;
-		}
 		BlockPos b = new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY-1, mc.thePlayer.posZ);
 		Chunk var2 = mc.theWorld.getChunkFromBlockCoords(b);
         Block blockId = var2.getBlock(b.getX(), b.getY(), b.getZ());

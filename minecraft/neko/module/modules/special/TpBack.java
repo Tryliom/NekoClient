@@ -35,16 +35,6 @@ public class TpBack extends Module {
 	}
 	
     public void onUpdate() {
-       
-    	if (u.isLock(this.getName())) {
-			boolean display = u.display;
-			u.display=false;
-			this.isToggled=false;
-			u.display=display;
-			u.addWarn(this.getName());
-			return;
-		}
-        
         if (spawn!=null && mc.thePlayer.getDistance(spawn.getX(), spawn.getY(), spawn.getZ())>4 && mc.thePlayer.getHealth()<vie && delay>10) {         	                                       	
         	int a=spawn.getX();
     		int b=spawn.getY();

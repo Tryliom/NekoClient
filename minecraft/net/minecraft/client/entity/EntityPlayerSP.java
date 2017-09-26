@@ -169,7 +169,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
     	// TODO: Client
     	Client var = Client.getNeko();
     	for(Module eventModule : var.moduleManager.ActiveModule) {
-    		if (eventModule.getToggled()) {
+    		if (eventModule.getToggled() && !Utils.isLock(eventModule.getName())) {
     			eventModule.onUpdate();
     			eventModule.onUpdate(e);
     		}

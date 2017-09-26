@@ -29,8 +29,6 @@ public class Pyro extends Module {
 	}
 	
 	public void onEnabled() {
-		if (u.isLock(this.getName()))
-			return;
 		isOn=true;
 		super.onEnabled();
 	}
@@ -41,14 +39,6 @@ public class Pyro extends Module {
 	}
 	
 	public void onUpdate() {
-		if (u.isLock(this.getName())) {
-			boolean display = u.display;
-			u.display=false;
-			this.isToggled=false;
-			u.display=display;
-			u.addWarn(this.getName());
-			return;
-		}
 		if (!mc.thePlayer.isSneaking()) {
 			isOn=true;			
 		} else if (mc.thePlayer.isSneaking()) {

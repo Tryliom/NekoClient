@@ -20,6 +20,10 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.util.AttributeKey;
 import io.netty.util.concurrent.GenericFutureListener;
+import neko.Client;
+import neko.module.modules.misc.Ping;
+import neko.module.modules.movements.Blink;
+import neko.module.modules.special.PunKeel;
 import neko.utils.Utils;
 
 import java.net.InetAddress;
@@ -27,7 +31,17 @@ import java.net.SocketAddress;
 import java.util.Queue;
 import javax.crypto.SecretKey;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.C00PacketKeepAlive;
+import net.minecraft.network.play.client.C01PacketChatMessage;
+import net.minecraft.network.play.client.C02PacketUseEntity;
+import net.minecraft.network.play.client.C03PacketPlayer;
+import net.minecraft.network.play.client.C07PacketPlayerDigging;
+import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
+import net.minecraft.network.play.client.C09PacketHeldItemChange;
+import net.minecraft.network.play.client.C0APacketAnimation;
+import net.minecraft.network.play.client.C0BPacketEntityAction;
+import net.minecraft.network.play.client.C14PacketTabComplete;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;

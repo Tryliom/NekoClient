@@ -28,16 +28,7 @@ public class VanillaTp extends Module {
 	
 
     @Override
-    public void onToggle() {
-       
-    	if (u.isLock(this.getName())) {
-			boolean display = u.display;
-			u.display=false;
-			this.isToggled=false;
-			u.display=display;
-			u.addWarn(this.getName());
-			return;
-		}    	
+    public void onToggle() {	
     	this.isToggled=false;
         if (mc.thePlayer.isSneaking()) {
         	return;        	

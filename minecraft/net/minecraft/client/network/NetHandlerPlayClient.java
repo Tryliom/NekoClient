@@ -843,7 +843,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         }
     }
 
-    public void addToSendQueue(Packet p_147297_1_) {	
+    public void addToSendQueue(Packet p_147297_1_) {	   
     	Minecraft mc = Minecraft.getMinecraft();
     	Client var = Client.getNeko();
     	//TODO: Freecam & Blink & Unicode	
@@ -899,7 +899,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     	}
     	
     	if (PunKeel.isOn) {
-    		if (!(p_147297_1_ instanceof C01PacketChatMessage) && PunKeel.attack ? !(p_147297_1_ instanceof C02PacketUseEntity) : true) {
+    		if (PunKeel.attack ? !(p_147297_1_ instanceof C02PacketUseEntity) : true) {
     			PunKeel.packet.add(p_147297_1_);
         		return;
     		}

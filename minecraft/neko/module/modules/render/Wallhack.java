@@ -24,10 +24,6 @@ public class Wallhack extends Module {
 	}	
 	
 	public void onEnabled() {		
-		
-		if (u.isLock(this.getName()))
-			return;
-		
 		super.onEnabled();
 	}
 	
@@ -36,15 +32,6 @@ public class Wallhack extends Module {
 	}
 	
 	public void onRender3D() {
-		if (u.isLock(this.getName())) {
-			boolean display = u.display;
-			u.display=false;
-			this.isToggled=false;
-			u.display=display;
-			u.addWarn(this.getName());
-			return;
-		}
-		
 		for (Object o : var.mode.equals("Player") ? mc.theWorld.playerEntities : mc.theWorld.loadedEntityList) {
 			if (o instanceof EntityLivingBase) {
 				EntityLivingBase entity = (EntityLivingBase) o;     
