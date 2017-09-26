@@ -29,7 +29,7 @@ import neko.module.modules.combat.KillAura;
 import neko.module.modules.misc.Ping;
 import neko.module.modules.hide.Plugins;
 import neko.module.other.Irc;
-import neko.module.other.IrcMode;
+import neko.module.other.enums.IrcMode;
 import neko.utils.Utils;
 import net.mcleaks.MCLeaks;
 import net.minecraft.block.Block;

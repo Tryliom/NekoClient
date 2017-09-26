@@ -1,5 +1,7 @@
 package neko.module.other;
 
+import neko.module.other.enums.EventType;
+
 public class Event {
 	public static int lastEventId=-1;
 	public static String lastEvent=null;

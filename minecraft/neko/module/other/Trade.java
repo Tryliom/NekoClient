@@ -1,5 +1,7 @@
 package neko.module.other;
 
+import neko.module.other.enums.Rate;
+
 public class Trade {
 	private String gain;
 	private int count;

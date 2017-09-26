@@ -1,4 +1,4 @@
-package neko.module.other;
+package neko.module.other.enums;
 
 public enum SpeedEnum {
 	Air, Ground;

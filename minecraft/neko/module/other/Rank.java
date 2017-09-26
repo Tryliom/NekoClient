@@ -2,6 +2,8 @@ package neko.module.other;
 
 import java.util.ArrayList;
 
+import neko.module.other.enums.Rate;
+
 public class Rank {
 	private String name;
 	private double bonus;

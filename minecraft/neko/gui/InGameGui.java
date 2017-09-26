@@ -14,7 +14,7 @@ import neko.module.modules.render.HUD;
 import neko.module.modules.render.Radar;
 import neko.module.modules.combat.Regen;
 import neko.module.other.Active;
-import neko.module.other.Rate;
+import neko.module.other.enums.Rate;
 import neko.utils.RenderUtils;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;

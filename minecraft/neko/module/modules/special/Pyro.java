@@ -2,7 +2,7 @@ package neko.module.modules.special;
 
 import neko.module.Category;
 import neko.module.Module;
-import neko.module.other.Form;
+import neko.module.other.enums.Form;
 import neko.utils.TpUtils;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;

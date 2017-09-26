@@ -12,7 +12,7 @@ import neko.module.modules.render.*;
 import neko.module.modules.special.*;
 import neko.module.other.Conditions;
 import neko.module.other.Rank;
-import neko.module.other.Rate;
+import neko.module.other.enums.Rate;
 import neko.utils.Utils;
 
 public class ModuleManager {

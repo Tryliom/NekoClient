@@ -6,7 +6,7 @@ import neko.module.Module;
 import neko.module.modules.combat.KillAura;
 import neko.module.modules.hide.Friends;
 import neko.module.modules.special.FastDura;
-import neko.module.other.Form;
+import neko.module.other.enums.Form;
 import neko.utils.TpUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

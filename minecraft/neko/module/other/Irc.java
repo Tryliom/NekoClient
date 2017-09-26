@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import neko.Client;
 import neko.dtb.RequestThread;
+import neko.module.other.enums.IrcMode;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 

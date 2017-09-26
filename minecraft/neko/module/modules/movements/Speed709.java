@@ -6,7 +6,7 @@ import org.lwjgl.input.Keyboard;
 
 import neko.module.Category;
 import neko.module.Module;
-import neko.module.other.SpeedEnum;
+import neko.module.other.enums.SpeedEnum;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;

@@ -8,7 +8,7 @@ import neko.module.Module;
 import neko.module.ModuleManager;
 import neko.module.other.Bonus;
 import neko.module.other.Rank;
-import neko.module.other.Rate;
+import neko.module.other.enums.Rate;
 import neko.utils.RenderUtils;
 import neko.utils.Utils;
 import net.minecraft.block.Block;

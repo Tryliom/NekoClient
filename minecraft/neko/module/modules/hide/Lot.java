@@ -10,7 +10,7 @@ import neko.module.ModuleManager;
 import neko.module.other.Active;
 import neko.module.other.Bloc;
 import neko.module.other.Rank;
-import neko.module.other.Rate;
+import neko.module.other.enums.Rate;
 import neko.utils.RenderUtils;
 import neko.utils.Utils;
 import net.minecraft.client.particle.EntityFireworkSparkFX;

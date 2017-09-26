@@ -109,17 +109,17 @@ import neko.module.modules.special.TpBack;
 import neko.module.modules.special.VanillaTp;
 import neko.module.other.Active;
 import neko.module.other.BddManager;
-import neko.module.other.Chat;
 import neko.module.other.Conditions;
 import neko.module.other.Irc;
-import neko.module.other.IrcMode;
 import neko.module.other.OnlyRpgManager;
 import neko.module.other.Rank;
-import neko.module.other.Rate;
-import neko.module.other.SpeedEnum;
 import neko.module.other.TempBon;
 import neko.module.other.TutoManager;
 import neko.module.other.Xp;
+import neko.module.other.enums.Chat;
+import neko.module.other.enums.IrcMode;
+import neko.module.other.enums.Rate;
+import neko.module.other.enums.SpeedEnum;
 import net.mcleaks.MCLeaks;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -2807,9 +2807,9 @@ public class Utils {
 	                	if (i==104)
 	                		AutoPot.heal=Integer.parseInt(ligne);
 	                	if (i==105)
-	                		Pyro.mode=neko.module.other.Form.valueOf(ligne);
+	                		Pyro.mode=neko.module.other.enums.Form.valueOf(ligne);
 	                	if (i==106)
-	                		Reach.mode=neko.module.other.Form.valueOf(ligne);
+	                		Reach.mode=neko.module.other.enums.Form.valueOf(ligne);
 	                	if (i==107)
 	                		Antiafk.getInstance().setSec(Integer.parseInt(ligne));
 	                	if (i==108)

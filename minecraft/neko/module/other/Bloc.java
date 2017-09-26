@@ -1,5 +1,6 @@
 package neko.module.other;
 
+import neko.module.other.enums.Rate;
 import net.minecraft.util.BlockPos;
 
 public class Bloc {
