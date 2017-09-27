@@ -2,6 +2,7 @@ package neko.module.modules.combat;
 
 import neko.module.Category;
 import neko.module.Module;
+import neko.utils.Utils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -57,13 +58,16 @@ public class Fastbow extends Module {
 				return;
 			}
 			
+			if (Utils.isToggle("BowAimbot"))
+				BowAimbot.getAim().aimBow();
+			
 			if (mc.thePlayer.isUsingItem() && Item.getIdFromItem(mc.thePlayer.getCurrentEquippedItem().getItem())==261) {
 				for (int i=0;i<this.packet;i++) {
 					mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer());
 				}
 				mc.getNetHandler().addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.RELEASE_USE_ITEM, BlockPos.ORIGIN, EnumFacing.DOWN));			      
 				mc.thePlayer.stopUsingItem();
-			} else if (mc.gameSettings.keyBindUseItem.pressed && nobow && isOn && !mc.thePlayer.getFoodStats().needFood()) {
+			} else if (mc.gameSettings.keyBindUseItem.pressed && nobow && isOn) {
 				int actual = mc.thePlayer.inventory.currentItem;
 				int bow = getBestBow();
 				if (!hasArrow() || bow<0)

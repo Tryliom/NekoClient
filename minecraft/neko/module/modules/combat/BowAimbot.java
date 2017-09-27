@@ -18,7 +18,6 @@ public class BowAimbot extends Module {
 	private Double fov=30.0;
 	private BowMode life=BowMode.Désactivé;
 	private BowMode armor=BowMode.Désactivé;
-	private BowMode distance=BowMode.Désactivé;
 	private static BowAimbot instance = null;
 	
 	
@@ -42,27 +41,7 @@ public class BowAimbot extends Module {
 	public void onUpdate() {
 		if (!this.haveBow())
 			return;
-		boolean valid = false;
-		for (Object o : (var.mode.equalsIgnoreCase("Player") ? mc.theWorld.playerEntities : mc.theWorld.loadedEntityList)) {
-			if (o instanceof EntityLivingBase) {
-				EntityLivingBase en = (EntityLivingBase) o;           
-	            // Checks
-				list.add(en);
-			}
-        }
-		for (EntityLivingBase en : this.list) {          
-            if (this.isValid(en)) {
-            	if (currEn!=null && currEn==en)
-            		valid=true;
-            	else if (currEn==null)
-            		valid=true;
-            	currEn=en;
-            	Utils.faceBowEntityClient(en);
-            }
-        }
-		list.clear();
-		if (!valid)
-			currEn=null;
+		this.aimBow();
 	}
 	
 	private boolean isValid(EntityLivingBase en) {
@@ -72,7 +51,7 @@ public class BowAimbot extends Module {
 			return false;
 		if (Friends.isFriend(en.getName()))
 			return false;
-		if (Utils.isPlayer(en))
+		if (mc.thePlayer.getName().equalsIgnoreCase(en.getName()) || en.getName().isEmpty())
 			return false;
 		if (Item.getIdFromItem(mc.thePlayer.getCurrentEquippedItem().getItem())!=261)
 			return false;
@@ -84,14 +63,45 @@ public class BowAimbot extends Module {
 	}
 	
 	private void sortEntity() {
-		Vector<EntityLivingBase> del = new Vector<EntityLivingBase>();
+		EntityLivingBase best = null;
+		boolean v=true;
+		for (Object o : (var.mode.equalsIgnoreCase("Player") ? mc.theWorld.playerEntities : mc.theWorld.loadedEntityList)) {
+			if (o instanceof EntityLivingBase) {
+				EntityLivingBase en = (EntityLivingBase) o;           
+				if (this.isValid(en))
+					list.add(en);
+			}
+        }
 		for (EntityLivingBase en : list) {
-			// checks
+			// checks Distance Life Armor
+			if (Utils.isInFov(en, fov))
+				continue;
+			if (best==null) {
+				best=en;
+				continue;
+			}
+			boolean heal = !this.life.name().equalsIgnoreCase("Désactivé");
+			boolean arm = !this.armor.name().equalsIgnoreCase("Désactivé");
+			if (heal) {
+				if (this.life==BowMode.Max ? best.getHealth()<en.getHealth() : best.getHealth()>en.getHealth()) {
+					best = en;
+				} else if (this.armor!=BowMode.Désactivé) {
+					if (this.armor==BowMode.Max ? best.getTotalArmorValue()<en.getTotalArmorValue() : best.getTotalArmorValue()>en.getTotalArmorValue()) {
+						best = en;
+					}
+				}
+			} else if (arm) {
+				if (this.armor==BowMode.Max ? best.getTotalArmorValue()<en.getTotalArmorValue() : best.getTotalArmorValue()>en.getTotalArmorValue()) {
+					best = en;
+				}
+			} else {
+				v=false;
+			}
 		}
-		for (EntityLivingBase en : del) {
-			list.remove(en);
+		if (v) {
+			list.clear();
+			list.add(best);
 		}
-		del.clear();
 	}
 	
 	private boolean haveBow() {
@@ -107,6 +117,24 @@ public class BowAimbot extends Module {
 			return false;
 		}
 		return true;
+	}
+	
+	public void aimBow() {
+		boolean valid = false;
+		this.sortEntity();
+		for (EntityLivingBase en : this.list) {          
+            if (this.isValid(en)) {
+            	if (currEn!=null && currEn==en)
+            		valid=true;
+            	else if (currEn==null)
+            		valid=true;
+            	currEn=en;
+            	Utils.faceBowEntityClient(en);
+            }
+        }
+		list.clear();
+		if (!valid)
+			currEn=null;
 	}
 
 	public Double getFov() {
@@ -132,13 +160,4 @@ public class BowAimbot extends Module {
 	public void setArmor(BowMode armor) {
 		this.armor = armor;
 	}
-
-	public BowMode getDistance() {
-		return distance;
-	}
-
-	public void setDistance(BowMode distance) {
-		this.distance = distance;
-	}
-
 }

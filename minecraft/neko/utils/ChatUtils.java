@@ -16,7 +16,6 @@ import java.util.Scanner;
 import java.util.UUID;
 import java.util.Vector;
 
-import neko.module.modules.misc.*;
 import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
@@ -34,53 +33,61 @@ import neko.module.Module;
 import neko.module.ModuleManager;
 import neko.module.modules.combat.AutoClic;
 import neko.module.modules.combat.AutoPot;
-import neko.module.modules.player.Autoarmor;
 import neko.module.modules.combat.Autosoup;
-import neko.module.modules.player.Build;
-import neko.module.modules.player.Cheststealer;
+import neko.module.modules.combat.BowAimbot;
 import neko.module.modules.combat.ClickAim;
-import neko.module.modules.movements.Dolphin;
-import neko.module.modules.special.DropShit;
 import neko.module.modules.combat.Fastbow;
-import neko.module.modules.player.Fasteat;
-import neko.module.modules.player.Fire;
-import neko.module.modules.special.FireTrail;
-import neko.module.modules.movements.Flight;
-import neko.module.modules.movements.Freecam;
-import neko.module.modules.hide.Friends;
-import neko.module.modules.movements.Glide;
-import neko.module.modules.hide.God;
-import neko.module.modules.render.HUD;
-import neko.module.modules.movements.Highjump;
-import neko.module.modules.render.ItemESP;
 import neko.module.modules.combat.KillAura;
-import neko.module.modules.movements.Longjump;
-import neko.module.modules.hide.Lot;
-import neko.module.modules.render.NekoChat;
-import neko.module.modules.movements.NoClip;
-import neko.module.modules.player.Nuker;
-import neko.module.modules.render.Paint;
-import neko.module.modules.render.Power;
-import neko.module.modules.special.PunKeel;
-import neko.module.modules.player.PushUp;
-import neko.module.modules.special.Pyro;
-import neko.module.modules.render.Radar;
 import neko.module.modules.combat.Reach;
-import neko.module.modules.special.Reflect;
 import neko.module.modules.combat.Regen;
 import neko.module.modules.combat.SmoothAim;
-import neko.module.modules.special.SpamBot;
+import neko.module.modules.combat.Trigger;
+import neko.module.modules.hide.Friends;
+import neko.module.modules.hide.God;
+import neko.module.modules.hide.Lot;
+import neko.module.modules.misc.Antiafk;
+import neko.module.modules.misc.AutoMLG;
+import neko.module.modules.misc.CallCmd;
+import neko.module.modules.misc.Phase;
+import neko.module.modules.misc.Ping;
+import neko.module.modules.misc.Register;
+import neko.module.modules.misc.Timer;
+import neko.module.modules.movements.Dolphin;
+import neko.module.modules.movements.Flight;
+import neko.module.modules.movements.Freecam;
+import neko.module.modules.movements.Glide;
+import neko.module.modules.movements.Highjump;
+import neko.module.modules.movements.Longjump;
+import neko.module.modules.movements.NoClip;
 import neko.module.modules.movements.Speed709;
 import neko.module.modules.movements.Step;
-import neko.module.modules.special.TpBack;
-import neko.module.modules.render.Tracers;
-import neko.module.modules.combat.Trigger;
-import neko.module.modules.special.VanillaTp;
+import neko.module.modules.player.Autoarmor;
+import neko.module.modules.player.Build;
+import neko.module.modules.player.Cheststealer;
+import neko.module.modules.player.Fasteat;
+import neko.module.modules.player.Fire;
+import neko.module.modules.player.Nuker;
+import neko.module.modules.player.PushUp;
 import neko.module.modules.player.Velocity;
+import neko.module.modules.render.HUD;
+import neko.module.modules.render.ItemESP;
+import neko.module.modules.render.NekoChat;
+import neko.module.modules.render.Paint;
+import neko.module.modules.render.Power;
+import neko.module.modules.render.Radar;
+import neko.module.modules.render.Tracers;
 import neko.module.modules.render.Wallhack;
 import neko.module.modules.render.Water;
 import neko.module.modules.render.WorldTime;
 import neko.module.modules.render.Xray;
+import neko.module.modules.special.DropShit;
+import neko.module.modules.special.FireTrail;
+import neko.module.modules.special.PunKeel;
+import neko.module.modules.special.Pyro;
+import neko.module.modules.special.Reflect;
+import neko.module.modules.special.SpamBot;
+import neko.module.modules.special.TpBack;
+import neko.module.modules.special.VanillaTp;
 import neko.module.other.Active;
 import neko.module.other.Bloc;
 import neko.module.other.Event;
@@ -90,6 +97,7 @@ import neko.module.other.PyroThread;
 import neko.module.other.Rank;
 import neko.module.other.RmRank;
 import neko.module.other.Trade;
+import neko.module.other.enums.BowMode;
 import neko.module.other.enums.Chat;
 import neko.module.other.enums.EventType;
 import neko.module.other.enums.Form;
@@ -232,7 +240,7 @@ public class ChatUtils {
 			
 			for (Lock l : ModuleManager.Lock) {
 				String s = l.getName();
-				if (var3.startsWith(var.prefixCmd+s) && Utils.isLock(s)) {
+				if (var3.startsWith(s.replace("--", var.prefixCmd)) && Utils.isLock(s)) {
 					Utils.addWarn(s);
 					return;
 				}
@@ -934,6 +942,13 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Flight blink", var.prefixCmd+"flight blink", "§7Permet d'activer automatiquement le Blink quand on active le Flight", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("bowaimbot")) {
+					Utils.addChat("========================================");
+					Utils.addChat2("§6"+var.prefixCmd+"BowAimbot Fov <Double>", var.prefixCmd+"bowaimbot fov ", "§7Change le fov du bowaimbot", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"BowAimbot Life", var.prefixCmd+"bowaimbot life", "§7Change le mode life, à viser la personne le Min de vie, Max de vie ou désactivé", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"BowAimbot Armor", var.prefixCmd+"bowaimbot armor", "§7Change le mode armor, à viser la personne le Min d'armure, Max d'armure ou désactivé", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("longjump")) {
 					Utils.addChat("========================================");
 					Utils.addChat2("§6"+var.prefixCmd+"Longjump speed <Double>", var.prefixCmd+"longjump speed ", "§7Change la vitesse du Longjump", false, Chat.Summon);
@@ -1458,6 +1473,25 @@ public class ChatUtils {
 					}
 				}
 				Utils.checkXp(xp);
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"bowaimbot") || args[0].equalsIgnoreCase(var.prefixCmd+"bowaim")) {
+				BowAimbot b = BowAimbot.getAim();
+				if (args[1].equalsIgnoreCase("fov")) {
+					try {
+						b.setFov(Double.parseDouble(args[2]));
+						Utils.addChat("§aFov du BowAimbot mis à "+b.getFov()+"° !");
+					} catch (Exception e) {
+						Utils.addChat(err);
+					}
+				} else if (args[1].equalsIgnoreCase("life")) {
+					b.setLife(Utils.pass(b.getLife()));
+					Utils.addChat("§aMode life mis à "+b.getLife()+" !");
+				} else if (args[1].equalsIgnoreCase("armor")) {
+					b.setArmor(Utils.pass(b.getArmor()));
+					Utils.addChat("§aMode armor mis à "+b.getArmor()+" !");
+				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
@@ -4221,19 +4255,24 @@ public class ChatUtils {
 							mc.getNetHandler().addToSendQueue(new C10PacketCreativeInventoryAction(mc.thePlayer.inventory.currentItem, item));
 						}
 					}
-				} else if (args.length==2) {
+				} else if (args.length==2 || (args.length>=3 && !Utils.isInteger(args[2]))) {
 					if (args[1].equalsIgnoreCase("list")) {
 						Utils.addChat("=============§aEnchantement List§6=============");
 						for (Enchantment ench : Enchantment.enchantmentsList) {
 							if (ench!=null) {
-								Utils.addChat("§a"+ench.getTranslatedName(1).replaceFirst(" I", ""));
+								Utils.addChat2("§a"+ench.getTranslatedName(1).replaceFirst(" I", ""), var.prefixCmd+"enchant "+ench.getTranslatedName(1).replaceFirst(" I", ""), "§7"+var.prefixCmd+"enchant "+ench.getTranslatedName(1).replaceFirst(" I", ""), false, Chat.Summon);
 							}
 						}
 					} else {
 						int i=0;
+						String e = args[1];
+						if (args.length>=3)
+							for (int j=2;j<args.length;j++) {
+								e+=" "+args[j];
+							}
 						for (Enchantment ench : Enchantment.enchantmentsList) {
 							if (ench!=null) {
-								if (args[1].equalsIgnoreCase(ench.getTranslatedName(1).replaceFirst(" I", ""))) {
+								if (e.equalsIgnoreCase(ench.getTranslatedName(1).replaceFirst(" I", ""))) {
 									i++;
 									item.addEnchantment(ench, 127);
 									mc.getNetHandler().addToSendQueue(new C10PacketCreativeInventoryAction(mc.thePlayer.inventory.currentItem, item));

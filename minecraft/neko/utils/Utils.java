@@ -52,6 +52,7 @@ import neko.module.ModuleManager;
 import neko.module.modules.combat.AutoClic;
 import neko.module.modules.combat.AutoPot;
 import neko.module.modules.combat.Autosoup;
+import neko.module.modules.combat.BowAimbot;
 import neko.module.modules.combat.ClickAim;
 import neko.module.modules.combat.Fastbow;
 import neko.module.modules.combat.KillAura;
@@ -116,6 +117,7 @@ import neko.module.other.Rank;
 import neko.module.other.TempBon;
 import neko.module.other.TutoManager;
 import neko.module.other.Xp;
+import neko.module.other.enums.BowMode;
 import neko.module.other.enums.Chat;
 import neko.module.other.enums.IrcMode;
 import neko.module.other.enums.Rate;
@@ -1307,6 +1309,11 @@ public class Utils {
 		ModuleManager.values.add("Delay:§7 "+PunKeel.delay+"sec");
 		ModuleManager.values.add("Attack:§7 "+(PunKeel.attack ? "§aActivé" : "§cDésactivé"));
 		disV("Punkeel");
+		BowAimbot b = BowAimbot.getAim();
+		ModuleManager.values.add("Fov:§7 "+b.getFov()+"°");
+		ModuleManager.values.add("Mode vie:§7 "+b.getLife());
+		ModuleManager.values.add("Mode armure:§7 "+b.getArmor());
+		disV("BowAimbot");
 		
 		
 		
@@ -1328,6 +1335,17 @@ public class Utils {
 			res*=-1;
 		}
 		return res;
+	}
+	
+	public static BowMode pass(BowMode b) {
+		if (b == BowMode.Max) {
+			b=BowMode.Min;
+		} else if (b == BowMode.Min) {
+			b=BowMode.Désactivé;
+		} else if (b == BowMode.Désactivé) {
+			b = BowMode.Max;
+		}
+		return b;
 	}
 	
 	public static boolean isInteger(String s) {
@@ -2302,7 +2320,7 @@ public class Utils {
 		                	pl+=st+":";
 		                s+=c.getCmd2()+"\n"+pl+"\n"+Register.getReg().getMdp()+"\n"+God.getInstance().getBackup()+"\n"+Highjump.getJump().getHeight()+"\n";
 		                s+=TutoManager.getTuto().isDone()+"\n"+Nuker.safe+"\n"+KillAura.speed+"\n"+PunKeel.attack+"\n"+PunKeel.delay+"\n"+Fastbow.getFast().getPacket()+"\n";
-		                s+=Step.getStep().isBypass()+"\n";
+		                s+=Step.getStep().isBypass()+"\n"+BowAimbot.getAim().getFov()+"\n"+BowAimbot.getAim().getLife()+"\n"+BowAimbot.getAim().getArmor()+"\n";
 		                writer.write(s);
 		                writer.flush();
 		            }
@@ -2921,6 +2939,12 @@ public class Utils {
 	                		Fastbow.getFast().setPacket(Integer.parseInt(ligne));
 	                	if (i==157)
 	                		Step.getStep().setBypass(Boolean.parseBoolean(ligne));
+	                	if (i==158)
+	                		BowAimbot.getAim().setFov(Double.parseDouble(ligne));
+	                	if (i==159)
+	                		BowAimbot.getAim().setLife(BowMode.valueOf(ligne));
+	                	if (i==160)
+	                		BowAimbot.getAim().setArmor(BowMode.valueOf(ligne));
                 	} catch (Exception e) {}                	
                 	i++;
                 }
