@@ -194,6 +194,7 @@ public class Utils {
 	public static boolean h200=true;
 	public static boolean h666=true;
 	// Heures
+	public static boolean cfg = false;
 	public static String server;
 	public static boolean n=false;
 	public static int nbPack=0;
@@ -2600,7 +2601,7 @@ public class Utils {
 		                		v.setVcoeff(Double.parseDouble(ligne));
 	                		}
 	                	}
-	                	if (i==12)
+	                	if (i==12 && !Utils.cfg)
 	                		display=Boolean.parseBoolean(ligne);
 	                	if (i==13)
 	                		zoom=Boolean.parseBoolean(ligne);
@@ -2634,14 +2635,14 @@ public class Utils {
 	                		Water.p=Integer.parseInt(ligne);
 	                	if (i==24)
 	                		Power.p=Integer.parseInt(ligne);
-	                	if (i==25) {
+	                	if (i==25 && !Utils.cfg) {
 	                		String time[] = ligne.split(":");
 	                		timeInGameMs=Integer.parseInt(time[0]);
 	                		timeInGameSec=Integer.parseInt(time[1]);
 	                		timeInGameMin=Integer.parseInt(time[2]);
 	                		timeInGameHour=Integer.parseInt(time[3]);
 	                	}
-	                	if (i==26) {
+	                	if (i==26 && !Utils.cfg) {
 	                		String h[] = ligne.split(" ");
 	                		h1=Boolean.parseBoolean(h[0]);
 	                		h10=Boolean.parseBoolean(h[1]);
@@ -2791,13 +2792,19 @@ public class Utils {
 	                	if (i==87)
 	                		Tracers.friend=Boolean.parseBoolean(ligne);
 	                	if (i==88) 
-	                		Reach.bloc=Boolean.parseBoolean(ligne);
+	                		if (!isLock("--reach pvp"))
+	                			Reach.bloc=Boolean.parseBoolean(ligne);
+	                		else
+	                			Reach.bloc = false;
 	                	if (i==89)
 	                		VanillaTp.classic=Boolean.parseBoolean(ligne);
 	                	if (i==90)
 	                		Reach.classic=Boolean.parseBoolean(ligne);
 	                	if (i==91)
-	                		Reach.aimbot=Boolean.parseBoolean(ligne);
+	                		if (!isLock("--reach pvp"))
+	                			Reach.aimbot=Boolean.parseBoolean(ligne);
+	                		else
+	                			Reach.aimbot = false;
 	                	if (i==92)
 	                		Reach.fov=Double.parseDouble(ligne);
 	                	if (i==93)
@@ -2819,7 +2826,10 @@ public class Utils {
 	                	if (i==101)
 	                		neko.module.modules.render.Render.xp=Boolean.parseBoolean(ligne);
 	                	if (i==102)
-	                		Reach.tnt=Boolean.parseBoolean(ligne);
+	                		if (!isLock("--reach pvp"))
+	                			Reach.tnt=Boolean.parseBoolean(ligne);
+	                		else 
+	                			Reach.tnt = false;
 	                	if (i==103)
 	                		Fastbow.getFast().setNobow(Boolean.parseBoolean(ligne));
 	                	if (i==104)

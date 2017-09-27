@@ -35,7 +35,7 @@ public class ChestESP extends Module {
 			if (o instanceof TileEntityChest || o instanceof TileEntityEnderChest || o instanceof TileEntityMobSpawner) {
 				TileEntity chest = (TileEntity) o;     
 				
-    			RenderUtils.drawBlockESP(chest.getPos().getX()-mc.getRenderManager().renderPosX, chest.getPos().getY()-mc.getRenderManager().renderPosY, chest.getPos().getZ()-mc.getRenderManager().renderPosZ, cR, cG, cR, 0.2F, clR, clG, clB, 0.2F, width);
+    			RenderUtils.drawBlockESP(chest.getPos().getX()-mc.getRenderManager().renderPosX, chest.getPos().getY()-mc.getRenderManager().renderPosY, chest.getPos().getZ()-mc.getRenderManager().renderPosZ, cR, cG, cR, 0.11F, clR, clG, clB, 0.11F, width);
 			}
         }
 	}

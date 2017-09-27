@@ -1401,6 +1401,7 @@ public class ChatUtils {
 					if (new File(fi).exists()) {	
 						boolean dis = Utils.display;
 						Utils.display = false;
+						Utils.cfg=true;
 						Utils.panic();
 						Utils.loadCmd(fi);
 						Utils.loadBind(fi);						
@@ -1410,6 +1411,7 @@ public class ChatUtils {
 						Utils.loadShit(fi);
 						Utils.loadValues(fi);
 						Utils.loadXray(fi);
+						Utils.cfg=false;
 						Utils.display = dis;
 						Utils.addChat("§aConfig "+args[2]+" chargée !");
 					} else {

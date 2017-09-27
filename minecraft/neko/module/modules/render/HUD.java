@@ -42,7 +42,7 @@ public class HUD extends Module {
 					RenderUtils.drawBlockESP(bp.getX() - mc.getRenderManager().renderPosX, bp.getY() - mc.getRenderManager().renderPosY, bp.getZ() - mc.getRenderManager().renderPosZ, cR, cG, cB, 0.12F, cR, cG, cB, 0.12F, width);
 				} else if (bp==null && mc.pointedEntity!=null) {
 					Entity entity = mc.pointedEntity;
-					RenderUtils.drawEntityESP(u.getX(entity), u.getY(entity), u.getZ(entity), entity.width, entity.height+0.3F, cR, cG, cR, 0.2F, cR, cG, cB, 0.2F, width);
+					RenderUtils.drawEntityESP(u.getX(entity), u.getY(entity), u.getZ(entity), entity.width/2, entity.height+0.22F, cR, cG, cR, 0.11F, cR, cG, cB, 0.11F, width);
 				}
 			} catch (Exception e) {}
 		}

@@ -36,7 +36,7 @@ public class Wallhack extends Module {
 			if (o instanceof EntityLivingBase) {
 				EntityLivingBase entity = (EntityLivingBase) o;     
 	        	if (entity!=mc.thePlayer && (var.mode.equals("Mob") ? !u.isPlayer(entity) : true))
-	        		RenderUtils.drawEntityESP(u.getX(entity), u.getY(entity), u.getZ(entity), entity.width, entity.height+0.3F, cR, cG, cR, 0.2F, clR, clG, clB, 0.2F, width);
+	        		RenderUtils.drawEntityESP(u.getX(entity), u.getY(entity), u.getZ(entity), entity.width/2, entity.height+0.3F, cR, cG, cR, 0.11F, clR, clG, clB, 0.11F, width);
 			}
         }
 	}
