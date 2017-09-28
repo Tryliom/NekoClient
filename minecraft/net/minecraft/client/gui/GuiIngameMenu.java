@@ -3,7 +3,7 @@ package net.minecraft.client.gui;
 import java.io.IOException;
 
 import neko.gui.GuiAltManager;
-import neko.module.other.OnlyRpgManager;
+import neko.manager.OnlyRpgManager;
 import neko.utils.Utils;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;

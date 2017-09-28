@@ -11,7 +11,7 @@ import java.util.Scanner;
 import java.util.Vector;
 
 import neko.Client;
-import neko.module.ModuleManager;
+import neko.manager.ModuleManager;
 import neko.module.modules.render.Render;
 import neko.module.other.Event;
 import neko.module.other.Irc;

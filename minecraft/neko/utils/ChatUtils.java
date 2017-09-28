@@ -26,11 +26,12 @@ import neko.Client;
 import neko.dtb.Alt;
 import neko.dtb.RequestThread;
 import neko.gui.InGameGui;
-import neko.guicheat.GuiManager;
 import neko.lock.Lock;
+import neko.manager.GuiManager;
+import neko.manager.LockManager;
+import neko.manager.ModuleManager;
 import neko.module.Category;
 import neko.module.Module;
-import neko.module.ModuleManager;
 import neko.module.modules.combat.AutoClic;
 import neko.module.modules.combat.AutoPot;
 import neko.module.modules.combat.Autosoup;
@@ -240,8 +241,11 @@ public class ChatUtils {
 			
 			for (Lock l : ModuleManager.Lock) {
 				String s = l.getName();
-				if (var3.startsWith(s.replace("--", var.prefixCmd)) && Utils.isLock(s)) {
+				if (var3.startsWith(s.replace("--", var.prefixCmd)) || var3.startsWith(var.prefixCmd+l.getRaccourcis()) && Utils.isLock(s)) {
 					Utils.addWarn(s);
+					mc.thePlayer.playSound("mob.villager.no", 1.0F, 1.0F);
+				 	mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				 	this.mc.displayGuiScreen((GuiScreen)null);
 					return;
 				}
 			}
@@ -714,7 +718,7 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Fastbow Packet <Int>", var.prefixCmd+"fastbow packet ", "§7Modifie le nombre de paquet envoyé par le fastbow par flèche, de base à 20", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-				} else if (args[1].equalsIgnoreCase("punkeel")) {
+				} else if (args[1].equalsIgnoreCase("punkeel") || args[1].equalsIgnoreCase("pk")) {
 					Utils.addChat("========================================");
 					Utils.addChat2("§6"+var.prefixCmd+"Punkeel Delay <Double>", var.prefixCmd+"punkeel delay ", "§7Modifie le delay entre les tp, par ex 0.5 donne un VRAI lag de 500ms, les joueurs vous voit vous tp tous les 0.5sec", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Punkeel Attack", var.prefixCmd+"punkeel attack ", "§7Fais que quand on frappe le packet d'attaque s'envoie tout de suite au lieu des ms normaux", false, Chat.Summon);
@@ -3035,20 +3039,12 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"trade") || args[0].equalsIgnoreCase(var.prefixCmd+"shop")) {
-				if (Utils.isLock("--trade")) {
-				 	Utils.addWarn("Trade");
-				 	mc.thePlayer.playSound("mob.villager.no", 1.0F, 1.0F);
-				 	mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-				 	this.mc.displayGuiScreen((GuiScreen)null); 
-				 	return;
-				}
-								
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"trade") || args[0].equalsIgnoreCase(var.prefixCmd+"shop")) {								
 				if (args.length==1) {
 					//Affiche la table des prix
 					Utils.addChat("========================================");
 					Utils.addChat("§lListe des gains:");
-					Utils.addChat("Votre solde: "+var.ame+" souls et "+var.lot+" "+(var.lot<2 ? "ticket de lotterie" : "tickets de lotterie"));
+					Utils.addChat2("§7Votre solde §7[§cici§7]", "§7Souls: §b"+var.ame+"\n§7 Tickets de loteries:§6 "+var.lot, "", true, Chat.Click);
 					
 					Utils.addChat(var.prefixCmd+"trade lot:§7 Tire des lots aléatoires !\n§6Coût:§c 1 ticket de lotterie");
 					Utils.addChat(var.prefixCmd+"trade ticket:§7 Reçois un ticket de lotterie !\n§6Coût:§c 150 souls");
@@ -3301,13 +3297,15 @@ public class ChatUtils {
 						Utils.addChat("§5Choisissez un des "+Lot.nbLot*totLot+" lots en allant dessous !");
 					}
 					
-				} else if (args[1].equalsIgnoreCase("noarmor") && Utils.isLock("--ka noarmor")) {
-					if (var.ame<50) {
+				} else if (LockManager.getManager().isALockCmdLocked(args[1])) {
+					LockManager lm = LockManager.getManager();
+					Lock curr = lm.getLockByCmdName(args[1]);
+					if (var.ame<curr.getCout()) {
 						Utils.addChat("§cDésolé mais vous n'avez pas assez de souls...");
 					} else {
-						var.ame-=50;
-						Utils.unlock("--ka noarmor");
-						Utils.addChat("§cKa NoArmor§7 débloqué !");
+						var.ame-=curr.getCout();
+						Utils.unlock(curr.getName());
+						Utils.addChat("§c"+curr.getNameUnlock()+"§7 débloqué !");
 					}
 					
 				} else if (args[1].equalsIgnoreCase("ticket")) {
@@ -3317,69 +3315,6 @@ public class ChatUtils {
 						var.ame-=150;
 						var.lot++;
 						Utils.addChat("§a+ 1 ticket de lotterie !");
-					}
-					
-				} else if (args[1].equalsIgnoreCase("random") && Utils.isLock("--ka random")) {
-					if (var.ame<100) {
-						Utils.addChat("§cDésolé mais vous n'avez pas assez de souls...");
-					} else {
-						var.ame-=100;
-						Utils.unlock("--ka random");
-						Utils.addChat("§cKa Random§7 débloqué !");
-					}
-					
-				} else if (args[1].equalsIgnoreCase("plugins") && Utils.isLock("--plugins")) {
-					if (var.ame<50) {
-						Utils.addChat("§cDésolé mais vous n'avez pas assez de souls...");
-					} else {
-						var.ame-=50;
-						Utils.unlock("--plugins");
-						Utils.addChat("§cPlugins§7 débloqué !");
-					}
-					
-				} else if (args[1].equalsIgnoreCase("sword") && Utils.isLock("--sword")) {
-					if (var.ame<75) {
-						Utils.addChat("§cDésolé mais vous n'avez pas assez de souls...");
-					} else {
-						var.ame-=75;
-						Utils.unlock("--sword");
-						Utils.addChat("§cSword§7 débloqué !");
-					}
-					
-				} else if (args[1].equalsIgnoreCase("unicode") && Utils.isLock("unicode")) {
-					if (var.ame<100) {
-						Utils.addChat("§cDésolé mais vous n'avez pas assez de souls...");
-					} else {
-						var.ame-=100;
-						Utils.unlock("unicode");
-						Utils.addChat("§cUnicode§7 débloqué !");
-					}
-					
-				} else if (args[1].equalsIgnoreCase("fastdura") && Utils.isLock("fastdura")) {
-					if (var.ame<150) {
-						Utils.addChat("§cDésolé mais vous n'avez pas assez de souls...");
-					} else {
-						var.ame-=150;
-						Utils.unlock("fastdura");
-						Utils.addChat("§cFastDura§7 débloqué !");
-					}
-					
-				} else if (args[1].equalsIgnoreCase("select") && Utils.isLock("--hud select")) {
-					if (var.ame<75) {
-						Utils.addChat("§cDésolé mais vous n'avez pas assez de souls...");
-					} else {
-						var.ame-=75;
-						Utils.unlock("--hud select");
-						Utils.addChat("§cHUD Select§7 débloqué !");
-					}
-					
-				} else if (args[1].equalsIgnoreCase("TpBack") && Utils.isLock("TpBack")) {
-					if (var.ame<50) {
-						Utils.addChat("§cDésolé mais vous n'avez pas assez de souls...");
-					} else {
-						var.ame-=50;
-						Utils.unlock("TpBack");
-						Utils.addChat("§cTpBack§7 débloqué !");
 					}
 					
 				} else if (args[1].equalsIgnoreCase("info") && !Utils.isLock("--rankmanager") && Utils.isLock("rankmanager info")) {
@@ -4607,7 +4542,7 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"punkeel")) {
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"punkeel") || args[0].equalsIgnoreCase(var.prefixCmd+"pk")) {
 				if (Utils.isLock("Punkeel")) {
 					Utils.addWarn("Punkeel");
 				} else if (args.length>=2) {

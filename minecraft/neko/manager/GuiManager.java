@@ -1,4 +1,4 @@
-package neko.guicheat;
+package neko.manager;
 
 import java.awt.Color;
 import java.awt.Dimension;

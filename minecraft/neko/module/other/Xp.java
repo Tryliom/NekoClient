@@ -7,7 +7,7 @@ import javax.swing.Timer;
 
 import neko.Client;
 import neko.lock.Lock;
-import neko.module.ModuleManager;
+import neko.manager.ModuleManager;
 import neko.module.modules.player.Fire;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;

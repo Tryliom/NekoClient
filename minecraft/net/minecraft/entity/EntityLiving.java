@@ -1,6 +1,6 @@
 package net.minecraft.entity;
 
-import neko.module.ModuleManager;
+import neko.manager.ModuleManager;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;

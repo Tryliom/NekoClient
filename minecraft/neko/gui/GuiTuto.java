@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.lwjgl.input.Keyboard;
 
 import neko.Client;
-import neko.module.other.TutoManager;
+import neko.manager.TutoManager;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;

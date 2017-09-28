@@ -59,10 +59,10 @@ import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
 import neko.Client;
 import neko.gui.GuiTuto;
+import neko.manager.TutoManager;
 import neko.module.Module;
 import neko.module.modules.combat.Reach;
 import neko.module.other.Irc;
-import neko.module.other.TutoManager;
 import neko.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;

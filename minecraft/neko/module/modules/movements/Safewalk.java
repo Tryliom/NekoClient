@@ -10,7 +10,7 @@ public class Safewalk extends Module {
 	public static boolean isOn=false;
 	
 	public Safewalk() {
-		super("Safewalk", Keyboard.KEY_NONE, Category.MOVEMENT);
+		super("Safewalk", -1, Category.MOVEMENT);
 	}
 	
 	public void onEnabled() {

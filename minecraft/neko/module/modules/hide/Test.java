@@ -2,7 +2,7 @@ package neko.module.modules.hide;
 
 import neko.module.Category;
 import neko.module.Module;
-import neko.utils.Utils;
+import net.minecraft.entity.Entity;
 
 public class Test extends Module {
 	private static Test instance;

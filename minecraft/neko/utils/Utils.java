@@ -44,11 +44,14 @@ import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import neko.Client;
 import neko.gui.GuiAltManager;
 import neko.gui.InGameGui;
-import neko.guicheat.GuiManager;
 import neko.lock.Lock;
+import neko.manager.BddManager;
+import neko.manager.GuiManager;
+import neko.manager.ModuleManager;
+import neko.manager.OnlyRpgManager;
+import neko.manager.TutoManager;
 import neko.module.Category;
 import neko.module.Module;
-import neko.module.ModuleManager;
 import neko.module.modules.combat.AutoClic;
 import neko.module.modules.combat.AutoPot;
 import neko.module.modules.combat.Autosoup;
@@ -109,13 +112,10 @@ import neko.module.modules.special.SpamBot;
 import neko.module.modules.special.TpBack;
 import neko.module.modules.special.VanillaTp;
 import neko.module.other.Active;
-import neko.module.other.BddManager;
 import neko.module.other.Conditions;
 import neko.module.other.Irc;
-import neko.module.other.OnlyRpgManager;
 import neko.module.other.Rank;
 import neko.module.other.TempBon;
-import neko.module.other.TutoManager;
 import neko.module.other.Xp;
 import neko.module.other.enums.BowMode;
 import neko.module.other.enums.Chat;
@@ -461,10 +461,8 @@ public class Utils {
 	public static void getLock(String name) {
 		for (Lock lock : ModuleManager.Lock) {
 			if (lock.getName().equalsIgnoreCase(name)) {
-				addChat("§6=§b-§6=§b-§6=§b-§7 "+setColor(lock.getName().replaceAll("--", var.prefixCmd), "§6")+" §b-§6=§b-§6=§b-§6=");
-				addChat("Description: §7"+setColor(lock.getDesc().replaceAll("--", var.prefixCmd), "§7"));
-				addChat("Type: §7"+lock.getType());
-				addChat("Coût: §7"+(lock.getUnit().equalsIgnoreCase("???") ? "???" : lock.getCout()+" "+lock.getUnit())+" "+(lock.isLock() ? "§cBloqué" : "§aDébloqué"));
+				addChat2(setColor(lock.getName().replaceAll("--", var.prefixCmd), "§6"), "", "§6Description: §7"+setColor(lock.getDesc().replaceAll("--", var.prefixCmd), "§7")+"\n"
+						+ "§6Type: §7"+lock.getType()+"\n"+"§cCoût: §7"+(lock.getUnit().equalsIgnoreCase("???") ? "???" : lock.getCout()+" "+lock.getUnit())+"\n"+(lock.isLock() ? "§cBloqué" : "§aDébloqué"), true, Chat.Click);
 			}
 		}
 	}

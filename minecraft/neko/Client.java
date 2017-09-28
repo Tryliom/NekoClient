@@ -14,11 +14,11 @@ import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.opengl.Display;
 
 import neko.dtb.RequestThread;
-import neko.guicheat.GuiManager;
-import neko.module.ModuleManager;
+import neko.manager.GuiManager;
+import neko.manager.ModuleManager;
+import neko.manager.OnlyRpgManager;
 import neko.module.other.Conditions;
 import neko.module.other.Irc;
-import neko.module.other.OnlyRpgManager;
 import neko.module.other.Rank;
 import neko.module.other.TempBon;
 import neko.utils.ChatUtils;

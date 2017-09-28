@@ -4,8 +4,8 @@ import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.darkstorm.minecraft.gui.util.GuiManagerDisplayScreen;
 import org.lwjgl.input.Keyboard;
 
-import neko.guicheat.GuiManager;
 import neko.guicheat.UIRender;
+import neko.manager.GuiManager;
 import neko.module.Category;
 import neko.module.Module;
 import neko.utils.Utils;

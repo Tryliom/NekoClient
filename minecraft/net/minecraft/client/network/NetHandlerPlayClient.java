@@ -25,6 +25,7 @@ import joptsimple.internal.Strings;
 import neko.Client;
 import neko.module.modules.movements.Blink;
 import neko.module.modules.special.PunKeel;
+import neko.module.modules.combat.BowAimbot;
 import neko.module.modules.combat.KillAura;
 import neko.module.modules.misc.Ping;
 import neko.module.modules.hide.Plugins;
@@ -878,7 +879,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     	}
     	
     	if (Blink.isOn) {
-    		if (p_147297_1_ instanceof C03PacketPlayer.C04PacketPlayerPosition || p_147297_1_ instanceof C03PacketPlayer.C06PacketPlayerPosLook || p_147297_1_ instanceof C02PacketUseEntity || p_147297_1_ instanceof C08PacketPlayerBlockPlacement || p_147297_1_ instanceof C07PacketPlayerDigging || p_147297_1_ instanceof C0BPacketEntityAction || p_147297_1_ instanceof C09PacketHeldItemChange) {
+    		if (((Utils.isToggle("FastBow") && BowAimbot.getAim().haveBow()) ? true : false) || p_147297_1_ instanceof C03PacketPlayer.C04PacketPlayerPosition || p_147297_1_ instanceof C03PacketPlayer.C06PacketPlayerPosLook || p_147297_1_ instanceof C02PacketUseEntity || p_147297_1_ instanceof C08PacketPlayerBlockPlacement || p_147297_1_ instanceof C07PacketPlayerDigging || p_147297_1_ instanceof C0BPacketEntityAction || p_147297_1_ instanceof C09PacketHeldItemChange) {
     			Blink.packet.add(p_147297_1_);
         		return;
     		}

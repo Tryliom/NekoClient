@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import neko.Client;
+import neko.manager.ModuleManager;
 import neko.module.Category;
 import neko.module.Module;
-import neko.module.ModuleManager;
 import neko.module.modules.movements.Blink;
 import neko.module.modules.hide.Friends;
 import neko.module.modules.render.HUD;

@@ -1,8 +1,9 @@
-package neko.module;
+package neko.manager;
 
 import java.util.ArrayList;
 
 import neko.lock.Lock;
+import neko.module.Module;
 import neko.module.modules.combat.*;
 import neko.module.modules.hide.*;
 import neko.module.modules.misc.*;
@@ -131,44 +132,54 @@ public class ModuleManager {
 		this.ActiveModule.add(new Flash()); // Key NONE
 		this.ActiveModule.add(new PunKeel()); // Key NONE
 		this.ActiveModule.add(new Crasher()); // Key NONE
-		this.ActiveModule.add(new Parkour()); // Key NONE
 		this.ActiveModule.add(new BowAimbot()); // Key NONE
 		this.ActiveModule.add(new BedGod()); // Key NONE
+		this.ActiveModule.add(new AutoTool()); // Key NONE
 		
-		
+		LockManager lm = LockManager.getManager();
 		// Ajouter les locks | -- = ..;
-		this.Lock.add(new Lock("--ka random", 100, "souls", "Commande", "Active le mode Random du Kill Aura", true));
-		this.Lock.add(new Lock("Wallhack", 7, "Lvl", "Cheat", "Permet de voir les joueurs ou mobs à travers les murs", true));
-		this.Lock.add(new Lock("TpKill", 10, "Lvl", "Cheat", "Vous tp sur les joueurs et les tuent à la chaîne", true));
-		this.Lock.add(new Lock("VanillaTp", 2, "Lvl", "Cheat", "Permet de se tp sur l'endroit visé", true));
-		this.Lock.add(new Lock("Reach", 2, "Lvl", "Cheat", "Permet d'atteindre les blocs depuis plus loin", true));
-		this.Lock.add(new Lock("--nyah", 3, "Lvl", "Commande", "Envoie une phrase mignonne aléatoire :3", true));
-		this.Lock.add(new Lock("--autonyah", 4, "Lvl", "Commande", "Amélioration du --nyah en nyah automatique :3", true));
-		this.Lock.add(new Lock("--rankmanager", 0, "???", "Commande", "Permet de gérer ses rangs", true));
-		this.Lock.add(new Lock("--fps", 0, "???", "Commande", "Permet d'augmenter ses fps", true));
-		this.Lock.add(new Lock("--tppos", 0, "???", "Commande", "Permet de se tp à des coordonnées précises", true));
-		this.Lock.add(new Lock("Trail", 0, "???", "Cheat", "Laisse une trainée bleue derrière vous sur les blocs que vous touchez", true));
-		this.Lock.add(new Lock("--sword", 75, "souls", "Commande", "Active le mode sword qui vous empêche de taper une entité /w Kill Aura, Trigger etc... sans avoir une épée dans la main", true));
-		this.Lock.add(new Lock("Unicode", 100, "souls", "Cheat", "Permet d'écrire avec des caractères Unicode qui bypass les anti-insutle", true));
-		this.Lock.add(new Lock("--plugins", 50, "souls", "Commande", "Affiche les plugins du serveur", true));
-		this.Lock.add(new Lock("--ka noarmor", 50, "souls", "Commande", "Active/désactive le mode NoArmor du Kill Aura", true));
-		this.Lock.add(new Lock("--HUD select", 75, "souls", "Cheat", "Personnalise votre séléction de blocs", true));
-		this.Lock.add(new Lock("--trade", 15, "Lvl", "Commande", "Permet de jouer à la lotterie, payer des options contre des souls", true));
-		this.Lock.add(new Lock("--ka onground", 40, "Lvl", "Commande", "Active/désactive le mode OnGround du Kill Aura", true));
-		this.Lock.add(new Lock("FastBow", 12, "Lvl", "Cheat", "Permet de tirer des flèches instantannement [Bypass AAC]", true));
-		this.Lock.add(new Lock("Sneak", 27, "Lvl", "Cheat", "Les autres joueurs vous voient Sneak sans que ça vous ralentissent", true));
-		this.Lock.add(new Lock("--server", 5, "Lvl", "Commande", "Affiche des serveurs bien pour cheat", true));
-		this.Lock.add(new Lock("rankmanager info", 100, "souls", "Commande", "Option RankManager qui affiche les informations concernant les rangs s'ils en ont", true));
-		this.Lock.add(new Lock("rankmanager lvl", 150, "souls", "Commande", "Option RankManager qui affiche le lvl des rangs", true));
-		this.Lock.add(new Lock("rankmanager rate", 200, "souls", "Commande", "Option RankManager qui affiche la rareté des rangs", true));
-		this.Lock.add(new Lock("rankmanager bonus", 250, "souls", "Commande", "Option RankManager qui affiche les bonus des rangs", true));
-		this.Lock.add(new Lock("fastdura", 150, "souls", "Cheat", "Permet de détruire l'armure très rapidement", true));
-		this.Lock.add(new Lock("--reach pvp", 0, "rang", "Commande", "Permet l'activation de la reach pvp", true));
-		this.Lock.add(new Lock("Pyro", 0, "rang", "Cheat", "Enflamme une zone depuis où l'ont vise", true));
-		this.Lock.add(new Lock("TpBack", 50, "souls", "Cheat", "Vous tp sur un bloc choisi quand vous arrivez en dessous du seuil de vie définit", true));
-		this.Lock.add(new Lock("Flash", 0, "???", "Cheat", "Vous retp sur la position set à l'activation", true));
-		this.Lock.add(new Lock("PunKeel", 0, "???", "Cheat", "Génére un véritable lag suivant vos désirs", true));
-		this.Lock.add(new Lock("--step bypass", 0, "???", "Commande", "Bypass step", true));
+		// Add le nom de la commande dans le ..trade quand on add un lock qui se débloque avec des souls
+		this.Lock.add(new Lock("--ka random", 100, "souls", "Commande", "Active le mode Random du Kill Aura", "", true));
+		lm.setLock("--ka random", "random", "Kill Aura Random");
+		this.Lock.add(new Lock("Wallhack", 7, "Lvl", "Cheat", "Permet de voir les joueurs ou mobs à travers les murs", "wh", true));
+		this.Lock.add(new Lock("TpKill", 10, "Lvl", "Cheat", "Vous tp sur les joueurs et les tuent à la chaîne", "", true));
+		this.Lock.add(new Lock("VanillaTp", 2, "Lvl", "Cheat", "Permet de se tp sur l'endroit visé", "vtp", true));
+		this.Lock.add(new Lock("Reach", 2, "Lvl", "Cheat", "Permet d'atteindre les blocs depuis plus loin", "", true));
+		this.Lock.add(new Lock("--nyah", 3, "Lvl", "Commande", "Envoie une phrase mignonne aléatoire :3", "", true));
+		this.Lock.add(new Lock("--autonyah", 4, "Lvl", "Commande", "Amélioration du --nyah en nyah automatique :3", "an", true));
+		this.Lock.add(new Lock("--rankmanager", 0, "???", "Commande", "Permet de gérer ses rangs", "rm", true));
+		this.Lock.add(new Lock("--fps", 0, "???", "Commande", "Permet d'augmenter ses fps", "", true));
+		this.Lock.add(new Lock("--tppos", 0, "???", "Commande", "Permet de se tp à des coordonnées précises", "", true));
+		this.Lock.add(new Lock("Trail", 0, "???", "Cheat", "Laisse une trainée bleue derrière vous sur les blocs que vous touchez", "", true));
+		this.Lock.add(new Lock("--sword", 75, "souls", "Commande", "Active le mode sword qui vous empêche de taper une entité avec Kill Aura, Trigger etc... sans avoir une épée dans la main", "", true));
+		lm.setLock("--sword", "sword", "Sword");
+		this.Lock.add(new Lock("Unicode", 100, "souls", "Cheat", "Permet d'écrire avec des caractères Unicode qui bypass les anti-insutle", "", true));
+		lm.setLock("Unicode", "unicode", "Unicode");
+		this.Lock.add(new Lock("--plugins", 50, "souls", "Commande", "Affiche les plugins du serveur", "pl", true));
+		lm.setLock("--plugins", "plugins", "Plugins");
+		this.Lock.add(new Lock("--ka noarmor", 50, "souls", "Commande", "Active/désactive le mode NoArmor du Kill Aura", "", true));
+		lm.setLock("--ka noarmor", "noarmor", "Kill Aura NoArmor");
+		this.Lock.add(new Lock("--HUD select", 75, "souls", "Cheat", "Personnalise votre séléction de blocs", "", true));
+		lm.setLock("--HUD select", "select", "HUD Select");
+		this.Lock.add(new Lock("--trade", 15, "Lvl", "Commande", "Permet de jouer à la lotterie, payer des options contre des souls", "shop", true));
+		this.Lock.add(new Lock("--ka onground", 40, "Lvl", "Commande", "Active/désactive le mode OnGround du Kill Aura", "", true));
+		this.Lock.add(new Lock("FastBow", 12, "Lvl", "Cheat", "Permet de tirer des flèches instantannement [Bypass AAC]", "fb", true));
+		this.Lock.add(new Lock("Sneak", 27, "Lvl", "Cheat", "Les autres joueurs vous voient Sneak sans que ça vous ralentissent", "", true));
+		this.Lock.add(new Lock("--server", 5, "Lvl", "Commande", "Affiche des serveurs bien pour cheat voté par les joueurs", "", true));
+		this.Lock.add(new Lock("--vote", 5, "Lvl", "Commande", "Vous permet de voter pour différent serveurs, max 1 fois par jours", "", true));
+		this.Lock.add(new Lock("rankmanager info", 100, "souls", "Commande", "Option RankManager qui affiche les informations concernant les rangs s'ils en ont", "", true));
+		this.Lock.add(new Lock("rankmanager lvl", 150, "souls", "Commande", "Option RankManager qui affiche le lvl des rangs", "", true));
+		this.Lock.add(new Lock("rankmanager rate", 200, "souls", "Commande", "Option RankManager qui affiche la rareté des rangs", "", true));
+		this.Lock.add(new Lock("rankmanager bonus", 250, "souls", "Commande", "Option RankManager qui affiche les bonus des rangs", "", true));
+		this.Lock.add(new Lock("fastdura", 150, "souls", "Cheat", "Permet de détruire l'armure très rapidement", "", true));
+		lm.setLock("fastdura", "fastdura", "FastDura");
+		this.Lock.add(new Lock("--reach pvp", 0, "rang", "Commande", "Permet l'activation de la reach pvp", "", true));
+		this.Lock.add(new Lock("Pyro", 0, "rang", "Cheat", "Enflamme une zone depuis où l'ont vise", "", true));
+		this.Lock.add(new Lock("TpBack", 50, "souls", "Cheat", "Vous tp sur un bloc choisi quand vous arrivez en dessous du seuil de vie définit", "tpb", true));
+		lm.setLock("TpBack", "tpback", "TpBack");
+		this.Lock.add(new Lock("Flash", 0, "???", "Cheat", "Vous retp sur la position set à l'activation", "", true));
+		this.Lock.add(new Lock("PunKeel", 0, "???", "Cheat", "Génére un véritable lag suivant vos désirs", "pk", true));
+		this.Lock.add(new Lock("--step bypass", 0, "???", "Commande", "Bypass step", "", true));
 
 		
 		

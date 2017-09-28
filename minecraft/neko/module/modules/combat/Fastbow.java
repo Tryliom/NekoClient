@@ -45,6 +45,7 @@ public class Fastbow extends Module {
 			isOn=true;			
 		} else if (mc.thePlayer.isSneaking()) {
 			isOn=false;
+			return;
 		}	
 		
 		if ((u.limite && u.nbPack>u.limit))

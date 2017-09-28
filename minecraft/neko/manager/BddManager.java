@@ -1,4 +1,4 @@
-package neko.module.other;
+package neko.manager;
 
 public class BddManager {
 	private String user;

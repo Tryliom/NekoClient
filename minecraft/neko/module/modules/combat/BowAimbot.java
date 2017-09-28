@@ -60,7 +60,7 @@ public class BowAimbot extends Module {
 		return true;
 	}
 	
-	private boolean haveBow() {
+	public boolean haveBow() {
 		try {
 			Item i = mc.thePlayer.getCurrentEquippedItem().getItem();
 			if ((i instanceof ItemBlock) || ((i instanceof ItemFood) && mc.thePlayer.getFoodStats().needFood()))
@@ -69,7 +69,6 @@ public class BowAimbot extends Module {
 			return false;
 		}
 		if (!mc.thePlayer.isUsingItem()) {
-			currEn=null;
 			return false;
 		}
 		return true;
@@ -77,7 +76,6 @@ public class BowAimbot extends Module {
 	
 	public void aimBow() {
 		EntityLivingBase best = null;
-		boolean v=true;
 		boolean valid = false;
 		for (Object o : (var.mode.equalsIgnoreCase("Player") ? mc.theWorld.playerEntities : mc.theWorld.loadedEntityList)) {
 			if (o instanceof EntityLivingBase) {
@@ -103,15 +101,9 @@ public class BowAimbot extends Module {
 					if (this.armor==BowMode.Max ? best.getTotalArmorValue()<en.getTotalArmorValue() : best.getTotalArmorValue()>en.getTotalArmorValue()) {
 						best = en;
 					}
-				} else {
-					v=false;
 				}
 			}
         }
-		if (currEn!=null && currEn==best)
-    		valid=true;
-    	else if (currEn==null)
-    		valid=true;
     	currEn=best;
     	if (currEn!=null)
     		Utils.faceBowEntityClient(best);

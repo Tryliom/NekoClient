@@ -3,9 +3,9 @@ package neko.module.modules.render;
 import java.util.ArrayList;
 
 import neko.Client;
+import neko.manager.ModuleManager;
 import neko.module.Category;
 import neko.module.Module;
-import neko.module.ModuleManager;
 import neko.module.other.Bonus;
 import neko.module.other.Rank;
 import neko.module.other.enums.Rate;

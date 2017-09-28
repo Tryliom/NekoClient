@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import neko.Client;
+import neko.manager.ModuleManager;
 import neko.module.Category;
 import neko.module.Module;
-import neko.module.ModuleManager;
 import neko.module.other.Active;
 import neko.module.other.Bloc;
 import neko.module.other.Rank;

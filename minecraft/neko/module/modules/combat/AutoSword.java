@@ -41,7 +41,7 @@ public class AutoSword extends Module {
 		
 	}
 	
-	protected void swap(int one, int two) {
+	private void swap(int one, int two) {
 		this.mc.playerController.windowClick(this.mc.thePlayer.inventoryContainer.windowId, one, two, 2, this.mc.thePlayer);
 	}
 	  

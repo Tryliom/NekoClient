@@ -5,6 +5,7 @@ import org.lwjgl.input.Keyboard;
 import neko.module.Category;
 import neko.module.Module;
 import net.minecraft.item.ItemSword;
+import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 
 public class Autoblock extends Module {
 	
@@ -23,7 +24,7 @@ public class Autoblock extends Module {
 	public void onUpdate() {
 		if (mc.thePlayer.getCurrentEquippedItem()!=null && mc.thePlayer.getCurrentEquippedItem().getItem()!=null) {
 			if (mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemSword) {
-				mc.playerController.sendUseItem(mc.thePlayer, mc.theWorld, mc.thePlayer.getCurrentEquippedItem());
+				mc.getNetHandler().addToSendQueue(new C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()));
 			}
 		}
 		

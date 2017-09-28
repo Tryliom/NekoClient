@@ -13,24 +13,17 @@ public class Fullbright extends Module {
 
 	}
 
-	
 	public void onEnabled() {
+		while (mc.gameSettings.gammaSetting < 101F) {
+			mc.gameSettings.gammaSetting += 0.5F;
+		}
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		super.onDisabled();
-	}
-	
-	public void onUpdate() {
-		if (this.getToggled() || Xray.isOn == true) {
-			while (Minecraft.getMinecraft().gameSettings.gammaSetting < 100F) {
-				Minecraft.getMinecraft().gameSettings.gammaSetting += 0.5F;
-			}
-		} else {
-			while (Minecraft.getMinecraft().gameSettings.gammaSetting > 1F) {
-				Minecraft.getMinecraft().gameSettings.gammaSetting -= 0.5F;
-			}
+		while (mc.gameSettings.gammaSetting > 1F) {
+			mc.gameSettings.gammaSetting -= 0.5F;
 		}
+		super.onDisabled();
 	}
 }

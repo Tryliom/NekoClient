@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import neko.Client;
 import neko.event.UpdateEvent;
 import neko.gui.InGameGui;
+import neko.manager.ModuleManager;
 import neko.module.modules.hide.Friends;
 import neko.module.modules.hide.Gui;
 import neko.module.modules.hide.Lot;
@@ -86,8 +87,9 @@ public class Module
 	    		}
 	    		if (b) {
 	    			Utils.toggleModule(s.replaceFirst(var.prefixCmd, ""));
-	    		} else
+	    		} else {
 	    			new ChatUtils().doCommand(s);
+	    		}
 	    	}
 	    }
 	  }
