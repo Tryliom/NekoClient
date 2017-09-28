@@ -133,6 +133,7 @@ public class ModuleManager {
 		this.ActiveModule.add(new Crasher()); // Key NONE
 		this.ActiveModule.add(new Parkour()); // Key NONE
 		this.ActiveModule.add(new BowAimbot()); // Key NONE
+		this.ActiveModule.add(new BedGod()); // Key NONE
 		
 		
 		// Ajouter les locks | -- = ..;

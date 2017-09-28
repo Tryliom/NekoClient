@@ -742,7 +742,7 @@ public class Utils {
 	public static void faceBowEntityClient(Entity target)
 	  {
 	    int bowCharge = mc.thePlayer.getItemInUseCount();
-	    float velocity = bowCharge / 20;
+	    float velocity = (Utils.isToggle("Fastbow") ? mc.thePlayer.getItemInUse().getMaxItemUseDuration() : bowCharge) / 20;
 	    velocity = (velocity * velocity + velocity * 2.0F) / 3.0F;
 	    if (velocity < 0.1D)
 	    {

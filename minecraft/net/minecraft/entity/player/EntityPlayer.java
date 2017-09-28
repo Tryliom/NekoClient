@@ -118,11 +118,11 @@ public abstract class EntityPlayer extends EntityLivingBase
     public double field_71085_bR;
 
     /** Boolean value indicating weather a player is sleeping or not */
-    protected boolean sleeping;
+    public boolean sleeping;
 
     /** the current location of the player */
     public BlockPos playerLocation;
-    private int sleepTimer;
+    public int sleepTimer;
     public float field_71079_bU;
     public float field_71082_cx;
     public float field_71089_bV;

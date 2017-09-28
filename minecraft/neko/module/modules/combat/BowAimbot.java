@@ -53,55 +53,11 @@ public class BowAimbot extends Module {
 			return false;
 		if (mc.thePlayer.getName().equalsIgnoreCase(en.getName()) || en.getName().isEmpty())
 			return false;
-		if (Item.getIdFromItem(mc.thePlayer.getCurrentEquippedItem().getItem())!=261)
-			return false;
 		if (var.mode.equalsIgnoreCase("Mob") ? Utils.isPlayer(en) : false)
-			return false;	
-		if (!this.list.contains(en))
+			return false;
+		if (!mc.thePlayer.canEntityBeSeen(en))
 			return false;
 		return true;
-	}
-	
-	private void sortEntity() {
-		EntityLivingBase best = null;
-		boolean v=true;
-		for (Object o : (var.mode.equalsIgnoreCase("Player") ? mc.theWorld.playerEntities : mc.theWorld.loadedEntityList)) {
-			if (o instanceof EntityLivingBase) {
-				EntityLivingBase en = (EntityLivingBase) o;           
-				if (this.isValid(en))
-					list.add(en);
-			}
-        }
-		for (EntityLivingBase en : list) {
-			// checks Distance Life Armor
-			if (Utils.isInFov(en, fov))
-				continue;
-			if (best==null) {
-				best=en;
-				continue;
-			}
-			boolean heal = !this.life.name().equalsIgnoreCase("Désactivé");
-			boolean arm = !this.armor.name().equalsIgnoreCase("Désactivé");
-			if (heal) {
-				if (this.life==BowMode.Max ? best.getHealth()<en.getHealth() : best.getHealth()>en.getHealth()) {
-					best = en;
-				} else if (this.armor!=BowMode.Désactivé) {
-					if (this.armor==BowMode.Max ? best.getTotalArmorValue()<en.getTotalArmorValue() : best.getTotalArmorValue()>en.getTotalArmorValue()) {
-						best = en;
-					}
-				}
-			} else if (arm) {
-				if (this.armor==BowMode.Max ? best.getTotalArmorValue()<en.getTotalArmorValue() : best.getTotalArmorValue()>en.getTotalArmorValue()) {
-					best = en;
-				}
-			} else {
-				v=false;
-			}
-		}
-		if (v) {
-			list.clear();
-			list.add(best);
-		}
 	}
 	
 	private boolean haveBow() {
@@ -120,21 +76,46 @@ public class BowAimbot extends Module {
 	}
 	
 	public void aimBow() {
+		EntityLivingBase best = null;
+		boolean v=true;
 		boolean valid = false;
-		this.sortEntity();
-		for (EntityLivingBase en : this.list) {          
-            if (this.isValid(en)) {
-            	if (currEn!=null && currEn==en)
-            		valid=true;
-            	else if (currEn==null)
-            		valid=true;
-            	currEn=en;
-            	Utils.faceBowEntityClient(en);
-            }
+		for (Object o : (var.mode.equalsIgnoreCase("Player") ? mc.theWorld.playerEntities : mc.theWorld.loadedEntityList)) {
+			if (o instanceof EntityLivingBase) {
+				EntityLivingBase en = (EntityLivingBase) o;           
+				if (!this.isValid(en)) {
+					continue;
+				}
+				if (best==null) {
+					best=en;
+					continue;
+				}
+				boolean heal = !this.life.name().equalsIgnoreCase("Désactivé");
+				boolean arm = !this.armor.name().equalsIgnoreCase("Désactivé");
+				if (heal) {
+					if (this.life==BowMode.Max ? best.getHealth()<en.getHealth() : best.getHealth()>en.getHealth()) {
+						best = en;
+					} else if (this.armor!=BowMode.Désactivé) {
+						if (this.armor==BowMode.Max ? best.getTotalArmorValue()<en.getTotalArmorValue() : best.getTotalArmorValue()>en.getTotalArmorValue()) {
+							best = en;
+						}
+					}
+				} else if (arm) {
+					if (this.armor==BowMode.Max ? best.getTotalArmorValue()<en.getTotalArmorValue() : best.getTotalArmorValue()>en.getTotalArmorValue()) {
+						best = en;
+					}
+				} else {
+					v=false;
+				}
+			}
         }
-		list.clear();
-		if (!valid)
-			currEn=null;
+		if (currEn!=null && currEn==best)
+    		valid=true;
+    	else if (currEn==null)
+    		valid=true;
+    	currEn=best;
+    	if (currEn!=null)
+    		Utils.faceBowEntityClient(best);
+		currEn=null;
 	}
 
 	public Double getFov() {
