@@ -36,10 +36,8 @@ public class Autoarmor extends Module {
 	}
 	
 	public void onUpdate() {		
-		if (!this.getToggled())
-			return;
 		if (!mc.isSingleplayer())
-			if (mc.getCurrentServerData().serverIP.equalsIgnoreCase("play.epicube.fr") && !ec)
+			if ((mc.getCurrentServerData()!=null ? mc.getCurrentServerData().serverIP.equalsIgnoreCase("play.epicube.fr") : false) && !ec)
 				return;
 		
 		if ((mc.thePlayer.capabilities.isCreativeMode) || (mc.thePlayer.openContainer != null) && 

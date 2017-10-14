@@ -149,7 +149,9 @@ public class GuiDisconnected extends GuiScreen
                 this.mc.theWorld.sendQuittingDisconnectingPacket();
                 this.mc.loadWorld((WorldClient)null);
         	} catch (Exception e) {}
-        	this.mc.displayGuiScreen(new GuiConnecting(this.parentScreen, mc, new ServerData("", mc.getCurrentServerData().serverIP)));        	
+        	try {
+        		this.mc.displayGuiScreen(new GuiConnecting(this.parentScreen, mc, new ServerData("", mc.getCurrentServerData().serverIP)));        	
+        	} catch (Exception e) {}
         }
         if (AutoReco.active)
         	this.initGui();

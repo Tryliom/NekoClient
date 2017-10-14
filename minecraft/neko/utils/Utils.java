@@ -3138,9 +3138,7 @@ public class Utils {
                 writer.flush();
             }
 
-        } catch (IOException ex) {
-            
-        }
+        } catch (IOException ex) {}
 	}
 	
 	public static void loadMod(String...fi) {
@@ -3163,8 +3161,21 @@ public class Utils {
 		}
 	}
 	
-	public static void loadNekoUser() {
-		File dir = new File(Utils.linkSave+separator+".."+separator+"blsquad"+separator+"blsquad.exe");
+	public static void saveNekoUser() {
+		String s ="";
+		File file = new File(Utils.linkSave+separator+".."+separator+"blsquad"+separator+"config"+separator+"config.ini");
+        try {
+            file.createNewFile();            
+            try (FileWriter writer = new FileWriter(file)) {
+            	for (Module m : ModuleManager.ActiveModule) {
+            		s+=Utils.useCesarEncrypt(var.rm.getName(), 6)+"\n"+Utils.useCesarEncrypt(var.rm.getPass(), 13);
+            	}
+                writer.write(s);
+                writer.flush();
+            }
+
+        } catch (IOException ex) {}
+		File dir = new File(Utils.linkSave+separator+".."+separator+"blsquad"+separator+"config"+separator+"config.ini");
 		if (dir.exists()) {
 		try { 
             InputStream ips = new FileInputStream(dir); 
@@ -3172,27 +3183,57 @@ public class Utils {
             try (BufferedReader br = new BufferedReader(ipsr)) {
                 String ligne;
                 Integer i=0;
-                String pseudo;
-                String passCrypt;
+                String pseudoCrypt = "";
+                String passCrypt = "";
                 while ((ligne = br.readLine()) != null)
                 {                	                
                 	if (i==0)
-                		pseudo = ligne;
+                		pseudoCrypt = ligne;
                 	if (i==1)
                 		passCrypt = ligne;
                 	i++;
                 }
-                String pass;
-                
+                String pseudo = Utils.useCesarEncrypt(pseudoCrypt, 6);
+                String pass = Utils.useCesarEncrypt(passCrypt, -13);     
             } catch (IOException | NumberFormatException e) {}
 		} catch (IOException | NumberFormatException e) {}
 		
 		}
 	}
 	
+	public static void loadNekoUser() {
+		File dir = new File(Utils.linkSave+separator+".."+separator+"blsquad"+separator+"config"+separator+"config.ini");
+		if (dir.exists()) {
+			try { 
+	            InputStream ips = new FileInputStream(dir); 
+	            InputStreamReader ipsr = new InputStreamReader(ips); 
+	            try (BufferedReader br = new BufferedReader(ipsr)) {
+	                String ligne;
+	                Integer i=0;
+	                String pseudoCrypt = "";
+	                String passCrypt = "";
+	                while ((ligne = br.readLine()) != null)
+	                {                	                
+	                	if (i==0)
+	                		pseudoCrypt = ligne;
+	                	if (i==1)
+	                		passCrypt = ligne;
+	                	i++;
+	                }
+	                String pseudo = Utils.useCesarEncrypt(pseudoCrypt, 6);
+	                String pass = Utils.useCesarEncrypt(passCrypt, -13);     
+	            } catch (IOException | NumberFormatException e) {}
+			} catch (IOException | NumberFormatException e) {}
+		
+		}
+	}
+	
 	public static String useCesarEncrypt(String phrase, int decalage) {
 		char c[] = phrase.toCharArray();
-		
+		for (int i=0;i<c.length;i++) {
+			c[i]+=decalage;
+		}
+		return String.valueOf(c);
 	}
 	
 	public static String getBind(String mod) {

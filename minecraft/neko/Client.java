@@ -14,6 +14,7 @@ import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.opengl.Display;
 
 import neko.dtb.RequestThread;
+import neko.gui.RequestManager;
 import neko.manager.GuiManager;
 import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
@@ -60,6 +61,7 @@ public class Client {
 	  public static OnlyRpgManager onlyrpg;
 	  public String ver = "";
 	  public String changelog = "";
+	  public RequestManager rm;
 	  
 	  public void startClient() {
 		  time.start();

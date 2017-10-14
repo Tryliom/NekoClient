@@ -3052,6 +3052,7 @@ public class ChatUtils {
 					
 					Utils.addChat2("§6"+var.prefixCmd+"trade lot", var.prefixCmd+"trade lot", "§7Tire des lots aléatoires !\n§6Coût:§c 1 ticket de loterie", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"trade ticket", var.prefixCmd+"trade ticket", "§7Reçois un ticket de lotterie !\n§6Coût:§c 150 souls", false, Chat.Summon);
+					Utils.addChat(var.prefixCmd+"trade lotplus: §7"+Utils.setColor("Augmente les lots qui apparaissent de 1 de plus. Coût: §c"+(100+(Lot.nbLot-3)*75)+" souls", "§7"));
 					for (Lock lock : ModuleManager.Lock) {
 						if (lock.isLock() && lock.getUnit().equalsIgnoreCase("souls") && !lock.getName().startsWith("rankmanager")) {
 							Utils.addChat2("§6"+var.prefixCmd+"trade "+lock.getCmdName(), var.prefixCmd+"trade "+lock.getCmdName(), "§7Débloque définitivement le §c"+lock.getNameUnlock(), false, Chat.Summon);
@@ -3212,9 +3213,7 @@ public class ChatUtils {
 							}
 						}
 						Utils.addChat2("§6"+var.prefixCmd+"trade all: §7"+Utils.setColor("Achète dans l'ordre tous les lots perdus jusqu'à avoir tout acheter ou plus assez de souls", "§7"), var.prefixCmd+"trade all", "§7Cliquer pour tout acheter !", false, Chat.Click);
-					}
-					
-					Utils.addChat(var.prefixCmd+"trade lotplus: §7"+Utils.setColor("Augmente les lots qui apparaissent de 1 de plus. Coût: §c"+(100+(Lot.nbLot-3)*75)+" souls", "§7"));
+					}								
 				} else if (args[1].equalsIgnoreCase("lot")) {
 					int totLot=1;
 					if (args.length==3 && Utils.isInteger(args[2])) {
