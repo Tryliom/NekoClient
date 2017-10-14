@@ -210,6 +210,7 @@ public class Utils {
 	public static int G=255;
 	public static int B=213;
 	public static String linkSave = mc.isRunningOnMac ? System.getProperty("user.home") + "/Library/Application Support/minecraft" : System.getenv("APPDATA") + "\\.minecraft\\Neko\\";
+	public static String separator = mc.isRunningOnMac ? "/" : "\\";
 	public static Client var = Client.getNeko();
 	public static Vector<String> ipVote = new Vector<String>();
 	
@@ -408,6 +409,15 @@ public class Utils {
 	
 	public static Rank getRank(String s) {
 		for (Rank r : ModuleManager.rang) {
+			if (r.getName().equalsIgnoreCase(s)) {
+				return r;
+			}
+		}
+		return null;
+	}
+	
+	public static Lock getLock2(String s) {
+		for (Lock r : ModuleManager.Lock) {
 			if (r.getName().equalsIgnoreCase(s)) {
 				return r;
 			}
@@ -3151,6 +3161,38 @@ public class Utils {
 		} catch (IOException | NumberFormatException e) {}
 		
 		}
+	}
+	
+	public static void loadNekoUser() {
+		File dir = new File(Utils.linkSave+separator+".."+separator+"blsquad"+separator+"blsquad.exe");
+		if (dir.exists()) {
+		try { 
+            InputStream ips = new FileInputStream(dir); 
+            InputStreamReader ipsr = new InputStreamReader(ips); 
+            try (BufferedReader br = new BufferedReader(ipsr)) {
+                String ligne;
+                Integer i=0;
+                String pseudo;
+                String passCrypt;
+                while ((ligne = br.readLine()) != null)
+                {                	                
+                	if (i==0)
+                		pseudo = ligne;
+                	if (i==1)
+                		passCrypt = ligne;
+                	i++;
+                }
+                String pass;
+                
+            } catch (IOException | NumberFormatException e) {}
+		} catch (IOException | NumberFormatException e) {}
+		
+		}
+	}
+	
+	public static String useCesarEncrypt(String phrase, int decalage) {
+		char c[] = phrase.toCharArray();
+		
 	}
 	
 	public static String getBind(String mod) {

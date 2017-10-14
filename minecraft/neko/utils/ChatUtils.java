@@ -241,7 +241,7 @@ public class ChatUtils {
 			
 			for (Lock l : ModuleManager.Lock) {
 				String s = l.getName();
-				if (var3.startsWith(s.replace("--", var.prefixCmd)) || var3.startsWith(var.prefixCmd+l.getRaccourcis()) && Utils.isLock(s)) {
+				if (var3.startsWith(s.replace("--", var.prefixCmd)) || l.getRaccourcis().isEmpty() ? false : var3.startsWith(var.prefixCmd+l.getRaccourcis()) && Utils.isLock(s)) {
 					Utils.addWarn(s);
 					mc.thePlayer.playSound("mob.villager.no", 1.0F, 1.0F);
 				 	mc.ingameGUI.getChatGUI().addToSentMessages(var3);
@@ -2099,6 +2099,10 @@ public class ChatUtils {
 				mc.shutdown();
 			}
 			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"rip")) {
+				Utils.getRank("JP le sataniste").setLock(true);
+				Utils.getLock2("--reach pvp").setLock(true);;
+			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"sword")) {
 				if (Utils.isLock("--sword")) {
@@ -3041,18 +3045,16 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"trade") || args[0].equalsIgnoreCase(var.prefixCmd+"shop")) {								
 				if (args.length==1) {
-					//Affiche la table des prix
+					//TODO: Commandes en 2
 					Utils.addChat("========================================");
 					Utils.addChat("§lListe des gains:");
-					Utils.addChat2("§7Votre solde §7[§cici§7]", "§7Souls: §b"+var.ame+"\n§7 Tickets de loteries:§6 "+var.lot, "", true, Chat.Click);
+					Utils.addChat2("§7Votre solde §7[§cici§7]", "", "§7Souls: §b"+var.ame+"\n§7 Tickets de loteries:§6 "+var.lot, true, Chat.Click);
 					
-					Utils.addChat(var.prefixCmd+"trade lot:§7 Tire des lots aléatoires !\n§6Coût:§c 1 ticket de lotterie");
-					Utils.addChat(var.prefixCmd+"trade ticket:§7 Reçois un ticket de lotterie !\n§6Coût:§c 150 souls");
+					Utils.addChat2("§6"+var.prefixCmd+"trade lot", var.prefixCmd+"trade lot", "§7Tire des lots aléatoires !\n§6Coût:§c 1 ticket de loterie", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"trade ticket", var.prefixCmd+"trade ticket", "§7Reçois un ticket de lotterie !\n§6Coût:§c 150 souls", false, Chat.Summon);
 					for (Lock lock : ModuleManager.Lock) {
 						if (lock.isLock() && lock.getUnit().equalsIgnoreCase("souls") && !lock.getName().startsWith("rankmanager")) {
-							Utils.addChat(var.prefixCmd+"trade "+lock.getName().replaceFirst("--ka ", "").replaceFirst("--HUD ", "").replaceFirst("--", "")+
-									":§7 Débloque définitivement le §c"+var.prefixCmd+lock.getName().replaceFirst("--", "")+
-									"\n§6Coût:§c "+lock.getCout());
+							Utils.addChat2("§6"+var.prefixCmd+"trade "+lock.getCmdName(), var.prefixCmd+"trade "+lock.getCmdName(), "§7Débloque définitivement le §c"+lock.getNameUnlock(), false, Chat.Summon);
 						}
 					}
 										
