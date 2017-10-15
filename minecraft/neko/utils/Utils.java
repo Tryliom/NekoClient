@@ -212,6 +212,7 @@ public class Utils {
 	public static String linkSave = mc.isRunningOnMac ? System.getProperty("user.home") + "/Library/Application Support/minecraft" : System.getenv("APPDATA") + "\\.minecraft\\Neko\\";
 	public static String separator = mc.isRunningOnMac ? "/" : "\\";
 	public static String sep = "§8§m--------------------------------------";
+	public static String sep2 = "§8§m--------------";
 	public static Client var = Client.getNeko();
 	public static Vector<String> ipVote = new Vector<String>();
 	
@@ -992,7 +993,7 @@ public class Utils {
 			addChat("Commandes autorisées en OnlyRpg: "+ch);			
 			return;
 		}
-		addChat("========================================");
+		addChat(Utils.sep);
 		addChat("§9§oHelp "+num+"/"+maxHelp);
 		switch (num) {
 		case 1 :	
@@ -1016,7 +1017,7 @@ public class Utils {
 			addChat2("§6"+var.prefixCmd+"Fov <Double>", var.prefixCmd+"fov ", "§7Change votre fov, même au dela des limites", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Clear", var.prefixCmd+"clear", "§7Efface le chat", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Mode <Player:Mob:All>", var.prefixCmd+"mode ", "§7Change la cible pour les cheats qui utilise ce fonctionnement", false, Chat.Summon);
-			addChat2("§6"+var.prefixCmd+"MyPing ou Lag", var.prefixCmd+"ping", "§7Affiche votre ping réel par rapport au serveur", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"MyPing", var.prefixCmd+"myping", "§7Affiche votre ping réel par rapport au serveur", false, Chat.Summon);
 			break;
 			
 		case 3:
@@ -1165,7 +1166,7 @@ public class Utils {
 				l+="§6"+ModuleManager.values.get(i);
 			else
 				l+="§6"+ModuleManager.values.get(i)+"\n";
-		Utils.addChat2("===§e"+cheat+"§6===", "", l, true, Chat.Click);
+		Utils.addChat2("§8§m--->§e "+cheat, "", l, true, Chat.Click);
 		ModuleManager.values.clear();
 	}
 	
@@ -2416,7 +2417,7 @@ public class Utils {
 		if (acc.size()==0) {
 			addChat("§cPas de comptes enregistrés...");			
 		} else {
-			addChat("=========Account=========");
+			addChat(Utils.sep2+"§6Account"+Utils.sep2);
 			String tab[] = new String[2];
 			for (int k=0;k<acc.size();k++) {
         		tab = acc.get(k).split(" ");
@@ -2432,7 +2433,7 @@ public class Utils {
         			msg+="["+(k+1)+"] "+tab[0]+" "+mdp+" - Utilisé";
         		addChat2("§6"+msg, var.prefixCmd+"log "+(k+1), "§7Cliquez ici pour vous log dans le compte n°"+(k+1), false, Chat.Click);
         	}
-			addChat("=========================");
+			addChat(Utils.sep);
 		}
 		
 	}		
@@ -3696,7 +3697,7 @@ public class Utils {
 				mc.theWorld.spawnParticle(EnumParticleTypes.HEART, mc.thePlayer.posX+neko*1/k, mc.thePlayer.posY+0.85, mc.thePlayer.posZ+nekoN*1/k, 1, 1, 1, 1);
 		}
 		
-		int neko = (int) Math.round(Math.random()*700);	
+		int neko = (int) Math.round(Math.random()*777);	
 		int rand = (int) Math.round(Math.random()*50);
 		String nyah = "";
 		switch (neko) {
@@ -4391,6 +4392,83 @@ public class Utils {
 		case 698:nyah="Sale démon !";break;
 		case 699:nyah="Oh tain que c'est gros..waw";break;
 		case 700:nyah="ça tire loin quand même c'te truc :x";break;
+		case 701:nyah="";break;
+		case 702:nyah="";break;
+		case 703:nyah="";break;
+		case 704:nyah="";break;
+		case 705:nyah="";break;
+		case 706:nyah="";break;
+		case 707:nyah="";break;
+		case 708:nyah="";break;
+		case 709:nyah="";break;
+		case 710:nyah="";break;
+		case 711:nyah="";break;
+		case 712:nyah="";break;
+		case 713:nyah="";break;
+		case 714:nyah="";break;
+		case 715:nyah="";break;
+		case 716:nyah="";break;
+		case 717:nyah="";break;
+		case 718:nyah="";break;
+		case 719:nyah="";break;
+		case 720:nyah="";break;
+		case 721:nyah="";break;
+		case 722:nyah="";break;
+		case 723:nyah="";break;
+		case 724:nyah="";break;
+		case 725:nyah="";break;
+		case 726:nyah="";break;
+		case 727:nyah="";break;
+		case 728:nyah="";break;
+		case 729:nyah="";break;
+		case 730:nyah="";break;
+		case 731:nyah="";break;
+		case 732:nyah="";break;
+		case 733:nyah="";break;
+		case 734:nyah="";break;
+		case 735:nyah="";break;
+		case 736:nyah="";break;
+		case 737:nyah="";break;
+		case 738:nyah="";break;
+		case 739:nyah="";break;
+		case 740:nyah="";break;
+		case 741:nyah="";break;
+		case 742:nyah="";break;
+		case 743:nyah="";break;
+		case 744:nyah="";break;
+		case 745:nyah="";break;
+		case 746:nyah="";break;
+		case 747:nyah="";break;
+		case 748:nyah="";break;
+		case 749:nyah="";break;
+		case 750:nyah="";break;
+		case 751:nyah="";break;
+		case 752:nyah="";break;
+		case 753:nyah="";break;
+		case 754:nyah="";break;
+		case 755:nyah="";break;
+		case 756:nyah="";break;
+		case 757:nyah="";break;
+		case 758:nyah="";break;
+		case 759:nyah="";break;
+		case 760:nyah="";break;
+		case 761:nyah="";break;
+		case 762:nyah="";break;
+		case 763:nyah="";break;
+		case 764:nyah="";break;
+		case 765:nyah="";break;
+		case 766:nyah="";break;
+		case 767:nyah="";break;
+		case 768:nyah="";break;
+		case 769:nyah="";break;
+		case 770:nyah="";break;
+		case 771:nyah="";break;
+		case 772:nyah="";break;
+		case 773:nyah="";break;
+		case 774:nyah="";break;
+		case 775:nyah="";break;
+		case 776:nyah="";break;
+		case 777:nyah="";break;
 		
 		case -1:nyah="";break;
 		}

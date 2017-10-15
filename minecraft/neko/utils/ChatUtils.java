@@ -584,24 +584,24 @@ public class ChatUtils {
 					}
 
 				} else if (args[1].equalsIgnoreCase("disc")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Disc <String>", var.prefixCmd+"disc ", "§7Joue le disc choisit", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Disc <String> <Double>", var.prefixCmd+"disc ", "§7Joue le disc et modifie le volume sur la distance", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("clickaim")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"ClickAim multiaura", var.prefixCmd+"clickaim ", "§7Change le mode multiaura au singleaura et inversement", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"ClickAim <Double>", var.prefixCmd+"clickaim", "§7Modifie la portée du ClickAim", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("firetrail")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"FireTrail large", var.prefixCmd+"firetrail large", "§7Change l'épaisseur de la trainée de plus large à plus fine", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("Build")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Build", var.prefixCmd+"Build", "§7Permet de poser des blocs format 3x3 autour de vous, ces options sont disponibles", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Build Down", var.prefixCmd+"Build down", "§7Pose les blocs format 3x3 en dessous de vous", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Build Up", var.prefixCmd+"Build up", "§7Pose les blocs format 3x3 au dessus de vous (1 bloc d'espace au dessus de votre tête)", false, Chat.Summon);
@@ -610,30 +610,29 @@ public class ChatUtils {
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("phase")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Phase vphase", var.prefixCmd+"phase vphase", "§7Change le phase pour essayer de passer à travers le sol", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("nametag")) {
-					Utils.addChat("========================================");
-					Utils.addChat(var.prefixCmd+"nametag <double> :§7 Change la taille des pseudo\n §7Base: 6");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Nametag <Double>", var.prefixCmd+"nametag ", "§7Change la taille des pseudos, de base sur 6", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("prefix")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Prefix <String>", var.prefixCmd+"prefix ", "§7Change le preifx des commandes", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("velocity") || args[1].equalsIgnoreCase("velo")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Velocity <Double>", var.prefixCmd+"velo ", "§7Change le coefficient de knockback en horizontal et vertical de base", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Velocity <Horizontal:Hor> <Double>", var.prefixCmd+"velo hor ", "§7Change le coefficient de knockback en horizontal", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Velocity <Vertical:Ver> <Double>", var.prefixCmd+"velo ver ", "§7Change le coefficient de knockback en vertical", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("friend") || args[1].equalsIgnoreCase("fr")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Friend <Player>", var.prefixCmd+"friend ", "§7Ajoute/supprime un joueur de votre liste", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Friend list", var.prefixCmd+"friend list", "§7Affiche la liste de vos amis", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Friend clear", var.prefixCmd+"friend clear", "§7Vide votre liste d'amis", false, Chat.Summon);
@@ -642,31 +641,31 @@ public class ChatUtils {
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("smoothaim")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"SmoothAim range <Double>", var.prefixCmd+"smoothaim range ", "§7Change la portée du SmoothAim", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"SmoothAim fov <Double>", var.prefixCmd+"smoothaim fov ", "§7Change le fov du SmoothAim", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"SmoothAim speed <Double>", var.prefixCmd+"smoothaim speed ", "§7Change la vitesse de la tête pour le SmoothAim", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("autosoup")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Autosoup heal <Int>", var.prefixCmd+"autosoup heal ", "§7Change le seuil de vie", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Autosoup drop", var.prefixCmd+"autosoup drop", "§7Drop ou non les bols vides de l'inventaire", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("autonyah")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Autonyah prefix <String>", var.prefixCmd+"autonyah prefix ", "§7Change le prefix avant les Nyah", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Autonyah speed <Double>", var.prefixCmd+"Autonyah speed ", "§7Change la vitesse de Nyah par secondes", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("glide")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Glide <Double>", var.prefixCmd+"glide ", "§7Change la vitesse du Glide, de base à 0.125", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("log")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Log add <Email/Username> <Mdp>", var.prefixCmd+"log add ", "§7Ajoute un compte à la liste", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Log remove <Int>", var.prefixCmd+"log remove ", "§7Supprime un compte de la liste selon son numéro dans le Log list", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Log clear", var.prefixCmd+"log clear", "§7Vide la liste de comptes", false, Chat.Summon);
@@ -674,7 +673,7 @@ public class ChatUtils {
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("reach")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6Reach pvp [info]", var.prefixCmd+"", "§7Toutes les sous commandes ci-dessous sont débloquées avec la reach pvp.\n§7Si vous voulez en savoir plus, veuillez vous renseignez sur le Guide Neko", true, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Reach <Double>", var.prefixCmd+"reach ", "§7Change la distance de la reach", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Reach pvp", var.prefixCmd+"reach pvp", "§7Permet de frapper des entités et joueurs à distance.\n§7La Reach aimbot vous aidera à mieux viser.", false, Chat.Summon);
@@ -685,14 +684,14 @@ public class ChatUtils {
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("trigger")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Trigger <Double>", var.prefixCmd+"trigger ", "§7Change la portée du Trigger", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Trigger cps <Int>", var.prefixCmd+"trigger cps ", "§7Change les coups/secondes du Trigger", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Trigger random", var.prefixCmd+"trigger random", "§7Active ou non les cps aléatoire pour le Trigger", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("callcmd")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"CallCmd player <Player>", var.prefixCmd+"callcmd player ", "§7Ajoute un joueur à la liste", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"CallCmd cmd <Cmd>", var.prefixCmd+"callcmd cmd ", "§7Change la commande faite si un joueur est détecté", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"CallCmd list", var.prefixCmd+"callcmd list", "§7Affiche la liste des joueurs et la commande faite", false, Chat.Summon);
@@ -700,49 +699,49 @@ public class ChatUtils {
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("nekochat") || args[1].equalsIgnoreCase("chat")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Chat color <R> <G> <B> <Alpha optionel>", var.prefixCmd+"chat color ", "§7Change la couleur du chat en fond", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Chat height <Double>", var.prefixCmd+"chat height ", "§7Change la hauteur du chat", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Chat width <Double>", var.prefixCmd+"chat width ", "§7Change la largeur du chat", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("proxy")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Proxy <HostIP> <Port>", var.prefixCmd+"proxy ", "§7Vous connecte à un proxy", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Proxy reset", var.prefixCmd+"proxy reset ", "§7Vous déconnecte de votre proxy", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("fastbow") || args[1].equalsIgnoreCase("fb")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Fastbow NoBow", var.prefixCmd+"fastbow nobow", "§7Permet de tirer des flèches si l'on possède au moins un arc + flèche dans l'inventaire.\n§7Pour les joueurs vous gardez votre item actuel dans la main en tirant, have fun.", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Fastbow Packet <Int>", var.prefixCmd+"fastbow packet ", "§7Modifie le nombre de paquet envoyé par le fastbow par flèche, de base à 20", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("punkeel") || args[1].equalsIgnoreCase("pk")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Punkeel Delay <Double>", var.prefixCmd+"punkeel delay ", "§7Modifie le delay entre les tp, par ex 0.5 donne un VRAI lag de 500ms, les joueurs vous voit vous tp tous les 0.5sec", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Punkeel Attack", var.prefixCmd+"punkeel attack ", "§7Fais que quand on frappe le packet d'attaque s'envoie tout de suite au lieu des ms normaux", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("automlg") || args[1].equalsIgnoreCase("mlg")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Mlg <Double>", var.prefixCmd+"mlg ", "§7Change la distance de chute minimale", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("vanillatp") || args[1].equalsIgnoreCase("vtp")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Vtp air", var.prefixCmd+"vtp air", "§7Permet de pouvoir se téléporter au loin sans forcément viser un bloc (L'air)", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Vtp classic", var.prefixCmd+"vtp classic", "§7Force à utiliser le mode de tp classique qui est en diagonale au lieu de passer par d'autres endroits", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Vtp top", var.prefixCmd+"vtp top", "§7Permet quand on vise un bloc de se tp en haut de celui-ci si les blocs au dessus sont pleins (Ex: un mur)", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("scaffold")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Scaffold down", var.prefixCmd+"scaffold down", "§7Permet de pouvoir poser les blocs en dessous de vous en escalier descendant", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("tpback") || args[1].equalsIgnoreCase("tpb")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Tpback top", var.prefixCmd+"tpback top", "§7Permet de vous téléporter sur le plus haut bloc si votre point de tp est bouché", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Tpback classic", var.prefixCmd+"tpback classic", "§7Force à utiliser le mode de tp classique qui est en diagonale au lieu de passer par d'autres endroits", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Tpback <Int>", var.prefixCmd+"tpback ", "§7Change le seuil de vie", false, Chat.Summon);
@@ -751,13 +750,13 @@ public class ChatUtils {
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("limit")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Limit", var.prefixCmd+"limit", "§7Active/désactive le limit.\n§7Limite le nombre de paquets/secondes envoyés.", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Limit <Int>", var.prefixCmd+"limit ", "§7Modifie la limite de paquet", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("reflect")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Reflect <Double>", var.prefixCmd+"reflect ", "§7Modifie la puissance du reflect, \n§7entre -15 et 15 ça vous fait rentrer dans le joueur", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
@@ -774,7 +773,7 @@ public class ChatUtils {
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("ka") || args[1].equalsIgnoreCase("killaura")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Ka mode <Multi:Single>", var.prefixCmd+"ka mode ", "§7Change entre les modes Single et Multi", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Ka cps <Int>", var.prefixCmd+"ka cps ", "§7Change les coups/secondes du Kill Aura", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Ka range <Double>", var.prefixCmd+"ka range ", "§7Change la portée des coups", false, Chat.Summon);
@@ -792,31 +791,31 @@ public class ChatUtils {
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("verif")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Verif <String>", var.prefixCmd+"verif ", "§7Désactive tout le client\n§7Le String est la commande que vous devez faire §7pour tout réactiver,\n§7tout sera désactivé jusqu'à ce que vous le fassiez\n§7Exemple: "+var.prefixCmd+"verif nyah, vous aurez besoin de faire "+var.prefixCmd+"nyah pour §7tout réactiver ;)\n§7Pour info, tous les cheats activés avant vont se réactiver ainsi que toutes les options etc...\n§7De quoi vous permettre de rester legit un instant et repartir en §7cheat d'un autre ;)", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("nyah")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Nyah", var.prefixCmd+"nyah", "§7Permet d'envoyer une phrase kawaii à base de neko et d'aléatoire", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Nyah <Prefix>", var.prefixCmd+"nyah ", "§7Pareil mais avec un prefix devant", false, Chat.Summon);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("autoarmor") || args[1].equalsIgnoreCase("aa")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"AutoArmor ec", var.prefixCmd+"autoarmor ec", "§7Active ou non sur épicube", false, Chat.Summon);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("dolphin")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Dolphin <Double>", var.prefixCmd+"dolphin ", "§7Change la vitesse du Dolphin", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("noclip")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Noclip <Double>", var.prefixCmd+"noclip ", "§7Change la vitesse du Noclip", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("hud")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Hud ", var.prefixCmd+"hud", "§7Affiche l'Hud", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Hud coord", var.prefixCmd+"hud coord", "§7Affiche les coordonnées", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Hud fps", var.prefixCmd+"hud fps", "§7Affiche les fps", false, Chat.Summon);
@@ -830,26 +829,26 @@ public class ChatUtils {
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("wallhack") || args[1].equalsIgnoreCase("wh")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"WallHack color <R> <G> <B>", var.prefixCmd+"wallhack color ", "§7Change la couleur du fond (Red Green Blue = taux de couleur, de 0 à 255)", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"WallHack linecolor <R> <G> <B>", var.prefixCmd+"wallhack linecolor ", "§7Pareil mais pour les lignes", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"WallHack width <Double>", var.prefixCmd+"wallhack width ", "§7Change l'épaisseur des lignes", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("itemesp") || args[1].equalsIgnoreCase("item")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"ItemESP color <R> <G> <B>", var.prefixCmd+"itemesp color ", "§7Change la couleur", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"ItemESP linecolor <R> <G> <B>", var.prefixCmd+"itemesp linecolor ", "§7pareil mais pour les lignes", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"ItemESP width <Double>", var.prefixCmd+"itemesp width ", "§7Change l'épaisseur de ligne", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("register") || args[1].equalsIgnoreCase("reg")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Register mdp <Mot de passe>", var.prefixCmd+"register mdp ", "§7Change le mot de passe par défaut", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("enchant")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Enchant", var.prefixCmd+"enchant", "§7Enchante l'item avec tous les enchantements disponible au niveau 127", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Enchant list", var.prefixCmd+"enchant list", "§7Affiche la liste des enchantements disponible", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Enchant <Enchant>", var.prefixCmd+"enchant ", "§7Enchante l'item dans votre main dans l'enchantement choisis au niveau 127", false, Chat.Summon);
@@ -857,26 +856,26 @@ public class ChatUtils {
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("paint")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Paint color <R> <G> <B>", var.prefixCmd+"paint color ", "§7Change la couleur des blocs (Red Green Blue = taux de couleur, de 0 à 100)", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Paint alpha <Double>", var.prefixCmd+"paint alpha ", "§7Change la transparence, de 0 à 1", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Paint clear", var.prefixCmd+"paint clear", "§7Enlève tout ce que vous avez fait", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("tracers")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Tracers color <R> <G> <B>", var.prefixCmd+"tracers color ", "§7Change la couleur de la ligne (Red Green Blue = taux de couleur, de 0 à 100)", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Tracers width <Double>", var.prefixCmd+"tracers width ", "§7Change l'épaisseur de la ligne", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Tracers friend", var.prefixCmd+"tracers friend", "§7Affiche ou non une ligne sur les friends", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("freecam")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Freecam <Speed>", var.prefixCmd+"freecam ", "§7Modifie la vitesse du freecam (De base à 1)", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("nuker")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Nuker add <Bloc>", var.prefixCmd+"nuker add ", "§7Ajoute un bloc à votre liste", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Nuker rem <Bloc>", var.prefixCmd+"nuker rem ", "§7Supprime un bloc de votre liste", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Nuker range <double>", var.prefixCmd+"nuker range ", "§7Change la distance d'atteinte des blocs", false, Chat.Summon);
@@ -886,29 +885,29 @@ public class ChatUtils {
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("step")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Step <Double>", var.prefixCmd+"step ", "§7Change le maximum de hauteur de bloc grimpable avec le Step", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Step bypass", var.prefixCmd+"step bypass", "§7Met le step en mode bypass", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("speed")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Speed <Double>", var.prefixCmd+"speed ", "§7Change la vitesse du Speed", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Speed Mode <Air:Ground:Motion>", var.prefixCmd+"speed mode ", "§7Change le mode du Speed", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("autoclic")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Autoclic <Int>", var.prefixCmd+"autoclic", "§7Modifie les coups/sec de l'Autoclic", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("worldtime")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"WorldTime <Int>", var.prefixCmd+"worldtime ", "§7Change l'heure du monde", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("irc")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat("§7Vous pouvez écrire en couleur dans l'Irc.");
 					Utils.addChat2("§6"+var.prefixCmd+"Irc", var.prefixCmd+"irc", "§7Active/désactive l'Irc", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Irc name <Pseudo>", var.prefixCmd+"irc name ", "§7Change votre pseudo dans l'Irc", false, Chat.Summon);
@@ -920,7 +919,7 @@ public class ChatUtils {
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("xray")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Xray add <Bloc>", var.prefixCmd+"xray add ", "§7Ajoute un bloc à votre liste", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Xray rem <Bloc>", var.prefixCmd+"xray rem ", "§7Supprime un bloc de votre liste", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Xray clear", var.prefixCmd+"xray clear", "§7Vide votre liste", false, Chat.Summon);
@@ -928,7 +927,7 @@ public class ChatUtils {
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("dropshit")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"DropShit", "", "§7Sert à drop les items dans votre inventaire qui sont dans votre liste noire (BlackList), vous pouvez les ajouter/supprimer avec les commandes suivantes:", true, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"DropShit add <Bloc>", var.prefixCmd+"dropshit add ", "§7Ajoute un item à votre liste", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"DropShit rem <Bloc>", var.prefixCmd+"dropshit rem ", "§7Supprime un item de votre liste", false, Chat.Summon);
@@ -937,46 +936,46 @@ public class ChatUtils {
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("regen")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Regen <Int>", var.prefixCmd+"regen ", "§7Change le nombre de paquets envoyés par secondes", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Regen bypass", var.prefixCmd+"regen bypass", "§7Active seulement la regen avec un effet de potion de regen", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("timer")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Timer <Double>", var.prefixCmd+"timer ", "§7Change la vitesse du Timer", false, Chat.Summon);	
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("fasteat")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Fasteat <Int>", var.prefixCmd+"fasteat ", "§7Change la vitesse quand on mange dans le Fasteat (0 à 25)", false, Chat.Summon);	
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("pushup")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Pushup <Int>", var.prefixCmd+"pushup ", "§7Change le nombre de paquet envoyés", false, Chat.Summon);	
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("flight")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Flight <Double>", var.prefixCmd+"flight ", "§7Change la vitesse du Flight", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Flight blink", var.prefixCmd+"flight blink", "§7Permet d'activer automatiquement le Blink quand on active le Flight", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("bowaimbot")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"BowAimbot Fov <Double>", var.prefixCmd+"bowaimbot fov ", "§7Change le fov du bowaimbot", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"BowAimbot Life", var.prefixCmd+"bowaimbot life", "§7Change le mode life, à viser la personne le Min de vie, Max de vie ou désactivé", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"BowAimbot Armor", var.prefixCmd+"bowaimbot armor", "§7Change le mode armor, à viser la personne le Min d'armure, Max d'armure ou désactivé", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("longjump")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Longjump speed <Double>", var.prefixCmd+"longjump speed ", "§7Change la vitesse du Longjump", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("option")) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat("Concernant ces commandes, elles n'affichent pas si elles §6ont été activées ou non");
 					Utils.addChat2("§6"+var.prefixCmd+"Option display", var.prefixCmd+"option ", "§7Affiche le Activé/désactivé des cheats", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Option zoom", var.prefixCmd+"option ", "§7Permet un zoom en tirant à l'arc", false, Chat.Summon);
@@ -1784,11 +1783,11 @@ public class ChatUtils {
 						Utils.addChat("§cAucun blocs ajoutés");
 					} else {
 						Collections.sort(Nuker.nuke);
-						Utils.addChat("=========Nuker=========");
+						Utils.addChat(Utils.sep2+"§6Nuker"+Utils.sep2);
 						for (int j=0;j<Nuker.nuke.size();j++) {
 							Utils.addChat("Block : "+Block.getBlockById(Nuker.nuke.get(j)).getLocalizedName());
 						}
-						Utils.addChat("=======================");
+						Utils.addChat(Utils.sep);
 					}
 				} catch (Exception e) {
 					Utils.addChat(err);
@@ -1897,11 +1896,11 @@ public class ChatUtils {
 					if (sh.getList().size()==0) {
 						Utils.addChat("Aucun items ajoutés");
 					} else {
-						Utils.addChat("=========DropShit=========");
+						Utils.addChat(Utils.sep2+"§6DropShit"+Utils.sep2);
 						for (int j=0;j<sh.getList().size();j++) {
 							Utils.addChat("Item "+(j+1)+" : "+Item.getItemById(sh.getList().get(j)).getUnlocalizedName().replaceFirst("tile.", ""));
 						}
-						Utils.addChat("======================");
+						Utils.addChat(Utils.sep);
 					}
 				} catch (Exception e) {
 					Utils.addChat(err);
@@ -2000,11 +1999,11 @@ public class ChatUtils {
 					if (Xray.xray.size()==0) {
 						Utils.addChat("Aucun blocs ajoutés");
 					} else {
-						Utils.addChat("=========Xray=========");
+						Utils.addChat(Utils.sep2+"§6Xray"+Utils.sep2);
 						for (int j=0;j<Xray.xray.size();j++) {
 							Utils.addChat("Block : "+Block.getBlockById(Xray.xray.get(j)).getLocalizedName());
 						}
-						Utils.addChat("======================");
+						Utils.addChat(Utils.sep);
 					}
 				} catch (Exception e) {
 					Utils.addChat(err);
@@ -3059,7 +3058,7 @@ public class ChatUtils {
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"trade") || args[0].equalsIgnoreCase(var.prefixCmd+"shop")) {								
 				if (args.length==1) {
 					//TODO: Commandes en 2
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat("§lListe des gains:");
 					Utils.addChat2("§7Votre solde §7[§cici§7]", "", "§7Souls: §b"+var.ame+"\n§7 Tickets de loteries:§6 "+var.lot, true, Chat.Click);
 					
@@ -3865,7 +3864,7 @@ public class ChatUtils {
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"locklvl")) {
-				Utils.addChat("========================================");
+				Utils.addChat(Utils.sep);
 				for (Lock lock : ModuleManager.Lock) {
 					if (lock.isLock())
 						Utils.getLock(lock.getName());
@@ -4049,7 +4048,7 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"info") || args[0].equalsIgnoreCase(var.prefixCmd+"i")) {
 				if (args.length==1) {
-					Utils.addChat("========================================");
+					Utils.addChat(Utils.sep);
 					Utils.addChat("Listes des caractéristiques du Client :");
 					Utils.addChat("Cheat:§7 Neko");
 					Utils.addChat("Version:§7 v" + var.CLIENT_VERSION);
@@ -4069,7 +4068,7 @@ public class ChatUtils {
 						Utils.addChat("§cErreur: Ce joueur est introuvable ou non visible");
 					} else {
 						EntityPlayer p = Utils.getPlayer(args[1]);
-						Utils.addChat("========================================");
+						Utils.addChat(Utils.sep);
 						Utils.addChat("Listes des caractéristiques de §c"+args[1]+" :");
 						Utils.addChat("Coordonnées: "+Utils.getCoord(p));
 						Utils.addChat(Utils.getArmorUsed(p, 3)+" §6:§7 "+Utils.setColor(Utils.getArmorEnchant(p, 3), "§7"));
@@ -4208,7 +4207,7 @@ public class ChatUtils {
 					}
 				} else if (args.length==2 || (args.length>=3 && !Utils.isInteger(args[2]))) {
 					if (args[1].equalsIgnoreCase("list")) {
-						Utils.addChat("=============§aEnchantement List§6=============");
+						Utils.addChat(Utils.sep2+"§aEnchantement List"+Utils.sep2);
 						for (Enchantment ench : Enchantment.enchantmentsList) {
 							if (ench!=null) {
 								Utils.addChat2("§a"+ench.getTranslatedName(1).replaceFirst(" I", ""), var.prefixCmd+"enchant "+ench.getTranslatedName(1).replaceFirst(" I", ""), "§7"+var.prefixCmd+"enchant "+ench.getTranslatedName(1).replaceFirst(" I", ""), false, Chat.Summon);
@@ -5017,7 +5016,7 @@ public class ChatUtils {
 				int a=0;
 				String s="";
 				ChatComponentText cc = new ChatComponentText("");
-				Utils.addChat("========================================");
+				Utils.addChat(Utils.sep);
 				for (Module mod : ModuleManager.ActiveModule) {
 					if (a==0)
 						s="§f"+mod.getName()+"§8";

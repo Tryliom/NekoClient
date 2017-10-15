@@ -11,7 +11,7 @@ public class Nausicaah extends Module {
 		this.instance=this;
 	}
 	
-	public static Nausicaah getAnim() {
+	public static Nausicaah getNausi() {
 		return instance;
 	}
 	
@@ -21,6 +21,10 @@ public class Nausicaah extends Module {
 	
 	public void onDisabled() {
 		super.onDisabled();
+	}
+	
+	public void onClick() {
+		
 	}
 		
 }

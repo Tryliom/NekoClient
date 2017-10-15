@@ -3,7 +3,7 @@ package neko.manager;
 import neko.Client;
 
 public class TutoManager {
-	private boolean done = false;
+	private boolean done = true;
 	private int part=1;
 	private int totPart=10;
 	private Client var = Client.getNeko();

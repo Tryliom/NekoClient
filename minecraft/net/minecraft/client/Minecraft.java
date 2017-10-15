@@ -1008,7 +1008,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             Irc.getInstance().setLastId(-1);
 			Irc.getInstance().setLastMsg("");
         }
-
+        
         this.currentScreen = (GuiScreen)guiScreenIn;
 
         if (guiScreenIn != null)
@@ -1018,11 +1018,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             int var3 = var2.getScaledWidth();
             int var4 = var2.getScaledHeight();
             ((GuiScreen)guiScreenIn).setWorldAndResolution(this, var3, var4);
-            this.skipRenderWorld = false;      
-            if (guiScreenIn instanceof GuiMainMenu || guiScreenIn instanceof GuiMultiplayer || guiScreenIn instanceof GuiSelectWorld || guiScreenIn instanceof GuiLanguage || guiScreenIn instanceof GuiAltManager) {
-            	SoundManager.getSM().startMusic();
-            } else
-            	SoundManager.getSM().stopMusic();
+            this.skipRenderWorld = false;
         }
         else
         {
