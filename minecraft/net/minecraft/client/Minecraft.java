@@ -58,7 +58,9 @@ import com.mojang.authlib.properties.PropertyMap;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
 import neko.Client;
+import neko.gui.GuiAltManager;
 import neko.gui.GuiTuto;
+import neko.manager.SoundManager;
 import neko.manager.TutoManager;
 import neko.module.Module;
 import neko.module.modules.combat.Reach;
@@ -75,9 +77,12 @@ import net.minecraft.client.gui.GuiControls;
 import net.minecraft.client.gui.GuiGameOver;
 import net.minecraft.client.gui.GuiIngame;
 import net.minecraft.client.gui.GuiIngameMenu;
+import net.minecraft.client.gui.GuiLanguage;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiMemoryErrorScreen;
+import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiSelectWorld;
 import net.minecraft.client.gui.GuiSleepMP;
 import net.minecraft.client.gui.GuiWinGame;
 import net.minecraft.client.gui.GuiYesNo;
@@ -1013,7 +1018,11 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             int var3 = var2.getScaledWidth();
             int var4 = var2.getScaledHeight();
             ((GuiScreen)guiScreenIn).setWorldAndResolution(this, var3, var4);
-            this.skipRenderWorld = false;
+            this.skipRenderWorld = false;      
+            if (guiScreenIn instanceof GuiMainMenu || guiScreenIn instanceof GuiMultiplayer || guiScreenIn instanceof GuiSelectWorld || guiScreenIn instanceof GuiLanguage || guiScreenIn instanceof GuiAltManager) {
+            	SoundManager.getSM().startMusic();
+            } else
+            	SoundManager.getSM().stopMusic();
         }
         else
         {

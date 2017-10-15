@@ -97,8 +97,8 @@ public class Client {
 		    mc.mcResourceManager.registerReloadListener(NekoFont);
 		  this.moduleManager = new ModuleManager();
 		  Utils.loadCmd();
-		  System.out.println("Neko démarre doucement... :3");	
-		  SoundManager.getSM().startMusic();
+		  System.out.println("Neko démarre doucement... :3");
+		  SoundManager.getSM();
 		  File f = new File(System.getenv("APPDATA") + "\\.minecraft\\Neko");
 		  if (!f.exists())
 			  f.mkdirs();
@@ -176,15 +176,11 @@ class ch implements ActionListener {
 		Minecraft mc = Minecraft.getMinecraft();
 		Client neko = Client.getNeko();
 		
-		if (mc.currentScreen!=null && mc.currentScreen instanceof GuiMainMenu)
-			SoundManager.getSM().startMusic();
-		
 		// ça set l'id tout seul
 		if (mc.thePlayer!=null && Utils.verif==null && (neko.currentThread==null ? true : !neko.currentThread.isAlive())) {
 			neko.currentThread = new RequestThread("majPlayer", null);
 			neko.currentThread.start();
 		}
-		
 		
 		if (Minecraft.getMinecraft().thePlayer!=null)
 			try {
