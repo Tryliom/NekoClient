@@ -211,6 +211,7 @@ public class Utils {
 	public static int B=213;
 	public static String linkSave = mc.isRunningOnMac ? System.getProperty("user.home") + "/Library/Application Support/minecraft" : System.getenv("APPDATA") + "\\.minecraft\\Neko\\";
 	public static String separator = mc.isRunningOnMac ? "/" : "\\";
+	public static String sep = "§8§m--------------------------------------";
 	public static Client var = Client.getNeko();
 	public static Vector<String> ipVote = new Vector<String>();
 	
@@ -750,7 +751,7 @@ public class Utils {
 	public static void faceBowEntityClient(Entity target)
 	  {
 	    int bowCharge = mc.thePlayer.getItemInUseCount();
-	    float velocity = (Utils.isToggle("Fastbow") ? mc.thePlayer.getItemInUse().getMaxItemUseDuration() : bowCharge) / 20;
+	    float velocity = ((Utils.isToggle("Fastbow") || Utils.isToggle("Fastbow") && Fastbow.getFast().isNobow()) ? mc.thePlayer.getItemInUse().getMaxItemUseDuration() : bowCharge) / 20;
 	    velocity = (velocity * velocity + velocity * 2.0F) / 3.0F;
 	    if (velocity < 0.1D)
 	    {
@@ -1323,7 +1324,8 @@ public class Utils {
 		ModuleManager.values.add("Mode vie:§7 "+b.getLife());
 		ModuleManager.values.add("Mode armure:§7 "+b.getArmor());
 		disV("BowAimbot");
-		
+		ModuleManager.values.add("Puissance:§7 "+Reflect.getReflect().getPower());
+		disV("Reflect");
 		
 		
 		ModuleManager.values.add("Total de bonus ramassé:§7 "+ neko.module.modules.render.Render.bonusCount);

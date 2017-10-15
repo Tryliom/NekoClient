@@ -45,7 +45,7 @@ public class BowAimbot extends Module {
 	}
 	
 	private boolean isValid(EntityLivingBase en) {
-		if (!this.haveBow())
+		if ((Utils.isToggle("Fastbow") && Fastbow.getFast().isNobow()) ? false : !this.haveBow())
 			return false;
 		if (!(currEn==null ? Utils.isInFov(en, fov) : en==currEn))
 			return false;

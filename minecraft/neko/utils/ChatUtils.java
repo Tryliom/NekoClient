@@ -756,6 +756,23 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Limit <Int>", var.prefixCmd+"limit ", "§7Modifie la limite de paquet", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("reflect")) {
+					Utils.addChat("========================================");
+					Utils.addChat2("§6"+var.prefixCmd+"Reflect <Double>", var.prefixCmd+"reflect ", "§7Modifie la puissance du reflect, \n§7entre -15 et 15 ça vous fait rentrer dans le joueur", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("ping")) {
+					Utils.addChat(Utils.sep);
+					Utils.addChat2("§6"+var.prefixCmd+"Ping <Int>", var.prefixCmd+"ping ", "§7Change le delai, le lag que vous voulez faire voir pour les autres", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Ping Random", var.prefixCmd+"ping random", "§7Active les ms aléatoire", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Ping Freezer", var.prefixCmd+"ping freezer", "§7Freeze le ping actuel", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("antiafk")) {
+					Utils.addChat(Utils.sep);
+					Utils.addChat2("§6"+var.prefixCmd+"AntiAfk <Int>", var.prefixCmd+"antiafk ", "§7Modifie le temps entre chaques saut", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("ka") || args[1].equalsIgnoreCase("killaura")) {
 					Utils.addChat("========================================");
 					Utils.addChat2("§6"+var.prefixCmd+"Ka mode <Multi:Single>", var.prefixCmd+"ka mode ", "§7Change entre les modes Single et Multi", false, Chat.Summon);
@@ -2562,21 +2579,17 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"reflect")) {
 				Reflect r = Reflect.getReflect();
-				if (args.length==1) {
-					Utils.toggleModule("Reflect");
-				} else {
-					try {
+				try {
 					r.setPower(Float.parseFloat(args[1]));
 					Utils.addChat("§aPuissance du Reflect mise à "+args[1]+" !");
-					} catch (Exception e) {
-						Utils.addChat(err);
-					}
+				} catch (Exception e) {
+					Utils.addChat(err);
 				}
 				Utils.checkXp(xp);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"afk")) {
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"antiafk") || args[0].equalsIgnoreCase(var.prefixCmd+"afk")) {
 				if (args.length==1) {
 					Utils.toggleModule("Antiafk");
 				} else {

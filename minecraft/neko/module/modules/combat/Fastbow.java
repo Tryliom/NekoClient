@@ -57,7 +57,7 @@ public class Fastbow extends Module {
 					return;
 			} catch (Exception e) {
 				return;
-			}
+			}			
 			
 			if (Utils.isToggle("BowAimbot"))
 				BowAimbot.getAim().aimBow();
@@ -70,7 +70,7 @@ public class Fastbow extends Module {
 				mc.thePlayer.stopUsingItem();
 			} else if (mc.gameSettings.keyBindUseItem.pressed && nobow && isOn) {
 				int actual = mc.thePlayer.inventory.currentItem;
-				int bow = getBestBow();
+				int bow = getBestBow();			
 				if (!hasArrow() || bow<0)
 					return;
 				swap(actual, bow);

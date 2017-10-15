@@ -18,6 +18,7 @@ import neko.gui.RequestManager;
 import neko.manager.GuiManager;
 import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
+import neko.manager.SoundManager;
 import neko.module.other.Conditions;
 import neko.module.other.Irc;
 import neko.module.other.Rank;
@@ -27,6 +28,7 @@ import neko.utils.Utils;
 import net.mcleaks.MCLeaks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.util.ResourceLocation;
 
 public class Client {
@@ -96,6 +98,7 @@ public class Client {
 		  this.moduleManager = new ModuleManager();
 		  Utils.loadCmd();
 		  System.out.println("Neko démarre doucement... :3");	
+		  SoundManager.getSM().startMusic();
 		  File f = new File(System.getenv("APPDATA") + "\\.minecraft\\Neko");
 		  if (!f.exists())
 			  f.mkdirs();
@@ -172,6 +175,9 @@ class ch implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {		
 		Minecraft mc = Minecraft.getMinecraft();
 		Client neko = Client.getNeko();
+		
+		if (mc.currentScreen!=null && mc.currentScreen instanceof GuiMainMenu)
+			SoundManager.getSM().startMusic();
 		
 		// ça set l'id tout seul
 		if (mc.thePlayer!=null && Utils.verif==null && (neko.currentThread==null ? true : !neko.currentThread.isAlive())) {

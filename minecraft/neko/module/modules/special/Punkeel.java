@@ -35,7 +35,7 @@ public class PunKeel extends Module {
 	}		
 	
 	public void onUpdate() {
-		if (this.count>this.delay*20) {
+		if (this.count>this.delay*20 || mc.thePlayer.getHealth()<0) {
 			this.count=0;
 			this.sendPacket();
 		} else

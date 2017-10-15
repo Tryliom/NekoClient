@@ -8,7 +8,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.play.client.C0BPacketEntityAction;
 
 public class Sneak extends Module {
-	Minecraft mc = Minecraft.getMinecraft();
 
 	public Sneak() {
 		super("Sneak", -1, Category.PLAYER);
