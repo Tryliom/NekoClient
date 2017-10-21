@@ -678,10 +678,6 @@ public class ModuleManager {
 		Utils.getRank("Maître Méchant").setDesc("Mon Maître est méchant...help plz..AIIIE CA FAIT MAL MAÎTRE :c");
 		rang.add(new Rank("AntoZzz x Delxer", 600, Rate.Event, "§2", true, 0));
 		Utils.getRank("AntoZzz x Delxer").setDesc("Ils se disputent très souvent mais au fond, ce ne sont que des querelles de couple..Vous n'imaginez pas comment ça dérape en privé..;3");
-		rang.add(new Rank("Soumis", 500, Rate.Event, "§2", true, 0));
-		Utils.getRank("Soumis").setDesc("J'obéis au Maître");
-		rang.add(new Rank("AntoZzz x Delxer", 600, Rate.Event, "§2", true, 0));
-		Utils.getRank("AntoZzz x Delxer").setDesc("Ils se disputent très souvent mais au fond, ce ne sont que des querelles de couple..Vous n'imaginez pas comment ça dérape en privé..;3");
 
 		
 		// Neko
