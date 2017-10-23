@@ -193,7 +193,7 @@ public class ModuleManager {
 		rang.add(new Rank("Dév Neko", 1000, Rate.CrazyLove, "§2", true, 0));
 		Utils.getRank("Dév Neko").setDesc("Développe chaque jours !");
 		rang.add(new Rank("Amour à Tryliom <3", 5000, Rate.CrazyLove, "§4", true, 0));
-		Utils.getRank("Amour à Tryliom <3").setDesc("Adore son Tryliom, ferais tout pour lui et sa soumise absolue :3");
+		Utils.getRank("Amour à Tryliom <3").setDesc("Adore son Tryliom, ferais tout pour lui et est sa soumise absolue :3");
 		rang.add(new Rank("Admin Neko", 3000, Rate.CrazyLove, "§4", true, 0));
 		Utils.getRank("Admin Neko").setDesc("Administrateur Neko");
 		rang.add(new Rank("Modérateur Neko", 2000, Rate.CrazyLove, "§d", true, 0));
@@ -407,7 +407,7 @@ public class ModuleManager {
 		rang.add(new Rank("Abel aux flammes purifiées", 500, Rate.Divin, "§d§o", true, 0));
 		Utils.getRank("Abel aux flammes purifiées").setDesc("Abel, tué par son grand frère Caïn et envoyé au Paradis, il cherche à venger l'acte fratricide de celui-ci. On chuchote qu'il se serait allié avec un chevalier de l'Enfer...");
 		rang.add(new Rank("AntoZzz", 600, Rate.Divin, "§d", true, 0));
-		Utils.getRank("AntoZzz").setDesc("Après sa mort, il s'est allié aux Neko et devînt ansi leur chinois domestique");
+		Utils.getRank("AntoZzz").setDesc("Après sa mort, il s'est allié aux Neko et devînt ainsi leur chinois domestique");
 		Utils.getRank("AntoZzz").setGiftAme(0.5);
 		rang.add(new Rank("La Sainte Reach", 380, Rate.Divin, "§d§n", true, 0));
 		Utils.getRank("La Sainte Reach").setDesc("Il est écrit qu'elle se montre une fois tous les millénaires et que seul un Neko pur peut la voir. Unique et d'une rareté si divine");
@@ -639,7 +639,7 @@ public class ModuleManager {
 		rang.add(new Rank("Blorg", 2, Rate.Ordinaire, "§7", true, 0));
 		Utils.getRank("Blorg").setDesc("Blorg - BLOOOORG - Blorg");
 		rang.add(new Rank("Patrick", 5, Rate.Ordinaire, "§7", true, 0));
-		Utils.getRank("Patrick").setDesc("Vide");
+		Utils.getRank("Patrick").setDesc("PATOUUU");
 		rang.add(new Rank("Débutant", 4, Rate.Ordinaire, "§7", true, 0));
 		Utils.getRank("Débutant").setDesc("Vide");
 		rang.add(new Rank("Débutant Avancé", 8, Rate.Ordinaire, "§7", true, 0));
