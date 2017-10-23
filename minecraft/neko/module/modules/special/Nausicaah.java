@@ -35,24 +35,23 @@ public class Nausicaah extends Module {
 	public void onClick() {
 		try {
 			if (mc.pointedEntity!=null) {
-				Entity en = mc.pointedEntity;
-				int i = AutoSword.getSword().getSwordFromInventory();
-				int j = mc.thePlayer.inventory.currentItem;
-				Utils.addChat(i+" "+j);
-				if (i!=-1) {
-					FastDura.attack(en, false);
-					FastDura.attack(en, true);				
-					FastDura.swap(j, i);
-					FastDura.attack(en, false);
-					FastDura.attack(en, true);
-					// Change seulement les deux item de places
-					FastDura.swap(j, i);
-				} else {
-					FastDura.attack(en, false);
-				}
+				doNausicaah(mc.pointedEntity);
 			}
-		} catch (Exception e) {
-			Utils.addChat("dsf");
-		}
+		} catch (Exception e) {}
+	}
+	
+	public void doNausicaah(Entity en) {
+		try {
+			int i = AutoSword.getSword().getSwordFromInventory();
+			int j = mc.thePlayer.inventory.currentItem;
+			if (i!=-1) {
+				FastDura.attack(en, false);
+				FastDura.attack(en, true);				
+				FastDura.swap(j, i);
+				FastDura.attack(en, false);
+				FastDura.attack(en, true);
+				FastDura.swap(j, i);
+			}
+		} catch (Exception e) {}
 	}
 }
