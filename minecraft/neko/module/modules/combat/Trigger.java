@@ -9,6 +9,7 @@ import neko.module.Category;
 import neko.module.Module;
 import neko.module.modules.hide.Friends;
 import neko.module.modules.special.FastDura;
+import neko.module.modules.special.Nausicaah;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -96,7 +97,10 @@ class attack implements ActionListener {
 		        		} else if (Utils.isToggle("FastDura")) {
 		    				FastDura.doDura(entity);
 		    				mc.thePlayer.swingItem();
-		    			} else {
+		    			} else if (Utils.isToggle("Nausicaah")) {
+            				Nausicaah.getNausi().doNausicaah(entity);
+            				mc.thePlayer.swingItem();
+            			} else {
 		    				try {
 								Robot r = new Robot();
 								r.mousePress(16);

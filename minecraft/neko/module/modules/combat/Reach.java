@@ -6,6 +6,7 @@ import neko.module.Module;
 import neko.module.modules.combat.KillAura;
 import neko.module.modules.hide.Friends;
 import neko.module.modules.special.FastDura;
+import neko.module.modules.special.Nausicaah;
 import neko.module.other.enums.Form;
 import neko.utils.TpUtils;
 import net.minecraft.block.Block;
@@ -225,6 +226,8 @@ public class Reach extends Module {
 	                        
 	                		if (u.isToggle("FastDura")) {
 	            				FastDura.doDura(entity);
+	            			} else if (u.isToggle("Nausicaah")) {
+	            				Nausicaah.getNausi().doNausicaah(entity);
 	            			} else
 	            				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));
 	                		doTpRetour(s);

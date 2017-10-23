@@ -24,31 +24,31 @@ public class SoundManager {
 	}
 	
 	public SoundManager() {
-//		new Thread(new Runnable() {
-//			
-//			@Override
-//			public void run() {
-//				while (true)
-//					try {
-//						int i = Utils.getRandInt(10);
-//						audioIn = AudioSystem.getAudioInputStream(new URL("http://nekohc.fr/song/music"+i+".wav"));
-//						break;
-//					} catch (UnsupportedAudioFileException | IOException e) {
-//						continue;
-//					}
-//				try {
-//					SoundManager.getSM().clip = AudioSystem.getClip();
-//					SoundManager.getSM().clip.open(SoundManager.getSM().audioIn);
-//					SoundManager.getSM().clip.loop(999);
-//					FloatControl gainControl = (FloatControl) SoundManager.getSM().clip.getControl(FloatControl.Type.MASTER_GAIN);        
-//			        gainControl.setValue(20f * (float) Math.log10(0.02f));
-//			        SoundManager.getSM().clip.start();
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//					
-//			}
-//		}).start();
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				while (true)
+					try {
+						int i = Utils.getRandInt(10);
+						audioIn = AudioSystem.getAudioInputStream(new URL("http://nekohc.fr/song/music5.wav"));
+						break;
+					} catch (UnsupportedAudioFileException | IOException e) {
+						continue;
+					}
+				try {
+					SoundManager.getSM().clip = AudioSystem.getClip();
+					SoundManager.getSM().clip.open(SoundManager.getSM().audioIn);
+					SoundManager.getSM().clip.loop(999);
+					FloatControl gainControl = (FloatControl) SoundManager.getSM().clip.getControl(FloatControl.Type.MASTER_GAIN);        
+			        gainControl.setValue(20f * (float) Math.log10(0.1f));
+			        SoundManager.getSM().clip.start();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+					
+			}
+		}).start();
 	}
 
 }

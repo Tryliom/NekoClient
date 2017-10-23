@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import neko.module.modules.special.FastDura;
+import neko.module.modules.special.Nausicaah;
 import neko.module.modules.hide.Friends;
 import org.lwjgl.input.Keyboard;
 
@@ -209,15 +210,11 @@ class cps implements ActionListener {
                 		Minecraft.getMinecraft().thePlayer.swingItem();
                 		if (Utils.isToggle("FastDura")) {
             				FastDura.doDura(entity);
-            			} else if (KillAura.lockView) {
-            				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));
+            			} else if (Utils.isToggle("Nausicaah")) {
+            				Nausicaah.getNausi().doNausicaah(entity);
             			} else
-            				try {
-    							Robot r = new Robot();
-    							r.mousePress(16);
-    							r.mouseRelease(16);
-    						} catch (AWTException e) {}
-
+            				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));
+                		mc.thePlayer.swingItem();
 	            		KillAura.giveMoney(entity);
 	                	
 	                	if (KillAura.mode.equalsIgnoreCase("Multi"))
@@ -248,14 +245,10 @@ class cps implements ActionListener {
                             	
     	                		if (Utils.isToggle("FastDura")) {
     	            				FastDura.doDura(entity);
-    	            			} else if (KillAura.lockView) {
-    	            				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));
+    	            			} else if (Utils.isToggle("Nausicaah")) {
+    	            				Nausicaah.getNausi().doNausicaah(entity);
     	            			} else
-    	            				try {
-    	    							Robot r = new Robot();
-    	    							r.mousePress(16);
-    	    							r.mouseRelease(16);
-    	    						} catch (AWTException e) {}
+    	            				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));
     	                		Minecraft.getMinecraft().thePlayer.swingItem();
                             	if (entity.getHealth()<2) {
                             		Utils.checkXp(4);
@@ -283,14 +276,10 @@ class cps implements ActionListener {
                         	
 	                		if (Utils.isToggle("FastDura")) {
 	            				FastDura.doDura(entity);
-	            			} else if (KillAura.lockView) {
-	            				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));
+	            			} else if (Utils.isToggle("Nausicaah")) {
+	            				Nausicaah.getNausi().doNausicaah(entity);
 	            			} else
-	            				try {
-	    							Robot r = new Robot();
-	    							r.mousePress(16);
-	    							r.mouseRelease(16);
-	    						} catch (AWTException e) {}
+	            				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));
 	                		Minecraft.getMinecraft().thePlayer.swingItem();
                         	
                         	KillAura.giveMoney(entity);

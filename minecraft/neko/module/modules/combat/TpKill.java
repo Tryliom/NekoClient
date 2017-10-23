@@ -3,6 +3,8 @@ package neko.module.modules.combat;
 import neko.module.modules.combat.KillAura;
 import neko.module.modules.hide.Friends;
 import neko.module.modules.special.FastDura;
+import neko.module.modules.special.Nausicaah;
+
 import org.lwjgl.input.Keyboard;
 
 import neko.Client;
@@ -69,6 +71,8 @@ public class TpKill extends Module {
 	                		Minecraft.getMinecraft().thePlayer.swingItem();
 	                		if (u.isToggle("FastDura")) {
 	            				FastDura.doDura(entity);
+	            			} else if (u.isToggle("Nausicaah")) {
+	            				Nausicaah.getNausi().doNausicaah(entity);
 	            			} else
 	            				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));	                	
 		                }
@@ -92,7 +96,9 @@ public class TpKill extends Module {
                     		Minecraft.getMinecraft().thePlayer.swingItem();
                     		if (u.isToggle("FastDura")) {
                 				FastDura.doDura(entity);
-                			} else
+                			} else if (u.isToggle("Nausicaah")) {
+	            				Nausicaah.getNausi().doNausicaah(entity);
+	            			} else
                 				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));	                	
 	    	                return;
 	                    	}
@@ -113,7 +119,9 @@ public class TpKill extends Module {
                     		Minecraft.getMinecraft().thePlayer.swingItem();
                     		if (u.isToggle("FastDura")) {
                 				FastDura.doDura(entity);
-                			} else
+                			} else if (u.isToggle("Nausicaah")) {
+	            				Nausicaah.getNausi().doNausicaah(entity);
+	            			} else
                 				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));	                	
 	    	                }
 	        			}
