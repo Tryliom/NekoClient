@@ -3067,7 +3067,7 @@ public class ChatUtils {
 					Utils.addChat(var.prefixCmd+"trade lotplus: §7"+Utils.setColor("Augmente les lots qui apparaissent de 1 de plus. Coût: §c"+(100+(Lot.nbLot-3)*75)+" souls", "§7"));
 					for (Lock lock : ModuleManager.Lock) {
 						if (lock.isLock() && lock.getUnit().equalsIgnoreCase("souls") && !lock.getName().startsWith("rankmanager")) {
-							Utils.addChat2("§6"+var.prefixCmd+"trade "+lock.getCmdName(), var.prefixCmd+"trade "+lock.getCmdName(), "§7Débloque définitivement le §c"+lock.getNameUnlock(), false, Chat.Summon);
+							Utils.addChat2("§6"+var.prefixCmd+"trade "+lock.getCmdName(), var.prefixCmd+"trade "+lock.getCmdName(), "§7Débloque définitivement le §c"+lock.getNameUnlock()+"\n§cCoût: "+lock.getCout(), false, Chat.Summon);
 						}
 					}
 										

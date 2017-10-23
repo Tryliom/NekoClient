@@ -12,9 +12,15 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagList;
 
 public class AutoSword extends Module {
+	private static AutoSword instance = null;
+	
+	public static AutoSword getSword() {
+		return instance;
+	}
 	
 	public AutoSword() {
 		super("AutoSword", -1, Category.COMBAT);
+		instance = this;
 	}
 	
 	public void onEnabled() {		
@@ -45,7 +51,7 @@ public class AutoSword extends Module {
 		this.mc.playerController.windowClick(this.mc.thePlayer.inventoryContainer.windowId, one, two, 2, this.mc.thePlayer);
 	}
 	  
-	private int getSwordFromInventory() {
+	public int getSwordFromInventory() {
 		java.util.ArrayList<Integer> list = new java.util.ArrayList<>();
 		for (int i = 9; i < 45; i++) {
 			if (mc.thePlayer.inventoryContainer.getSlot(i).getStack() != null) {
