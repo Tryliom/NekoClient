@@ -17,9 +17,11 @@ import neko.module.other.Active;
 import neko.module.other.enums.Rate;
 import neko.utils.RenderUtils;
 import neko.utils.Utils;
+import net.mcleaks.MCLeaks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class InGameGui {
@@ -67,7 +69,16 @@ public class InGameGui {
 		  ScaledResolution scaled = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);	
 		  NumberFormat form = null;
 		  Locale loc = new Locale("FR", "CH");
-		  
+		  int ping=-1;
+		  for (Object o : mc.theWorld.playerEntities) {
+				if (o instanceof EntityPlayer) {
+					EntityPlayer en = (EntityPlayer) o;
+					try {
+						NetworkPlayerInfo npi = (NetworkPlayerInfo) mc.getNetHandler().getPlayerInfoMap().get(en.getGameProfile().getId());
+						ping = npi.getResponseTime();
+					} catch (Exception e) {}
+				}
+			}
 		  if (HUD.coord || HUD.fps || HUD.fall || HUD.item || HUD.packet) {
 			  int pos=20;
 			  if (HUD.coord || HUD.fps)
@@ -84,9 +95,6 @@ public class InGameGui {
 				  if (mc.pointedEntity instanceof EntityPlayer)
 					  pos+=55;
 			  int var5=170;
-			  if (var.NekoFont.getStringWidth("§6Item en main:§7 "+(Utils.getItemUsed(mc.thePlayer)))>170) {
-				  var5 = var.NekoFont.getStringWidth("§6Item en main:§7 "+(Utils.getItemUsed(mc.thePlayer)));
-			  }
 			  
 			  if (var.NekoFont.getStringWidth((var.rang.getRate()==Rate.Titan ? "§c§k55"+var.rang.getColor()+var.rang.getName()+"§c§k55" : var.rang.getColor()+var.rang.getName())+" §8[§7"+form.getNumberInstance(loc).format(var.xp)+"xp§8/§7"+form.getNumberInstance(loc).format(var.xpMax)+"xp§8]")>var5)
 				  var5 =var.NekoFont.getStringWidth((var.rang.getRate()==Rate.Titan ? "§c§k55"+var.rang.getColor()+var.rang.getName()+"§c§k55" : var.rang.getColor()+var.rang.getName())+" §8[§7"+form.getNumberInstance(loc).format(var.xp)+"xp§8/§7"+form.getNumberInstance(loc).format(var.xpMax)+"xp§8]");
@@ -131,7 +139,7 @@ public class InGameGui {
 		  }
 		  
 		  if (HUD.item) {
-			  var3 = "§6Item en main:§7 "+(Utils.getItemUsed(mc.thePlayer));
+			  var3 = "§6Ping actuel: "+(ping<=50 ? "§a" : (ping>50 && ping<100) ? "§e" : "§c")+ping+"ms" ;
 			  var.NekoFont.drawStringWithShadow(var3, 2, yP, 0);		
 			  yP+=11;
 		  }
