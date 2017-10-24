@@ -1,5 +1,6 @@
 package neko.utils;
 
+import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -104,7 +105,9 @@ import neko.module.modules.render.Water;
 import neko.module.modules.render.WorldTime;
 import neko.module.modules.render.Xray;
 import neko.module.modules.special.DropShit;
+import neko.module.modules.special.FastDura;
 import neko.module.modules.special.FireTrail;
+import neko.module.modules.special.Nausicaah;
 import neko.module.modules.special.PunKeel;
 import neko.module.modules.special.Pyro;
 import neko.module.modules.special.Reflect;
@@ -146,6 +149,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.play.client.C00PacketKeepAlive;
+import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
@@ -1166,7 +1170,7 @@ public class Utils {
 				l+="§6"+ModuleManager.values.get(i);
 			else
 				l+="§6"+ModuleManager.values.get(i)+"\n";
-		Utils.addChat2("§8§m--->§e "+cheat, "", l, true, Chat.Click);
+		Utils.addChat2("§8[§e"+cheat+"§8]", "", l, true, Chat.Click);
 		ModuleManager.values.clear();
 	}
 	
@@ -1331,7 +1335,7 @@ public class Utils {
 		
 		ModuleManager.values.add("Total de bonus ramassé:§7 "+ neko.module.modules.render.Render.bonusCount);
 		ModuleManager.values.add("Bonus d'xp permanent:§7 "+ var.bonus+"%");
-		ModuleManager.values.add("Bonus d'xp du rang:§7 "+ var.rang.getBonus()+"%");
+		ModuleManager.values.add("Bonus d'xp du rang:§7 "+ var.rang.getTotBonus()+"%");
 		ModuleManager.values.add("Autre bonus d'xp:§7 "+ var.tempBonus+"%");
 		disV("Statistics");
 	}
@@ -1730,6 +1734,21 @@ public class Utils {
 		return s;
 		
 	}
+	
+	public static void attack(Entity entity) {
+		if (isToggle("FastDura")) {
+			FastDura.doDura(entity);
+		} else if (isToggle("Nausicaah")) {
+			Nausicaah.getNausi().doNausicaah(entity);
+		} else
+			mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK));
+	}
+	
+	public static int rainbow(int offset) {
+        long offset_ = 200000000L /*OR 200000000L (1 extra zero)  20000000 for more drastic rainbow*/ * offset;
+        float hue = (System.nanoTime() + offset_) / 4.0E9f /*can also be [5.0E9f, 7.0E9f, 8.0E9f, 10.0E9f] */ % 1.0f;
+        return (int) (Long.parseLong(Integer.toHexString(Integer.valueOf(Color.HSBtoRGB(hue, 50 / 100.0f, 30 / 100.0f))), 16));
+    }
 	
 	public static boolean isSword() {
 		return sword ? mc.thePlayer.getCurrentEquippedItem()!=null ? mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemSword : false : true;

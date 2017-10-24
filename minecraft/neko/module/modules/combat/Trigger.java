@@ -88,25 +88,25 @@ class attack implements ActionListener {
 		        	if (Utils.isToggle("Crit"))
 		        		Utils.crit();
 		        		                			
-		        		if (Reach.pvp && Trigger.dist>6) {
-		        			try {
-								Robot r = new Robot();
-								r.mousePress(16);
-								r.mouseRelease(16);
-							} catch (AWTException e) {}
-		        		} else if (Utils.isToggle("FastDura")) {
-		    				FastDura.doDura(entity);
-		    				mc.thePlayer.swingItem();
-		    			} else if (Utils.isToggle("Nausicaah")) {
-            				Nausicaah.getNausi().doNausicaah(entity);
-            				mc.thePlayer.swingItem();
-            			} else {
-		    				try {
-								Robot r = new Robot();
-								r.mousePress(16);
-								r.mouseRelease(16);
-							} catch (AWTException e) {}
-		    			}
+	        		if (Reach.pvp && Trigger.dist>6) {
+	        			try {
+							Robot r = new Robot();
+							r.mousePress(16);
+							r.mouseRelease(16);
+						} catch (AWTException e) {}
+	        		} else if (Utils.isToggle("FastDura")) {
+	    				FastDura.doDura(entity);
+	    				mc.thePlayer.swingItem();
+	    			} else if (Utils.isToggle("Nausicaah")) {
+        				Nausicaah.getNausi().doNausicaah(entity);
+        				mc.thePlayer.swingItem();
+        			} else {
+	    				try {
+							Robot r = new Robot();
+							r.mousePress(16);
+							r.mouseRelease(16);
+						} catch (AWTException e) {}
+	    			}
 				}
 			}
 	}

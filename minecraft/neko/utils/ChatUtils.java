@@ -314,9 +314,7 @@ public class ChatUtils {
 						try {
 							NetworkPlayerInfo npi = (NetworkPlayerInfo) mc.getNetHandler().getPlayerInfoMap().get(en.getGameProfile().getId());
 							ping = npi.getResponseTime();
-						} catch (Exception e) {						
-							
-						}
+						} catch (Exception e) {}
 						boolean isMe=false;
 						String s = en.getName();
 						if (s.equalsIgnoreCase(mc.session.getUsername()))
@@ -3060,11 +3058,11 @@ public class ChatUtils {
 					//TODO: Commandes en 2
 					Utils.addChat(Utils.sep);
 					Utils.addChat("§lListe des gains:");
-					Utils.addChat2("§7Votre solde §7[§cici§7]", "", "§7Souls: §b"+var.ame+"\n§7 Tickets de loteries:§6 "+var.lot, true, Chat.Click);
+					Utils.addChat2("§7Votre solde §7[§cici§7]", "", "§7Souls: §b"+var.ame+"\n§7Tickets de loteries:§6 "+var.lot, true, Chat.Click);
 					
 					Utils.addChat2("§6"+var.prefixCmd+"trade lot", var.prefixCmd+"trade lot", "§7Tire des lots aléatoires !\n§6Coût:§c 1 ticket de loterie", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"trade ticket", var.prefixCmd+"trade ticket", "§7Reçois un ticket de lotterie !\n§6Coût:§c 150 souls", false, Chat.Summon);
-					Utils.addChat(var.prefixCmd+"trade lotplus: §7"+Utils.setColor("Augmente les lots qui apparaissent de 1 de plus. Coût: §c"+(100+(Lot.nbLot-3)*75)+" souls", "§7"));
+					Utils.addChat2("§6"+var.prefixCmd+"trade lotplus", var.prefixCmd+"trade lotplus", "§7Augmente les lots qui apparaissent de 1 de plus\n§cCoût: §c"+(100+(Lot.nbLot-3)*75)+" souls", false, Chat.Summon);
 					for (Lock lock : ModuleManager.Lock) {
 						if (lock.isLock() && lock.getUnit().equalsIgnoreCase("souls") && !lock.getName().startsWith("rankmanager")) {
 							Utils.addChat2("§6"+var.prefixCmd+"trade "+lock.getCmdName(), var.prefixCmd+"trade "+lock.getCmdName(), "§7Débloque définitivement le §c"+lock.getNameUnlock()+"\n§cCoût: "+lock.getCout(), false, Chat.Summon);
@@ -3073,16 +3071,16 @@ public class ChatUtils {
 										
 					if (!Utils.isLock("--rankmanager")) {
 						if (Utils.isLock("rankmanager info")) {
-							Utils.addChat(var.prefixCmd+"trade info:§7 Débloque définitivement l'option Info dans le §7RankManager\n§6Coût:§c 100 souls");
+							Utils.addChat2("§6"+var.prefixCmd+"trade info", var.prefixCmd+"trade info", "§7Débloque définitivement l'option Info dans le RankManager\n§cCoût: 100 souls", true , Chat.Summon);
 						} else
 							if (Utils.isLock("rankmanager lvl")) {
-								Utils.addChat(var.prefixCmd+"trade lvl:§7 Débloque définitivement l'option Lvl dans le §7RankManager\n§6Coût:§c 150 souls");
+								Utils.addChat2("§6"+var.prefixCmd+"trade lvl", var.prefixCmd+"trade lvl", "§7Débloque définitivement l'option Lvl dans le RankManager\n§cCoût: 150 souls", true, Chat.Summon);
 							} else
 								if (Utils.isLock("rankmanager rate")) {
-									Utils.addChat(var.prefixCmd+"trade rate:§7 Débloque définitivement l'option Rareté dans le §7RankManager\n§6Coût:§c 200 souls");
+									Utils.addChat2("§6"+var.prefixCmd+"trade rate", var.prefixCmd+"trade rate", "§7Débloque définitivement l'option Rareté dans le RankManager\n§cCoût: 200 souls", true, Chat.Summon);
 								} else
 									if (Utils.isLock("rankmanager bonus")) {
-										Utils.addChat(var.prefixCmd+"trade bonus:§7 Débloque définitivement l'option Lvl dans le §7RankManager\n§6Coût:§c 250 souls");
+										Utils.addChat2("§6"+var.prefixCmd+"trade bonus", var.prefixCmd+"trade bonus", "§7Débloque définitivement l'option Lvl dans le RankManager\n§cCoût: 250 souls", true, Chat.Summon);
 									}						
 					}				
 					if (!Lot.list2.isEmpty()) {
@@ -5014,26 +5012,45 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"list")) {
 				int a=0;
-				String s="";
+				String s = "";
 				ChatComponentText cc = new ChatComponentText("");
 				Utils.addChat(Utils.sep);
-				for (Module mod : ModuleManager.ActiveModule) {
-					if (a==0)
-						s="§f"+mod.getName()+"§8";
-					
-					if ((mod.getCategory()!=Category.HIDE || mod.isCmd()) && a!=0)
-						if (mod.isCmd()) {
-							s=", §9"+mod.getName()+"§8";
-						} else if (mod.getToggled()) {							
-							s=", §a"+mod.getName()+"§8";
-						} else {
-							s=", §f"+mod.getName()+"§8";
+				for (Category c : Category.values()) {
+					s = "";
+					int num = 0;
+					boolean end = false;
+					for (Module mod : ModuleManager.ActiveModule) {						
+						if ((mod.getCategory()!=Category.HIDE) && mod.getCategory()==c) {
+							if (num==0) {
+								s="§7"+mod.getName()+"§8";
+							} else
+							if (mod.isCmd()) {
+								s=", §9"+mod.getName()+"§8";
+							} else if (mod.getToggled()) {							
+								s=", §a"+mod.getName()+"§8";
+							} else {
+								s=", §7"+mod.getName()+"§8";
+							}
+							a++;
+							num++;
+							int count = 0;
+							for (Module mod2 : ModuleManager.ActiveModule) {	
+								if (mod2.getCategory()==c)
+									count++;
+							}
+							if (count==num)
+								end = true;
+						}						
+						if (!end)
+							cc.appendSibling(Utils.getHoverText(s, "§6Keybind du "+mod.getName()+":§7 "+Utils.getBind(mod.getName())));
+						else {
+							end = false;
+							cc.appendSibling(new ChatComponentText("\n"+Utils.sep+"\n"));
 						}
-					cc.appendSibling(Utils.getHoverText(s, "§6Keybind du "+mod.getName()+":§7 "+Utils.getBind(mod.getName())));
-					s="";
-					a++;					
+						s="";				
+					}
 				}
-				Utils.addChatText(new ChatComponentText(Utils.getNeko()+" Cheats [§7"+a+"§6] : ").appendSibling(cc));
+				Utils.addChatText(new ChatComponentText(Utils.getNeko()+" Cheats [§7"+a+"§6] : \n").appendSibling(cc));
 				Utils.checkXp(xp);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}							

@@ -32,6 +32,7 @@ public class ClickAim extends Module {
                 if(Minecraft.getMinecraft().thePlayer.getDistanceToEntity(en) <= ClickAim.dist && en!=mc.thePlayer) {                    	
                     if(en.isEntityAlive() && en.ticksExisted > KillAura.live && Minecraft.getMinecraft().thePlayer.canEntityBeSeen(en) && !Friends.isFriend(en.getName())) {
                     	KillAura.faceEntity(en);
+                    	Utils.attack(en);
                     	if (!ClickAim.multiAura)
                     		break;
                     	else 

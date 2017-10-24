@@ -68,9 +68,6 @@ public class InGameGui {
 		  NumberFormat form = null;
 		  Locale loc = new Locale("FR", "CH");
 		  
-  		  
-		  
-		  
 		  if (HUD.coord || HUD.fps || HUD.fall || HUD.item || HUD.packet) {
 			  int pos=20;
 			  if (HUD.coord || HUD.fps)

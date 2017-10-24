@@ -31,7 +31,7 @@ public class SoundManager {
 				while (true)
 					try {
 						int i = Utils.getRandInt(10);
-						audioIn = AudioSystem.getAudioInputStream(new URL("http://nekohc.fr/song/music5.wav"));
+						audioIn = AudioSystem.getAudioInputStream(new URL("http://nekohc.fr/song/music"+i+".wav"));
 						break;
 					} catch (UnsupportedAudioFileException | IOException e) {
 						continue;
@@ -41,7 +41,7 @@ public class SoundManager {
 					SoundManager.getSM().clip.open(SoundManager.getSM().audioIn);
 					SoundManager.getSM().clip.loop(999);
 					FloatControl gainControl = (FloatControl) SoundManager.getSM().clip.getControl(FloatControl.Type.MASTER_GAIN);        
-			        gainControl.setValue(20f * (float) Math.log10(0.1f));
+			        gainControl.setValue(20f * (float) Math.log10(0.05f));
 			        SoundManager.getSM().clip.start();
 				} catch (Exception e) {
 					e.printStackTrace();

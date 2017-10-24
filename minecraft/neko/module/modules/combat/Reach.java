@@ -9,6 +9,7 @@ import neko.module.modules.special.FastDura;
 import neko.module.modules.special.Nausicaah;
 import neko.module.other.enums.Form;
 import neko.utils.TpUtils;
+import neko.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -17,8 +18,11 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemBucket;
+import net.minecraft.item.ItemEgg;
+import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemPotion;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
@@ -140,7 +144,7 @@ public class Reach extends Module {
 			mc.playerController.syncCurrentPlayItem();
 		} else if (bloc) {
 			try {
-				if (mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemSword || mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBow) {
+				if (!(mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemBlock) && !(mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemMonsterPlacer)) {
 					return;
 				}
 			} catch (Exception e) {}
@@ -200,7 +204,7 @@ public class Reach extends Module {
 			if (en!=null && !Friends.isFriend(en.getName()) && mc.thePlayer!=en) {
 				if (mc.thePlayer.getDistanceToEntity(en)>5) {
 	        		String s = doTpAller(en);
-	        		mc.playerController.attackEntity(mc.thePlayer, en);
+	        		Utils.attack(en);
 	        		doTpRetour(s);	        			        			
 	        		
 	        		// Puis on re set notre position initiale
@@ -222,14 +226,8 @@ public class Reach extends Module {
 					for (Object theObject : mc.theWorld.playerEntities) {
 		                EntityPlayer entity = (EntityPlayer) theObject;
 		                if (u.isEntityInFov(entity, fov) && !Friends.isFriend(entity.getName()) && mc.thePlayer!=entity) {
-	                        String s = doTpAller(entity);
-	                        
-	                		if (u.isToggle("FastDura")) {
-	            				FastDura.doDura(entity);
-	            			} else if (u.isToggle("Nausicaah")) {
-	            				Nausicaah.getNausi().doNausicaah(entity);
-	            			} else
-	            				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));
+	                        String s = doTpAller(entity);	                        
+	                		Utils.attack(entity);
 	                		doTpRetour(s);
 	                		mc.thePlayer.setPosition(lastX, lastY+0.005*Math.random(), lastZ);
 	                		KillAura.giveMoney(entity);	
@@ -252,10 +250,7 @@ public class Reach extends Module {
     	                        	        	                        
         	                        String s = doTpAller(entity);
         	                        
-        	                		if (u.isToggle("FastDura")) {
-        	            				FastDura.doDura(entity);
-        	            			} else
-        	            				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));
+        	                        Utils.attack(entity);
         	                		doTpRetour(s);
         	                		mc.thePlayer.setPosition(lastX, lastY+0.005*Math.random(), lastZ);;
         	                		KillAura.giveMoney(entity);
@@ -275,10 +270,7 @@ public class Reach extends Module {
 
 		                        String s = doTpAller(entity);
 		                        
-		                		if (u.isToggle("FastDura")) {
-		            				FastDura.doDura(entity);
-		            			} else
-		            				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));
+		                        Utils.attack(entity);
 		                		doTpRetour(s);
 		                		mc.thePlayer.setPosition(lastX, lastY+0.005*Math.random(), lastZ);
 		                		KillAura.giveMoney(entity);

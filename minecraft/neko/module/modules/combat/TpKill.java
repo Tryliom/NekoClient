@@ -4,6 +4,7 @@ import neko.module.modules.combat.KillAura;
 import neko.module.modules.hide.Friends;
 import neko.module.modules.special.FastDura;
 import neko.module.modules.special.Nausicaah;
+import neko.utils.Utils;
 
 import org.lwjgl.input.Keyboard;
 
@@ -69,12 +70,7 @@ public class TpKill extends Module {
 		                		u.crit();
 		                		                			
 	                		Minecraft.getMinecraft().thePlayer.swingItem();
-	                		if (u.isToggle("FastDura")) {
-	            				FastDura.doDura(entity);
-	            			} else if (u.isToggle("Nausicaah")) {
-	            				Nausicaah.getNausi().doNausicaah(entity);
-	            			} else
-	            				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));	                	
+	                		Utils.attack(entity);                	
 		                }
 		        	}
 					break;
@@ -93,13 +89,8 @@ public class TpKill extends Module {
     	                	if (u.isToggle("Crit"))
     	                		u.crit();
     	                		                			
-                    		Minecraft.getMinecraft().thePlayer.swingItem();
-                    		if (u.isToggle("FastDura")) {
-                				FastDura.doDura(entity);
-                			} else if (u.isToggle("Nausicaah")) {
-	            				Nausicaah.getNausi().doNausicaah(entity);
-	            			} else
-                				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));	                	
+                    		mc.thePlayer.swingItem();
+                    		Utils.attack(entity);	                	
 	    	                return;
 	                    	}
 	        			}     
@@ -113,17 +104,12 @@ public class TpKill extends Module {
 	                       
 	                        if(isViable(entity)) {              	                	                   
 	    	                	
-    	                	if (u.isToggle("Crit"))
-    	                		u.crit();
+	    	                	if (u.isToggle("Crit"))
+	    	                		u.crit();
     	                		                			
-                    		Minecraft.getMinecraft().thePlayer.swingItem();
-                    		if (u.isToggle("FastDura")) {
-                				FastDura.doDura(entity);
-                			} else if (u.isToggle("Nausicaah")) {
-	            				Nausicaah.getNausi().doNausicaah(entity);
-	            			} else
-                				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));	                	
-	    	                }
+	                    		mc.thePlayer.swingItem();
+	                    		Utils.attack(entity);
+	                        }
 	        			}
 	                }
 					break;

@@ -207,13 +207,7 @@ class cps implements ActionListener {
 	                	if (Utils.isToggle("Crit"))
 	                		Utils.crit();
 	                		                			
-                		Minecraft.getMinecraft().thePlayer.swingItem();
-                		if (Utils.isToggle("FastDura")) {
-            				FastDura.doDura(entity);
-            			} else if (Utils.isToggle("Nausicaah")) {
-            				Nausicaah.getNausi().doNausicaah(entity);
-            			} else
-            				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));
+                		Utils.attack(entity);
                 		mc.thePlayer.swingItem();
 	            		KillAura.giveMoney(entity);
 	                	
@@ -243,12 +237,7 @@ class cps implements ActionListener {
                             	if (!Utils.isInFov(entity, KillAura.fov))
                             		return;
                             	
-    	                		if (Utils.isToggle("FastDura")) {
-    	            				FastDura.doDura(entity);
-    	            			} else if (Utils.isToggle("Nausicaah")) {
-    	            				Nausicaah.getNausi().doNausicaah(entity);
-    	            			} else
-    	            				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));
+                            	Utils.attack(entity);
     	                		Minecraft.getMinecraft().thePlayer.swingItem();
                             	if (entity.getHealth()<2) {
                             		Utils.checkXp(4);
@@ -274,13 +263,8 @@ class cps implements ActionListener {
                         	if (Utils.isToggle("Crit"))
                         		Utils.crit();
                         	
-	                		if (Utils.isToggle("FastDura")) {
-	            				FastDura.doDura(entity);
-	            			} else if (Utils.isToggle("Nausicaah")) {
-	            				Nausicaah.getNausi().doNausicaah(entity);
-	            			} else
-	            				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, Action.ATTACK));
-	                		Minecraft.getMinecraft().thePlayer.swingItem();
+                        	Utils.attack(entity);
+	                		mc.thePlayer.swingItem();
                         	
                         	KillAura.giveMoney(entity);
                         	if (KillAura.mode.equalsIgnoreCase("Multi"))
