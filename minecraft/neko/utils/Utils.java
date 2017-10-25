@@ -3715,8 +3715,12 @@ public class Utils {
 			if (mc.thePlayer!=null)
 				mc.theWorld.spawnParticle(EnumParticleTypes.HEART, mc.thePlayer.posX+neko*1/k, mc.thePlayer.posY+0.85, mc.thePlayer.posZ+nekoN*1/k, 1, 1, 1, 1);
 		}
-		
-		int neko = (int) Math.round(Math.random()*777);	
+		/**
+		 * Détermine la phrase qui va être tirée aléatoirement, sur le nombre multiplié par le Math.random()
+		 * Ex: mettre 40 donnera une phrase aléatoire sur les 40 premiers
+		 * Il faut toujours mettre par rapport au max
+		 */
+		int neko = (int) Math.round(Math.random()*800);	
 		int rand = (int) Math.round(Math.random()*50);
 		String nyah = "";
 		switch (neko) {
@@ -4488,6 +4492,29 @@ public class Utils {
 		case 775:nyah="";break;
 		case 776:nyah="";break;
 		case 777:nyah="";break;
+		case 778:nyah="I-il fait tout noir..qui m'a touché ;w; ? C'est toi "+getRandPlayer()+" QwQ ?";mc.thePlayer.playSound("mob.ghast.affectionate_scream", 1.0F, 1.0F);break;
+		case 779:nyah=":msg "+getRandPlayer()+" J'ai tout vu, mais je dirais rien, ne t'inquiète pas mon petit ;3";break;
+		case 780:nyah="à tous les coups c'est la faute des citrouilles !";break;
+		case 781:nyah="Je l'ai jamais fait, j'espère que ça va passer facilement m.. ><";break;
+		case 782:nyah="J'ai tellement joué à ça...m-miaam..c'étais tellement bon...j'adore ç-ça OwO";break;
+		case 783:nyah="C-c'est tro..trop p-pour mes pe-petit yeux QwQ";break;
+		case 784:nyah="Pardonne moi, je vais un peu fort le soir de nouvelle lune...Mais je sais que tu as aimé ;3";break;
+		case 785:nyah="Tu es irrésistible ma petite ;3";break;
+		case 786:nyah="Donc je ne peux plus me cacher à présent, tu vas découvrir ce que je vais te faire ;3";break;
+		case 787:nyah="M-maître, pas ici s'il vous plaît, pas devant tout le monde ><";break;
+		case 788:nyah="Il ne faut pas avoir peur, tu vas à peine crier ;3";break;
+		case 789:nyah="Comment ça tu veux pas ? Je vais t'apprendre ce qui se passe quand on se conduis comme ça moi !";break;
+		case 790:nyah="Q-que faites vous ma-MAOW..mais mais mais sto-PPP..stop stop je dirais plus rien promis ><";break;
+		case 791:nyah="Merci, je vais tout bien noter monsieur/madame";break;
+		case 792:nyah="/w "+getRandPlayer()+" J'adore ce que tu fais, c'est tellement bon :3";break;
+		case 793:nyah="#Mignon";break;
+		case 794:nyah="#Rage";break;
+		case 795:nyah="#DetraRage";break;
+		case 796:nyah="Detra et Whara ont fais des choses très sale en privé..mais j'étais en privé xc";break;
+		case 797:nyah="ça rage net ici ;3";break;
+		case 798:nyah="Quel joli présent, je vais m'amuser tout de suite avec vous ;3";break;
+		case 799:nyah="Bande de cactus séchés !";break;
+		case 800:nyah="Désolé j'aime trop ça, je vais pas pouvoir me passer de vous <3";break;
 		
 		case -1:nyah="";break;
 		}
