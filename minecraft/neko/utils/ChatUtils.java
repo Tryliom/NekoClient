@@ -819,7 +819,7 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Hud fps", var.prefixCmd+"hud fps", "§7Affiche les fps", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Hud xp", var.prefixCmd+"hud xp", "§7Affiche l'expérience et votre niveau", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Hud packet", var.prefixCmd+"hud packet", "§7Affiche les paquets/secondes envoyés", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Hud item", var.prefixCmd+"hud item", "§7Affiche l'item en main", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Hud ms", var.prefixCmd+"hud ms", "§7Affiche votre ping actuel", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Hud time", var.prefixCmd+"hud time", "§7Affiche le temps de jeu ou le temps de bonus restant", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Hud stuff", var.prefixCmd+"hud stuff", "§7Affiche le stuff des joueurs visés", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Hud select", var.prefixCmd+"hud select", "§7Rend le bloc visé d'une certaine couleur choisie ci-dessous", false, Chat.Summon);
@@ -4516,13 +4516,13 @@ public class ChatUtils {
 						Utils.addChat("§aHUD: Temps de jeu affiché");
 					}
 					
-				} else if (args[1].equalsIgnoreCase("item")) {
+				} else if (args[1].equalsIgnoreCase("ms")) {
 					if (HUD.item) {
 						HUD.item=false;
-						Utils.addChat("§cHUD: Item caché");
+						Utils.addChat("§cHUD: Ms caché");
 					} else {
 						HUD.item=true;
-						Utils.addChat("§aHUD: Item affiché");
+						Utils.addChat("§aHUD: Ms affiché");
 					}
 					
 				}
