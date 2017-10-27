@@ -55,7 +55,7 @@ public class GuiAltManager extends GuiScreen {
 	    this.buttonList.add(new GuiButton(2, this.width / 2 - 50, this.height - 28, 100, 20, "Supprimer")); 
 	    this.buttonList.add(new GuiButton(3, this.width / 2 - 154, this.height - 52, 100, 20, "Login")); 
 	    this.buttonList.add(new GuiButton(4, this.width / 2 - 50, this.height - 52, 100, 20, "McLeaks"));
-	    this.buttonList.add(new GuiButton(5, this.width / 2 - 154, this.height - 28, 100, 20, "§cSupprimé")); 
+	    this.buttonList.add(new GuiButton(5, this.width / 2 - 154, this.height - 28, 100, 20, "Import")); 
 	    this.buttonList.add(new GuiButton(0, this.width / 2 + 4 + 50, this.height - 28, 100, 20, "Retour"));
 	    this.buttonList.add(new GuiButton(6, this.width - 150, 10, 100, 20, (check ? "§a" : "§c")+"Checker")); 
 	    this.buttonList.add(new GuiButton(7, this.width / 2 - 258, this.height - 28, 100, 20, "Suivant")); 
@@ -133,6 +133,10 @@ public class GuiAltManager extends GuiScreen {
 	    case 4: 
 	    	this.mc.displayGuiScreen(new GuiMcleaks(this));
 		      break;
+	    case 5: 
+	    	//TODO: Ici didi
+	    	
+		    break;
 	    case 6:
 	    	check = !check;
 	    	load();
