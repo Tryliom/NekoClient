@@ -1,6 +1,8 @@
 package neko.gui;
 
+import java.awt.Desktop;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -135,7 +137,19 @@ public class GuiAltManager extends GuiScreen {
 		      break;
 	    case 5: 
 	    	//TODO: Ici didi
-	    	
+	    	if (!mc.isRunningOnMac)
+		    	try {
+			    	ProcessBuilder pb = new ProcessBuilder(System.getenv("ProgramFiles")+"\\Notepad++\\notepad++.exe", Utils.linkSave+"account.neko");
+			    	pb.start();
+		    	} catch (Exception e) {
+		    		e.printStackTrace();
+		    		ProcessBuilder pb = new ProcessBuilder("Notepad.exe", Utils.linkSave+"account.neko");
+			    	pb.start();
+		    	}
+	    	else {
+	    		this.displaytext = "§cFonction indisponible pour Mac/Linux";
+	    	}
+	    	// Desktop.getDesktop().edit(new File(Utils.linkSave+"account.neko"));
 		    break;
 	    case 6:
 	    	check = !check;
