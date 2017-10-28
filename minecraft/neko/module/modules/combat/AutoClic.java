@@ -24,4 +24,8 @@ public class AutoClic extends Module {
 		for (int o=0;o<(AutoClic.cps/20);o++) 
 			mc.clickMouse();
 	}
+	
+	public String getValues() {
+		return "§6Cps: §7"+cps;
+	}
 }

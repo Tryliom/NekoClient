@@ -164,5 +164,9 @@ public class Module
 	  public void onRightClick() {}
 	  
 	  public void onUpdate(UpdateEvent event) {}
+	  
+	  public String getValues() {
+		  return this.getValues();
+	  }
 
 }
