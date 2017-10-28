@@ -413,8 +413,7 @@ public class ChatUtils {
 				} else if (args[1].equalsIgnoreCase("reset")) {
 					Properties props = System.getProperties();
 					props.setProperty("proxySet", "false" );
-			    	props.setProperty("socksProxyHost", "");
-			    	props.setProperty("socksProxyPort", "");
+					System.clearProperty("socksProxyHost");
 			    	System.setProperties(props);
 					Utils.addChat("§aVous vous êtes déconnecté du proxy");
 				} else {

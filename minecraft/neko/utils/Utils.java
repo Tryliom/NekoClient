@@ -1163,18 +1163,17 @@ public class Utils {
 		return b;
 	}
 	
-	public static void disV(String cheat) {
-		String l = "";
-		for (int i=0;i<ModuleManager.values.size();i++)
-			if ((i+1)==ModuleManager.values.size())
-				l+="§6"+ModuleManager.values.get(i);
-			else
-				l+="§6"+ModuleManager.values.get(i)+"\n";
-		Utils.addChat2("§8[§e"+cheat+"§8]", "", l, true, Chat.Click);
-		ModuleManager.values.clear();
-	}
-	
 	public static void displayValues() {
+		//TODO: Nadia ici !
+		for (Category c : Category.values()) {
+			for (Module m : ModuleManager.ActiveModule) {
+				if (!m.isCmd() && c!=Category.HIDE && c==m.getCategory() && !m.getValues().isEmpty()) {
+					Utils.addChat2("§8[§9Neko§8] "+m.getName(), "", m.getValues(), true, Chat.Click);
+				}
+			}
+			Utils.addChat(Utils.sep);
+		}
+		
 		ModuleManager.values.clear();
 		ModuleManager.values.add("Vitesse:§7 "+Dolphin.dolph);
 		disV("Dolphin");

@@ -10,7 +10,7 @@ import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 public class Autoblock extends Module {
 	
 	public Autoblock() {
-		super("Autoblock", Keyboard.KEY_NONE, Category.COMBAT);
+		super("Autoblock", -1, Category.COMBAT);
 	}
 	
 	public void onEnabled() {		
@@ -27,7 +27,9 @@ public class Autoblock extends Module {
 				mc.getNetHandler().addToSendQueue(new C08PacketPlayerBlockPlacement(mc.thePlayer.inventory.getCurrentItem()));
 			}
 		}
-		
-		
 	}	
+	
+	public String getValues() {
+		return "";
+	}
 }
