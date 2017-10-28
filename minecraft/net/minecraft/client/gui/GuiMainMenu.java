@@ -74,7 +74,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     private static final ResourceLocation minecraftTitleTextures = new ResourceLocation("textures/gui/title/minecraft.png");
 
     /** An array of all the paths to the panorama pictures. */
-    private static final ResourceLocation[] titlePanoramaPaths = new ResourceLocation[] {new ResourceLocation("textures/gui/title/background/panorama_0.png"), new ResourceLocation("textures/gui/title/background/panorama_1.png"), new ResourceLocation("textures/gui/title/background/panorama_2.png"), new ResourceLocation("textures/gui/title/background/panorama_3.png"), new ResourceLocation("textures/gui/title/background/panorama_4.png"), new ResourceLocation("textures/gui/title/background/panorama_5.png")};
+    private static final ResourceLocation[] titlePanoramaPaths = new ResourceLocation[] {new ResourceLocation("textures/gui/title/background/"+Utils.getPan()+"_0.png"), new ResourceLocation("textures/gui/title/background/"+Utils.getPan()+"_1.png"), new ResourceLocation("textures/gui/title/background/"+Utils.getPan()+"_2.png"), new ResourceLocation("textures/gui/title/background/"+Utils.getPan()+"_3.png"), new ResourceLocation("textures/gui/title/background/"+Utils.getPan()+"_4.png"), new ResourceLocation("textures/gui/title/background/"+Utils.getPan()+"_5.png")};
     public static final String field_96138_a = "Please click " + EnumChatFormatting.UNDERLINE + "here" + EnumChatFormatting.RESET + " for more information.";
     private int field_92024_r;
     private int field_92023_s;
@@ -229,6 +229,10 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         		}
         	}
     		this.buttonList.add(new GuiButton(769, 10, 10, 100, 20, tm.isDone() ? "§7Activer le tuto" : "§7Passer le tuto"));
+    		if (SoundManager.getSM().canStart)
+    			this.buttonList.add(new GuiButton(665, this.width-110, 10, 100, 20, SoundManager.getSM().isActive() ? "♫ Stop ♫" : "♪ Restart ♪"));
+    		else
+    			this.buttonList.add(new GuiButton(665, this.width-110, 10, 100, 20, "Music loading..."));
         } else
         	this.buttonList.add(new GuiButtonLanguage(5, Utils.verif==null ? 100 : this.width / 2 - 124, Utils.verif==null ? var3+104+12 : var3 + 72 + 12));
         Object var4 = this.field_104025_t;
@@ -277,6 +281,15 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
 
     protected void actionPerformed(GuiButton button) throws IOException
     {	
+    	if (button.id == 665)
+        {
+    		if (SoundManager.getSM().canStart && !button.displayString.equals("Music loading..."))
+	    		if (SoundManager.getSM().isActive()) 
+	    			SoundManager.getSM().stopMusic();
+	    		else
+	    			SoundManager.getSM().restartMusic();
+    		this.mc.displayGuiScreen(new GuiMainMenu());
+        }
     	if (button.id == 666 && tm.isDone())
         {
     		this.mc.displayGuiScreen(new GuiAltManager(this));
@@ -420,13 +433,13 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         GlStateManager.matrixMode(5889);
         GlStateManager.pushMatrix();
         GlStateManager.loadIdentity();
-        Project.gluPerspective(120.0F, 1.0F, 0.05F, 10.0F);
+        Project.gluPerspective(90.0F, 1.5F, 0.05F, 10.0F);
         GlStateManager.matrixMode(5888);
         GlStateManager.pushMatrix();
         GlStateManager.loadIdentity();
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         GlStateManager.rotate(180.0F, 1.0F, 0.0F, 0.0F);
-        GlStateManager.rotate(90.0F, 0.0F, 0.0F, 1.0F);
+        GlStateManager.rotate(90.0F, 0.0F, 0F, 1.0F);
         GlStateManager.enableBlend();
         GlStateManager.disableAlpha();
         GlStateManager.disableCull();
@@ -441,8 +454,10 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
             float var9 = ((float)(var7 / var6) / (float)var6 - 0.5F) / 64.0F;
             float var10 = 0.0F;
             GlStateManager.translate(var8, var9, var10);
-            GlStateManager.rotate(MathHelper.sin(((float)this.panoramaTimer + p_73970_3_) / 400.0F) * 25.0F + 20.0F, 1.0F, 0.0F, 0.0F);
-            GlStateManager.rotate(-((float)this.panoramaTimer + p_73970_3_) * 0.1F, 0.0F, 1.0F, 0.0F);
+            if (Utils.verif!=null) {
+	            GlStateManager.rotate(MathHelper.sin(((float)this.panoramaTimer + p_73970_3_) / 400.0F) * 25.0F + 20.0F, 1.0F, 0.0F, 0.0F);
+	            GlStateManager.rotate(-((float)this.panoramaTimer + p_73970_3_) * 0.1F, 0.0F, 1.0F, 0.0F);
+            }
 
             for (int var11 = 0; var11 < 6; ++var11)
             {
@@ -543,12 +558,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     	this.mc.getFramebuffer().unbindFramebuffer();
         GlStateManager.viewport(0, 0, 256, 256);
     	this.drawPanorama(p_73971_1_, p_73971_2_, p_73971_3_);     
-        this.rotateAndBlurSkybox(p_73971_3_);
-        this.rotateAndBlurSkybox(p_73971_3_);
-        this.rotateAndBlurSkybox(p_73971_3_);
-        this.rotateAndBlurSkybox(p_73971_3_);
-        this.rotateAndBlurSkybox(p_73971_3_);
-        this.rotateAndBlurSkybox(p_73971_3_);
         this.rotateAndBlurSkybox(p_73971_3_);
         this.mc.getFramebuffer().bindFramebuffer(true);
         GlStateManager.viewport(0, 0, this.mc.displayWidth, this.mc.displayHeight);

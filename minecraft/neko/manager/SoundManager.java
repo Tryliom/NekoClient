@@ -11,6 +11,8 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
 import neko.utils.Utils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SoundCategory;
 
 public class SoundManager {
 	private static SoundManager instance = null;
@@ -41,8 +43,9 @@ public class SoundManager {
 					SoundManager.getSM().clip.open(SoundManager.getSM().audioIn);
 					SoundManager.getSM().clip.loop(999);
 					FloatControl gainControl = (FloatControl) SoundManager.getSM().clip.getControl(FloatControl.Type.MASTER_GAIN);        
-			        gainControl.setValue(20f * (float) Math.log10(0.05f));
+			        gainControl.setValue(20f * (float) Math.log10(0.02f));
 			        SoundManager.getSM().clip.start();
+			        canStart=true;
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -50,5 +53,20 @@ public class SoundManager {
 			}
 		}).start();
 	}
+	
+	public void stopMusic() {
+		if (clip!=null || clip.isOpen() || clip.isRunning())
+			clip.close();
+		clip = null;
+	}
+	
+	public boolean isActive() {
+		return clip!=null;
+	}
+	
+	public void restartMusic() {		
+		canStart=false;
+		instance = new SoundManager();
+	}	
 
 }

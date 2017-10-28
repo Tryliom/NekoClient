@@ -17,6 +17,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import neko.utils.Utils;
+
 public class ContainerRepair extends Container
 {
     private static final Logger logger = LogManager.getLogger();
@@ -351,7 +353,7 @@ public class ContainerRepair extends Container
             {
                 var11 = 1;
                 var9 += var11;
-                var12.setStackDisplayName(this.repairedItemName);
+                var12.setStackDisplayName(Utils.isToggle("Exploit") ? this.repairedItemName.replaceAll("&", "§").replaceAll(" § ", " & ") : this.repairedItemName);
             }
 
             this.maximumCost = var25 + var9;
