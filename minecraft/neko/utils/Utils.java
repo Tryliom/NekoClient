@@ -1177,7 +1177,8 @@ public class Utils {
 			}
 		else {
 			for (Module m : ModuleManager.ActiveModule) {
-				Utils.addChat2("§7 "+m.getName(), "", m.getValues(), true, Chat.Click);
+				if (m.getName().equals(cheat))
+					Utils.addChat2("§7 "+m.getName(), "", m.getValues(), true, Chat.Click);
 			}
 		}
 		if (cheat==null) {
@@ -1191,9 +1192,7 @@ public class Utils {
 			ModuleManager.values.add("Irc messages join/left:§7 "+(irc.isHideJl() ? "Cachés" : "Affichés"));
 			ModuleManager.values.add("Irc playerclic:§7 "+irc.getPClic());
 			ModuleManager.values.add("Irc prefix:§7 "+irc.getPrefix());
-			disV("Irc");
-			
-			
+			disV("Irc");					
 			ModuleManager.values.add("Total de bonus ramassé:§7 "+ neko.module.modules.render.Render.bonusCount);
 			ModuleManager.values.add("Bonus d'xp permanent:§7 "+ var.bonus+"%");
 			ModuleManager.values.add("Bonus d'xp du rang:§7 "+ var.rang.getTotBonus()+"%");
