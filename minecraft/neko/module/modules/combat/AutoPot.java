@@ -21,7 +21,7 @@ public class AutoPot extends Module {
 	private TimerUtils time = new TimerUtils();
 	
 	public AutoPot() {
-		super("AutoPot", Keyboard.KEY_NONE, Category.COMBAT);
+		super("AutoPot", -1, Category.COMBAT);
 	}
 	
 	public void onEnabled() {		
@@ -30,6 +30,10 @@ public class AutoPot extends Module {
 	
 	public void onDisabled() {
 		super.onDisabled();
+	}
+	
+	public String getValues() {
+		return "§6Seuil de vie sensible:§7 "+AutoPot.heal;
 	}
 	
 	public void onUpdate() {		

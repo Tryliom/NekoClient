@@ -17,6 +17,10 @@ public class AntiFire extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "";
+	}
+	
 	public void onUpdate() {
 		if (mc.thePlayer.isBurning() && mc.thePlayer.onGround)
 			for (int i=0;i<40;i++)

@@ -19,6 +19,10 @@ public class WorldTime extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "§6Temps du monde:§6 "+time;
+	}
+	
 	public void onUpdate() {
 		mc.theWorld.setWorldTime(time);
 	}

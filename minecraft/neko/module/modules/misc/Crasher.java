@@ -18,6 +18,10 @@ public class Crasher extends Module {
 		super.onDisabled();
 	}	
 
+	public String getValues() {
+		return "";
+	}
+	
 	public void onUpdate() {
 		new Thread(new Runnable() {
 			

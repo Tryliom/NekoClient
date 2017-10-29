@@ -17,6 +17,10 @@ public class Register extends Module {
 		return instance;
 	}
 	
+	public String getValues() {
+		return "§6Mot de passe:§7 "+mdp;
+	}
+	
 	public void onToggle() {		
 		ChatUtils c = new ChatUtils();
 		c.doCommand("/register "+mdp+" "+mdp);

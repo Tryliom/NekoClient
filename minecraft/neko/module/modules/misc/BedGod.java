@@ -31,6 +31,10 @@ public class BedGod extends Module {
 		super.onDisabled();		
 	}		
 	
+	public String getValues() {
+		return "";
+	}
+	
 	public void onUpdate() {	
 		if (!this.mc.thePlayer.isPlayerSleeping()) {
 	      return;

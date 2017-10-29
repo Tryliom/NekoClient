@@ -2,6 +2,7 @@ package neko.module.modules.render;
 
 import neko.Client;
 import neko.gui.InGameGui;
+import neko.manager.ModuleManager;
 import neko.module.Category;
 import neko.module.Module;
 import neko.utils.RenderUtils;
@@ -29,6 +30,16 @@ public class Wallhack extends Module {
 	
 	public void onDisabled() {
 		super.onDisabled();
+	}
+	
+	public void setValues() {
+		this.values = "§6Couleur R:§7 "+Wallhack.cR+"\n"
+		+ "§6Couleur G:§7 "+Wallhack.cG+"\n"
+		+ "§6Couleur B:§7 "+Wallhack.cB+"\n"
+		+ "§6Couleur de ligne R:§7 "+Wallhack.clR+"\n"
+		+ "§6Couleur de ligne G:§7 "+Wallhack.clG+"\n"
+		+ "§6Couleur de ligne B:§7 "+Wallhack.clB+"\n"
+		+ "§6Epaisseur de ligne:§7 "+Wallhack.width;
 	}
 	
 	public void onRender3D() {

@@ -21,15 +21,21 @@ public class ItemESP extends Module {
 	}	
 	
 	public void onEnabled() {		
-		
-		if (u.isLock(this.getName()))
-			return;
-		
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
 		super.onDisabled();
+	}
+	
+	public void setValues() {
+		this.values = "§6Couleur de ligne R:§7 "+clR+"\n"
+				+ "§6Couleur de ligne G:§7 "+clG+"\n"
+				+ "§6Couleur de ligne B:§7 "+clB+"\n"
+				+ "§6Couleur R:§7 "+cR+"\n"
+				+ "§6Couleur G:§7 "+cG+"\n"
+				+ "§6Couleur B:§7 "+cB+"\n"
+				+ "§6Epaisseur bord:§7 "+width+"\n";
 	}
 	
 	public void onRender3D() {

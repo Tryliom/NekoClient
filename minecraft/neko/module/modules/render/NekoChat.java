@@ -29,6 +29,12 @@ public class NekoChat extends Module {
 		super.onDisabled();
 	}		
 	
+	public void setValues() {
+		this.values = "§6Couleur:§7 "+color+"\n"
+				+ "§6Hauteur:§7 "+height+"\n"
+				+ "§6Largeur:§7 "+width;
+	}
+	
 	public void newChat() {
 		GuiNewChat chat = new GuiNewChat(mc);		
 	}

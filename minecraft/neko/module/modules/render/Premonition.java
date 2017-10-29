@@ -39,6 +39,10 @@ public class Premonition extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "";
+	}
+	
 	public void onRender3D() {
         boolean bow = false;
         boolean potion = false;

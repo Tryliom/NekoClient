@@ -237,11 +237,12 @@ public class Utils {
 	
 	
 	/**
-	 * txt: Texte à afficher
-	 * cmd: Commande à executer si action == Chat.Click
-	 * desc: Description du hover
-	 * onlyHover: Pour détérminer si c'est juste afficher une description sans commandes
-	 * action: Détérmine l'action entre Click, Summon (Sans executé) ou Link (Ouvre un lien internet)
+	 * Sert à afficher une ligne de texte dans le chat suivant différent paramètres, avec le [Neko] devant
+	 * @param txt 			Texte à afficher
+	 * @param cmd 			Commande à executer si action == Chat.Click
+	 * @param desc 			Description du hover
+	 * @param onlyHover 	Pour détérminer si c'est juste afficher une description sans commandes
+	 * @param action 		Détérmine l'action entre Click, Summon (Sans executé) ou Link (Ouvre un lien internet)
 	 */
 	public static void addChat2(String txt, String cmd, String desc, boolean onlyHover, Chat action) {
 		if (verif==null) {
@@ -1163,136 +1164,37 @@ public class Utils {
 		return b;
 	}
 	
-	public static void displayValues() {
-		//TODO: Nadia ici !
-		for (Category c : Category.values()) {
-			for (Module m : ModuleManager.ActiveModule) {
-				if (!m.isCmd() && c!=Category.HIDE && c==m.getCategory() && !m.getValues().isEmpty()) {
-					Utils.addChat2("§8[§9Neko§8] "+m.getName(), "", m.getValues(), true, Chat.Click);
+	public static void displayValues(String cheat) {
+		if (cheat==null)
+			for (Category c : Category.values()) {
+				for (Module m : ModuleManager.ActiveModule) {
+					if (!m.isCmd() && c!=Category.HIDE && c==m.getCategory() && !m.getValues().isEmpty()) {
+						Utils.addChat2("§8[§9Neko§8]§7 "+m.getName(), "", m.getValues(), true, Chat.Click);
+					}
 				}
+				Utils.addChat(Utils.sep);
 			}
-			Utils.addChat(Utils.sep);
+		else {
+			for (Module m : ModuleManager.ActiveModule) {
+				Utils.addChat2("§8[§9Neko§8]§7 "+m.getName(), "", m.getValues(), true, Chat.Click);
+			}
 		}
 		
-		ModuleManager.values.clear();
-		ModuleManager.values.add("Vitesse:§7 "+Dolphin.dolph);
-//		// disV("Dolphin");
-		ModuleManager.values.add("Vitesse:§7 "+Flight.speed);
-//		// disV("Flight");
-		ModuleManager.values.add("Mode 'blink':§7 "+Flight.getBlink());
-		ModuleManager.values.add("Mode:§7 "+KillAura.mode);
-		ModuleManager.values.add("Cps:§7 "+KillAura.cps);
-		ModuleManager.values.add("Range:§7 "+KillAura.range);
-		ModuleManager.values.add("Fov :§7 "+KillAura.fov+"°");
-		ModuleManager.values.add("Lockview:§7 "+(KillAura.lockView ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("Temps avant de taper une cible:§7 "+KillAura.live/20+"sec");
-		ModuleManager.values.add("Invisible:§7 "+(KillAura.invi ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("OnGround:§7 "+(KillAura.onground ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("NoArmor:§7 "+(KillAura.noarmor ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("Random:§7 "+(KillAura.random ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("Double vérification:§7 "+(KillAura.verif ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("NoBot:§7 "+(KillAura.nobot ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("Premium:§7 "+(KillAura.premium ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("Speed:§7 "+KillAura.speed);
-//		// disV("KillAura");
 		ModuleManager.values.add("Taille des pseudos:§7 "+Render.varNeko);
 //		// disV("Nametag");
 		ModuleManager.values.add("Vitesse:§7 "+NoClip.speed);
 //		// disV("Noclip");
-		ModuleManager.values.add("Paquets:§7 "+Regen.regen);
-		ModuleManager.values.add("Bypass:§7 "+(Regen.bypass ? "§aActivé" : "§cDésactivé"));
-//		// disV("Regen");
-		ModuleManager.values.add("Vitesse:§7 "+Speed709.getSpeed().getSpe());
-		ModuleManager.values.add("Mode:§7 "+Speed709.getSpeed().getMode());
-//		// disV("Speed");
-		ModuleManager.values.add("Hauteur de bloc:§7 "+Step.getStep().getStep());
-		ModuleManager.values.add("Bypass:§7 "+Step.getStep().isBypass());
-//		// disV("Step");
-		ModuleManager.values.add("Multiplicateur de temps:§7 "+Timer.time);
-//		// disV("Timer");
-		Velocity v = Velocity.getVelocity();
-		ModuleManager.values.add("Coefficient horizontal:§7 "+v.getHcoeff());
-		ModuleManager.values.add("Coefficient vertical:§7 "+v.getVcoeff());
-//		// disV("Velocity");
-		ModuleManager.values.add("Range:§7 "+Trigger.dist);
-		ModuleManager.values.add("Cps:§7 "+Trigger.cps);
-		ModuleManager.values.add("Random:§7 "+(Trigger.random ? "§aActivé" : "§cDésactivé"));
-//		// disV("Trigger");
-		ModuleManager.values.add("Distance:§7 "+Reach.dist);
-		ModuleManager.values.add("Pvp:§7 "+(Reach.pvp ? "§aActivée" : "§cDésactivée"));
-		ModuleManager.values.add("Bloc:§7 "+(Reach.bloc ? "§aActivée" : "§cDésactivée"));
-		ModuleManager.values.add("Mode tp classic:§7 "+(Reach.classic ? "§aActivée" : "§cDésactivée"));
-		ModuleManager.values.add("Aimbot:§7 "+(Reach.aimbot ? "§aActivée" : "§cDésactivée"));
-		ModuleManager.values.add("Fov:§7 "+Reach.fov+"°");
-		ModuleManager.values.add("Tnt:§7 "+(Reach.tnt ? "§aActivée" : "§cDésactivée"));
-//		// disV("Reach");
-		ModuleManager.values.add("Distance de frappe:§7 "+ClickAim.dist);
-		ModuleManager.values.add("MultiAura:§7 "+(ClickAim.multiAura ? "§aActivé" : "§cDésactivé"));
-//		// disV("ClickAim");
 		ModuleManager.values.add("Air:§7 "+(VanillaTp.air ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("Classic:§7 "+(VanillaTp.classic ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("Top:§7 "+(VanillaTp.top ? "§aActivé" : "§cDésactivé"));
 //		// disV("VanillaTp");
-		ModuleManager.values.add("Désactivé sur Epicube:§7 "+(Autoarmor.ec ? "§aActivé" : "§cDésactivé"));
-//		// disV("AutoArmor");
-		ModuleManager.values.add("Tick:§7 "+Cheststealer.waitTime);
-//		// disV("Cheststealer");
-		ModuleManager.values.add("Range:§7 "+SmoothAim.range);
-		ModuleManager.values.add("Fov:§7 "+SmoothAim.degrees+"°");
-		ModuleManager.values.add("Speed:§7 "+SmoothAim.speed);
-		// disV("SmoothAim");
-		ModuleManager.values.add("Seuil de vie sensible:§7 "+Autosoup.heal);
-		ModuleManager.values.add("Drop les soupes vide:§7 "+(Autosoup.drop ? "§aActivé" : "§cDésactivé"));
-		// disV("Autosoup");
-		ModuleManager.values.add(isNyah());
-		ModuleManager.values.add("Prefix du nyah:§7 "+nyahh);
-		ModuleManager.values.add("Temps entre chaque nyah:§7 "+nyahSec+"s");	
-		// disV("AutoNyah");
-		ModuleManager.values.add("AutoClic cps:§7 "+AutoClic.cps);
-		// disV("AutoClic");
-		ModuleManager.values.add("Range:§7 "+Nuker.nukerRadius);
-		ModuleManager.values.add("Safe:§7 "+(Nuker.safe ? "§aActivé" : "§cDésactivé"));
-		// disV("Nuker");
-		ModuleManager.values.add("Speed:§7 "+Freecam.speed);
-		// disV("Freecam");
-		ModuleManager.values.add("Speed:§7 "+Longjump.speed);
-		// disV("Longjump");
 		ModuleManager.values.add("Affichage des friends:§7 "+(Radar.fr ? "§aActivé" : "§cDésactivé"));
 		// disV("Radar");
-		ModuleManager.values.add(sword ? "§aActivé" : "§cDésactivé");
-		// disV("Sword");
-		ModuleManager.values.add("Temps du monde:§7 "+WorldTime.time);
-		// disV("WorldTime");
-		ModuleManager.values.add("Coord: "+(HUD.coord ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("Fps: "+(HUD.fps ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("Xp: "+(HUD.fall ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("Item: "+(HUD.item ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("Time: "+(HUD.time ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("Select: "+(HUD.select ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("Couleur R:§7 "+HUD.cR);
-		ModuleManager.values.add("Couleur G:§7 "+HUD.cG);
-		ModuleManager.values.add("Couleur B:§7 "+HUD.cB);
-		ModuleManager.values.add("Epaisseur bord:§7 "+HUD.width);
-		// disV("HUD");
-		ModuleManager.values.add("Couleur R:§7 "+Wallhack.cR);
-		ModuleManager.values.add("Couleur G:§7 "+Wallhack.cG);
-		ModuleManager.values.add("Couleur B:§7 "+Wallhack.cB);
-		ModuleManager.values.add("Couleur de ligne R:§7 "+Wallhack.clR);
-		ModuleManager.values.add("Couleur de ligne G:§7 "+Wallhack.clG);
-		ModuleManager.values.add("Couleur de ligne B:§7 "+Wallhack.clB);
-		ModuleManager.values.add("Epaisseur de ligne:§7 "+Wallhack.width);
-		// disV("WallHack");
-		ModuleManager.values.add("Couleur de ligne R:§7 "+Tracers.cR);
-		ModuleManager.values.add("Couleur de ligne G:§7 "+Tracers.cG);
-		ModuleManager.values.add("Couleur de ligne B:§7 "+Tracers.cB);
-		ModuleManager.values.add("Epaisseur de ligne:§7 "+Tracers.width);
-		ModuleManager.values.add("Friend: "+(Tracers.friend ? "§aAffiché" : "§cCaché"));
-		// disV("Tracers");
+		ModuleManager.values.add(displayBool(sword));
+		disV("Sword");
 		ModuleManager.values.add(limite ? "§aActivée" : "§cDésactivée");
 		ModuleManager.values.add("Limite de paquet: "+limit);
-		// disV("Limit");
-		ModuleManager.values.add("Seuil de vie sensible:§7 "+AutoPot.heal);
-		// disV("AutoPot");
+		disV("Limit");
 		ModuleManager.values.add("Mode:§7 "+Pyro.mode);
 		// disV("Pyro");
 		TpBack tp = TpBack.getInstance();
@@ -1301,33 +1203,15 @@ public class Utils {
 		ModuleManager.values.add("Top:§7 "+(tp.isTop() ? "§aActivé" : "§cDésactivé"));
 		ModuleManager.values.add("Spawn:§7 X:"+tp.getSpawn().getX()+" Y:"+tp.getSpawn().getY()+" Z:"+tp.getSpawn().getZ());
 		// disV("TpBack");
-		Ping p = Ping.getPing();
-		ModuleManager.values.add("Fake ms:§7 "+p.getDelay());
-		ModuleManager.values.add("Freezer:§7 "+p.isFreezer());
-		ModuleManager.values.add("Random:§7 "+p.isRandom());
-		// disV("Ping");
 		Irc irc = Irc.getInstance();
 		ModuleManager.values.add("Irc mode:§7 "+irc.getMode());
 		ModuleManager.values.add("Irc messages join/left:§7 "+(irc.isHideJl() ? "Cachés" : "Affichés"));
 		ModuleManager.values.add("Irc playerclic:§7 "+irc.getPClic());
 		ModuleManager.values.add("Irc prefix:§7 "+irc.getPrefix());
-		// disV("Irc");
-		NekoChat nc = NekoChat.getChat();
-		ModuleManager.values.add("Color:§7 "+nc.getColor());
-		ModuleManager.values.add("Largeur:§7 "+nc.getWidth());
-		ModuleManager.values.add("Hauteur:§7 "+nc.getHeight());
-		// disV("NekoChat");
-		Register r = Register.getReg();
-		ModuleManager.values.add("Mdp de base:§7 "+r.getMdp());
-		// disV("Register");
+		disV("Irc");
 		ModuleManager.values.add("Delay:§7 "+PunKeel.delay+"sec");
 		ModuleManager.values.add("Attack:§7 "+(PunKeel.attack ? "§aActivé" : "§cDésactivé"));
 		// disV("Punkeel");
-		BowAimbot b = BowAimbot.getAim();
-		ModuleManager.values.add("Fov:§7 "+b.getFov()+"°");
-		ModuleManager.values.add("Mode vie:§7 "+b.getLife());
-		ModuleManager.values.add("Mode armure:§7 "+b.getArmor());
-		// disV("BowAimbot");
 		ModuleManager.values.add("Puissance:§7 "+Reflect.getReflect().getPower());
 		// disV("Reflect");
 		
@@ -1336,11 +1220,31 @@ public class Utils {
 		ModuleManager.values.add("Bonus d'xp permanent:§7 "+ var.bonus+"%");
 		ModuleManager.values.add("Bonus d'xp du rang:§7 "+ var.rang.getTotBonus()+"%");
 		ModuleManager.values.add("Autre bonus d'xp:§7 "+ var.tempBonus+"%");
-		// disV("Statistics");
+		disV("Statistics");
 	}
 	
-	public static String isNyah() {
-		return nyah ? "§aActivé" : "§cDésactivé";
+	/**
+	 * Sert à afficher en hover un texte mis dans la list du ModuleManager.values sur un String donné.<br>
+	 * Principalement pour le ..values pour le moment. Pour les values hors cheat
+	 * @param title	String donné qui va être affichée
+	 */
+	public static void disV(String title) {
+		String in = "";
+		for (String s : ModuleManager.values) {
+			in+="§6"+s+"\n";
+		}
+		in = in.substring(0, in.length()-2);
+		Utils.addChat2("§8[§9Neko§8]§7 "+title, "", in, true, Chat.Click);
+		ModuleManager.values.clear();
+	}
+	
+	/**
+	 * Sert à afficher le Activé ou désactivé en couleur de paramètres pour les values ou autre
+	 * @param b	Boolean testé
+	 * @return	String avec la valeur §aActivé si true et §cDésactivé si false
+	 */
+	public static String displayBool(boolean b) {
+		return b ? "§aActivé" : "§cDésactivé";
 		
 	}
 	

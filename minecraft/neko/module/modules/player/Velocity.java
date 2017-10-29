@@ -27,6 +27,12 @@ public class Velocity extends Module {
 		super.onDisabled();
 	}
 
+	public void setValues() {
+		this.values = "§6Horizontal:§7 "+hcoeff*100+"%\n"
+				+ "§6Vertical:§7 "+(vcoeff*100)+"%\n"
+				+ "§6Coeff. moyen:§7 "+((vcoeff+hcoeff)/2)*100+"%";
+	}
+	
 	public double getHcoeff() {
 		return hcoeff;
 	}

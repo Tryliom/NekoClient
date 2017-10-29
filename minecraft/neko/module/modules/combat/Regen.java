@@ -15,14 +15,18 @@ public class Regen extends Module {
 	public Regen() {
 		super("Regen", Keyboard.KEY_G, Category.COMBAT);
 	}
-	
-	
+		
 	public void onEnabled() {
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
 		super.onDisabled();
+	}
+	
+	public String getValues() {
+		return "§6Packet:§7 "+regen+"\n"
+				+ "§6Bypass:§7 "+(bypass ? "§aActivé" : "§cDésactivé");
 	}
 	
 	public void onUpdate() {

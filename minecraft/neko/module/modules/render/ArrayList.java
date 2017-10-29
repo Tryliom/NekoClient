@@ -19,6 +19,10 @@ public class ArrayList extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "";
+	}
+	
 	public void onRender2D() {
 		// Que si le debugFPS n'est pas actif
 		if (!mc.gameSettings.showDebugInfo)

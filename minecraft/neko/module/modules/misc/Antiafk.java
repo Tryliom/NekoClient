@@ -25,6 +25,10 @@ public class Antiafk extends Module {
 		super.onDisabled();
 	}
 	
+	public String getValues() {
+		return "§6Temps entre les sauts:§7 "+sec+"sec";
+	}
+	
 	public void onUpdate() {
 		if (delay>sec*20) {
 			delay=0;

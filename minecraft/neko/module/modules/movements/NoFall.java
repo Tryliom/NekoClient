@@ -8,13 +8,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.C03PacketPlayer;
 
 public class NoFall extends Module {
-	public static boolean isOn;
-	Minecraft mc = Minecraft.getMinecraft();
 
 	public NoFall() {
 		super("NoFall", Keyboard.KEY_RSHIFT, Category.MOVEMENT);
 	}
-
 	
 	public void onEnabled() {
 		super.onEnabled();
@@ -22,6 +19,10 @@ public class NoFall extends Module {
 	
 	public void onDisabled() {
 		super.onDisabled();
+	}
+	
+	public String getValues() {
+		return "";
 	}
 	
 	public void onUpdate() {

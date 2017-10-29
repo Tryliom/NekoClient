@@ -1,6 +1,7 @@
 package neko.module.modules.render;
 
 import neko.gui.InGameGui;
+import neko.manager.ModuleManager;
 import neko.module.Category;
 import neko.module.Module;
 import neko.utils.RenderUtils;
@@ -32,6 +33,19 @@ public class HUD extends Module {
 	
 	public void onDisabled() {
 		super.onDisabled();
+	}
+	
+	public void setValues() {
+		this.values = "§6Coord: "+(HUD.coord ? "§aActivé" : "§cDésactivé")+"\n"
+		+ "§6Fps: "+(HUD.fps ? "§aActivé" : "§cDésactivé")+"\n"
+		+ "§6Xp: "+(HUD.fall ? "§aActivé" : "§cDésactivé")+"\n"
+		+ "§6Item: "+(HUD.item ? "§aActivé" : "§cDésactivé")+"\n"
+		+ "§6Time: "+(HUD.time ? "§aActivé" : "§cDésactivé")+"\n"
+		+ "§6Select: "+(HUD.select ? "§aActivé" : "§cDésactivé")+"\n"
+		+ "§6Couleur R:§7 "+HUD.cR+"\n"
+		+ "§6Couleur G:§7 "+HUD.cG+"\n"
+		+ "§6Couleur B:§7 "+HUD.cB+"\n"
+		+ "§6Epaisseur bord:§7 "+HUD.width+"\n";
 	}
 	
 	public void onRender3D() {		

@@ -26,6 +26,10 @@ public class Trail extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "";
+	}
+	
 	public void onRender3D() {
 		for (BlockPos bp : list) {
 				RenderUtils.drawBlockESP(bp.getX() - mc.getRenderManager().renderPosX, bp.getY() - mc.getRenderManager().renderPosY, bp.getZ() - mc.getRenderManager().renderPosZ, 0.3F, 0.3F, 0.9F, 0.15F, 0.2F, 0.2F, 0.9F, 0.15F, 1F);

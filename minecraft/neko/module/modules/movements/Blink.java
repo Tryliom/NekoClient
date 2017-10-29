@@ -22,7 +22,7 @@ public class Blink extends Module {
 	public static boolean onGround;
 	
 	public Blink() {
-		super("Blink", Keyboard.KEY_NONE, Category.MOVEMENT);
+		super("Blink", -1, Category.MOVEMENT);
 	}
 	
 	public void onEnabled() {		
@@ -49,6 +49,10 @@ public class Blink extends Module {
 	    mc.theWorld.updateEntities();
 		super.onDisabled();
 	}		
+	
+	public String getValues() {
+		return "";
+	}
 	
 	public void sendPacket() {
 		if (packet!=null && packet.size()!=0) {

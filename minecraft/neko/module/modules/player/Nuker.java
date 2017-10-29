@@ -18,7 +18,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.world.chunk.Chunk;
 
 public class Nuker extends Module {
-	Minecraft mc = Minecraft.getMinecraft();
 	int delay =0;
 	public int xPos = -1;
 	  public int yPos = -1;
@@ -29,8 +28,7 @@ public class Nuker extends Module {
 	  public float nukerB = 0.15F;
 	  public static ArrayList<Integer> nuke = new ArrayList<Integer>();
 	  public static boolean safe = true;
-
-	private int delayNuker=0;
+	  private int delayNuker=0;
 	
 	public Nuker() {
 		super("Nuker", -1, Category.PLAYER);
@@ -43,6 +41,11 @@ public class Nuker extends Module {
 	public void onDisabled() {
 		super.onDisabled();
 	}	
+	
+	public void setValues() {
+		this.values = "§6Range:§7 "+nukerRadius+"\n"
+				+ "§6Safe:§7 "+Utils.displayBool(safe);
+	}
 	
 	public void onUpdate() {	
 		

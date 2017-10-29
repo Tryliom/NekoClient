@@ -2,6 +2,7 @@ package neko.module.modules.misc;
 
 import neko.module.Category;
 import neko.module.Module;
+import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 
 public class Autonyah extends Module {
@@ -19,5 +20,10 @@ public class Autonyah extends Module {
 	public void onDisabled() {
 		u.nyah=false;
 		super.onDisabled();
+	}
+	
+	public String getValues() {
+		return "§6Préfix du "+var.prefixCmd+"nyah:§7 "+Utils.nyahh+"\n"
+				+ "§6Temps entre chaque nyah:§7 "+Utils.nyahSec+"sec";
 	}
 }

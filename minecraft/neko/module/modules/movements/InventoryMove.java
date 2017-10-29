@@ -12,7 +12,6 @@ import net.minecraft.client.gui.inventory.GuiDispenser;
 import net.minecraft.client.settings.KeyBinding;
 
 public class InventoryMove extends Module {
-	Minecraft mc = Minecraft.getMinecraft();
 	
 	public InventoryMove() {
 		super("InventoryMove", -1, Category.MOVEMENT);
@@ -24,6 +23,10 @@ public class InventoryMove extends Module {
 	
 	public void onDisabled() {
 		super.onDisabled();
+	}
+	
+	public String getValues() {
+		return "";
 	}
 	
 	public void onUpdate() {

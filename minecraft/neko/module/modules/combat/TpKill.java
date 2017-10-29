@@ -48,6 +48,10 @@ public class TpKill extends Module {
 		super.onDisabled();
 	}
 	
+	public String getValues() {
+		return "";
+	}
+	
     public void onUpdate() {
 		if (!mc.isSingleplayer())
     		if (mc.getCurrentServerData().serverIP.equalsIgnoreCase("mc.erisium.com"))

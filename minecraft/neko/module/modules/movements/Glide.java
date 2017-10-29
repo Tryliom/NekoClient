@@ -25,6 +25,10 @@ public class Glide extends Module {
 		super.onDisabled();
 	}
 	
+	public String getValues() {
+		return "§6Speed:§7 "+speed;
+	}
+	
 	public void onUpdate() {		
 		if (mc.thePlayer.motionY < 0.0d && mc.thePlayer.isAirBorne && !mc.thePlayer.isInWater() && !mc.thePlayer.isOnLadder() && !mc.thePlayer.isInsideOfMaterial(Material.lava)){
 			if (!mc.thePlayer.isInsideOfMaterial(Material.lava)){

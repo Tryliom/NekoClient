@@ -20,6 +20,10 @@ public class AutoTool extends Module {
 	public void onDisabled() {
 		super.onDisabled();
 	}
+	
+	public void setValues() {
+		this.values = "";
+	}
 
 	public void onUpdate() {
 		try {

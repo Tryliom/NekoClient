@@ -36,6 +36,10 @@ public class Scaffold extends Module {
 		super.onDisabled();
 	}		
 	
+	public void setValues() {
+		this.values = "";
+	}
+	
 	public void onUpdate() {
 		BlockPos b = new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY-1, mc.thePlayer.posZ);
 		if (!mc.thePlayer.isSneaking()) {			

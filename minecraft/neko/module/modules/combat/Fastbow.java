@@ -40,6 +40,11 @@ public class Fastbow extends Module {
 		super.onDisabled();
 	}		
 	
+	public String getValues() {
+		return "§6Packet:§7 "+packet+"\n"
+				+ "§6Tirer sans l'arc en main: "+(nobow ? "§aActivé" : "§cDésactivé")+"\n";
+	}
+	
 	public void onUpdate() {
 		if (!mc.thePlayer.isSneaking()) {
 			isOn=true;			

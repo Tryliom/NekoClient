@@ -1,6 +1,7 @@
 package neko.module.modules.combat;
 
 import neko.Client;
+import neko.manager.ModuleManager;
 import neko.module.Category;
 import neko.module.Module;
 import neko.module.modules.combat.KillAura;
@@ -66,6 +67,17 @@ public class Reach extends Module {
 		isOn=false;
 		super.onDisabled();
 	}
+	
+	public String getValues() {
+		return "§6Distance:§7 "+Reach.dist+"\n"
+		+ "§6Pvp:§7 "+(Reach.pvp ? "§aActivée" : "§cDésactivée")+"\n"
+		+ "§6Bloc:§7 "+(Reach.bloc ? "§aActivée" : "§cDésactivée")+"\n"
+		+ "§6Mode tp classic:§7 "+(Reach.classic ? "§aActivée" : "§cDésactivée")+"\n"
+		+ "§6Aimbot:§7 "+(Reach.aimbot ? "§aActivée" : "§cDésactivée")+"\n"
+		+ "§6Fov:§7 "+Reach.fov+"°"+"\n"
+		+ "§6Tnt:§7 "+(Reach.tnt ? "§aActivée" : "§cDésactivée");
+	}
+	
 	// Réglé dans PlayerControllerMP
 	public void onUpdate() {
 		if (!mc.thePlayer.isSneaking()) {

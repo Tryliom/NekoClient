@@ -20,11 +20,11 @@ public class Longjump extends Module {
 		super.onDisabled();
 	}
 	
-	public void onUpdate() {
-		if (!this.getToggled()) {
-			return;
-		}
-		
+	public String getValues() {
+		return "§6Speed:§7 "+speed;
+	}
+	
+	public void onUpdate() {		
 		if (mc.thePlayer.isAirBorne) {
 		      mc.thePlayer.jumpMovementFactor = speed/100;
 		}

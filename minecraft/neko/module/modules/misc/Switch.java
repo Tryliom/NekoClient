@@ -21,6 +21,10 @@ public class Switch extends Module {
 		super.onDisabled();
 	}
 	
+	public String getValues() {
+		return "";
+	}
+	
 	public void onUpdate() {
 		mc.thePlayer.inventory.currentItem=(mc.thePlayer.inventory.currentItem==8 ? 0 : mc.thePlayer.inventory.currentItem+1);
 		mc.getNetHandler().addToSendQueue(new C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem));

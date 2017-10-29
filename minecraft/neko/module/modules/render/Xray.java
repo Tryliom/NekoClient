@@ -31,6 +31,10 @@ public class Xray extends Module {
 		Minecraft.getMinecraft().renderGlobal.loadRenderers();
 	}
 	
+	public void setValues() {
+		this.values = "";
+	}
+	
 	public void onUpdate() {
 		if (mc.gameSettings.keyBindPickBlock.getIsKeyPressed() && delay > 20 && mc.objectMouseOver.func_178782_a()!=null && !(mc.currentScreen instanceof GuiChat) && !(mc.currentScreen instanceof GuiInventory)) {
 			BlockPos bl = mc.objectMouseOver.func_178782_a();

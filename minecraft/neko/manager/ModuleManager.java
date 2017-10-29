@@ -122,7 +122,6 @@ public class ModuleManager {
 		this.ActiveModule.add(new Fastbreak()); // Key NONE
 		this.ActiveModule.add(new Test()); // Key NONE
 		this.ActiveModule.add(new SpamBot()); // Key NONE
-		this.ActiveModule.add(new FlyBypass()); // Key NONE
 		this.ActiveModule.add(new NekoChat()); // Key NONE
 		this.ActiveModule.add(new Premonition()); // Key NONE
 		this.ActiveModule.add(new Highjump()); // Key NONE

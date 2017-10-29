@@ -31,6 +31,10 @@ public class DropShit extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "";
+	}
+	
 	public void onUpdate() {	
 		if (time.delay((float)this.delay)) {
 			drop();

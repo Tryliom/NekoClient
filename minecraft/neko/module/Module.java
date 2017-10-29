@@ -33,6 +33,7 @@ public class Module
 	protected boolean isToggled;
 	protected ScaledResolution scaled = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 	protected ArrayList<String> cmd = new ArrayList<>();
+	protected String values;
 	  
 	  public Module(String moduleName, int moduleBind, Category moduleCategory)
 	  {
@@ -146,9 +147,20 @@ public class Module
 			Utils.addChat("§c§o" + getName() + " désactivé !");
 
 	}
+	
+	public String getValues() {
+		this.setValues();
+		return this.values;
+	}
 
+	  /**
+	   * Est appelée chaques tick (20/sec)
+	   */
 	  public void onUpdate() {}
 	  
+	  /**
+	   * Est appelée chaques tick (20/sec) mais pas besoin que le module soit activé pour qu'il soit exec
+	   */
 	  public void onAction() {}
 	  
 	  public void onRender3D() {}
@@ -164,9 +176,6 @@ public class Module
 	  public void onRightClick() {}
 	  
 	  public void onUpdate(UpdateEvent event) {}
-	  
-	  public String getValues() {
-		  return this.getValues();
-	  }
 
+	  public void setValues() {}
 }

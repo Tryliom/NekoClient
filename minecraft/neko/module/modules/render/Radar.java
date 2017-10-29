@@ -3,6 +3,7 @@ package neko.module.modules.render;
 import neko.gui.InGameGui;
 import neko.module.Category;
 import neko.module.Module;
+import neko.utils.Utils;
 
 public class Radar extends Module {
 	public static boolean fr=true;
@@ -17,6 +18,10 @@ public class Radar extends Module {
 	
 	public void onDisabled() {
 		super.onDisabled();
+	}
+	
+	public void setValues() {
+		this.values =  "§6Affichage des amis:§7 "+Utils.displayBool(fr);
 	}
 	
 	public void onRender2D() {

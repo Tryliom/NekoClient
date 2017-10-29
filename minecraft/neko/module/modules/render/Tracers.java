@@ -1,6 +1,7 @@
 package neko.module.modules.render;
 
 import neko.Client;
+import neko.manager.ModuleManager;
 import neko.module.Category;
 import neko.module.Module;
 import neko.module.modules.hide.Friends;
@@ -25,6 +26,14 @@ public class Tracers extends Module {
 	
 	public void onDisabled() {
 		super.onDisabled();
+	}
+	
+	public void setValues() {
+		this.values = "§6Couleur de ligne R:§7 "+Tracers.cR+"\n"
+		+ "§6Couleur de ligne G:§7 "+Tracers.cG+"\n"
+		+ "§6Couleur de ligne B:§7 "+Tracers.cB+"\n"
+		+ "§6Epaisseur de ligne:§7 "+Tracers.width+"\n"
+		+ "§6Friend: "+(Tracers.friend ? "§aAffiché" : "§cCaché");
 	}
 	
 	public void onRender3D() {

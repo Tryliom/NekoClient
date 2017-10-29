@@ -5,7 +5,6 @@ import neko.module.Category;
 import neko.module.Module;
 
 public class Nametag extends Module {
-	Client var = Client.getNeko();
 	public static boolean isOn=false;
 	
 	public Nametag() {
@@ -22,5 +21,10 @@ public class Nametag extends Module {
 		Nametag.isOn=false;
 		var.renderOn=false;
 		super.onDisabled();
+	}
+	
+	public void setValues() {
+		this.values = "§6Taille:§7 "+
+				net.minecraft.client.renderer.entity.Render.varNeko;
 	}
 }

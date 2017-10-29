@@ -7,7 +7,6 @@ import neko.module.Module;
 import net.minecraft.client.Minecraft;
 
 public class FastPlace extends Module {
-	Minecraft mc = Minecraft.getMinecraft();
 	
 	public FastPlace() {
 		super("FastPlace", Keyboard.KEY_U, Category.PLAYER);
@@ -21,10 +20,11 @@ public class FastPlace extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "";
+	}
+	
 	public void onUpdate() {
-		if (!this.getToggled()) {
-			return;
-		}
 		mc.rightClickDelayTimer = 0;
 		mc.leftClickCounter = 0;	
 	}

@@ -15,7 +15,6 @@ import net.minecraft.network.play.client.C0DPacketCloseWindow;
 public class Cheststealer extends Module {
 	public static int cooldown;
 	public static int waitTime = 3;
-	public static Minecraft mc = Minecraft.getMinecraft();
 
 	public Cheststealer() {
 		super("Cheststealer", -1, Category.PLAYER);
@@ -27,6 +26,10 @@ public class Cheststealer extends Module {
 
 	public void onDisabled() {
 		super.onDisabled();
+	}
+	
+	public void setValues() {
+		this.values = "§6Speed:§7 "+waitTime+" tick";
 	}
 
 	public void onUpdate() {
@@ -112,7 +115,7 @@ public class Cheststealer extends Module {
 	        }
 	        if (!item_found)
 	        {
-	          mc.displayGuiScreen((GuiScreen)null);
+	          Minecraft.getMinecraft().displayGuiScreen((GuiScreen)null);
 	          player.sendQueue.addToSendQueue(new C0DPacketCloseWindow(chest.windowId));
 	          break;
 	        }

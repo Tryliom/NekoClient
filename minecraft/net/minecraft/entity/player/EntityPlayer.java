@@ -1379,7 +1379,7 @@ public abstract class EntityPlayer extends EntityLivingBase
                             targetEntity.addVelocity((double)(-MathHelper.sin(this.rotationYaw * (float)Math.PI / 180.0F) * (float)var18 * 0.5F), 0.1D, (double)(MathHelper.cos(this.rotationYaw * (float)Math.PI / 180.0F) * (float)var18 * 0.5F));
                             this.motionX *= 0.6D; // 0.6
                             this.motionZ *= 0.6D;
-                            if (!Sprint.sprint) {
+                            if (!Utils.isToggle("Sprint")) {
                             	this.setSprinting(false);
                             } else {
                             	this.setSprinting(true);
@@ -1943,7 +1943,7 @@ public abstract class EntityPlayer extends EntityLivingBase
     //TODO: Client
     public void fall(float distance, float damageMultiplier)
     {
-    	if (NoFall.isOn == true) {
+    	if (Utils.isToggle("NoFall")) {
     		
     		super.fall(0, 0);
     		

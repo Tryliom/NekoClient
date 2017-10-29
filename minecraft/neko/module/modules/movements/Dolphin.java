@@ -22,6 +22,10 @@ public class Dolphin extends Module {
 		super.onDisabled();
 	}
 	
+	public String getValues() {
+		return "§6Speed:§7 "+dolph;
+	}
+	
 	public void onUpdate() {
 		if(!this.getToggled()) {
 			return;

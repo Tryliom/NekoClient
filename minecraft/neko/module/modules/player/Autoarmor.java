@@ -2,6 +2,7 @@ package neko.module.modules.player;
 
 import neko.module.Category;
 import neko.module.Module;
+import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -33,6 +34,10 @@ public class Autoarmor extends Module {
 	
 	public void onDisabled() {
 		super.onDisabled();
+	}
+	
+	public void setValues() {
+		this.values = "§6Désactivé sur ec auto:§7 "+Utils.displayBool(ec);
 	}
 	
 	public void onUpdate() {		
