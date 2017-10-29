@@ -38,8 +38,8 @@ public class Trigger extends Module {
 		super.onDisabled();
 	}
 	
-	public String getValues() {
-		return "§6Range:§7 "+dist
+	public void setValues() {
+		this.values = "§6Range:§7 "+dist
 				+ "§6Cps:§7 "+cps
 				+ "§6Random:§7 "+(Trigger.random ? "§aActivé" : "§cDésactivé");
 	}

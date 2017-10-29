@@ -68,8 +68,8 @@ public class Reach extends Module {
 		super.onDisabled();
 	}
 	
-	public String getValues() {
-		return "§6Distance:§7 "+Reach.dist+"\n"
+	public void setValues() {
+		this.values = "§6Distance:§7 "+Reach.dist+"\n"
 		+ "§6Pvp:§7 "+(Reach.pvp ? "§aActivée" : "§cDésactivée")+"\n"
 		+ "§6Bloc:§7 "+(Reach.bloc ? "§aActivée" : "§cDésactivée")+"\n"
 		+ "§6Mode tp classic:§7 "+(Reach.classic ? "§aActivée" : "§cDésactivée")+"\n"

@@ -41,8 +41,8 @@ public class Speed709 extends Module {
 		super.onDisabled();
 	}
 	
-	public String getValues() {
-		return "§6Speed:§7 "+spe+"\n"
+	public void setValues() {
+		this.values = "§6Speed:§7 "+spe+"\n"
 				+ "§6Mode:§7 "+mode;
 	}
 	

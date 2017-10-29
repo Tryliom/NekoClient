@@ -5,7 +5,7 @@ import neko.module.Module;
 import net.minecraft.client.Minecraft;
 
 public class Unicode extends Module {
-	Minecraft mc = Minecraft.getMinecraft();
+	
 	public Unicode() {
 		super("Unicode", -1, Category.Special);
 	}
@@ -18,8 +18,8 @@ public class Unicode extends Module {
 		super.onDisabled();
 	}	
 	
-	public void onUpdate() {
-		
+	public void setValues() {
+		this.values = "";
 	}
 
 }

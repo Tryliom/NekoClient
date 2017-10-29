@@ -32,6 +32,10 @@ public class Nausicaah extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "";
+	}
+	
 	public void onClick() {
 		try {
 			if (mc.pointedEntity!=null) {

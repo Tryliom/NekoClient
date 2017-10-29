@@ -6,6 +6,7 @@ import neko.Client;
 import neko.module.Category;
 import neko.module.Module;
 import neko.utils.TpUtils;
+import neko.utils.Utils;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.monster.EntityWitch;
@@ -26,8 +27,12 @@ public class VanillaTp extends Module {
 		super("VanillaTp", Keyboard.KEY_TAB, Category.Special);
 	}
 	
-
-    @Override
+	public void setValues() {
+		this.values = "§6Air: "+Utils.displayBool(air)+"\n"
+				+ "§6Tp classic: "+Utils.displayBool(classic)+"\n"
+				+ "§6Top: "+Utils.displayBool(top);
+	}
+	
     public void onToggle() {	
     	this.isToggled=false;
         if (mc.thePlayer.isSneaking()) {

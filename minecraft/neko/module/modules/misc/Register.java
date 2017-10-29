@@ -17,8 +17,8 @@ public class Register extends Module {
 		return instance;
 	}
 	
-	public String getValues() {
-		return "§6Mot de passe:§7 "+mdp;
+	public void setValues() {
+		this.values = "§6Mot de passe:§7 "+mdp;
 	}
 	
 	public void onToggle() {		

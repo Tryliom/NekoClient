@@ -30,8 +30,8 @@ public class Ping extends Module {
 		super.onDisabled();
 	}	
 	
-	public String getValues() {
-		return "§6Fake ping:§7 "+delay+"ms\n"
+	public void setValues() {
+		this.values = "§6Fake ping:§7 "+delay+"ms\n"
 				+ "§6Freezer:§7 "+Utils.displayBool(freezer)+"\n"
 				+ "§6Random:§7 "+Utils.displayBool(random);
 	}

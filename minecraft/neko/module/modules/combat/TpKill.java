@@ -48,8 +48,8 @@ public class TpKill extends Module {
 		super.onDisabled();
 	}
 	
-	public String getValues() {
-		return "";
+	public void setValues() {
+		this.values = "";
 	}
 	
     public void onUpdate() {

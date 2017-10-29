@@ -24,8 +24,8 @@ public class ClickAim extends Module {
 		super.onDisabled();
 	}
 	
-	public String getValues() {
-		return "§6Distance de frappe:§7 "+ClickAim.dist+"\n"
+	public void setValues() {
+		this.values = "§6Distance de frappe:§7 "+ClickAim.dist+"\n"
 				+ "§6MultiAura:§7 "+(ClickAim.multiAura ? "§aActivé" : "§cDésactivé");
 	}
 	

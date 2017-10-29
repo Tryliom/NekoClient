@@ -45,7 +45,7 @@ public class HUD extends Module {
 		+ "§6Couleur R:§7 "+HUD.cR+"\n"
 		+ "§6Couleur G:§7 "+HUD.cG+"\n"
 		+ "§6Couleur B:§7 "+HUD.cB+"\n"
-		+ "§6Epaisseur bord:§7 "+HUD.width+"\n";
+		+ "§6Epaisseur bord:§7 "+HUD.width;
 	}
 	
 	public void onRender3D() {		

@@ -40,8 +40,8 @@ public class Freecam extends Module {
 		super.onDisabled();
 	}
 	
-	public String getValues() {
-		return "§6Speed:§7 "+speed;
+	public void setValues() {
+		this.values = "§6Speed:§7 "+speed;
 	}
 	
 	public void onUpdate() {		

@@ -24,8 +24,8 @@ public class Highjump extends Module {
 		super.onDisabled();
 	}
 	
-	public String getValues() {
-		return "§6Hauteur:§7 "+height;
+	public void setValues() {
+		this.values = "§6Hauteur:§7 "+height;
 	}
 
 	public float getHeight() {

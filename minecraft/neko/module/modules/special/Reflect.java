@@ -28,6 +28,10 @@ public class Reflect extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "§6Force:§7 "+power;
+	}
+	
 	public void onUpdate() {		
 		mc.thePlayer.entityCollisionReduction=power;
 		if (Utils.getPlayerInRange(1.0)!=null)

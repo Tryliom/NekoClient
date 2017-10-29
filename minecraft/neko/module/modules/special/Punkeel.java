@@ -6,6 +6,7 @@ import org.lwjgl.input.Keyboard;
 
 import neko.module.Category;
 import neko.module.Module;
+import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.network.Packet;
@@ -33,6 +34,11 @@ public class PunKeel extends Module {
 	    mc.theWorld.updateEntities();
 		super.onDisabled();
 	}		
+	
+	public void setValues() {
+		this.values = "§6Delais:§7 "+delay+"sec\n"
+				+ "§6Attack: "+Utils.displayBool(attack);
+	}
 	
 	public void onUpdate() {
 		if (this.count>this.delay*20 || mc.thePlayer.getHealth()<0) {

@@ -43,7 +43,7 @@ public class Build extends Module {
 		this.values = "§6Down:§7 "+Utils.displayBool(down)+"\n"
 				+ "§6Up:§7 "+Utils.displayBool(up)+"\n"
 				+ "§6Wall:§7 "+Utils.displayBool(wall)+"\n"
-				+ "§6Sneak:§7 "+Utils.displayBool(sneak)+"\n";
+				+ "§6Sneak:§7 "+Utils.displayBool(sneak);
 	}
 	
 	public void onUpdate() {

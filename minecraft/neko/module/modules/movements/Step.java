@@ -31,8 +31,8 @@ public class Step extends Module {
 		super.onDisabled();
 	}
 	
-	public String getValues() {
-		return "§6Hauteur:§7 "+step+" blocs\n"
+	public void setValues() {
+		this.values = "§6Hauteur:§7 "+step+" blocs\n"
 				+ "§6Bypass:§7 "+Utils.displayBool(bypass);
 	}
 	

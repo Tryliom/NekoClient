@@ -22,8 +22,8 @@ public class Autonyah extends Module {
 		super.onDisabled();
 	}
 	
-	public String getValues() {
-		return "§6Préfix du "+var.prefixCmd+"nyah:§7 "+Utils.nyahh+"\n"
+	public void setValues() {
+		this.values = "§6Préfix du "+var.prefixCmd+"nyah:§7 "+Utils.nyahh+"\n"
 				+ "§6Temps entre chaque nyah:§7 "+Utils.nyahSec+"sec";
 	}
 }

@@ -32,8 +32,8 @@ public class AutoPot extends Module {
 		super.onDisabled();
 	}
 	
-	public String getValues() {
-		return "§6Seuil de vie sensible:§7 "+AutoPot.heal;
+	public void setValues() {
+		this.values = "§6Seuil de vie sensible:§7 "+AutoPot.heal;
 	}
 	
 	public void onUpdate() {		

@@ -24,8 +24,8 @@ public class Regen extends Module {
 		super.onDisabled();
 	}
 	
-	public String getValues() {
-		return "§6Packet:§7 "+regen+"\n"
+	public void setValues() {
+		this.values = "§6Packet:§7 "+regen+"\n"
 				+ "§6Bypass:§7 "+(bypass ? "§aActivé" : "§cDésactivé");
 	}
 	

@@ -26,6 +26,10 @@ public class NoLook extends Module {
 	public void onDisabled() {
 		super.onDisabled();
 	}
+	
+	public void setValues() {
+		this.values = "";
+	}
 
 	public float getPitch() {
 		return pitch;

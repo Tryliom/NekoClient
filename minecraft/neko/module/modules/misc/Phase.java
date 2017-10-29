@@ -27,8 +27,8 @@ public class Phase extends Module {
 		super.onDisabled();
 	}
 	
-	public String getValues() {
-		return "§6Phase vertical:§7 "+(vphase ? "§aActivé" : "§cDésactivé");
+	public void setValues() {
+		this.values = "§6Phase vertical:§7 "+(vphase ? "§aActivé" : "§cDésactivé");
 	}
 	
 	public void onUpdate() {

@@ -22,8 +22,8 @@ public class Safewalk extends Module {
 		super.onDisabled();
 	}
 	
-	public String getValues() {
-		return "";
+	public void setValues() {
+		this.values = "";
 	}
 	
 }

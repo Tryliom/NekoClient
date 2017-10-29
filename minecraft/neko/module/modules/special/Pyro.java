@@ -38,6 +38,10 @@ public class Pyro extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "§6Mode:§7 "+mode;
+	}
+	
 	public void onUpdate() {
 		if (!mc.thePlayer.isSneaking()) {
 			isOn=true;			

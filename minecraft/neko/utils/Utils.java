@@ -1169,58 +1169,37 @@ public class Utils {
 			for (Category c : Category.values()) {
 				for (Module m : ModuleManager.ActiveModule) {
 					if (!m.isCmd() && c!=Category.HIDE && c==m.getCategory() && !m.getValues().isEmpty()) {
-						Utils.addChat2("§8[§9Neko§8]§7 "+m.getName(), "", m.getValues(), true, Chat.Click);
+						Utils.addChat2("§7 "+m.getName(), "", m.getValues(), true, Chat.Click);
 					}
 				}
-				Utils.addChat(Utils.sep);
+				if (c!=Category.HIDE)
+					Utils.addChat(Utils.sep);
 			}
 		else {
 			for (Module m : ModuleManager.ActiveModule) {
-				Utils.addChat2("§8[§9Neko§8]§7 "+m.getName(), "", m.getValues(), true, Chat.Click);
+				Utils.addChat2("§7 "+m.getName(), "", m.getValues(), true, Chat.Click);
 			}
 		}
-		
-		ModuleManager.values.add("Taille des pseudos:§7 "+Render.varNeko);
-//		// disV("Nametag");
-		ModuleManager.values.add("Vitesse:§7 "+NoClip.speed);
-//		// disV("Noclip");
-		ModuleManager.values.add("Air:§7 "+(VanillaTp.air ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("Classic:§7 "+(VanillaTp.classic ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("Top:§7 "+(VanillaTp.top ? "§aActivé" : "§cDésactivé"));
-//		// disV("VanillaTp");
-		ModuleManager.values.add("Affichage des friends:§7 "+(Radar.fr ? "§aActivé" : "§cDésactivé"));
-		// disV("Radar");
-		ModuleManager.values.add(displayBool(sword));
-		disV("Sword");
-		ModuleManager.values.add(limite ? "§aActivée" : "§cDésactivée");
-		ModuleManager.values.add("Limite de paquet: "+limit);
-		disV("Limit");
-		ModuleManager.values.add("Mode:§7 "+Pyro.mode);
-		// disV("Pyro");
-		TpBack tp = TpBack.getInstance();
-		ModuleManager.values.add("Seuil de vie:§7 "+tp.getVie());
-		ModuleManager.values.add("Classic:§7 "+(tp.isClassic() ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("Top:§7 "+(tp.isTop() ? "§aActivé" : "§cDésactivé"));
-		ModuleManager.values.add("Spawn:§7 X:"+tp.getSpawn().getX()+" Y:"+tp.getSpawn().getY()+" Z:"+tp.getSpawn().getZ());
-		// disV("TpBack");
-		Irc irc = Irc.getInstance();
-		ModuleManager.values.add("Irc mode:§7 "+irc.getMode());
-		ModuleManager.values.add("Irc messages join/left:§7 "+(irc.isHideJl() ? "Cachés" : "Affichés"));
-		ModuleManager.values.add("Irc playerclic:§7 "+irc.getPClic());
-		ModuleManager.values.add("Irc prefix:§7 "+irc.getPrefix());
-		disV("Irc");
-		ModuleManager.values.add("Delay:§7 "+PunKeel.delay+"sec");
-		ModuleManager.values.add("Attack:§7 "+(PunKeel.attack ? "§aActivé" : "§cDésactivé"));
-		// disV("Punkeel");
-		ModuleManager.values.add("Puissance:§7 "+Reflect.getReflect().getPower());
-		// disV("Reflect");
-		
-		
-		ModuleManager.values.add("Total de bonus ramassé:§7 "+ neko.module.modules.render.Render.bonusCount);
-		ModuleManager.values.add("Bonus d'xp permanent:§7 "+ var.bonus+"%");
-		ModuleManager.values.add("Bonus d'xp du rang:§7 "+ var.rang.getTotBonus()+"%");
-		ModuleManager.values.add("Autre bonus d'xp:§7 "+ var.tempBonus+"%");
-		disV("Statistics");
+		if (cheat==null) {
+			ModuleManager.values.add(displayBool(sword));
+			disV("Sword");
+			ModuleManager.values.add(limite ? "§aActivée" : "§cDésactivée");
+			ModuleManager.values.add("Limite de paquet: "+limit);
+			disV("Limit");
+			Irc irc = Irc.getInstance();
+			ModuleManager.values.add("Irc mode:§7 "+irc.getMode());
+			ModuleManager.values.add("Irc messages join/left:§7 "+(irc.isHideJl() ? "Cachés" : "Affichés"));
+			ModuleManager.values.add("Irc playerclic:§7 "+irc.getPClic());
+			ModuleManager.values.add("Irc prefix:§7 "+irc.getPrefix());
+			disV("Irc");
+			
+			
+			ModuleManager.values.add("Total de bonus ramassé:§7 "+ neko.module.modules.render.Render.bonusCount);
+			ModuleManager.values.add("Bonus d'xp permanent:§7 "+ var.bonus+"%");
+			ModuleManager.values.add("Bonus d'xp du rang:§7 "+ var.rang.getTotBonus()+"%");
+			ModuleManager.values.add("Autre bonus d'xp:§7 "+ var.tempBonus+"%");
+			disV("Statistics");
+		}
 	}
 	
 	/**
@@ -1233,8 +1212,8 @@ public class Utils {
 		for (String s : ModuleManager.values) {
 			in+="§6"+s+"\n";
 		}
-		in = in.substring(0, in.length()-2);
-		Utils.addChat2("§8[§9Neko§8]§7 "+title, "", in, true, Chat.Click);
+		in = in.substring(0, in.length()-1);
+		Utils.addChat2("§7 "+title, "", in, true, Chat.Click);
 		ModuleManager.values.clear();
 	}
 	

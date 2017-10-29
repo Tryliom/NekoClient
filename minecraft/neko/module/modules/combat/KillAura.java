@@ -72,8 +72,8 @@ public class KillAura extends Module {
 		super.onDisabled();
 	}
 	
-	public String getValues() {
-		return "§6Mode:§7 "+KillAura.mode+"\n"
+	public void setValues() {
+		this.values = "§6Mode:§7 "+KillAura.mode+"\n"
 		+ "§6Cps:§7 "+KillAura.cps+"\n"
 		+ "§6Range:§7 "+KillAura.range+"\n"
 		+ "§6Fov :§7 "+KillAura.fov+"°"+"\n"

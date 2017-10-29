@@ -38,8 +38,8 @@ public class BowAimbot extends Module {
 		super.onDisabled();
 	}
 	
-	public String getValues() {
-		return "§6Fov:§7 "+getFov()+"°\n"
+	public void setValues() {
+		this.values = "§6Fov:§7 "+getFov()+"°\n"
 				+ "§6Mode vie:§7 "+getLife()+"\n"
 				+ "§6Mode armure:§7 "+getArmor();
 	}

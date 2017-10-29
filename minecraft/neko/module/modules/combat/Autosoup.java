@@ -30,8 +30,8 @@ public class Autosoup extends Module {
 		super.onDisabled();
 	}
 	
-	public String getValues() {
-		return "§6Seuil de vie sensible:§7 "+AutoPot.heal+"\n"
+	public void setValues() {
+		this.values = "§6Seuil de vie sensible:§7 "+AutoPot.heal+"\n"
 				+ "§6Drop les soupes vide:§7 "+(Autosoup.drop ? "§aActivé" : "§cDésactivé");
 	}
 	
