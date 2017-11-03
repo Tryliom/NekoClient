@@ -1655,9 +1655,6 @@ public class Utils {
 	}
 	
 	public static Boolean isEntityValid(EntityLivingBase en) {
-    	if (!Utils.getPlayerGameType(en.getName()).isSurvivalOrAdventure())
-	    	return false;    	
-    	
     	if (KillAura.invi) 
     		if (en.isInvisible())
     			return false;
@@ -1671,6 +1668,12 @@ public class Utils {
         		return false;
 
     	if(!(en.isEntityAlive() && en.ticksExisted > KillAura.live && !Friends.isFriend(en.getName()) && en!=mc.thePlayer))
+    		return false;
+    	
+    	if (KillAura.verif && !Utils.IsInTab(en.getName()))
+    		return false;
+    	
+    	if (KillAura.isBot(en.getName()))
     		return false;
     	
     	if (en.getName().isEmpty())

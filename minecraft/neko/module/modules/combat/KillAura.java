@@ -122,10 +122,9 @@ public class KillAura extends Module {
     }
     
     public static Boolean isViable(EntityLivingBase en) {
-    	try {
-	    	if (!Utils.getPlayerGameType(en.getName()).isSurvivalOrAdventure())
-		    	return false;    	
-    	} catch (Exception e) {}
+    	if (!Utils.getPlayerGameType(en.getName()).isSurvivalOrAdventure())
+	    	return false;
+    	
     	if (KillAura.invi) 
     		if (en.isInvisible())
     			return false;
