@@ -1630,21 +1630,27 @@ public class Utils {
 	}
 	
 	public static void attack(Entity entity, boolean ma) {
-		if (isToggle("FastDura")) {
-			FastDura.doDura(entity);
-		} else if (isToggle("Nausicaah")) {
-			Nausicaah.getNausi().doNausicaah(entity);
-		} else
-			mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK));
 		if (ma) {
 			for (Object o : (var.mode.equalsIgnoreCase("Player") ? mc.theWorld.playerEntities : mc.theWorld.loadedEntityList)) {
 				if (o instanceof EntityLivingBase) {
 					EntityLivingBase en = (EntityLivingBase) o;
 					if (isEntityValid(en) && mc.thePlayer.getDistanceToEntity(en) <= 6) {
-						mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(en, net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK));
+						if (isToggle("FastDura")) {
+							FastDura.doDura(en);
+						} else if (isToggle("Nausicaah")) {
+							Nausicaah.getNausi().doNausicaah(en);
+						} else
+							mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(en, net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK));
 					}
 				}
 			}
+		} else {
+			if (isToggle("FastDura")) {
+				FastDura.doDura(entity);
+			} else if (isToggle("Nausicaah")) {
+				Nausicaah.getNausi().doNausicaah(entity);
+			} else
+				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK));
 		}
 	}
 	
@@ -1666,15 +1672,9 @@ public class Utils {
 
     	if(!(en.isEntityAlive() && en.ticksExisted > KillAura.live && !Friends.isFriend(en.getName()) && en!=mc.thePlayer))
     		return false;
-    	 
-    	if (KillAura.isBot(en.getName()))
-			return false;
     	
     	if (en.getName().isEmpty())
 			return false;
-    	
-    	if (KillAura.verif && !Utils.IsInTab(en.getName()))
-	    	return false;
     	
     	if (KillAura.nobot && Utils.getPlayerPing(en.getName())<0) 
     		return false;
@@ -2293,6 +2293,7 @@ public class Utils {
 		                s+=c.getCmd2()+"\n"+pl+"\n"+Register.getReg().getMdp()+"\n"+God.getInstance().getBackup()+"\n"+Highjump.getJump().getHeight()+"\n";
 		                s+=TutoManager.getTuto().isDone()+"\n"+Nuker.safe+"\n"+KillAura.speed+"\n"+PunKeel.attack+"\n"+PunKeel.delay+"\n"+Fastbow.getFast().getPacket()+"\n";
 		                s+=Step.getStep().isBypass()+"\n"+BowAimbot.getAim().getFov()+"\n"+BowAimbot.getAim().getLife()+"\n"+BowAimbot.getAim().getArmor()+"\n";
+		                s+=Reach.multiaura+"\n";
 		                writer.write(s);
 		                writer.flush();
 		            }
@@ -2926,6 +2927,8 @@ public class Utils {
 	                		BowAimbot.getAim().setLife(BowMode.valueOf(ligne));
 	                	if (i==160)
 	                		BowAimbot.getAim().setArmor(BowMode.valueOf(ligne));
+	                	if (i==161)
+	                		Reach.multiaura=Boolean.parseBoolean(ligne);
                 	} catch (Exception e) {}                	
                 	i++;
                 }

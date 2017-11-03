@@ -32,7 +32,7 @@ public class SoundManager {
 			public void run() {
 				while (true)
 					try {
-						int i = Utils.getRandInt(10);
+						int i = Utils.getRandInt(15);
 						audioIn = AudioSystem.getAudioInputStream(new URL("http://nekohc.fr/song/music"+i+".wav"));
 						break;
 					} catch (UnsupportedAudioFileException | IOException e) {

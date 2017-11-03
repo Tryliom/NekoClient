@@ -122,9 +122,10 @@ public class KillAura extends Module {
     }
     
     public static Boolean isViable(EntityLivingBase en) {
-    	if (!Utils.getPlayerGameType(en.getName()).isSurvivalOrAdventure())
-	    	return false;    	
-    	
+    	try {
+	    	if (!Utils.getPlayerGameType(en.getName()).isSurvivalOrAdventure())
+		    	return false;    	
+    	} catch (Exception e) {}
     	if (KillAura.invi) 
     		if (en.isInvisible())
     			return false;
@@ -216,25 +217,27 @@ class cps implements ActionListener {
 		if (Utils.sword ? mc.thePlayer.getCurrentEquippedItem()!=null ? mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemSword : false : true) {
 			switch (var.mode) {
 			case "Player" :
-				for (Object theObject : mc.theWorld.playerEntities) {
-	                EntityLivingBase entity = (EntityLivingBase) theObject;
-	                if(KillAura.isViable(entity)) {              	                	                   
-	                	if (KillAura.lockView)
-	                		KillAura.faceEntity(entity);
-	                	
-	                	if (Utils.isToggle("Crit"))
-	                		Utils.crit();
-	                		                			
-                		Utils.attack(entity);
-                		mc.thePlayer.swingItem();
-	            		KillAura.giveMoney(entity);
-	                	
-	                	if (KillAura.mode.equalsIgnoreCase("Multi"))
-	                		continue;
-	                	else
-	                		break;
-	                }
-	        	}
+				try {
+					for (Object theObject : mc.theWorld.playerEntities) {
+		                EntityLivingBase entity = (EntityLivingBase) theObject;
+		                if(KillAura.isViable(entity)) {              	                	                   
+		                	if (KillAura.lockView)
+		                		KillAura.faceEntity(entity);
+		                	
+		                	if (Utils.isToggle("Crit"))
+		                		Utils.crit();
+		                		                			
+	                		Utils.attack(entity);
+	                		mc.thePlayer.swingItem();
+		            		KillAura.giveMoney(entity);
+		                	
+		                	if (KillAura.mode.equalsIgnoreCase("Multi"))
+		                		continue;
+		                	else
+		                		break;
+		                }
+		        	}
+				} catch (Exception e) {}
 				break;
 				
 			case "Mob" :
@@ -242,56 +245,60 @@ class cps implements ActionListener {
         			if (Utils.isPlayerInRange(Utils.warnB))
         				return;
         		}
-        		for (Object theObject : mc.theWorld.loadedEntityList) {
-        			if (theObject instanceof EntityLivingBase) {
-                    	EntityLivingBase entity = (EntityLivingBase) theObject;
-                                                 
-                        if(Minecraft.getMinecraft().thePlayer.getDistanceToEntity(entity) <= KillAura.range) {
-                            if(entity.isEntityAlive() && entity.ticksExisted > 2 && !Utils.isPlayer(entity) && entity!=mc.thePlayer) {
-                            	if (KillAura.lockView)
-                            		KillAura.faceEntity(entity);
-                            	if (Utils.isToggle("Crit"))
-                            		Utils.crit();
-                            	if (!Utils.isInFov(entity, KillAura.fov))
-                            		return;
-                            	
-                            	Utils.attack(entity);
-    	                		Minecraft.getMinecraft().thePlayer.swingItem();
-                            	if (entity.getHealth()<2) {
-                            		Utils.checkXp(4);
-                            	}
-                            	if (KillAura.mode.equalsIgnoreCase("Multi"))
-        	                		continue;
-        	                	else
-        	                		break;
-                            }
-                        }
-        			}                            
-                }
+				try {
+	        		for (Object theObject : mc.theWorld.loadedEntityList) {
+	        			if (theObject instanceof EntityLivingBase) {
+	                    	EntityLivingBase entity = (EntityLivingBase) theObject;
+	                                                 
+	                        if(Minecraft.getMinecraft().thePlayer.getDistanceToEntity(entity) <= KillAura.range) {
+	                            if(entity.isEntityAlive() && entity.ticksExisted > 2 && !Utils.isPlayer(entity) && entity!=mc.thePlayer) {
+	                            	if (KillAura.lockView)
+	                            		KillAura.faceEntity(entity);
+	                            	if (Utils.isToggle("Crit"))
+	                            		Utils.crit();
+	                            	if (!Utils.isInFov(entity, KillAura.fov))
+	                            		return;
+	                            	
+	                            	Utils.attack(entity);
+	    	                		Minecraft.getMinecraft().thePlayer.swingItem();
+	                            	if (entity.getHealth()<2) {
+	                            		Utils.checkXp(4);
+	                            	}
+	                            	if (KillAura.mode.equalsIgnoreCase("Multi"))
+	        	                		continue;
+	        	                	else
+	        	                		break;
+	                            }
+	                        }
+	        			}                            
+	                }
+				} catch (Exception e) {}
 				break;
 				
 			case "All" :
-				for (Object theObject : mc.theWorld.loadedEntityList) {
-        			if (theObject instanceof EntityLivingBase) {
-                        EntityLivingBase entity = (EntityLivingBase) theObject;
-                       
-                        if(KillAura.isViable(entity)) {                        	                           
-                        	if (KillAura.lockView)
-                        		KillAura.faceEntity(entity);
-                        	if (Utils.isToggle("Crit"))
-                        		Utils.crit();
-                        	
-                        	Utils.attack(entity);
-	                		mc.thePlayer.swingItem();
-                        	
-                        	KillAura.giveMoney(entity);
-                        	if (KillAura.mode.equalsIgnoreCase("Multi"))
-    	                		continue;
-    	                	else
-    	                		break;                       
-                        }
-        			}
-                }
+				try {
+					for (Object theObject : mc.theWorld.loadedEntityList) {
+	        			if (theObject instanceof EntityLivingBase) {
+	                        EntityLivingBase entity = (EntityLivingBase) theObject;
+	                       
+	                        if(KillAura.isViable(entity)) {                        	                           
+	                        	if (KillAura.lockView)
+	                        		KillAura.faceEntity(entity);
+	                        	if (Utils.isToggle("Crit"))
+	                        		Utils.crit();
+	                        	
+	                        	Utils.attack(entity);
+		                		mc.thePlayer.swingItem();
+	                        	
+	                        	KillAura.giveMoney(entity);
+	                        	if (KillAura.mode.equalsIgnoreCase("Multi"))
+	    	                		continue;
+	    	                	else
+	    	                		break;                       
+	                        }
+	        			}
+	                }
+				} catch (Exception e) {}
 				break;
 			}
 		}

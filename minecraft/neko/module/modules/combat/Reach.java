@@ -66,6 +66,7 @@ public class Reach extends Module {
 	
 	public void onDisabled() {
 		isOn=false;
+		mc.theWorld.updateEntities();
 		super.onDisabled();
 	}
 	
@@ -218,7 +219,7 @@ public class Reach extends Module {
 			if (en!=null && !Friends.isFriend(en.getName()) && mc.thePlayer!=en) {
 				if (mc.thePlayer.getDistanceToEntity(en)>5) {
 	        		String s = doTpAller(en);
-	        		Utils.attack(en);
+	        		Utils.attack(en, multiaura);
 	        		doTpRetour(s);	        			        			
 	        		
 	        		// Puis on re set notre position initiale
@@ -237,18 +238,18 @@ public class Reach extends Module {
 			} else if (aimbot) {
 				switch (var.mode) {
 				case "Player" :
-					for (Object theObject : mc.theWorld.playerEntities) {
-		                EntityPlayer entity = (EntityPlayer) theObject;
-		                if (u.isEntityInFov(entity, fov) && !Friends.isFriend(entity.getName()) && mc.thePlayer!=entity) {
-	                        String s = doTpAller(entity);	                        
-	                		Utils.attack(entity, multiaura);
-	                		doTpRetour(s);
-	                		mc.thePlayer.setPosition(lastX, lastY+0.005*Math.random(), lastZ);
-	                		KillAura.giveMoney(entity);	
-		                	break; 
-		                }
-		        	}
-					break;
+				for (Object theObject : mc.theWorld.playerEntities) {
+	                EntityPlayer entity = (EntityPlayer) theObject;
+	                if (u.isEntityInFov(entity, fov) && !Friends.isFriend(entity.getName()) && mc.thePlayer!=entity) {
+                        String s = doTpAller(entity);	 
+                		Utils.attack(entity, multiaura);
+                		doTpRetour(s);
+                		mc.thePlayer.setPosition(lastX, lastY+0.005*Math.random(), lastZ);
+                		KillAura.giveMoney(entity);	
+	                	break; 
+	                }
+	        	}
+				break;
 					
 				case "Mob" :
 					if (u.warn) {
