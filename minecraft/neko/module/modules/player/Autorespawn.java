@@ -17,6 +17,10 @@ public class Autorespawn extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "";
+	}
+	
 	public void onUpdate() {
 		if (mc.thePlayer!=null && mc.thePlayer.getHealth()<=0)
 		mc.thePlayer.respawnPlayer();		

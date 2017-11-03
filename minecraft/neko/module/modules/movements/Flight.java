@@ -1,14 +1,15 @@
 package neko.module.modules.movements;
 
 import neko.module.modules.movements.Blink;
+import neko.utils.Utils;
+
 import org.lwjgl.input.Keyboard;
 
 import neko.module.Category;
 import neko.module.Module;
 import net.minecraft.client.Minecraft;
 
-public class Flight extends Module {
-	
+public class Flight extends Module {	
 	public static double speed=1.0;
 	public static boolean blink=false;
 	boolean v;
@@ -30,6 +31,11 @@ public class Flight extends Module {
 		if (blink)
 			Blink.isOn=v;		
 		super.onDisabled();
+	}
+	
+	public void setValues() {
+		this.values = "§6Speed:§7 "+speed+"\n"
+				+ "§6Mode Blink:§7 "+Utils.displayBool(blink);
 	}
 	
 	public void onUpdate() {

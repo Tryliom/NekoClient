@@ -1,8 +1,10 @@
 package neko.module.modules.special;
 
+import neko.manager.ModuleManager;
 import neko.module.Category;
 import neko.module.Module;
 import neko.utils.TpUtils;
+import neko.utils.Utils;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.util.BlockPos;
@@ -32,6 +34,13 @@ public class TpBack extends Module {
 	
 	public void onDisabled() {
 		super.onDisabled();
+	}
+	
+	public void setValues() {
+		this.values = "§6Seuil de vie:§7 "+vie+"\n"
+		+ "§6Classic:§7 "+Utils.displayBool(classic)+"\n"
+		+ "§6Top:§7 "+Utils.displayBool(top)+"\n"
+		+ "§6Spawn:§7 X:"+spawn.getX()+" Y:"+spawn.getY()+" Z:"+spawn.getZ();
 	}
 	
     public void onUpdate() {

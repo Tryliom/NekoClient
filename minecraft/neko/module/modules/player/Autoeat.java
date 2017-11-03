@@ -11,7 +11,6 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 
 public class Autoeat extends Module {
-	Minecraft mc = Minecraft.getMinecraft();
 	
 	public Autoeat() {
 		super("Autoeat", -1, Category.PLAYER);
@@ -25,10 +24,11 @@ public class Autoeat extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "";
+	}
+	
 	public void onUpdate() {
-		if (!this.getToggled())
-			return;
-		
 		int foodSlot = getFoodSlotInHotbar();
 	      if ((foodSlot != -1) && (this.mc.thePlayer.getFoodStats().getFoodLevel() <=19) && (this.mc.thePlayer.isCollidedVertically)) {
 	    	  swap(foodSlot, this.mc.thePlayer.inventory.currentItem);

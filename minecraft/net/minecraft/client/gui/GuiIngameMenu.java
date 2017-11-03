@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import neko.gui.GuiAltManager;
 import neko.manager.OnlyRpgManager;
+import neko.manager.SoundManager;
 import neko.utils.Utils;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
@@ -52,6 +53,10 @@ public class GuiIngameMenu extends GuiScreen
         		this.buttonList.add(new GuiButton(9, this.width / 2 - 100, this.height / 4 + 72 + var1, 98, 20, "Multiplayer"));
         	else
         		this.buttonList.add(new GuiButton(9, this.width / 2 - 100, this.height / 4 + 72 + var1, "Multiplayer"));
+        	if (SoundManager.getSM().canStart)
+    			this.buttonList.add(new GuiButton(665, this.width / 2 -100, 10, SoundManager.getSM().isActive() ? "♫ Stop ♫" : "♪ Restart ♪"));
+    		else
+    			this.buttonList.add(new GuiButton(665, this.width / 2 -100, 10, "Music loading..."));
         }
         GuiButton var3;
         this.buttonList.add(var3 = new GuiButton(7, this.width / 2 + 2, this.height / 4 + 96 + var1, 98, 20, I18n.format("menu.shareToLan", new Object[0])));
@@ -64,6 +69,14 @@ public class GuiIngameMenu extends GuiScreen
     {
         switch (button.id)
         {
+        	case 665:
+        		if (SoundManager.getSM().canStart && !button.displayString.equals("Music loading..."))
+    	    		if (SoundManager.getSM().isActive()) 
+    	    			SoundManager.getSM().stopMusic();
+    	    		else
+    	    			SoundManager.getSM().restartMusic();
+        		mc.displayGuiScreen(new GuiIngameMenu());
+        		break;
             case 0:
                 this.mc.displayGuiScreen(new GuiOptions(this, this.mc.gameSettings));
                 break;

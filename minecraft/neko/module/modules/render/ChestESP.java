@@ -30,6 +30,10 @@ public class ChestESP extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "";
+	}
+	
 	public void onRender3D() {		
 		for (Object o : mc.theWorld.loadedTileEntityList) {
 			if (o instanceof TileEntityChest || o instanceof TileEntityEnderChest || o instanceof TileEntityMobSpawner) {

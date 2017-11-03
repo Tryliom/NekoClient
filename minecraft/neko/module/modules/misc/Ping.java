@@ -2,6 +2,7 @@ package neko.module.modules.misc;
 
 import neko.module.Category;
 import neko.module.Module;
+import neko.utils.Utils;
 
 public class Ping extends Module {
 	private boolean freezer=false;
@@ -28,6 +29,12 @@ public class Ping extends Module {
 		isOn=false;
 		super.onDisabled();
 	}	
+	
+	public void setValues() {
+		this.values = "§6Fake ping:§7 "+delay+"ms\n"
+				+ "§6Freezer:§7 "+Utils.displayBool(freezer)+"\n"
+				+ "§6Random:§7 "+Utils.displayBool(random);
+	}
 
 	public boolean isFreezer() {
 		return freezer;

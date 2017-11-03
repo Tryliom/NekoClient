@@ -9,6 +9,8 @@ import neko.module.Module;
 import neko.module.other.enums.SpeedEnum;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.BlockPos;
 
 public class Speed709 extends Module {	
@@ -37,6 +39,11 @@ public class Speed709 extends Module {
 		}
 		list.clear();
 		super.onDisabled();
+	}
+	
+	public void setValues() {
+		this.values = "§6Speed:§7 "+spe+"\n"
+				+ "§6Mode:§7 "+mode;
 	}
 	
 	public void onUpdate() {

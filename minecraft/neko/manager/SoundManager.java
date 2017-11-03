@@ -43,7 +43,7 @@ public class SoundManager {
 					SoundManager.getSM().clip.open(SoundManager.getSM().audioIn);
 					SoundManager.getSM().clip.loop(999);
 					FloatControl gainControl = (FloatControl) SoundManager.getSM().clip.getControl(FloatControl.Type.MASTER_GAIN);        
-			        gainControl.setValue(20f * (float) Math.log10(0.02f));
+			        gainControl.setValue(20f * (float) Math.log10(0.1f));
 			        SoundManager.getSM().clip.start();
 			        canStart=true;
 				} catch (Exception e) {

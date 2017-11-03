@@ -8,8 +8,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 
 public class NoBlind extends Module {
-	Minecraft mc = Minecraft.getMinecraft();
-	Client var = Client.getNeko();
 	
 	public NoBlind() {
 		super("NoBlind", -1, Category.RENDER);
@@ -23,8 +21,11 @@ public class NoBlind extends Module {
 		super.onDisabled();
 	}
 	
-	public void onUpdate() {
-		
+	public void setValues() {
+		this.values = "";
+	}
+	
+	public void onUpdate() {		
 		if (mc.thePlayer.getActivePotionEffect(Potion.blindness) != null && !var.rang.getName().equalsIgnoreCase("Ange déchu")) {
 			mc.thePlayer.removePotionEffect(Potion.blindness.getId());
 		}

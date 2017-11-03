@@ -41,6 +41,10 @@ public class Flash extends Module {
 		super.onDisabled();
 	}		
 	
+	public void setValues() {
+		this.values = "";
+	}
+	
 	private void back() {
 		TpUtils tp = new TpUtils();
 		Vector<Double> v = tp.getTargetInPos(this.lastPos);	

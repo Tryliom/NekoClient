@@ -23,6 +23,10 @@ public class AirWalk extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "";
+	}
+	
 	public void onUpdate() {		
 		if (mc.thePlayer.isAirBorne)
 			mc.thePlayer.onGround=true;

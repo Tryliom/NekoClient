@@ -34,6 +34,12 @@ public class SmoothAim extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "§6Range:§7 "+range+"\n"
+				+ "§6Speed:§7 "+speed+"\n"
+				+ "§6Fov:§7 "+degrees+"°";
+	}
+	
 	public void onUpdate() {
 		for (Object o : mc.theWorld.loadedEntityList) {
 	        if ((o instanceof EntityLivingBase))

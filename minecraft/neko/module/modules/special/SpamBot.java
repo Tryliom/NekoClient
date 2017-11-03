@@ -38,6 +38,10 @@ public class SpamBot extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "";
+	}
+	
 	public void onUpdate() {
 		if (mc.isSingleplayer())
 			return;

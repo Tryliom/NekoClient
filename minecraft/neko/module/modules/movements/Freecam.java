@@ -40,10 +40,11 @@ public class Freecam extends Module {
 		super.onDisabled();
 	}
 	
-	public void onUpdate() {
-		if (!this.getToggled())
-			return;
-		
+	public void setValues() {
+		this.values = "§6Speed:§7 "+speed;
+	}
+	
+	public void onUpdate() {		
 		mc.thePlayer.noClip=true;
 		mc.thePlayer.motionX = 0.0D;
 	    mc.thePlayer.motionY = 0.0D;

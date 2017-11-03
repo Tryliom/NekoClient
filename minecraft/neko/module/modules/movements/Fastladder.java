@@ -15,4 +15,8 @@ public class Fastladder extends Module {
 	public void onDisabled() {
 		super.onDisabled();
 	}
+	
+	public void setValues() {
+		this.values = "";
+	}
 }

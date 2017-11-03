@@ -8,7 +8,7 @@ import neko.module.Module;
 public class Crit extends Module {
 	
 	public Crit() {
-		super("Crit", Keyboard.KEY_NONE, Category.COMBAT);
+		super("Crit", -1, Category.COMBAT);
 	}
 	
 	public void onEnabled() {		
@@ -18,6 +18,10 @@ public class Crit extends Module {
 	public void onDisabled() {
 		super.onDisabled();
 	}	
+	
+	public void setValues() {
+		this.values = "";
+	}
 	
 	public void onClick() {
 		if (mc.pointedEntity!=null)

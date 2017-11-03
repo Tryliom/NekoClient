@@ -658,7 +658,7 @@ public class ChatUtils {
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("glide")) {
 					Utils.addChat(Utils.sep);
-					Utils.addChat2("§6"+var.prefixCmd+"Glide <Double>", var.prefixCmd+"glide ", "§7Change la vitesse du Glide, de base à 0.125", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Glide <Double>", var.prefixCmd+"glide ", "§7Change la vitesse du Glide, de base à -0.125", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("log")) {
@@ -1208,7 +1208,7 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"glide")) {
 				try {
-					Glide.getGlide().setSpeed(Double.parseDouble(args[1])*-1);
+					Glide.getGlide().setSpeed(Double.parseDouble(args[1]));
 					Utils.addChat("§aVitesse du glide changé à "+args[1]+" !");
 				} catch (Exception e) {
 					Utils.addChat(err);
@@ -2778,7 +2778,10 @@ public class ChatUtils {
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"values") || args[0].equalsIgnoreCase(var.prefixCmd+"v")) {
-				Utils.displayValues();
+				if (args.length>1 && Utils.isModule(args[1]))
+					Utils.displayValues(args[1]);
+				else
+					Utils.displayValues(null);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			

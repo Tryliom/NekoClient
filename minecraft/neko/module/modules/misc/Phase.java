@@ -27,6 +27,10 @@ public class Phase extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "§6Phase vertical:§7 "+(vphase ? "§aActivé" : "§cDésactivé");
+	}
+	
 	public void onUpdate() {
 		double p = 4*Math.random();
 		mc.thePlayer.noClip=true;

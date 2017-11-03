@@ -7,12 +7,10 @@ import neko.module.Module;
 import net.minecraft.client.Minecraft;
 
 public class Sprint extends Module {	
-	public static boolean sprint=false;
 	
 	public Sprint() {
 		super("Sprint", Keyboard.KEY_K, Category.MOVEMENT);
-	}
-	
+	}	
 	
 	public void onEnabled() {
 		super.onEnabled();
@@ -22,9 +20,12 @@ public class Sprint extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "";
+	}
+	
 	public void onUpdate() {
 		if (mc.thePlayer.isMovingXZ())
-			mc.thePlayer.setSprinting(true);					
-		sprint=true;
+			mc.thePlayer.setSprinting(true);
 	}
 }

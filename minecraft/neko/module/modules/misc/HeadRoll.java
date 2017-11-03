@@ -17,6 +17,10 @@ public class HeadRoll extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "";
+	}
+	
 	public void onUpdate() {
 		mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C05PacketPlayerLook(mc.thePlayer.rotationYaw, (float)Math.sin(mc.thePlayer.ticksExisted % 20 / 10.0D * 3.141592653589793D) * 90.0F, mc.thePlayer.onGround));
 	}

@@ -30,6 +30,10 @@ public class Fasteat extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "§6Packet:§7 "+packet;
+	}
+	
 	public void onUpdate() {
 		if (!this.getToggled())
 			return;

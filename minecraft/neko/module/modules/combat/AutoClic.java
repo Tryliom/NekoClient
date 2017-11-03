@@ -25,7 +25,7 @@ public class AutoClic extends Module {
 			mc.clickMouse();
 	}
 	
-	public String getValues() {
-		return "§6Cps: §7"+cps;
+	public void setValues() {
+		this.values = "§6Cps: §7"+cps;
 	}
 }

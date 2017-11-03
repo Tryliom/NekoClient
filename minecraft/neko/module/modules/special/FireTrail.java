@@ -2,6 +2,7 @@ package neko.module.modules.special;
 
 import neko.module.Category;
 import neko.module.Module;
+import neko.utils.Utils;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
@@ -30,6 +31,10 @@ public class FireTrail extends Module {
 	public void onDisabled() {
 		super.onDisabled();
 	}		
+	
+	public void setValues() {
+		this.values = "§6Trainée large:§7 "+Utils.displayBool(large);
+	}
 	
 	public void onUpdate() {
 		if (!hasFire())

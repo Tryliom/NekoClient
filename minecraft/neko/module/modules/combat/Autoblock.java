@@ -29,7 +29,7 @@ public class Autoblock extends Module {
 		}
 	}	
 	
-	public String getValues() {
-		return "";
+	public void setValues() {
+		this.values = "";
 	}
 }

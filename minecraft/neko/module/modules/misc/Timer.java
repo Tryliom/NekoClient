@@ -21,10 +21,11 @@ public class Timer extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "§6Speed:§7 "+time;
+	}
+	
 	public void onUpdate() {
-		if (!this.getToggled()) {
- 			return;
-		}
 		net.minecraft.util.Timer.timerSpeed = time;
 	}
 

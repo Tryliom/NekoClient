@@ -24,6 +24,11 @@ public class ClickAim extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "§6Distance de frappe:§7 "+ClickAim.dist+"\n"
+				+ "§6MultiAura:§7 "+(ClickAim.multiAura ? "§aActivé" : "§cDésactivé");
+	}
+	
 	public void onClick() {
 		if (Utils.isSword()) {
     		for(Object o : mc.theWorld.playerEntities) {

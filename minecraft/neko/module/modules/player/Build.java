@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import neko.module.Category;
 import neko.module.Module;
+import neko.utils.Utils;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
@@ -37,6 +38,13 @@ public class Build extends Module {
 	public void onDisabled() {
 		super.onDisabled();
 	}		
+	
+	public void setValues() {
+		this.values = "§6Down:§7 "+Utils.displayBool(down)+"\n"
+				+ "§6Up:§7 "+Utils.displayBool(up)+"\n"
+				+ "§6Wall:§7 "+Utils.displayBool(wall)+"\n"
+				+ "§6Sneak:§7 "+Utils.displayBool(sneak);
+	}
 	
 	public void onUpdate() {
 		if (delay>20 && !list.isEmpty() && list.size()>7) {

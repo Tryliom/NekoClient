@@ -33,6 +33,10 @@ public class Render extends Module {
 		super("Render", -1, Category.HIDE);
 	}	
 	
+	public void setValues() {
+		this.values = "";
+	}
+	
 	public void onRender3DA() {	
 		if (Utils.verif!=null)
 			return;

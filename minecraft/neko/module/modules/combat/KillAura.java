@@ -13,6 +13,7 @@ import org.lwjgl.input.Keyboard;
 
 import neko.Client;
 import neko.event.UpdateEvent;
+import neko.manager.ModuleManager;
 import neko.module.Category;
 import neko.module.Module;
 import neko.utils.Utils;
@@ -69,6 +70,23 @@ public class KillAura extends Module {
 		timer.setDelay(1000/cps);
 		timer.stop();
 		super.onDisabled();
+	}
+	
+	public void setValues() {
+		this.values = "§6Mode:§7 "+KillAura.mode+"\n"
+		+ "§6Cps:§7 "+KillAura.cps+"\n"
+		+ "§6Range:§7 "+KillAura.range+"\n"
+		+ "§6Fov :§7 "+KillAura.fov+"°"+"\n"
+		+ "§6Lockview:§7 "+(KillAura.lockView ? "§aActivé" : "§cDésactivé")+"\n"
+		+ "§6Temps avant de taper une cible:§7 "+KillAura.live/20+"sec"+"\n"
+		+ "§6Invisible:§7 "+(KillAura.invi ? "§aActivé" : "§cDésactivé")+"\n"
+		+ "§6OnGround:§7 "+(KillAura.onground ? "§aActivé" : "§cDésactivé")+"\n"
+		+ "§6NoArmor:§7 "+(KillAura.noarmor ? "§aActivé" : "§cDésactivé")+"\n"
+		+ "§6Random:§7 "+(KillAura.random ? "§aActivé" : "§cDésactivé")+"\n"
+		+ "§6Double vérification:§7 "+(KillAura.verif ? "§aActivé" : "§cDésactivé")+"\n"
+		+ "§6NoBot:§7 "+(KillAura.nobot ? "§aActivé" : "§cDésactivé")+"\n"
+		+ "§6Premium:§7 "+(KillAura.premium ? "§aActivé" : "§cDésactivé")+"\n"
+		+ "§6Speed:§7 "+KillAura.speed;
 	}
 	
 	public static void clearBot() {

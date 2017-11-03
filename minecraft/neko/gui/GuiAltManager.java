@@ -139,17 +139,15 @@ public class GuiAltManager extends GuiScreen {
 	    	//TODO: Ici didi
 	    	if (!mc.isRunningOnMac)
 		    	try {
-			    	ProcessBuilder pb = new ProcessBuilder(System.getenv("ProgramFiles")+"\\Notepad++\\notepad++.exe", Utils.linkSave+"account.neko");
+			    	ProcessBuilder pb = new ProcessBuilder("C:\\Program Files (x86)\\Notepad++\\notepad++.exe", Utils.linkSave+"account.neko");
 			    	pb.start();
 		    	} catch (Exception e) {
-		    		e.printStackTrace();
 		    		ProcessBuilder pb = new ProcessBuilder("Notepad.exe", Utils.linkSave+"account.neko");
 			    	pb.start();
 		    	}
 	    	else {
 	    		this.displaytext = "§cFonction indisponible pour Mac/Linux";
 	    	}
-	    	// Desktop.getDesktop().edit(new File(Utils.linkSave+"account.neko"));
 		    break;
 	    case 6:
 	    	check = !check;

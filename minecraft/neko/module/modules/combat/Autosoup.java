@@ -19,7 +19,7 @@ public class Autosoup extends Module {
 	private TimerUtils time = new TimerUtils();
 	
 	public Autosoup() {
-		super("Autosoup", Keyboard.KEY_NONE, Category.COMBAT);
+		super("Autosoup", -1, Category.COMBAT);
 	}
 	
 	public void onEnabled() {		
@@ -30,10 +30,12 @@ public class Autosoup extends Module {
 		super.onDisabled();
 	}
 	
-	public void onUpdate() {
-		if (!this.getToggled())
-			return;
-		
+	public void setValues() {
+		this.values = "§6Seuil de vie sensible:§7 "+AutoPot.heal+"\n"
+				+ "§6Drop les soupes vide:§7 "+(Autosoup.drop ? "§aActivé" : "§cDésactivé");
+	}
+	
+	public void onUpdate() {		
 		int soupSlot = getSoupFromInventory();
 		if (mc.thePlayer.getHealth()<=heal && (this.time.delay((float)this.delay)) && (soupSlot != -1)) {
 			int prevSlot = this.mc.thePlayer.inventory.currentItem;

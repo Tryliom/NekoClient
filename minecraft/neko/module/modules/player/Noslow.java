@@ -7,7 +7,6 @@ import net.minecraft.client.Minecraft;
 
 public class Noslow extends Module {
 	public static boolean isOn=false;
-	Minecraft mc = Minecraft.getMinecraft();
 
 	public Noslow() {
 		super("Noslow", -1, Category.PLAYER);
@@ -21,10 +20,11 @@ public class Noslow extends Module {
 		isOn=false;
 	}
 	
+	public void setValues() {
+		this.values = "";
+	}
+	
 	public void onUpdate() {
-		if (!this.getToggled()) {
-			return;
-		}
 		if (mc.thePlayer.onGround && mc.gameSettings.keyBindJump.pressed) {
 			if (mc.thePlayer.isInWater()) {
 				mc.thePlayer.jump();

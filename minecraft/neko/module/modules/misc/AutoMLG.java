@@ -30,6 +30,10 @@ public class AutoMLG extends Module {
 		super.onDisabled();
 	}		
 	
+	public void setValues() {
+		this.values = "";
+	}
+	
 	public void onUpdate() {	
 		boolean bucket=false;
 		try {

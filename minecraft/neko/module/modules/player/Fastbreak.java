@@ -23,6 +23,10 @@ public class Fastbreak extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "";
+	}
+	
 	public void onUpdate() {		
 		mc.playerController.blockHitDelay = 0;
 		if (this.mc.playerController.curBlockDamageMP > 0.8F) {

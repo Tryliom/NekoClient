@@ -30,6 +30,10 @@ public class CallCmd extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "";
+	}
+	
 	public void onUpdate() {		
 		if (actualTime>=40) {
 			for (String s : this.listPlayer) {

@@ -4,6 +4,7 @@ import org.lwjgl.input.Keyboard;
 
 import neko.module.Category;
 import neko.module.Module;
+import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 
 
@@ -28,6 +29,11 @@ public class Step extends Module {
 	public void onDisabled() {
 		mc.thePlayer.stepHeight = 0.5F;
 		super.onDisabled();
+	}
+	
+	public void setValues() {
+		this.values = "§6Hauteur:§7 "+step+" blocs\n"
+				+ "§6Bypass:§7 "+Utils.displayBool(bypass);
 	}
 	
 	public void onUpdate() {

@@ -38,6 +38,12 @@ public class Trigger extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "§6Range:§7 "+dist
+				+ "§6Cps:§7 "+cps
+				+ "§6Random:§7 "+(Trigger.random ? "§aActivé" : "§cDésactivé");
+	}
+	
 	public void onUpdate() {
 		if (random) {
     		int r = (int) Math.round(8-Math.random()*4);

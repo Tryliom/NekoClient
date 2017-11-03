@@ -5,8 +5,7 @@ import org.lwjgl.input.Keyboard;
 import neko.module.Category;
 import neko.module.Module;
 
-public class Safewalk extends Module {
-	
+public class Safewalk extends Module {	
 	public static boolean isOn=false;
 	
 	public Safewalk() {
@@ -23,6 +22,9 @@ public class Safewalk extends Module {
 		super.onDisabled();
 	}
 	
-
+	public void setValues() {
+		this.values = "";
+	}
+	
 }
 

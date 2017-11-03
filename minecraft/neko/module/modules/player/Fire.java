@@ -15,7 +15,6 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
 
 public class Fire extends Module {
-	Minecraft mc = Minecraft.getMinecraft();
 	public static boolean onLvl=false;
 	public static int count=0;
 	public static int p=1;
@@ -25,7 +24,7 @@ public class Fire extends Module {
 	public static double large=0.5;
 
 	public Fire() {
-		super("Fire", Keyboard.KEY_NONE, Category.RENDER);
+		super("Fire", -1, Category.RENDER);
 	}
 	
 	public void onEnabled() {
@@ -34,6 +33,10 @@ public class Fire extends Module {
 	
 	public void onDisabled() {
 		super.onDisabled();
+	}
+	
+	public void setValues() {
+		this.values = "";
 	}
 	
 	public void onRender3DA() {

@@ -28,7 +28,11 @@ public class Eagle extends Module {
 			mc.gameSettings.keyBindSneak.pressed = false;
 		}
 		super.onDisabled();
-	}		
+	}	
+	
+	public void setValues() {
+		this.values = "";
+	}
 	
 	public void onUpdate() {	
 		 BlockPos bp = new BlockPos(this.mc.thePlayer.posX, this.mc.thePlayer.posY - 1.0D, this.mc.thePlayer.posZ);

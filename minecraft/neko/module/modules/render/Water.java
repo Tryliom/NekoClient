@@ -26,6 +26,10 @@ public class Water extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "§6Nombre de particules:§7 "+p;
+	}
+	
 	public void onUpdate() {
 		if (!this.getToggled())
 			return;

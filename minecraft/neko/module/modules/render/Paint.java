@@ -29,6 +29,13 @@ public class Paint extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "§6Couleur R:§7 "+cR+"\n"
+				+ "§6Couleur G:§7 "+cG+"\n"
+				+ "§6Couleur B:§7 "+cB+"\n"
+				+ "§6Transparence:§7 "+alpha+"\n";
+	}
+	
 	public void onRender3D() {
 		if (pain.size()!=0) {
 			for (PaintBloc p : pain) {

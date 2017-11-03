@@ -8,9 +8,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.util.MathHelper;
 
-public class NoClip extends Module {
-	Minecraft mc = Minecraft.getMinecraft();
-	
+public class NoClip extends Module {	
 	public static float speed = 0.5F;
 	public NoClip() {
 		super("NoClip", Keyboard.KEY_N, Category.MOVEMENT);
@@ -25,8 +23,11 @@ public class NoClip extends Module {
 		super.onDisabled();
 	}
 	
+	public void setValues() {
+		this.values = "§6Speed:§7 "+speed;
+	}
+	
 	public void onUpdate() {
-		Minecraft mc = Minecraft.getMinecraft();
 		mc.thePlayer.noClip = true;
 		mc.thePlayer.fallDistance = 0;
 		mc.thePlayer.onGround = false;
