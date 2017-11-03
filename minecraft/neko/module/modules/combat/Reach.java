@@ -45,6 +45,7 @@ public class Reach extends Module {
 	public static boolean classic=false;
 	public static boolean aimbot=false;
 	public static boolean tnt=false;
+	public static boolean multiaura=false;
 	public static double fov=7;
 	double entityPosX;				
 	double entityPosY;
@@ -75,7 +76,8 @@ public class Reach extends Module {
 		+ "§6Mode tp classic:§7 "+(Reach.classic ? "§aActivée" : "§cDésactivée")+"\n"
 		+ "§6Aimbot:§7 "+(Reach.aimbot ? "§aActivée" : "§cDésactivée")+"\n"
 		+ "§6Fov:§7 "+Reach.fov+"°"+"\n"
-		+ "§6Tnt:§7 "+(Reach.tnt ? "§aActivée" : "§cDésactivée");
+		+ "§6Tnt:§7 "+(Reach.tnt ? "§aActivée" : "§cDésactivée")+"\n"
+		+ "§6MultiAura: "+Utils.displayBool(multiaura);
 	}
 	
 	// Réglé dans PlayerControllerMP
@@ -239,7 +241,7 @@ public class Reach extends Module {
 		                EntityPlayer entity = (EntityPlayer) theObject;
 		                if (u.isEntityInFov(entity, fov) && !Friends.isFriend(entity.getName()) && mc.thePlayer!=entity) {
 	                        String s = doTpAller(entity);	                        
-	                		Utils.attack(entity);
+	                		Utils.attack(entity, multiaura);
 	                		doTpRetour(s);
 	                		mc.thePlayer.setPosition(lastX, lastY+0.005*Math.random(), lastZ);
 	                		KillAura.giveMoney(entity);	
@@ -262,7 +264,7 @@ public class Reach extends Module {
     	                        	        	                        
         	                        String s = doTpAller(entity);
         	                        
-        	                        Utils.attack(entity);
+        	                        Utils.attack(entity, multiaura);
         	                		doTpRetour(s);
         	                		mc.thePlayer.setPosition(lastX, lastY+0.005*Math.random(), lastZ);;
         	                		KillAura.giveMoney(entity);
@@ -282,7 +284,7 @@ public class Reach extends Module {
 
 		                        String s = doTpAller(entity);
 		                        
-		                        Utils.attack(entity);
+		                        Utils.attack(entity, multiaura);
 		                		doTpRetour(s);
 		                		mc.thePlayer.setPosition(lastX, lastY+0.005*Math.random(), lastZ);
 		                		KillAura.giveMoney(entity);

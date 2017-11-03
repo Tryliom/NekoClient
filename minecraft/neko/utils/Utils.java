@@ -1177,7 +1177,7 @@ public class Utils {
 			}
 		else {
 			for (Module m : ModuleManager.ActiveModule) {
-				if (m.getName().equals(cheat))
+				if (m.getName().equalsIgnoreCase(cheat))
 					Utils.addChat2("§7 "+m.getName(), "", m.getValues(), true, Chat.Click);
 			}
 		}
@@ -1628,6 +1628,62 @@ public class Utils {
 		} else
 			mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK));
 	}
+	
+	public static void attack(Entity entity, boolean ma) {
+		if (isToggle("FastDura")) {
+			FastDura.doDura(entity);
+		} else if (isToggle("Nausicaah")) {
+			Nausicaah.getNausi().doNausicaah(entity);
+		} else
+			mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK));
+		if (ma) {
+			for (Object o : (var.mode.equalsIgnoreCase("Player") ? mc.theWorld.playerEntities : mc.theWorld.loadedEntityList)) {
+				if (o instanceof EntityLivingBase) {
+					EntityLivingBase en = (EntityLivingBase) o;
+					if (isEntityValid(en) && mc.thePlayer.getDistanceToEntity(en) <= 6) {
+						mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(en, net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK));
+					}
+				}
+			}
+		}
+	}
+	
+	public static Boolean isEntityValid(EntityLivingBase en) {
+    	if (!Utils.getPlayerGameType(en.getName()).isSurvivalOrAdventure())
+	    	return false;    	
+    	
+    	if (KillAura.invi) 
+    		if (en.isInvisible())
+    			return false;
+    	
+    	if (KillAura.onground)
+        	if (!en.onGround)
+        		return false;
+    	
+    	if (KillAura.noarmor)
+        	if (en.hasArmor())
+        		return false;
+
+    	if(!(en.isEntityAlive() && en.ticksExisted > KillAura.live && !Friends.isFriend(en.getName()) && en!=mc.thePlayer))
+    		return false;
+    	 
+    	if (KillAura.isBot(en.getName()))
+			return false;
+    	
+    	if (en.getName().isEmpty())
+			return false;
+    	
+    	if (KillAura.verif && !Utils.IsInTab(en.getName()))
+	    	return false;
+    	
+    	if (KillAura.nobot && Utils.getPlayerPing(en.getName())<0) 
+    		return false;
+    	
+    	if (KillAura.premium && Utils.isPremium((en instanceof EntityPlayer) ? (EntityPlayer) en : null))
+    		return false;
+    	
+    	return true;
+    }
 	
 	public static int rainbow(int offset) {
         long offset_ = 200000000L /*OR 200000000L (1 extra zero)  20000000 for more drastic rainbow*/ * offset;
