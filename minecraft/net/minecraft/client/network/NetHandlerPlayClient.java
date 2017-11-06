@@ -867,7 +867,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     			msg.getMessage().replaceAll("/r ", "");
     		}
     		for (char chr : msg.getMessage().toCharArray()) {
-    		      if ((chr >= '!') && (chr <= ' ') &&
+    		      if ((chr >= '!') && (chr <= 'À') &&
     		        (!"(){}[]|!*@$".contains(Character.toString(chr)))) {
     		        out = out + new String(Character.toChars(chr + 65248));
     		      } else {
