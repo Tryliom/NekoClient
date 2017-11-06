@@ -145,8 +145,8 @@ public class FastDura extends Module {
 	}	
 	
 	public static void attack(Entity en, boolean crit) {
-		if (crit) 
-			u.crit();		
+		if (crit || (crit && Utils.isToggle("Crit"))) 
+			Utils.crit();		
 		mc.getNetHandler().addToSendQueue(new C02PacketUseEntity(en, Action.ATTACK));		
 	}
 	

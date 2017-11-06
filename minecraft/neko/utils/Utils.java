@@ -1132,10 +1132,8 @@ public class Utils {
 	
 	public static void crit() {
 		if (!mc.thePlayer.onGround)
-			return;		
-	    mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY + 0.05D, mc.thePlayer.posZ, false));
-	    mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, false));
-	    mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY + 0.012511D, mc.thePlayer.posZ, false));
+			return;
+	    mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY + 0.0001D, mc.thePlayer.posZ, false));
 	    mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, false));	    
 	}
 	//TODO: SaveAll
@@ -1630,11 +1628,17 @@ public class Utils {
 	}
 	
 	public static void attack(Entity entity, boolean ma) {
-		if (ma) {
+		if (isToggle("FastDura")) {
+			FastDura.doDura(entity);
+		} else if (isToggle("Nausicaah")) {
+			Nausicaah.getNausi().doNausicaah(entity);
+		} else
+			mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK));
+		if (ma)
 			for (Object o : (var.mode.equalsIgnoreCase("Player") ? mc.theWorld.playerEntities : mc.theWorld.loadedEntityList)) {
 				if (o instanceof EntityLivingBase) {
 					EntityLivingBase en = (EntityLivingBase) o;
-					if (isEntityValid(en) && mc.thePlayer.getDistanceToEntity(en) <= 6) {
+					if (isEntityValid(en) && mc.thePlayer.getDistanceToEntity(en) <= 6 && entity!=en) {
 						if (isToggle("FastDura")) {
 							FastDura.doDura(en);
 						} else if (isToggle("Nausicaah")) {
@@ -1644,14 +1648,6 @@ public class Utils {
 					}
 				}
 			}
-		} else {
-			if (isToggle("FastDura")) {
-				FastDura.doDura(entity);
-			} else if (isToggle("Nausicaah")) {
-				Nausicaah.getNausi().doNausicaah(entity);
-			} else
-				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK));
-		}
 	}
 	
 	public static Boolean isEntityValid(EntityLivingBase en) {
@@ -1689,9 +1685,9 @@ public class Utils {
     }
 	
 	public static int rainbow(int offset) {
-        long offset_ = 200000000L /*OR 200000000L (1 extra zero)  20000000 for more drastic rainbow*/ * offset;
-        float hue = (System.nanoTime() + offset_) / 4.0E9f /*can also be [5.0E9f, 7.0E9f, 8.0E9f, 10.0E9f] */ % 1.0f;
-        return (int) (Long.parseLong(Integer.toHexString(Integer.valueOf(Color.HSBtoRGB(hue, 50 / 100.0f, 30 / 100.0f))), 16));
+        long offset_ = 2000000000000L * offset;
+        float hue = (System.nanoTime() + offset_) / 4.0E9f % 1.0f;
+        return (int) (Long.parseLong(Integer.toHexString(Integer.valueOf(Color.HSBtoRGB(hue, 0.5f, 0.5f))), 16));
     }
 	
 	public static boolean isSword() {

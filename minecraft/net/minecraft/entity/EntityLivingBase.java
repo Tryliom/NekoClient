@@ -1574,8 +1574,8 @@ public abstract class EntityLivingBase extends Entity
         this.motionY = (double)this.func_175134_bD();
         
         if (this==Minecraft.getMinecraft().thePlayer && Utils.isToggle("Highjump"))
-        	this.motionY = Highjump.getJump().getHeight();
-
+        	this.motionY += (double)((float)(Highjump.getJump().getHeight() + 1) * 0.1F);
+        
         if (this.isPotionActive(Potion.jump))
         {
             this.motionY += (double)((float)(this.getActivePotionEffect(Potion.jump).getAmplifier() + 1) * 0.1F);

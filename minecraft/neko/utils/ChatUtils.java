@@ -1386,7 +1386,7 @@ public class ChatUtils {
 								Utils.addChat("§7[§aDerniers pseudos§7]");
 								String list[] = s.split(" ");
 								for (int i = list.length-1;i!=-1;i--)
-									Utils.addChat("§7+§a"+list[i]);
+									Utils.addChat("§7>>> §a"+list[i]);
 							}
 						}
 					}).start();
