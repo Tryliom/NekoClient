@@ -4593,10 +4593,12 @@ public class ChatUtils {
 						PunKeel.random=!PunKeel.random;
 						if (args.length>=4) {
 							if (Utils.isDouble(args[2]) && Utils.isDouble(args[3])) {
-								
+								Utils.addChat("§aDelay min et max mis à jour !");
+								PunKeel.rDelay.clear();;
+								PunKeel.rDelay.addElement(Double.parseDouble(args[2]));
+								PunKeel.rDelay.addElement(Double.parseDouble(args[3]));
 							} else {
-								
-								Utils.addChat(Utils.setColor("§cErreur, les valeurs ne sont pas des Double", "§c"));
+								Utils.addError("Les valeurs ne sont pas des Double\n§aSyntax correcte: "+var.prefixCmd+"pk random <Delay min> <Delay max>");
 							}
 						}
 					} else if (args[1].equalsIgnoreCase("delay") && args.length>=3 && Utils.isDouble(args[2])) {

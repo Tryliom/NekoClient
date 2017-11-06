@@ -2333,7 +2333,7 @@ public class Utils {
 		                s+=c.getCmd2()+"\n"+pl+"\n"+Register.getReg().getMdp()+"\n"+God.getInstance().getBackup()+"\n"+Highjump.getJump().getHeight()+"\n";
 		                s+=TutoManager.getTuto().isDone()+"\n"+Nuker.safe+"\n"+KillAura.speed+"\n"+PunKeel.attack+"\n"+PunKeel.delay+"\n"+Fastbow.getFast().getPacket()+"\n";
 		                s+=Step.getStep().isBypass()+"\n"+BowAimbot.getAim().getFov()+"\n"+BowAimbot.getAim().getLife()+"\n"+BowAimbot.getAim().getArmor()+"\n";
-		                s+=Reach.multiaura+"\n"+PunKeel.random+"\n";
+		                s+=Reach.multiaura+"\n"+PunKeel.random+"\n"+(PunKeel.random ? PunKeel.rDelay.firstElement()+"\n"+PunKeel.rDelay.lastElement() : "0.5\n1.0")+"\n";
 		                writer.write(s);
 		                writer.flush();
 		            }
@@ -2969,6 +2969,12 @@ public class Utils {
 	                		BowAimbot.getAim().setArmor(BowMode.valueOf(ligne));
 	                	if (i==161)
 	                		Reach.multiaura=Boolean.parseBoolean(ligne);
+	                	if (i==162) {
+	                		PunKeel.random=Boolean.parseBoolean(ligne);
+	                		PunKeel.rDelay.clear();
+	                	}
+	                	if (i==163 || i==164)
+	                		PunKeel.rDelay.addElement(Double.parseDouble(ligne));
                 	} catch (Exception e) {}                	
                 	i++;
                 }

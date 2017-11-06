@@ -40,7 +40,8 @@ public class PunKeel extends Module {
 	public void setValues() {
 		this.values = "§6Delais:§7 "+delay+"sec\n"
 				+ "§6Attack: "+Utils.displayBool(attack)+"\n"
-				+ "§6Random: "+Utils.displayBool(random);
+				+ "§6Random: "+Utils.displayBool(random)+"\n"
+				+ "§6Delay Min - Max: §e"+rDelay.firstElement()+" §7- §e"+rDelay.lastElement();
 	}
 	
 	public void onUpdate() {
