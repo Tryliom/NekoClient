@@ -4130,7 +4130,13 @@ public class ChatUtils {
 			}	
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"listserver")) {
-				new RequestThread("listserver", null).start();
+				if (args.length==1)
+					new RequestThread("listserver", null).start();
+				else if (Utils.isInteger(args[1])) {
+					ArrayList<String> list = new ArrayList<String>();
+					list.add(args[1]);
+					new RequestThread("listserver", list).start();
+				}
 			}			
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"connect") || args[0].equalsIgnoreCase(var.prefixCmd+"co")) {
