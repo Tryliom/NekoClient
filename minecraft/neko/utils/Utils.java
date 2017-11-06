@@ -674,6 +674,35 @@ public class Utils {
 	    	return true;
 	}
 	
+	/**
+	 * Sert à vérifier si une ip mc est présente dans une liste d'ip mc mais qu'ils ont une adresse différente mais qui mène au même endroit.
+	 * @param list	Vector de String, liste d'ip mc
+	 * @param s		IP mc à vérifier
+	 * @return		True si l'ip est déjà présente dans la liste et False si elle n'y est pas
+	 */
+	public static Boolean isSameServerIP(Vector<String> list, String s) {
+		InetAddress ia = null;
+		try {
+			ia = InetAddress.getByName(s);
+		} catch (Exception e) {}
+		
+		if (ia==null) {
+			return false;
+		} else {
+			for (String r : list) {
+				InetAddress ria = null;
+				try {
+					ria = InetAddress.getByName(r);
+					if (ria.getHostAddress().equalsIgnoreCase(ia.getHostAddress())) {
+						return true;
+					}						
+				} catch (Exception e) {}
+			}
+		}
+		
+		return false;
+	}
+	
 	public static float getDistanceBetweenAngles(float angle1, float angle2) {
 	    float angle3 = Math.abs(angle1 - angle2) % 360.0F;
 	    if (angle3 > 180.0F) {

@@ -336,7 +336,7 @@ public class RequestThread extends Thread {
 								for (String r : list)
 									if (r.equalsIgnoreCase(s))
 										cont=false;
-								if (cont && !s.equalsIgnoreCase("127.0.0.1") && !s.equalsIgnoreCase("localhost") && !s.equalsIgnoreCase("null")) {
+								if (cont && !Utils.isSameServerIP(list, s) && !s.equalsIgnoreCase("127.0.0.1") && !s.equalsIgnoreCase("localhost") && !s.equalsIgnoreCase("null")) {
 									list.add(s.toLowerCase());
 								}
 							}
@@ -348,8 +348,10 @@ public class RequestThread extends Thread {
 				System.out.println("Erreur BDD: List Server");
 			}
 			Utils.addChat("Listes des serveurs utilisés par les Neko:\n");
+			int i = 0;
 			for (String s : list) {
-				Utils.addChat2("-§7 "+s, var.prefixCmd+"co "+s, "§aCliquer pour se connecter !", false, Chat.Summon);
+				i++;
+				Utils.addChat2("§8[§e"+i+"§8] "+s, var.prefixCmd+"co "+s, "§aCliquer pour se connecter !", false, Chat.Summon);
 			}
 			
 		}		
