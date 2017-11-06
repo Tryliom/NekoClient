@@ -41,7 +41,7 @@ public class PunKeel extends Module {
 		this.values = "§6Delais:§7 "+delay+"sec\n"
 				+ "§6Attack: "+Utils.displayBool(attack)+"\n"
 				+ "§6Random: "+Utils.displayBool(random)+"\n"
-				+ "§6Delay Min - Max: §e"+rDelay.firstElement()+" §7- §e"+rDelay.lastElement();
+				+ "§6Delais Min - Max: §e"+rDelay.firstElement()+" §7- §e"+rDelay.lastElement();
 	}
 	
 	public void onUpdate() {
@@ -50,7 +50,8 @@ public class PunKeel extends Module {
 				this.delay_ = rDelay.lastElement()-rDelay.firstElement()+(Math.random()*rDelay.firstElement());
 				this.count=0;
 				this.sendPacket();
-			}
+			} else 
+				this.count++;
 		} else if (this.count>this.delay*20 || mc.thePlayer.getHealth()<0) {
 			this.count=0;
 			this.sendPacket();
