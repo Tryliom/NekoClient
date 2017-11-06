@@ -258,7 +258,7 @@ public class Utils {
 				}
 			}
 		}
-	}
+	}	
 	
 	public static void addChat2Irc(String txt, String cmd, String desc, boolean onlyHover, Chat action) {
 		if (verif==null) {
@@ -274,6 +274,14 @@ public class Utils {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Met dans le chat un "Erreur [?]" avec le [?] en hover pour afficher la raison, les deux en rouge
+	 * @param reason	Raison de l'erreur
+	 */
+	public static void addError(String reason) {
+		mc.ingameGUI.getChatGUI().printChatMessage(new ChatComponentText("§cErreur ").appendSibling(getHoverText("§8[§9?§8]", "§c"+reason)));
 	}
 	
 	public static String getNeko() {
@@ -672,6 +680,35 @@ public class Utils {
 	    	return false;
 	      else		
 	    	return true;
+	}
+	
+	/**
+	 * Sert � v�rifier si une ip mc est pr�sente dans une liste d'ip mc mais qu'ils ont une adresse diff�rente mais qui m�ne au m�me endroit.
+	 * @param list	Vector de String, liste d'ip mc
+	 * @param s		IP mc � v�rifier
+	 * @return		True si l'ip est d�j� pr�sente dans la liste et False si elle n'y est pas
+	 */
+	public static Boolean isSameServerIP(Vector<String> list, String s) {
+		InetAddress ia = null;
+		try {
+			ia = InetAddress.getByName(s);
+		} catch (Exception e) {}
+		
+		if (ia==null) {
+			return false;
+		} else {
+			for (String r : list) {
+				InetAddress ria = null;
+				try {
+					ria = InetAddress.getByName(r);
+					if (ria.getHostAddress().equalsIgnoreCase(ia.getHostAddress())) {
+						return true;
+					}						
+				} catch (Exception e) {}
+			}
+		}
+		
+		return false;
 	}
 	
 	public static float getDistanceBetweenAngles(float angle1, float angle2) {
@@ -2292,7 +2329,7 @@ public class Utils {
 		                s+=c.getCmd2()+"\n"+pl+"\n"+Register.getReg().getMdp()+"\n"+God.getInstance().getBackup()+"\n"+Highjump.getJump().getHeight()+"\n";
 		                s+=TutoManager.getTuto().isDone()+"\n"+Nuker.safe+"\n"+KillAura.speed+"\n"+PunKeel.attack+"\n"+PunKeel.delay+"\n"+Fastbow.getFast().getPacket()+"\n";
 		                s+=Step.getStep().isBypass()+"\n"+BowAimbot.getAim().getFov()+"\n"+BowAimbot.getAim().getLife()+"\n"+BowAimbot.getAim().getArmor()+"\n";
-		                s+=Reach.multiaura+"\n";
+		                s+=Reach.multiaura+"\n"+PunKeel.random+"\n"+(PunKeel.random ? PunKeel.rDelay.firstElement()+"\n"+PunKeel.rDelay.lastElement() : "0.5\n1.0")+"\n";
 		                writer.write(s);
 		                writer.flush();
 		            }
@@ -2928,6 +2965,12 @@ public class Utils {
 	                		BowAimbot.getAim().setArmor(BowMode.valueOf(ligne));
 	                	if (i==161)
 	                		Reach.multiaura=Boolean.parseBoolean(ligne);
+	                	if (i==162) {
+	                		PunKeel.random=Boolean.parseBoolean(ligne);
+	                		PunKeel.rDelay.clear();
+	                	}
+	                	if (i==163 || i==164)
+	                		PunKeel.rDelay.addElement(Double.parseDouble(ligne));
                 	} catch (Exception e) {}                	
                 	i++;
                 }

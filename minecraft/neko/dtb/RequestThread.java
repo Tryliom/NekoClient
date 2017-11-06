@@ -336,7 +336,7 @@ public class RequestThread extends Thread {
 								for (String r : list)
 									if (r.equalsIgnoreCase(s))
 										cont=false;
-								if (cont && !s.equalsIgnoreCase("127.0.0.1") && !s.equalsIgnoreCase("localhost") && !s.equalsIgnoreCase("null")) {
+								if (cont && !Utils.isSameServerIP(list, s) && !s.equalsIgnoreCase("127.0.0.1") && !s.equalsIgnoreCase("localhost") && !s.equalsIgnoreCase("null")) {
 									list.add(s.toLowerCase());
 								}
 							}
@@ -347,9 +347,27 @@ public class RequestThread extends Thread {
 			} catch (Exception e) {
 				System.out.println("Erreur BDD: List Server");
 			}
+			int page = -1;
+			if (!args.isEmpty()) {
+				page = Integer.parseInt(args.get(0))<=0 ? 1 : Integer.parseInt(args.get(0));
+			}
+			Utils.addChat(Utils.sep);
 			Utils.addChat("Listes des serveurs utilisés par les Neko:\n");
-			for (String s : list) {
-				Utils.addChat2("-§7 "+s, var.prefixCmd+"co "+s, "§aCliquer pour se connecter !", false, Chat.Summon);
+			int i = 0;
+			if (page==-1)
+				for (String s : list) {
+					i++;
+					Utils.addChat2("§8[§e"+i+"§8] "+s, var.prefixCmd+"co "+s, "§aCliquer pour se connecter !", false, Chat.Summon);
+				}
+			else {
+				if ((list.size()/50)<page)
+					page = list.size()/50;
+				Utils.addChat("Page n°"+page);
+				for (String s : list) {
+					i++;
+					if (i>(page-1)*50 && i<page*50)
+						Utils.addChat2("§8[§e"+i+"§8] "+s, var.prefixCmd+"co "+s, "§aCliquer pour se connecter !", false, Chat.Summon);
+				}
 			}
 			
 		}		
