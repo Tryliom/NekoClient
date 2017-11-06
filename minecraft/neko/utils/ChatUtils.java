@@ -4584,6 +4584,21 @@ public class ChatUtils {
 							Utils.addChat("§aMode Attack du Punkeel activé !");
 						}
 						PunKeel.attack=!PunKeel.attack;
+					} else if (args[1].equalsIgnoreCase("random")) {
+						if (PunKeel.random) {
+							Utils.addChat("§cMode Random du Punkeel désactivé !");
+						} else {
+							Utils.addChat("§aMode Random du Punkeel activé !");
+						}
+						PunKeel.random=!PunKeel.random;
+						if (args.length>=4) {
+							if (Utils.isDouble(args[2]) && Utils.isDouble(args[3])) {
+								
+							} else {
+								
+								Utils.addChat(Utils.setColor("§cErreur, les valeurs ne sont pas des Double", "§c"));
+							}
+						}
 					} else if (args[1].equalsIgnoreCase("delay") && args.length>=3 && Utils.isDouble(args[2])) {
 						PunKeel.delay = Double.parseDouble(args[2]);
 						Utils.addChat("§aDelay du Punkeel mis à "+args[2]+"sec !");

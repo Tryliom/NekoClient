@@ -258,7 +258,7 @@ public class Utils {
 				}
 			}
 		}
-	}
+	}	
 	
 	public static void addChat2Irc(String txt, String cmd, String desc, boolean onlyHover, Chat action) {
 		if (verif==null) {
@@ -274,6 +274,14 @@ public class Utils {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Met dans le chat un "Erreur [?]" avec le [?] en hover pour afficher la raison, les deux en rouge
+	 * @param reason	Raison de l'erreur
+	 */
+	public static void addError(String reason) {
+		mc.ingameGUI.getChatGUI().printChatMessage(new ChatComponentText("Â§cErreur ").appendSibling(getHoverText("Â§8[Â§9?Â§8]", "Â§c"+reason)));
 	}
 	
 	public static String getNeko() {
@@ -675,10 +683,10 @@ public class Utils {
 	}
 	
 	/**
-	 * Sert à vérifier si une ip mc est présente dans une liste d'ip mc mais qu'ils ont une adresse différente mais qui mène au même endroit.
+	 * Sert ï¿½ vï¿½rifier si une ip mc est prï¿½sente dans une liste d'ip mc mais qu'ils ont une adresse diffï¿½rente mais qui mï¿½ne au mï¿½me endroit.
 	 * @param list	Vector de String, liste d'ip mc
-	 * @param s		IP mc à vérifier
-	 * @return		True si l'ip est déjà présente dans la liste et False si elle n'y est pas
+	 * @param s		IP mc ï¿½ vï¿½rifier
+	 * @return		True si l'ip est dï¿½jï¿½ prï¿½sente dans la liste et False si elle n'y est pas
 	 */
 	public static Boolean isSameServerIP(Vector<String> list, String s) {
 		InetAddress ia = null;
@@ -2325,7 +2333,7 @@ public class Utils {
 		                s+=c.getCmd2()+"\n"+pl+"\n"+Register.getReg().getMdp()+"\n"+God.getInstance().getBackup()+"\n"+Highjump.getJump().getHeight()+"\n";
 		                s+=TutoManager.getTuto().isDone()+"\n"+Nuker.safe+"\n"+KillAura.speed+"\n"+PunKeel.attack+"\n"+PunKeel.delay+"\n"+Fastbow.getFast().getPacket()+"\n";
 		                s+=Step.getStep().isBypass()+"\n"+BowAimbot.getAim().getFov()+"\n"+BowAimbot.getAim().getLife()+"\n"+BowAimbot.getAim().getArmor()+"\n";
-		                s+=Reach.multiaura+"\n";
+		                s+=Reach.multiaura+"\n"+PunKeel.random+"\n";
 		                writer.write(s);
 		                writer.flush();
 		            }
