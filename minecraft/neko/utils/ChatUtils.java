@@ -718,7 +718,9 @@ public class ChatUtils {
 				} else if (args[1].equalsIgnoreCase("punkeel") || args[1].equalsIgnoreCase("pk")) {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Punkeel Delay <Double>", var.prefixCmd+"punkeel delay ", "§7Modifie le delay entre les tp, par ex 0.5 donne un VRAI lag de 500ms, les joueurs vous voit vous tp tous les 0.5sec", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Punkeel Attack", var.prefixCmd+"punkeel attack ", "§7Fais que quand on frappe le packet d'attaque s'envoie tout de suite au lieu des ms normaux", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Punkeel Attack", var.prefixCmd+"punkeel attack", "§7Fais que quand on frappe le packet d'attaque s'envoie tout de suite au lieu des ms normaux", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Punkeel Random", var.prefixCmd+"punkeel random", "§7Active/désactive le punkeel random", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Punkeel Random <Delay min> <Delay max>", var.prefixCmd+"punkeel random ", "§7Active/désactive le punkeel Random et Met un delay aléatoire entre 2 valeurs min et max entre chaque tp", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("automlg") || args[1].equalsIgnoreCase("mlg")) {
@@ -4594,9 +4596,14 @@ public class ChatUtils {
 						if (args.length>=4) {
 							if (Utils.isDouble(args[2]) && Utils.isDouble(args[3])) {
 								Utils.addChat("§aDelay min et max mis à jour !");
-								PunKeel.rDelay.clear();;
-								PunKeel.rDelay.addElement(Double.parseDouble(args[2]));
-								PunKeel.rDelay.addElement(Double.parseDouble(args[3]));
+								PunKeel.rDelay.clear();
+								if (Double.parseDouble(args[2])>Double.parseDouble(args[3])) {
+									PunKeel.rDelay.addElement(Double.parseDouble(args[3]));
+									PunKeel.rDelay.addElement(Double.parseDouble(args[2]));
+								} else {
+									PunKeel.rDelay.addElement(Double.parseDouble(args[2]));
+									PunKeel.rDelay.addElement(Double.parseDouble(args[3]));
+								}
 							} else {
 								Utils.addError("Les valeurs ne sont pas des Double\n§aSyntax correcte: "+var.prefixCmd+"pk random <Delay min> <Delay max>");
 							}
