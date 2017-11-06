@@ -69,7 +69,7 @@ public class Client {
 		  time.start();
 		  try {
 			URL url = new URL("http://nekohc.fr/ver.html");
-			Scanner sc = new Scanner(url.openStream());
+			Scanner sc = new Scanner(url.openStream(), "UTF-8");
 			ArrayList<String> s = new ArrayList<>();
 			String l;
 			try {

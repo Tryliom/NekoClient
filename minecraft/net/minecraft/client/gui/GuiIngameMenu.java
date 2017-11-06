@@ -87,9 +87,7 @@ public class GuiIngameMenu extends GuiScreen
 	                this.mc.theWorld.sendQuittingDisconnectingPacket();
 	                this.mc.loadWorld((WorldClient)null);
 	                GuiConnecting.networkManager.closeChannel(null);
-            	} catch (Exception e) {
-            		e.printStackTrace();
-            	}
+            	} catch (Exception e) {}
                 this.mc.displayGuiScreen(new GuiMainMenu());
 
             case 2:
