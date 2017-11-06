@@ -107,6 +107,7 @@ import neko.module.modules.render.Xray;
 import neko.module.modules.special.DropShit;
 import neko.module.modules.special.FastDura;
 import neko.module.modules.special.FireTrail;
+import neko.module.modules.special.Magnet;
 import neko.module.modules.special.Nausicaah;
 import neko.module.modules.special.PunKeel;
 import neko.module.modules.special.Pyro;
@@ -123,6 +124,7 @@ import neko.module.other.Xp;
 import neko.module.other.enums.BowMode;
 import neko.module.other.enums.Chat;
 import neko.module.other.enums.IrcMode;
+import neko.module.other.enums.MagnetWay;
 import neko.module.other.enums.Rate;
 import neko.module.other.enums.SpeedEnum;
 import net.mcleaks.MCLeaks;
@@ -2326,6 +2328,8 @@ public class Utils {
 		                s+=TutoManager.getTuto().isDone()+"\n"+Nuker.safe+"\n"+KillAura.speed+"\n"+PunKeel.attack+"\n"+PunKeel.delay+"\n"+Fastbow.getFast().getPacket()+"\n";
 		                s+=Step.getStep().isBypass()+"\n"+BowAimbot.getAim().getFov()+"\n"+BowAimbot.getAim().getLife()+"\n"+BowAimbot.getAim().getArmor()+"\n";
 		                s+=Reach.multiaura+"\n"+PunKeel.random+"\n"+(PunKeel.random ? PunKeel.rDelay.firstElement()+"\n"+PunKeel.rDelay.lastElement() : "0.5\n1.0")+"\n";
+		                Magnet m = Magnet.getMagnet();
+		                s+=m.getMode()+"\n"+m.isAll()+"\n"+m.isAttack()+"\n"+m.isClassic()+"\n"+m.isDefense()+"\n"+m.isFood()+"\n";
 		                writer.write(s);
 		                writer.flush();
 		            }
@@ -2967,6 +2971,19 @@ public class Utils {
 	                	}
 	                	if (i==163 || i==164)
 	                		PunKeel.rDelay.addElement(Double.parseDouble(ligne));
+	                	Magnet m = Magnet.getMagnet();
+	                	if (i==165)
+	                		m.setMode(MagnetWay.valueOf(ligne));
+	                	if (i==166)
+	                		m.setAll(Boolean.parseBoolean(ligne));
+	                	if (i==167)
+	                		m.setAttack(Boolean.parseBoolean(ligne));
+	                	if (i==168)
+	                		m.setClassic(Boolean.parseBoolean(ligne));
+	                	if (i==169)
+	                		m.setDefense(Boolean.parseBoolean(ligne));
+	                	if (i==170)
+	                		m.setFood(Boolean.parseBoolean(ligne));
                 	} catch (Exception e) {}                	
                 	i++;
                 }

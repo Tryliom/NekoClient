@@ -83,6 +83,7 @@ import neko.module.modules.render.WorldTime;
 import neko.module.modules.render.Xray;
 import neko.module.modules.special.DropShit;
 import neko.module.modules.special.FireTrail;
+import neko.module.modules.special.Magnet;
 import neko.module.modules.special.PunKeel;
 import neko.module.modules.special.Pyro;
 import neko.module.modules.special.Reflect;
@@ -103,6 +104,7 @@ import neko.module.other.enums.Chat;
 import neko.module.other.enums.EventType;
 import neko.module.other.enums.Form;
 import neko.module.other.enums.IrcMode;
+import neko.module.other.enums.MagnetWay;
 import neko.module.other.enums.Rate;
 import neko.module.other.enums.SpeedEnum;
 import net.mcleaks.Callback;
@@ -584,6 +586,15 @@ public class ChatUtils {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Disc <String>", var.prefixCmd+"disc ", "§7Joue le disc choisit", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Disc <String> <Double>", var.prefixCmd+"disc ", "§7Joue le disc et modifie le volume sur la distance", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("magnet")) {
+					Utils.addChat(Utils.sep);
+					Utils.addChat2("§6"+var.prefixCmd+"Magnet Filtre", var.prefixCmd+"magnet filtre", "§7Active/désactive le filtrage des items", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Magnet Attack", var.prefixCmd+"magnet attack", "§7Filtre les items pour prendre les armes", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Magnet Defense", var.prefixCmd+"magnet defense", "§7Filtre les items pour prendre les armures", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Magnet Food", var.prefixCmd+"magnet food", "§7Filtre les items pour prendre la nourriture", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Magnet Mode <Single:Multi>", var.prefixCmd+"magnet mode ", "§7Choisis entre:\n§7Prendre les items un à un (Envoie moins de paquets)\n§7Prend tous les items en même temps (Envoie plus de paquets)", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("clickaim")) {
@@ -4327,7 +4338,54 @@ public class ChatUtils {
 				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
-								
+				
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"magnet")) {
+				Magnet m = Magnet.getMagnet();
+				if (args[1].equalsIgnoreCase("filtre")) {
+					if (m.isAll()) {
+						Utils.addChat("§cFiltre désactivée !");
+					} else {
+						Utils.addChat("§aFiltre activée !");
+					}
+					m.setAll(!m.isAll());
+				} else if (args[1].equalsIgnoreCase("attack")) {
+					if (m.isAttack()) {
+						Utils.addChat("§cFiltre par items d'attaque désactivée !");
+					} else {
+						Utils.addChat("§aFiltre par items d'attaque activée !");
+					}
+					m.setAttack(!m.isAttack());
+				} else if (args[1].equalsIgnoreCase("defense")) {
+					if (m.isDefense()) {
+						Utils.addChat("§cFiltre par items de défense désactivée !");
+					} else {
+						Utils.addChat("§aFiltre par items de défense activée !");
+					}
+					m.setDefense(!m.isDefense());
+				} else if (args[1].equalsIgnoreCase("food")) {
+					if (m.isFood()) {
+						Utils.addChat("§cFiltre par items de bouffe désactivée !");
+					} else {
+						Utils.addChat("§aFiltre par items de bouffe activée !");
+					}
+					m.setFood(!m.isFood());
+				} else if (args[1].equalsIgnoreCase("mode") && args.length>=3) {
+					String mode = "";
+					if (args[2].equalsIgnoreCase("Multi")) {
+						mode = "Multi";
+					} else if (args[2].equalsIgnoreCase("Single")) {
+						mode = "Single";
+					}
+					m.setMode(MagnetWay.valueOf(mode));
+					Utils.addChat("§aMode changé en "+mode+" !");
+				} else {
+					Utils.addError(error);
+					mc.thePlayer.playSound("mob.villager.haggle", 1.0F, 1.0F);
+				}
+				Utils.checkXp(xp);
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"ka")) {
 				if (args.length==1) {
 					Utils.toggleModule("KillAura");
