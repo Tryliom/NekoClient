@@ -45,6 +45,13 @@ public class BowAimbot extends Module {
 	}
 	
 	public void onUpdate() {
+		try {
+			Item i = mc.thePlayer.getCurrentEquippedItem().getItem();
+			if ((i instanceof ItemBlock) || ((i instanceof ItemFood) && mc.thePlayer.getFoodStats().needFood()))
+				return;
+		} catch (Exception e) {
+			return;
+		}
 		if (!this.haveBow())
 			return;
 		this.aimBow();
