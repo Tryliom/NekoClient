@@ -103,7 +103,6 @@ import neko.module.modules.render.Tracers;
 import neko.module.modules.render.Wallhack;
 import neko.module.modules.render.Water;
 import neko.module.modules.render.WorldTime;
-import neko.module.modules.render.Xray;
 import neko.module.modules.special.DropShit;
 import neko.module.modules.special.FastDura;
 import neko.module.modules.special.FireTrail;
@@ -1178,7 +1177,6 @@ public class Utils {
 		saveMod();
 		saveRpg();
 		saveValues();
-		saveXray();
 		saveNuker();
 		saveLock();
 		saveRank();
@@ -2109,24 +2107,6 @@ public class Utils {
         } catch (IOException ex) {}
 	}
 	
-	public static void saveXray(String...fi) {
-		if (verif!=null)
-			return;
-		String s ="";
-		File file = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"xray.neko");
-        try {
-            file.createNewFile();            
-            try (FileWriter writer = new FileWriter(file)) {
-            	for (int i : Xray.xray) {
-            		s+=i+"\n";
-            	}
-                writer.write(s);
-                writer.flush();
-            }
-
-        } catch (IOException ex) {}
-	}
-	
 	public static void saveNuker(String...fi) {
 		if (verif!=null)
 			return;
@@ -3031,27 +3011,6 @@ public class Utils {
 		}
 	}
 	
-	public static void loadXray(String...fi) {
-		File dir = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"xray.neko");
-		if (dir.exists()) {
-		try { 
-            InputStream ips = new FileInputStream(dir); 
-            InputStreamReader ipsr = new InputStreamReader(ips); 
-            try (BufferedReader br = new BufferedReader(ipsr)) {
-                String ligne;
-                Integer i=0;
-                Xray.xray.clear();
-                while ((ligne = br.readLine()) != null)
-                {                	
-                	Xray.xray.add(Integer.parseInt(ligne));
-                }
-            
-		} catch (IOException | NumberFormatException e) {}		
-		} catch (IOException | NumberFormatException e) {}
-		
-		}
-	}
-	
 	public static void loadNuker(String...fi) {
 		File dir = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"nuker.neko");
 		if (dir.exists()) {
@@ -3389,7 +3348,6 @@ public class Utils {
 		  boolean legit = loadRpg();
 		  loadFriends();
 		  loadBind();
-		  loadXray();
 		  if (legit)
 			  loadLock();
 		  if (!legit) {

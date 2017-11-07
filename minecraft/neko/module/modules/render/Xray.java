@@ -6,6 +6,7 @@ import org.lwjgl.input.Keyboard;
 
 import neko.module.Category;
 import neko.module.Module;
+import neko.utils.RenderUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
@@ -13,47 +14,38 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.BlockPos;
 
 public class Xray extends Module {
-	public static boolean isOn;
-	public static ArrayList<Integer> xray = new ArrayList<Integer>();
-	int delay = 0;
+	private int renderDistance = 100;
 
 	public Xray() {
 		super("Xray", Keyboard.KEY_X, Category.RENDER);
 	}
 
 	public void onEnabled() {
-		isOn = true;
-		Minecraft.getMinecraft().renderGlobal.loadRenderers();
+		mc.renderGlobal.loadRenderers();
 	}
 
 	public void onDisabled() {
-		isOn = false;
-		Minecraft.getMinecraft().renderGlobal.loadRenderers();
+		mc.renderGlobal.loadRenderers();
 	}
-	
+
 	public void setValues() {
 		this.values = "";
 	}
-	
-	public void onUpdate() {
-		if (mc.gameSettings.keyBindPickBlock.getIsKeyPressed() && delay > 20 && mc.objectMouseOver.func_178782_a()!=null && !(mc.currentScreen instanceof GuiChat) && !(mc.currentScreen instanceof GuiContainer)) {
-			BlockPos bl = mc.objectMouseOver.func_178782_a();
-			int id = Block.getIdFromBlock(mc.theWorld.getBlockState(bl).getBlock());
-			if (xray.contains(id)) {
-				for (int i=0;i<xray.size();i++) {
-					if (xray.get(i)==id) {
-						xray.remove(i);
-					}						
+
+	public void onRender3D() {
+		for (int y = (int) renderDistance; y >= (int) -renderDistance; y--) {
+			for (int z = (int) -renderDistance; z <= renderDistance; z++) {
+				for (int x = (int) -renderDistance; x <= renderDistance; x++) {
+					int xPos = ((int) Math.round(this.mc.thePlayer.posX + x));
+					int yPos = ((int) Math.round(this.mc.thePlayer.posY + y));
+					int zPos = ((int) Math.round(this.mc.thePlayer.posZ + z));
+
+					BlockPos b = new BlockPos(xPos, yPos, zPos);
+					Block block = mc.theWorld.getChunkFromBlockCoords(b).getBlock(xPos, yPos, zPos);
+					
 				}
-				u.addChat("§cLe bloc "+Block.getBlockById(id).getLocalizedName()+" a été supprimé !");
-			} else {
-				xray.add(id);
-				u.addChat("§aLe bloc "+Block.getBlockById(id).getLocalizedName()+" a été ajouté !");
 			}
-			Minecraft.getMinecraft().renderGlobal.loadRenderers();
-			delay=0;
-		} else
-			delay++;
+		}
 	}
 
 }

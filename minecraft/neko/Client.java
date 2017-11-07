@@ -113,7 +113,6 @@ public class Client {
 		  boolean legit = Utils.loadRpg();
 		  Utils.loadFriends();
 		  Utils.loadBind();
-		  Utils.loadXray();
 		  if (legit)
 			  Utils.loadLock();
 		  if (!legit) {

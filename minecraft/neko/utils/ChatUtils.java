@@ -80,7 +80,6 @@ import neko.module.modules.render.Tracers;
 import neko.module.modules.render.Wallhack;
 import neko.module.modules.render.Water;
 import neko.module.modules.render.WorldTime;
-import neko.module.modules.render.Xray;
 import neko.module.modules.special.DropShit;
 import neko.module.modules.special.FireTrail;
 import neko.module.modules.special.Magnet;
@@ -929,14 +928,6 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Irc playerclic", var.prefixCmd+"irc playerclic", "§7Change entre la connexion au serveur du joueur ou le contacter par message privé quand on clic dessus", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-				} else if (args[1].equalsIgnoreCase("xray")) {
-					Utils.addChat(Utils.sep);
-					Utils.addChat2("§6"+var.prefixCmd+"Xray add <Bloc>", var.prefixCmd+"xray add ", "§7Ajoute un bloc à votre liste", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Xray rem <Bloc>", var.prefixCmd+"xray rem ", "§7Supprime un bloc de votre liste", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Xray clear", var.prefixCmd+"xray clear", "§7Vide votre liste", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Xray list", var.prefixCmd+"xray list", "§7Affiche la liste", false, Chat.Summon);
-					Utils.checkXp(xp);
-					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("dropshit")) {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"DropShit", "", "§7Sert à drop les items dans votre inventaire qui sont dans votre liste noire (BlackList), vous pouvez les ajouter/supprimer avec les commandes suivantes:", true, Chat.Summon);
@@ -1425,7 +1416,6 @@ public class ChatUtils {
 					Utils.saveNuker(fi);
 					Utils.saveShit(fi);
 					Utils.saveValues(fi);
-					Utils.saveXray(fi);
 					Utils.addChat("§aConfig "+args[2]+" crée !");
 				} else if (args[1].equalsIgnoreCase("load") && args.length>=3) {
 					String fi = Utils.linkSave+(mc.isRunningOnMac ? "/Config/"+args[2]+"/" : "\\Config\\"+args[2]+"\\");
@@ -1441,7 +1431,6 @@ public class ChatUtils {
 						Utils.loadNuker(fi);
 						Utils.loadShit(fi);
 						Utils.loadValues(fi);
-						Utils.loadXray(fi);
 						Utils.cfg=false;
 						Utils.display = dis;
 						Utils.addChat("§aConfig "+args[2]+" chargée !");
@@ -1849,8 +1838,7 @@ public class ChatUtils {
 						
 					} catch (Exception e) {
 						Utils.addChat(err);
-					}
-					Utils.saveXray();												
+					}											
 			} else if (args[1].equalsIgnoreCase("clear")) {
 				try {
 					sh.getList().clear();
@@ -1901,7 +1889,6 @@ public class ChatUtils {
 				} catch (Exception e) {
 					Utils.addChat(err);
 				}
-				Utils.saveXray();
 			} else if (args[1].equalsIgnoreCase("list")) {
 				try {
 					if (sh.getList().size()==0) {
@@ -1910,109 +1897,6 @@ public class ChatUtils {
 						Utils.addChat(Utils.sep2+"§6DropShit"+Utils.sep2);
 						for (int j=0;j<sh.getList().size();j++) {
 							Utils.addChat("Item "+(j+1)+" : "+Item.getItemById(sh.getList().get(j)).getUnlocalizedName().replaceFirst("tile.", ""));
-						}
-						Utils.addChat(Utils.sep);
-					}
-				} catch (Exception e) {
-					Utils.addChat(err);
-				}
-			}
-				Utils.checkXp(xp);
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"xray")) {
-				if (args.length==1) {
-					Utils.toggleModule("Xray");
-				} else if (args[1].equalsIgnoreCase("add")) {
-					try {
-						if (Utils.isInteger(args[2])) {
-							int x = Integer.parseInt(args[2]);						
-							int c=0;
-							for (int i=0;i<Xray.xray.size();i++) {
-								if (Xray.xray.get(i)==x) {
-									c++;
-								}
-							}
-							if (c!=0) {
-								Utils.addChat("§cLe bloc "+Block.getBlockById(x).getLocalizedName()+" a déjà été ajouté !");									
-							} else {
-								Xray.xray.add(x);
-								Utils.addChat("§aLe bloc "+Block.getBlockById(x).getLocalizedName()+" a été ajouté !");
-							}
-						} else {					
-							int c=0;
-							if (Utils.isABlock(args[2])) {
-								for (int i=0;i<Xray.xray.size();i++) {
-									if (Block.getBlockById(Xray.xray.get(i)).getLocalizedName()==Block.getBlockFromName(args[2]).getLocalizedName()) {
-										c++;
-									}
-								}
-								if (c!=0) {
-									Utils.addChat("§cLe bloc "+Block.getBlockById(Block.getIdFromBlock(Block.getBlockFromName(args[2]))).getLocalizedName()+" a déjà été ajouté !");									
-								} else {
-									Xray.xray.add(Block.getIdFromBlock(Block.getBlockFromName(args[2])));
-									Utils.addChat("§aLe bloc "+Block.getBlockById(Block.getIdFromBlock(Block.getBlockFromName(args[2]))).getLocalizedName()+" a été ajouté !");
-								}
-							} else {
-								Utils.addChat("§cCe bloc n'existe pas !");
-							}
-						}
-						
-					} catch (Exception e) {
-						Utils.addChat(err);
-					}
-					Utils.saveXray();												
-			} else if (args[1].equalsIgnoreCase("clear")) {
-				try {
-					Xray.xray.clear();
-					Utils.addChat("§aListe vidée !");
-				} catch (Exception e) {
-					Utils.addChat(err);
-				}
-			} else if (args[1].equalsIgnoreCase("rem")) {
-				try {
-					if (Utils.isInteger(args[2])) {
-						int c=0;
-						int x = Integer.parseInt(args[2]);
-						for (int j=0;j<Xray.xray.size();j++) {
-							if (Xray.xray.get(j)==x) {
-								Xray.xray.remove(j);
-								c++;									
-							}
-						}
-						if (c!=0) {
-							Utils.addChat("§aLe bloc "+Block.getBlockById(x).getLocalizedName()+" a été retiré !");
-						} else {
-							Utils.addChat("§cLe bloc "+Block.getBlockById(x).getLocalizedName()+" n'est pas dans la liste !");
-						}
-					} else {
-						int c=0;
-						for (int j=0;j<Xray.xray.size();j++) {
-							if (Block.getBlockById(Xray.xray.get(j)).getLocalizedName()==Block.getBlockFromName(args[2]).getLocalizedName()) {
-								c++;
-								Xray.xray.remove(j);
-							}									
-							
-						}
-						if (c!=0) {
-							Utils.addChat("§aLe bloc "+Block.getBlockById(Block.getIdFromBlock(Block.getBlockFromName(args[2]))).getLocalizedName()+" a été retiré !");
-						} else {
-							Utils.addChat("§cLe bloc "+Block.getBlockById(Block.getIdFromBlock(Block.getBlockFromName(args[2]))).getLocalizedName()+" n'est pas dans la liste !");
-						}
-					}
-				} catch (Exception e) {
-					Utils.addChat(err);
-				}
-				Utils.saveXray();
-			} else if (args[1].equalsIgnoreCase("list")) {
-				try {
-					if (Xray.xray.size()==0) {
-						Utils.addChat("Aucun blocs ajoutés");
-					} else {
-						Utils.addChat(Utils.sep2+"§6Xray"+Utils.sep2);
-						for (int j=0;j<Xray.xray.size();j++) {
-							Utils.addChat("Block : "+Block.getBlockById(Xray.xray.get(j)).getLocalizedName());
 						}
 						Utils.addChat(Utils.sep);
 					}
