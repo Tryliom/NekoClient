@@ -144,6 +144,7 @@ import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.ClickEvent.Action;
+import net.minecraft.init.Blocks;
 import net.minecraft.event.HoverEvent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -152,14 +153,17 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.play.client.C00PacketKeepAlive;
 import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.client.C03PacketPlayer;
+import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Session;
 import net.minecraft.world.WorldSettings.GameType;
+import net.minecraft.world.chunk.Chunk;
 
 /**
  * Utilité de cette classe:<br>
@@ -1443,6 +1447,27 @@ public class Utils {
 			}
 			
 		}
+	}
+	
+	public static BlockPos getRandBlock(int radius, double chance) {
+		BlockPos b = null;
+	      for (int z = (int)-radius; z <= radius; z++) {
+	        for (int x = (int)-radius; x <= radius; x++)
+	        {
+		          int xPos = ((int)Math.round(mc.thePlayer.posX + x));
+		          int yPos = ((int)Math.round(mc.thePlayer.posY));
+		          int zPos = ((int)Math.round(mc.thePlayer.posZ + z));
+		          
+		          b = new BlockPos(xPos, yPos, zPos);
+		          if (Math.random()<chance)
+		        	  return b;
+	        }
+	      }
+	      return b;
+	}
+	
+	public static void sendTpPos(BlockPos bp) {
+		mc.getNetHandler().addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(bp.getX(), bp.getY(), bp.getZ(), true));
 	}
 	
 	public static boolean isAllRateHaveLvl(int lvl, Rate r) {
