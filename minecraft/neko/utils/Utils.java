@@ -2230,6 +2230,13 @@ public class Utils {
 		            	TpBack tp = TpBack.getInstance();
 		            	Velocity v = Velocity.getVelocity();
 		            	Build b = Build.getBuild();
+		                Ping p = Ping.getPing();
+		                NekoChat nc = NekoChat.getChat();
+		                CallCmd c = CallCmd.getCall();
+		                String pl = "";
+		                for (String st : c.getListPlayer())
+		                	pl+=st+":";
+		                Magnet m = Magnet.getMagnet();
 		            	s+=Dolphin.dolph+"\n";
 		            	s+=Flight.speed+"\n";
 		            	s+=KillAura.cps+"\n"+KillAura.range+"\n"+KillAura.lockView+"\n";
@@ -2301,20 +2308,13 @@ public class Utils {
 		                s+=Phase.getPhase().isVphase()+"\n\n";
 		                s+=AutoMLG.getMLG().getFall()+"\n"+b.isDown()+"\n"+b.isSneak()+"\n"+b.isUp()+"\n"+b.isWall()+"\n";
 		                s+=Fasteat.getFast().getPacket()+"\n"+PushUp.getPush().getPacket()+"\n"+Speed709.getSpeed().getMode()+"\n"+Reflect.getReflect().getPower()+"\n";
-		                Ping p = Ping.getPing();
-		                NekoChat nc = NekoChat.getChat();
 		                s+=p.getDelay()+"\n"+p.isFreezer()+"\n"+p.isRandom()+"\n"+KillAura.nobot+"\n"+SpamBot.getBot().getPseudo()+"\n"+var.animation+"\n";
 		                s+=KillAura.premium+"\n"+GuiAltManager.check+"\n"+var.onlyrpg.isActive()+"\n"+nc.getColor()+"\n"+nc.getHeight()+"\n"+nc.getWidth()+"\n";
-		                CallCmd c = CallCmd.getCall();
-		                String pl = "";
-		                for (String st : c.getListPlayer())
-		                	pl+=st+":";
 		                s+=c.getCmd2()+"\n"+pl+"\n"+Register.getReg().getMdp()+"\n"+God.getInstance().getBackup()+"\n"+Highjump.getJump().getHeight()+"\n";
 		                s+=TutoManager.getTuto().isDone()+"\n"+Nuker.safe+"\n"+KillAura.speed+"\n"+PunKeel.attack+"\n"+PunKeel.delay+"\n"+Fastbow.getFast().getPacket()+"\n";
 		                s+=Step.getStep().isBypass()+"\n"+BowAimbot.getAim().getFov()+"\n"+BowAimbot.getAim().getLife()+"\n"+BowAimbot.getAim().getArmor()+"\n";
 		                s+=Reach.multiaura+"\n"+PunKeel.random+"\n"+(PunKeel.random ? PunKeel.rDelay.firstElement()+"\n"+PunKeel.rDelay.lastElement() : "0.5\n1.0")+"\n";
-		                Magnet m = Magnet.getMagnet();
-		                s+=m.getMode()+"\n"+m.isAll()+"\n"+m.isAttack()+"\n"+m.isClassic()+"\n"+m.isDefense()+"\n"+m.isFood()+"\n";
+		                s+=m.getMode()+"\n"+m.isAll()+"\n"+m.isAttack()+"\n"+m.isClassic()+"\n"+m.isDefense()+"\n"+m.isFood()+"\n"+Nuker.op+"\n";
 		                writer.write(s);
 		                writer.flush();
 		            }
@@ -2969,6 +2969,8 @@ public class Utils {
 	                		m.setDefense(Boolean.parseBoolean(ligne));
 	                	if (i==170)
 	                		m.setFood(Boolean.parseBoolean(ligne));
+	                	if (i==171)
+	                		Nuker.op=Boolean.parseBoolean(ligne);
                 	} catch (Exception e) {}                	
                 	i++;
                 }

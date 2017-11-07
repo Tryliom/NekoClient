@@ -28,6 +28,7 @@ public class Nuker extends Module {
 	  public float nukerB = 0.15F;
 	  public static ArrayList<Integer> nuke = new ArrayList<Integer>();
 	  public static boolean safe = true;
+	  public static boolean op = true;
 	  private int delayNuker=0;
 	
 	public Nuker() {
@@ -44,7 +45,8 @@ public class Nuker extends Module {
 	
 	public void setValues() {
 		this.values = "§6Range:§7 "+nukerRadius+"\n"
-				+ "§6Safe:§7 "+Utils.displayBool(safe);
+				+ "§6Safe:§7 "+Utils.displayBool(safe)+"\n"
+				+ "§6Op:§7 "+Utils.displayBool(op);
 	}
 	
 	public void onUpdate() {	
@@ -58,10 +60,10 @@ public class Nuker extends Module {
 						nuke.remove(i);
 					}						
 				}
-				u.addChat("§cLe bloc "+Block.getBlockById(id).getLocalizedName()+" a été supprimé !");
+				Utils.addChat("§cLe bloc "+Block.getBlockById(id).getLocalizedName()+" a été supprimé !");
 			} else {
 				nuke.add(id);
-				u.addChat("§aLe bloc "+Block.getBlockById(id).getLocalizedName()+" a été ajouté !");
+				Utils.addChat("§aLe bloc "+Block.getBlockById(id).getLocalizedName()+" a été ajouté !");
 			}
 			
 			delay=0;
@@ -76,6 +78,7 @@ public class Nuker extends Module {
 				
 		
 		if (mc.thePlayer.capabilities.isCreativeMode) {
+			// Creative Nuker
 		    for (int y = (int)nukerRadius; y >= (int)-nukerRadius; y--) {
 		      for (int z = (int)-nukerRadius; z <= nukerRadius; z++) {
 		        for (int x = (int)-nukerRadius; x <= nukerRadius; x++)
@@ -89,8 +92,8 @@ public class Nuker extends Module {
 		          Block blockId = var2.getBlock(this.xPos, this.yPos, this.zPos);		          
 		          
 		          if ((blockId != Blocks.air) && (blockId != Blocks.flowing_water) && (blockId != Blocks.water) && (blockId != Blocks.flowing_lava) && (blockId != Blocks.lava)) {
-		            Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, b, EnumFacing.NORTH));
-		            Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, b, EnumFacing.NORTH));
+		            mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, b, EnumFacing.NORTH));
+		            mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, b, EnumFacing.NORTH));
 		          }
 		        }
 		      }
@@ -110,10 +113,11 @@ public class Nuker extends Module {
 		          Chunk var2 = mc.theWorld.getChunkFromBlockCoords(b);
 		          Block blockId = var2.getBlock(this.xPos, this.yPos, this.zPos);		          
 		          if ((blockId != Blocks.air) && (blockId != Blocks.bedrock) && (blockId != Blocks.flowing_water) && (blockId != Blocks.water) && (blockId != Blocks.flowing_lava) && (blockId != Blocks.lava)) {
-		        	  if (u.verifBlock(blockId)) {
-			        	  Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, b, EnumFacing.NORTH));			        	  
-			        	  Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, b, EnumFacing.NORTH));
-			        	  return;
+		        	  if (Utils.verifBlock(blockId)) {
+			        	  mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, b, EnumFacing.NORTH));			        	  
+			        	  mc.thePlayer.sendQueue.addToSendQueue(new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, b, EnumFacing.NORTH));
+			        	  if (!this.op)
+			        		  return;	
 		        	  }		        	  
 		          }
 		        }

@@ -892,6 +892,7 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Nuker clear", var.prefixCmd+"nuker clear", "§7Vide votre liste", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Nuker list", var.prefixCmd+"nuker list", "§7Affiche la liste", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Nuker safe", var.prefixCmd+"nuker safe", "§7Ne casse pas le bloc en dessous de vous", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Nuker op", var.prefixCmd+"nuker op", "§7Casse tous les blocs en même temps (Envoie env 10x + de paquets)", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("step")) {
@@ -1777,6 +1778,13 @@ public class ChatUtils {
 					Utils.addChat("§aNuker safe activé !");
 				}
 				Nuker.safe=!Nuker.safe;
+			} else if (args[1].equalsIgnoreCase("op")) {
+				if (Nuker.op) {
+					Utils.addChat("§cNuker op désactivé !");
+				} else {
+					Utils.addChat("§aNuker op activé !");
+				}
+				Nuker.op=!Nuker.op;
 			} else if (args[1].equalsIgnoreCase("list")) {
 				try {
 					if (Nuker.nuke.size()==0) {
