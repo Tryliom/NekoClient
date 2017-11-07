@@ -9,7 +9,7 @@ import neko.module.Module;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.gui.inventory.GuiInventory;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.BlockPos;
 
 public class Xray extends Module {
@@ -36,7 +36,7 @@ public class Xray extends Module {
 	}
 	
 	public void onUpdate() {
-		if (mc.gameSettings.keyBindPickBlock.getIsKeyPressed() && delay > 20 && mc.objectMouseOver.func_178782_a()!=null && !(mc.currentScreen instanceof GuiChat) && !(mc.currentScreen instanceof GuiInventory)) {
+		if (mc.gameSettings.keyBindPickBlock.getIsKeyPressed() && delay > 20 && mc.objectMouseOver.func_178782_a()!=null && !(mc.currentScreen instanceof GuiChat) && !(mc.currentScreen instanceof GuiContainer)) {
 			BlockPos bl = mc.objectMouseOver.func_178782_a();
 			int id = Block.getIdFromBlock(mc.theWorld.getBlockState(bl).getBlock());
 			if (xray.contains(id)) {
