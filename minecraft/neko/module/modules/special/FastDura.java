@@ -41,17 +41,6 @@ public class FastDura extends Module {
 		}
 	}
 	
-	public void onUpdate() {
-		if (u.isLock(this.getName())) {
-			boolean display = u.display;
-			u.display=false;
-			this.isToggled=false;
-			u.display=display;
-			u.addWarn(this.getName());
-			return;
-		}			
-	}
-	
 	
 	// Fonctions swap et attack
 	

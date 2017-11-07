@@ -161,11 +161,11 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.Session;
 import net.minecraft.world.WorldSettings.GameType;
 
+/**
+ * Utilité de cette classe:<br>
+ * Sert pour les méthodes pratiques utilisées partout et variables 
+ */	
 public class Utils {
-	/*
-	 * Utilité de cette classe:
-	 * Sert pour les méthodes pratiques utilisées partout et variables 
-	 */	
 	public static Minecraft mc = Minecraft.getMinecraft();
 	public static boolean warn=false;
 	public static double warnB=0;
@@ -285,6 +285,10 @@ public class Utils {
 		mc.ingameGUI.getChatGUI().printChatMessage(new ChatComponentText("§cErreur ").appendSibling(getHoverText("§8[§9?§8]", "§c"+reason)));
 	}
 	
+	/**
+	 * Retourne le "[Neko] " en couleur
+	 * @return	String en fin de ligne couleur orange §6
+	 */
 	public static String getNeko() {
 		return "§8[§9Neko§8]§6 ";
 	}
@@ -1271,9 +1275,9 @@ public class Utils {
 	
 	public static BowMode pass(BowMode b) {
 		if (b == BowMode.Max) {
-			b=BowMode.Min;
+			b = BowMode.Min;
 		} else if (b == BowMode.Min) {
-			b=BowMode.Désactivé;
+			b = BowMode.Désactivé;
 		} else if (b == BowMode.Désactivé) {
 			b = BowMode.Max;
 		}
@@ -1281,8 +1285,9 @@ public class Utils {
 	}
 	
 	public static boolean isInteger(String s) {
+		int l = 0;
 		try {
-			int l = Integer.parseInt(s);
+			l = Integer.parseInt(s);
 			return true;
 		} catch (Exception e) {
 			return false;
