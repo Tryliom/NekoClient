@@ -34,16 +34,24 @@ public class Search extends Module {
 	}
 
 	public void onEnabled() {
-		mc.renderGlobal.loadRenderers();
+		super.onEnabled();
 	}
 
 	public void onDisabled() {
-		mc.renderGlobal.loadRenderers();
+		super.onDisabled();
 	}
 
 	public void setValues() {
 		this.values = "§6Bloc recherché:§7 "
 				+ (this.searchBlock == null ? "Aucun" : this.searchBlock.getLocalizedName());
+	}
+
+	public Block getSearchBlock() {
+		return searchBlock;
+	}
+
+	public void setSearchBlock(Block searchBlock) {
+		this.searchBlock = searchBlock;
 	}
 
 	public void onUpdate() {

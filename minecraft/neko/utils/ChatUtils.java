@@ -76,6 +76,7 @@ import neko.module.modules.render.NekoChat;
 import neko.module.modules.render.Paint;
 import neko.module.modules.render.Power;
 import neko.module.modules.render.Radar;
+import neko.module.modules.render.Search;
 import neko.module.modules.render.Tracers;
 import neko.module.modules.render.Wallhack;
 import neko.module.modules.render.Water;
@@ -1679,11 +1680,41 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"search")) {
+				if (args[1].equalsIgnoreCase("add")) {
+					try {
+						if (Utils.isInteger(args[2])) {
+							int x = Integer.parseInt(args[2]);						
+							Block b = Block.getBlockById(x);
+							
+							if (b==null) {
+								Utils.addChat("§cCe bloc n'existe pas !");			
+							} else if (b!=Search.getSearch().getSearchBlock()) {
+								Search.getSearch().setSearchBlock(b);
+								Utils.addChat("§aLe bloc "+b.getLocalizedName()+" est cherché !");
+							} else 
+								Utils.addChat("§cLe bloc "+b.getLocalizedName()+" est déjà cherché !");	
+						} else if (Utils.isABlock(args[2])) {					
+							Block b = Block.getBlockFromName(args[2]);
+							if (b==null) {
+								Utils.addChat("§cCe bloc n'existe pas !");			
+							} else if (b!=Search.getSearch().getSearchBlock()) {
+								Search.getSearch().setSearchBlock(b);
+								Utils.addChat("§aLe bloc "+b.getLocalizedName()+" est cherché !");
+							} else 
+								Utils.addChat("§cLe bloc "+b.getLocalizedName()+" est déjà cherché !");	
+						} else {
+							Utils.addError("Ceci n'est pas un bloc !\n§aSyntaxe correcte: "+var.prefixCmd+"search <ID de bloc> ou <nom du bloc>");
+						}
+						
+					} catch (Exception e) {
+						Utils.addChat(err);
+					}												
+				}
+			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"nuker")) {
-				if (args.length==1) {
-					Utils.toggleModule("Nuker");
-				} else if (args[1].equalsIgnoreCase("add")) {
+				if (args[1].equalsIgnoreCase("add")) {
 					try {
 						if (Utils.isInteger(args[2])) {
 							int x = Integer.parseInt(args[2]);						
