@@ -26,7 +26,6 @@ public class GuiIngameMenu extends GuiScreen
     	Utils.saveRpg();
 		Utils.saveFriends();
 		Utils.saveBind();
-		Utils.saveXray();
 		Utils.saveValues();
 		Utils.saveNuker();
 		Utils.saveLock();

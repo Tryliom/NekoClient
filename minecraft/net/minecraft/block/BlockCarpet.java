@@ -4,6 +4,7 @@ import java.util.List;
 
 import neko.Client;
 import neko.module.modules.render.Xray;
+import neko.utils.Utils;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -93,12 +94,7 @@ public class BlockCarpet extends Block
 
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
     {
-    	Client var = Client.getNeko();
-    	if (var.moduleManager.xrayModule.getToggled()) {
-    		for (int i=0;i<Xray.xray.size();i++) {
-    			if (this == Block.getBlockById(Xray.xray.get(i)))
-    				return true;
-    		}
+    	if (Utils.isToggle("Xray")) {
     		return false;
     	}
 		

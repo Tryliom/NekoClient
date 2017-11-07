@@ -4,8 +4,7 @@ import java.util.BitSet;
 import java.util.Iterator;
 import java.util.List;
 
-import neko.Client;
-import neko.module.modules.render.Xray;
+import neko.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -133,14 +132,6 @@ public class BlockModelRenderer
 
     public boolean renderModelStandard(IBlockAccess blockAccessIn, IBakedModel modelIn, Block blockIn, IBlockState blockStateIn, BlockPos blockPosIn, WorldRenderer worldRendererIn, boolean checkSides)
     {
-    	Client var = Client.getNeko();
-    	if (var.moduleManager.xrayModule.getToggled()) {
-    		for (int i=0;i<Xray.xray.size();i++) {
-    			if (blockIn == Block.getBlockById(Xray.xray.get(i)))
-    				return true;
-    		}
-    		return false;
-    	}
         boolean var7 = false;
         RenderEnv renderEnv = null;
         EnumFacing[] var9 = EnumFacing.VALUES;
