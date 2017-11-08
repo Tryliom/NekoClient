@@ -5,7 +5,7 @@ import neko.Client;
 public class TutoManager {
 	private boolean done = true;
 	private int part=1;
-	private int totPart=7;
+	private int totPart=8;
 	private Client var = Client.getNeko();
 	private static TutoManager instance = null;
 	
@@ -68,6 +68,11 @@ public class TutoManager {
 					+ "§cEst-ce que Neko est un RAT ?\n§d-> J'ai jamais vu de rats vivant ici moa...";
 		}
 		if (num==7) {
+			s+= "Instant FAQ 2\n-=-\n"
+					+ "§cComment parler dans l'irc ?\n§d-> Mettre un $ avant votre phrase\n"
+					+ "§cJe n'ai plus mes niveaux, comment faire ?\n§d-> Il faut prendre le contenu du dossier NekoBackup, le mettre dans Neko puis "+var.prefixCmd+"reload\n";
+		}
+		if (num==8) {
 			s+="Les commandes utiles:\n§c"+var.prefixCmd+"cmd\n§c"+var.prefixCmd+"config\n§c"+var.prefixCmd+"listserver\n§c"+var.prefixCmd+"bind\n"
 					+ "§c"+var.prefixCmd+"bind\n";
 		}

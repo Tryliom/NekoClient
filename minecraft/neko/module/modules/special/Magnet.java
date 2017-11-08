@@ -7,6 +7,7 @@ import neko.Client;
 import neko.manager.ModuleManager;
 import neko.module.Category;
 import neko.module.Module;
+import neko.module.modules.render.ItemESP;
 import neko.module.other.enums.MagnetWay;
 import neko.utils.RenderUtils;
 import neko.utils.TpUtils;
@@ -15,18 +16,16 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityWitch;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.util.BlockPos;
 
 public class Magnet extends Module {
 	private boolean classic = false;
-	private boolean all = true;
-	private boolean food = false;
-	private boolean attack = false;
-	private boolean defense = false;
 	private MagnetWay mode = MagnetWay.Single;
 	private static javax.swing.Timer timer = new javax.swing.Timer(500, new check());
 	private static Magnet instance;
@@ -52,10 +51,6 @@ public class Magnet extends Module {
 	
 	public void setValues() {
 		this.values = "§6Tp classic:§7 "+Utils.displayBool(classic)+"\n"
-				+ "§6Filtrage des items: "+Utils.displayBool(all)+"\n"
-				+ "§6Food: "+Utils.displayBool(all)+"\n"
-				+ "§6Attack: "+Utils.displayBool(all)+"\n"
-				+ "§6Defense: "+Utils.displayBool(all)+"\n"
 				+ "§6Mode de ramassage:§7 "+mode.name();
 	}
     
@@ -67,57 +62,12 @@ public class Magnet extends Module {
 		this.classic = classic;
 	}
 
-	public boolean isAll() {
-		return all;
-	}
-
-	public void setAll(boolean all) {
-		this.all = all;
-	}
-
-	public boolean isFood() {
-		return food;
-	}
-
-	public void setFood(boolean food) {
-		this.food = food;
-	}
-
-	public boolean isAttack() {
-		return attack;
-	}
-
-	public void setAttack(boolean attack) {
-		this.attack = attack;
-	}
-
-	public boolean isDefense() {
-		return defense;
-	}
-
-	public void setDefense(boolean defense) {
-		this.defense = defense;
-	}
-
 	public MagnetWay getMode() {
 		return mode;
 	}
 
 	public void setMode(MagnetWay mode) {
 		this.mode = mode;
-	}
-	
-	public Boolean isItemValid(EntityItem en) {
-		if (!all) {
-			return true;
-		} else if ((defense && en.getEntityItem().getItem() instanceof ItemArmor) || 
-				(attack && (en.getEntityItem().getItem() instanceof ItemSword || en.getEntityItem().getItem() instanceof ItemAxe)) ||
-				(food && en.getEntityItem().getItem() instanceof ItemFood)
-				) {
-			return true;
-		}
-		
-		return false;
 	}
 }
 
@@ -126,26 +76,26 @@ class check implements ActionListener {
 	Client var = Client.getNeko();
 	TpUtils tp = new TpUtils();	
 	Magnet m = Magnet.getMagnet();
+	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		try {
 			for (Object o : mc.theWorld.loadedEntityList) {
 				if (o instanceof EntityItem) {
-					EntityItem entity = (EntityItem) o;     
+					EntityItem entity = (EntityItem) o;   
 		        	BlockPos bll = entity.getPosition();
 		        	if (mc.theWorld.getBlockState(bll).getBlock().getMaterial() != Material.air ||
 		        			mc.theWorld.getBlockState(new BlockPos(bll.getX(), bll.getY()+1, bll.getZ())).getBlock().getMaterial() != Material.air || 
-		        			!mc.thePlayer.canEntityBeSeen(entity) || !m.isItemValid(entity))
+		        			!mc.thePlayer.canEntityBeSeen(entity)) {
 						continue;
+		        	}
 		        	Double b1 = mc.thePlayer.posX;
 		        	Double b2 = mc.thePlayer.posY;
 		        	Double b3 = mc.thePlayer.posZ;
-		        	String how = tp.doTpAller(entity, tp.getTargetInPos(bll).get(0), tp.getTargetInPos(bll).get(1), tp.getTargetInPos(bll).get(2), Magnet.getMagnet().isClassic(), tp.getK(bll));
+		        	String how = tp.doTpAller(entity, tp.getTargetInPos(bll).get(0)+0.5, tp.getTargetInPos(bll).get(1), tp.getTargetInPos(bll).get(2)+0.5, Magnet.getMagnet().isClassic(), tp.getK(bll));
 		        	tp.doTpRetour(how, tp.getTargetInPos(bll).get(0), tp.getTargetInPos(bll).get(1), tp.getTargetInPos(bll).get(2), tp.getK(bll));
 	        		mc.thePlayer.setPosition(b1, b2+0.001*Math.random(), b3);
-		        	if (m.getMode()==MagnetWay.Multi)
-		        		continue;
-		        	else
+		        	if (m.getMode()==MagnetWay.Single)
 		        		break;
 				}
 	        } 

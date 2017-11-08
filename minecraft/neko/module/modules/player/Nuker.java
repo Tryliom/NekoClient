@@ -28,7 +28,6 @@ public class Nuker extends Module {
 	public float nukerB = 0.15F;
 	public static ArrayList<Integer> nuke = new ArrayList<Integer>();
 	public static boolean safe = true;
-	public static boolean op = true;
 	private int delayNuker = 0;
 
 	public Nuker() {
@@ -44,8 +43,7 @@ public class Nuker extends Module {
 	}
 
 	public void setValues() {
-		this.values = "§6Range:§7 " + nukerRadius + "\n" + "§6Safe:§7 " + Utils.displayBool(safe) + "\n" + "§6Op:§7 "
-				+ Utils.displayBool(op);
+		this.values = "§6Range:§7 " + nukerRadius + "\n" + "§6Safe:§7 " + Utils.displayBool(safe);
 	}
 
 	public void onUpdate() {
@@ -112,15 +110,12 @@ public class Nuker extends Module {
 						BlockPos b = new BlockPos(this.xPos, this.yPos, this.zPos);
 						Chunk var2 = mc.theWorld.getChunkFromBlockCoords(b);
 						Block blockId = var2.getBlock(this.xPos, this.yPos, this.zPos);
-						if ((blockId != Blocks.air) && (blockId != Blocks.bedrock) && (blockId != Blocks.flowing_water)
-								&& (blockId != Blocks.water) && (blockId != Blocks.flowing_lava)
-								&& (blockId != Blocks.lava)) {
+						if ((blockId != Blocks.air)) {
 							if (Utils.verifBlock(blockId)) {
 								mc.thePlayer.sendQueue.addToSendQueue(
 										new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, b, EnumFacing.NORTH));
 								mc.thePlayer.sendQueue.addToSendQueue(
 										new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, b, EnumFacing.NORTH));
-								if (!this.op)
 									return;
 							}
 						}

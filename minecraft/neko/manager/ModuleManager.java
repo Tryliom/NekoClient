@@ -137,6 +137,7 @@ public class ModuleManager {
 		this.ActiveModule.add(new Nausicaah()); // Key NONE
 		this.ActiveModule.add(new Magnet()); // Key NONE
 		this.ActiveModule.add(new Search()); // Key NONE
+		this.ActiveModule.add(new Likaotique()); // Key NONE
 		
 		LockManager lm = LockManager.getManager();
 		// Ajouter les locks | -- = ..;

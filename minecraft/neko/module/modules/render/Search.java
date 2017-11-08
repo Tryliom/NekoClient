@@ -67,7 +67,6 @@ public class Search extends Module {
 				searchBlock = searchBlock_;
 				Utils.addChat("§a" + this.searchBlock.getLocalizedName() + " recherché !");
 			}
-			mc.renderGlobal.loadRenderers();
 			delay = 0;
 		} else
 			delay++;
@@ -89,7 +88,7 @@ public class Search extends Module {
 							RenderUtils.drawOutlinedBlockESP(b.getX() - mc.getRenderManager().renderPosX,
 									b.getY() - mc.getRenderManager().renderPosY,
 									b.getZ() - mc.getRenderManager().renderPosZ, 
-									0.33F, 0.33F, 0.99F, 0.2F, 7F, 1D, 1D, 1D);
+									0.15F, 0.15F, 0.99F, 0.2F, 7F, 1D, 1D, 1D);
 						}
 					}
 				}

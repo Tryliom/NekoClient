@@ -590,10 +590,7 @@ public class ChatUtils {
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("magnet")) {
 					Utils.addChat(Utils.sep);
-					Utils.addChat2("§6"+var.prefixCmd+"Magnet Filtre", var.prefixCmd+"magnet filtre", "§7Active/désactive le filtrage des items", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Magnet Attack", var.prefixCmd+"magnet attack", "§7Filtre les items pour prendre les armes", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Magnet Defense", var.prefixCmd+"magnet defense", "§7Filtre les items pour prendre les armures", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Magnet Food", var.prefixCmd+"magnet food", "§7Filtre les items pour prendre la nourriture", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Magnet classic", var.prefixCmd+"magnet classic", "§7Active/désactive le tp par diagonale", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Magnet Mode <Single:Multi>", var.prefixCmd+"magnet mode ", "§7Choisis entre:\n§7Prendre les items un à un (Envoie moins de paquets)\n§7Prend tous les items en même temps (Envoie plus de paquets)", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
@@ -889,6 +886,7 @@ public class ChatUtils {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Search add <ID du bloc>", var.prefixCmd+"search add ", "§7Ajoute le bloc et le cherche", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Search add <Nom du bloc>", var.prefixCmd+"search add ", "§7Ajoute le bloc et le cherche", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Search clear", var.prefixCmd+"search clear", "§7Clear le bloc cherché", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("nuker")) {
@@ -899,7 +897,6 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Nuker clear", var.prefixCmd+"nuker clear", "§7Vide votre liste", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Nuker list", var.prefixCmd+"nuker list", "§7Affiche la liste", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Nuker safe", var.prefixCmd+"nuker safe", "§7Ne casse pas le bloc en dessous de vous", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Nuker op", var.prefixCmd+"nuker op", "§7Casse tous les blocs en même temps (Envoie env 10x + de paquets)", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("step")) {
@@ -1716,6 +1713,9 @@ public class ChatUtils {
 					} catch (Exception e) {
 						Utils.addChat(err);
 					}												
+				} else if (args[1].equalsIgnoreCase("clear")) {
+					Utils.addChat("§aBloc cherché clear");
+					Search.getSearch().setSearchBlock(null);
 				}
 			}
 			
@@ -1815,13 +1815,6 @@ public class ChatUtils {
 					Utils.addChat("§aNuker safe activé !");
 				}
 				Nuker.safe=!Nuker.safe;
-			} else if (args[1].equalsIgnoreCase("op")) {
-				if (Nuker.op) {
-					Utils.addChat("§cNuker op désactivé !");
-				} else {
-					Utils.addChat("§aNuker op activé !");
-				}
-				Nuker.op=!Nuker.op;
 			} else if (args[1].equalsIgnoreCase("list")) {
 				try {
 					if (Nuker.nuke.size()==0) {
@@ -4270,34 +4263,13 @@ public class ChatUtils {
 				
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"magnet")) {
 				Magnet m = Magnet.getMagnet();
-				if (args[1].equalsIgnoreCase("filtre")) {
-					if (m.isAll()) {
-						Utils.addChat("§cFiltre désactivée !");
+				if (args[1].equalsIgnoreCase("classic")) {
+					if (m.isClassic()) {
+						Utils.addChat("§cTp classic désactivée !");
 					} else {
-						Utils.addChat("§aFiltre activée !");
+						Utils.addChat("§aTp classic activée !");
 					}
-					m.setAll(!m.isAll());
-				} else if (args[1].equalsIgnoreCase("attack")) {
-					if (m.isAttack()) {
-						Utils.addChat("§cFiltre par items d'attaque désactivée !");
-					} else {
-						Utils.addChat("§aFiltre par items d'attaque activée !");
-					}
-					m.setAttack(!m.isAttack());
-				} else if (args[1].equalsIgnoreCase("defense")) {
-					if (m.isDefense()) {
-						Utils.addChat("§cFiltre par items de défense désactivée !");
-					} else {
-						Utils.addChat("§aFiltre par items de défense activée !");
-					}
-					m.setDefense(!m.isDefense());
-				} else if (args[1].equalsIgnoreCase("food")) {
-					if (m.isFood()) {
-						Utils.addChat("§cFiltre par items de bouffe désactivée !");
-					} else {
-						Utils.addChat("§aFiltre par items de bouffe activée !");
-					}
-					m.setFood(!m.isFood());
+					m.setClassic(!m.isClassic());
 				} else if (args[1].equalsIgnoreCase("mode") && args.length>=3) {
 					String mode = "";
 					if (args[2].equalsIgnoreCase("Multi")) {

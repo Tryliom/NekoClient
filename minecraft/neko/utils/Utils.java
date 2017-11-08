@@ -2339,7 +2339,7 @@ public class Utils {
 		                s+=TutoManager.getTuto().isDone()+"\n"+Nuker.safe+"\n"+KillAura.speed+"\n"+PunKeel.attack+"\n"+PunKeel.delay+"\n"+Fastbow.getFast().getPacket()+"\n";
 		                s+=Step.getStep().isBypass()+"\n"+BowAimbot.getAim().getFov()+"\n"+BowAimbot.getAim().getLife()+"\n"+BowAimbot.getAim().getArmor()+"\n";
 		                s+=Reach.multiaura+"\n"+PunKeel.random+"\n"+(PunKeel.random ? PunKeel.rDelay.firstElement()+"\n"+PunKeel.rDelay.lastElement() : "0.5\n1.0")+"\n";
-		                s+=m.getMode()+"\n"+m.isAll()+"\n"+m.isAttack()+"\n"+m.isClassic()+"\n"+m.isDefense()+"\n"+m.isFood()+"\n"+Nuker.op+"\n";
+		                s+=m.getMode()+"\n"+m.isClassic()+"\n";
 		                writer.write(s);
 		                writer.flush();
 		            }
@@ -2985,17 +2985,7 @@ public class Utils {
 	                	if (i==165)
 	                		m.setMode(MagnetWay.valueOf(ligne));
 	                	if (i==166)
-	                		m.setAll(Boolean.parseBoolean(ligne));
-	                	if (i==167)
-	                		m.setAttack(Boolean.parseBoolean(ligne));
-	                	if (i==168)
 	                		m.setClassic(Boolean.parseBoolean(ligne));
-	                	if (i==169)
-	                		m.setDefense(Boolean.parseBoolean(ligne));
-	                	if (i==170)
-	                		m.setFood(Boolean.parseBoolean(ligne));
-	                	if (i==171)
-	                		Nuker.op=Boolean.parseBoolean(ligne);
                 	} catch (Exception e) {}                	
                 	i++;
                 }
