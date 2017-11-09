@@ -1,27 +1,23 @@
 package neko.module.modules.render;
 
-import java.util.ArrayList;
-
-import org.lwjgl.input.Keyboard;
+import java.util.Vector;
 
 import neko.module.Category;
 import neko.module.Module;
-import neko.module.other.PaintBloc;
 import neko.utils.RenderUtils;
 import neko.utils.Utils;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.gui.inventory.GuiInventory;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
-import net.minecraft.world.chunk.Chunk;
 
 public class Search extends Module {
 	private Block searchBlock;
 	private int delay = 0;
-	private int renderDistance = 100;
+	private int delay_ = 0;
+	private int refreshTime = 10;
+	private int renderDistance = 200;
+	private Vector<BlockPos> list = new Vector<>();
 	private static Search instance = null;
 
 	public Search() {
@@ -70,30 +66,41 @@ public class Search extends Module {
 			delay = 0;
 		} else
 			delay++;
-	}
+		if (delay_ > 20*refreshTime) {
+			if (searchBlock != null) {
+				list.clear();
+				for (int y = (int) renderDistance; y >= (int) - renderDistance; y--) {
+					for (int z = (int) - renderDistance; z <= renderDistance; z++) {
+						for (int x = (int) - renderDistance; x <= renderDistance; x++) {
+							int xPos = ((int) Math.round(mc.thePlayer.posX + x));
+							int yPos = ((int) Math.round(mc.thePlayer.posY + y));
+							int zPos = ((int) Math.round(mc.thePlayer.posZ + z));
 
-	public void onRender3D() {
-		if (searchBlock != null) {
-			for (int y = (int) renderDistance; y >= (int) - renderDistance; y--) {
-				for (int z = (int) - renderDistance; z <= renderDistance; z++) {
-					for (int x = (int) - renderDistance; x <= renderDistance; x++) {
-						int xPos = ((int) Math.round(this.mc.thePlayer.posX + x));
-						int yPos = ((int) Math.round(this.mc.thePlayer.posY + y));
-						int zPos = ((int) Math.round(this.mc.thePlayer.posZ + z));
+							BlockPos b = new BlockPos(xPos, yPos, zPos);
+							Block block = mc.theWorld.getChunkFromBlockCoords(b).getBlock(xPos, yPos, zPos);
 
-						BlockPos b = new BlockPos(xPos, yPos, zPos);
-						Block block = mc.theWorld.getChunkFromBlockCoords(b).getBlock(xPos, yPos, zPos);
-
-						if ((block == searchBlock)) {
-							RenderUtils.drawOutlinedBlockESP(b.getX() - mc.getRenderManager().renderPosX,
-									b.getY() - mc.getRenderManager().renderPosY,
-									b.getZ() - mc.getRenderManager().renderPosZ, 
-									0.15F, 0.15F, 0.99F, 0.2F, 7F, 1D, 1D, 1D);
+							if ((block == searchBlock)) {
+								list.add(b);
+							}
 						}
 					}
 				}
 			}
-		}
+			delay_ = 0;
+		} else
+			delay_++;
+	}
+
+	public void onRender3D() {
+		try {
+			if (searchBlock != null) {
+				for (BlockPos b : list)
+					RenderUtils.drawOutlinedBlockESP(b.getX() - mc.getRenderManager().renderPosX,
+							b.getY() - mc.getRenderManager().renderPosY,
+							b.getZ() - mc.getRenderManager().renderPosZ, 
+							0.15F, 0.15F, 0.99F, 0.2F, 7F, 1D, 1D, 1D);
+			}
+		} catch (Exception e) {}
 	}
 
 }

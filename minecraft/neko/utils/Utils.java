@@ -99,6 +99,7 @@ import neko.module.modules.render.NekoChat;
 import neko.module.modules.render.Paint;
 import neko.module.modules.render.Power;
 import neko.module.modules.render.Radar;
+import neko.module.modules.render.Search;
 import neko.module.modules.render.Tracers;
 import neko.module.modules.render.Wallhack;
 import neko.module.modules.render.Water;
@@ -2339,14 +2340,12 @@ public class Utils {
 		                s+=TutoManager.getTuto().isDone()+"\n"+Nuker.safe+"\n"+KillAura.speed+"\n"+PunKeel.attack+"\n"+PunKeel.delay+"\n"+Fastbow.getFast().getPacket()+"\n";
 		                s+=Step.getStep().isBypass()+"\n"+BowAimbot.getAim().getFov()+"\n"+BowAimbot.getAim().getLife()+"\n"+BowAimbot.getAim().getArmor()+"\n";
 		                s+=Reach.multiaura+"\n"+PunKeel.random+"\n"+(PunKeel.random ? PunKeel.rDelay.firstElement()+"\n"+PunKeel.rDelay.lastElement() : "0.5\n1.0")+"\n";
-		                s+=m.getMode()+"\n"+m.isClassic()+"\n";
+		                s+=m.getMode()+"\n"+m.isClassic()+"\n"+Block.getIdFromBlock(Search.getSearch().getSearchBlock())+"\n";
 		                writer.write(s);
 		                writer.flush();
 		            }
 
-		        } catch (IOException ex) {
-		            
-		        }				
+		        } catch (IOException ex) {}				
 			}
 			
 		}).start();
@@ -2986,6 +2985,8 @@ public class Utils {
 	                		m.setMode(MagnetWay.valueOf(ligne));
 	                	if (i==166)
 	                		m.setClassic(Boolean.parseBoolean(ligne));
+	                	if (i==167)
+	                		Search.getSearch().setSearchBlock(Block.getBlockById(Integer.parseInt(ligne)));
                 	} catch (Exception e) {}                	
                 	i++;
                 }
