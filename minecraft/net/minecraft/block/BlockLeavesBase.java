@@ -2,6 +2,7 @@ package net.minecraft.block;
 
 import neko.Client;
 import neko.module.modules.render.Xray;
+import neko.utils.Utils;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -24,12 +25,7 @@ public class BlockLeavesBase extends Block
 
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
     {
-    	Client var = Client.getNeko();
-    	if (var.moduleManager.xrayModule.getToggled()) {
-    		for (int i=0;i<Xray.xray.size();i++) {
-    			if (this == Block.getBlockById(Xray.xray.get(i)))
-    				return true;
-    		}
+    	if (Utils.isToggle("Xray")) {
     		return false;
     	}
 		

@@ -76,13 +76,15 @@ import neko.module.modules.render.NekoChat;
 import neko.module.modules.render.Paint;
 import neko.module.modules.render.Power;
 import neko.module.modules.render.Radar;
+import neko.module.modules.render.Search;
 import neko.module.modules.render.Tracers;
 import neko.module.modules.render.Wallhack;
 import neko.module.modules.render.Water;
 import neko.module.modules.render.WorldTime;
-import neko.module.modules.render.Xray;
 import neko.module.modules.special.DropShit;
 import neko.module.modules.special.FireTrail;
+import neko.module.modules.special.Likaotique;
+import neko.module.modules.special.Magnet;
 import neko.module.modules.special.PunKeel;
 import neko.module.modules.special.Pyro;
 import neko.module.modules.special.Reflect;
@@ -103,6 +105,7 @@ import neko.module.other.enums.Chat;
 import neko.module.other.enums.EventType;
 import neko.module.other.enums.Form;
 import neko.module.other.enums.IrcMode;
+import neko.module.other.enums.MagnetWay;
 import neko.module.other.enums.Rate;
 import neko.module.other.enums.SpeedEnum;
 import net.mcleaks.Callback;
@@ -586,6 +589,12 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Disc <String> <Double>", var.prefixCmd+"disc ", "§7Joue le disc et modifie le volume sur la distance", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("magnet")) {
+					Utils.addChat(Utils.sep);
+					Utils.addChat2("§6"+var.prefixCmd+"Magnet classic", var.prefixCmd+"magnet classic", "§7Active/désactive le tp par diagonale", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Magnet Mode <Single:Multi>", var.prefixCmd+"magnet mode ", "§7Choisis entre:\n§7Prendre les items un à un (Envoie moins de paquets)\n§7Prend tous les items en même temps (Envoie plus de paquets)", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("clickaim")) {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"ClickAim multiaura", var.prefixCmd+"clickaim ", "§7Change le mode multiaura au singleaura et inversement", false, Chat.Summon);
@@ -718,7 +727,9 @@ public class ChatUtils {
 				} else if (args[1].equalsIgnoreCase("punkeel") || args[1].equalsIgnoreCase("pk")) {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Punkeel Delay <Double>", var.prefixCmd+"punkeel delay ", "§7Modifie le delay entre les tp, par ex 0.5 donne un VRAI lag de 500ms, les joueurs vous voit vous tp tous les 0.5sec", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Punkeel Attack", var.prefixCmd+"punkeel attack ", "§7Fais que quand on frappe le packet d'attaque s'envoie tout de suite au lieu des ms normaux", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Punkeel Attack", var.prefixCmd+"punkeel attack", "§7Fais que quand on frappe le packet d'attaque s'envoie tout de suite au lieu des ms normaux", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Punkeel Random", var.prefixCmd+"punkeel random", "§7Active/désactive le punkeel random", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Punkeel Random <Delay min> <Delay max>", var.prefixCmd+"punkeel random ", "§7Active/désactive le punkeel Random et Met un delay aléatoire entre 2 valeurs min et max entre chaque tp", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("automlg") || args[1].equalsIgnoreCase("mlg")) {
@@ -872,6 +883,13 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Freecam <Speed>", var.prefixCmd+"freecam ", "§7Modifie la vitesse du freecam (De base à 1)", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("search")) {
+					Utils.addChat(Utils.sep);
+					Utils.addChat2("§6"+var.prefixCmd+"Search add <ID du bloc>", var.prefixCmd+"search add ", "§7Ajoute le bloc et le cherche", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Search add <Nom du bloc>", var.prefixCmd+"search add ", "§7Ajoute le bloc et le cherche", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Search clear", var.prefixCmd+"search clear", "§7Clear le bloc cherché", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("nuker")) {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Nuker add <Bloc>", var.prefixCmd+"nuker add ", "§7Ajoute un bloc à votre liste", false, Chat.Summon);
@@ -914,14 +932,6 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Irc list", var.prefixCmd+"irc list", "§7Affiche la liste des joueurs connectés sur Neko et l'IRC", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Irc hide", var.prefixCmd+"irc hide", "§7Cache les messages de join/left", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Irc playerclic", var.prefixCmd+"irc playerclic", "§7Change entre la connexion au serveur du joueur ou le contacter par message privé quand on clic dessus", false, Chat.Summon);
-					Utils.checkXp(xp);
-					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-				} else if (args[1].equalsIgnoreCase("xray")) {
-					Utils.addChat(Utils.sep);
-					Utils.addChat2("§6"+var.prefixCmd+"Xray add <Bloc>", var.prefixCmd+"xray add ", "§7Ajoute un bloc à votre liste", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Xray rem <Bloc>", var.prefixCmd+"xray rem ", "§7Supprime un bloc de votre liste", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Xray clear", var.prefixCmd+"xray clear", "§7Vide votre liste", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Xray list", var.prefixCmd+"xray list", "§7Affiche la liste", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("dropshit")) {
@@ -1386,7 +1396,7 @@ public class ChatUtils {
 								Utils.addChat("§7[§aDerniers pseudos§7]");
 								String list[] = s.split(" ");
 								for (int i = list.length-1;i!=-1;i--)
-									Utils.addChat("§7+§a"+list[i]);
+									Utils.addChat("§7>>> §a"+list[i]);
 							}
 						}
 					}).start();
@@ -1412,7 +1422,6 @@ public class ChatUtils {
 					Utils.saveNuker(fi);
 					Utils.saveShit(fi);
 					Utils.saveValues(fi);
-					Utils.saveXray(fi);
 					Utils.addChat("§aConfig "+args[2]+" crée !");
 				} else if (args[1].equalsIgnoreCase("load") && args.length>=3) {
 					String fi = Utils.linkSave+(mc.isRunningOnMac ? "/Config/"+args[2]+"/" : "\\Config\\"+args[2]+"\\");
@@ -1428,7 +1437,6 @@ public class ChatUtils {
 						Utils.loadNuker(fi);
 						Utils.loadShit(fi);
 						Utils.loadValues(fi);
-						Utils.loadXray(fi);
 						Utils.cfg=false;
 						Utils.display = dis;
 						Utils.addChat("§aConfig "+args[2]+" chargée !");
@@ -1676,11 +1684,64 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"likaotique") || args[0].equalsIgnoreCase(var.prefixCmd+"lik")) {
+				if (args[1].equalsIgnoreCase("delay")) {
+					if (Utils.isDouble(args[2])) {
+						if (Double.parseDouble(args[2])==0d)
+							args[2] = "1";
+						Likaotique.getLik().getTimer().setDelay((int) Double.parseDouble(args[2])*100);
+						Likaotique.getLik().setDelay((int) Math.round(Double.parseDouble(args[2])*100));
+						Utils.addChat("§aDelay du Likaotique changé à "+args[2]+"sec !");
+					}											
+				} else if (args[1].equalsIgnoreCase("radius")) {
+					if (Utils.isInteger(args[2])) {
+						Likaotique.getLik().setRadius(Integer.parseInt(args[2]));
+						Utils.addChat("§aRadius du Likaotique changé à "+args[2]+" !");
+					}
+				}
+			}
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"search")) {
+				if (args[1].equalsIgnoreCase("add")) {
+					try {
+						if (Utils.isInteger(args[2])) {
+							int x = Integer.parseInt(args[2]);						
+							Block b = Block.getBlockById(x);
+							
+							if (b==null) {
+								Utils.addChat("§cCe bloc n'existe pas !");			
+							} else if (b!=Search.getSearch().getSearchBlock()) {
+								Search.getSearch().setSearchBlock(b);
+								Utils.addChat("§aLe bloc "+b.getLocalizedName()+" est cherché !");
+								Search.getSearch().refresh();
+							} else 
+								Utils.addChat("§cLe bloc "+b.getLocalizedName()+" est déjà cherché !");	
+						} else if (Utils.isABlock(args[2])) {					
+							Block b = Block.getBlockFromName(args[2]);
+							if (b==null) {
+								Utils.addChat("§cCe bloc n'existe pas !");			
+							} else if (b!=Search.getSearch().getSearchBlock()) {
+								Search.getSearch().setSearchBlock(b);
+								Utils.addChat("§aLe bloc "+b.getLocalizedName()+" est cherché !");
+								Search.getSearch().refresh();
+							} else 
+								Utils.addChat("§cLe bloc "+b.getLocalizedName()+" est déjà cherché !");	
+						} else {
+							Utils.addError("Ceci n'est pas un bloc !\n§aSyntaxe correcte: "+var.prefixCmd+"search <ID de bloc> ou <nom du bloc>");
+						}
+						
+					} catch (Exception e) {
+						Utils.addChat(err);
+					}												
+				} else if (args[1].equalsIgnoreCase("clear")) {
+					Utils.addChat("§aBloc cherché clear");
+					Search.getSearch().setSearchBlock(null);
+					Search.getSearch().refresh();
+				}
+			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"nuker")) {
-				if (args.length==1) {
-					Utils.toggleModule("Nuker");
-				} else if (args[1].equalsIgnoreCase("add")) {
+				if (args[1].equalsIgnoreCase("add")) {
 					try {
 						if (Utils.isInteger(args[2])) {
 							int x = Integer.parseInt(args[2]);						
@@ -1836,8 +1897,7 @@ public class ChatUtils {
 						
 					} catch (Exception e) {
 						Utils.addChat(err);
-					}
-					Utils.saveXray();												
+					}											
 			} else if (args[1].equalsIgnoreCase("clear")) {
 				try {
 					sh.getList().clear();
@@ -1888,7 +1948,6 @@ public class ChatUtils {
 				} catch (Exception e) {
 					Utils.addChat(err);
 				}
-				Utils.saveXray();
 			} else if (args[1].equalsIgnoreCase("list")) {
 				try {
 					if (sh.getList().size()==0) {
@@ -1897,109 +1956,6 @@ public class ChatUtils {
 						Utils.addChat(Utils.sep2+"§6DropShit"+Utils.sep2);
 						for (int j=0;j<sh.getList().size();j++) {
 							Utils.addChat("Item "+(j+1)+" : "+Item.getItemById(sh.getList().get(j)).getUnlocalizedName().replaceFirst("tile.", ""));
-						}
-						Utils.addChat(Utils.sep);
-					}
-				} catch (Exception e) {
-					Utils.addChat(err);
-				}
-			}
-				Utils.checkXp(xp);
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"xray")) {
-				if (args.length==1) {
-					Utils.toggleModule("Xray");
-				} else if (args[1].equalsIgnoreCase("add")) {
-					try {
-						if (Utils.isInteger(args[2])) {
-							int x = Integer.parseInt(args[2]);						
-							int c=0;
-							for (int i=0;i<Xray.xray.size();i++) {
-								if (Xray.xray.get(i)==x) {
-									c++;
-								}
-							}
-							if (c!=0) {
-								Utils.addChat("§cLe bloc "+Block.getBlockById(x).getLocalizedName()+" a déjà été ajouté !");									
-							} else {
-								Xray.xray.add(x);
-								Utils.addChat("§aLe bloc "+Block.getBlockById(x).getLocalizedName()+" a été ajouté !");
-							}
-						} else {					
-							int c=0;
-							if (Utils.isABlock(args[2])) {
-								for (int i=0;i<Xray.xray.size();i++) {
-									if (Block.getBlockById(Xray.xray.get(i)).getLocalizedName()==Block.getBlockFromName(args[2]).getLocalizedName()) {
-										c++;
-									}
-								}
-								if (c!=0) {
-									Utils.addChat("§cLe bloc "+Block.getBlockById(Block.getIdFromBlock(Block.getBlockFromName(args[2]))).getLocalizedName()+" a déjà été ajouté !");									
-								} else {
-									Xray.xray.add(Block.getIdFromBlock(Block.getBlockFromName(args[2])));
-									Utils.addChat("§aLe bloc "+Block.getBlockById(Block.getIdFromBlock(Block.getBlockFromName(args[2]))).getLocalizedName()+" a été ajouté !");
-								}
-							} else {
-								Utils.addChat("§cCe bloc n'existe pas !");
-							}
-						}
-						
-					} catch (Exception e) {
-						Utils.addChat(err);
-					}
-					Utils.saveXray();												
-			} else if (args[1].equalsIgnoreCase("clear")) {
-				try {
-					Xray.xray.clear();
-					Utils.addChat("§aListe vidée !");
-				} catch (Exception e) {
-					Utils.addChat(err);
-				}
-			} else if (args[1].equalsIgnoreCase("rem")) {
-				try {
-					if (Utils.isInteger(args[2])) {
-						int c=0;
-						int x = Integer.parseInt(args[2]);
-						for (int j=0;j<Xray.xray.size();j++) {
-							if (Xray.xray.get(j)==x) {
-								Xray.xray.remove(j);
-								c++;									
-							}
-						}
-						if (c!=0) {
-							Utils.addChat("§aLe bloc "+Block.getBlockById(x).getLocalizedName()+" a été retiré !");
-						} else {
-							Utils.addChat("§cLe bloc "+Block.getBlockById(x).getLocalizedName()+" n'est pas dans la liste !");
-						}
-					} else {
-						int c=0;
-						for (int j=0;j<Xray.xray.size();j++) {
-							if (Block.getBlockById(Xray.xray.get(j)).getLocalizedName()==Block.getBlockFromName(args[2]).getLocalizedName()) {
-								c++;
-								Xray.xray.remove(j);
-							}									
-							
-						}
-						if (c!=0) {
-							Utils.addChat("§aLe bloc "+Block.getBlockById(Block.getIdFromBlock(Block.getBlockFromName(args[2]))).getLocalizedName()+" a été retiré !");
-						} else {
-							Utils.addChat("§cLe bloc "+Block.getBlockById(Block.getIdFromBlock(Block.getBlockFromName(args[2]))).getLocalizedName()+" n'est pas dans la liste !");
-						}
-					}
-				} catch (Exception e) {
-					Utils.addChat(err);
-				}
-				Utils.saveXray();
-			} else if (args[1].equalsIgnoreCase("list")) {
-				try {
-					if (Xray.xray.size()==0) {
-						Utils.addChat("Aucun blocs ajoutés");
-					} else {
-						Utils.addChat(Utils.sep2+"§6Xray"+Utils.sep2);
-						for (int j=0;j<Xray.xray.size();j++) {
-							Utils.addChat("Block : "+Block.getBlockById(Xray.xray.get(j)).getLocalizedName());
 						}
 						Utils.addChat(Utils.sep);
 					}
@@ -4130,7 +4086,13 @@ public class ChatUtils {
 			}	
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"listserver")) {
-				new RequestThread("listserver", null).start();
+				if (args.length==1)
+					new RequestThread("listserver", null).start();
+				else if (Utils.isInteger(args[1])) {
+					ArrayList<String> list = new ArrayList<String>();
+					list.add(args[1]);
+					new RequestThread("listserver", list).start();
+				}
 			}			
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"connect") || args[0].equalsIgnoreCase(var.prefixCmd+"co")) {
@@ -4319,7 +4281,33 @@ public class ChatUtils {
 				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
-								
+				
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"magnet")) {
+				Magnet m = Magnet.getMagnet();
+				if (args[1].equalsIgnoreCase("classic")) {
+					if (m.isClassic()) {
+						Utils.addChat("§cTp classic désactivée !");
+					} else {
+						Utils.addChat("§aTp classic activée !");
+					}
+					m.setClassic(!m.isClassic());
+				} else if (args[1].equalsIgnoreCase("mode") && args.length>=3) {
+					String mode = "";
+					if (args[2].equalsIgnoreCase("Multi")) {
+						mode = "Multi";
+					} else if (args[2].equalsIgnoreCase("Single")) {
+						mode = "Single";
+					}
+					m.setMode(MagnetWay.valueOf(mode));
+					Utils.addChat("§aMode changé en "+mode+" !");
+				} else {
+					Utils.addError(error);
+					mc.thePlayer.playSound("mob.villager.haggle", 1.0F, 1.0F);
+				}
+				Utils.checkXp(xp);
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"ka")) {
 				if (args.length==1) {
 					Utils.toggleModule("KillAura");
@@ -4578,6 +4566,28 @@ public class ChatUtils {
 							Utils.addChat("§aMode Attack du Punkeel activé !");
 						}
 						PunKeel.attack=!PunKeel.attack;
+					} else if (args[1].equalsIgnoreCase("random")) {
+						if (PunKeel.random) {
+							Utils.addChat("§cMode Random du Punkeel désactivé !");
+						} else {
+							Utils.addChat("§aMode Random du Punkeel activé !");
+						}
+						PunKeel.random=!PunKeel.random;
+						if (args.length>=4) {
+							if (Utils.isDouble(args[2]) && Utils.isDouble(args[3])) {
+								Utils.addChat("§aDelay min et max mis à jour !");
+								PunKeel.rDelay.clear();
+								if (Double.parseDouble(args[2])>Double.parseDouble(args[3])) {
+									PunKeel.rDelay.addElement(Double.parseDouble(args[3]));
+									PunKeel.rDelay.addElement(Double.parseDouble(args[2]));
+								} else {
+									PunKeel.rDelay.addElement(Double.parseDouble(args[2]));
+									PunKeel.rDelay.addElement(Double.parseDouble(args[3]));
+								}
+							} else {
+								Utils.addError("Les valeurs ne sont pas des Double\n§aSyntax correcte: "+var.prefixCmd+"pk random <Delay min> <Delay max>");
+							}
+						}
 					} else if (args[1].equalsIgnoreCase("delay") && args.length>=3 && Utils.isDouble(args[2])) {
 						PunKeel.delay = Double.parseDouble(args[2]);
 						Utils.addChat("§aDelay du Punkeel mis à "+args[2]+"sec !");

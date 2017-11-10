@@ -309,9 +309,10 @@ public class Reach extends Module {
 		for (k=1;u.verif(entityPosX, k) > 4;k++) {}
 		for (;u.verif(entityPosY, k) > 4;k++) {}
 		for (;u.verif(entityPosZ, k) > 4;k++) {} 
-		TpUtils tp = new TpUtils();
-		return tp.doTpAller(en, entityPosX, entityPosY, entityPosZ, classic, k);
 		
+		TpUtils tp = new TpUtils();
+		tp.getK(en.getPosition());
+		return tp.doTpAller(en, entityPosX, entityPosY, entityPosZ, classic, k);		
 	}
 	
 	public void doTpRetour(String how) {

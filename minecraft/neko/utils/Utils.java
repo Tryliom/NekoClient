@@ -99,14 +99,15 @@ import neko.module.modules.render.NekoChat;
 import neko.module.modules.render.Paint;
 import neko.module.modules.render.Power;
 import neko.module.modules.render.Radar;
+import neko.module.modules.render.Search;
 import neko.module.modules.render.Tracers;
 import neko.module.modules.render.Wallhack;
 import neko.module.modules.render.Water;
 import neko.module.modules.render.WorldTime;
-import neko.module.modules.render.Xray;
 import neko.module.modules.special.DropShit;
 import neko.module.modules.special.FastDura;
 import neko.module.modules.special.FireTrail;
+import neko.module.modules.special.Magnet;
 import neko.module.modules.special.Nausicaah;
 import neko.module.modules.special.PunKeel;
 import neko.module.modules.special.Pyro;
@@ -123,6 +124,7 @@ import neko.module.other.Xp;
 import neko.module.other.enums.BowMode;
 import neko.module.other.enums.Chat;
 import neko.module.other.enums.IrcMode;
+import neko.module.other.enums.MagnetWay;
 import neko.module.other.enums.Rate;
 import neko.module.other.enums.SpeedEnum;
 import net.mcleaks.MCLeaks;
@@ -143,6 +145,7 @@ import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.ClickEvent.Action;
+import net.minecraft.init.Blocks;
 import net.minecraft.event.HoverEvent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -151,20 +154,23 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.play.client.C00PacketKeepAlive;
 import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.client.C03PacketPlayer;
+import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Session;
 import net.minecraft.world.WorldSettings.GameType;
+import net.minecraft.world.chunk.Chunk;
 
+/**
+ * Utilité de cette classe:<br>
+ * Sert pour les méthodes pratiques utilisées partout et variables 
+ */	
 public class Utils {
-	/*
-	 * Utilité de cette classe:
-	 * Sert pour les méthodes pratiques utilisées partout et variables 
-	 */	
 	public static Minecraft mc = Minecraft.getMinecraft();
 	public static boolean warn=false;
 	public static double warnB=0;
@@ -258,7 +264,7 @@ public class Utils {
 				}
 			}
 		}
-	}
+	}	
 	
 	public static void addChat2Irc(String txt, String cmd, String desc, boolean onlyHover, Chat action) {
 		if (verif==null) {
@@ -276,6 +282,18 @@ public class Utils {
 		}
 	}
 	
+	/**
+	 * Met dans le chat un "Erreur [?]" avec le [?] en hover pour afficher la raison, les deux en rouge
+	 * @param reason	Raison de l'erreur
+	 */
+	public static void addError(String reason) {
+		mc.ingameGUI.getChatGUI().printChatMessage(new ChatComponentText("§cErreur ").appendSibling(getHoverText("§8[§9?§8]", "§c"+reason)));
+	}
+	
+	/**
+	 * Retourne le "[Neko] " en couleur
+	 * @return	String en fin de ligne couleur orange §6
+	 */
 	public static String getNeko() {
 		return "§8[§9Neko§8]§6 ";
 	}
@@ -672,6 +690,35 @@ public class Utils {
 	    	return false;
 	      else		
 	    	return true;
+	}
+	
+	/**
+	 * Sert � v�rifier si une ip mc est pr�sente dans une liste d'ip mc mais qu'ils ont une adresse diff�rente mais qui m�ne au m�me endroit.
+	 * @param list	Vector de String, liste d'ip mc
+	 * @param s		IP mc � v�rifier
+	 * @return		True si l'ip est d�j� pr�sente dans la liste et False si elle n'y est pas
+	 */
+	public static Boolean isSameServerIP(Vector<String> list, String s) {
+		InetAddress ia = null;
+		try {
+			ia = InetAddress.getByName(s);
+		} catch (Exception e) {}
+		
+		if (ia==null) {
+			return false;
+		} else {
+			for (String r : list) {
+				InetAddress ria = null;
+				try {
+					ria = InetAddress.getByName(r);
+					if (ria.getHostAddress().equalsIgnoreCase(ia.getHostAddress())) {
+						return true;
+					}						
+				} catch (Exception e) {}
+			}
+		}
+		
+		return false;
 	}
 	
 	public static float getDistanceBetweenAngles(float angle1, float angle2) {
@@ -1126,17 +1173,11 @@ public class Utils {
 		return i;
 	}
 	
-	public static void getFace(String email) {
-		
-	}
-	
 	public static void crit() {
 		if (!mc.thePlayer.onGround)
-			return;		
-	    mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY + 0.05D, mc.thePlayer.posZ, false));
+			return;
+		mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY + 0.01D*Math.random(), mc.thePlayer.posZ, false));
 	    mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, false));
-	    mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY + 0.012511D, mc.thePlayer.posZ, false));
-	    mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, false));	    
 	}
 	//TODO: SaveAll
 	public static void saveAll() {
@@ -1145,7 +1186,6 @@ public class Utils {
 		saveMod();
 		saveRpg();
 		saveValues();
-		saveXray();
 		saveNuker();
 		saveLock();
 		saveRank();
@@ -1240,9 +1280,9 @@ public class Utils {
 	
 	public static BowMode pass(BowMode b) {
 		if (b == BowMode.Max) {
-			b=BowMode.Min;
+			b = BowMode.Min;
 		} else if (b == BowMode.Min) {
-			b=BowMode.Désactivé;
+			b = BowMode.Désactivé;
 		} else if (b == BowMode.Désactivé) {
 			b = BowMode.Max;
 		}
@@ -1250,8 +1290,9 @@ public class Utils {
 	}
 	
 	public static boolean isInteger(String s) {
+		int l = 0;
 		try {
-			int l = Integer.parseInt(s);
+			l = Integer.parseInt(s);
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -1407,6 +1448,28 @@ public class Utils {
 			}
 			
 		}
+	}
+	
+	public static BlockPos getRandBlock(int radius, double chance) {
+		BlockPos b = null;
+	      for (int z = (int)-radius; z <= radius; z++) {
+	        for (int x = (int)-radius; x <= radius; x++)
+	        {
+		          int xPos = ((int)Math.round(mc.thePlayer.posX + x));
+		          int yPos = ((int)Math.round(mc.thePlayer.posY));
+		          int zPos = ((int)Math.round(mc.thePlayer.posZ + z));
+		          
+		          b = new BlockPos(xPos, yPos, zPos);
+		          if (Math.random()<chance) {
+		        	  return b;
+		          }
+	        }
+	      }
+	      return b;
+	}
+	
+	public static void sendTpPos(BlockPos bp) {
+		mc.getNetHandler().addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(bp.getX(), bp.getY(), bp.getZ(), true));
 	}
 	
 	public static boolean isAllRateHaveLvl(int lvl, Rate r) {
@@ -1630,11 +1693,17 @@ public class Utils {
 	}
 	
 	public static void attack(Entity entity, boolean ma) {
-		if (ma) {
+		if (isToggle("FastDura")) {
+			FastDura.doDura(entity);
+		} else if (isToggle("Nausicaah")) {
+			Nausicaah.getNausi().doNausicaah(entity);
+		} else
+			mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK));
+		if (ma)
 			for (Object o : (var.mode.equalsIgnoreCase("Player") ? mc.theWorld.playerEntities : mc.theWorld.loadedEntityList)) {
 				if (o instanceof EntityLivingBase) {
 					EntityLivingBase en = (EntityLivingBase) o;
-					if (isEntityValid(en) && mc.thePlayer.getDistanceToEntity(en) <= 6) {
+					if (isEntityValid(en) && mc.thePlayer.getDistanceToEntity(en) <= 6 && entity!=en) {
 						if (isToggle("FastDura")) {
 							FastDura.doDura(en);
 						} else if (isToggle("Nausicaah")) {
@@ -1644,14 +1713,6 @@ public class Utils {
 					}
 				}
 			}
-		} else {
-			if (isToggle("FastDura")) {
-				FastDura.doDura(entity);
-			} else if (isToggle("Nausicaah")) {
-				Nausicaah.getNausi().doNausicaah(entity);
-			} else
-				mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK));
-		}
 	}
 	
 	public static Boolean isEntityValid(EntityLivingBase en) {
@@ -1689,9 +1750,9 @@ public class Utils {
     }
 	
 	public static int rainbow(int offset) {
-        long offset_ = 200000000L /*OR 200000000L (1 extra zero)  20000000 for more drastic rainbow*/ * offset;
-        float hue = (System.nanoTime() + offset_) / 4.0E9f /*can also be [5.0E9f, 7.0E9f, 8.0E9f, 10.0E9f] */ % 1.0f;
-        return (int) (Long.parseLong(Integer.toHexString(Integer.valueOf(Color.HSBtoRGB(hue, 50 / 100.0f, 30 / 100.0f))), 16));
+        long offset_ = 2000000000000L * offset;
+        float hue = (System.nanoTime() + offset_) / 4.0E9f % 1.0f;
+        return (int) (Long.parseLong(Integer.toHexString(Integer.valueOf(Color.HSBtoRGB(hue, 0.5f, 0.5f))), 16));
     }
 	
 	public static boolean isSword() {
@@ -2078,24 +2139,6 @@ public class Utils {
         } catch (IOException ex) {}
 	}
 	
-	public static void saveXray(String...fi) {
-		if (verif!=null)
-			return;
-		String s ="";
-		File file = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"xray.neko");
-        try {
-            file.createNewFile();            
-            try (FileWriter writer = new FileWriter(file)) {
-            	for (int i : Xray.xray) {
-            		s+=i+"\n";
-            	}
-                writer.write(s);
-                writer.flush();
-            }
-
-        } catch (IOException ex) {}
-	}
-	
 	public static void saveNuker(String...fi) {
 		if (verif!=null)
 			return;
@@ -2214,6 +2257,13 @@ public class Utils {
 		            	TpBack tp = TpBack.getInstance();
 		            	Velocity v = Velocity.getVelocity();
 		            	Build b = Build.getBuild();
+		                Ping p = Ping.getPing();
+		                NekoChat nc = NekoChat.getChat();
+		                CallCmd c = CallCmd.getCall();
+		                String pl = "";
+		                for (String st : c.getListPlayer())
+		                	pl+=st+":";
+		                Magnet m = Magnet.getMagnet();
 		            	s+=Dolphin.dolph+"\n";
 		            	s+=Flight.speed+"\n";
 		            	s+=KillAura.cps+"\n"+KillAura.range+"\n"+KillAura.lockView+"\n";
@@ -2285,25 +2335,18 @@ public class Utils {
 		                s+=Phase.getPhase().isVphase()+"\n\n";
 		                s+=AutoMLG.getMLG().getFall()+"\n"+b.isDown()+"\n"+b.isSneak()+"\n"+b.isUp()+"\n"+b.isWall()+"\n";
 		                s+=Fasteat.getFast().getPacket()+"\n"+PushUp.getPush().getPacket()+"\n"+Speed709.getSpeed().getMode()+"\n"+Reflect.getReflect().getPower()+"\n";
-		                Ping p = Ping.getPing();
-		                NekoChat nc = NekoChat.getChat();
 		                s+=p.getDelay()+"\n"+p.isFreezer()+"\n"+p.isRandom()+"\n"+KillAura.nobot+"\n"+SpamBot.getBot().getPseudo()+"\n"+var.animation+"\n";
 		                s+=KillAura.premium+"\n"+GuiAltManager.check+"\n"+var.onlyrpg.isActive()+"\n"+nc.getColor()+"\n"+nc.getHeight()+"\n"+nc.getWidth()+"\n";
-		                CallCmd c = CallCmd.getCall();
-		                String pl = "";
-		                for (String st : c.getListPlayer())
-		                	pl+=st+":";
 		                s+=c.getCmd2()+"\n"+pl+"\n"+Register.getReg().getMdp()+"\n"+God.getInstance().getBackup()+"\n"+Highjump.getJump().getHeight()+"\n";
 		                s+=TutoManager.getTuto().isDone()+"\n"+Nuker.safe+"\n"+KillAura.speed+"\n"+PunKeel.attack+"\n"+PunKeel.delay+"\n"+Fastbow.getFast().getPacket()+"\n";
 		                s+=Step.getStep().isBypass()+"\n"+BowAimbot.getAim().getFov()+"\n"+BowAimbot.getAim().getLife()+"\n"+BowAimbot.getAim().getArmor()+"\n";
-		                s+=Reach.multiaura+"\n";
+		                s+=Reach.multiaura+"\n"+PunKeel.random+"\n"+(PunKeel.random ? PunKeel.rDelay.firstElement()+"\n"+PunKeel.rDelay.lastElement() : "0.5\n1.0")+"\n";
+		                s+=m.getMode()+"\n"+m.isClassic()+"\n"+Block.getIdFromBlock(Search.getSearch().getSearchBlock())+"\n";
 		                writer.write(s);
 		                writer.flush();
 		            }
 
-		        } catch (IOException ex) {
-		            
-		        }				
+		        } catch (IOException ex) {}				
 			}
 			
 		}).start();
@@ -2932,6 +2975,19 @@ public class Utils {
 	                		BowAimbot.getAim().setArmor(BowMode.valueOf(ligne));
 	                	if (i==161)
 	                		Reach.multiaura=Boolean.parseBoolean(ligne);
+	                	if (i==162) {
+	                		PunKeel.random=Boolean.parseBoolean(ligne);
+	                		PunKeel.rDelay.clear();
+	                	}
+	                	if (i==163 || i==164)
+	                		PunKeel.rDelay.addElement(Double.parseDouble(ligne));
+	                	Magnet m = Magnet.getMagnet();
+	                	if (i==165)
+	                		m.setMode(MagnetWay.valueOf(ligne));
+	                	if (i==166)
+	                		m.setClassic(Boolean.parseBoolean(ligne));
+	                	if (i==167)
+	                		Search.getSearch().setSearchBlock(Block.getBlockById(Integer.parseInt(ligne)));
                 	} catch (Exception e) {}                	
                 	i++;
                 }
@@ -2971,27 +3027,6 @@ public class Utils {
                 while ((ligne = br.readLine()) != null)
                 {                	
                 	DropShit.getShit().getList().add(Integer.parseInt(ligne));
-                }
-            
-		} catch (IOException | NumberFormatException e) {}		
-		} catch (IOException | NumberFormatException e) {}
-		
-		}
-	}
-	
-	public static void loadXray(String...fi) {
-		File dir = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"xray.neko");
-		if (dir.exists()) {
-		try { 
-            InputStream ips = new FileInputStream(dir); 
-            InputStreamReader ipsr = new InputStreamReader(ips); 
-            try (BufferedReader br = new BufferedReader(ipsr)) {
-                String ligne;
-                Integer i=0;
-                Xray.xray.clear();
-                while ((ligne = br.readLine()) != null)
-                {                	
-                	Xray.xray.add(Integer.parseInt(ligne));
                 }
             
 		} catch (IOException | NumberFormatException e) {}		
@@ -3337,7 +3372,6 @@ public class Utils {
 		  boolean legit = loadRpg();
 		  loadFriends();
 		  loadBind();
-		  loadXray();
 		  if (legit)
 			  loadLock();
 		  if (!legit) {

@@ -1,7 +1,10 @@
 package net.minecraft.block;
 
-import neko.Client;
-import neko.module.modules.render.Xray;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+
+import neko.utils.Utils;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -19,14 +22,19 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.ObjectIntIdentityMap;
+import net.minecraft.util.RegistryNamespacedDefaultedByKey;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.StatCollector;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
 
 public class Block {
 	/** ResourceLocation for the Air block */
@@ -401,12 +409,6 @@ public class Block {
 	}
 
 	public int getMixedBrightnessForBlock(IBlockAccess worldIn, BlockPos pos) {
-		// TODO: Client
-		Client var = Client.getNeko();
-		if (var.moduleManager.xrayModule.getToggled()) {
-			return 1000000000;
-
-		}
 		Block var3 = worldIn.getBlockState(pos).getBlock();
 		int var4 = worldIn.getCombinedLight(pos, var3.getLightValue());
 
@@ -422,13 +424,7 @@ public class Block {
 	public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos,
 			EnumFacing side) {
 		// TODO: Xray
-		// return true if you would to see this block with this id
-		Client var = Client.getNeko();
-		if (var.moduleManager.xrayModule.getToggled()) {
-    		for (int i=0;i<Xray.xray.size();i++) {
-    			if (this == Block.getBlockById(Xray.xray.get(i)))
-    				return true;
-    		}
+		if (Utils.isToggle("Xray")) {
     		return false;
     	}
 

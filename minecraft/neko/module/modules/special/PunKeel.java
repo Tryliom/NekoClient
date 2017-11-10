@@ -1,6 +1,10 @@
 package neko.module.modules.special;
 
 import java.util.ArrayList;
+<<<<<<< HEAD:minecraft/neko/module/modules/special/Punkeel.java
+=======
+import java.util.Vector;
+>>>>>>> 39d0833bd0a0954eab767071c920514ca9b972f7:minecraft/neko/module/modules/special/PunKeel.java
 
 import neko.module.Category;
 import neko.module.Module;
@@ -12,6 +16,9 @@ public class PunKeel extends Module {
 	public static boolean isOn;
 	private int count;
 	public static Double delay = 1.0;
+	public static Double delay_ = 1.0;
+	public static Boolean random = false;
+	public static Vector<Double> rDelay = new Vector<>();
 	public static boolean attack = false;
 	
 	public PunKeel() {
@@ -19,6 +26,8 @@ public class PunKeel extends Module {
 	}
 	
 	public void onEnabled() {	
+		if (random)
+			this.delay_ = rDelay.lastElement()-rDelay.firstElement()+(Math.random()*rDelay.firstElement());
 	    isOn=true;
 	    this.count = 0;	    
 		super.onEnabled();
@@ -33,15 +42,29 @@ public class PunKeel extends Module {
 	
 	public void setValues() {
 		this.values = "§6Delais:§7 "+delay+"sec\n"
-				+ "§6Attack: "+Utils.displayBool(attack);
+				+ "§6Attack: "+Utils.displayBool(attack)+"\n"
+				+ "§6Random: "+Utils.displayBool(random)+"\n"
+				+ "§6Delais Min - Max: §e"+rDelay.firstElement()+" §7- §e"+rDelay.lastElement();
 	}
 	
 	public void onUpdate() {
-		if (this.count>this.delay*20 || mc.thePlayer.getHealth()<0) {
+		if (random) {
+			if (this.count>this.delay_*20 || mc.thePlayer.getHealth()<0) {
+				this.delay_ = rDelay.lastElement()-rDelay.firstElement()+(Math.random()*rDelay.firstElement());
+				this.count=0;
+				this.sendPacket();
+			} else 
+				this.count++;
+		} else if (this.count>this.delay*20 || mc.thePlayer.getHealth()<0) {
 			this.count=0;
 			this.sendPacket();
 		} else
 			this.count++;
+	}
+	
+	public void onAction() {
+		if (!this.getToggled() && this.isOn)
+			this.isOn = false;
 	}
 	
 	public void sendPacket() {

@@ -7,6 +7,7 @@ import neko.Client;
 import neko.event.UpdateEvent;
 import neko.module.Module;
 import neko.module.modules.combat.KillAura;
+import neko.module.modules.special.Likaotique;
 import neko.module.modules.special.NoLook;
 import neko.module.modules.player.Noslow;
 import neko.utils.Utils;
@@ -233,12 +234,21 @@ public class EntityPlayerSP extends AbstractClientPlayer
                 	if (Utils.isToggle("NoLook")) {
                 		NoLook n = NoLook.getLook();
                 		this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.posX, e.y, this.posZ, n.getYaw(), n.getPitch(), e.isOnGround()));
+                	} else if (Utils.isToggle("Likaotique") && Likaotique.getLik().getCurrPos()!=null) {
+                		this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(
+                				Likaotique.getLik().getCurrPos().getX(), 
+                				Likaotique.getLik().getCurrPos().getY(), 
+                				Likaotique.getLik().getCurrPos().getZ(),
+                				e.getYaw(), e.getPitch(), e.isOnGround()));
                 	} else
                 		this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.posX, e.y, this.posZ, e.getYaw(), e.getPitch(), e.isOnGround()));
                 }
                 else if (var13)
                 {                	
-                	this.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(this.posX, e.y, this.posZ, e.isOnGround()));
+                	if (Utils.isToggle("Likaotique") && Likaotique.getLik().getCurrPos()!=null) {
+                		Utils.sendTpPos(Likaotique.getLik().getCurrPos());
+                	} else
+                		this.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(this.posX, e.y, this.posZ, e.isOnGround()));
                 }
                 else if (var14)
                 {

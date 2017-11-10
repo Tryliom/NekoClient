@@ -51,12 +51,11 @@ public class Autosoup extends Module {
 		        Minecraft.thePlayer.sendQueue.addToSendQueue(new C09PacketHeldItemChange(Minecraft.thePlayer.inventory.currentItem + (Minecraft.thePlayer.inventory.currentItem < 8 ? 1 : -1)));
 		        Minecraft.thePlayer.sendQueue.addToSendQueue(new C08PacketPlayerBlockPlacement(Minecraft.thePlayer.inventory.getCurrentItem()));
 		        Minecraft.thePlayer.sendQueue.addToSendQueue(new C09PacketHeldItemChange(prevSlot));
-		      }
-	        if (drop)
-	        	this.dropBowl();
+		      }	        
 	        this.time.reset();						
 		}	
-		
+		if (drop)
+	        this.dropBowl();
 	}
 	
 	protected void swap(int one, int two) {

@@ -13,6 +13,16 @@ import net.minecraft.util.EnumFacing;
 public class TpUtils {
 	Minecraft mc = Minecraft.getMinecraft();		
 	
+	/**
+	 * <h1>Sert à se tp de manière intelligente à une entité/cible</h1>
+	 * @param en			Entité sur laquelle on se tp
+	 * @param entityPosX	Coord X de l'entité après déduction des coord du joueur
+	 * @param entityPosY	Coord Y de l'entité après déduction des coord du joueur
+	 * @param entityPosZ	Coord Z de l'entité après déduction des coord du joueur
+	 * @param classic		Boolean si le tp est de manière classique ou sinon suivant la détection du terrain
+	 * @param k				Nombre par lequel sont divisés les coord
+	 * @return				String de la manière de comment on se tp, utilisé par le doTpRetour
+	 */
 	public String doTpAller(Entity en, double entityPosX, double entityPosY, double entityPosZ, boolean classic, int k) {
 		if (entityPosY<0 && !classic) {
 			// Check du chemin et de tous les blocs dessus, si false, faire le chemin classic
@@ -146,6 +156,14 @@ public class TpUtils {
 		}				
 	}
 	
+	/**
+	 * 
+	 * @param how			Manière de se téléporter
+	 * @param entityPosX	Coord X de l'entité après déduction des coord du joueur
+	 * @param entityPosY	Coord Y de l'entité après déduction des coord du joueur
+	 * @param entityPosZ	Coord Z de l'entité après déduction des coord du joueur
+	 * @param k				Nombre par lequel sont divisés les coord
+	 */
 	public void doTpRetour(String how, double entityPosX, double entityPosY, double entityPosZ, int k) {
 		switch (how) {
 		case "down" :
@@ -201,6 +219,11 @@ public class TpUtils {
 		}
 	}
 	
+	/**
+	 * Retourne automatiquement le nombre qui divise les coord de pos, le K 
+	 * @param target	La cible sans les déductions par coord du joueur, + 1.5 au Y
+	 * @return			K
+	 */
 	public int getK(BlockPos target) {
 		int k;
 		double entityPosX = target.getX()-mc.thePlayer.posX;				
@@ -212,6 +235,22 @@ public class TpUtils {
 		return k;
 	}
 	
+	public int getK(BlockPos target, BlockPos lastTarget) {
+		int k;
+		double entityPosX = target.getX()-lastTarget.getX();				
+		double entityPosY = target.getY()-lastTarget.getY();
+		double entityPosZ = target.getZ()-lastTarget.getZ();
+		for (k=1;Utils.verif(entityPosX, k) > 4;k++) {}
+		for (;Utils.verif(entityPosY, k) > 4;k++) {}
+		for (;Utils.verif(entityPosZ, k) > 4;k++) {} 
+		return k;
+	}
+	
+	/**
+	 * Retourne la manière de se tp
+	 * @param target	Cible visée
+	 * @return			String de la manière utilisée
+	 */
 	public String getHow(BlockPos target) {
 		BlockPos player = mc.thePlayer.getPosition();
 		String s="classic";
@@ -222,6 +261,11 @@ public class TpUtils {
 		return s;
 	}
 	
+	/**
+	 * Retourne une liste de Double en Vector des coord finales après déduction des coord joueur
+	 * @param coordTarget	Cible
+	 * @return				Vector de Double, 3 coord de X Y et Z
+	 */
 	public Vector<Double> getTargetInPos(BlockPos coordTarget) {
 		Vector<Double> v = new Vector<Double>();
 		if (mc.thePlayer!=null) {
@@ -235,5 +279,20 @@ public class TpUtils {
 		}
 		return v;
 	}
+	
+	public Vector<Double> getTargetInPos(BlockPos coordTarget, BlockPos lastTarget) {
+		Vector<Double> v = new Vector<Double>();
+		if (mc.thePlayer!=null) {
+			v.add((double) (coordTarget.getX()-lastTarget.getX()));				
+			v.add((double) (coordTarget.getY()-lastTarget.getY()));
+			v.add((double) (coordTarget.getZ()-lastTarget.getZ()));
+		} else {
+			v.add(1.0);
+			v.add(1.0);
+			v.add(1.0);
+		}
+		return v;
+	}
+
 
 }

@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import neko.module.modules.special.FastDura;
+import neko.module.modules.special.Likaotique;
 import neko.module.modules.special.Nausicaah;
 import neko.module.modules.hide.Friends;
 import org.lwjgl.input.Keyboard;
@@ -225,7 +226,9 @@ class cps implements ActionListener {
 		                	
 		                	if (Utils.isToggle("Crit"))
 		                		Utils.crit();
-		                		                			
+		                	if (Utils.isToggle("Likaotique")) {
+		                		Likaotique.getLik().tpToPlayer();
+		                	}
 	                		Utils.attack(entity);
 	                		mc.thePlayer.swingItem();
 		            		KillAura.giveMoney(entity);
@@ -257,7 +260,9 @@ class cps implements ActionListener {
 	                            		Utils.crit();
 	                            	if (!Utils.isInFov(entity, KillAura.fov))
 	                            		return;
-	                            	
+	                            	if (Utils.isToggle("Likaotique")) {
+	                            		Likaotique.getLik().tpToPlayer();
+	                            	}
 	                            	Utils.attack(entity);
 	    	                		Minecraft.getMinecraft().thePlayer.swingItem();
 	                            	if (entity.getHealth()<2) {
@@ -285,7 +290,9 @@ class cps implements ActionListener {
 	                        		KillAura.faceEntity(entity);
 	                        	if (Utils.isToggle("Crit"))
 	                        		Utils.crit();
-	                        	
+	                        	if (Utils.isToggle("Likaotique")) {
+	                        		Likaotique.getLik().tpToPlayer();
+	                        	}
 	                        	Utils.attack(entity);
 		                		mc.thePlayer.swingItem();
 	                        	

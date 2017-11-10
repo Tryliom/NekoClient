@@ -52,7 +52,6 @@ public class Nausicaah extends Module {
 				FastDura.swap(j, i);
 				FastDura.attack(en, true);
 				FastDura.swap(j, i);
-				FastDura.attack(en, false);
 			}
 		} catch (Exception e) {}
 	}

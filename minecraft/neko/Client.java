@@ -37,7 +37,7 @@ public class Client {
 	  public final String CLIENT_AUTHOR = "Tryliom";
 	  public ModuleManager moduleManager;
 	  public GuiManager gui;
-	  public final String CLIENT_VERSION = "Pre-2.0";
+	  public final String CLIENT_VERSION = "2.0";
 	  private static final Client Neko = new Client();
 	  public String mode="Player";
 	  public Rank rang;
@@ -69,7 +69,7 @@ public class Client {
 		  time.start();
 		  try {
 			URL url = new URL("http://nekohc.fr/ver.html");
-			Scanner sc = new Scanner(url.openStream());
+			Scanner sc = new Scanner(url.openStream(), "UTF-8");
 			ArrayList<String> s = new ArrayList<>();
 			String l;
 			try {
@@ -113,7 +113,6 @@ public class Client {
 		  boolean legit = Utils.loadRpg();
 		  Utils.loadFriends();
 		  Utils.loadBind();
-		  Utils.loadXray();
 		  if (legit)
 			  Utils.loadLock();
 		  if (!legit) {

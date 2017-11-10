@@ -39,15 +39,6 @@ public class ItemESP extends Module {
 	}
 	
 	public void onRender3D() {
-		if (u.isLock(this.getName())) {
-			boolean display = u.display;
-			u.display=false;
-			this.isToggled=false;
-			u.display=display;
-			u.addWarn(this.getName());
-			return;
-		}
-		
 		for (Object o : mc.theWorld.loadedEntityList) {
 			if (o instanceof EntityItem) {
 				EntityItem entity = (EntityItem) o;     

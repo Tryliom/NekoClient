@@ -5,7 +5,7 @@ import neko.Client;
 public class TutoManager {
 	private boolean done = true;
 	private int part=1;
-	private int totPart=10;
+	private int totPart=8;
 	private Client var = Client.getNeko();
 	private static TutoManager instance = null;
 	
@@ -64,8 +64,17 @@ public class TutoManager {
 		if (num==6) {
 			s+= "Instant FAQ, les questions §ctrès très très§e souvent posées (on tourne autour des 1000 fois é.è)\n-=-\n"
 					+ "§cComment obtenir la reach pvp ?\n§d-> Il faut obtenir un rang qui contient les mots §cJP§d ou §cJean-Pierre\n"
-					+ "§dTips: Si vous voulez mettre sur une touche une commande: §c"+var.prefixCmd+"help cmd, ça vous aidera ;)\n"
-					+ "§e";
+					+ "§cPourquoi le fullbright ne fonctionne pas avec certains ressources packs ?\n§d-> Ce sont les ressources packs qui empêchent d'augmenter la brightness\n"
+					+ "§cEst-ce que Neko est un RAT ?\n§d-> J'ai jamais vu de rats vivant ici moa...";
+		}
+		if (num==7) {
+			s+= "Instant FAQ 2\n-=-\n"
+					+ "§cComment parler dans l'irc ?\n§d-> Mettre un $ avant votre phrase\n"
+					+ "§cJe n'ai plus mes niveaux, comment faire ?\n§d-> Il faut prendre le contenu du dossier NekoBackup, le mettre dans Neko puis "+var.prefixCmd+"reload\n";
+		}
+		if (num==8) {
+			s+="Les commandes utiles:\n§c"+var.prefixCmd+"cmd\n§c"+var.prefixCmd+"config\n§c"+var.prefixCmd+"listserver\n§c"+var.prefixCmd+"bind\n"
+					+ "§c"+var.prefixCmd+"bind\n";
 		}
 		
 		return s;

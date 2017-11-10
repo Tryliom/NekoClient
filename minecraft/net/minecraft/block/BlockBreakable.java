@@ -2,6 +2,7 @@ package net.minecraft.block;
 
 import neko.Client;
 import neko.module.modules.render.Xray;
+import neko.utils.Utils;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -26,16 +27,12 @@ public class BlockBreakable extends Block
 
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
     {
+    	if (Utils.isToggle("Xray")) {
+    		return false;
+    	}
+    	
         IBlockState var4 = worldIn.getBlockState(pos);
-        Block var5 = var4.getBlock();
-
-        for (int i=0;i<Xray.xray.size();i++) {
-			if (this == Block.getBlockById(Xray.xray.get(i)))
-				return true;
-		}
-        Client var = Client.getNeko();
-		if (var.moduleManager.xrayModule.getToggled())
-			return false;
+        Block var5 = var4.getBlock();      
         
         if (this == Blocks.glass || this == Blocks.stained_glass)
         {

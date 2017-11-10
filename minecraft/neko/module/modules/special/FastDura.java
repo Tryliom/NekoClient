@@ -41,17 +41,6 @@ public class FastDura extends Module {
 		}
 	}
 	
-	public void onUpdate() {
-		if (u.isLock(this.getName())) {
-			boolean display = u.display;
-			u.display=false;
-			this.isToggled=false;
-			u.display=display;
-			u.addWarn(this.getName());
-			return;
-		}			
-	}
-	
 	
 	// Fonctions swap et attack
 	
@@ -145,8 +134,8 @@ public class FastDura extends Module {
 	}	
 	
 	public static void attack(Entity en, boolean crit) {
-		if (crit) 
-			u.crit();		
+		if (crit || (crit && Utils.isToggle("Crit"))) 
+			Utils.crit();		
 		mc.getNetHandler().addToSendQueue(new C02PacketUseEntity(en, Action.ATTACK));		
 	}
 	

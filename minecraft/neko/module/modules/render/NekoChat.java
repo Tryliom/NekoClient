@@ -2,6 +2,7 @@ package neko.module.modules.render;
 
 import neko.module.Category;
 import neko.module.Module;
+import neko.utils.Utils;
 import net.minecraft.client.gui.GuiNewChat;
 
 public class NekoChat extends Module {
