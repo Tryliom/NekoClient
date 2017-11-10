@@ -235,6 +235,17 @@ public class TpUtils {
 		return k;
 	}
 	
+	public int getK(BlockPos target, BlockPos lastTarget) {
+		int k;
+		double entityPosX = target.getX()-lastTarget.getX();				
+		double entityPosY = target.getY()-lastTarget.getY();
+		double entityPosZ = target.getZ()-lastTarget.getZ();
+		for (k=1;Utils.verif(entityPosX, k) > 4;k++) {}
+		for (;Utils.verif(entityPosY, k) > 4;k++) {}
+		for (;Utils.verif(entityPosZ, k) > 4;k++) {} 
+		return k;
+	}
+	
 	/**
 	 * Retourne la manière de se tp
 	 * @param target	Cible visée
@@ -268,5 +279,20 @@ public class TpUtils {
 		}
 		return v;
 	}
+	
+	public Vector<Double> getTargetInPos(BlockPos coordTarget, BlockPos lastTarget) {
+		Vector<Double> v = new Vector<Double>();
+		if (mc.thePlayer!=null) {
+			v.add((double) (coordTarget.getX()-lastTarget.getX()));				
+			v.add((double) (coordTarget.getY()-lastTarget.getY()));
+			v.add((double) (coordTarget.getZ()-lastTarget.getZ()));
+		} else {
+			v.add(1.0);
+			v.add(1.0);
+			v.add(1.0);
+		}
+		return v;
+	}
+
 
 }

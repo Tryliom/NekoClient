@@ -59,36 +59,42 @@ public class Search extends Module {
 			if (searchBlock == searchBlock_) {
 				searchBlock = null;
 				Utils.addChat("§cBloc cherché supprimé !");
+				Search.getSearch().refresh();
 			} else {
 				searchBlock = searchBlock_;
 				Utils.addChat("§a" + this.searchBlock.getLocalizedName() + " recherché !");
+				Search.getSearch().refresh();
 			}
 			delay = 0;
 		} else
 			delay++;
 		if (delay_ > 20*refreshTime) {
-			if (searchBlock != null) {
-				list.clear();
-				for (int y = (int) renderDistance; y >= (int) - renderDistance; y--) {
-					for (int z = (int) - renderDistance; z <= renderDistance; z++) {
-						for (int x = (int) - renderDistance; x <= renderDistance; x++) {
-							int xPos = ((int) Math.round(mc.thePlayer.posX + x));
-							int yPos = ((int) Math.round(mc.thePlayer.posY + y));
-							int zPos = ((int) Math.round(mc.thePlayer.posZ + z));
+			refresh();
+			delay_ = 0;
+		} else
+			delay_++;
+	}
+	
+	public void refresh() {
+		if (searchBlock != null) {
+			list.clear();
+			for (int y = (int) renderDistance; y >= (int) - renderDistance; y--) {
+				for (int z = (int) - renderDistance; z <= renderDistance; z++) {
+					for (int x = (int) - renderDistance; x <= renderDistance; x++) {
+						int xPos = ((int) Math.round(mc.thePlayer.posX + x));
+						int yPos = ((int) Math.round(mc.thePlayer.posY + y));
+						int zPos = ((int) Math.round(mc.thePlayer.posZ + z));
 
-							BlockPos b = new BlockPos(xPos, yPos, zPos);
-							Block block = mc.theWorld.getChunkFromBlockCoords(b).getBlock(xPos, yPos, zPos);
+						BlockPos b = new BlockPos(xPos, yPos, zPos);
+						Block block = mc.theWorld.getChunkFromBlockCoords(b).getBlock(xPos, yPos, zPos);
 
-							if ((block == searchBlock)) {
-								list.add(b);
-							}
+						if ((block == searchBlock)) {
+							list.add(b);
 						}
 					}
 				}
 			}
-			delay_ = 0;
-		} else
-			delay_++;
+		}
 	}
 
 	public void onRender3D() {

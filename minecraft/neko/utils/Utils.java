@@ -1460,8 +1460,9 @@ public class Utils {
 		          int zPos = ((int)Math.round(mc.thePlayer.posZ + z));
 		          
 		          b = new BlockPos(xPos, yPos, zPos);
-		          if (Math.random()<chance)
+		          if (Math.random()<chance) {
 		        	  return b;
+		          }
 	        }
 	      }
 	      return b;

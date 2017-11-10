@@ -2046,7 +2046,9 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         }
         else if ("MC|Brand".equals(packetIn.getChannelName()))
         {
-            this.getGameController().thePlayer.func_175158_f(packetIn.getBufferData().readStringFromBuffer(32767));
+        	try {
+        		this.getGameController().thePlayer.func_175158_f(packetIn.getBufferData().readStringFromBuffer(32767));
+        	} catch (Exception e) {}
         }
         else if ("MC|BOpen".equals(packetIn.getChannelName()))
         {

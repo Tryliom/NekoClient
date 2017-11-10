@@ -1,6 +1,8 @@
 package neko.module.modules.combat;
 
 import neko.module.modules.util.TimerUtils;
+import neko.utils.Utils;
+
 import org.lwjgl.input.Keyboard;
 
 import neko.module.Category;
@@ -36,7 +38,7 @@ public class AutoPot extends Module {
 		this.values = "§6Seuil de vie sensible:§7 "+AutoPot.heal;
 	}
 	
-	public void onUpdate() {		
+	public void onUpdate() {	
 		int Slot = getPotFromInventory();
 		if (mc.thePlayer.getHealth()<=heal && (this.time.delay((float)this.delay)) && (Slot != -1)) {
 			int prevSlot = mc.thePlayer.inventory.currentItem;

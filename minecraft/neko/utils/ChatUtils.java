@@ -83,6 +83,7 @@ import neko.module.modules.render.Water;
 import neko.module.modules.render.WorldTime;
 import neko.module.modules.special.DropShit;
 import neko.module.modules.special.FireTrail;
+import neko.module.modules.special.Likaotique;
 import neko.module.modules.special.Magnet;
 import neko.module.modules.special.PunKeel;
 import neko.module.modules.special.Pyro;
@@ -1683,6 +1684,23 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"likaotique") || args[0].equalsIgnoreCase(var.prefixCmd+"lik")) {
+				if (args[1].equalsIgnoreCase("delay")) {
+					if (Utils.isDouble(args[2])) {
+						if (Double.parseDouble(args[2])==0d)
+							args[2] = "1";
+						Likaotique.getLik().getTimer().setDelay((int) Double.parseDouble(args[2])*100);
+						Likaotique.getLik().setDelay((int) Math.round(Double.parseDouble(args[2])*100));
+						Utils.addChat("§aDelay du Likaotique changé à "+args[2]+"sec !");
+					}											
+				} else if (args[1].equalsIgnoreCase("radius")) {
+					if (Utils.isInteger(args[2])) {
+						Likaotique.getLik().setRadius(Integer.parseInt(args[2]));
+						Utils.addChat("§aRadius du Likaotique changé à "+args[2]+" !");
+					}
+				}
+			}
+			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"search")) {
 				if (args[1].equalsIgnoreCase("add")) {
 					try {
@@ -1695,6 +1713,7 @@ public class ChatUtils {
 							} else if (b!=Search.getSearch().getSearchBlock()) {
 								Search.getSearch().setSearchBlock(b);
 								Utils.addChat("§aLe bloc "+b.getLocalizedName()+" est cherché !");
+								Search.getSearch().refresh();
 							} else 
 								Utils.addChat("§cLe bloc "+b.getLocalizedName()+" est déjà cherché !");	
 						} else if (Utils.isABlock(args[2])) {					
@@ -1704,6 +1723,7 @@ public class ChatUtils {
 							} else if (b!=Search.getSearch().getSearchBlock()) {
 								Search.getSearch().setSearchBlock(b);
 								Utils.addChat("§aLe bloc "+b.getLocalizedName()+" est cherché !");
+								Search.getSearch().refresh();
 							} else 
 								Utils.addChat("§cLe bloc "+b.getLocalizedName()+" est déjà cherché !");	
 						} else {
@@ -1716,6 +1736,7 @@ public class ChatUtils {
 				} else if (args[1].equalsIgnoreCase("clear")) {
 					Utils.addChat("§aBloc cherché clear");
 					Search.getSearch().setSearchBlock(null);
+					Search.getSearch().refresh();
 				}
 			}
 			

@@ -64,6 +64,7 @@ import neko.manager.SoundManager;
 import neko.manager.TutoManager;
 import neko.module.Module;
 import neko.module.modules.combat.Reach;
+import neko.module.modules.special.Likaotique;
 import neko.module.other.Irc;
 import neko.utils.Utils;
 import net.minecraft.block.Block;
@@ -1529,6 +1530,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
     public void clickMouse()
     {
+    	if (Utils.isToggle("Likaotique")) {
+    		Likaotique.getLik().tpToPlayer();
+    	}
     	if (!Utils.isToggle("Autoclic")) {
     		count++;
     		if (count==30) {
