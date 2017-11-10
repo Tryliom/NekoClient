@@ -2,13 +2,9 @@ package neko.module.modules.special;
 
 import java.util.ArrayList;
 
-import org.lwjgl.input.Keyboard;
-
 import neko.module.Category;
 import neko.module.Module;
 import neko.utils.Utils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.network.Packet;
 
 public class PunKeel extends Module {
