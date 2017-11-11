@@ -140,7 +140,7 @@ public class RequestThread extends Thread {
 			int pLvl=0;
 			try {
 				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=5fae61cb8045379e89cbe92e28741dbd");
-				Scanner sc = new Scanner(url.openStream());		
+				Scanner sc = new Scanner(url.openStream(), "UTF-8");		
 				String l;
 				Utils.addChat("§7--[§aMeilleurs joueurs (Lvl)§7]--\n");
 				try {
