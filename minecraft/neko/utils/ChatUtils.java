@@ -2821,7 +2821,7 @@ public class ChatUtils {
 						for (Rank r : ModuleManager.rang) {
 							if (!r.isLock()) {
 								String desc="";
-								desc+="\n§6Sélectionné: "+(r.getName().equalsIgnoreCase(var.rang.getName()) ? "§aSélectioné" : "§cNon");
+								desc+="§6Sélectionné: "+(r.getName().equalsIgnoreCase(var.rang.getName()) ? "§aSélectionné" : "§cNon");
 								if (!Utils.isLock("rankmanager rate"))
 									desc+="\n§6Rareté: "+r.getColor()+r.getRate();
 								if (!Utils.isLock("rankmanager lvl"))
@@ -2830,7 +2830,7 @@ public class ChatUtils {
 									desc+="\n§6Bonus: §d"+r.getTotBonus()+"%";
 									ArrayList<String> l = r.getAllBonus("§6", "§d");
 									for (String s : l) {
-										desc+="\n"+s;
+										desc+=s+"\n";
 									}
 								}
 								if (!r.getDesc().equalsIgnoreCase("null") && !Utils.isLock("rankmanager desc"))
