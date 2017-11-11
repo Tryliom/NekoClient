@@ -86,6 +86,9 @@ public class Likaotique extends Module {
 		double pz = (cb==null ? tp.getTargetInPos(b).get(2) : tp.getTargetInPos(b, cb).get(2));
 		double psx = (cb==null ? mc.thePlayer.posX : cb.getX());
 		double psz = (cb==null ? mc.thePlayer.posZ : cb.getZ());
+		if (k>30)
+			Likaotique.getLik().setCurrPos(mc.thePlayer.getPosition());
+		else
 		for (int j=0;j<k;j++)  {  
     		Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C04PacketPlayerPosition(psx+px/k, 
     				mc.thePlayer.posY, psz+pz/k, true));

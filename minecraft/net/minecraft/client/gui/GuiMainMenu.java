@@ -288,7 +288,11 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
 	    			SoundManager.getSM().stopMusic();
 	    		else
 	    			SoundManager.getSM().restartMusic();
-    		this.mc.displayGuiScreen(new GuiMainMenu());
+    		if (SoundManager.getSM().canStart)
+    			button.displayString = SoundManager.getSM().isActive() ? "♫ Stop ♫" : "♪ Restart ♪";
+    		else
+    			button.displayString = "Music loading...";
+    		
         }
     	if (button.id == 666 && tm.isDone())
         {
