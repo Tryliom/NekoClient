@@ -198,7 +198,7 @@ public class ModuleManager {
 		Utils.getRank("Amour à Tryliom <3").setDesc("Adore son Tryliom, ferais tout pour lui et est sa soumise absolue :3");
 		rang.add(new Rank("Administrateur", 3000, Rate.CrazyLove, "§4", true, 0));
 		Utils.getRank("Administrateur").setDesc("Administrateur Neko");
-		rang.add(new Rank("Modérateur", 2000, Rate.CrazyLove, "§d", true, 0));
+		rang.add(new Rank("Modérateur", 2000, Rate.CrazyLove, "§9", true, 0));
 		Utils.getRank("Modérateur").setDesc("Modérateur Neko");
 		rang.add(new Rank("Helper", 1000, Rate.CrazyLove, "§3", true, 0));
 		Utils.getRank("Helper").setDesc("Helper Neko");

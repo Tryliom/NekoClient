@@ -48,7 +48,7 @@ public class Nausicaah extends Module {
 		try {
 			int i = AutoSword.getSword().getSwordFromInventory();
 			int j = mc.thePlayer.inventory.currentItem;
-			if (i!=-1) {				
+			if (i!=-1) {
 				FastDura.swap(j, i);
 				FastDura.attack(en, true);
 				FastDura.swap(j, i);

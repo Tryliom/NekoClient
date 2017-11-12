@@ -1634,6 +1634,13 @@ public class Utils {
 		}
 	}
 	
+	public static void openUrl(String url) {
+		try {
+			URI url2 = URI.create(url);
+			Desktop.getDesktop().browse(url2);
+		} catch (Exception e) {}
+	}
+	
 	public static void doWater(int nb) {
 		for (int i=0;i<nb;i++) {
 			double neko = -1+Math.random()*2;									

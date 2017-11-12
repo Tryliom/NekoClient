@@ -1,12 +1,10 @@
 package neko.module.modules.combat;
 
-import org.lwjgl.input.Keyboard;
-
 import neko.module.Category;
 import neko.module.Module;
-import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.nbt.NBTTagList;
@@ -57,6 +55,7 @@ public class AutoSword extends Module {
 	  
 	public int getSwordFromInventory() {
 		java.util.ArrayList<Integer> list = new java.util.ArrayList<>();
+		int temp = -1;
 		for (int i = 9; i < 45; i++) {
 			if (mc.thePlayer.inventoryContainer.getSlot(i).getStack() != null) {
 				ItemStack is = mc.thePlayer.inventoryContainer.getSlot(i).getStack();

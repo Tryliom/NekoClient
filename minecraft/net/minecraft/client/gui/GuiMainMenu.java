@@ -22,6 +22,7 @@ import com.google.common.collect.Lists;
 
 import neko.Client;
 import neko.gui.GuiAltManager;
+import neko.gui.GuiConnect;
 import neko.gui.GuiProxy;
 import neko.manager.OnlyRpgManager;
 import neko.manager.SoundManager;
@@ -247,6 +248,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
             this.field_92020_v = this.field_92022_t + var5;
             this.field_92019_w = this.field_92021_u + 24;
         }
+        if (Client.getNeko().testComptesNeko)
+        	mc.displayGuiScreen(new GuiConnect(this, 1));
     }
 
     /**
@@ -328,7 +331,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
 			try {
 				URI url = URI.create("https://nekohc.fr");
 				Desktop.getDesktop().browse(url);
-				mc.displayGuiScreen(new GuiMainMenu());
 			} catch (Exception e) {}	
 		}
     	

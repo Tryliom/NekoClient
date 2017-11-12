@@ -2836,7 +2836,7 @@ public class ChatUtils {
 									desc+="\n§6Bonus: §d"+r.getTotBonus()+"%";
 									ArrayList<String> l = r.getAllBonus("§6", "§d");
 									for (String s : l) {
-										desc+=s+"\n";
+										desc+="\n"+s;
 									}
 								}
 								if (!r.getDesc().equalsIgnoreCase("null") && !Utils.isLock("rankmanager desc"))
@@ -3036,16 +3036,16 @@ public class ChatUtils {
 										
 					if (!Utils.isLock("--rankmanager")) {
 						if (Utils.isLock("rankmanager info")) {
-							Utils.addChat2("§6"+var.prefixCmd+"trade info", var.prefixCmd+"trade info", "§7Débloque définitivement l'option Info dans le RankManager\n§cCoût: 100 souls", true , Chat.Summon);
+							Utils.addChat2("§6"+var.prefixCmd+"trade info", var.prefixCmd+"trade info", "§7Débloque définitivement l'option Info dans le RankManager\n§cCoût: 100 souls", false , Chat.Summon);
 						} else
 							if (Utils.isLock("rankmanager lvl")) {
-								Utils.addChat2("§6"+var.prefixCmd+"trade lvl", var.prefixCmd+"trade lvl", "§7Débloque définitivement l'option Lvl dans le RankManager\n§cCoût: 150 souls", true, Chat.Summon);
+								Utils.addChat2("§6"+var.prefixCmd+"trade lvl", var.prefixCmd+"trade lvl", "§7Débloque définitivement l'option Lvl dans le RankManager\n§cCoût: 150 souls", false, Chat.Summon);
 							} else
 								if (Utils.isLock("rankmanager rate")) {
-									Utils.addChat2("§6"+var.prefixCmd+"trade rate", var.prefixCmd+"trade rate", "§7Débloque définitivement l'option Rareté dans le RankManager\n§cCoût: 200 souls", true, Chat.Summon);
+									Utils.addChat2("§6"+var.prefixCmd+"trade rate", var.prefixCmd+"trade rate", "§7Débloque définitivement l'option Rareté dans le RankManager\n§cCoût: 200 souls", false, Chat.Summon);
 								} else
 									if (Utils.isLock("rankmanager bonus")) {
-										Utils.addChat2("§6"+var.prefixCmd+"trade bonus", var.prefixCmd+"trade bonus", "§7Débloque définitivement l'option Lvl dans le RankManager\n§cCoût: 250 souls", true, Chat.Summon);
+										Utils.addChat2("§6"+var.prefixCmd+"trade bonus", var.prefixCmd+"trade bonus", "§7Débloque définitivement l'option Lvl dans le RankManager\n§cCoût: 250 souls", false, Chat.Summon);
 									}						
 					}				
 					if (!Lot.list2.isEmpty()) {
