@@ -665,6 +665,12 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Autonyah speed <Double>", var.prefixCmd+"Autonyah speed ", "§7Change la vitesse de Nyah par secondes", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("likaotique") || args[1].equalsIgnoreCase("lik")) {
+					Utils.addChat(Utils.sep);
+					Utils.addChat2("§6"+var.prefixCmd+"Likaotique delay <Secondes>", var.prefixCmd+"lik delay ", "§7Change le delais entre les tp", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Likaotique radius <Int>", var.prefixCmd+"Likaotique radius ", "§7Change l'aura autour du joueur maximal", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("glide")) {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Glide <Double>", var.prefixCmd+"glide ", "§7Change la vitesse du Glide, de base à -0.125", false, Chat.Summon);
@@ -1689,8 +1695,8 @@ public class ChatUtils {
 					if (Utils.isDouble(args[2])) {
 						if (Double.parseDouble(args[2])==0d)
 							args[2] = "1";
-						Likaotique.getLik().getTimer().setDelay((int) Double.parseDouble(args[2])*100);
-						Likaotique.getLik().setDelay((int) Math.round(Double.parseDouble(args[2])*100));
+						Likaotique.getLik().getTimer().setDelay((int) Double.parseDouble(args[2])*1000);
+						Likaotique.getLik().setDelay((int) Math.round(Double.parseDouble(args[2])*1000));
 						Utils.addChat("§aDelay du Likaotique changé à "+args[2]+"sec !");
 					}											
 				} else if (args[1].equalsIgnoreCase("radius")) {
@@ -3840,7 +3846,7 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"tochat")) {
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"tochat")) {				
 				String s = ".......";
 				for (int i=0;i<var.prefixCmd.length();i++)
 					s+=".";

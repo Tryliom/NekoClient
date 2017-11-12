@@ -83,6 +83,9 @@ public class Reach extends Module {
 	
 	// Réglé dans PlayerControllerMP
 	public void onUpdate() {
+		if (!this.isToggled && isOn)
+			isOn = false;
+			
 		if (!mc.thePlayer.isSneaking()) {
 			isOn=true;			
 		} else {

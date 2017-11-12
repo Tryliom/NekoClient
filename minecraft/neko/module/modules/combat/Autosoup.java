@@ -1,10 +1,10 @@
 package neko.module.modules.combat;
 
-import neko.module.modules.util.TimerUtils;
 import org.lwjgl.input.Keyboard;
 
 import neko.module.Category;
 import neko.module.Module;
+import neko.utils.TimerUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

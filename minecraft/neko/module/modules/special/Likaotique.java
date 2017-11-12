@@ -50,7 +50,7 @@ public class Likaotique extends Module {
 	}
 	
 	public void setValues() {
-		this.values = "§6Delay:§7 "+(delay/100d)+"sec\n"
+		this.values = "§6Delay:§7 "+(delay/1000d)+"sec\n"
 					+ "§6Radius de tp:§7 "+radius+" blocs";
 	}
 	
