@@ -5107,7 +5107,7 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
-			//TODO: Nyah
+			//TODO: Nyah Tryliom c'est l'amour a Didi
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"nyah") || args[0].equalsIgnoreCase(var.prefixCmd+"nyah!") || args[0].equalsIgnoreCase(var.prefixCmd+"nyah*")) {
 				if (Utils.isLock("--nyah")) {
 					Utils.addWarn("Nyah");
