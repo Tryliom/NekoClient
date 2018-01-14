@@ -2,27 +2,42 @@ package neko.gui;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Locale;
+
+import org.lwjgl.opengl.GL11;
+import org.newdawn.slick.util.FontUtils;
 
 import neko.Client;
 import neko.manager.ModuleManager;
 import neko.module.Category;
 import neko.module.Module;
-import neko.module.modules.movements.Blink;
+import neko.module.modules.combat.Regen;
 import neko.module.modules.hide.Friends;
+import neko.module.modules.movements.Blink;
 import neko.module.modules.render.HUD;
 import neko.module.modules.render.Radar;
-import neko.module.modules.combat.Regen;
 import neko.module.other.Active;
 import neko.module.other.enums.Rate;
 import neko.utils.RenderUtils;
 import neko.utils.Utils;
-import net.mcleaks.MCLeaks;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.network.NetworkPlayerInfo;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemBow;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
+import net.minecraft.item.ItemTool;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.ResourceLocation;
 
 public class InGameGui {
 	public static String color="§3";
@@ -58,9 +73,65 @@ public class InGameGui {
 		  }
 		}
 	
-	public static void renderNeko() {
-
+	public static void renderEffect() {
+		Minecraft mc = Minecraft.getMinecraft();
+		ScaledResolution scaled = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+		GL11.glPushMatrix();
+        int size = 16;
+        int margin = -5;
+        float x = (scaled.getScaledWidth() - size * 2) - margin;
+        float y = (scaled.getScaledHeight() - size * 2) - margin;
+        Collection var4 = mc.thePlayer.getActivePotionEffects();
+        int i = 0;
+        if (!var4.isEmpty()) {
+            for (Iterator var6 = mc.thePlayer.getActivePotionEffects().iterator(); var6.hasNext(); ) {
+                PotionEffect var7 = (PotionEffect) var6.next();
+                Potion var8 = Potion.potionTypes[var7.getPotionID()];
+                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+                mc.getTextureManager().bindTexture(new ResourceLocation("textures/gui/container/inventory.png"));
+                if (var8.hasStatusIcon()) {
+                    int var9 = var8.getStatusIconIndex();
+                    new Gui().drawTexturedModalRect((int) x - 35, (int) y - (18 * i), var9 % 8 * 18, 198 + var9 / 8 * 18, 18, 18);
+                    var.NekoFont.drawStringWithShadow((var7.getDuration() <= 300 ? "§c" : "§f") + Potion.getDurationString(var7), (float) x - Potion.getDurationString(var7).length() - 5, (float) y - (18 * i) + 6, -1);
+                    i++;
+                }
+            }
+        }
+        GL11.glPopMatrix();
 	}
+	
+	public static void renderArmor() {
+		Minecraft mc = Minecraft.getMinecraft();
+		ScaledResolution scaled = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+		int itemX = scaled.getScaledWidth() / 2 + 9;
+        for (int i = 0; i < 5; i++) {
+            ItemStack ia = mc.thePlayer.getEquipmentInSlot(i);
+            if (ia == null) continue;
+
+            float oldZ = mc.getRenderItem().zLevel;
+            GL11.glPushMatrix();
+            GlStateManager.clear(GL11.GL_ACCUM);
+            GlStateManager.disableAlpha();
+            RenderHelper.enableStandardItemLighting();
+            mc.getRenderItem().zLevel = -100;
+            mc.getRenderItem().func_175042_a(ia, itemX, scaled.getScaledHeight() - 55);
+            mc.getRenderItem().func_175030_a(mc.fontRendererObj, ia, itemX, scaled.getScaledHeight() - 55);
+            mc.getRenderItem().zLevel = oldZ;
+            RenderHelper.disableStandardItemLighting();
+            GlStateManager.enableAlpha();
+            GL11.glPopMatrix();
+
+            if (ia.getItem() instanceof ItemSword || ia.getItem() instanceof ItemTool || ia.getItem() instanceof ItemArmor || ia.getItem() instanceof ItemBow) {
+                GlStateManager.pushMatrix();
+                int durability = ia.getMaxDamage() - ia.getItemDamage();
+                int y = scaled.getScaledHeight() - 60;
+                GlStateManager.scale(0.5, 0.5, 0.5);
+                var.NekoFont.drawStringWithShadow((ia.getMaxDamage()/10>durability ? "§c" : "§f") + durability, (itemX + 4) / (float) 0.5, ((float) y) / (float) 0.5, 0xffffff);
+                GlStateManager.popMatrix();
+            }
+            itemX += 16;
+        }
+	}	
 	
 	public static void renderHUD() {
 		  yP=20;

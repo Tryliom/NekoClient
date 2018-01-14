@@ -212,8 +212,10 @@ public class GuiIngame extends Gui
     		}
     	}
         
-        if (Utils.verif==null && !mc.gameSettings.showDebugInfo)
-        	InGameGui.renderNeko();
+        if (Utils.verif==null && Utils.isToggle("PotionEffect"))
+        	InGameGui.renderEffect();
+        if (Utils.verif==null && Utils.isToggle("ArmorHUD"))
+        	InGameGui.renderArmor();
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         var11 = var3 / 2 - 91;

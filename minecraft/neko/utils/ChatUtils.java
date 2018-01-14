@@ -4181,7 +4181,6 @@ public class ChatUtils {
 					for (Enchantment ench : Enchantment.enchantmentsList) {
 						if (ench!=null) {
 							item.addEnchantment(ench, 127);
-							mc.getNetHandler().addToSendQueue(new C10PacketCreativeInventoryAction(mc.thePlayer.inventory.currentItem, item));
 						}
 					}
 				} else if (args.length==2 || (args.length>=3 && !Utils.isInteger(args[2]))) {
@@ -4204,7 +4203,6 @@ public class ChatUtils {
 								if (e.equalsIgnoreCase(ench.getTranslatedName(1).replaceFirst(" I", ""))) {
 									i++;
 									item.addEnchantment(ench, 127);
-									mc.getNetHandler().addToSendQueue(new C10PacketCreativeInventoryAction(mc.thePlayer.inventory.currentItem, item));
 								}							
 							}
 						}
@@ -4242,7 +4240,6 @@ public class ChatUtils {
 								if (name.equalsIgnoreCase(ench.getTranslatedName(1).replaceFirst(" I", ""))) {
 									i++;
 									item.addEnchantment(ench, lvl);
-									mc.getNetHandler().addToSendQueue(new C10PacketCreativeInventoryAction(mc.thePlayer.inventory.currentItem, item));
 								}							
 							}
 						}
