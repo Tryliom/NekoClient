@@ -209,7 +209,6 @@ public class Utils {
 	public static boolean n=false;
 	public static int nbPack=0;
 	public static boolean sword=false;
-	public static javax.swing.Timer t = new javax.swing.Timer(25, new upLvl());
 	public static int lvl=0;
 	public static boolean changeRank=true;
 	public static int limit=200;
@@ -559,16 +558,13 @@ public class Utils {
 	}
 	
     public static boolean shouldChat(Module module) {
-        if(module.getClass().equals(Fire.class)
-                || module.getClass().equals(Friends.class)
+        if(module.getClass().equals(Friends.class)
                 || module.getClass().equals(Gui.class)
                 || module.getClass().equals(Lot.class)
                 || module.getClass().equals(Plugins.class)
-                || module.getClass().equals(Power.class)
                 || module.getClass().equals(Register.class)
                 || module.getClass().equals(Render.class)
                 || module.getClass().equals(VanillaTp.class)
-                || module.getClass().equals(Water.class)
                 || !Utils.display
                 || Utils.isLock(module.getName())) return false;
         return true;
@@ -5012,65 +5008,4 @@ public class Utils {
 		} catch (Exception e) {}
 	}
 
-}
-	
-
-class upLvl implements ActionListener {
-	Minecraft mc = Minecraft.getMinecraft();
-	
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		if (Utils.lvl==200) {
-			Utils.lvl++;		
-			
-			// Animation du lvl up
-			if (!Client.getNeko().animation)
-				Utils.t.stop();
-			int randy = (int) Math.round(Math.random()*3);
-			if (Utils.verif==null) {
-				switch (randy) {
-					case 0:mc.thePlayer.playSound("mob.cat.purr", 1.0F, 1.0F);break;
-					case 1:mc.thePlayer.playSound("mob.cat.purreow", 1.0F, 1.0F);break;
-					case 2:mc.thePlayer.playSound("mob.cat.meow", 1.0F, 1.0F);break;
-				}
-			}
-			double i;
-			double j;
-			double neko;									
-			double nekoN;	
-			double n;
-			double nekoY;
-			
-			if (Utils.verif==null) {
-				neko = -10+Math.random()*20.3;									
-				nekoN = -10+Math.random()*20.6;	
-				n = Math.random()-0.25;
-				nekoY = Math.random()*1.15+n;
-				mc.theWorld.spawnParticle(EnumParticleTypes.LAVA, mc.thePlayer.posX+neko, mc.thePlayer.posY+nekoY, mc.thePlayer.posZ+nekoN, 0, 0, 0, 0);
-				neko = -10+Math.random()*20.3;									
-				nekoN = -10+Math.random()*20.6;	
-				n = Math.random()-0.25;
-				nekoY = Math.random()*1.15+n;
-				mc.theWorld.spawnParticle(EnumParticleTypes.FLAME, mc.thePlayer.posX+neko, mc.thePlayer.posY+nekoY, mc.thePlayer.posZ+nekoN, 0, 0, 0, 0);
-				neko = -10+Math.random()*20.3;									
-				nekoN = -10+Math.random()*20.6;	
-				n = Math.random()-0.25;
-				nekoY = Math.random()*1.15+n;
-				mc.theWorld.spawnParticle(EnumParticleTypes.DRIP_WATER, mc.thePlayer.posX+neko, mc.thePlayer.posY+nekoY, mc.thePlayer.posZ+nekoN, 0, 0, 0, 0);
-				neko = -10+Math.random()*20.3;									
-				nekoN = -10+Math.random()*20.6;	
-				n = Math.random()-0.25;
-				nekoY = Math.random()*1.15+n;
-				mc.theWorld.spawnParticle(EnumParticleTypes.REDSTONE, mc.thePlayer.posX+neko, mc.thePlayer.posY+nekoY, mc.thePlayer.posZ+nekoN, 0, 0, 0, 0);
-			}			
-			
-			
-		} else {
-			
-			Utils.lvl=0;
-			Utils.t.stop();
-		}
-		
-	}
-	
 }

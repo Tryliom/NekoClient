@@ -51,12 +51,7 @@ class checkXp implements ActionListener {
 			}			
 			
 			if (var.xp>=var.xpMax) {
-				//Animation et sons
-				Utils.lvl=0;
-				if (var.animation)
-					Utils.t.start();
-				if (var.animation)
-					Fire.onLvl=true;
+				Utils.doPower(10);
 				var.niveau+=1;
 				if (Math.random()<0.9) {
 					int coin = Utils.getRandInt(30);
@@ -178,8 +173,6 @@ class checkXp implements ActionListener {
 				}		
 			}
 		} else {
-			if (var.animation)
-				Fire.onLvl=false;
 			Xp.t.stop();
 		}
 		}

@@ -135,6 +135,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.InventoryBasic;
+import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -1179,13 +1181,18 @@ public class ChatUtils {
 						ItemStack item = mc.thePlayer.getCurrentEquippedItem();
 						if (item!=null) {
 							item.stackSize=size;
-							mc.getNetHandler().addToSendQueue(new C10PacketCreativeInventoryAction(mc.thePlayer.inventory.currentItem, item));
 							Minecraft.thePlayer.sendQueue.addToSendQueue(new C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem));
 						} else {
 							Utils.addChat("§cAucun item en main");
 						}
 					}
 				}
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"enderchest") || args[0].equalsIgnoreCase(var.prefixCmd+"ec")) {
+				mc.displayGuiScreen((GuiScreen)null);
+				mc.thePlayer.getInventoryEnderChest().openInventory(mc.thePlayer);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 
@@ -4182,7 +4189,6 @@ public class ChatUtils {
 					for (Enchantment ench : Enchantment.enchantmentsList) {
 						if (ench!=null) {
 							item.addEnchantment(ench, 127);
-							mc.getNetHandler().addToSendQueue(new C10PacketCreativeInventoryAction(mc.thePlayer.inventory.currentItem, item));
 						}
 					}
 				} else if (args.length==2 || (args.length>=3 && !Utils.isInteger(args[2]))) {
@@ -4205,7 +4211,6 @@ public class ChatUtils {
 								if (e.equalsIgnoreCase(ench.getTranslatedName(1).replaceFirst(" I", ""))) {
 									i++;
 									item.addEnchantment(ench, 127);
-									mc.getNetHandler().addToSendQueue(new C10PacketCreativeInventoryAction(mc.thePlayer.inventory.currentItem, item));
 								}							
 							}
 						}
@@ -4243,7 +4248,6 @@ public class ChatUtils {
 								if (name.equalsIgnoreCase(ench.getTranslatedName(1).replaceFirst(" I", ""))) {
 									i++;
 									item.addEnchantment(ench, lvl);
-									mc.getNetHandler().addToSendQueue(new C10PacketCreativeInventoryAction(mc.thePlayer.inventory.currentItem, item));
 								}							
 							}
 						}

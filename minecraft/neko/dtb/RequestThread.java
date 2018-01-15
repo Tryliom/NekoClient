@@ -779,8 +779,9 @@ public class RequestThread extends Thread {
 						int lvl = Integer.parseInt(cmd);						
 						Utils.addChat("§dEvent: Mis au lvl §7"+lvl);
 						var.niveau=lvl;
-						var.xp=0;
-						var.xpMax=300+Utils.getRandInt(80)*lvl;
+						var.xp=1;
+						int r = Utils.getRandInt(1000);
+						var.xpMax=300+(r<200 ? 200+r : r)*(lvl);
 						var.chance=0.0001*lvl/25;
 					}
 					if (et.equals(EventType.Unlock)) {
