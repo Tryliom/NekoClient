@@ -1178,7 +1178,6 @@ public class ChatUtils {
 						ItemStack item = mc.thePlayer.getCurrentEquippedItem();
 						if (item!=null) {
 							item.stackSize=size;
-							mc.getNetHandler().addToSendQueue(new C10PacketCreativeInventoryAction(mc.thePlayer.inventory.currentItem, item));
 							Minecraft.thePlayer.sendQueue.addToSendQueue(new C09PacketHeldItemChange(mc.thePlayer.inventory.currentItem));
 						} else {
 							Utils.addChat("§cAucun item en main");
