@@ -149,6 +149,7 @@ public class PlayerControllerMP
             }
         }
 
+        // Pour que le joueur en créatif ne puisse rien casser avec une épée
         if (this.currentGameType.isCreative() && this.mc.thePlayer.getHeldItem() != null && this.mc.thePlayer.getHeldItem().getItem() instanceof ItemSword)
         {
             return false;

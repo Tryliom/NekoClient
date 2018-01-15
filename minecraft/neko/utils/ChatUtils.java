@@ -134,6 +134,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.InventoryBasic;
+import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -1184,6 +1186,12 @@ public class ChatUtils {
 						}
 					}
 				}
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"enderchest") || args[0].equalsIgnoreCase(var.prefixCmd+"ec")) {
+				mc.displayGuiScreen((GuiScreen)null);
+				mc.thePlayer.getInventoryEnderChest().openInventory(mc.thePlayer);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 
