@@ -82,13 +82,18 @@ public class Reach extends Module {
 	}
 	
 	// Réglé dans PlayerControllerMP
-	public void onUpdate() {
+	public void onUpdate() {			
 		if (!mc.thePlayer.isSneaking()) {
 			isOn=true;			
 		} else {
 			isOn=false;
 		}						
 	}	
+	
+	public void onAction() {
+		if (!this.isToggled && isOn)
+			isOn = false;
+	}
 	
 	public void onRightClick() {
 		if (u.isLock(this.getName())) {

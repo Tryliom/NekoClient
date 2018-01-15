@@ -1012,7 +1012,7 @@ public class Utils {
 			case 32: return "Un roux";
 			case 33: return "PunKeel";
 			case 34: return "SkyLouna";
-			case 35: return "Ma bite";
+			case 35: return "Umitsu";
 			case 36: return "Speedkill709";
 			case 37: return "Aexos";
 			case 38: return "neko";
@@ -1632,6 +1632,13 @@ public class Utils {
 			double nekoY = Math.random()*1.15+n;
 			mc.theWorld.spawnParticle(EnumParticleTypes.FLAME, mc.thePlayer.posX+neko, mc.thePlayer.posY+nekoY, mc.thePlayer.posZ+nekoN, 0, 0, 0, 0);
 		}
+	}
+	
+	public static void openUrl(String url) {
+		try {
+			URI url2 = URI.create(url);
+			Desktop.getDesktop().browse(url2);
+		} catch (Exception e) {}
 	}
 	
 	public static void doWater(int nb) {
@@ -4520,7 +4527,7 @@ public class Utils {
 		case 822:nyah="Arrête de poigner ici ! >-<";break;
 		case 823:nyah="Une petite fessée pour twa ? :3";break;
 		case 824:nyah=getRandPlayer()+" suce pour pas cher ;3";break;
-		case 825:nyah="";break;
+		case 825:nyah="><";break;
 		case 826:nyah="";break;
 		case 827:nyah="";break;
 		case 828:nyah="";break;

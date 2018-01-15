@@ -25,6 +25,7 @@ import com.mojang.authlib.GameProfile;
 import neko.Client;
 import neko.dtb.Alt;
 import neko.dtb.RequestThread;
+import neko.gui.GuiShop;
 import neko.gui.InGameGui;
 import neko.lock.Lock;
 import neko.manager.GuiManager;
@@ -663,6 +664,12 @@ public class ChatUtils {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Autonyah prefix <String>", var.prefixCmd+"autonyah prefix ", "§7Change le prefix avant les Nyah", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Autonyah speed <Double>", var.prefixCmd+"Autonyah speed ", "§7Change la vitesse de Nyah par secondes", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("likaotique") || args[1].equalsIgnoreCase("lik")) {
+					Utils.addChat(Utils.sep);
+					Utils.addChat2("§6"+var.prefixCmd+"Likaotique delay <Secondes>", var.prefixCmd+"lik delay ", "§7Change le delais entre les tp", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Likaotique radius <Int>", var.prefixCmd+"Likaotique radius ", "§7Change l'aura autour du joueur maximal", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("glide")) {
@@ -1689,8 +1696,8 @@ public class ChatUtils {
 					if (Utils.isDouble(args[2])) {
 						if (Double.parseDouble(args[2])==0d)
 							args[2] = "1";
-						Likaotique.getLik().getTimer().setDelay((int) Double.parseDouble(args[2])*100);
-						Likaotique.getLik().setDelay((int) Math.round(Double.parseDouble(args[2])*100));
+						Likaotique.getLik().getTimer().setDelay((int) Double.parseDouble(args[2])*1000);
+						Likaotique.getLik().setDelay((int) Math.round(Double.parseDouble(args[2])*1000));
 						Utils.addChat("§aDelay du Likaotique changé à "+args[2]+"sec !");
 					}											
 				} else if (args[1].equalsIgnoreCase("radius")) {
@@ -2821,7 +2828,7 @@ public class ChatUtils {
 						for (Rank r : ModuleManager.rang) {
 							if (!r.isLock()) {
 								String desc="";
-								desc+="\n§6Sélectionné: "+(r.getName().equalsIgnoreCase(var.rang.getName()) ? "§aSélectioné" : "§cNon");
+								desc+="§6Sélectionné: "+(r.getName().equalsIgnoreCase(var.rang.getName()) ? "§aSélectionné" : "§cNon");
 								if (!Utils.isLock("rankmanager rate"))
 									desc+="\n§6Rareté: "+r.getColor()+r.getRate();
 								if (!Utils.isLock("rankmanager lvl"))
@@ -3012,15 +3019,15 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"trade") || args[0].equalsIgnoreCase(var.prefixCmd+"shop")) {								
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"trade") || args[0].equalsIgnoreCase(var.prefixCmd+"shop")) {
 				if (args.length==1) {
 					//TODO: Commandes en 2
 					Utils.addChat(Utils.sep);
 					Utils.addChat("§lListe des gains:");
 					Utils.addChat2("§7Votre solde §7[§cici§7]", "", "§7Souls: §b"+var.ame+"\n§7Tickets de loteries:§6 "+var.lot, true, Chat.Click);
 					
-					Utils.addChat2("§6"+var.prefixCmd+"trade lot", var.prefixCmd+"trade lot", "§7Tire des lots aléatoires !\n§6Coût:§c 1 ticket de loterie", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"trade ticket", var.prefixCmd+"trade ticket", "§7Reçois un ticket de lotterie !\n§6Coût:§c 150 souls", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"trade lot", var.prefixCmd+"trade lot", "§7Tire des lots aléatoires !\n§cCoût:§c 1 ticket de loterie", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"trade ticket", var.prefixCmd+"trade ticket", "§7Reçois un ticket de lotterie !\n§cCoût:§c 150 souls", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"trade lotplus", var.prefixCmd+"trade lotplus", "§7Augmente les lots qui apparaissent de 1 de plus\n§cCoût: §c"+(100+(Lot.nbLot-3)*75)+" souls", false, Chat.Summon);
 					for (Lock lock : ModuleManager.Lock) {
 						if (lock.isLock() && lock.getUnit().equalsIgnoreCase("souls") && !lock.getName().startsWith("rankmanager")) {
@@ -3030,16 +3037,16 @@ public class ChatUtils {
 										
 					if (!Utils.isLock("--rankmanager")) {
 						if (Utils.isLock("rankmanager info")) {
-							Utils.addChat2("§6"+var.prefixCmd+"trade info", var.prefixCmd+"trade info", "§7Débloque définitivement l'option Info dans le RankManager\n§cCoût: 100 souls", true , Chat.Summon);
+							Utils.addChat2("§6"+var.prefixCmd+"trade info", var.prefixCmd+"trade info", "§7Débloque définitivement l'option Info dans le RankManager\n§cCoût: 100 souls", false , Chat.Summon);
 						} else
 							if (Utils.isLock("rankmanager lvl")) {
-								Utils.addChat2("§6"+var.prefixCmd+"trade lvl", var.prefixCmd+"trade lvl", "§7Débloque définitivement l'option Lvl dans le RankManager\n§cCoût: 150 souls", true, Chat.Summon);
+								Utils.addChat2("§6"+var.prefixCmd+"trade lvl", var.prefixCmd+"trade lvl", "§7Débloque définitivement l'option Lvl dans le RankManager\n§cCoût: 150 souls", false, Chat.Summon);
 							} else
 								if (Utils.isLock("rankmanager rate")) {
-									Utils.addChat2("§6"+var.prefixCmd+"trade rate", var.prefixCmd+"trade rate", "§7Débloque définitivement l'option Rareté dans le RankManager\n§cCoût: 200 souls", true, Chat.Summon);
+									Utils.addChat2("§6"+var.prefixCmd+"trade rate", var.prefixCmd+"trade rate", "§7Débloque définitivement l'option Rareté dans le RankManager\n§cCoût: 200 souls", false, Chat.Summon);
 								} else
 									if (Utils.isLock("rankmanager bonus")) {
-										Utils.addChat2("§6"+var.prefixCmd+"trade bonus", var.prefixCmd+"trade bonus", "§7Débloque définitivement l'option Lvl dans le RankManager\n§cCoût: 250 souls", true, Chat.Summon);
+										Utils.addChat2("§6"+var.prefixCmd+"trade bonus", var.prefixCmd+"trade bonus", "§7Débloque définitivement l'option Lvl dans le RankManager\n§cCoût: 250 souls", false, Chat.Summon);
 									}						
 					}				
 					if (!Lot.list2.isEmpty()) {
@@ -3840,7 +3847,7 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"tochat")) {
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"tochat")) {				
 				String s = ".......";
 				for (int i=0;i<var.prefixCmd.length();i++)
 					s+=".";

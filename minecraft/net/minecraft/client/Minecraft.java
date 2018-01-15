@@ -1662,13 +1662,15 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         {
             ItemStack var5 = this.thePlayer.inventory.getCurrentItem();
             if (Reach.bloc) {
-            	Minecraft mc = Minecraft.getMinecraft();
-            	BlockPos bll = mc.objectMouseOver.func_178782_a();
-            	if (bll==null && mc.pointedEntity!=null)
-            		bll = new BlockPos(mc.pointedEntity);
-            	if (bll!=null && mc.thePlayer.getDistance(bll.getX(), bll.getY(), bll.getZ())>5 && var5!=null && var5.getItem() instanceof ItemPotion) {
-            		return;
-            	}
+            	try {
+	            	Minecraft mc = Minecraft.getMinecraft();
+	            	BlockPos bll = mc.objectMouseOver.func_178782_a();
+	            	if (bll==null && mc.pointedEntity!=null)
+	            		bll = new BlockPos(mc.pointedEntity);
+	            	if (bll!=null && mc.thePlayer.getDistance(bll.getX(), bll.getY(), bll.getZ())>5 && var5!=null && var5.getItem() instanceof ItemPotion) {
+	            		return;
+	            	}
+            	} catch (Exception e) {}
             }
             if (var5 != null && this.playerController.sendUseItem(this.thePlayer, this.theWorld, var5))
             {

@@ -64,6 +64,7 @@ public class Client {
 	  public String ver = "";
 	  public String changelog = "";
 	  public RequestManager rm;
+	  public boolean testComptesNeko = false;
 	  
 	  public void startClient() {
 		  time.start();

@@ -50,7 +50,7 @@ public class Likaotique extends Module {
 	}
 	
 	public void setValues() {
-		this.values = "§6Delay:§7 "+(delay/100d)+"sec\n"
+		this.values = "§6Delay:§7 "+(delay/1000d)+"sec\n"
 					+ "§6Radius de tp:§7 "+radius+" blocs";
 	}
 	
@@ -77,7 +77,7 @@ public class Likaotique extends Module {
 	}
 	
 	public void tpToPlayer() {
-		BlockPos cb = Likaotique.getLik().getCurrPos();
+		BlockPos cb = this.getCurrPos();
 		BlockPos b = mc.thePlayer.getPosition();
 		Likaotique.getLik().setCurrPos(b);
 		TpUtils tp = new TpUtils();
@@ -86,6 +86,7 @@ public class Likaotique extends Module {
 		double pz = (cb==null ? tp.getTargetInPos(b).get(2) : tp.getTargetInPos(b, cb).get(2));
 		double psx = (cb==null ? mc.thePlayer.posX : cb.getX());
 		double psz = (cb==null ? mc.thePlayer.posZ : cb.getZ());
+		if (k<=30)
 		for (int j=0;j<k;j++)  {  
     		Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C04PacketPlayerPosition(psx+px/k, 
     				mc.thePlayer.posY, psz+pz/k, true));
@@ -113,15 +114,13 @@ public class Likaotique extends Module {
 class tptimer implements ActionListener {
 	Minecraft mc = Minecraft.getMinecraft();
 	Client var = Client.getNeko();
-	TpUtils tp = new TpUtils();	
-	Likaotique m = Likaotique.getLik();
+	TpUtils tp = new TpUtils();
 	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		try {
 			boolean find = false;
 			BlockPos b = null;
-			BlockPos cb = Likaotique.getLik().getCurrPos();
 			for (int i=0;i<20;i++) {
 				b = Utils.getRandBlock(Likaotique.getLik().getRadius(), 2d/100d);
 				if (Likaotique.getLik().isPositionValid(b)) {
@@ -129,13 +128,14 @@ class tptimer implements ActionListener {
 					break;
 				}
 			}
-			Likaotique.getLik().setCurrPos(b);
-			if (find) {
-				int k = (cb==null ? tp.getK(b) : tp.getK(b, cb));
-				double px = (cb==null ? tp.getTargetInPos(b).get(0) : tp.getTargetInPos(b, cb).get(0));
-				double pz = (cb==null ? tp.getTargetInPos(b).get(2) : tp.getTargetInPos(b, cb).get(2));
-				double psx = (cb==null ? mc.thePlayer.posX : cb.getX());
-				double psz = (cb==null ? mc.thePlayer.posZ : cb.getZ());
+			if (find) {		
+				Likaotique.getLik().tpToPlayer();
+				Likaotique.getLik().setCurrPos(b);
+				int k = tp.getK(b);
+				double px = tp.getTargetInPos(b).get(0);
+				double pz = tp.getTargetInPos(b).get(2);
+				double psx = mc.thePlayer.posX;
+				double psz = mc.thePlayer.posZ;
 				if (k>30)
 					Likaotique.getLik().setCurrPos(mc.thePlayer.getPosition());
 				else

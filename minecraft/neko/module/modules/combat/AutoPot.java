@@ -1,6 +1,6 @@
 package neko.module.modules.combat;
 
-import neko.module.modules.util.TimerUtils;
+import neko.utils.TimerUtils;
 import neko.utils.Utils;
 
 import org.lwjgl.input.Keyboard;

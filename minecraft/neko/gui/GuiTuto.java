@@ -31,7 +31,7 @@ public class GuiTuto extends GuiScreen {
 		if (tm.getPart()==1) {
 			this.buttonList.add(new GuiButton(2, this.width / 2 - 150, hBtn+24, 300, 20, "§aActiver l'HUD & ArrayList et passer au n°2"));
 		} else {
-			this.buttonList.add(new GuiButton(2, this.width / 2 - 150, hBtn+24, 300, 20, (tm.getPart())==tm.getTotPart() ? "Terminer le tuto" : "§aPasser au n°"+(tm.getPart()+1)));
+			this.buttonList.add(new GuiButton(2, this.width / 2 - 150, hBtn+24, 300, 20, (tm.getPart())==tm.getTotPart() ? "§aTerminer le tuto" : "§aPasser au n°"+(tm.getPart()+1)));
 			if ((tm.getPart()-1)!=0)
 				this.buttonList.add(new GuiButton(3, this.width / 6 - 50, this.height - 50, 100, 20, "§aRetourner au n°"+(tm.getPart()-1)));
 		}
@@ -70,12 +70,14 @@ public class GuiTuto extends GuiScreen {
 				if (!Utils.isToggle("ArrayList"))
 					Utils.toggleModule("ArrayList");
 			}
-			if (tm.getPart()==tm.getTotPart()) {
+			if ((tm.getPart())==tm.getTotPart()) {
 				tm.setDone(true);
 				tm.setPart(1);
 				mc.displayGuiScreen(this.prevGui);
-			} else
+				return;
+			} else {
 				tm.setPart(tm.getPart()+1);
+			}
 			mc.displayGuiScreen(new GuiTuto(this.prevGui));
 		}
 		if (button.id == 3) {

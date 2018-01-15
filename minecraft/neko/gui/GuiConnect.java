@@ -7,6 +7,7 @@ import java.util.Properties;
 import org.lwjgl.input.Keyboard;
 
 import neko.Client;
+import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
@@ -26,21 +27,28 @@ public class GuiConnect extends GuiScreen {
 	  private String error="";
 	  private boolean userv = false;
 	  private boolean passv = false;
+	  private int part;
 	  
-	  public GuiConnect(GuiScreen gui)
+	  public GuiConnect(GuiScreen gui, int part)
 	  {
 	    this.prevGui = gui;
+	    this.part=part;
 	  }
 	  
 	  public void initGui()
 	  {
+		this.buttonList.clear();
 	    int j = 28;
-	    this.buttonList.add(new GuiButton(1, this.width / 2 - 50, this.height - 200, 100, 20, "Se connecter"));
-	    this.buttonList.add(new GuiButton(0, this.width / 2 - 50, this.height - 150, 100, 20, "Retour"));
-	    this.user = new GuiTextField(2, this.fontRendererObj, this.width / 2 - 100, 60, 200, 20);
-	    this.pass = new GuiTextField(3, this.fontRendererObj, this.width / 2 - 100, 98, 200, 20);
-	    this.user.setText("Pseudo");
-	    this.pass.setText("Mot de passe");
+	    if (this.part==1) {
+		    this.buttonList.add(new GuiButton(1, this.width / 2 + 5, this.height / 3 + 50, 100, 20, "Se connecter"));
+		    this.buttonList.add(new GuiButton(0, this.width / 2 - 105, this.height - 50, 100, 20, "Refresh"));
+		    this.buttonList.add(new GuiButton(2, this.width / 2 - 105, this.height / 3 + 50, 100, 20, "Créer un compte"));
+		    this.buttonList.add(new GuiButton(-1, this.width - 75, this.height / 2, 50, 20, "Next"));
+		    this.user = new GuiTextField(2, this.fontRendererObj, this.width / 2 - 100, 60, 200, 20);
+		    this.pass = new GuiTextField(3, this.fontRendererObj, this.width / 2 - 100, 98, 200, 20);
+		    this.user.setText("Pseudo");
+		    this.pass.setText("Mot de passe");
+	    }
 	  }
 	  
 	  public void drawScreen(int mouseX, int mouseY, float partialTicks)
@@ -51,8 +59,8 @@ public class GuiConnect extends GuiScreen {
 	    
 	    drawDefaultBackground();
 	    
-	    drawCenteredString(var.NekoFont, "Connexion à Neko", this.width / 2, 10, 16777215);      
-	    drawCenteredString(var.NekoFont, "§c" + this.error, this.width / 2, 140, 16777215);
+	    drawCenteredString(var.NekoFont, "§e§nConnexion à Neko", this.width / 2, 10, 16777215);      
+	    drawCenteredString(var.NekoFont, "§c" + this.error, this.width / 2, 130, 16777215);
         String var10 = "§b-[§eNeko v"+var.CLIENT_VERSION+"§b]-";
         this.user.drawTextBox();
         this.pass.drawTextBox();
@@ -74,13 +82,14 @@ public class GuiConnect extends GuiScreen {
 	    case 1: 	    	
 	    	String user = this.user.getText();
 	    	String pass = this.pass.getText();
-	    	if (user.isEmpty() || user.equalsIgnoreCase("Pseudo") || pass.isEmpty() || pass.equalsIgnoreCase("Mot de passe")) {
-	    		this.error="Veuillez remplir ce champs !";
-	    	} else {
-		    	
-		    	this.mc.displayGuiScreen(this.prevGui);
+	    	if (user.isEmpty() || pass.isEmpty()) {
+	    		this.error="Veuillez remplir les champs !";
 	    	}
-	    	break;	    
+	    	this.error="Ce compte n'existe pas, mauvais mot de passe ou pseudo";
+	    	break;
+	    case 2:
+	    	Utils.openUrl("https://nekohc.fr/beta/register.php");
+	    	break;
 	    }
 	  }
 	  

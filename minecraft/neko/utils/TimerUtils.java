@@ -1,4 +1,4 @@
-package neko.module.modules.util;
+package neko.utils;
 
 public class TimerUtils {
 	private long prevMS;

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import neko.module.Category;
 import neko.module.Module;
-import neko.module.modules.util.TimerUtils;
+import neko.utils.TimerUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
