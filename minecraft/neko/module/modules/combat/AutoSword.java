@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraft.item.ItemTool;
 import net.minecraft.nbt.NBTTagList;
 
 public class AutoSword extends Module {
@@ -39,7 +40,7 @@ public class AutoSword extends Module {
 			good=true;
 		}
 		try {
-			int swordSlot = getSwordFromInventory();
+			int swordSlot = getBestWeaponFromInventory();
 			if (swordSlot!=mc.thePlayer.inventory.currentItem && (swordSlot != -1) && good) {
 				int prevSlot = mc.thePlayer.inventory.currentItem;
 				swap(swordSlot, prevSlot);		
@@ -53,14 +54,17 @@ public class AutoSword extends Module {
 		this.mc.playerController.windowClick(this.mc.thePlayer.inventoryContainer.windowId, one, two, 2, this.mc.thePlayer);
 	}
 	  
-	public int getSwordFromInventory() {
+	/**
+	 * Prend la meilleure des armes ou outils de l'inventaire en comparant avec le matériaux et les enchantements
+	 * @return	Le slot de la meilleure arme/outil<br>-1 si rien trouvé
+	 */
+	public int getBestWeaponFromInventory() {
 		java.util.ArrayList<Integer> list = new java.util.ArrayList<>();
-		int temp = -1;
 		for (int i = 9; i < 45; i++) {
 			if (mc.thePlayer.inventoryContainer.getSlot(i).getStack() != null) {
 				ItemStack is = mc.thePlayer.inventoryContainer.getSlot(i).getStack();
 				Item item = is.getItem();
-				if (item instanceof ItemSword) {
+				if (item instanceof ItemSword || item instanceof ItemTool) {
 					list.add(i);
 				}
 			}
@@ -72,8 +76,16 @@ public class AutoSword extends Module {
 			double bestDamage=-1;
 			int totalEnchant=-1;
 			for (Integer i : list) {
-				ItemSword item =(ItemSword) mc.thePlayer.inventoryContainer.getSlot(i).getStack().getItem();
-				String material = item.getToolMaterialName().toLowerCase();
+				Item it = mc.thePlayer.inventoryContainer.getSlot(i).getStack().getItem();
+				String material;
+				if (it instanceof ItemTool)
+					material = ((ItemTool) it).getToolMaterialName().toLowerCase();
+				else if (it instanceof ItemSword)
+					material = ((ItemSword) it).getToolMaterialName().toLowerCase();
+				else
+					continue;
+				
+				
 				int lvl = 0;
 				double totalDamage=0;
 				int count = 0;
@@ -89,6 +101,7 @@ public class AutoSword extends Module {
 		                  }
 		              }
 				}
+				// emerald = diamond
 				if (material.equalsIgnoreCase("emerald")) {
 					totalDamage+=7;
 				} else if (material.equalsIgnoreCase("iron")) {

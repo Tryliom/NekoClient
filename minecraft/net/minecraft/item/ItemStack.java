@@ -251,6 +251,9 @@ public final class ItemStack
      */
     public boolean isItemStackDamageable()
     {
+//    	NBTTagCompound nb = new NBTTagCompound(); 
+//    	nb.setBoolean("Unbreakable", true);
+//    	this.setTagCompound(nb);
         return this.item == null ? false : (this.item.getMaxDamage() <= 0 ? false : !this.hasTagCompound() || !this.getTagCompound().getBoolean("Unbreakable"));
     }
 
