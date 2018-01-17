@@ -2705,10 +2705,10 @@ public class ChatUtils {
 					    nbtBefehl.setString("CustomName", "Neko Sign");
 					    
 					    item.setTagInfo("BlockEntityTag", nbtBefehl);
-					    mc.thePlayer.inventory.addItemStackToInventory(item);
-					    for (int i = 0; i < mc.thePlayer.inventoryContainer.getInventory().size(); i++) {
-					        mc.playerController.sendSlotPacket((ItemStack)mc.thePlayer.inventoryContainer.getInventory().get(i), i);
-					    }
+					    mc.thePlayer.inventory.setInventorySlotContents(mc.thePlayer.inventory.currentItem, item);
+//					    for (int i = 0; i < mc.thePlayer.inventoryContainer.getInventory().size(); i++) {
+//					        mc.playerController.sendSlotPacket((ItemStack)mc.thePlayer.inventoryContainer.getInventory().get(i), i);
+//					    }
 					} catch (Exception e) {
                         Utils.addChat(err);
                     }
