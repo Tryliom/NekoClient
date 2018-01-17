@@ -1188,12 +1188,6 @@ public class ChatUtils {
 				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"enderchest") || args[0].equalsIgnoreCase(var.prefixCmd+"ec")) {
-				mc.displayGuiScreen((GuiScreen)null);
-				mc.thePlayer.getInventoryEnderChest().openInventory(mc.thePlayer);
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
 
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"gm")) {
 				if (args.length==1) {
@@ -1238,6 +1232,16 @@ public class ChatUtils {
 					Utils.addChat(err);
 				}
 			}
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"wear")) {
+				try {					
+					if (mc.thePlayer.getCurrentEquippedItem()!=null) {
+						mc.thePlayer.inventory.setInventorySlotContents(39, mc.thePlayer.getCurrentEquippedItem());
+						mc.thePlayer.inventory.markDirty();
+					}
+				} catch (Exception e) {}
+			}
+			
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"pyro")) {
 				if (args.length==1) {

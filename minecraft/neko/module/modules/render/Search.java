@@ -100,11 +100,16 @@ public class Search extends Module {
 	public void onRender3D() {
 		try {
 			if (searchBlock != null) {
-				for (BlockPos b : list)
+				int i = 0;
+				for (BlockPos b : list) {
+					i++;
+					if (i>200)
+						break;
 					RenderUtils.drawOutlinedBlockESP(b.getX() - mc.getRenderManager().renderPosX,
 							b.getY() - mc.getRenderManager().renderPosY,
 							b.getZ() - mc.getRenderManager().renderPosZ, 
 							0.15F, 0.15F, 0.99F, 0.2F, 7F, 1D, 1D, 1D);
+				}
 			}
 		} catch (Exception e) {}
 	}

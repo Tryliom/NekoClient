@@ -1798,7 +1798,6 @@ public abstract class EntityLivingBase extends Entity
     public void onUpdate()
     {
         super.onUpdate();        
-        
         //TODO: Deathoff
         if (delay >= 200) {
 	        if (Utils.deathoff && Minecraft.getMinecraft().thePlayer.getHealth() <= 0) {

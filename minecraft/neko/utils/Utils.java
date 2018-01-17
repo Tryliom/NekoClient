@@ -168,7 +168,7 @@ import net.minecraft.world.chunk.Chunk;
 
 /**
  * Utilité de cette classe:<br>
- * Sert pour les méthodes pratiques utilisées partout et variables 
+ * Sert pour les méthodes pratiques utilisées partout et variables
  */	
 public class Utils {
 	public static Minecraft mc = Minecraft.getMinecraft();
