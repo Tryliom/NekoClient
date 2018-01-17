@@ -4224,10 +4224,10 @@ public class ChatUtils {
 						int lvl=0;
 						if (Utils.isInteger(args[args.length-1])) {
 							lvl = Integer.parseInt(args[args.length-1]);
-							if (lvl>127)
-								lvl=127;
-							else if (lvl<-127)
-								lvl=-127;
+							if (lvl>1000)
+								lvl=1000;
+							else if (lvl<-1000)
+								lvl=-1000;
 						} else
 							lvl=127;
 						int i=0;
@@ -4244,7 +4244,7 @@ public class ChatUtils {
 						}
 						for (Enchantment ench : Enchantment.enchantmentsList) {
 							if (ench!=null) {
-								if (name.equalsIgnoreCase(ench.getTranslatedName(1).replaceFirst(" I", ""))) {
+								if (name.equalsIgnoreCase("all") || name.equalsIgnoreCase(ench.getTranslatedName(1).replaceFirst(" I", ""))) {
 									i++;
 									item.addEnchantment(ench, lvl);
 								}							
