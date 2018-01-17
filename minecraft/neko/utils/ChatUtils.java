@@ -2702,7 +2702,7 @@ public class ChatUtils {
 					    item.setTagInfo("BlockEntityTag", nbtEntity);
 					    NBTTagCompound nbtBefehl = new NBTTagCompound();
 					    nbtBefehl.setString("Text1", "{text:\"Hit me :D\",clickEvent:{action:run_command,value:\"" + command + "\"}}");
-					    nbtBefehl.setString("CustomName", "Neko Sign");
+					    nbtBefehl.setString("CustomName", "§dNeko Sign");
 					    
 					    item.setTagInfo("BlockEntityTag", nbtBefehl);
 					    mc.thePlayer.inventory.setInventorySlotContents(mc.thePlayer.inventory.currentItem, item);
