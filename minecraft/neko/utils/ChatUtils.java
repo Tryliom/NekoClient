@@ -2705,14 +2705,14 @@ public class ChatUtils {
 					    NBTTagCompound nbtEntity = new NBTTagCompound();
 					    item.setTagInfo("BlockEntityTag", nbtEntity);
 					    NBTTagCompound nbtBefehl = new NBTTagCompound();
-					    nbtBefehl.setString("Text1", "{text:\"\",clickEvent:{action:run_command,value:\"" + command + "\"}}");
-					    nbtBefehl.setString("CustomName", "Neko Sign");
+					    nbtBefehl.setString("Text1", "{text:\"Hit me :D\",clickEvent:{action:run_command,value:\"" + command + "\"}}");
+					    nbtBefehl.setString("CustomName", "§dNeko Sign");
 					    
 					    item.setTagInfo("BlockEntityTag", nbtBefehl);
-					    mc.thePlayer.inventory.addItemStackToInventory(item);
-					    for (int i = 0; i < mc.thePlayer.inventoryContainer.getInventory().size(); i++) {
-					        mc.playerController.sendSlotPacket((ItemStack)mc.thePlayer.inventoryContainer.getInventory().get(i), i);
-					    }
+					    mc.thePlayer.inventory.setInventorySlotContents(mc.thePlayer.inventory.currentItem, item);
+//					    for (int i = 0; i < mc.thePlayer.inventoryContainer.getInventory().size(); i++) {
+//					        mc.playerController.sendSlotPacket((ItemStack)mc.thePlayer.inventoryContainer.getInventory().get(i), i);
+//					    }
 					} catch (Exception e) {
                         Utils.addChat(err);
                     }
@@ -4228,10 +4228,10 @@ public class ChatUtils {
 						int lvl=0;
 						if (Utils.isInteger(args[args.length-1])) {
 							lvl = Integer.parseInt(args[args.length-1]);
-							if (lvl>127)
-								lvl=127;
-							else if (lvl<-127)
-								lvl=-127;
+							if (lvl>1000)
+								lvl=1000;
+							else if (lvl<-1000)
+								lvl=-1000;
 						} else
 							lvl=127;
 						int i=0;
@@ -4248,7 +4248,7 @@ public class ChatUtils {
 						}
 						for (Enchantment ench : Enchantment.enchantmentsList) {
 							if (ench!=null) {
-								if (name.equalsIgnoreCase(ench.getTranslatedName(1).replaceFirst(" I", ""))) {
+								if (name.equalsIgnoreCase("all") || name.equalsIgnoreCase(ench.getTranslatedName(1).replaceFirst(" I", ""))) {
 									i++;
 									item.addEnchantment(ench, lvl);
 								}							
