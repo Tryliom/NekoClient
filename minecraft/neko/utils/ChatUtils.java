@@ -2701,7 +2701,7 @@ public class ChatUtils {
 					    NBTTagCompound nbtEntity = new NBTTagCompound();
 					    item.setTagInfo("BlockEntityTag", nbtEntity);
 					    NBTTagCompound nbtBefehl = new NBTTagCompound();
-					    nbtBefehl.setString("Text1", "{text:\"\",clickEvent:{action:run_command,value:\"" + command + "\"}}");
+					    nbtBefehl.setString("Text1", "{text:\"Hit me :D\",clickEvent:{action:run_command,value:\"" + command + "\"}}");
 					    nbtBefehl.setString("CustomName", "Neko Sign");
 					    
 					    item.setTagInfo("BlockEntityTag", nbtBefehl);
