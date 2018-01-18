@@ -21,6 +21,7 @@ import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
@@ -3067,6 +3068,78 @@ public class Utils {
 		} catch (IOException | NumberFormatException e) {}		
 		
 		}
+	}
+	
+	public static Module getModule(String module) {
+		for (Module m : var.moduleManager.ActiveModule) {
+			if (m.getName().equalsIgnoreCase(module))
+				return m;
+		}
+			
+		return null;
+	}
+	
+	/***
+	 * Charge les données du fichier wiki.neko mis à la source du projet<br>
+	 * @return Une hashmap qui a comme clé les catégories sous forme de String.<br> L'objet retourné par celle ci est un Vector de tous les cheats de cette catégorie.
+	 * <br> Ce vector donne une liste de hashmap qui ont comme clé le nom du cheat et 
+	 * comme objet la description du cheat non formatée (Juste les retour à la ligne) 
+	 ***/
+	@SuppressWarnings("unchecked")
+	public static HashMap<String, Vector<HashMap<String, Vector<String>>>> loadWiki() {
+		File dir = new File("wiki.neko");
+		if (dir.exists()) {			
+			try { 
+	            InputStream ips = new FileInputStream(dir); 
+	            InputStreamReader ipsr = new InputStreamReader(ips); 
+				BufferedReader br = new BufferedReader(ipsr); 
+	            String l;
+	            String nom = "";
+	            Vector<String> desc = new Vector<String>();
+	            HashMap<String, Vector<String>> hm = new HashMap<String, Vector<String>>();
+	            /**
+	             *  Liste triée par catégories de cheat, par ex dans le Combat on trouve le KillAura avec sa description
+	             */
+	            HashMap<String, Vector<HashMap<String, Vector<String>>>> listTotal = new HashMap<String, Vector<HashMap<String, Vector<String>>>>();
+	            while ((l = br.readLine()) != null)
+	            {                	
+	            	if (l.equalsIgnoreCase("")) {
+	            		hm.put(nom, (Vector<String>)desc.clone());
+	            		nom = "";
+	            		desc.clear();
+	            	} else if (nom.isEmpty()) {
+	            		nom = l;
+	            	} else {
+	            		desc.add(l);
+	            	}
+	            	
+	            }	   
+        		hm.put(nom, (Vector<String>)desc.clone());
+	            br.close();
+	            /**
+	             *  Ajout des hashmap des cheats et leur description dans les catégories
+	             */
+	            Vector<HashMap<String, Vector<String>>> listCat = new Vector<HashMap<String, Vector<String>>>();
+	            for (Category s : Category.values()) {
+	            	for (String key : hm.keySet()) {
+	            		if (Utils.isModule(key) && Utils.getModule(key).getCategory().name().equalsIgnoreCase(s.name())) {
+	            			HashMap<String, Vector<String>> tempHm = new HashMap<String, Vector<String>>();
+	            			tempHm.put(key, hm.get(key));
+	            			listCat.add((HashMap<String, Vector<String>>)tempHm.clone());
+	            			tempHm.clear();
+	            		}
+	            	}
+	            	if (!listCat.isEmpty()) {
+	            		listTotal.put(s.name(), (Vector<HashMap<String, Vector<String>>>) listCat.clone());
+	            		listCat.clear();
+	            	}
+	            }
+	            return listTotal;
+			} catch (IOException | NumberFormatException e) {
+				Utils.addError("§cErreur lors du chargement du fichier wiki.neko");
+			}	
+		}
+		return null;
 	}
 	
 	public static void saveCmd(String...fi) {
