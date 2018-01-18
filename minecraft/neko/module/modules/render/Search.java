@@ -16,6 +16,7 @@ public class Search extends Module {
 	private int delay = 0;
 	private int delay_ = 0;
 	private int refreshTime = 10;
+	private int nbMaxElem = 200;
 	private int renderDistance = 200;
 	private Vector<BlockPos> list = new Vector<>();
 	private static Search instance = null;
@@ -38,7 +39,7 @@ public class Search extends Module {
 	}
 
 	public void setValues() {
-		this.values = "§6Bloc recherché:§7 "
+		this.values = "ï¿½6Bloc recherchï¿½:ï¿½7 "
 				+ (this.searchBlock == null ? "Aucun" : this.searchBlock.getLocalizedName());
 	}
 
@@ -50,6 +51,14 @@ public class Search extends Module {
 		this.searchBlock = searchBlock;
 	}
 
+	public int getNbMaxElem() {
+		return nbMaxElem;
+	}
+
+	public void setNbMaxElem(int nbMaxElem) {
+		this.nbMaxElem = nbMaxElem;
+	}
+
 	public void onUpdate() {
 		if (mc.gameSettings.keyBindPickBlock.getIsKeyPressed() && delay > 15
 				&& mc.objectMouseOver.func_178782_a() != null && !(mc.currentScreen instanceof GuiChat)
@@ -58,11 +67,11 @@ public class Search extends Module {
 			Block searchBlock_ = mc.theWorld.getBlockState(bl).getBlock();
 			if (searchBlock == searchBlock_) {
 				searchBlock = null;
-				Utils.addChat("§cBloc cherché supprimé !");
+				Utils.addChat("ï¿½cBloc cherchï¿½ supprimï¿½ !");
 				Search.getSearch().refresh();
 			} else {
 				searchBlock = searchBlock_;
-				Utils.addChat("§a" + this.searchBlock.getLocalizedName() + " recherché !");
+				Utils.addChat("ï¿½a" + this.searchBlock.getLocalizedName() + " recherchï¿½ !");
 				Search.getSearch().refresh();
 			}
 			delay = 0;
@@ -87,7 +96,8 @@ public class Search extends Module {
 
 						BlockPos b = new BlockPos(xPos, yPos, zPos);
 						Block block = mc.theWorld.getChunkFromBlockCoords(b).getBlock(xPos, yPos, zPos);
-
+						if (this.nbMaxElem <= list.size())
+							return;
 						if ((block == searchBlock)) {
 							list.add(b);
 						}
@@ -103,7 +113,7 @@ public class Search extends Module {
 				int i = 0;
 				for (BlockPos b : list) {
 					i++;
-					if (i>200)
+					if (i>this.nbMaxElem)
 						break;
 					RenderUtils.drawOutlinedBlockESP(b.getX() - mc.getRenderManager().renderPosX,
 							b.getY() - mc.getRenderManager().renderPosY,
