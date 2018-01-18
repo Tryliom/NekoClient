@@ -4,6 +4,9 @@ import com.google.common.base.Function;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
+
+import neko.utils.Utils;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -54,7 +57,7 @@ public class Item
     protected static Random itemRand = new Random();
 
     /** Maximum size of the stack. */
-    protected int maxStackSize = 128;
+    protected int maxStackSize = 64;
 
     /** Maximum damage an item can handle. */
     private int maxDamage;

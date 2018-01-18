@@ -4245,7 +4245,7 @@ public class ChatUtils {
 						for (int j=3;j<args.length;j++) {
 							value+=" "+args[j];
 						}
-			    	NBTTagCompound nb = new NBTTagCompound(); 
+			    	NBTTagCompound nb = item.getTagCompound(); 
 			    	if (Utils.isInteger(value)) {
 			    		nb.setInteger(tag, Integer.parseInt(value));
 			    	} else if (Utils.isDouble(value)) {
