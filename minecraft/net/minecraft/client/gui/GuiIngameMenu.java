@@ -3,6 +3,7 @@ package net.minecraft.client.gui;
 import java.io.IOException;
 
 import neko.gui.GuiAltManager;
+import neko.gui.GuiMenuNeko;
 import neko.manager.OnlyRpgManager;
 import neko.manager.SoundManager;
 import neko.utils.Utils;
@@ -46,12 +47,7 @@ public class GuiIngameMenu extends GuiScreen
         this.buttonList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 24 + var1, I18n.format("menu.returnToGame", new Object[0])));
         this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + var1, 98, 20, I18n.format("menu.options", new Object[0])));
         if (Utils.verif==null) {
-        	if (!OnlyRpgManager.getRpg().isActive())
-        	this.buttonList.add(new GuiButton(8, this.width / 2 + 2, this.height / 4 + 72 + var1, 98, 20, "Alt Manager"));
-        	if (!OnlyRpgManager.getRpg().isActive())
-        		this.buttonList.add(new GuiButton(9, this.width / 2 - 100, this.height / 4 + 72 + var1, 98, 20, "Multiplayer"));
-        	else
-        		this.buttonList.add(new GuiButton(9, this.width / 2 - 100, this.height / 4 + 72 + var1, "Multiplayer"));
+        	this.buttonList.add(new GuiButton(9, this.width / 2 - 100, this.height / 4 + 72 + var1, "§9Neko"));
         	if (SoundManager.getSM().canStart)
     			this.buttonList.add(new GuiButton(665, this.width / 2 -100, 10, SoundManager.getSM().isActive() ? "♫ Stop ♫" : "♪ Restart ♪"));
     		else
@@ -110,11 +106,8 @@ public class GuiIngameMenu extends GuiScreen
             case 7:
                 this.mc.displayGuiScreen(new GuiShareToLan(this));
                 break;
-            case 8:
-                this.mc.displayGuiScreen(new GuiAltManager(this));
-                break;
             case 9:
-                this.mc.displayGuiScreen(new GuiMultiplayer(this));
+                this.mc.displayGuiScreen(new GuiMenuNeko());
                 break;
         }
     }
