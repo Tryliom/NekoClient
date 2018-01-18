@@ -224,6 +224,7 @@ public class Utils {
 	public static String sep2 = "§8§m--------------";
 	public static Client var = Client.getNeko();
 	public static Vector<String> ipVote = new Vector<String>();
+	public static int xptime = 0;
 	
 	public static void addChat(String m) {
 		if (verif==null)
@@ -1298,6 +1299,15 @@ public class Utils {
 	public static boolean isDouble(String s) {
 		try {
 			double l = Double.parseDouble(s);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
+	public static boolean isBoolean(String s) {
+		try {
+			Boolean b = Boolean.parseBoolean(s);
 			return true;
 		} catch (Exception e) {
 			return false;

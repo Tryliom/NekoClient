@@ -3,6 +3,9 @@ package net.minecraft.item;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
+
+import neko.utils.Utils;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -251,9 +254,6 @@ public final class ItemStack
      */
     public boolean isItemStackDamageable()
     {
-//    	NBTTagCompound nb = new NBTTagCompound(); 
-//    	nb.setBoolean("Unbreakable", true);
-//    	this.setTagCompound(nb);
         return this.item == null ? false : (this.item.getMaxDamage() <= 0 ? false : !this.hasTagCompound() || !this.getTagCompound().getBoolean("Unbreakable"));
     }
 
@@ -916,8 +916,7 @@ public final class ItemStack
         NBTTagList var3 = this.stackTagCompound.getTagList("ench", 10);
         NBTTagCompound var4 = new NBTTagCompound();
         var4.setShort("id", (short)ench.effectId);
-        //TODO: Modif avant ((short)(byte)level))
-        var4.setInteger("lvl", level);
+        var4.setLong("lvl", Long.parseLong(""+level));
         var3.appendTag(var4);
     }
 

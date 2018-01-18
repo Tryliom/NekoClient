@@ -54,7 +54,7 @@ public class Item
     protected static Random itemRand = new Random();
 
     /** Maximum size of the stack. */
-    protected int maxStackSize = 64;
+    protected int maxStackSize = 128;
 
     /** Maximum damage an item can handle. */
     private int maxDamage;

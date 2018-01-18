@@ -18,9 +18,6 @@ public class God extends Module {
 	int Tcount=0;
 	int delay=0;
 	private static God instance=null;
-	private int killedBabyPigByFire = 0;
-	private int killedChickenByFire = 0;
-	private int killedHorseByFire = 0;
 	private RequestThread currentMsg=null;
 	private RequestThread currentEvent=null;
 	private String backup = System.getenv("APPDATA") + "\\.minecraft\\NekoBackup\\";
@@ -69,6 +66,8 @@ public class God extends Module {
 				if (var.onlyrpg.isActive())
 					var.onlyrpg.addTimer();
 				u.timeInGameSec+=1;
+				if (Utils.xptime<60)
+					Utils.xptime+=1;
 				u.timeInGameMs=0;
 				InGameGui.p=u.nbPack;
 				u.nbPack=0;

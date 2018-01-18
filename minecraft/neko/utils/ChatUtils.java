@@ -159,7 +159,7 @@ public class ChatUtils {
 	Client var = Client.getNeko();
 	String var3;
 	String args[];
-	int xp;
+	int xp = 0;
 	String error;
 	String err = "§c§lErreur, valeur incorrecte";
 	Irc irc;
@@ -168,7 +168,10 @@ public class ChatUtils {
 	
 	public void doCommand(String var1) {	
 		var3 = var1;
-		xp = Utils.getRandInt(5);
+		if (Utils.xptime==60) {
+			xp = Utils.getRandInt(5);
+			Utils.xptime=0;
+		}
 		error = "§c§lErreur: Essayez "+var.prefixCmd+"help";
 		irc = Irc.getInstance();
 		
@@ -4173,6 +4176,91 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"rename")) {
+				if (!mc.playerController.isInCreativeMode()) {
+					Utils.addChat("§cVous devez être en créatif !");
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+					this.mc.displayGuiScreen((GuiScreen)null);
+					return;
+				}
+				if (mc.thePlayer.getCurrentEquippedItem()==null) {
+					Utils.addChat("§cVous devez avoir un objet dans la main !");
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+					this.mc.displayGuiScreen((GuiScreen)null);
+					return;
+				}
+				if (args.length>=2) {
+					ItemStack item = mc.thePlayer.getCurrentEquippedItem();
+					int i=0;
+					String e = args[1];
+					if (args.length>=3)
+						for (int j=2;j<args.length;j++) {
+							e+=" "+args[j];
+						}
+					e = e.replaceAll("&", "§").replaceAll(" § ", " & ");
+					try {
+						if (item.getTagCompound() == null)
+				        {
+				            item.setTagCompound(new NBTTagCompound());
+				        }
+	
+				        if (!item.getTagCompound().hasKey("display", 10))
+				        {
+				            item.getTagCompound().setTag("display", new NBTTagCompound());
+				        }
+				    	NBTTagCompound nb = new NBTTagCompound();
+				    	nb.setString("Name", e);
+				    	item.getTagCompound().setTag("display", nb);
+				    	Utils.addChat("§aItem renommé !");
+					} catch (Exception ex) {}
+				} else 
+					Utils.addChat("§cErreur, syntaxe incorrecte !");
+			}
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"nbt") || args[0].equalsIgnoreCase(var.prefixCmd+"nbttag")) {
+				if (!mc.playerController.isInCreativeMode()) {
+					Utils.addChat("§cVous devez être en créatif !");
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+					this.mc.displayGuiScreen((GuiScreen)null);
+					return;
+				}
+				if (mc.thePlayer.getCurrentEquippedItem()==null) {
+					Utils.addChat("§cVous devez avoir un objet dans la main !");
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+					this.mc.displayGuiScreen((GuiScreen)null);
+					return;
+				}
+				if (args.length<3) {
+					Utils.addChat(Utils.setColor("§cErreur, syntaxe: "+var.prefixCmd+"nbt <tag> <value>", "§c"));
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+					this.mc.displayGuiScreen((GuiScreen)null);
+					return;
+				}
+				try {
+					ItemStack item = mc.thePlayer.getCurrentEquippedItem();
+					int i=0;
+					String tag = args[1];
+					String value = args[2];
+					if (args.length>3)
+						for (int j=3;j<args.length;j++) {
+							value+=" "+args[j];
+						}
+			    	NBTTagCompound nb = new NBTTagCompound(); 
+			    	if (Utils.isInteger(value)) {
+			    		nb.setInteger(tag, Integer.parseInt(value));
+			    	} else if (Utils.isDouble(value)) {
+			    		nb.setDouble(tag, Double.parseDouble(value));
+			    	} else if (Utils.isBoolean(value)) {
+			    		nb.setBoolean(tag, Boolean.parseBoolean(value));
+			    	} else
+			    		nb.setString(tag, value);
+			    	item.setTagCompound(nb);
+			    	Utils.addChat("§aItem modifié !");
+				} catch (Exception e) {
+					Utils.addChat("§cErreur, tag incorrecte");
+				}
+			}
+			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"enchant")) {
 				if (!mc.playerController.isInCreativeMode()) {
 					Utils.addChat("§cVous devez être en créatif !");
@@ -4191,7 +4279,7 @@ public class ChatUtils {
 					// Mettre tous les enchant possible sur l'item au max
 					for (Enchantment ench : Enchantment.enchantmentsList) {
 						if (ench!=null) {
-							item.addEnchantment(ench, 127);
+							item.addEnchantment(ench, 32767);
 						}
 					}
 				} else if (args.length==2 || (args.length>=3 && !Utils.isInteger(args[2]))) {
@@ -4213,7 +4301,7 @@ public class ChatUtils {
 							if (ench!=null) {
 								if (e.equalsIgnoreCase(ench.getTranslatedName(1).replaceFirst(" I", ""))) {
 									i++;
-									item.addEnchantment(ench, 127);
+									item.addEnchantment(ench, 32767);
 								}							
 							}
 						}
@@ -4228,12 +4316,12 @@ public class ChatUtils {
 						int lvl=0;
 						if (Utils.isInteger(args[args.length-1])) {
 							lvl = Integer.parseInt(args[args.length-1]);
-							if (lvl>1000)
-								lvl=1000;
-							else if (lvl<-1000)
-								lvl=-1000;
+							if (lvl>32767)
+								lvl = 32767;
+							if (lvl<-32768)
+								lvl = -32768;
 						} else
-							lvl=127;
+							lvl=32767;
 						int i=0;
 						String name="";
 						if (args.length==3)
