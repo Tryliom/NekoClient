@@ -64,12 +64,16 @@ public class GuiWikiMenu extends GuiScreen {
 	    	try {
 	    		l1 = GuiWikiMenu.listWiki.get(c.name());
 	    	} catch (Exception e) {
-	    		Utils.addChat("Taille wiki: "+this.listWiki==null ? "Null" : ""+this.listWiki.size());
+	    		System.out.println(e.getMessage());
+	    		System.out.println("list: "
+	    	+this.listWiki.isEmpty());
+	    		System.out.println(
+	    				"Taille wiki: "+(this.listWiki==null ? "Null" : ""+this.listWiki.size()));
 	    	}
 	    	for (HashMap<String, Vector<String>> hm : l1) {
 	    		for (Module m : var.moduleManager.ActiveModule) {
 	    			if (hm.containsKey(m.getName())) {
-	    				this.buttonList.add(new GuiButton(nb, x, y, 50, 20, color+m.getName()));
+	    				this.buttonList.add(new GuiButton(nb, x, y, 50, 11, color+m.getName()));
 	    				nb++;
 	    				y+=15;
 	    				if (y>= this.width) {
@@ -128,9 +132,10 @@ public class GuiWikiMenu extends GuiScreen {
 //		  if (this.listWiki.isEmpty()) {
 			  this.listWiki = Utils.loadWiki();
 //		  }
-		  if (this.listWiki == null)
+		  if (this.listWiki == null) 
 			  mc.displayGuiScreen(this.prevGui);
-		  System.out.println("NekoWiki: Pour le moment le wiki se reload à chaques fois");
+		  else
+			  System.out.println("NekoWiki: Pour le moment le wiki se reload à chaques fois");
 	  }
 	  
 	  private class GuiWikiPart extends GuiScreen {
@@ -175,7 +180,7 @@ public class GuiWikiMenu extends GuiScreen {
 		    	  if (!cmd)
 		    		  drawString(var.NekoFont, "§9"+d, 100, y, 16777215);
 		    	  else {
-		    		  d = d.startsWith("..") ? d.replace("..", "§6"+var.prefixCmd) : d;
+		    		  d = d.startsWith("..") ? d.replace("..", "§6"+var.prefixCmd).replaceFirst(":", ":§9") : "§9"+d;
 		    		  drawString(var.NekoFont, d, 100, y, 16777215);
 		    	  }
 		    	  y+=15;
