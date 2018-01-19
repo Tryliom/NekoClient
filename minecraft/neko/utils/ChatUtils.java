@@ -2694,35 +2694,6 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"sign")) {
-				if (args.length==1) {
-					Utils.addChat(Utils.setColor("§cErreur, utilisation correcte: "+var.prefixCmd+"sign <Commande>", "§c"));
-				} else {
-					try {								
-						String command = "";
-					    for (int i = 1; i < args.length; i++) {
-					      command+=args[i]+" ";
-					    }
-					    ItemStack item = new ItemStack(Items.sign);
-					    
-					    NBTTagCompound nbtEntity = new NBTTagCompound();
-					    item.setTagInfo("BlockEntityTag", nbtEntity);
-					    NBTTagCompound nbtBefehl = new NBTTagCompound();
-					    nbtBefehl.setString("Text1", "{text:\"Hit me :D\",clickEvent:{action:run_command,value:\"" + command + "\"}}");
-					    nbtBefehl.setString("CustomName", "§dNeko Sign");
-					    
-					    item.setTagInfo("BlockEntityTag", nbtBefehl);
-					    mc.thePlayer.inventory.setInventorySlotContents(mc.thePlayer.inventory.currentItem, item);
-//					    for (int i = 0; i < mc.thePlayer.inventoryContainer.getInventory().size(); i++) {
-//					        mc.playerController.sendSlotPacket((ItemStack)mc.thePlayer.inventoryContainer.getInventory().get(i), i);
-//					    }
-					} catch (Exception e) {
-                        Utils.addChat(err);
-                    }
-				}
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"push") || args[0].equalsIgnoreCase(var.prefixCmd+"pushup")) {
 				if (args.length==1) {
 					Utils.toggleModule("PushUp");

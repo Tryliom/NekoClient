@@ -16,8 +16,7 @@ public class Search extends Module {
 	private int delay = 0;
 	private int delay_ = 0;
 	private int refreshTime = 10;
-	private int nbMaxElem = 100;
-	private int renderDistance = 150;
+	private int renderDistance = 75;
 	private Vector<BlockPos> list = new Vector<>();
 	private static Search instance = null;
 
@@ -31,6 +30,7 @@ public class Search extends Module {
 	}
 
 	public void onEnabled() {
+		this.refresh();
 		super.onEnabled();
 	}
 
@@ -49,14 +49,6 @@ public class Search extends Module {
 
 	public void setSearchBlock(Block searchBlock) {
 		this.searchBlock = searchBlock;
-	}
-
-	public int getNbMaxElem() {
-		return nbMaxElem;
-	}
-
-	public void setNbMaxElem(int nbMaxElem) {
-		this.nbMaxElem = nbMaxElem;
 	}
 
 	public void onUpdate() {

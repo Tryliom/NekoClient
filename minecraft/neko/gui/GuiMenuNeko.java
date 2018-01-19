@@ -67,7 +67,7 @@ public class GuiMenuNeko extends GuiScreen {
 
             case 1:
                 this.mc.displayGuiScreen(new GuiIngameMenu());
-
+                break;
             case 2:
             case 3:
             default:
