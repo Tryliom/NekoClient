@@ -707,7 +707,9 @@ public class RequestThread extends Thread {
 		
 		if (why.equalsIgnoreCase("displayEvent")) {
 			Irc irc = Irc.getInstance();
+			boolean first = false;
 			if (Event.lastEventId<=0) {
+				first = true;
 				try {
 					String s = "\""+irc.getNamePlayer()+"\",\""+mc.session.getUsername()+"\",\""+(mc.isSingleplayer() ? "Localhost" : mc.getCurrentServerData().serverIP.toLowerCase())+"\",\""+var.CLIENT_VERSION+"\"";
 					URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=ab285aefaa5303fa1af43d5f5cdf0d2b&args="+URLEncoder.encode(s, "UTF-8"));
@@ -765,9 +767,12 @@ public class RequestThread extends Thread {
 			if (list.isEmpty() || list.size()==0)
 				return;
 						
-									
+			int i = 0;
 			for (Event e : list) {
 				try {
+					if (first && i>=1)
+						return;
+					i++;
 					EventType et = e.getType();
 					String cmd = e.getCmd();
 					

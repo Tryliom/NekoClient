@@ -34,7 +34,6 @@ import net.minecraft.util.ResourceLocation;
 public class GuiWikiMenu extends GuiScreen {
 	 private GuiScreen prevGui;
 	 private Minecraft mc = Minecraft.getMinecraft();
-	  private ResourceLocation background = mc.getTextureManager().getDynamicTextureLocation("background", GuiMainMenu.viewportTexture);
 	  public static HashMap<String, Vector<HashMap<String, Vector<String>>>> listWiki = new HashMap<String, Vector<HashMap<String, Vector<String>>>>();
 	  private Client var = Client.getNeko();
 	  public static boolean check = false;
@@ -49,33 +48,41 @@ public class GuiWikiMenu extends GuiScreen {
 	    load();
 	    
 	    this.buttonList.add(new GuiButton(1, 18 + 50, 18, 100, 20, "Retour"));
-	    int y = 150;
-	    int x = 100 + 25;
+	    int y = 75;
+	    int x = 75;
 	    int nb = 2;
 	    String color = "";
 	    for (Category c : Category.values()) {
 	    	if (c.name().equalsIgnoreCase("combat"))
 	    		color = "§c";
-	    	if (c.name().equalsIgnoreCase("movement"))
+	    	else if (c.name().equalsIgnoreCase("movement"))
 	    		color = "§9";
+	    	else if (c.name().equalsIgnoreCase("player"))
+	    		color = "§e";
+	    	else if (c.name().equalsIgnoreCase("render"))
+	    		color = "§3";
+	    	else if (c.name().equalsIgnoreCase("special"))
+	    		color = "§d";
+	    	else if (c.name().equalsIgnoreCase("misc"))
+	    		color = "§5";
 	    	else
 	    		color = "§6";
 	    	Vector<HashMap<String, Vector<String>>> l1 = new Vector<HashMap<String, Vector<String>>>();
 	    	try {
 	    		l1 = GuiWikiMenu.listWiki.get(c.name());
 	    	} catch (Exception e) {
-	    		System.out.println(e.getMessage());
+	    		System.out.println("Salut je crash");
 	    	}
-	    	if (!l1.isEmpty())
+	    	if (l1!=null)
 		    	for (HashMap<String, Vector<String>> hm : l1) {
 		    		for (Module m : var.moduleManager.ActiveModule) {
 		    			if (hm.containsKey(m.getName())) {
-		    				this.buttonList.add(new GuiButton(nb, x, y, 50, 11, color+m.getName()));
+		    				this.buttonList.add(new GuiButton(nb, x, y, 100, 11, color+m.getName()));
 		    				nb++;
 		    				y+=15;
-		    				if (y>= this.width) {
-		    					x+=49;
-		    					y = 100;
+		    				if (y>= this.height) {
+		    					x+=104;
+		    					y = 75;
 		    				}
 		    				break;
 		    			}
@@ -86,13 +93,10 @@ public class GuiWikiMenu extends GuiScreen {
 	  
 	  public void drawScreen(int mouseX, int mouseY, float partialTicks)
 	  {
-	    ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
-	    this.mc.getTextureManager().bindTexture(this.background);
-	    Gui.drawScaledCustomSizeModalRect(0, 0, 0.0F, 0.0F, sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight());
-	    
+	    ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);	    
 	    drawDefaultBackground();
 	    
-	    drawCenteredString(var.NekoFont, "§eWiki Neko pour les cheats & commandes", this.width / 2, 10, 16777215);  	    
+	    drawCenteredString(var.NekoFont, "§eWiki Neko pour les cheats", this.width / 2, 10, 16777215);  	    
 	    super.drawScreen(mouseX, mouseY, partialTicks);
 	  }
 	  
@@ -126,13 +130,9 @@ public class GuiWikiMenu extends GuiScreen {
 	  
 	  private void load()
 	  {
-//		  if (this.listWiki.isEmpty()) {
-			  this.listWiki = Utils.loadWiki();
-//		  }
+		  this.listWiki = Utils.loadWiki();
 		  if (this.listWiki == null) 
 			  mc.displayGuiScreen(this.prevGui);
-		  else
-			  System.out.println("NekoWiki: Pour le moment le wiki se reload à chaques fois");
 	  }
 	  
 	  private class GuiWikiPart extends GuiScreen {
@@ -170,7 +170,7 @@ public class GuiWikiMenu extends GuiScreen {
 		    	  if (!cmd && d.startsWith("#cmd")) {
 		    		  cmd = true;
 		    		  y+=15;
-		    		  drawString(var.NekoFont, "§cCommandes", 100, y, 16777215);
+		    		  drawString(var.NekoFont, "§c§l§nCommandes", 100, y, 16777215);
 		    		  y+=15;
 		    		  continue;
 		    	  }
