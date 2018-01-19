@@ -164,7 +164,7 @@ public class GuiWikiMenu extends GuiScreen {
 		    		  break;
 		    	  }		    		 
 		      }
-		      int y = 100;
+		      int y = 64;
 		      boolean cmd = false;
 		      for (String d : desc) {
 		    	  if (!cmd && d.startsWith("#cmd")) {

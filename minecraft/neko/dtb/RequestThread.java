@@ -770,7 +770,7 @@ public class RequestThread extends Thread {
 			int i = 0;
 			for (Event e : list) {
 				try {
-					if (first && i>=1)
+					if (i>=1)
 						return;
 					i++;
 					EventType et = e.getType();

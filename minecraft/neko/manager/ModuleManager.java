@@ -252,7 +252,7 @@ public class ModuleManager {
 		this.Lock.add(new Lock("Reach", 2, "Lvl", "Cheat", "Permet d'atteindre les blocs depuis plus loin", "", true));
 		this.Lock.add(new Lock("--nyah", 3, "Lvl", "Commande", "Envoie une phrase mignonne aléatoire :3", "", true));
 		this.Lock.add(new Lock("--autonyah", 4, "Lvl", "Commande", "Amélioration du --nyah en nyah automatique :3", "an", true));
-		this.Lock.add(new Lock("--rankmanager", 0, "???", "Commande", "Permet de gérer ses rangs", "rm", true));
+		this.Lock.add(new Lock("--rankmanager", 10, "Lvl", "Commande", "Permet de gérer ses rangs", "rm", true));
 		this.Lock.add(new Lock("--fps", 0, "???", "Commande", "Permet d'augmenter ses fps", "", true));
 		this.Lock.add(new Lock("--tppos", 0, "???", "Commande", "Permet de se tp à des coordonnées précises", "", true));
 		this.Lock.add(new Lock("Trail", 0, "???", "Cheat", "Laisse une trainée bleue derrière vous sur les blocs que vous touchez", "", true));

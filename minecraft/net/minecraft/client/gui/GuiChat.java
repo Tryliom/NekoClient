@@ -234,7 +234,11 @@ public class GuiChat extends GuiScreen {
 		}
 		case 6: {
 			Utils.displayHelp(1);
-			int xp = Utils.getRandInt(100);
+			int xp = 0;
+			if (Utils.xptime>=59) {
+				xp = Utils.getRandInt(5);
+				Utils.xptime=0;
+			}
 			Utils.checkXp(xp);
 			int rand = (int) Math.round(Math.random() * 1000);
 			if (!Client.getNeko().achievementHelp) {
