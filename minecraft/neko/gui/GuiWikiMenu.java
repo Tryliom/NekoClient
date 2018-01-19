@@ -36,7 +36,6 @@ public class GuiWikiMenu extends GuiScreen {
 	 private Minecraft mc = Minecraft.getMinecraft();
 	  private ResourceLocation background = mc.getTextureManager().getDynamicTextureLocation("background", GuiMainMenu.viewportTexture);
 	  public static HashMap<String, Vector<HashMap<String, Vector<String>>>> listWiki = new HashMap<String, Vector<HashMap<String, Vector<String>>>>();
-	  private GuiList list;
 	  private Client var = Client.getNeko();
 	  public static boolean check = false;
 	  
@@ -116,7 +115,6 @@ public class GuiWikiMenu extends GuiScreen {
 	    throws IOException
 	  {
 	    super.handleMouseInput();
-	    this.list.handleMouseInput();
 	  }
 	  
 	  private void load()
