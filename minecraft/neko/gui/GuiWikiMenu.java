@@ -64,7 +64,8 @@ public class GuiWikiMenu extends GuiScreen {
 	    	try {
 	    		l1 = GuiWikiMenu.listWiki.get(c.name());
 	    	} catch (Exception e) {
-	    		Utils.addChat("list: "+this.listWiki.isEmpty());
+	    		Utils.addChat("list: "
+	    	+this.listWiki.isEmpty());
 	    		Utils.addChat(
 	    				"Taille wiki: "+(this.listWiki==null ? "Null" : ""+this.listWiki.size()));
 	    	}
@@ -130,9 +131,10 @@ public class GuiWikiMenu extends GuiScreen {
 //		  if (this.listWiki.isEmpty()) {
 			  this.listWiki = Utils.loadWiki();
 //		  }
-		  if (this.listWiki == null)
+		  if (this.listWiki == null) 
 			  mc.displayGuiScreen(this.prevGui);
-		  System.out.println("NekoWiki: Pour le moment le wiki se reload à chaques fois");
+		  else
+			  System.out.println("NekoWiki: Pour le moment le wiki se reload à chaques fois");
 	  }
 	  
 	  private class GuiWikiPart extends GuiScreen {
