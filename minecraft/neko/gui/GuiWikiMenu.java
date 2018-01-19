@@ -63,7 +63,9 @@ public class GuiWikiMenu extends GuiScreen {
 	    	Vector<HashMap<String, Vector<String>>> l1 = new Vector<HashMap<String, Vector<String>>>();
 	    	try {
 	    		l1 = GuiWikiMenu.listWiki.get(c.name());
-	    	} catch (Exception e) {}
+	    	} catch (Exception e) {
+	    		Utils.addChat("Taille wiki: "+GuiWikiMenu.listWiki.size());
+	    	}
 	    	for (HashMap<String, Vector<String>> hm : l1) {
 	    		for (Module m : var.moduleManager.ActiveModule) {
 	    			if (hm.containsKey(m.getName())) {
