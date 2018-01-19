@@ -3123,6 +3123,7 @@ public class Utils {
 	            for (Category s : Category.values()) {
 	            	for (String key : hm.keySet()) {
 	            		if (Utils.isModule(key) && Utils.getModule(key).getCategory().name().equalsIgnoreCase(s.name())) {
+	            			System.out.println(""+key+" "+s.name()+" "+hm.get(key));
 	            			HashMap<String, Vector<String>> tempHm = new HashMap<String, Vector<String>>();
 	            			tempHm.put(key, hm.get(key));
 	            			listCat.add((HashMap<String, Vector<String>>)tempHm.clone());
@@ -3136,7 +3137,7 @@ public class Utils {
 	            }
 	            return listTotal;
 			} catch (IOException | NumberFormatException e) {
-				Utils.addError("§cErreur lors du chargement du fichier wiki.neko");
+				System.out.println("§cErreur lors du chargement du fichier wiki.neko");
 			}	
 		}
 		return null;
