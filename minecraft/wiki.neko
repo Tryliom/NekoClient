@@ -20,7 +20,7 @@ ramasser des items au sol trop loin pour vous.
 ..reach aimbot
 ..reach fov
 ..reach bloc
-/n
+
 VanillaTp
 Vous téléporte sur le bloc ou entité visée instantanément.
 Vtp air : Permet de pouvoir se téléporter au loin sans avoir un bloc plein (bloc d’air)
@@ -31,7 +31,7 @@ viser le bloc du haut.
 ..vtp air
 ..vtp classic
 ..vtp top 
-/n
+
 SmoothAim
 Permet de rapprocher le curseur d’une entité proche selon le fov et la vitesse.
 smoothaim rang : Modifie la portée du SmoothAim
