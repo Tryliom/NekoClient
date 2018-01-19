@@ -3136,8 +3136,8 @@ public class Utils {
 	            	}
 	            }
 	            return listTotal;
-			} catch (IOException | NumberFormatException e) {
-				System.out.println("§cErreur lors du chargement du fichier wiki.neko");
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
 			}	
 		}
 		return null;
