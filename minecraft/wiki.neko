@@ -8,7 +8,7 @@ Avec l'option « pvp », la reach aura les fonctions suivantes :
 ..Reach pvp : Active/désactive la reach pvp. Permet de frapper les joueurs
 ..Reach tnt : Active/désactive la reach tnt. Pose de la tnt à distance et l'allume
 automatiquement
-..Reach tnt <Mode> : Change la faÃ§on dont les tnt vont se poser. Faire Reach tnt list pour la liste des modes.
+..Reach tnt <Mode> : Change la façon dont les tnt vont se poser. Faire Reach tnt list pour la liste des modes.
 ..Reach aimbot : Active/désactive l'aimbot de la reach. Fais pour la reach pvp pour mieux viser pour
 frapper, si on frappe à côté on atteint quand même la cible.
 ..Reach fov <Int> : Change le fov pour l'aimbot. Angle de vue pour que le Aimbot fasse effet.
