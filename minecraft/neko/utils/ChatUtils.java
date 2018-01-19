@@ -25,6 +25,7 @@ import com.mojang.authlib.GameProfile;
 import neko.Client;
 import neko.dtb.Alt;
 import neko.dtb.RequestThread;
+import neko.gui.GuiShop;
 import neko.gui.InGameGui;
 import neko.lock.Lock;
 import neko.manager.GuiManager;
@@ -3003,15 +3004,15 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"trade") || args[0].equalsIgnoreCase(var.prefixCmd+"shop")) {								
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"trade") || args[0].equalsIgnoreCase(var.prefixCmd+"shop")) {
 				if (args.length==1) {
 					//TODO: Commandes en 2
 					Utils.addChat(Utils.sep);
 					Utils.addChat("§lListe des gains:");
 					Utils.addChat2("§7Votre solde §7[§cici§7]", "", "§7Souls: §b"+var.ame+"\n§7Tickets de loteries:§6 "+var.lot, true, Chat.Click);
 					
-					Utils.addChat2("§6"+var.prefixCmd+"trade lot", var.prefixCmd+"trade lot", "§7Tire des lots aléatoires !\n§6Coût:§c 1 ticket de loterie", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"trade ticket", var.prefixCmd+"trade ticket", "§7Reçois un ticket de lotterie !\n§6Coût:§c 150 souls", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"trade lot", var.prefixCmd+"trade lot", "§7Tire des lots aléatoires !\n§cCoût:§c 1 ticket de loterie", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"trade ticket", var.prefixCmd+"trade ticket", "§7Reçois un ticket de lotterie !\n§cCoût:§c 150 souls", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"trade lotplus", var.prefixCmd+"trade lotplus", "§7Augmente les lots qui apparaissent de 1 de plus\n§cCoût: §c"+(100+(Lot.nbLot-3)*75)+" souls", false, Chat.Summon);
 					for (Lock lock : ModuleManager.Lock) {
 						if (lock.isLock() && lock.getUnit().equalsIgnoreCase("souls") && !lock.getName().startsWith("rankmanager")) {
@@ -5180,7 +5181,7 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
-			//TODO: Nyah
+			//TODO: Nyah Tryliom c'est l'amour a Didi
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"nyah") || args[0].equalsIgnoreCase(var.prefixCmd+"nyah!") || args[0].equalsIgnoreCase(var.prefixCmd+"nyah*")) {
 				if (Utils.isLock("--nyah")) {
 					Utils.addWarn("Nyah");

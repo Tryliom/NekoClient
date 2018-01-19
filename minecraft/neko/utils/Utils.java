@@ -1010,7 +1010,7 @@ public class Utils {
 			case 32: return "Un roux";
 			case 33: return "PunKeel";
 			case 34: return "SkyLouna";
-			case 35: return "Ma bite";
+			case 35: return "Umitsu";
 			case 36: return "Speedkill709";
 			case 37: return "Aexos";
 			case 38: return "neko";
@@ -3087,7 +3087,7 @@ public class Utils {
 	 ***/
 	@SuppressWarnings("unchecked")
 	public static HashMap<String, Vector<HashMap<String, Vector<String>>>> loadWiki() {
-		File dir = new File("wiki.neko");
+		File dir = new File(System.getProperty("user.dir")+ Utils.separator +"..\\src\\minecraft\\wiki.neko");
 		if (dir.exists()) {			
 			try { 
 	            InputStream ips = new FileInputStream(dir); 
@@ -3135,8 +3135,8 @@ public class Utils {
 	            	}
 	            }
 	            return listTotal;
-			} catch (IOException | NumberFormatException e) {
-				Utils.addError("§cErreur lors du chargement du fichier wiki.neko");
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
 			}	
 		}
 		return null;
@@ -4596,17 +4596,17 @@ public class Utils {
 		case 812:nyah="On parle pas la bouche pleine !";break;
 		case 813:nyah="À ce rythme, la fin sera encore mieux ;3";break;
 		case 814:nyah="Dépêchons-nous, buvons ça...";break;
-		case 815:nyah="Tryliom et Kumitsu sont fiancer <3";break;
-		case 816:nyah="";break;
-		case 817:nyah="";break;
-		case 818:nyah="";break;
-		case 819:nyah="";break;
-		case 820:nyah="";break;
-		case 821:nyah="";break;
-		case 822:nyah="";break;
-		case 823:nyah="";break;
-		case 824:nyah="";break;
-		case 825:nyah="";break;
+		case 815:nyah="Tryliom et Kumitsu sont fiancés <3";break;
+		case 816:nyah="Oww deux belles boules ;3";break;
+		case 817:nyah="J'adore chaaa OwO";break;
+		case 818:nyah="Met toi bien "+getRandPlayer()+" je vais inspecter cha ;3";break;
+		case 819:nyah="Whara adore les petits chatons x3";break;
+		case 820:nyah="OwO C'est vraiment à twa cha ? ";break;
+		case 821:nyah="Regarde bien, c'est la derrnière fois que tu la vois ;3";break;
+		case 822:nyah="Arrête de poigner ici ! >-<";break;
+		case 823:nyah="Une petite fessée pour twa ? :3";break;
+		case 824:nyah=getRandPlayer()+" suce pour pas cher ;3";break;
+		case 825:nyah="><";break;
 		case 826:nyah="";break;
 		case 827:nyah="";break;
 		case 828:nyah="";break;

@@ -2,7 +2,6 @@ package neko.module.modules.special;
 
 import java.util.ArrayList;
 import java.util.Vector;
-
 import neko.module.Category;
 import neko.module.Module;
 import neko.utils.Utils;
