@@ -36,7 +36,6 @@ public class GuiWikiMenu extends GuiScreen {
 	 private Minecraft mc = Minecraft.getMinecraft();
 	  private ResourceLocation background = mc.getTextureManager().getDynamicTextureLocation("background", GuiMainMenu.viewportTexture);
 	  public static HashMap<String, Vector<HashMap<String, Vector<String>>>> listWiki = new HashMap<String, Vector<HashMap<String, Vector<String>>>>();
-	  private GuiList list;
 	  private Client var = Client.getNeko();
 	  public static boolean check = false;
 	  
@@ -59,9 +58,13 @@ public class GuiWikiMenu extends GuiScreen {
 	    		color = "§c";
 	    	if (c.name().equalsIgnoreCase("movement"))
 	    		color = "§9";
-	    	color = "§6";
-	    	Vector<HashMap<String, Vector<String>>> l1 = GuiWikiMenu.listWiki.get(c.name());
-	    	for (HashMap hm : l1) {
+	    	else
+	    		color = "§6";
+	    	Vector<HashMap<String, Vector<String>>> l1 = new Vector<HashMap<String, Vector<String>>>();
+	    	try {
+	    		l1 = GuiWikiMenu.listWiki.get(c.name());
+	    	} catch (Exception e) {}
+	    	for (HashMap<String, Vector<String>> hm : l1) {
 	    		for (Module m : var.moduleManager.ActiveModule) {
 	    			if (hm.containsKey(m.getName())) {
 	    				this.buttonList.add(new GuiButton(nb, x, y, 50, 20, color+m.getName()));
@@ -116,7 +119,6 @@ public class GuiWikiMenu extends GuiScreen {
 	    throws IOException
 	  {
 	    super.handleMouseInput();
-	    this.list.handleMouseInput();
 	  }
 	  
 	  private void load()
@@ -169,7 +171,7 @@ public class GuiWikiMenu extends GuiScreen {
 		    		  continue;
 		    	  }
 		    	  if (!cmd)
-		    		  drawString(var.NekoFont, d, 100, y, 16777215);
+		    		  drawString(var.NekoFont, "§9"+d, 100, y, 16777215);
 		    	  else {
 		    		  d = d.startsWith("..") ? d.replace("..", "§6"+var.prefixCmd) : d;
 		    		  drawString(var.NekoFont, d, 100, y, 16777215);
