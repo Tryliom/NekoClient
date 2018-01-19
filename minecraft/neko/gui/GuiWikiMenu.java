@@ -64,7 +64,7 @@ public class GuiWikiMenu extends GuiScreen {
 	    	try {
 	    		l1 = GuiWikiMenu.listWiki.get(c.name());
 	    	} catch (Exception e) {
-	    		Utils.addChat("Taille wiki: "+GuiWikiMenu.listWiki.size());
+	    		Utils.addChat("Taille wiki: "+this.listWiki==null ? "Null" : ""+this.listWiki.size());
 	    	}
 	    	for (HashMap<String, Vector<String>> hm : l1) {
 	    		for (Module m : var.moduleManager.ActiveModule) {
