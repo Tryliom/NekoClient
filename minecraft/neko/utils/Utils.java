@@ -3087,7 +3087,7 @@ public class Utils {
 	 ***/
 	@SuppressWarnings("unchecked")
 	public static HashMap<String, Vector<HashMap<String, Vector<String>>>> loadWiki() {
-		File dir = new File(System.getProperty("user.dir")+ Utils.separator +"..\\src\\minecraft\\wiki.neko", "UTF-8");
+		File dir = new File(System.getProperty("user.dir")+ Utils.separator +"..\\src\\minecraft\\wiki.neko");
 		if (dir.exists()) {			
 			try { 
 	            InputStream ips = new FileInputStream(dir); 
