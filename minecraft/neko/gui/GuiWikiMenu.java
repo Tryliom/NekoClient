@@ -72,7 +72,7 @@ public class GuiWikiMenu extends GuiScreen {
 	    	for (HashMap<String, Vector<String>> hm : l1) {
 	    		for (Module m : var.moduleManager.ActiveModule) {
 	    			if (hm.containsKey(m.getName())) {
-	    				this.buttonList.add(new GuiButton(nb, x, y, 50, 20, color+m.getName()));
+	    				this.buttonList.add(new GuiButton(nb, x, y, 50, 11, color+m.getName()));
 	    				nb++;
 	    				y+=15;
 	    				if (y>= this.width) {
@@ -179,7 +179,7 @@ public class GuiWikiMenu extends GuiScreen {
 		    	  if (!cmd)
 		    		  drawString(var.NekoFont, "§9"+d, 100, y, 16777215);
 		    	  else {
-		    		  d = d.startsWith("..") ? d.replace("..", "§6"+var.prefixCmd) : d;
+		    		  d = d.startsWith("..") ? d.replace("..", "§6"+var.prefixCmd).replaceFirst(":", ":§9") : "§9"+d;
 		    		  drawString(var.NekoFont, d, 100, y, 16777215);
 		    	  }
 		    	  y+=15;
