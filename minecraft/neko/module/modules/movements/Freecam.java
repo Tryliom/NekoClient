@@ -46,36 +46,35 @@ public class Freecam extends Module {
 	}
 	
 	public void onUpdate() {		
-		mc.thePlayer.setGameType(GameType.SPECTATOR);
-//		mc.thePlayer.noClip=true;
-//		mc.thePlayer.motionX = 0.0D;
-//	    mc.thePlayer.motionY = 0.0D;
-//	    mc.thePlayer.motionZ = 0.0D;
-//	    mc.thePlayer.onGround=false;
-//	    mc.thePlayer.jumpMovementFactor = speed;
-//	    if (mc.gameSettings.keyBindJump.pressed) {
-//	    	if (mc.thePlayer.isCollidedVertically) {
-//		    	  mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY+1, mc.thePlayer.posZ);
-//		      } else
-//	      mc.thePlayer.motionY += speed;
-//	    }
-//	    if (mc.gameSettings.keyBindSneak.pressed) {
-//	      if (mc.thePlayer.isCollidedVertically) {
-//	    	  mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY-1, mc.thePlayer.posZ);
-//	      } else
-//	    	mc.thePlayer.motionY -= speed;
-//	    }
-//	    if (mc.gameSettings.keyBindForward.pressed)
-//	    {
-//	      float var1 = mc.thePlayer.rotationYaw * 0.01745329F;
-//	      mc.thePlayer.motionX -= MathHelper.sin(var1) * 0.5F;
-//	      mc.thePlayer.motionZ += MathHelper.cos(var1) * 0.5F;
-//	    }
-//	    if (mc.gameSettings.keyBindBack.pressed)
-//	    {
-//	      float var1 = mc.thePlayer.rotationYaw * 0.01745329F;
-//	      mc.thePlayer.motionX -= MathHelper.sin(var1) * -0.5F;
-//	      mc.thePlayer.motionZ += MathHelper.cos(var1) * -0.5F;
-//	    }
+		mc.thePlayer.noClip=true;
+		mc.thePlayer.motionX = 0.0D;
+	    mc.thePlayer.motionY = 0.0D;
+	    mc.thePlayer.motionZ = 0.0D;
+	    mc.thePlayer.onGround=false;
+	    mc.thePlayer.jumpMovementFactor = speed;
+	    if (mc.gameSettings.keyBindJump.pressed) {
+	    	if (mc.thePlayer.isCollidedVertically) {
+		    	  mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY+1, mc.thePlayer.posZ);
+		      } else
+	      mc.thePlayer.motionY += speed;
+	    }
+	    if (mc.gameSettings.keyBindSneak.pressed) {
+	      if (mc.thePlayer.isCollidedVertically) {
+	    	  mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY-1, mc.thePlayer.posZ);
+	      } else
+	    	mc.thePlayer.motionY -= speed;
+	    }
+	    if (mc.gameSettings.keyBindForward.pressed)
+	    {
+	      float var1 = mc.thePlayer.rotationYaw * 0.01745329F;
+	      mc.thePlayer.motionX -= MathHelper.sin(var1) * 0.5F;
+	      mc.thePlayer.motionZ += MathHelper.cos(var1) * 0.5F;
+	    }
+	    if (mc.gameSettings.keyBindBack.pressed)
+	    {
+	      float var1 = mc.thePlayer.rotationYaw * 0.01745329F;
+	      mc.thePlayer.motionX -= MathHelper.sin(var1) * -0.5F;
+	      mc.thePlayer.motionZ += MathHelper.cos(var1) * -0.5F;
+	    }
 	}
 }

@@ -16,7 +16,8 @@ public class Search extends Module {
 	private int delay = 0;
 	private int delay_ = 0;
 	private int refreshTime = 10;
-	private int renderDistance = 200;
+	private int nbMaxElem = 100;
+	private int renderDistance = 150;
 	private Vector<BlockPos> list = new Vector<>();
 	private static Search instance = null;
 
@@ -38,7 +39,7 @@ public class Search extends Module {
 	}
 
 	public void setValues() {
-		this.values = "§6Bloc recherché:§7 "
+		this.values = "§6Bloc recherché §7"
 				+ (this.searchBlock == null ? "Aucun" : this.searchBlock.getLocalizedName());
 	}
 
@@ -48,6 +49,14 @@ public class Search extends Module {
 
 	public void setSearchBlock(Block searchBlock) {
 		this.searchBlock = searchBlock;
+	}
+
+	public int getNbMaxElem() {
+		return nbMaxElem;
+	}
+
+	public void setNbMaxElem(int nbMaxElem) {
+		this.nbMaxElem = nbMaxElem;
 	}
 
 	public void onUpdate() {
@@ -76,35 +85,44 @@ public class Search extends Module {
 	}
 	
 	public void refresh() {
-		if (searchBlock != null) {
-			list.clear();
-			for (int y = (int) renderDistance; y >= (int) - renderDistance; y--) {
-				for (int z = (int) - renderDistance; z <= renderDistance; z++) {
-					for (int x = (int) - renderDistance; x <= renderDistance; x++) {
-						int xPos = ((int) Math.round(mc.thePlayer.posX + x));
-						int yPos = ((int) Math.round(mc.thePlayer.posY + y));
-						int zPos = ((int) Math.round(mc.thePlayer.posZ + z));
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				Vector<BlockPos> cl = new Vector<>();
+				if (searchBlock != null) {
+					for (int y = (int) renderDistance; y >= (int) - renderDistance; y--) {				
+						for (int z = (int) - renderDistance; z <= renderDistance; z++) {
+							for (int x = (int) - renderDistance; x <= renderDistance; x++) {
+								int xPos = ((int) Math.round(mc.thePlayer.posX + x));
+								int yPos = ((int) Math.round(mc.thePlayer.posY + y));
+								int zPos = ((int) Math.round(mc.thePlayer.posZ + z));
 
-						BlockPos b = new BlockPos(xPos, yPos, zPos);
-						Block block = mc.theWorld.getChunkFromBlockCoords(b).getBlock(xPos, yPos, zPos);
-
-						if ((block == searchBlock)) {
-							list.add(b);
+								BlockPos b = new BlockPos(xPos, yPos, zPos);
+								Block block = mc.theWorld.getChunkFromBlockCoords(b).getBlock(xPos, yPos, zPos);
+								if ((block == searchBlock)) {
+									cl.add(b);
+								}
+							}
 						}
 					}
+					list.clear();
+					list = (Vector<BlockPos>) cl.clone();
 				}
+				
 			}
-		}
+		}).start();
 	}
 
 	public void onRender3D() {
 		try {
 			if (searchBlock != null) {
-				for (BlockPos b : list)
+				for (BlockPos b : list) {
 					RenderUtils.drawOutlinedBlockESP(b.getX() - mc.getRenderManager().renderPosX,
 							b.getY() - mc.getRenderManager().renderPosY,
 							b.getZ() - mc.getRenderManager().renderPosZ, 
 							0.15F, 0.15F, 0.99F, 0.2F, 7F, 1D, 1D, 1D);
+				}
 			}
 		} catch (Exception e) {}
 	}

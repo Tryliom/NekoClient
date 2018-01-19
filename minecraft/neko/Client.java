@@ -28,7 +28,6 @@ import neko.utils.Utils;
 import net.mcleaks.MCLeaks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.util.ResourceLocation;
 
 public class Client {
@@ -37,7 +36,7 @@ public class Client {
 	  public final String CLIENT_AUTHOR = "Tryliom";
 	  public ModuleManager moduleManager;
 	  public GuiManager gui;
-	  public final String CLIENT_VERSION = "2.0";
+	  public final String CLIENT_VERSION = "2.1";
 	  private static final Client Neko = new Client();
 	  public String mode="Player";
 	  public Rank rang;

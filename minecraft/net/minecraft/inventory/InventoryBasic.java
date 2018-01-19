@@ -1,6 +1,9 @@
 package net.minecraft.inventory;
 
 import com.google.common.collect.Lists;
+
+import neko.utils.Utils;
+
 import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -204,7 +207,7 @@ public class InventoryBasic implements IInventory
      */
     public int getInventoryStackLimit()
     {
-        return 64;
+    	return 64;
     }
 
     /**

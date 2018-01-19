@@ -255,8 +255,8 @@ public class PlayerControllerMP
 
                 if (var5 && var3.getPlayerRelativeBlockHardness(this.mc.thePlayer, this.mc.thePlayer.worldObj, p_180511_1_) >= 1.0F)
                 {
-                	if (Math.random()<0.7) {
-                		Utils.checkXp(Utils.getRandInt(5));
+                	if (Math.random()<0.2) {
+                		Utils.checkXp(Utils.getRandInt(1));
                 	}
                     this.func_178888_a(p_180511_1_, p_180511_2_);
                 }

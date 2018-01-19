@@ -46,12 +46,14 @@ public class Nausicaah extends Module {
 	
 	public void doNausicaah(Entity en) {
 		try {
-			int i = AutoSword.getSword().getSwordFromInventory();
+			int i = AutoSword.getSword().getBestWeaponFromInventory();
 			int j = mc.thePlayer.inventory.currentItem;
 			if (i!=-1) {
 				FastDura.swap(j, i);
 				FastDura.attack(en, true);
 				FastDura.swap(j, i);
+			} else {
+				FastDura.attack(en, true);
 			}
 		} catch (Exception e) {}
 	}
