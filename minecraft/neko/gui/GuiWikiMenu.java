@@ -64,6 +64,7 @@ public class GuiWikiMenu extends GuiScreen {
 	    	try {
 	    		l1 = GuiWikiMenu.listWiki.get(c.name());
 	    	} catch (Exception e) {
+	    		System.out.println(e.getMessage());
 	    		System.out.println("list: "
 	    	+this.listWiki.isEmpty());
 	    		System.out.println(
