@@ -20,19 +20,13 @@ VanillaTp
 Vous téléporte sur le bloc ou entité visée instantanément.
 #cmd
 ..Vtp air : Permet de pouvoir se téléporter au loin sans avoir un bloc plein (bloc d’air)
-..Vtp classic : Utilise le mode classic pour se téléporter au lieu d’utiliser un chemin vérifié
+..Vtp classic : Utilise le mode classic pour se téléporter au lieu d��utiliser un chemin vérifié
 ..Vtp top : Permet de téléporter au dessus du bloc lorsque les blocs du dessous sont pleins sans
 viser le bloc du haut.
 
 SmoothAim
 Permet de rapprocher le curseur d’une entité proche selon le fov et la vitesse.
 #cmd
-<<<<<<< HEAD
-..SmoothAim range
-..SmoothAim fov
-..SmoothAim speed
-=======
 ..Smoothaim range : Modifie la portée du SmoothAim
 ..SmoothAim fov <Double> : Modifie l’angle du SmoothAim
 ..SmoothAim speed <Double> : Modifie la vitesse du SmoothAim
->>>>>>> f90826c8cd06cbdd7ae9727a29850d814f84fb80
