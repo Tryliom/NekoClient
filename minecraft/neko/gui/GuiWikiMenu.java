@@ -96,7 +96,7 @@ public class GuiWikiMenu extends GuiScreen {
 	    ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);	    
 	    drawDefaultBackground();
 	    
-	    drawCenteredString(var.NekoFont, "§eWiki Neko pour les cheats", this.width / 2, 10, 16777215);  	    
+	    drawCenteredString(var.NekoFont, "§eWiki Neko pour les cheats", this.width / 2, 34, 16777215);  	    
 	    super.drawScreen(mouseX, mouseY, partialTicks);
 	  }
 	  
@@ -110,7 +110,7 @@ public class GuiWikiMenu extends GuiScreen {
 	    	mc.displayGuiScreen(this.prevGui);
 	    	break;
 	    default:
-	    	mc.displayGuiScreen(new GuiWikiPart(this, ((GuiButton)this.buttonList.get(button.id)).displayString.replaceAll("§([0-9]|[a-f])", "")));
+	    	mc.displayGuiScreen(new GuiWikiPart(this, ((GuiButton)this.buttonList.get(button.id-1)).displayString.replaceAll("§([0-9]|[a-f])", "")));
 	    }
 	  }
 	  
