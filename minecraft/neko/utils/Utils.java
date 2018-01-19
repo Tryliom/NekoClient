@@ -3087,7 +3087,7 @@ public class Utils {
 	 ***/
 	@SuppressWarnings("unchecked")
 	public static HashMap<String, Vector<HashMap<String, Vector<String>>>> loadWiki() {
-		File dir = new File(System.getProperty("user.dir")+ Utils.separator +"..\\src\\minecraft\\wiki.neko");
+		File dir = new File(System.getProperty("user.dir")+ Utils.separator +"..\\src\\minecraft\\wiki.neko", "UTF-8");
 		if (dir.exists()) {			
 			try { 
 	            InputStream ips = new FileInputStream(dir); 
@@ -3123,7 +3123,6 @@ public class Utils {
 	            for (Category s : Category.values()) {
 	            	for (String key : hm.keySet()) {
 	            		if (Utils.isModule(key) && Utils.getModule(key).getCategory().name().equalsIgnoreCase(s.name())) {
-	            			System.out.println(""+key+" "+s.name()+" "+hm.get(key));
 	            			HashMap<String, Vector<String>> tempHm = new HashMap<String, Vector<String>>();
 	            			tempHm.put(key, hm.get(key));
 	            			listCat.add((HashMap<String, Vector<String>>)tempHm.clone());

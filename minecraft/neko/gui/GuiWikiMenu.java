@@ -65,25 +65,22 @@ public class GuiWikiMenu extends GuiScreen {
 	    		l1 = GuiWikiMenu.listWiki.get(c.name());
 	    	} catch (Exception e) {
 	    		System.out.println(e.getMessage());
-	    		System.out.println("list: "
-	    	+this.listWiki.isEmpty());
-	    		System.out.println(
-	    				"Taille wiki: "+(this.listWiki==null ? "Null" : ""+this.listWiki.size()));
 	    	}
-	    	for (HashMap<String, Vector<String>> hm : l1) {
-	    		for (Module m : var.moduleManager.ActiveModule) {
-	    			if (hm.containsKey(m.getName())) {
-	    				this.buttonList.add(new GuiButton(nb, x, y, 50, 11, color+m.getName()));
-	    				nb++;
-	    				y+=15;
-	    				if (y>= this.width) {
-	    					x+=49;
-	    					y = 100;
-	    				}
-	    				break;
-	    			}
-	    		}
-		    }
+	    	if (!l1.isEmpty())
+		    	for (HashMap<String, Vector<String>> hm : l1) {
+		    		for (Module m : var.moduleManager.ActiveModule) {
+		    			if (hm.containsKey(m.getName())) {
+		    				this.buttonList.add(new GuiButton(nb, x, y, 50, 11, color+m.getName()));
+		    				nb++;
+		    				y+=15;
+		    				if (y>= this.width) {
+		    					x+=49;
+		    					y = 100;
+		    				}
+		    				break;
+		    			}
+		    		}
+			    }
 	    }	  
 	  }
 	  
