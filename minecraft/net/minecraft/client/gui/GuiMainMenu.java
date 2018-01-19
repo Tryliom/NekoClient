@@ -310,7 +310,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     	if (button.id == 668)
         {
     		try {
-    			URI url = URI.create("https://discord.gg/BSYZKqn");
+    			URI url = URI.create("https://discord.gg/x7eqx5E");
     			Desktop.getDesktop().browse(url);
     		} catch (Exception e) {}	
         }

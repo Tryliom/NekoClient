@@ -1,0 +1,43 @@
+Reach
+Existe avec de nombreuses options, elle est d’abord débloquée au niveau 2
+puis avec un rang spécifique avec ces autres options.
+Sans l’option « pvp », la reach ne servira seulement qu’à utiliser le VanillaTp ou à casser
+des blocs fictivement pour qu’il soit « glitch », ce qui vous permettra de vous Tp à travers.
+Avec l’option « pvp », la reach aura les fonctions suivantes :
+Reach PvP : Active/désactive la reach pvp. Permet de frapper les joueurs
+Reach TnT : Active/désactive la reach tnt. Pose de la tnt à distance et l’allume
+automatiquement
+Reach tnt <Mode> : Change la façon dont les tnt vont se poser. Faire Reach tnt list pour la liste des modes.
+Reach aimbot : Active/désactive l’aimbot de la reach. Fais pour la reach pvp pour mieux viser pour
+frapper, si on frappe à côté on atteint quand même la cible.
+Reach fov <Int> : Change le fov pour l’aimbot. Angle de vue pour que le Aimbot fasse effet.
+Reach bloc : Active/désactive la reach sur les blocs. Clic droit pose un bloc à distance tandis que
+le clic gauche sans rien dans la main vous Tp sur le bloc puis retourne, idéal pour
+ramasser des items au sol trop loin pour vous.
+#cmd
+..reach pvp
+..reach tnt <mode>
+..reach aimbot
+..reach fov
+..reach bloc
+/n
+VanillaTp
+Vous téléporte sur le bloc ou entité visée instantanément.
+Vtp air : Permet de pouvoir se téléporter au loin sans avoir un bloc plein (bloc d’air)
+Vtp classic : Utilise le mode classic pour se téléporter au lieu d’utiliser un chemin vérifié
+Vtp top : Permet de téléporter au dessus du bloc lorsque les blocs du dessous sont pleins sans
+viser le bloc du haut.
+#cmd
+..vtp air
+..vtp classic
+..vtp top 
+/n
+SmoothAim
+Permet de rapprocher le curseur d’une entité proche selon le fov et la vitesse.
+smoothaim rang : Modifie la portée du SmoothAim
+SmoothAim fov <Double> : Modifie l’angle du SmoothAim
+SmoothAim speed <Double> : Modifie la vitesse du SmoothAim
+#cmd
+..SmoothAim range
+..SmoothAim fov
+..SmoothAim speed
