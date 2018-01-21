@@ -175,7 +175,7 @@ public class GuiAltManager extends GuiScreen {
 	  protected void keyTyped(char typedChar, int keyCode)
 	    throws IOException
 	  {
-	    if (keyCode == KeyEvent.VK_ESCAPE)
+	    if (keyCode == 1)
 	    	this.mc.displayGuiScreen(this.prevGui);
 	    super.keyTyped(typedChar, keyCode);
 	  }

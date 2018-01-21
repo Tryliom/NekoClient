@@ -5072,8 +5072,12 @@ public class ChatUtils {
 				} else if (args[1].equalsIgnoreCase("list")) {
 					new RequestThread("displaylist", null).start();
 				} else if (args[1].equalsIgnoreCase("prefix")) {
-					irc.setPrefix(args[2]);
-					Utils.addChat("§aPrefix de l'irc changé !");
+					if (args.length>=3) {
+						irc.setPrefix(args[2]);
+						Utils.addChat("§aPrefix de l'irc changé !");
+					} else {
+						Utils.addError("Syntace incorrecte: "+var.prefixCmd+"irc prefix <Nouveau prefix>");
+					}
 				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}

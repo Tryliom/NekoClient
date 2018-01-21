@@ -2,8 +2,6 @@ package neko.utils;
 
 import java.awt.Color;
 import java.awt.Desktop;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -45,6 +43,7 @@ import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
 import neko.Client;
 import neko.gui.GuiAltManager;
+import neko.gui.GuiBindManager;
 import neko.gui.InGameGui;
 import neko.lock.Lock;
 import neko.manager.BddManager;
@@ -134,6 +133,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiMultiplayer;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -146,7 +146,6 @@ import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.ClickEvent.Action;
-import net.minecraft.init.Blocks;
 import net.minecraft.event.HoverEvent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -155,17 +154,14 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.play.client.C00PacketKeepAlive;
 import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.client.C03PacketPlayer;
-import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Session;
 import net.minecraft.world.WorldSettings.GameType;
-import net.minecraft.world.chunk.Chunk;
 
 /**
  * Utilité de cette classe:<br>
@@ -408,6 +404,35 @@ public class Utils {
 			}
 		}
 		return false;
+	}
+	
+	public static Module getModuleWithInt(int nb) {
+		int i = 0;
+		for (Module m : ModuleManager.ActiveModule) {
+			if (i==nb && m.getCategory() != Category.HIDE) {
+				return m;
+			}
+			if (m.getCategory() != Category.HIDE)
+				i++;
+		}
+		return null;
+	}
+	
+	public static boolean canEscape(GuiScreen actual) {
+		if (actual instanceof GuiBindManager) {
+			return false;
+		}
+		return true;
+	}
+	
+	public static int getTotModule() {
+		int i = 0;
+		for (Module m : ModuleManager.ActiveModule) {
+			if (m.getCategory() != Category.HIDE) {
+				i++;
+			}
+		}
+		return i;
 	}
 	
 	public static boolean changeRank(String rang) {

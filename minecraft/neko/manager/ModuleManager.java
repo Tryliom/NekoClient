@@ -252,7 +252,7 @@ public class ModuleManager {
 		this.Lock.add(new Lock("Reach", 2, "Lvl", "Cheat", "Permet d'atteindre les blocs depuis plus loin", "", true));
 		this.Lock.add(new Lock("--nyah", 3, "Lvl", "Commande", "Envoie une phrase mignonne aléatoire :3", "", true));
 		this.Lock.add(new Lock("--autonyah", 4, "Lvl", "Commande", "Amélioration du --nyah en nyah automatique :3", "an", true));
-		this.Lock.add(new Lock("--rankmanager", 0, "???", "Commande", "Permet de gérer ses rangs", "rm", true));
+		this.Lock.add(new Lock("--rankmanager", 10, "Lvl", "Commande", "Permet de gérer ses rangs", "rm", true));
 		this.Lock.add(new Lock("--fps", 0, "???", "Commande", "Permet d'augmenter ses fps", "", true));
 		this.Lock.add(new Lock("--tppos", 0, "???", "Commande", "Permet de se tp à des coordonnées précises", "", true));
 		this.Lock.add(new Lock("Trail", 0, "???", "Cheat", "Laisse une trainée bleue derrière vous sur les blocs que vous touchez", "", true));
@@ -294,8 +294,8 @@ public class ModuleManager {
 		// CrazyLove
 		rang.add(new Rank("La tentacule divine", 5000, Rate.CrazyLove, "§9", true, 0));
 		Utils.getRank("La tentacule divine").setDesc("Si gluante et visqueuse, votre amie pour votre vie de pervy ;3");
-		rang.add(new Rank("Développeur", 1000, Rate.CrazyLove, "§2", true, 0));
-		Utils.getRank("Développeur").setDesc("Développe chaque jours !");
+		rang.add(new Rank("Développeur Neko", 1000, Rate.CrazyLove, "§2", true, 0));
+		Utils.getRank("Développeur Neko").setDesc("Développe chaque jours !");
 		rang.add(new Rank("Amour à Tryliom <3", 5000, Rate.CrazyLove, "§4", true, 0));
 		Utils.getRank("Amour à Tryliom <3").setDesc("Adore son Tryliom, ferais tout pour lui et est sa soumise absolue :3");
 		rang.add(new Rank("Administrateur", 3000, Rate.CrazyLove, "§4", true, 0));
