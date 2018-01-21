@@ -579,7 +579,7 @@ public class ChatUtils {
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"help")) {
 				// Afficher la liste des commandes non simplifiées
 				if (args.length==1) {
-					Utils.displayHelp(1);							
+					Utils.displayHelp(1);						
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 					int rand = (int) Math.round(Math.random()*1000);

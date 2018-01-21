@@ -1141,7 +1141,7 @@ public class Utils {
 			break;
 			
 		case 7:
-			addChat2("§6"+var.prefixCmd+"Alt", var.prefixCmd+"alt", "§7Vous connecte à un compte\n§7Commande disponible toutes les 15 secondes\n§7Comptes mis à jour toutes les 2 heures", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"ListServ", var.prefixCmd+"listserv", "§7Affiche la liste des serveurs utilisé par les Neko", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Cmd", var.prefixCmd+"cmd ", "§7Permet d'assigner des commandes à des touches\n§7Cmd <Nom> <Touche> <Commande>", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"UnBindAll", var.prefixCmd+"unbindall", "§7Met tous les cheats sur la touche 'None'", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Saveall", var.prefixCmd+"saveall", "§7Save vos données manuellement", false, Chat.Summon);

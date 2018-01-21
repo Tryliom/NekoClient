@@ -85,11 +85,10 @@ public class GuiBindManager extends GuiScreen {
 		if (this.waitKey && keyCode != Keyboard.KEY_ESCAPE) {
 			Utils.getModuleWithInt(this.list.selectedSlot).setBind(Keyboard.getKeyIndex(Keyboard.getKeyName(keyCode)));
 			this.waitKey = false;
-		} else if (keyCode == Keyboard.KEY_ESCAPE) {
+		} else if (this.waitKey && keyCode == Keyboard.KEY_ESCAPE) {
 			Utils.getModuleWithInt(this.list.selectedSlot).setBind(-1);
 			this.waitKey = false;
-		}
-		else if (keyCode == Keyboard.KEY_ESCAPE)
+		} else if (keyCode == Keyboard.KEY_ESCAPE)
 			this.mc.displayGuiScreen(this.prevGui);
 		super.keyTyped(typedChar, keyCode);
 	}
