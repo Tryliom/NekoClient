@@ -48,7 +48,7 @@ public class GuiBindManager extends GuiScreen {
 		this.list.registerScrollButtons(7, 8);
 
 		this.buttonList.add(new GuiButton(1, this.width / 2 - 50, this.height - 52, 100, 20, "Changer"));
-		this.buttonList.add(new GuiButton(2, this.width / 2 - 100, this.height - 52, 100, 20, "Supprimer"));
+		this.buttonList.add(new GuiButton(2, this.width / 2 - 154, this.height - 52, 100, 20, "Supprimer"));
 		this.buttonList.add(new GuiButton(0, this.width / 2 + 4 + 50, this.height - 52, 100, 20, "Retour"));
 	}
 
