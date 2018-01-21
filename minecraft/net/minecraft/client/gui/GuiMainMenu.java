@@ -633,7 +633,13 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         {
             var10 = var10 + " Demo";
         }
-
+// 665
+        for (Object o = this.buttonList.iterator();this.buttonList.iterator().hasNext();) {
+        	
+        }
+        if (SoundManager.getSM().canStart)
+			this.buttonList.get().displayString = SoundManager.getSM().isActive() ? "♫ Stop ♫" : "♪ Restart ♪";
+        
         this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, var10, 2, this.height - 10, -1);
         String var11 = "Copyright Mojang AB. Do not distribute!";
         if (Utils.verif==null) {
