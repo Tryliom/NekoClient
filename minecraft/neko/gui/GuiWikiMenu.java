@@ -80,7 +80,7 @@ public class GuiWikiMenu extends GuiScreen {
 		    				this.buttonList.add(new GuiButton(nb, x, y, 100, 11, color+m.getName()));
 		    				nb++;
 		    				y+=15;
-		    				if (y>= this.height) {
+		    				if ((y+11)>= this.height) {
 		    					x+=104;
 		    					y = 75;
 		    				}
