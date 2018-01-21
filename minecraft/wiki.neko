@@ -19,14 +19,156 @@ ramasser des items au sol trop loin pour vous.
 VanillaTp
 Vous téléporte sur le bloc ou entité visée instantanément.
 #cmd
-..Vtp air : Permet de pouvoir se téléporter au loin sans avoir un bloc plein (bloc d'air)
-..Vtp classic : Utilise le mode classic pour se téléporter au lieu d'utiliser un chemin vérifié
+..Vtp air : Permet de pouvoir se téléporter au loin sans avoir un bloc plein (bloc d'air).
+..Vtp classic : Utilise le mode classic pour se téléporter au lieu d'utiliser un chemin vérifié.
 ..Vtp top : Permet de téléporter au dessus du bloc lorsque les blocs du dessous sont pleins sans
 viser le bloc du haut.
 
 SmoothAim
 Permet de rapprocher le curseur d'une entité proche selon le fov et la vitesse.
 #cmd
-..SmoothAim range : Modifie la portée du SmoothAim
-..SmoothAim fov <Double> : Modifie l'angle du SmoothAim
-..SmoothAim speed <Double> : Modifie la vitesse du SmoothAim
+..SmoothAim range : Modifie la portée du SmoothAim.
+..SmoothAim fov <Double> : Modifie l'angle du SmoothAim.
+..SmoothAim speed <Double> : Modifie la vitesse du SmoothAim.
+
+AirWalk
+#cmd
+..AirWalk : Permet de sauter sans avoir de blocs en dessous de vous. Vous sautez tout simplement sur
+des blocs d’air.
+
+AntiAfk
+Permet de faire sauter votre joueur à intervalle régulier selon vos réglages.
+#cmd
+..antiafk <Int> : Permet de définir le temps d’intervalle.
+
+AntiFire
+#cmd
+..antifire : Vous immunise du feu.
+
+ArrayList
+#cmd
+..arraylist : Permet d’afficher la liste de tous les cheats activés à droite de l’écran.
+..arrayList color <couleur> : Modifie la couleur de l’ArrayList.
+
+AutoArmor
+#cmd
+..autoarmor : Équipe automatiquement la meilleure armure de l’inventaire en comparant le matériau,
+les enchantements de protections ainsi que l’utilisation restante.
+
+AutoBlock
+#cmd
+..autoblock Bloque si le joueur a une épée en main automatiquement.
+
+AutoClic
+Simule x clics par seconde selon vos réglages.
+#cmd
+..AutoClic <Int> : Définit le nombre de clics par seconde.
+
+AutoEat
+#cmd
+..autoeat : Quand vous avez faim, vous mangez automatiquement. Nécessite au préalable de la
+nourriture dans l’inventaire.
+
+AutoMLG
+Permet de poser automatiquement un seau d’eau au sol lorsque vous êtes en chute libre
+d’une hauteur de x bloc (peut être défini).
+#cmd
+..AutoMlg <Double> : Change la distance de chute minimale.
+
+AutoNyah
+Un « automessage » qui sélectionne parmi plus de 500 phrases différentes une phrase
+aléatoire et l’envoie en x temps.
+#cmd
+..autoNyah prefix <String> : Permet de modifier le préfixe du message
+..autoNyah speed <Double> : Permet de modifier la vitesse (en secondes)
+
+AutoPot
+Permet de se soigner automatiquement à un certain seuil de vie configurable si on a des
+potions de soin dans son inventaire.
+#cmd
+..autoPot <Int> : Permet de définir le seuil de vie
+
+AutoRespawn
+Lorsque vous mourrez, vous ressuscitez instantanément.
+
+AutoSoup
+Permet de se soigner automatiquement à un certain seuil de vie configurable. 
+#cmd
+..AutoSoup heal <Int> : Permet de définir le seuil de vie 
+..AutoSoup drop : Drop ou non les bols vides de l’inventaire
+
+AutoSword
+Quand vous cliquez dans le vide ou sur une entité, cherche la meilleure épée possible
+dans votre inventaire et vous la met dans le slot actuel.
+
+AutoTool
+Permet de choisir automatiquement le meilleur outil pour casser le bloc sélectionné. Par exemple,
+vous avez une hache en diamant efficacité IV et une hache en fer efficacité II, si vous frappez un bloc de bois,
+que vous essayez de le casser, l’AutoTool va prendre automatiquement la hache en diamant Efficacité IV,
+car c’est celle qui va détruire votre bloc le plus rapidement.
+
+BedGod
+Permet d’interagir avec les blocs ou les entités pendant
+que vous dormez dans un lit sur un rayon de 7 blocs autour de ce lit.
+
+BowAimbot
+Suit une cible lorsqu’on vise à l’arc, comme un Aimbot mais pour l’arc. Fonctionne aussi avec le FastBow. 
+#cmd
+..BowAimbot Fov <Double> : Modifie le Fov du BowAimbot.
+..BowAimbot Life : Permet d’alterner entre le mode Max (le BowAimbot vise le joueur avec le plus de vie),
+le mode Min (le BowAimbot vise le joueur avec le moins de vie) ou Normal.
+..BowAimbot Armor : Permet de définir si le BowAimbot visera en priorité le joueur avec l’armure la plus importante,
+la moins importante ou s’il ne fera aucune distinction.
+
+Build
+Pose des blocs autour de vous sur du 3x3 selon les modes Down, Up, Wall et Sneak.
+#cmd
+..Build Down : Pose des blocs au format 3x3 en dessous de vous.
+..Build Up :Pose des blocs au format 3x3 au dessus de vous (un bloc d’air est laissé au dessus de votre tête).
+..Build Wall : Construis un mur devant vous au format 3x3.
+..Build Sneak : Utilisé pour le mode Wall. S’il est activé, le mur au format 3x3 se construira devant vous si vous vous accroupissez.
+S’il est désactivé, alors le Wall mettra un mur devant vous sans forcément vous accroupir. 
+
+CallCMD
+Exécute une commande quand un des joueurs blacklistés se connecte.
+#cmd
+..CallCMD player : <Player> Ajoute un joueur à la liste.
+..CallCMD cmd <Cmd> : Modifie la commande attribuée aux joueurs blacklistés.
+..CallCMD list : Affiche la liste des joueurs blacklistés.
+..CallCMD clear : Vide la liste des joueurs blacklistés.
+
+ChestESP
+Permet de voir les coffres à travers les murs.
+
+ChestStealer
+Permet de vider un coffre automatiquement.
+#cmd
+..ChestStealer <Int> : Permet de définir les ticks du ChestStealer.
+
+ClickAim
+Lorsque vous frappez, le curseur se mettra automatiquement sur le joueur le plus proche.
+#cmd
+..ClickAim multiaura : Change le mode multiaura au singleaura et inversement. Permet de viser qu’un seul joueur ou tous les joueurs autour.
+..ClickAim <Double> : Modifie la portée du ClickAim.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
