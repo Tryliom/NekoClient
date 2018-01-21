@@ -211,10 +211,373 @@ Permet de casser plus vite les blocs.
 #cmd
 ..FastBreak
 
+FastDura
+Permet d’émettre plus de dégâts à l’armure de l’ennemi. Au lieu qu’elle s’abîme de 1, elle s’abîme de 3 à 4.
+#cmd
+..FastDura
 
+FastEat
+Permet de manger/boire instantanément tout item mangeable/buvable par un simple clic droit.
+#cmd
+..FastEat <Int> : Modifie la vitesse (valeur entre 0 et 25)
 
+FastLadder
+Permet de monter plus vite les échelles et lianes.
 
+FastPlace
+Permet de poser des blocs sans le délai entre 2 « plaçages ».
 
+Fire
+Émet des particules de feu autour du joueur.
+#cmd
+..Fire
+
+FireTrail
+Si vous avez un briquet dans les mains, permet de brûler les blocs derrières
+vous afin de laisser une traînée de feu incendiaire.
+
+Flash
+Permet de simuler un « rollback ». L’activer enregistrera la position où vous vous trouvez,
+le désactiver vous fera téléporter à cette position. Vous pouvez toujours vous déplacer 
+et interagir pendant que le Flash est activé.
+
+Flight
+Permet au joueur de voler.
+#cmd
+..Flight <Double> : Modifie la vitesse du Flight
+..Flight blink : Permet d’activer automatiquement le Blink avec le Flight
+
+Freecam
+Comme une projection astrale, votre « esprit » sort de votre corps pour pouvoir explorer les alentours, 
+bien qu’il soit possible aussi d’ouvrir les coffres et toutes sortes de blocs de stockage à la bonne distance.
+#cmd
+..Freecam <Double> : Modifie la vitesse du Freecam
+
+Fullbright
+Permet de voir avec un gamme à fond, comme-ci vous aviez de la nyctalopie.
+
+Glide
+Permet de modifier votre gravité.
+#cmd
+..Glide <Double> : Modifie la vitesse du Glide
+
+HighJump
+Permet de modifier votre hauteur de saut, comme-ci vous aviez un effet de JumpBoost.
+#cmd
+..HighJump height <Double> : Permet de définir sa hauteur de saut.
+
+HUD
+Permet d’afficher avec plusieurs options certaines information.
+#cmd
+..HUD coord : Affiche les coordonnées
+..HUD fps : Affiche les fps
+..HUD xp : Affiche vos statistiques du RPG
+..HUD packet : Affiche le nombre de packets/sec envoyé
+..HUD ms : Affiche votre ping
+..HUD time : Affiche le temps de jeu ou le temps de bonus restant (si un bonus ou un malus est actif,
+l’HUD affichera celui-ci à la place du temps de jeu)
+..HUD stuff : Affiche l’armure du joueur visé, avec son enchantement
+..HUD select : Affiche le bloc visé avec une couleur définie
+..HUD color <R> <G> <B> : Modifie la couleur du HUD select
+
+InventoryMove
+Permet de marcher même avec l’inventaire ouvert.
+
+ItemESP
+Permet de voir tous les items au sol.
+#cmd
+..ItemESP color <R> <G> <B> : Permet de modifier la couleur
+..ItemESP linecolor <R> <G> <B> : Permet de modifier la couleur des lignes
+..ItemESP width <Double> : Modifie l’épaisseur des lignes
+
+Jesus
+Permet de marcher sur les liquides, comme l’eau et la lave.
+Si vous vous accroupissez, vous pouvez pénétrer le premier bloc avant qu’il redevienne solide.
+
+Jetpack
+Agit comme un « jetpack ». Lorsque vous appuyez sur votre touche de saut,
+vous vous boostez vers le haut.
+
+KillAura
+Permet de frapper tous les joueurs automatiquement selon vos réglages.
+#cmd
+..KA mode : Change le mode du KillAura. Soit il frappe plusieurs cibles, soit il n’en frappe qu’une
+..KA cps <Int> : Permet de définir les clics par seconde du KillAura
+..KA range <Double> : Permet de définir la portée des coups
+..KA Fov : Modifie l’angle d’attaque du KillAura
+..KA live : Permet de définir un « cooldown », un temps avant de frapper une nouvelle entité
+..KA LockView : Fixe l’entité ou non
+..KA invi : Frappe ou non les entités invisibles
+..KA random : Fais varier les clics par seconde du KillAura pour qu’ils soient aléatoires
+..KA verif : Effectue une double vérification avant de frapper l’entité pour confirmer
+ que c’est bien un joueur et non un BOT
+..KA OnGround : Frappe ou non les joueurs dans les airs
+..KA NoArmor Frappe ou non les joueurs sans armure
+..KA NoBot Active ou non l’Anti-BOT
+..KA Premium Ne frappe que les joueurs premium ou non
+..KA speed <Int> Modifie la vitesse du LockView
+
+Likaotique
+Vous téléporte à n’importe quelle position sur un rayon de x bloc afin de troubler l’ennemi.
+#cmd
+..Lik delay <Double> : Permet de modifier le délai entre chaque téléportation
+..Lik radius <Int> : Modifie le rayon sur lequel vous allez vous téléporter
+
+Longjump
+Permet de faire de plus long saut, ou plus court, selon la valeur que vous définissez.
+#cmd
+..Longjump <Double> : Permet de modifier la vitesse du Longjump
+
+Magnet
+Ramasse automatiquement les objets au sol autour de vous.
+#cmd
+..Magnet classic : Permet de choisir entre le mode « classic » de téléportation (en diagonale) ou via un chemin vérifié
+..Magnet mode <Single:Multi> : Choisis entre le mode Single, c’est-à-dire si vous récupérez les items un par un,
+et le mode Multi, où vous récupérez tous les items d’un coup (nécessite un envoie de paquets plus important)
+
+Nametag
+Permet de voir les pseudos des joueurs et leur ping de loin, grâce à la taille des nametags qui est importante.
+#cmd
+..Nametag <Double> : Modifie la taille du Nametag
+
+Nausicaah
+Permet de frapper avec la meilleur arme de son inventaire sans l'avoir dans la main.
+
+NekoChat
+Permet de personnaliser son chat.
+#cmd
+..NekoChat color <R> <G> <B> <Alpha Optionel> : Modifie la couleur du fond du chat
+..NekoChat height <Double> : Modifie la hauteur du chat
+..NekoChat witdh <Double> : Modifie la largeur du chat
+
+NoAnim
+Retire toute animation. Lorsque, par exemple, l’on frappe ou que l’on pare l’épée,
+les autres joueurs ne nous voient pas frapper ou parer avec l’épée
+
+NoBlind
+Permet de supprimer les effets visuels de cécité et de nausée.
+
+NoClip
+Permet de traverser tous les blocs, comme un fantôme.
+Utilisation : Il faut au préalable avoir une partie du corps dans un bloc. 
+Ensuite, vous pouvez vous déplacer dans tous les autres en prenant des dégâts d’étouffement 
+sauf si vous utilisez le Blink de temps en temps. Si vous sortez des blocs vous ne pouvez plus revenir dedans.
+#cmd 
+..NoClip <Double> : Modifie la vitesse du NoClip
+
+NoFall
+Permet de ne pas prendre de dégâts de chute. Il arrive de prendre des dégâts en plus lors de grandes chutes, 
+ça ne fait pas trop de mal en soit et à l’air d’aider à se faire moins détecter.
+#cmd
+..Nofall
+
+NoLook
+Lorsque celui-ci est activé, les autres joueurs ne voient pas votre tête bouger. 
+Il suffit tout simplement de regarder vers l’endroit où vous voulez que votre tête reste figé.
+
+NoSlow
+Permet de ne pas être ralenti par les toiles d’araignées, l’épée parée ou l’arc chargé. 
+Le NoSlow peut aussi servir à manger ou boire tout en se déplaçant
+
+Nuker
+Permet de détruire les blocs automatiquement selon le GameMode. 
+En Créatif, le Nuker casse tous les blocs sans dépendre de la liste. En Survie, 
+le Nuker casse les blocs définis dans la liste.
+#cmd
+..Nuker add <Bloc> : Ajoute un bloc à votre liste du Nuker (un clic-molette peut ajouter le bloc à votre liste) 
+..Nuker rem <Bloc> : Supprime un bloc de votre liste (un second clic-molette le supprimera de votre liste) 
+..Nuker range <Double> : Change la portée du Nuker pour casser les blocs 
+..Nuker clear : Vide la liste de blocs 
+..Nuker list : Affiche la liste de blocs du Nuker 
+..Nuker safe : Ne casse pas le bloc en dessous de vous
+
+Paint
+Permet de « peindre » sur les blocs avec toutes les couleurs et transparences disponible, 
+modifiable via les commandes et visible seulement pour vous. 
+..Paint color <R> <G> <B> : Permet de définir la couleur des blocs 
+..Paint alpha <Double> : Modifie la transparence (de 0 à 1) 
+..Paint clear : Retire tout. Peut être aussi fait en désactivant le Paint
+
+Phase
+Permet de traverser des murs, « glitch » à travers. 
+#cmd
+..Phase vphase : Permet d’utiliser le phase pour passer à travers le sol
+
+Ping
+Permet de modifier la valeur de son Ping. Aucun lag n’est émis, le ping est « fake ».
+#cmd
+..Ping <Int> : Définit votre ping 
+..Ping Freezer : Freeze le ping actuel sur le serveur 
+..Ping random : Fais varier la valeur du ping pour qu’il soit aléatoire
+
+Power
+Affiche un effet de particules vertes.
+
+Premonition
+Il sert à savoir où les flèches, les boules de neiges, 
+les œufs, les enderpearls et les potions jetables vont atterrir.
+
+PunKeel
+Génère un vrai lag.
+#cmd 
+..PunKeel Delay <Double> : Permet de définir le délai entre chaque Tp. Ex: ..punkeel delay 0.5, 
+vous générerez des lags comme-ci vous aviez une latence de 500ms. 
+Par conséquent, les joueurs vous voient vous téléporter toutes les 0.5 secondes, soit toutes les 500 millisecondes.
+..PunKeel Attack : Si ce mode est activé, les coups donnés seront envoyés sans la latence.
+..PunKeel random <delay min> <delay max> : Modifie la valeur du PunKeel pour qu’il soit aléatoire.
+entre une valeur minimum et une valeur maximum.
+
+PushUp
+Lorsqu’il est activé, se mettre sur un mob l’expulsera, 
+se mettre sur un joueur le fera freeze et potentiellement le faire kick pour Fly en fonction du nombre de packets qu’on a défini. 
+#cmd
+..PushUp <Int> : Permet de définir l’envoie de packets par seconde
+
+Pyro
+Si vous avez un briquet dans la main, vous pouvez utiliser le briquet à distance en utilisant la Reach. 
+Le Pyro contient des motifs affichés dans la liste des motifs
+#cmd
+..Pyro list : Affiche la liste des dessins disponibles 
+..Pyro <Motif> : Permet de choisir un motif 
+
+Radar
+Placé en dessous de l’ArrayList, il affiche les joueurs les plus proches, 
+avec le nombre de blocs qui le sépare du joueur entre crochets.
+
+Reflect
+Lorsqu’il est activé, vous vous faîtes repousser lorsque vous frôlez un joueur. 
+#cmd
+..Reflect <Double> Permet de définir la puissance du Reflect
+
+Regen
+Régénère la vie plus vite. On peut définir le nombre de packets à envoyer. 
+#cmd
+..Regen <Int> : Permet de définir le nombre de packets par seconde à envoyer 
+..Regen bypass : Active le Regen seulement lorsque vous avez un effet de régénération
+
+Register
+Permet de vous connecter sur un serveur requérant un mot de passe via le /register et le /login. 
+#cmd
+..Register mdp <mdp> : Permet de définir le mot de passe par défaut
+
+SafeWalk
+Permet de courir au bord des blocs sans risque de tomber.
+
+Scaffold
+Permet de poser le bloc dans votre main sous vous si c’est de l’air. 
+Permet de faire des ponts facilement, ainsi que des tower si vous sautez sans avancer.
+
+Search
+Mets en surbrillance un bloc afin de le voir à travers le sol. 
+#cmd
+..Search add <Name/ID> Recherche le bloc sélectionné 
+..Search clear <Name/ID> Supprime le bloc sélectionné
+
+SmoothAim
+Permet de rapprocher le curseur d’une entité proche selon le fov et la vitesse. 
+Modifie la portée du SmoothAim 
+#cmd
+..SmoothAim fov <Double> : Modifie l’angle du SmoothAim 
+..SmoothAim speed <Double> : Modifie la vitesse du SmoothAim
+
+Sneak
+Permet, aux yeux du serveur et des autres joueurs, de vous voir en sneak tandis que vous pouvez avoir une vitesse normale.
+
+SpamBot
+Permet de connecter des comptes crack à un serveur (5 comptes cracks par secondes).
+
+Speed
+Permet d’aller beaucoup plus vite que la normale sur le sol. 
+#cmd
+..Speed <Double> Modifie la vitesse du Speed 
+..Speed Mode Permet de définir les différents modes du Speed (Air, Ground, Motion)
+
+Sprint
+Maintient le sprint actif pour vous.
+
+Step
+Permet de monter des blocs d’une grande hauteur comme des escaliers. 
+#cmd
+..Step <Double> :Permet de définir la hauteur maximale de blocs que le Step peut vous faire grimper 
+..Step bypass : Met le Step en mode bypass
+
+Switch
+Switch ce que vous tenez à travers toutes les cases indéfiniment.
+
+Timer
+Change la façon dont s’écoule le temps du jeu. 
+#cmd
+..Timer <Double> Modifie la vitesse du Timer
+
+TpBack
+Permet de « fuir » lorsque votre vie est à un certain seuil défini. 
+#cmd
+..TpBack top : Permet de vous téléporter sur le plus haut bloc si votre point de Tp est bouché 
+..TpBack classic : Utilise le mode classic pour se téléporter au lieu d’utiliser un chemin vérifié
+..TpBack <Int> : Définit le seuil de vie 
+..TpBack set:spawn:setspawn : Modifie le point de Tp à la coordonnée où vous vous trouvez 
+..TpBack set:spawn:setspawn <X> <Y> <Z> : Modifie le point de Tp à une coordonnée précise
+
+TpKill
+Se téléporte à chaque joueur et les frappe jusqu’à leur mort. 
+S’il n’y a qu’un joueur, le TpKill se téléportera au joueur s’il est à plus de 6 blocs de lui.
+
+Tracers
+Trace une ligne d’une couleur et d’une épaisseur choisie qui suit les autres joueurs. 
+#cmd
+..Tracers color <R> <G> <B> : Modifie la couleur de la ligne 
+..Tracers width <Double> : Modifie l’épaisseur de la ligne 
+..Tracers Friend : Suit ou non les amis
+
+Trail
+Trace une ligne de blocs derrière vous.
+
+Trigger
+Tape quand le curseur est sur une entité. 
+#cmd
+..Trigger <Double> : Modifie la portée du Trigger 
+..Trigger cps <Double> : Permet de définir les clics par seconde du Trigger 
+..Trigger random : Change les clics par seconde du Trigger pour qu’ils soient aléatoires.
+
+Unicode
+Change la police d’écriture des messages envoyés. 
+Sert à bypass les plugins de censure.
+
+VanillaTp
+Vous téléporte sur le bloc ou entité visée instantanément. 
+#cmd
+? Vtp air : Permet de pouvoir se téléporter au loin sans avoir un bloc plein (bloc d’air) 
+? Vtp classic : Utilise le mode classic pour se téléporter au lieu d’utiliser un chemin vérifié 
+? Vtp top : Permet de téléporter au dessus du bloc lorsque les blocs du dessous sont pleins 
+sans viser le bloc du haut (Ex: un mur)
+
+Velocity
+Permet de modifier le ratio de KnockBack de base. 
+#cmd
+..Velocity <Double> : Modifie le coefficient de KnockBack. 1 est 100% et aller plus bas diminue le KnockBack, 
+aller plus haut l’augmente. 
+..Velocity <hor:horizontal> : Modifie la vélocité en horizontal 
+..Velocity <ver:vertical> : Modifie la vélocité en vertical
+
+WallHack
+Permet de voir les autres joueurs et entités à travers les murs et blocs. 
+#cmd
+..WallHack color <R> <G> <B> : Modifie la couleur de la HitBox 
+..WallHack linecolor <R> <G> <B> : Modifie la couleur des lignes 
+..WallHack width <Double> : Modifie l’épaisseur des lignes
+
+Water
+Affiche un effet de gouttes d’eau près du joueur.
+
+WorldTime
+Modifie la position du soleil et de la lune dans le monde. 
+#cmd
+..WorldTime <Int> : Permet de modifier l’heure du monde
+
+Xray
+Permet de voir à travers les blocs. Pour certains, 
+ce module sert à voir les minerais à travers les blocs, mais sur Neko, le Xray perd cette fonction basique. 
+Il est remplacé par le « Search » et sert désormais à voir les entités directement à travers les blocs.
 
 
 
