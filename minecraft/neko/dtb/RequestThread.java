@@ -1094,7 +1094,7 @@ public class RequestThread extends Thread {
 				        if (!Irc.getInstance().getLastMsg().equalsIgnoreCase(msg2) && !isPv)
 				        	Utils.addChat2Irc("§6[§9IRC§6] "+first, Irc.getInstance().getPlayerClic(pName, pServer), sec, Irc.getInstance().getPClic().equalsIgnoreCase("connect") ? pServer.equalsIgnoreCase("Localhost") : false, Chat.Summon);
 				        else if (!Irc.getInstance().getLastMsg().equalsIgnoreCase(msg2) && isPv)
-				        	Utils.addChat2Irc("§6[§9IRC§6] "+first, "//r ", "§7Cliquez pour répondre !", false, Chat.Summon);				        
+				        	Utils.addChat2Irc("§6[§9IRC§6] "+first, "//w "+pName, "§7Cliquez pour répondre !", false, Chat.Summon);				        
 					Irc.getInstance().setLastMsg(msg2);
 			        } else 
 						return;
