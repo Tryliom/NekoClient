@@ -24,9 +24,11 @@ public class Eagle extends Module {
 	}
 	
 	public void onDisabled() {
-		if ((mc.gameSettings.keyBindSneak.pressed & !Keyboard.isKeyDown(this.mc.gameSettings.keyBindSneak.getKeyCode()))) {
-			mc.gameSettings.keyBindSneak.pressed = false;
-		}
+		try {
+			if ((mc.gameSettings.keyBindSneak.pressed & !Keyboard.isKeyDown(this.mc.gameSettings.keyBindSneak.getKeyCode()))) {
+				mc.gameSettings.keyBindSneak.pressed = false;
+			}
+		} catch (Exception e) {}
 		super.onDisabled();
 	}	
 	

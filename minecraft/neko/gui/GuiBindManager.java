@@ -139,7 +139,7 @@ public class GuiBindManager extends GuiScreen {
 			try {
 				Module m = Utils.getModuleWithInt(id);
 				var.NekoFont.drawString("§c" + m.getName(), x + 31, y + 3, 10526880);
-				var.NekoFont.drawString("§9Touche: " + Utils.getBind(m.getName()), x + 31, y + 15, 10526880);
+				var.NekoFont.drawString((waitKey && list.isSelected(id)) ? "§cAppuyez sur une touche" : "§9Touche: " + Utils.getBind(m.getName()), x + 31, y + 15, 10526880);
 			} catch (Exception e) {
 			}
 		}

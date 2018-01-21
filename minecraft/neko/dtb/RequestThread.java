@@ -184,9 +184,9 @@ public class RequestThread extends Thread {
 							int j = 0;
 							if (r.length>1) {
 								for (int i=0;i<r.length;i++) {	
-									j++;
 									if (r[i].startsWith("player_name=")) {
 										pName=r[i].replaceFirst("............", "");
+										j++;
 									}
 									i++;
 									if (r[i].startsWith("player_lvl=")) {
