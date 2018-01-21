@@ -8,7 +8,8 @@ Avec l'option « pvp », la reach aura les fonctions suivantes :
 ..Reach pvp : Active/désactive la reach pvp. Permet de frapper les joueurs
 ..Reach tnt : Active/désactive la reach tnt. Pose de la tnt à distance et l'allume
 automatiquement
-..Reach tnt <Mode> : Change la façon dont les tnt vont se poser. Faire Reach tnt list pour la liste des modes.
+..Reach tnt <Mode> : Change la façon dont les tnt vont se poser.
+Faire Reach tnt list pour la liste des modes.
 ..Reach aimbot : Active/désactive l'aimbot de la reach. Fais pour la reach pvp pour mieux viser pour
 frapper, si on frappe à côté on atteint quand même la cible.
 ..Reach fov <Int> : Change le fov pour l'aimbot. Angle de vue pour que le Aimbot fasse effet.
@@ -39,25 +40,25 @@ des blocs d’air.
 AntiAfk
 Permet de faire sauter votre joueur à intervalle régulier selon vos réglages.
 #cmd
-..antiafk <Int> : Permet de définir le temps d’intervalle.
+..Antiafk <Int> : Permet de définir le temps d’intervalle.
 
 AntiFire
 #cmd
-..antifire : Vous immunise du feu.
+..Antifire : Vous immunise du feu.
 
 ArrayList
 #cmd
-..arraylist : Permet d’afficher la liste de tous les cheats activés à droite de l’écran.
-..arrayList color <couleur> : Modifie la couleur de l’ArrayList.
+..Arraylist : Permet d’afficher la liste de tous les cheats activés à droite de l’écran.
+..ArrayList color <couleur> : Modifie la couleur de l’ArrayList.
 
 AutoArmor
 #cmd
-..autoarmor : Équipe automatiquement la meilleure armure de l’inventaire en comparant le matériau,
+..Autoarmor : Équipe automatiquement la meilleure armure de l’inventaire en comparant le matériau,
 les enchantements de protections ainsi que l’utilisation restante.
 
 AutoBlock
 #cmd
-..autoblock Bloque si le joueur a une épée en main automatiquement.
+..Autoblock Bloque si le joueur a une épée en main automatiquement.
 
 AutoClic
 Simule x clics par seconde selon vos réglages.
@@ -66,7 +67,7 @@ Simule x clics par seconde selon vos réglages.
 
 AutoEat
 #cmd
-..autoeat : Quand vous avez faim, vous mangez automatiquement. Nécessite au préalable de la
+..Autoeat : Quand vous avez faim, vous mangez automatiquement. Nécessite au préalable de la
 nourriture dans l’inventaire.
 
 AutoMLG
@@ -79,17 +80,19 @@ AutoNyah
 Un « automessage » qui sélectionne parmi plus de 500 phrases différentes une phrase
 aléatoire et l’envoie en x temps.
 #cmd
-..autoNyah prefix <String> : Permet de modifier le préfixe du message
-..autoNyah speed <Double> : Permet de modifier la vitesse (en secondes)
+..AutoNyah prefix <String> : Permet de modifier le préfixe du message
+..AutoNyah speed <Double> : Permet de modifier la vitesse (en secondes)
 
 AutoPot
 Permet de se soigner automatiquement à un certain seuil de vie configurable si on a des
 potions de soin dans son inventaire.
 #cmd
-..autoPot <Int> : Permet de définir le seuil de vie
+..AutoPot <Int> : Permet de définir le seuil de vie
 
 AutoRespawn
 Lorsque vous mourrez, vous ressuscitez instantanément.
+#cmd
+..Autorespawn
 
 AutoSoup
 Permet de se soigner automatiquement à un certain seuil de vie configurable. 
@@ -100,12 +103,16 @@ Permet de se soigner automatiquement à un certain seuil de vie configurable.
 AutoSword
 Quand vous cliquez dans le vide ou sur une entité, cherche la meilleure épée possible
 dans votre inventaire et vous la met dans le slot actuel.
+#cmd
+..Autosword
 
 AutoTool
 Permet de choisir automatiquement le meilleur outil pour casser le bloc sélectionné. Par exemple,
 vous avez une hache en diamant efficacité IV et une hache en fer efficacité II, si vous frappez un bloc de bois,
 que vous essayez de le casser, l’AutoTool va prendre automatiquement la hache en diamant Efficacité IV,
 car c’est celle qui va détruire votre bloc le plus rapidement.
+#cmd
+..AutoTool
 
 BedGod
 Permet d’interagir avec les blocs ou les entités pendant
@@ -126,7 +133,8 @@ Pose des blocs autour de vous sur du 3x3 selon les modes Down, Up, Wall et Sneak
 ..Build Down : Pose des blocs au format 3x3 en dessous de vous.
 ..Build Up :Pose des blocs au format 3x3 au dessus de vous (un bloc d’air est laissé au dessus de votre tête).
 ..Build Wall : Construis un mur devant vous au format 3x3.
-..Build Sneak : Utilisé pour le mode Wall. S’il est activé, le mur au format 3x3 se construira devant vous si vous vous accroupissez.
+..Build Sneak : Utilisé pour le mode Wall. S’il est activé, le mur au format 3x3 se construira
+devant vous si vous vous accroupissez.
 S’il est désactivé, alors le Wall mettra un mur devant vous sans forcément vous accroupir. 
 
 CallCMD
@@ -139,6 +147,8 @@ Exécute une commande quand un des joueurs blacklistés se connecte.
 
 ChestESP
 Permet de voir les coffres à travers les murs.
+#cmd
+..CheatESP
 
 ChestStealer
 Permet de vider un coffre automatiquement.
@@ -148,17 +158,58 @@ Permet de vider un coffre automatiquement.
 ClickAim
 Lorsque vous frappez, le curseur se mettra automatiquement sur le joueur le plus proche.
 #cmd
-..ClickAim multiaura : Change le mode multiaura au singleaura et inversement. Permet de viser qu’un seul joueur ou tous les joueurs autour.
+..ClickAim multiaura : Change le mode multiaura au singleaura et inversement.
+Permet de viser qu’un seul joueur ou tous les joueurs autour.
 ..ClickAim <Double> : Modifie la portée du ClickAim.
 
+ClickGui
+Ouvre la fenêtre de réglages des cheats, le panel de contrôle. De base,
+la touche est sur RCTRL (la touche CTRL à droite).
 
+Crasher
+Permet de faire crash certains serveurs (envoie BEAUCOUP de packets = lag). (Pas faire c'est méchant.)
 
+Crit
+Permet d’infliger des coups critiques à chaque fois que vous frappez une entité, manuellement ou non.
+#cmd
+..Crit
 
+Dolphin
+Permet d’améliorer votre vitesse dans l’eau.
+#cmd
+..Dolphin <Double> : Modifie la vitesse du Dolphin
 
+DropShit
+Drop tous les items de votre inventaire d’une liste noire configurée via les commandes.
+#cmd
+..DropShit add <Bloc> : Ajoute un item à votre liste
+..DropShit rem <Blocs> : Supprime un item de votre liste
+..DropShit clear : Vide votre liste
+..DropShit list : Affiche la liste
 
+Eagle
+Sneak automatiquement lorsque vous êtes au bord du vide.
+#cmd
+..eagle : Il bug 
 
+Exploit
+Un « cheat » qui permet d’avoir quelques ajouts en tout genre,
+comme augmenter la limite de caractères du chat (seulement pour l’IRC) 
+ou pouvoir ouvrir son inventaire et son chat dans un portail du Néant.
+#cmd
+..exploit
 
+FastBow
+Permet de tirer instantanément des flèches avec un arc.
+#cmd
+..FastBow nobow : Permet de tirer des flèches sans avoir l’arc dans la main. 
+Il est cependant nécessaire d’avoir au moins un arc et une flèche dans son inventaire
+..FastBow Packets <Int> : Modifie le nombre de packets envoyé par le FastBow. De base : 20
 
+FastBreak
+Permet de casser plus vite les blocs.
+#cmd
+..FastBreak
 
 
 
