@@ -27,7 +27,7 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
 
-public class GuiBindManager extends GuiScreen {
+public class GuiMusicManager extends GuiScreen {
 	private GuiScreen prevGui;
 	private Minecraft mc = Minecraft.getMinecraft();
 	private ResourceLocation background = mc.getTextureManager().getDynamicTextureLocation("background",
@@ -37,7 +37,7 @@ public class GuiBindManager extends GuiScreen {
 	private int lastIndex = -1;
 	private boolean waitKey = false;
 
-	public GuiBindManager(GuiScreen gui) {
+	public GuiMusicManager(GuiScreen gui) {
 		this.prevGui = gui;
 	}
 
@@ -46,8 +46,8 @@ public class GuiBindManager extends GuiScreen {
 		this.list = new GuiList(this);
 		this.list.registerScrollButtons(7, 8);
 
-		this.buttonList.add(new GuiButton(1, this.width / 2 - 50, this.height - 52, 100, 20, "Changer"));
-		this.buttonList.add(new GuiButton(2, this.width / 2 - 154, this.height - 52, 100, 20, "Supprimer"));
+		this.buttonList.add(new GuiButton(1, this.width / 2 - 50, this.height - 52, 100, 20, "Lancer"));
+		this.buttonList.add(new GuiButton(2, this.width / 2 - 154, this.height - 52, 100, 20, "Arrêter"));
 		this.buttonList.add(new GuiButton(0, this.width / 2 + 4 + 50, this.height - 52, 100, 20, "Retour"));
 	}
 
@@ -59,7 +59,7 @@ public class GuiBindManager extends GuiScreen {
 
 		drawDefaultBackground();
 		this.list.drawScreen(mouseX, mouseY, partialTicks);
-		drawCenteredString(var.NekoFont, "Bind Manager", this.width / 2, 10, 16777215);
+		drawCenteredString(var.NekoFont, "Music Manager", this.width / 2, 10, 16777215);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 

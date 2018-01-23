@@ -47,7 +47,7 @@ public class SoundManager
     private final GameSettings options;
 
     /** A reference to the sound system. */
-    private SoundManager.SoundSystemStarterThread sndSystem;
+    public static SoundManager.SoundSystemStarterThread sndSystem;
 
     /** Set to true when the SoundManager has been initialised. */
     private boolean loaded;
@@ -554,7 +554,7 @@ public class SoundManager
         }
     }
 
-    class SoundSystemStarterThread extends SoundSystem
+    public class SoundSystemStarterThread extends SoundSystem
     {
 
         private SoundSystemStarterThread() {}

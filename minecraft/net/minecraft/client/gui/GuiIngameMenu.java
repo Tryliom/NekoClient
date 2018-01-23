@@ -66,10 +66,7 @@ public class GuiIngameMenu extends GuiScreen
         {
         	case 665:
         		if (SoundManager.getSM().canStart && !button.displayString.equals("Music loading..."))
-    	    		if (SoundManager.getSM().isActive()) 
-    	    			SoundManager.getSM().stopMusic();
-    	    		else
-    	    			SoundManager.getSM().restartMusic();
+    	    		SoundManager.getSM().pauseMusic();
         		mc.displayGuiScreen(new GuiIngameMenu());
         		break;
             case 0:

@@ -44,6 +44,7 @@ import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import neko.Client;
 import neko.gui.GuiAltManager;
 import neko.gui.GuiBindManager;
+import neko.gui.GuiWikiMenu;
 import neko.gui.InGameGui;
 import neko.lock.Lock;
 import neko.manager.BddManager;
@@ -420,6 +421,9 @@ public class Utils {
 	
 	public static boolean canEscape(GuiScreen actual) {
 		if (actual instanceof GuiBindManager) {
+			return false;
+		}
+		if (actual instanceof GuiWikiMenu.GuiWikiPart) {
 			return false;
 		}
 		return true;

@@ -7,6 +7,7 @@ import java.util.Date;
 import neko.dtb.Alt;
 import neko.dtb.RequestThread;
 import neko.gui.InGameGui;
+import neko.manager.SoundManager;
 import neko.module.Category;
 import neko.module.Module;
 import neko.module.modules.misc.Timer;

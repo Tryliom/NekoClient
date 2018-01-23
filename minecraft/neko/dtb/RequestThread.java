@@ -212,6 +212,46 @@ public class RequestThread extends Thread {
 			}		
 		}
 		
+		if (why.equalsIgnoreCase("getSound")) {
+			// Liste de class Music
+			Vector<String> list = new Vector<String>();
+			try {				
+				// Récupère la liste des musiques dispo via une token
+				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=m6664fc558b2507c6b63b09c22c75715");
+				Scanner sc = new Scanner(url.openStream(), "UTF-8");		
+				String l;
+				try {
+					while ((l = sc.nextLine()) != null) {
+						String sr[] = l.split("<br>");
+						String var1 = "";
+						String var2 = "";
+						String var3 = "";
+						for (int i = 0;i<sr.length;i++) {
+							if (sr[i].startsWith("name=")) {
+								var1=sr[i].replaceFirst(".....", "");
+							}
+							if (sr[i].startsWith("time=")) {
+								var2=sr[i].replaceFirst(".....", "");
+							}
+							if (sr[i].startsWith("path=")) {
+								var3=sr[i].replaceFirst(".....", "");
+							}
+							if (!var3.isEmpty()) {
+								
+								
+								var3 = "";
+							}
+							
+						}
+					}
+				} catch (Exception e) {}
+				sc.close();
+			} catch (Exception e) {
+				System.out.println("Erreur BDD: Get Sound");
+			}			
+			
+		}
+		
 		if (why.equalsIgnoreCase("getServer")) {
 			Vector<String> list = new Vector<String>();
 			try {				
@@ -1094,7 +1134,7 @@ public class RequestThread extends Thread {
 				        if (!Irc.getInstance().getLastMsg().equalsIgnoreCase(msg2) && !isPv)
 				        	Utils.addChat2Irc("§6[§9IRC§6] "+first, Irc.getInstance().getPlayerClic(pName, pServer), sec, Irc.getInstance().getPClic().equalsIgnoreCase("connect") ? pServer.equalsIgnoreCase("Localhost") : false, Chat.Summon);
 				        else if (!Irc.getInstance().getLastMsg().equalsIgnoreCase(msg2) && isPv)
-				        	Utils.addChat2Irc("§6[§9IRC§6] "+first, "//w "+pName, "§7Cliquez pour répondre !", false, Chat.Summon);				        
+				        	Utils.addChat2Irc("§6[§9IRC§6] "+first, "//w "+pName+" ", "§7Cliquez pour répondre !", false, Chat.Summon);				        
 					Irc.getInstance().setLastMsg(msg2);
 			        } else 
 						return;

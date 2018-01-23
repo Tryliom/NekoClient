@@ -117,7 +117,7 @@ public class GuiWikiMenu extends GuiScreen {
 	  protected void keyTyped(char typedChar, int keyCode)
 	    throws IOException
 	  {
-	    if (keyCode == KeyEvent.VK_ESCAPE)
+	    if (keyCode == 1)
 	    	this.mc.displayGuiScreen(this.prevGui);
 	    super.keyTyped(typedChar, keyCode);
 	  }
@@ -135,7 +135,7 @@ public class GuiWikiMenu extends GuiScreen {
 			  mc.displayGuiScreen(this.prevGui);
 	  }
 	  
-	  private class GuiWikiPart extends GuiScreen {
+	  public class GuiWikiPart extends GuiScreen {
 		    private GuiScreen prevGui;
 		    private String cheat;
 		    
@@ -195,9 +195,13 @@ public class GuiWikiMenu extends GuiScreen {
 		      }
 		    }
 		    
-		    protected void keyTyped(char typedChar, int keyCode) throws IOException {
-		      super.keyTyped(typedChar, keyCode);
-		    }
+		    protected void keyTyped(char typedChar, int keyCode)
+		    	    throws IOException
+		    	  {
+		    	    if (keyCode == 1)
+		    	    	this.mc.displayGuiScreen(this.prevGui);
+		    	    super.keyTyped(typedChar, keyCode);
+		    	  }
 		    
 		    protected void mouseClicked(int mouseX, int mouseY, int mouseButton)
 		      throws IOException

@@ -1,30 +1,14 @@
 package neko.gui;
 
-import java.awt.event.KeyEvent;
 import java.io.IOException;
-
-import org.lwjgl.input.Keyboard;
 
 import neko.Client;
 import neko.manager.OnlyRpgManager;
 import neko.manager.SoundManager;
-import neko.utils.Utils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiIngameMenu;
-import net.minecraft.client.gui.GuiKeyBindingList;
-import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiMultiplayer;
-import net.minecraft.client.gui.GuiOptions;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiShareToLan;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.gui.achievement.GuiAchievements;
-import net.minecraft.client.gui.achievement.GuiStats;
-import net.minecraft.client.multiplayer.GuiConnecting;
-import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.resources.I18n;
 
 public class GuiMenuNeko extends GuiScreen {
     /**
@@ -38,6 +22,7 @@ public class GuiMenuNeko extends GuiScreen {
 
         this.buttonList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 24 + var1, "Wiki Cheats"));
         this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + var1, 98, 20, "Bind Manager"));
+        this.buttonList.add(new GuiButton(5, this.width / 2 + 2, this.height / 4 + 96 + var1, 98, 20, "Music Manager"));
         	if (!OnlyRpgManager.getRpg().isActive())
         		this.buttonList.add(new GuiButton(8, this.width / 2 + 2, this.height / 4 + 72 + var1, 98, 20, "Alt Manager"));
         	if (!OnlyRpgManager.getRpg().isActive())
@@ -56,10 +41,7 @@ public class GuiMenuNeko extends GuiScreen {
         {
         	case 665:
         		if (SoundManager.getSM().canStart && !button.displayString.equals("Music loading..."))
-    	    		if (SoundManager.getSM().isActive()) 
-    	    			SoundManager.getSM().stopMusic();
-    	    		else
-    	    			SoundManager.getSM().restartMusic();
+    	    		SoundManager.getSM().pauseMusic();
         		mc.displayGuiScreen(this);
         		break;
             case 0:
@@ -76,6 +58,9 @@ public class GuiMenuNeko extends GuiScreen {
 
             case 4:
             	this.mc.displayGuiScreen(new GuiWikiMenu(this));
+                break;
+            case 5:
+            	this.mc.displayGuiScreen(new GuiMusicManager(this));
                 break;
             case 8:
                 this.mc.displayGuiScreen(new GuiAltManager(this));
