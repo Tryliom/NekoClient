@@ -286,13 +286,12 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     {	
     	if (button.id == 665)
         {
-    		if (SoundManager.getSM().canStart && !button.displayString.equals("Music loading..."))
-    			SoundManager.getSM().pauseMusic();
-    		if (SoundManager.getSM().canStart)
+    		if (SoundManager.getSM().isActive() && !button.displayString.equals("Music loading..."))
+    			SoundManager.getSM().stopMusic();
+    		else if (!button.displayString.equals("Music loading...")) {
+    			SoundManager.getSM().restartMusic();
+    		} else
     			button.displayString = SoundManager.getSM().isActive() ? "♫ Stop ♫" : "♪ Restart ♪";
-    		else
-    			button.displayString = "Music loading...";
-    		
         }
     	if (button.id == 666 && tm.isDone())
         {

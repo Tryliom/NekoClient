@@ -67,6 +67,8 @@ public class God extends Module {
 				if (var.onlyrpg.isActive())
 					var.onlyrpg.addTimer();
 				u.timeInGameSec+=1;
+				if (SoundManager.getSM().timeUntilRestart>0)
+					SoundManager.getSM().timeUntilRestart--;
 				if (Utils.xptime<60)
 					Utils.xptime+=1;
 				u.timeInGameMs=0;

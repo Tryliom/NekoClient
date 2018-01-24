@@ -35,6 +35,7 @@ public class JLayerPlayerPausable
     public boolean isComplete = false;
     private PlaybackListener listener;
     private int frameIndexCurrent;
+    private boolean hasRestart = false;
 
     public boolean isPaused;
 
@@ -160,12 +161,11 @@ public class JLayerPlayerPausable
                     (
                         this,
                         PlaybackEvent.EventType.Instances.Stopped,
-                        this.audioDevice!=null ? this.audioDevice.getPosition() : SoundManager.getSM().canRestart()
+                        this.audioDevice!=null ? this.audioDevice.getPosition() : 1
                     )
                 );
             }
         }
-
         return shouldContinueReadingFrames;
     }
 
@@ -189,7 +189,9 @@ public class JLayerPlayerPausable
                 this.bitstream.close();
             }
             catch (Exception ex)
-            {}
+            {
+            	
+            }
         }
     }
 
@@ -201,6 +203,7 @@ public class JLayerPlayerPausable
         {
             if (this.audioDevice != null)
             {                
+            	
                 Header header = this.bitstream.readFrame();
                 if (header != null)
                 {
@@ -224,6 +227,9 @@ public class JLayerPlayerPausable
                     }
 
                     this.bitstream.closeFrame();
+                } else if (SoundManager.getSM().isActive() && header == null && !this.hasRestart) {
+                	this.hasRestart = true;
+                	SoundManager.getSM().restartMusic();
                 }
             }
         }

@@ -458,7 +458,6 @@ public class RequestThread extends Thread {
 				long diff = lastDate-22000;	
 				String s = "\""+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE).format(new Date(diff))+"\",\""+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE).format(new Date(lastDate))+"\"";
 				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=b0ac0857d55ccb7f52303bc7e440b02e&args="+URLEncoder.encode(s, "UTF-8"));
-				System.out.println(url.toString());
 				Scanner sc = new Scanner(url.openStream(), "UTF-8");		
 				String l;
 				Utils.addChat("§7--[§aJoueurs connectés§7]--");

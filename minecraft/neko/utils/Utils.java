@@ -3114,14 +3114,9 @@ public class Utils {
 	 * <br> Ce vector donne une liste de hashmap qui ont comme clé le nom du cheat et 
 	 * comme objet la description du cheat non formatée (Juste les retour à la ligne) 
 	 ***/
-	@SuppressWarnings("unchecked")
 	public static HashMap<String, Vector<HashMap<String, Vector<String>>>> loadWiki() {
-		File dir = new File(System.getProperty("user.dir")+ Utils.separator +"..\\src\\minecraft\\wiki.neko");
-		if (dir.exists()) {			
 			try { 
-	            InputStream ips = new FileInputStream(dir); 
-	            InputStreamReader ipsr = new InputStreamReader(ips); 
-				BufferedReader br = new BufferedReader(ipsr); 
+				Scanner sc = new Scanner(new URL("http://nekohc.fr/controler/Neko/wiki.neko").openStream());
 	            String l;
 	            String nom = "";
 	            Vector<String> desc = new Vector<String>();
@@ -3130,8 +3125,10 @@ public class Utils {
 	             *  Liste triée par catégories de cheat, par ex dans le Combat on trouve le KillAura avec sa description
 	             */
 	            HashMap<String, Vector<HashMap<String, Vector<String>>>> listTotal = new HashMap<String, Vector<HashMap<String, Vector<String>>>>();
-	            while ((l = br.readLine()) != null)
+	            while (sc.hasNextLine())
 	            {                	
+	            	l = sc.nextLine();
+	            	System.out.println(l);
 	            	if (l.equalsIgnoreCase("")) {
 	            		hm.put(nom, (Vector<String>)desc.clone());
 	            		nom = "";
@@ -3144,7 +3141,7 @@ public class Utils {
 	            	
 	            }	   
         		hm.put(nom, (Vector<String>)desc.clone());
-	            br.close();
+	            sc.close();
 	            /**
 	             *  Ajout des hashmap des cheats et leur description dans les catégories
 	             */
@@ -3167,7 +3164,6 @@ public class Utils {
 			} catch (Exception e) {
 				System.out.println(e.getMessage());
 			}	
-		}
 		return null;
 	}
 	

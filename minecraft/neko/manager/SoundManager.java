@@ -2,6 +2,7 @@ package neko.manager;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.function.Consumer;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -31,15 +32,11 @@ public class SoundManager {
 //	private ArrayList<Music> list = new ArrayList<>();
 	private SoundJLayer currAudio;
 	public boolean canStart = false;
-
-	public static SoundManager getSM() {
-		return instance == null ? instance = new SoundManager() : instance;
-	}
-	
-	public SoundManager() {
-		try {
-			
-			currAudio = new SoundJLayer("https://nekohc.fr/song/test.mp3");					
+	public boolean stopByButton = false;
+	public int timeUntilRestart = 10;
+	public Consumer<String> c = (String s) -> {
+		try {			
+			currAudio = new SoundJLayer(s);					
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -49,36 +46,38 @@ public class SoundManager {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	};
+
+	public static SoundManager getSM() {
+		return instance == null ? instance = new SoundManager() : instance;
 	}
 	
-	public void pauseMusic() {
-		if (!this.currAudio.player.isPaused) {
+	public SoundManager() {
+		this.startNewMusic();
+	}
+	
+	public void stopMusic() {
+		if (this.currAudio!=null && this.currAudio.player!=null && !this.currAudio.player.isPaused) {
 			this.currAudio.pause();
-			this.currAudio = null;
-			canStart = false;
+			this.currAudio.player.close();
 		}
+		stopByButton = true;
 	}
 	
 	public boolean isActive() {
-		if (this.currAudio==null)
-			System.out.println("currAudio null");
-		else if (this.currAudio.player==null)
-			System.out.println("currAudio.player null");
-		else if (this.currAudio.player.audioDevice==null)
-			System.out.println("currAudio.player.audioDevice null");
-		
-		return canStart && this.currAudio!=null && this.currAudio.player.audioDevice!=null && this.currAudio.player.audioDevice.isOpen();
+		return canStart && !stopByButton && this.currAudio!=null;
 	}
 	
 	public void restartMusic() {
-		this.canStart=false;	
-		this.instance = new SoundManager();
+			this.canStart=false;	
+			stopByButton = false;
+			if (this.currAudio.player!=null)
+				this.currAudio.player.close();
+			this.startNewMusic();
 	}	
 	
-	public int canRestart() {
-		System.out.println("dfs");
-		this.restartMusic();
-		return 1;
+	private void startNewMusic() {
+		c.accept("https://nekohc.fr/song/test.mp3");
 	}
 
 }
@@ -166,7 +165,6 @@ class SoundJLayer extends JLayerPlayerPausable.PlaybackListener implements Runna
 		}
 		catch (javazoom.jl.decoder.JavaLayerException ex)
 		{
-			SoundManager.getSM().restartMusic();
 			ex.printStackTrace();
 		}
 
