@@ -55,9 +55,11 @@ public class GuiMusicManager extends GuiScreen {
 		Gui.drawScaledCustomSizeModalRect(0, 0, 0.0F, 0.0F, sr.getScaledWidth(), sr.getScaledHeight(),
 				sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight());
 		this.buttonList.clear();
-		if (this.list.selectedSlot!=-1)
-			this.buttonList.add(new GuiButton(1, this.width / 2 - 50, this.height - 52, 100, 20, "Lancer"));
-		this.buttonList.add(new GuiButton(2, this.width / 2 - 154, this.height - 52, 100, 20, "Mode: "+SoundManager.getSM().mm.name()));
+		if (SoundManager.getSM().canStart) {
+			if (this.list.selectedSlot!=-1)
+				this.buttonList.add(new GuiButton(1, this.width / 2 - 50, this.height - 52, 100, 20, "Lancer"));
+			this.buttonList.add(new GuiButton(2, this.width / 2 - 154, this.height - 52, 100, 20, "Mode: §a"+SoundManager.getSM().mm.name()));
+		}
 		this.buttonList.add(new GuiButton(0, this.width / 2 + 4 + 50, this.height - 52, 100, 20, "Retour"));
 		if (SoundManager.getSM().canStart)
 			this.buttonList.add(new GuiButton(665, this.width-110, 10, 100, 20, SoundManager.getSM().isActive() ? "♫ Stop ♫" : "♪ Restart ♪"));
@@ -78,13 +80,22 @@ public class GuiMusicManager extends GuiScreen {
 		case 1:
 			if (this.list.selectedSlot>=0) {
 				SoundManager.getSM().currPath = SoundManager.getSM().getList().get(this.list.selectedSlot).getPath();
-				SoundManager.getSM().restartMusic();
+				SoundManager.getSM().restartMusic(" ");
 			}
 			break;
 		case 2:
 			// MusicMode à changer
-			
+			SoundManager.getSM().changeMode.accept(SoundManager.getSM().mm);
 			break;
+		case 665:
+    		if (SoundManager.getSM().isActive() && !button.displayString.equals("Music loading..."))
+    			SoundManager.getSM().stopMusic();
+    		else if (!button.displayString.equals("Music loading...")) {
+    			SoundManager.getSM().restartMusic();
+    		} else
+    			button.displayString = SoundManager.getSM().isActive() ? "♫ Stop ♫" : "♪ Restart ♪";
+    		mc.displayGuiScreen(this);
+    		break;
 		}
 	}
 
@@ -125,9 +136,9 @@ public class GuiMusicManager extends GuiScreen {
 
 		protected void elementClicked(int var1, boolean doubleClick, int var3, int var4) {
 			this.selectedSlot = var1;
-			if (doubleClick) {
+			if (doubleClick && SoundManager.getSM().canStart) {
 				SoundManager.getSM().currPath = SoundManager.getSM().getList().get(list.selectedSlot).getPath();
-				SoundManager.getSM().restartMusic();
+				SoundManager.getSM().restartMusic("");
 			}
 		}
 

@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
 import java.net.Proxy;
 import java.net.URI;
 import java.net.URL;
@@ -52,6 +53,7 @@ import neko.manager.BddManager;
 import neko.manager.GuiManager;
 import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
+import neko.manager.SoundManager;
 import neko.manager.TutoManager;
 import neko.module.Category;
 import neko.module.Module;
@@ -120,6 +122,7 @@ import neko.module.modules.special.VanillaTp;
 import neko.module.other.Active;
 import neko.module.other.Conditions;
 import neko.module.other.Irc;
+import neko.module.other.Music;
 import neko.module.other.Rank;
 import neko.module.other.TempBon;
 import neko.module.other.Xp;
@@ -127,6 +130,7 @@ import neko.module.other.enums.BowMode;
 import neko.module.other.enums.Chat;
 import neko.module.other.enums.IrcMode;
 import neko.module.other.enums.MagnetWay;
+import neko.module.other.enums.MusicMode;
 import neko.module.other.enums.Rate;
 import neko.module.other.enums.SpeedEnum;
 import net.mcleaks.MCLeaks;
@@ -1168,7 +1172,7 @@ public class Utils {
 					+ "§7Vous pouvez mettre des couleurs", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Nbt <Tag> <Value>", var.prefixCmd+"nbt ", "§7Ajoute un nbt à l'item, comprend les values int, double, boolean et string.\n"
 					+ "§7Exemple simple, rendre incassable un item: "+var.prefixCmd+"nbt Unbreakable true", false, Chat.Summon);
-//			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Give <ID ou Name>", var.prefixCmd+"give ", "§7Juste en créatif, vous donne l'item que vous avez spécifié avec l'ID ou son nom (minecraft:stone ou 1 fonctionnent)", false, Chat.Summon);
 //			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
 //			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
 //			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
@@ -1198,6 +1202,25 @@ public class Utils {
       	  }
         }
 		return false;
+	}
+	
+	public static boolean haveInternet() {
+		try {
+			new URL("http://google.ch").openConnection();
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+	
+	public static int getIdMusicByPath(String path) {
+		Vector<Music> list = (Vector<Music>) SoundManager.getSM().getList().clone();
+		for (int i = 0; i < list.size();i++) {
+			if (list.get(i).getPath().equalsIgnoreCase(path)) {
+				return i;
+			}
+		}
+		return -1;
 	}
 	
 	public static int getTotRankRate(Rate r) {
@@ -2409,7 +2432,7 @@ public class Utils {
 		                s+=TutoManager.getTuto().isDone()+"\n"+Nuker.safe+"\n"+KillAura.speed+"\n"+PunKeel.attack+"\n"+PunKeel.delay+"\n"+Fastbow.getFast().getPacket()+"\n";
 		                s+=Step.getStep().isBypass()+"\n"+BowAimbot.getAim().getFov()+"\n"+BowAimbot.getAim().getLife()+"\n"+BowAimbot.getAim().getArmor()+"\n";
 		                s+=Reach.multiaura+"\n"+PunKeel.random+"\n"+(PunKeel.random ? PunKeel.rDelay.firstElement()+"\n"+PunKeel.rDelay.lastElement() : "0.5\n1.0")+"\n";
-		                s+=m.getMode()+"\n"+m.isClassic()+"\n"+Block.getIdFromBlock(Search.getSearch().getSearchBlock())+"\n";
+		                s+=m.getMode()+"\n"+m.isClassic()+"\n"+Block.getIdFromBlock(Search.getSearch().getSearchBlock())+"\n"+SoundManager.mm.name()+"\n";
 		                writer.write(s);
 		                writer.flush();
 		            }
@@ -3056,6 +3079,8 @@ public class Utils {
 	                		m.setClassic(Boolean.parseBoolean(ligne));
 	                	if (i==167)
 	                		Search.getSearch().setSearchBlock(Block.getBlockById(Integer.parseInt(ligne)));
+	                	if (i==168)
+	                		SoundManager.mm = MusicMode.valueOf(ligne);
                 	} catch (Exception e) {}                	
                 	i++;
                 }

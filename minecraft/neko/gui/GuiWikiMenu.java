@@ -177,7 +177,7 @@ public class GuiWikiMenu extends GuiScreen {
 		    	  if (!cmd)
 		    		  drawString(var.NekoFont, "§9"+d, 100, y, 16777215);
 		    	  else {
-		    		  d = d.startsWith("..") ? d.replace("..", "§6"+var.prefixCmd).replaceFirst(":", ":§9") : "§9"+d;
+		    		  d = d.startsWith("..") ? d.replace("..", "§6"+var.prefixCmd).replaceFirst(" : ", " :§9 ") : "§9"+d;
 		    		  drawString(var.NekoFont, d, 100, y, 16777215);
 		    	  }
 		    	  y+=15;

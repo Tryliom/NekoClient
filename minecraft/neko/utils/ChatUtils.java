@@ -1118,61 +1118,6 @@ public class ChatUtils {
 					Utils.addChat(err);
 				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			} 	
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"give")) {
-				if (args.length==1) {
-					Utils.addChat(err);
-				} else {
-					try {
-						EntityPlayer en = Utils.getPlayer(args[1]);
-						if (Utils.isPlayer(en)) {
-							if (en.getCurrentEquippedItem()!=null) {
-								try {
-									ItemStack items = en.getCurrentEquippedItem();
-									mc.thePlayer.inventory.addItemStackToInventory(items);
-								} catch (Exception e) {
-									Utils.addChat(err);
-								}
-							}
-							if (en.getCurrentArmor(0)!=null) {
-								try {
-									ItemStack items = en.getCurrentArmor(0);
-									mc.thePlayer.inventory.addItemStackToInventory(items);
-								} catch (Exception e) {
-									Utils.addChat(err);
-								}
-							}
-							if (en.getCurrentArmor(1)!=null) {
-								try {
-									ItemStack items = en.getCurrentArmor(1);
-									mc.thePlayer.inventory.addItemStackToInventory(items);
-								} catch (Exception e) {
-									Utils.addChat(err);
-								}
-							}
-							if (en.getCurrentArmor(2)!=null) {
-								try {
-									ItemStack items = en.getCurrentArmor(2);
-									mc.thePlayer.inventory.addItemStackToInventory(items);
-								} catch (Exception e) {
-									Utils.addChat(err);
-								}
-							}
-							if (en.getCurrentArmor(3)!=null) {
-								try {
-									ItemStack items = en.getCurrentArmor(3);
-									mc.thePlayer.inventory.addItemStackToInventory(items);
-								} catch (Exception e) {
-									Utils.addChat(err);
-								}
-							}
-						}
-					} catch (Exception e) {
-						Utils.addChat("§cErreur: Le joueur n'existe pas");
-					}
-				}
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"size")) {
@@ -1188,6 +1133,27 @@ public class ChatUtils {
 						} else {
 							Utils.addChat("§cAucun item en main");
 						}
+					}
+				}
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"give")) {
+				if (args.length==1) {
+					Utils.addChat(err);
+				} else {
+					try {
+						String id = args[1];
+						Item item = Item.getByNameOrId(id);
+						int amount = 1;
+						if (args.length>=3 && Utils.isInteger(args[2])) {
+							amount = Integer.parseInt(args[2]);
+						}
+						mc.thePlayer.inventory.addItemStackToInventory(new ItemStack(item, amount));
+						mc.thePlayer.inventoryContainer.detectAndSendChanges();
+						Utils.addChat("§aItem ajouté dans l'inventaire !");
+					} catch (Exception e) {
+						Utils.addError(err);
 					}
 				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);

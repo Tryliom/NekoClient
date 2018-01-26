@@ -203,7 +203,7 @@ public class JLayerPlayerPausable
 
         try
         {
-            if (this.audioDevice != null)
+            if (this.audioDevice != null && this.bitstream!=null)
             {                
             	
                 Header header = this.bitstream.readFrame();

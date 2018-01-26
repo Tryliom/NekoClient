@@ -64,6 +64,7 @@ public class Client {
 	  public String changelog = "";
 	  public RequestManager rm;
 	  public boolean testComptesNeko = false;
+	  public boolean firstServDisplay = true;
 	  
 	  public void startClient() {
 		  time.start();
@@ -161,7 +162,7 @@ public class Client {
 			  case 10:Display.setTitle("Fire et Enclume nyanyatent ensemble souvent ;3");break;
 			  case 11:Display.setTitle("Github > Gitlab :3");break;
 		  }
-		  name=CLIENT_NAME+"/vanilla";  
+		  name=CLIENT_NAME+"/vanilla";
 	  }
 	  public static final Client getNeko() {
 		  return Neko;
@@ -445,6 +446,12 @@ class ch implements ActionListener {
 				
 				sc.close();
 			} catch (Exception e) {}
+		if (Client.getNeko().firstServDisplay && mc.thePlayer!=null) {
+			// Affichage des serveurs votés
+			new ChatUtils().doCommand(Client.getNeko().prefixCmd+"server");
+			Client.getNeko().firstServDisplay = false;
+		}
+			
 	}
 	
 }

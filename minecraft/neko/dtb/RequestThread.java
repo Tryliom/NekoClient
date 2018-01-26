@@ -248,7 +248,7 @@ public class RequestThread extends Thread {
 			} else {
 				int min = (Integer.parseInt(args.get(0))/2-1)*10;
 				int max = ((Integer.parseInt(args.get(0))/2-1)*10)+10;
-				Utils.addChat("-================-Serveurs - Page "+Integer.parseInt(args.get(0))/2+"-================-");
+				Utils.addChat(">>> Serveurs - Page "+Integer.parseInt(args.get(0))/2+" <<<");
 				Utils.addChat("Liste des serveurs les mieux votés: ");
 				int i=0;
 				for (String s : list) {
