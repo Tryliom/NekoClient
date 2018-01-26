@@ -108,7 +108,7 @@ public class GuiIngameMenu extends GuiScreen
                 this.mc.displayGuiScreen(new GuiShareToLan(this));
                 break;
             case 9:
-                this.mc.displayGuiScreen(new GuiMenuNeko());
+                this.mc.displayGuiScreen(new GuiMenuNeko(this));
                 break;
         }
     }

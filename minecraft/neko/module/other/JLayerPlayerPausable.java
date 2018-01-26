@@ -82,7 +82,9 @@ public class JLayerPlayerPausable
             );
         }
         catch (java.io.IOException ex)
-        {}
+        {
+        	System.out.println("Pourquoi crash ? : "+ex.getMessage());
+        }
 
         this.audioDevice = FactoryRegistry.systemRegistry().createAudioDevice();
         this.decoder = new Decoder();

@@ -11,6 +11,13 @@ import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiScreen;
 
 public class GuiMenuNeko extends GuiScreen {
+	private GuiScreen prevGui;
+	
+	
+	public GuiMenuNeko(GuiScreen prevGui) {
+		this.prevGui = prevGui;
+	}
+	
     /**
      * Adds the buttons (and other controls) to the screen in question.
      */
@@ -53,7 +60,7 @@ public class GuiMenuNeko extends GuiScreen {
                 break;
 
             case 1:
-                this.mc.displayGuiScreen(new GuiIngameMenu());
+                this.mc.displayGuiScreen(this.prevGui);
                 break;
             case 2:
             case 3:

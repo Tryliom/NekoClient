@@ -44,6 +44,7 @@ import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import neko.Client;
 import neko.gui.GuiAltManager;
 import neko.gui.GuiBindManager;
+import neko.gui.GuiMusicManager;
 import neko.gui.GuiWikiMenu;
 import neko.gui.InGameGui;
 import neko.lock.Lock;
@@ -424,6 +425,9 @@ public class Utils {
 			return false;
 		}
 		if (actual instanceof GuiWikiMenu.GuiWikiPart) {
+			return false;
+		}		
+		if (actual instanceof GuiMusicManager) {
 			return false;
 		}
 		return true;
@@ -1156,6 +1160,20 @@ public class Utils {
 			addChat2("§6"+var.prefixCmd+"Namemc <Pseudo>", var.prefixCmd+"Namemc ", "§7Affiche l'historique des pseudos de la personne", false, Chat.Summon);
 			break;															
 			
+		case 8:
+			addChat2("§6"+var.prefixCmd+"ToChat", var.prefixCmd+"tochat ", "§7Affiche une ligne dans le chat formatée comme on veut avec les couleurs qu'on veut.\n"
+					+ "Par ex, pour faire dire une insulte à un joueur fictif ou réél et le faire accuser ;3", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Wear", var.prefixCmd+"wear", "§7Juste en créatif, met l'objet dans notre main sur notre tête", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Rename <Nom>", var.prefixCmd+"rename ", "§7Juste en créatif, renomme l'item en main en ce que vous mettez.\n"
+					+ "§7Vous pouvez mettre des couleurs", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Nbt <Tag> <Value>", var.prefixCmd+"nbt ", "§7Ajoute un nbt à l'item, comprend les values int, double, boolean et string.\n"
+					+ "§7Exemple simple, rendre incassable un item: "+var.prefixCmd+"nbt Unbreakable true", false, Chat.Summon);
+//			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
+//			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
+//			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
+//			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
+			break;
+			
 		case -1:
 			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
@@ -1748,14 +1766,21 @@ public class Utils {
 					EntityLivingBase en = (EntityLivingBase) o;
 					if (isEntityValid(en) && mc.thePlayer.getDistanceToEntity(en) <= 6 && entity!=en) {
 						if (isToggle("FastDura")) {
+							KillAura.giveMoney(en);
 							FastDura.doDura(en);
 						} else if (isToggle("Nausicaah")) {
 							Nausicaah.getNausi().doNausicaah(en);
-						} else
+							KillAura.giveMoney(en);
+						} else {
 							mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(en, net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK));
+							KillAura.giveMoney(en);
+						}
 					}
 				}
 			}
+		try {
+			KillAura.giveMoney((EntityLivingBase)entity);
+		} catch (Exception e) {}
 	}
 	
 	public static Boolean isEntityValid(EntityLivingBase en) {

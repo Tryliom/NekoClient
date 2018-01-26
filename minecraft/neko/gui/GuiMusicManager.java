@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import org.lwjgl.input.Keyboard;
 
 import neko.Client;
+import neko.dtb.RequestThread;
+import neko.manager.SoundManager;
 import neko.module.Category;
 import neko.module.Module;
 import neko.module.modules.hide.Friends;
@@ -35,20 +37,16 @@ public class GuiMusicManager extends GuiScreen {
 	private GuiList list;
 	private Client var = Client.getNeko();
 	private int lastIndex = -1;
-	private boolean waitKey = false;
 
 	public GuiMusicManager(GuiScreen gui) {
 		this.prevGui = gui;
+		SoundManager.getSM().searchMusicList();
 	}
 
 	public void initGui() {
 
 		this.list = new GuiList(this);
 		this.list.registerScrollButtons(7, 8);
-
-		this.buttonList.add(new GuiButton(1, this.width / 2 - 50, this.height - 52, 100, 20, "Lancer"));
-		this.buttonList.add(new GuiButton(2, this.width / 2 - 154, this.height - 52, 100, 20, "Arrêter"));
-		this.buttonList.add(new GuiButton(0, this.width / 2 + 4 + 50, this.height - 52, 100, 20, "Retour"));
 	}
 
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -56,7 +54,15 @@ public class GuiMusicManager extends GuiScreen {
 		this.mc.getTextureManager().bindTexture(this.background);
 		Gui.drawScaledCustomSizeModalRect(0, 0, 0.0F, 0.0F, sr.getScaledWidth(), sr.getScaledHeight(),
 				sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight());
-
+		this.buttonList.clear();
+		if (this.list.selectedSlot!=-1)
+			this.buttonList.add(new GuiButton(1, this.width / 2 - 50, this.height - 52, 100, 20, "Lancer"));
+		this.buttonList.add(new GuiButton(2, this.width / 2 - 154, this.height - 52, 100, 20, "Mode: "+SoundManager.getSM().mm.name()));
+		this.buttonList.add(new GuiButton(0, this.width / 2 + 4 + 50, this.height - 52, 100, 20, "Retour"));
+		if (SoundManager.getSM().canStart)
+			this.buttonList.add(new GuiButton(665, this.width-110, 10, 100, 20, SoundManager.getSM().isActive() ? "â™« Stop â™«" : "â™ª Restart â™ª"));
+		else
+			this.buttonList.add(new GuiButton(665, this.width-110, 10, 100, 20, "Music loading..."));
 		drawDefaultBackground();
 		this.list.drawScreen(mouseX, mouseY, partialTicks);
 		drawCenteredString(var.NekoFont, "Music Manager", this.width / 2, 10, 16777215);
@@ -70,24 +76,21 @@ public class GuiMusicManager extends GuiScreen {
 			mc.displayGuiScreen(this.prevGui);
 			break;
 		case 1:
-			this.waitKey = true;
+			if (this.list.selectedSlot>=0) {
+				SoundManager.getSM().currPath = SoundManager.getSM().getList().get(this.list.selectedSlot).getPath();
+				SoundManager.getSM().restartMusic();
+			}
 			break;
 		case 2:
-			// Supprimer une bind
-			Utils.getModuleWithInt(this.list.selectedSlot).setBind(-1);
+			// MusicMode Ã  changer
+			
 			break;
 		}
 	}
 
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
 		
-		if (this.waitKey && keyCode != Keyboard.KEY_ESCAPE) {
-			Utils.getModuleWithInt(this.list.selectedSlot).setBind(Keyboard.getKeyIndex(Keyboard.getKeyName(keyCode)));
-			this.waitKey = false;
-		} else if (this.waitKey && keyCode == Keyboard.KEY_ESCAPE) {
-			Utils.getModuleWithInt(this.list.selectedSlot).setBind(-1);
-			this.waitKey = false;
-		} else if (keyCode == Keyboard.KEY_ESCAPE)
+		if (keyCode == Keyboard.KEY_ESCAPE)
 			this.mc.displayGuiScreen(this.prevGui);
 		super.keyTyped(typedChar, keyCode);
 	}
@@ -117,13 +120,14 @@ public class GuiMusicManager extends GuiScreen {
 		}
 
 		protected int getSize() {
-			return Utils.getTotModule();
+			return SoundManager.getSM().getList().size();
 		}
 
 		protected void elementClicked(int var1, boolean doubleClick, int var3, int var4) {
 			this.selectedSlot = var1;
 			if (doubleClick) {
-				waitKey = true;
+				SoundManager.getSM().currPath = SoundManager.getSM().getList().get(list.selectedSlot).getPath();
+				SoundManager.getSM().restartMusic();
 			}
 		}
 
@@ -132,9 +136,8 @@ public class GuiMusicManager extends GuiScreen {
 
 		protected void drawSlot(int id, int x, int y, int var4, int var5, int var6) {
 			try {
-				Module m = Utils.getModuleWithInt(id);
-				var.NekoFont.drawString("§c" + m.getName(), x + 31, y + 3, 10526880);
-				var.NekoFont.drawString((waitKey && list.isSelected(id)) ? "§cAppuyez sur une touche" : "§9Touche: " + Utils.getBind(m.getName()), x + 31, y + 15, 10526880);
+				var.NekoFont.drawString("Â§c" + SoundManager.getSM().getList().get(id).getName(), x + 31, y + 3, 10526880);
+				var.NekoFont.drawString(String.valueOf(SoundManager.getSM().getList().get(id).getTime()).replaceFirst("00:", ""), x + 31, y + 15, 10526880);
 			} catch (Exception e) {
 			}
 		}

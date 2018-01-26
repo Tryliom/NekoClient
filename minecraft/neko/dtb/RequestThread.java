@@ -12,9 +12,11 @@ import java.util.Vector;
 
 import neko.Client;
 import neko.manager.ModuleManager;
+import neko.manager.SoundManager;
 import neko.module.modules.render.Render;
 import neko.module.other.Event;
 import neko.module.other.Irc;
+import neko.module.other.Music;
 import neko.module.other.Rank;
 import neko.module.other.enums.Chat;
 import neko.module.other.enums.EventType;
@@ -210,46 +212,6 @@ public class RequestThread extends Thread {
 			} catch (Exception e) {
 				System.out.println("Erreur BDD: DisplayGl");
 			}		
-		}
-		
-		if (why.equalsIgnoreCase("getSound")) {
-			// Liste de class Music
-			Vector<String> list = new Vector<String>();
-			try {				
-				// Récupère la liste des musiques dispo via une token
-				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=m6664fc558b2507c6b63b09c22c75715");
-				Scanner sc = new Scanner(url.openStream(), "UTF-8");		
-				String l;
-				try {
-					while ((l = sc.nextLine()) != null) {
-						String sr[] = l.split("<br>");
-						String var1 = "";
-						String var2 = "";
-						String var3 = "";
-						for (int i = 0;i<sr.length;i++) {
-							if (sr[i].startsWith("name=")) {
-								var1=sr[i].replaceFirst(".....", "");
-							}
-							if (sr[i].startsWith("time=")) {
-								var2=sr[i].replaceFirst(".....", "");
-							}
-							if (sr[i].startsWith("path=")) {
-								var3=sr[i].replaceFirst(".....", "");
-							}
-							if (!var3.isEmpty()) {
-								
-								
-								var3 = "";
-							}
-							
-						}
-					}
-				} catch (Exception e) {}
-				sc.close();
-			} catch (Exception e) {
-				System.out.println("Erreur BDD: Get Sound");
-			}			
-			
 		}
 		
 		if (why.equalsIgnoreCase("getServer")) {

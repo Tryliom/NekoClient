@@ -21,8 +21,8 @@ import org.lwjgl.util.glu.Project;
 import com.google.common.collect.Lists;
 
 import neko.Client;
-import neko.gui.GuiAltManager;
 import neko.gui.GuiConnect;
+import neko.gui.GuiMenuNeko;
 import neko.gui.GuiProxy;
 import neko.manager.OnlyRpgManager;
 import neko.manager.SoundManager;
@@ -261,7 +261,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         this.buttonList.add(new GuiButton(1, Utils.verif==null ? wid : this.width / 2 - 100, p_73969_1_, !tm.isDone() ? "§aCommencer le tuto !" : Utils.verif==null ? Utils.getSolo() : I18n.format("menu.singleplayer", new Object[0])));
         this.buttonList.add(new GuiButton(2, Utils.verif==null ? wid : this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 1, !tm.isDone() ? "§c§kdsjfnkjndsj" : Utils.verif==null ? Utils.getMulti() : I18n.format("menu.multiplayer", new Object[0])));
         if (Utils.verif==null && !OnlyRpgManager.getRpg().isActive()) {
-        	this.buttonList.add(this.field_175372_K = new GuiButton(666, wid, p_73969_1_ + p_73969_2_ * 2, (!tm.isDone() ? "§k" : "")+"Alt Manager"));
+        	this.buttonList.add(this.field_175372_K = new GuiButton(666, wid, p_73969_1_ + p_73969_2_ * 2, (!tm.isDone() ? "§k" : "§9")+"Neko..."));
         } else
         	this.buttonList.add(this.field_175372_K = new GuiButton(14, OnlyRpgManager.getRpg().isActive() ? wid : this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 2, I18n.format("menu.online", new Object[0])));
     }
@@ -295,7 +295,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         }
     	if (button.id == 666 && tm.isDone())
         {
-    		this.mc.displayGuiScreen(new GuiAltManager(this));
+    		this.mc.displayGuiScreen(new GuiMenuNeko(this));
         }
     	
     	if (button.id == 667 && tm.isDone())

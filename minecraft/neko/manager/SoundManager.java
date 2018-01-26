@@ -1,39 +1,23 @@
 package neko.manager;
 
-import java.io.IOException;
 import java.net.URL;
+import java.util.Scanner;
+import java.util.Vector;
 import java.util.function.Consumer;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Sound;
-
-import javazoom.jl.player.AudioDevice;
-import javazoom.jl.player.advanced.AdvancedPlayer;
 import neko.module.other.JLayerPlayerPausable;
-import neko.utils.Utils;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.ISound;
-import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.client.audio.SoundCategory;
-import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.util.ResourceLocation;
-import paulscode.sound.SoundSystem;
+import neko.module.other.Music;
+import neko.module.other.enums.MusicMode;
 
 public class SoundManager {
 	private static SoundManager instance = null;
 	// Liste des musiques
-//	private ArrayList<Music> list = new ArrayList<>();
+	private Vector<Music> list = new Vector<Music>();
+	public static MusicMode mm;
+	public static String currPath = "";
 	private SoundJLayer currAudio;
 	public boolean canStart = false;
 	public boolean stopByButton = false;
-	public int timeUntilRestart = 10;
 	public Consumer<String> c = (String s) -> {
 		try {			
 			currAudio = new SoundJLayer(s);					
@@ -53,7 +37,59 @@ public class SoundManager {
 	}
 	
 	public SoundManager() {
-		this.startNewMusic();
+		this.searchMusicList();
+		if (this.list.size()!=0) {
+			this.currPath = this.list.get(0).getPath();
+			this.startNewMusic();
+		}
+		this.mm = MusicMode.Loop;
+	}
+	
+	public void searchMusicList() {
+		Vector<Music> list = new Vector<Music>();
+		try {				
+			// Récupère la liste des musiques dispo via une token
+			URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=m6664fc558b2507c6b63b09c22c75715");
+			Scanner sc = new Scanner(url.openStream(), "UTF-8");		
+			String l;
+			String var1 = "";
+			String var2 = "";
+			String var3 = "";
+			try {
+				while ((l = sc.nextLine()) != null) {
+					String sr[] = l.split("<br>");
+					for (int i = 0;i<sr.length;i++) {
+						if (sr[i].startsWith("name=")) {
+							var1=sr[i].replaceFirst(".....", "");
+						}
+						if (sr[i].startsWith("time=")) {
+							var2=sr[i].replaceFirst(".....", "");
+						}
+						if (sr[i].startsWith("path=")) {
+							var3=sr[i].replaceFirst(".....", "");
+						}
+						if (!var3.isEmpty()) {
+							list.add(new Music(var1, var2, var3));
+							var1 = "";
+							var2 = "";
+							var3 = "";
+						}
+						
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			sc.close();
+		} catch (Exception e) {
+			System.out.println("Erreur BDD: Get Sound");
+		}			
+		System.out.println(list.size());
+		this.list = list;
+	}
+	
+	public Vector<Music> getList() {
+		return this.list;
 	}
 	
 	public void stopMusic() {
@@ -76,8 +112,15 @@ public class SoundManager {
 			this.startNewMusic();
 	}	
 	
-	private void startNewMusic() {
-		c.accept("https://nekohc.fr/song/test.mp3");
+	public void startNewMusic() {
+		if (this.currPath.isEmpty()) {
+			this.searchMusicList();
+			if (this.list.size()!=0) {
+				this.currPath = this.list.get(0).getPath();
+				this.startNewMusic();
+			}
+		}
+		c.accept(this.currPath);
 	}
 
 }
