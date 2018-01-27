@@ -1208,7 +1208,7 @@ public class Utils {
 	
 	public static boolean haveInternet() {
 		try {
-			new URL("http://google.ch").openConnection();
+			new URL("http://www.perdu.com").openConnection();
 		} catch (Exception e) {
 			return false;
 		}
@@ -4692,10 +4692,10 @@ public class Utils {
 		case 823:nyah="Une petite fessée pour twa ? :3";break;
 		case 824:nyah=getRandPlayer()+" suce pour pas cher ;3";break;
 		case 825:nyah="><";break;
-		case 826:nyah="";break;
-		case 827:nyah="";break;
-		case 828:nyah="";break;
-		case 829:nyah="";break;
+		case 826:nyah="Qu'as tu fais jeune Padawan2Neko :o C'est tout blanc partout :c";break;
+		case 827:nyah="SorryNoName code, mais ne dev pas :D";break;
+		case 828:nyah="SorryNoName aime CTRL + c & CTRL + v <3";break;
+		case 829:nyah="Kutmisu fouette Tryliom pour qu'il dev O_o";break;
 		case 830:nyah="";break;
 		case 831:nyah="";break;
 		case 832:nyah="";break;
