@@ -53,7 +53,8 @@ public class SoundManager {
 			this.currPath = this.list.get(0).getPath();
 			this.startNewMusic();
 		}
-		this.mm = MusicMode.Loop;
+		if (this.mm==null)
+			this.mm = MusicMode.Loop;
 	}
 	
 	public void searchMusicList() {

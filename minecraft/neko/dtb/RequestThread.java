@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import neko.Client;
 import neko.manager.ModuleManager;
@@ -65,9 +67,9 @@ public class RequestThread extends Thread {
 				try {
 					String s = "";
 					if (Irc.getInstance().isOn())
-						s = "\""+var.rang.getName()+"\",\""+var.rang.getColor()+"\",\""+irc.getNamePlayer()+"\",\""+(mc.isSingleplayer() ? "Localhost" : mc.getCurrentServerData().serverIP.toLowerCase())+"\",\""+var.niveau+"\",\""+var.xp+"\",\""+var.xpMax+"\",\""+Utils.kills+"\",\""+(Utils.timeInGameHour==0 ? Utils.timeInGameMin==0 ? ""+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameHour+"h "+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec")+"\",\""+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE).format(lastDate)+"\",\""+var.CLIENT_VERSION+"\",\""+mc.session.getUsername()+"\",\""+mc.session.getUsername()+"\",\""+(var.onlyrpg.isActive() ? "§aLegit" : "§cCheat")+"\"";
+						s = "\""+var.rang.getName()+"\",\""+var.rang.getColor()+"\",\""+irc.getNamePlayer()+"\",\""+(mc.isSingleplayer() ? "Solitaire" : mc.getCurrentServerData().serverIP.toLowerCase())+"\",\""+var.niveau+"\",\""+var.xp+"\",\""+var.xpMax+"\",\""+Utils.kills+"\",\""+(Utils.timeInGameHour==0 ? Utils.timeInGameMin==0 ? ""+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameHour+"h "+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec")+"\",\""+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE).format(lastDate)+"\",\""+var.CLIENT_VERSION+"\",\""+mc.session.getUsername()+"\",\""+mc.session.getUsername()+"\",\""+(var.onlyrpg.isActive() ? "§aLegit" : "§cCheat")+"\"";
 					else
-						s = "\""+var.rang.getName()+"\",\""+var.rang.getColor()+"\",\""+irc.getNamePlayer()+"\",\"§cCaché\",\""+var.niveau+"\",\""+var.xp+"\",\""+var.xpMax+"\",\""+Utils.kills+"\",\""+(Utils.timeInGameHour==0 ? Utils.timeInGameMin==0 ? ""+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameHour+"h "+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec")+"\",\""+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE).format(lastDate)+"\",\""+var.CLIENT_VERSION+"\",\""+mc.session.getUsername()+"\",\""+mc.session.getUsername()+"\",\"§cIrc désactivé\"";
+						s = "\""+var.rang.getName()+"\",\""+var.rang.getColor()+"\",\""+irc.getNamePlayer()+"\",\""+(mc.isSingleplayer() ? "Solitaire" : mc.getCurrentServerData().serverIP.toLowerCase())+"\",\""+var.niveau+"\",\""+var.xp+"\",\""+var.xpMax+"\",\""+Utils.kills+"\",\""+(Utils.timeInGameHour==0 ? Utils.timeInGameMin==0 ? ""+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameHour+"h "+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec")+"\",\""+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE).format(lastDate)+"\",\""+var.CLIENT_VERSION+"\",\""+mc.session.getUsername()+"\",\""+mc.session.getUsername()+"\",\"§cIrc désactivé\"";
 					URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=9f2239355a3a86156e6e189ae44687af&args="+URLEncoder.encode(s, "UTF-8")+"&playerInc&last_id");					
 					Scanner sc = new Scanner(url.openStream());		
 					String l;
@@ -95,7 +97,7 @@ public class RequestThread extends Thread {
 							if (l.equalsIgnoreCase("false")) {
 								int id=0;
 								try {
-									s = "\""+var.rang.getName()+"\",\""+var.rang.getColor()+"\",\""+irc.getNamePlayer()+"\",\""+(mc.isSingleplayer() ? "Localhost" : mc.getCurrentServerData().serverIP.toLowerCase())+"\",\""+var.niveau+"\",\""+var.xp+"\",\""+var.xpMax+"\",\""+Utils.kills+"\",\""+(Utils.timeInGameHour==0 ? Utils.timeInGameMin==0 ? ""+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameHour+"h "+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec")+"\",\""+var.CLIENT_VERSION+"\",\""+mc.session.getUsername()+"\",\""+(var.onlyrpg.isActive() ? "§aLegit" : "§cCheat")+"\"";					
+									s = "\""+var.rang.getName()+"\",\""+var.rang.getColor()+"\",\""+irc.getNamePlayer()+"\",\""+(mc.isSingleplayer() ? "Solitaire" : mc.getCurrentServerData().serverIP.toLowerCase())+"\",\""+var.niveau+"\",\""+var.xp+"\",\""+var.xpMax+"\",\""+Utils.kills+"\",\""+(Utils.timeInGameHour==0 ? Utils.timeInGameMin==0 ? ""+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameHour+"h "+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec")+"\",\""+var.CLIENT_VERSION+"\",\""+mc.session.getUsername()+"\",\""+(var.onlyrpg.isActive() ? "§aLegit" : "§cCheat")+"\"";					
 									url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=3239bd0714e36f08fb95406bc18639e5&args="+URLEncoder.encode(s, "UTF-8")+"&playerInc&last_id");
 									sc = new Scanner(url.openStream());
 									try {
@@ -122,9 +124,9 @@ public class RequestThread extends Thread {
 				try {
 					String s = "";
 					if (Irc.getInstance().isOn())
-						s = "\""+var.rang.getName()+"\",\""+var.rang.getColor()+"\",\""+irc.getNamePlayer()+"\",\""+(mc.isSingleplayer() ? "Localhost" : mc.getCurrentServerData().serverIP.toLowerCase())+"\",\""+var.niveau+"\",\""+var.xp+"\",\""+var.xpMax+"\",\""+Utils.kills+"\",\""+(Utils.timeInGameHour==0 ? Utils.timeInGameMin==0 ? ""+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameHour+"h "+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec")+"\",\""+var.CLIENT_VERSION+"\",\""+mc.session.getUsername()+"\",\""+(var.onlyrpg.isActive() ? "§aLegit" : "§cCheat")+"\",\""+irc.getIdPlayer()+"\"";
+						s = "\""+var.rang.getName()+"\",\""+var.rang.getColor()+"\",\""+irc.getNamePlayer()+"\",\""+(mc.isSingleplayer() ? "Solitaire" : mc.getCurrentServerData().serverIP.toLowerCase())+"\",\""+var.niveau+"\",\""+var.xp+"\",\""+var.xpMax+"\",\""+Utils.kills+"\",\""+(Utils.timeInGameHour==0 ? Utils.timeInGameMin==0 ? ""+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameHour+"h "+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec")+"\",\""+var.CLIENT_VERSION+"\",\""+mc.session.getUsername()+"\",\""+(var.onlyrpg.isActive() ? "§aLegit" : "§cCheat")+"\",\""+irc.getIdPlayer()+"\"";
 					else
-						s = "\""+var.rang.getName()+"\",\""+var.rang.getColor()+"\",\""+irc.getNamePlayer()+"\",\"§cCaché\",\""+var.niveau+"\",\""+var.xp+"\",\""+var.xpMax+"\",\""+Utils.kills+"\",\""+(Utils.timeInGameHour==0 ? Utils.timeInGameMin==0 ? ""+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameHour+"h "+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec")+"\",\""+var.CLIENT_VERSION+"\",\""+mc.session.getUsername()+"\",\"§cIrc désactivé\",\""+irc.getIdPlayer()+"\"";
+						s = "\""+var.rang.getName()+"\",\""+var.rang.getColor()+"\",\""+irc.getNamePlayer()+"\",\""+(mc.isSingleplayer() ? "Solitaire" : mc.getCurrentServerData().serverIP.toLowerCase())+"\",\""+var.niveau+"\",\""+var.xp+"\",\""+var.xpMax+"\",\""+Utils.kills+"\",\""+(Utils.timeInGameHour==0 ? Utils.timeInGameMin==0 ? ""+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameHour+"h "+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec")+"\",\""+var.CLIENT_VERSION+"\",\""+mc.session.getUsername()+"\",\"§cIrc désactivé\",\""+irc.getIdPlayer()+"\"";
 					URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=bbfee1f4f27b1be7fd757963452fb84e&args="+URLEncoder.encode(s, "UTF-8")+"&playerInc");
 					Scanner sc = new Scanner(url.openStream());		
 					sc.close();
@@ -216,7 +218,7 @@ public class RequestThread extends Thread {
 		
 		if (why.equalsIgnoreCase("getServer")) {
 			Vector<String> list = new Vector<String>();
-			try {				
+			try {
 				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=f83b3a742a9a97bedb1a3db847248cc2");
 				Scanner sc = new Scanner(url.openStream(), "UTF-8");		
 				String l;
@@ -338,7 +340,7 @@ public class RequestThread extends Thread {
 								for (String r : list)
 									if (r.equalsIgnoreCase(s) || r.contains("§"))
 										cont=false;
-								if (cont && !Utils.isSameServerIP(list, s) && !s.equalsIgnoreCase("127.0.0.1") && !s.contains("0.0.0.0") && !s.equalsIgnoreCase("localhost") && !s.equalsIgnoreCase("null")) {
+								if (cont && !Utils.isSameServerIP(list, s) && !s.equalsIgnoreCase("127.0.0.1") && !s.contains("0.0.0.0") && !s.equalsIgnoreCase("localhost") && !s.equalsIgnoreCase("null") && !s.contains("§") && !s.equalsIgnoreCase("Solitaire")) {
 									list.add(s.toLowerCase());
 								}
 							}
@@ -685,6 +687,13 @@ public class RequestThread extends Thread {
 		}
 		
 		if (why.equalsIgnoreCase("nameIsFree")) {
+			String name = args.get(0);
+			Pattern p = Pattern.compile("\\W");
+			Matcher m = p.matcher(name);
+			if (m.find() || name.length()>=21 || name.length()<1) {
+				Utils.addError("Veuillez choisir un pseudo entre 1 et 20 caractères et des caractères acceptables !");
+				return;
+			}				
 			try {
 				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=0140b8aafce358ccfbee86bd42c9e14f&args=\""+args.get(0)+"\"");
 				Scanner sc = new Scanner(url.openStream());	
@@ -709,24 +718,30 @@ public class RequestThread extends Thread {
 		if (why.equalsIgnoreCase("displayEvent")) {
 			Irc irc = Irc.getInstance();
 			boolean first = false;
+			int lastEventID = 0;
+			try {
+				String s = "\""+irc.getNamePlayer()+"\",\""+mc.session.getUsername()+"\",\""+(mc.isSingleplayer() ? "Localhost" : mc.getCurrentServerData().serverIP.toLowerCase())+"\",\""+var.CLIENT_VERSION+"\"";
+				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=ab285aefaa5303fa1af43d5f5cdf0d2b&args="+URLEncoder.encode(s, "UTF-8"));
+				Scanner sc = new Scanner(url.openStream());
+				String l;					
+				try {
+					while ((l = sc.nextLine()) != null) {
+						if (l.startsWith("MAX(event_id)=")) {
+							lastEventID=Integer.parseInt(l.replaceFirst("..............", "").replace("<br>", ""));
+						}						
+					}
+				} catch (Exception ex) {}
+				sc.close();
+			} catch (Exception ex) {
+				System.out.println("Erreur BDD: setLastEventId");
+			}
 			if (Event.lastEventId<=0) {
 				first = true;
-				try {
-					String s = "\""+irc.getNamePlayer()+"\",\""+mc.session.getUsername()+"\",\""+(mc.isSingleplayer() ? "Localhost" : mc.getCurrentServerData().serverIP.toLowerCase())+"\",\""+var.CLIENT_VERSION+"\"";
-					URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=ab285aefaa5303fa1af43d5f5cdf0d2b&args="+URLEncoder.encode(s, "UTF-8"));
-					Scanner sc = new Scanner(url.openStream());
-					String l;					
-					try {
-						while ((l = sc.nextLine()) != null) {
-							if (l.startsWith("MAX(event_id)=")) {
-								Event.lastEventId=Integer.parseInt(l.replaceFirst("..............", "").replace("<br>", "").replaceAll("\t", ""));
-							}						
-						}
-					} catch (Exception ex) {}
-					sc.close();
-				} catch (Exception ex) {
-					System.out.println("Erreur BDD: setLastEventId");
-				}
+				Event.lastEventId=lastEventID;
+				return;
+			}
+			if (Event.lastEventId==lastEventID) {
+				return;
 			}
 			ArrayList<Event> list = new ArrayList<>();
 			try {								

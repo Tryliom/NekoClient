@@ -47,6 +47,7 @@ public class GuiMusicManager extends GuiScreen {
 
 		this.list = new GuiList(this);
 		this.list.registerScrollButtons(7, 8);
+		this.list.selectedSlot = Utils.getIdMusicByPath(SoundManager.getSM().currPath);
 	}
 
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -57,7 +58,7 @@ public class GuiMusicManager extends GuiScreen {
 		this.buttonList.clear();
 		if (SoundManager.getSM().canStart) {
 			if (this.list.selectedSlot!=-1)
-				this.buttonList.add(new GuiButton(1, this.width / 2 - 50, this.height - 52, 100, 20, "Lancer"));
+				this.buttonList.add(new GuiButton(1, this.width / 2 - 50, this.height - 52, 100, 20, "§aJouer"));
 			this.buttonList.add(new GuiButton(2, this.width / 2 - 154, this.height - 52, 100, 20, "Mode: §a"+SoundManager.getSM().mm.name()));
 		}
 		this.buttonList.add(new GuiButton(0, this.width / 2 + 4 + 50, this.height - 52, 100, 20, "Retour"));

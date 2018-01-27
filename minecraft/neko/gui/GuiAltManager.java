@@ -60,9 +60,6 @@ public class GuiAltManager extends GuiScreen {
 	    this.buttonList.add(new GuiButton(5, this.width / 2 - 154, this.height - 28, 100, 20, "Import")); 
 	    this.buttonList.add(new GuiButton(0, this.width / 2 + 4 + 50, this.height - 28, 100, 20, "Retour"));
 	    this.buttonList.add(new GuiButton(6, this.width - 150, 10, 100, 20, (check ? "§a" : "§c")+"Checker")); 
-	    this.buttonList.add(new GuiButton(7, this.width / 2 - 258, this.height - 28, 100, 20, "Suivant")); 
-	    this.buttonList.add(new GuiButton(8, this.width / 2 - 258, this.height - 52, 100, 20, "Précédent"));
-	    // Bouton sur les côtés [Précédent] et [Suivant]
 	  }
 	  
 	  public void drawScreen(int mouseX, int mouseY, float partialTicks)
@@ -77,10 +74,10 @@ public class GuiAltManager extends GuiScreen {
 	    drawCenteredString(var.NekoFont, "Alt Manager", this.width / 2, 10, 16777215);
 	    drawCenteredString(var.NekoFont, "§a" + this.displaytext, this.width / 2, 25, 16777215);
 	    drawString(var.NekoFont, "§7Pseudo: " + this.mc.session.getUsername(), 10, 10, 16777215);        
-        String var10 = "§b-[§eNeko v"+var.CLIENT_VERSION+"§b]-";
+        String var10 = var.strNeko;
 
         this.drawString(var.NekoFont, var10, 2, this.height - 10, -1);
-        String var11="§b-[§eBy Tryliom§b]-";
+        String var11=var.strCreator;
         this.drawString(var.NekoFont, var11, this.width - var.NekoFont.getStringWidth(var11) - 2, this.height - 10, -1);
         ((GuiButton) this.buttonList.get(6)).displayString = (check ? "§a" : "§c")+"Checker";
 	    super.drawScreen(mouseX, mouseY, partialTicks);
@@ -136,7 +133,6 @@ public class GuiAltManager extends GuiScreen {
 	    	this.mc.displayGuiScreen(new GuiMcleaks(this));
 		      break;
 	    case 5: 
-	    	//TODO: Ici didi
 	    	if (!mc.isRunningOnMac)
 		    	try {
 			    	ProcessBuilder pb = new ProcessBuilder("C:\\Program Files (x86)\\Notepad++\\notepad++.exe", Utils.linkSave+"account.neko");
@@ -152,22 +148,6 @@ public class GuiAltManager extends GuiScreen {
 	    case 6:
 	    	check = !check;
 	    	load();
-	    	break;
-	    case 7: // Suivant
-	    	if (((this.list.getSelectedSlot() != -1 ? 1 : 0) & (this.list.getSelectedSlot() < this.list.getSize() ? 1 : 0)) != 0) {
-	    		if (this.list.getSelectedSlot()+1 >= this.list.getSize())
-	    			this.list.selectedSlot=0;
-	    		else
-	    			this.list.selectedSlot++;
-	    	}
-	    	break;
-	    case 8: // Précedent
-	    	if (((this.list.getSelectedSlot() != -1 ? 1 : 0) & (this.list.getSelectedSlot() < this.list.getSize() ? 1 : 0)) != 0) {
-	    		if (this.list.getSelectedSlot()-1 < 0)
-	    			this.list.selectedSlot=0;
-	    		else
-	    			this.list.selectedSlot--;
-	    	}
 	    	break;
 	    }
 	  }

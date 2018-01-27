@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Vector;
 
 import javax.swing.Timer;
 
@@ -23,6 +24,7 @@ import neko.module.other.Conditions;
 import neko.module.other.Irc;
 import neko.module.other.Rank;
 import neko.module.other.TempBon;
+import neko.module.other.enums.Chat;
 import neko.utils.ChatUtils;
 import neko.utils.Utils;
 import net.mcleaks.MCLeaks;
@@ -65,6 +67,8 @@ public class Client {
 	  public RequestManager rm;
 	  public boolean testComptesNeko = false;
 	  public boolean firstServDisplay = true;
+	  public String strNeko = "§c>>> §9Neko Nightmare v"+CLIENT_VERSION+" §c<<<";
+	  public String strCreator = "§9Créé par Tryliom";
 	  
 	  public void startClient() {
 		  time.start();
@@ -448,7 +452,52 @@ class ch implements ActionListener {
 			} catch (Exception e) {}
 		if (Client.getNeko().firstServDisplay && mc.thePlayer!=null) {
 			// Affichage des serveurs votés
-			new ChatUtils().doCommand(Client.getNeko().prefixCmd+"server");
+			new Thread(() -> {
+				Vector<String> list = new Vector<String>();
+				try {
+					URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=f83b3a742a9a97bedb1a3db847248cc2");
+					Scanner sc = new Scanner(url.openStream(), "UTF-8");		
+					String l;
+					
+					try {
+						while ((l = sc.nextLine()) != null) {
+							String sr[] = l.split("<br>");
+							String lc = "";
+							for (int i = 0;i<sr.length;i++) {
+								if (sr[i].startsWith("ip=")) {
+									lc=sr[i].replaceFirst("...", "");
+								}
+								if (sr[i].startsWith("vote=")) {
+									lc+=" "+sr[i].replaceFirst(".....", "");
+								}
+								if (lc.contains(" ")) {
+									list.add(lc);
+								}
+							}
+						}
+					} catch (Exception e) {}
+					sc.close();
+				} catch (Exception e) {
+					System.out.println("Erreur BDD: Get BestServ");
+				}			
+				// Lister les serveurs
+				if (list.isEmpty() || (list.size()-1)<(2/2-1)*10) {
+					Utils.addChat("§cPas de serveurs disponibles...");
+				} else {
+					int min = (2/2-1)*10;
+					int max = ((2/2-1)*10)+10;
+					Utils.addChat(">>> Serveurs - Page "+2/2+" <<<");
+					Utils.addChat("Liste des serveurs les mieux votés: ");
+					int i=0;
+					for (String s : list) {
+						i++;
+						if (i>min && i<max) {
+							String l[] = s.split(" ");
+							Utils.addChat2("§e"+l[0]+" - "+l[1]+" vote"+(Integer.parseInt(l[1])>1 ? "s" : ""), Client.getNeko().prefixCmd+"co "+l[0], "Ce serveur a obtenu "+l[1]+" votes !", false, Chat.Summon);
+						}
+					}
+				}
+			}).start();
 			Client.getNeko().firstServDisplay = false;
 		}
 			

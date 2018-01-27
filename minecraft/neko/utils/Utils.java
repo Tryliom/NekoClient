@@ -25,6 +25,8 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -290,7 +292,7 @@ public class Utils {
 	 * @param reason	Raison de l'erreur
 	 */
 	public static void addError(String reason) {
-		mc.ingameGUI.getChatGUI().printChatMessage(new ChatComponentText("§cErreur ").appendSibling(getHoverText("§8[§9?§8]", "§c"+reason)));
+		mc.ingameGUI.getChatGUI().printChatMessage(new ChatComponentText(getNeko()+"§cErreur ").appendSibling(getHoverText("§8[§9?§8]", "§c"+reason)));
 	}
 	
 	/**
@@ -2200,6 +2202,12 @@ public class Utils {
             		irc.setPrefix("$");
             		irc.setIdPlayer(0);
             	}
+            	String name = irc.getNamePlayer();
+    			Pattern p = Pattern.compile("\\W");
+    			Matcher m = p.matcher(name);
+    			if (m.find() || name.length()>=21 || name.length()<1) {
+    				irc.setNamePlayer("PseudoIncorrect"+System.currentTimeMillis());
+    			}	
                 
             
 		} catch (IOException | NumberFormatException e) {}		
@@ -3079,8 +3087,10 @@ public class Utils {
 	                		m.setClassic(Boolean.parseBoolean(ligne));
 	                	if (i==167)
 	                		Search.getSearch().setSearchBlock(Block.getBlockById(Integer.parseInt(ligne)));
-	                	if (i==168)
-	                		SoundManager.mm = MusicMode.valueOf(ligne);
+	                	if (i==168) {
+	                		SoundManager.getSM().mm = MusicMode.valueOf(ligne);
+	                		System.out.println(ligne + " "+ MusicMode.valueOf(ligne));
+	                	}
                 	} catch (Exception e) {}                	
                 	i++;
                 }
