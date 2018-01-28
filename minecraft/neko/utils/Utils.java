@@ -1855,7 +1855,7 @@ public class Utils {
 	public static void checkXp(int xp) {
 		if (var.niveau>10000 || var.niveau<0) {
 			var.niveau=10000;
-			var.xp=0;
+			var.xp=1;
 			var.xpMax=800300;
 			return;
 		}
@@ -1893,7 +1893,7 @@ public class Utils {
 		}	
 	
 	
-	public static void loadRank(String...fi) {				
+	public static void loadRank(String...fi) {
 		File dir = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"rank.neko");
 		if (dir.exists()) {
 		try { 
@@ -3826,21 +3826,21 @@ public class Utils {
 		return s;
 	}
 	
-	public static String getMulti() {
+	public static String getUpLvlStr() {
 		int randy = (int) Math.round(Math.random()*10);
-		String s = "Multi - ";
+		String s = "";
 		switch (randy) {
-			case 0:s+="§eVoler des elos ;3";break;
-			case 1:s+="Rekt des noobs";break;
-			case 2:s+="Faire voler les joueurs";break;
-			case 3:s+="§cYou are banned now !";break;
-			case 4:s+="Joue avec des Neko :3";break;
-			case 5:s+="§cNe pas appuyer";break;
-			case 6:s+="Pas taper D:";break;
+			case 0:s+="§eTu es supérieur !";break;
+			case 1:s+="§dPrêt à mieux faire crier ;3 ?";break;
+			case 2:s+="§dOwi fais moi monter plus haut :3";break;
+			case 3:s+="§cENCORE PLUS DE LEVEL";break;
+			case 4:s+="§dJe sens que tu es bien fort sous ton...";break;
+			case 5:s+="§dLa puissance de ton niveau m'envahit :3";break;
+			case 6:s+="§cWow, t'as fais comment ?";break;
 			case 7:s+="§bGO §fGO §cGO §d!";break;
-			case 8:s+="Nyanyater avec des neko :3";break;
-			case 9:s+="Please rekt me :3";break;
-			case 10:s+="Ez";break;
+			case 8:s+="§aC'est bien mon petit :3";break;
+			case 9:s+="§dVas-y plus fort ! Aller !";break;
+			case 10:s+="§cEz rekt all";break;
 		}
 		return s;
 	}

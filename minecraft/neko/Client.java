@@ -38,7 +38,7 @@ public class Client {
 	  public final String CLIENT_AUTHOR = "Tryliom";
 	  public ModuleManager moduleManager;
 	  public GuiManager gui;
-	  public final String CLIENT_VERSION = "2.1";
+	  public final String CLIENT_VERSION = "2.1.1";
 	  private static final Client Neko = new Client();
 	  public String mode="Player";
 	  public Rank rang;
