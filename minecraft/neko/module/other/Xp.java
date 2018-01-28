@@ -96,7 +96,8 @@ class checkXp implements ActionListener {
 							break;
 							
 						default:
-							
+							mc.ingameGUI.func_175178_a(null, Utils.getUpLvlStr(), 10, 10, 10);
+							break;
 					
 					}
 					if (var.niveau == 100) {
