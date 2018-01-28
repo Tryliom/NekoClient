@@ -50,7 +50,7 @@ class checkXp implements ActionListener {
 				Xp.xp--;
 			}			
 			
-			if (var.xp>=var.xpMax) {
+			if (var.xp>=var.xpMax) { 
 				Utils.doPower(10);
 				var.niveau+=1;
 				if (Math.random()<0.9) {
@@ -68,27 +68,27 @@ class checkXp implements ActionListener {
 					switch (var.niveau) {
 						
 						case 2:
-							mc.ingameGUI.func_175178_a(null, "§5Waw, tu m'impressionnes ...", 10, 10, 10);
+							mc.ingameGUI.func_175178_a(null, "§aça commence bien °w°", 10, 10, 10);
 							break;
 							
 						case 10:
-							mc.ingameGUI.func_175178_a(null, "§5Waw, tu m'impressionnes ...", 10, 10, 10);
+							mc.ingameGUI.func_175178_a(null, "§5Déja 10 ? Tu forces ... O_o", 10, 10, 10);
 							break;
 							
 						case 25:
-							mc.ingameGUI.func_175178_a(null, "§5Waw, tu m'impressionnes ...", 10, 10, 10);
+							mc.ingameGUI.func_175178_a(null, "§6Que ça ? J'fais mieux c:", 10, 10, 10);
 							break;
 							
 						case 50:
-							mc.ingameGUI.func_175178_a(null, "§5Waw, tu m'impressionnes ...", 10, 10, 10);
+							mc.ingameGUI.func_175178_a(null, "§dOh oui, j'en veux encore ;3", 10, 10, 10);
 							break;
 							
 						case 100:
-							mc.ingameGUI.func_175178_a(null, "§5Waw, tu m'impressionnes ...", 10, 10, 10);
+							mc.ingameGUI.func_175178_a(null, "§6WHAOU, Tu me fais mouiller <3", 10, 10, 10);
 							break;
 							
 						case 250:
-							mc.ingameGUI.func_175178_a(null, "§5Waw, tu m'impressionnes ...", 10, 10, 10);
+							mc.ingameGUI.func_175178_a(null, "§cPas de mot, tu gères :x", 10, 10, 10);
 							break;
 
 						case 500:
@@ -99,12 +99,6 @@ class checkXp implements ActionListener {
 							mc.ingameGUI.func_175178_a(null, Utils.getUpLvlStr(), 10, 10, 10);
 							break;
 					
-					}
-					if (var.niveau == 100) {
-	                    
-	                    
-					}else {
-						
 					}
 					
 					var.xp-=var.xpMax;
