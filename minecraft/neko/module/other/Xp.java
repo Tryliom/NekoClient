@@ -64,7 +64,8 @@ class checkXp implements ActionListener {
 				}
 				if (Utils.verif==null) {
 					Utils.addChat("§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=");
-					Utils.addChat("§dNiveau "+var.niveau+" atteint !");			
+					Utils.addChat("§dNiveau "+var.niveau+" atteint !");						
+					
 					var.xp-=var.xpMax;
 					var.xpMax+=Utils.getRandInt(var.niveau*80);
 					for (Lock lock : ModuleManager.Lock) {

@@ -2660,6 +2660,20 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"test")) {
+				if (args.length==1) {
+					Utils.addError("blabla");
+				} else {
+					mc.ingameGUI.func_175178_a("§atitle", null, 10, 10, 10);
+					mc.ingameGUI.func_175178_a(null, "subtitle", 10, 10, 10);
+				}
+				
+				Utils.checkXp(xp);
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
+			// 
+			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"push") || args[0].equalsIgnoreCase(var.prefixCmd+"pushup")) {
 				if (args.length==1) {
 					Utils.toggleModule("PushUp");
