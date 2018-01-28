@@ -205,7 +205,7 @@ import net.minecraft.world.storage.WorldInfo;
 public class Minecraft implements IThreadListener, IPlayerUsage
 {
     private static final Logger logger = LogManager.getLogger();
-    private static final ResourceLocation locationMojangPng = new ResourceLocation("textures/gui/title/neko.png");
+    private static final ResourceLocation locationMojangPng = new ResourceLocation("textures/gui/title/neko_laoder.png");
     public static final boolean isRunningOnMac = Util.getOSType() == Util.EnumOS.OSX;
 
     /** A 10MiB preallocation to ensure the heap is reasonably sized. */
@@ -926,7 +926,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             this.mojangLogo = p_180510_1_.getDynamicTextureLocation("logo", new DynamicTexture(ImageIO.read(var5)));
             p_180510_1_.bindTexture(this.mojangLogo);
         }
-        catch (IOException var12)
+        catch (Exception var12)
         {
             logger.error("Unable to load logo: " + locationMojangPng, var12);
         }

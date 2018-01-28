@@ -48,7 +48,7 @@ public class Main
         int height = (int)dimension.getHeight();
         int width  = (int)dimension.getWidth();
         ArgumentAcceptingOptionSpec var15 = var1.accepts("width").withRequiredArg().ofType(Integer.class).defaultsTo(Integer.valueOf(1400>width ? 854 : 1400), new Integer[0]);
-        ArgumentAcceptingOptionSpec var16 = var1.accepts("height").withRequiredArg().ofType(Integer.class).defaultsTo(Integer.valueOf(900>height ? 484 : 900), new Integer[0]);
+        ArgumentAcceptingOptionSpec var16 = var1.accepts("height").withRequiredArg().ofType(Integer.class).defaultsTo(Integer.valueOf(900>height ? 480 : 900), new Integer[0]);
         ArgumentAcceptingOptionSpec var17 = var1.accepts("userProperties").withRequiredArg().required();
         ArgumentAcceptingOptionSpec var18 = var1.accepts("assetIndex").withRequiredArg();
         ArgumentAcceptingOptionSpec var19 = var1.accepts("userType").withRequiredArg().defaultsTo("legacy", new String[0]);
