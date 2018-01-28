@@ -5,6 +5,8 @@ import neko.module.Module;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemAxe;
+import net.minecraft.item.ItemPickaxe;
+import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
@@ -111,8 +113,14 @@ public class AutoSword extends Module {
 				} else if (material.equalsIgnoreCase("stone")) {
 					totalDamage+=5;
 				} else if (material.equalsIgnoreCase("wood")) {
-					totalDamage+=4;
+					totalDamage+=4;				
 				}
+				if (it instanceof ItemAxe)
+					totalDamage-=1;
+				if (it instanceof ItemPickaxe)
+					totalDamage-=2;
+				if (it instanceof ItemSpade)
+					totalDamage-=3;
 				totalDamage+=lvl*1.25;
 				if (bestDamage<totalDamage || (bestDamage==totalDamage && count>totalEnchant)) {
 					bestDamage=totalDamage;
