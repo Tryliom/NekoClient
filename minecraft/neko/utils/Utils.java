@@ -3809,23 +3809,6 @@ public class Utils {
 		return true;
 	}
 	
-	public static String getSolo() {
-		int randy = (int) Math.round(Math.random()*8);
-		String s = "Solo - ";
-		switch (randy) {
-			case 0:s+="Seul au monde D:";break;
-			case 1:s+="Nooon";break;
-			case 2:s+="§aEspionner les creepers";break;
-			case 3:s+="Jouer à chat avec les mobis :3";break;
-			case 4:s+="Fuyez pauvres fou !";break;
-			case 5:s+="Pas de ban ici !";break;
-			case 6:s+="§cApocalypse now !";break;
-			case 7:s+="§dNeko à câliner :3";break;
-			case 8:s+="<3 Solitaire <3";break;
-		}
-		return s;
-	}
-	
 	public static String getUpLvlStr() {
 		int randy = (int) Math.round(Math.random()*10);
 		String s = "";
