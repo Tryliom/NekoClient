@@ -743,6 +743,7 @@ public class RequestThread extends Thread {
 			if (Event.lastEventId==lastEventID) {
 				return;
 			}
+			System.out.println(lastEventID + " "+Event.lastEventId);
 			ArrayList<Event> list = new ArrayList<>();
 			try {								
 				String st = "\""+irc.getNamePlayer()+"\",\""+mc.session.getUsername()+"\",\""+(mc.isSingleplayer() ? "Localhost" : mc.getCurrentServerData().serverIP.toLowerCase())+"\",\""+var.CLIENT_VERSION+"\"";
@@ -764,7 +765,7 @@ public class RequestThread extends Thread {
 									cmd=s[i].replaceFirst("..........", "");
 								} 
 								if (!cmd.isEmpty() && !type.isEmpty()) {									
-									Event.lastEventId++;
+									Event.lastEventId++;								
 									if (Event.lastEvent==null || !Event.lastEvent.equals(EventType.valueOf(type)+" "+cmd)) {
 										list.add(new Event(EventType.valueOf(type), cmd));
 										cmd="";

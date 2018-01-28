@@ -30,7 +30,7 @@ public class NoClip extends Module {
 	public void onUpdate() {
 		mc.thePlayer.noClip = true;
 		mc.thePlayer.fallDistance = 0;
-		mc.thePlayer.onGround = false;
+		mc.thePlayer.onGround = true;
 		
 		mc.thePlayer.capabilities.isFlying = false;		
 		mc.thePlayer.motionX = 0;
