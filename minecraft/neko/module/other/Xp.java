@@ -63,8 +63,48 @@ class checkXp implements ActionListener {
 					var.lot++;
 				}
 				if (Utils.verif==null) {
-					Utils.addChat("§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=");
-					Utils.addChat("§dNiveau "+var.niveau+" atteint !");						
+
+					mc.ingameGUI.func_175178_a("§dNiveau "+var.niveau+" atteint !", null, 10, 10, 10);
+					switch (var.niveau) {
+						
+						case 2:
+							mc.ingameGUI.func_175178_a(null, "§5Waw, tu m'impressionnes ...", 10, 10, 10);
+							break;
+							
+						case 10:
+							mc.ingameGUI.func_175178_a(null, "§5Waw, tu m'impressionnes ...", 10, 10, 10);
+							break;
+							
+						case 25:
+							mc.ingameGUI.func_175178_a(null, "§5Waw, tu m'impressionnes ...", 10, 10, 10);
+							break;
+							
+						case 50:
+							mc.ingameGUI.func_175178_a(null, "§5Waw, tu m'impressionnes ...", 10, 10, 10);
+							break;
+							
+						case 100:
+							mc.ingameGUI.func_175178_a(null, "§5Waw, tu m'impressionnes ...", 10, 10, 10);
+							break;
+							
+						case 250:
+							mc.ingameGUI.func_175178_a(null, "§5Waw, tu m'impressionnes ...", 10, 10, 10);
+							break;
+
+						case 500:
+							mc.ingameGUI.func_175178_a(null, "§5Waw, tu m'impressionnes ...", 10, 10, 10);
+							break;
+							
+						default:
+							
+					
+					}
+					if (var.niveau == 100) {
+	                    
+	                    
+					}else {
+						
+					}
 					
 					var.xp-=var.xpMax;
 					var.xpMax+=Utils.getRandInt(var.niveau*80);
