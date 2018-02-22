@@ -75,7 +75,7 @@ public class Render extends Module {
 			        Block blockId = var2.getBlock(b.getX(), b.getY(), b.getZ());
 			        Block id2 = var2.getBlock(b.getX(), b.getY()-1, b.getZ());
 			        String gain;
-			        if (((blockId.getMaterial()==Material.air || blockId.getMaterial() == Material.water || blockId.getMaterial() == Material.carpet || blockId.getMaterial() == Material.fire) && id2.getMaterial()!=Material.air) && b.getY()>0) {
+			        if ((blockId.getMaterial().isReplaceable() && id2.getMaterial()!=Material.air) && b.getY()>0) {
 			        	if (Math.random()<0.2+var.rang.getGiftXp()*0.2) {
 			        		gain="xp+";
 			        		cR=0.44F;

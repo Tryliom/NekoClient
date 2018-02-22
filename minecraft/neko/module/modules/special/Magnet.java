@@ -14,6 +14,7 @@ import neko.utils.TpUtils;
 import neko.utils.Utils;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.item.EntityArmorStand;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.item.Item;
@@ -81,7 +82,7 @@ class check implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		try {
 			for (Object o : mc.theWorld.loadedEntityList) {
-				if (o instanceof EntityItem) {
+				if (o instanceof EntityItem && !(o instanceof EntityArmorStand)) {
 					EntityItem entity = (EntityItem) o;   
 		        	BlockPos bll = entity.getPosition();
 		        	if (mc.theWorld.getBlockState(bll).getBlock().getMaterial() != Material.air ||

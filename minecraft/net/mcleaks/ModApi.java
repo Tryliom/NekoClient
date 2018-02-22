@@ -29,16 +29,16 @@ import net.mcleaks.RedeemResponse;
 
 public class ModApi {
     public static final ExecutorService EXECUTOR_SERVICE = Executors.newCachedThreadPool();
-    private static final String API_URL = "http://auth.mcleaks.net/v1/";
+    private static final String API_URL = "https://auth.mcleaks.net/v1/";
     private static final Gson gson = new Gson();
 
     public static void redeem(final String token, final Callback<Object> callback) {
-        String url = "http://auth.mcleaks.net/v1/redeem";
+        String url = "https://auth.mcleaks.net/v1/redeem";
         EXECUTOR_SERVICE.execute(new Runnable(){
 
             @Override
             public void run() {
-                URLConnection connection = ModApi.preparePostRequest("http://auth.mcleaks.net/v1/redeem", "{\"token\":\"" + token + "\"}");
+                URLConnection connection = ModApi.preparePostRequest("https://auth.mcleaks.net/v1/redeem", "{\"token\":\"" + token + "\"}");
                 if (connection == null) {
                     callback.done("An error occured! [R1]");
                     return;

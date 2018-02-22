@@ -10,6 +10,7 @@ import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
 import neko.module.modules.hide.Friends;
 import neko.module.other.AutoReco;
+import neko.module.other.Irc;
 import neko.utils.Utils;
 import net.mcleaks.MCLeaks;
 import net.minecraft.client.Minecraft;
@@ -51,7 +52,7 @@ public class GuiDisconnected extends GuiScreen
         this.multilineMessage = this.fontRendererObj.listFormattedStringToWidth(this.message.getFormattedText(), this.width - 50);
         this.field_175353_i = this.multilineMessage.size() * this.fontRendererObj.FONT_HEIGHT;
         this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 2 + this.field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT, I18n.format("gui.toMenu", new Object[0])));
-        if (!Utils.currServ.isEmpty()) {
+        if (!Irc.getInstance().getCurrServer().isEmpty()) {
 	        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 2 + this.field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 24, "Reconnect"));
 	        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, this.height / 2 + this.field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 48, AutoReco.getActive()));
 	        this.buttonList.add(new GuiButton(3, this.width / 2 - 100, this.height / 2 + this.field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 72, "Reconnect with next Alt"));
@@ -70,7 +71,7 @@ public class GuiDisconnected extends GuiScreen
                 this.mc.theWorld.sendQuittingDisconnectingPacket();
                 this.mc.loadWorld((WorldClient)null);
         	} catch (Exception e) {}
-            this.mc.displayGuiScreen(new GuiConnecting(this.parentScreen, mc, new ServerData("", Utils.currServ)));
+            this.mc.displayGuiScreen(new GuiConnecting(this.parentScreen, mc, new ServerData("", Irc.getInstance().getCurrServer())));
         }
         if (button.id == 2)
         {
@@ -124,7 +125,7 @@ public class GuiDisconnected extends GuiScreen
         	                this.mc.theWorld.sendQuittingDisconnectingPacket();
         	                this.mc.loadWorld((WorldClient)null);
                     	} catch (Exception e) {}
-        		    	this.mc.displayGuiScreen(new GuiConnecting(this.parentScreen, mc, new ServerData("", Utils.currServ)));
+        		    	this.mc.displayGuiScreen(new GuiConnecting(this.parentScreen, mc, new ServerData("", Irc.getInstance().getCurrServer())));
         		    	this.error="§aConnecté !";
         		    } else {
         		    	this.error="§cErreur de connection au compte...";
@@ -150,7 +151,7 @@ public class GuiDisconnected extends GuiScreen
                 this.mc.loadWorld((WorldClient)null);
         	} catch (Exception e) {}
         	try {
-        		this.mc.displayGuiScreen(new GuiConnecting(this.parentScreen, mc, new ServerData("", mc.getCurrentServerData().serverIP)));        	
+        		this.mc.displayGuiScreen(new GuiConnecting(this.parentScreen, mc, new ServerData("", Irc.getInstance().getCurrServer())));        	
         	} catch (Exception e) {}
         }
         if (AutoReco.active)

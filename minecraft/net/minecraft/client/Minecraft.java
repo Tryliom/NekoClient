@@ -437,14 +437,14 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
                         continue;
                     }
-
+                    Utils.saveAll();
                     this.displayCrashReport(this.crashReporter);
                     return;
                 }
             }
             catch (MinecraftError var12)
             {
-                ;
+            	;
             }
             catch (ReportedException var13)
             {
@@ -462,6 +462,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             }
             finally
             {
+            	Utils.saveAll();
                 this.shutdownMinecraftApplet();
             }
 

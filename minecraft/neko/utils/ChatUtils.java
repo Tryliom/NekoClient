@@ -32,6 +32,7 @@ import neko.lock.Lock;
 import neko.manager.GuiManager;
 import neko.manager.LockManager;
 import neko.manager.ModuleManager;
+import neko.manager.SoundManager;
 import neko.module.Category;
 import neko.module.Module;
 import neko.module.modules.combat.AutoClic;
@@ -2504,13 +2505,65 @@ public class ChatUtils {
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"vclip")) {
 				if (args.length==1) {
 					Utils.addChat(error);
-				} else {
+				} else if (Utils.isDouble(args[1])) {
 					try {
 						Double b = Double.parseDouble(args[1]);
 						mc.thePlayer.setPosition(Minecraft.thePlayer.posX, Minecraft.thePlayer.posY+b, Minecraft.thePlayer.posZ);								
 					} catch (Exception e) {
                         Utils.addChat(err);
                     }
+				} else if (args[1].equalsIgnoreCase("+")) {
+					BlockPos curr = mc.thePlayer.getPosition();
+					curr = new BlockPos(curr.getX(), curr.getY()+2, curr.getZ());
+					boolean firstBlock = false;
+					for (int i = 2;i<14;i++) {
+						Material m = mc.theWorld.getBlockState(curr).getBlock().getMaterial();
+						if (!m.isReplaceable() && m != Material.air) {
+							firstBlock = true;
+						} else if (firstBlock) {
+							m = mc.theWorld.getBlockState(new BlockPos(curr.getX(), curr.getY()+1, curr.getZ())).getBlock().getMaterial();
+							if (m.isReplaceable() || m == Material.air) {
+								mc.thePlayer.setPosition(Minecraft.thePlayer.posX, Minecraft.thePlayer.posY+i, Minecraft.thePlayer.posZ);
+								break;
+							}
+						}
+						curr = new BlockPos(curr.getX(), curr.getY()+1, curr.getZ());
+					}
+					if (!firstBlock) {
+						mc.thePlayer.setPosition(Minecraft.thePlayer.posX, Minecraft.thePlayer.posY+13, Minecraft.thePlayer.posZ);
+					}
+				} else if (args[1].equalsIgnoreCase("-")) {
+					BlockPos curr = mc.thePlayer.getPosition();
+					curr = new BlockPos(curr.getX(), curr.getY()-1, curr.getZ());
+					boolean firstBlock = false;
+					boolean finish = false;
+					for (int i = 2;i<14;i++) {
+						Material m = mc.theWorld.getBlockState(curr).getBlock().getMaterial();
+						if (!m.isReplaceable() && m != Material.air) {
+							firstBlock = true;
+						} else if (firstBlock) {
+							m = mc.theWorld.getBlockState(new BlockPos(curr.getX(), curr.getY()-1, curr.getZ())).getBlock().getMaterial();
+							if (m.isReplaceable() || m == Material.air) {
+								for (int j = i;j<14;j++) {
+									m = mc.theWorld.getBlockState(new BlockPos(curr.getX(), curr.getY()-1, curr.getZ())).getBlock().getMaterial();
+									if (!m.isReplaceable() && m != Material.air) {
+										mc.thePlayer.setPosition(Minecraft.thePlayer.posX, Minecraft.thePlayer.posY-j+1, Minecraft.thePlayer.posZ);
+										finish = true;
+										break;
+									}
+									curr = new BlockPos(curr.getX(), curr.getY()-1, curr.getZ());
+								}
+								if (!finish)
+									mc.thePlayer.setPosition(Minecraft.thePlayer.posX, Minecraft.thePlayer.posY-i, Minecraft.thePlayer.posZ);
+								finish = true;
+								break;
+							}
+						}
+						curr = new BlockPos(curr.getX(), curr.getY()-1, curr.getZ());						
+					}
+					if (!firstBlock) {
+						mc.thePlayer.setPosition(Minecraft.thePlayer.posX, Minecraft.thePlayer.posY-13, Minecraft.thePlayer.posZ);
+					}
 				}
 				Utils.checkXp(xp);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
@@ -3655,7 +3708,10 @@ public class ChatUtils {
 						Utils.addWarn("reach pvp");
 				} else {
 					try {
-						Reach.dist=Float.parseFloat(args[1]);
+						Float f = Float.parseFloat(args[1]);
+						if (f>1000000)
+							f = 1000000f; 
+						Reach.dist=f;
 						Utils.addChat("§aReach augmentée à "+args[1]+" !");
 					} catch (Exception e) {
                         Utils.addChat(err);
@@ -3860,6 +3916,7 @@ public class ChatUtils {
 					Utils.panic();
 					Display.setTitle("Minecraft 1.8");
 					var.name=Utils.version.equalsIgnoreCase("Neko") ? "1.8/vanilla" : Utils.version+"/vanilla";
+					SoundManager.getSM().stopMusic();
 					mc.ingameGUI.getChatGUI().clearChatMessages();	
 					mc.displayGuiScreen((GuiScreen)null);
 					return;			
@@ -4696,7 +4753,9 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"cmd")) {
 				if (args.length==1) {
-					Utils.addChat(Utils.setColor("Utilisation correcte: cmd <nom> <touche> <commande>\nLe '&&' permet d'ajouter plus d'une commande", "§a"));
+					Utils.addChat(Utils.setColor("Utilisation correcte: cmd <nom> <touche> <commande>", "§a"));
+					Utils.addChat(Utils.setColor("Le '&&' permet d'ajouter plus d'une commande", "§a"));
+					Utils.addChat(Utils.setColor("Supprimer une cmd: cmd del <nom>", "§a"));
 					Utils.addChat(Utils.setColor("Pour changer les touches, faire "+var.prefixCmd+"bind <Nom donné> <Nouvelle touche>", "§a"));
 				} else if (args[1].equalsIgnoreCase("remove") || args[1].equalsIgnoreCase("rm") || args[1].equalsIgnoreCase("delete") || args[1].equalsIgnoreCase("del")) {
 					try {

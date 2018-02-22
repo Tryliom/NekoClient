@@ -81,7 +81,7 @@ public class NetHandlerLoginClient implements INetHandlerLoginClient
             try {
                 String line;
                 String jsonBody = "{\"session\":\"" + mcLeaksSession + "\",\"mcname\":\"" + mcName + "\",\"serverhash\":\"" + var5 + "\",\"server\":\"" + server + "\"}";
-                HttpURLConnection connection = (HttpURLConnection)new URL("http://auth.mcleaks.net/v1/joinserver").openConnection();
+                HttpURLConnection connection = (HttpURLConnection)new URL("https://auth.mcleaks.net/v1/joinserver").openConnection();
                 connection.setConnectTimeout(10000);
                 connection.setReadTimeout(10000);
                 connection.setRequestMethod("POST");

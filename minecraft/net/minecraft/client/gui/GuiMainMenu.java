@@ -640,12 +640,11 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         	String s[] = this.Bc.split("\n");
         	int h = 0;
         	for (int i=1;i<s.length+1;i++) {
-        		if (s[i-1].startsWith("§d") && s[i-1].contains("%")) {
-        			h = 89 + 24 * i;
-        		} else {
-        			h = 89 + 15 * i;
-        			this.drawString(Client.getNeko().NekoFont, "§6"+s[i-1], this.leftPx, h, -1);
-        		}
+    			h = 89 + 15 * i;
+    			if (s[i-1].startsWith("§d") && s[i-1].contains("%")) {
+    				
+    			} else
+    				this.drawString(Client.getNeko().NekoFont, "§6"+s[i-1], this.leftPx, h, -1);        		
         	}
         	
         	if (!Client.getNeko().ver.isEmpty()) {

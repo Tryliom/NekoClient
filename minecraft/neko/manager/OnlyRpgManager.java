@@ -82,6 +82,8 @@ public class OnlyRpgManager {
 		cmd.add("v");
 		cmd.add("nekochat");
 		cmd.add("chat");
+		cmd.add("nyah");
+		cmd.add("autonyah");
 		this.timeSec = 0;
 	}
 

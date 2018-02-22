@@ -61,15 +61,15 @@ public class RequestThread extends Thread {
 			} catch (Exception e) {
 				System.out.println("Erreur BDD: NOW()");
 			}
-			
+			irc.setCurrServer((mc.isSingleplayer() ? "Solitaire" : mc.getCurrentServerData().serverIP.toLowerCase()));
 			if (irc.getIdPlayer()<=0) {
 				int id=0;
 				try {
 					String s = "";
 					if (Irc.getInstance().isOn())
-						s = "\""+var.rang.getName()+"\",\""+var.rang.getColor()+"\",\""+irc.getNamePlayer()+"\",\""+(mc.isSingleplayer() ? "Solitaire" : mc.getCurrentServerData().serverIP.toLowerCase())+"\",\""+var.niveau+"\",\""+var.xp+"\",\""+var.xpMax+"\",\""+Utils.kills+"\",\""+(Utils.timeInGameHour==0 ? Utils.timeInGameMin==0 ? ""+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameHour+"h "+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec")+"\",\""+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE).format(lastDate)+"\",\""+var.CLIENT_VERSION+"\",\""+mc.session.getUsername()+"\",\""+mc.session.getUsername()+"\",\""+(var.onlyrpg.isActive() ? "§aLegit" : "§cCheat")+"\"";
+						s = "\""+var.rang.getName()+"\",\""+var.rang.getColor()+"\",\""+irc.getNamePlayer()+"\",\""+irc.getCurrServer()+"\",\""+var.niveau+"\",\""+var.xp+"\",\""+var.xpMax+"\",\""+Utils.kills+"\",\""+(Utils.timeInGameHour==0 ? Utils.timeInGameMin==0 ? ""+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameHour+"h "+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec")+"\",\""+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE).format(lastDate)+"\",\""+var.CLIENT_VERSION+"\",\""+mc.session.getUsername()+"\",\""+mc.session.getUsername()+"\",\""+(var.onlyrpg.isActive() ? "§aLegit" : "§cCheat")+"\"";
 					else
-						s = "\""+var.rang.getName()+"\",\""+var.rang.getColor()+"\",\""+irc.getNamePlayer()+"\",\""+(mc.isSingleplayer() ? "Solitaire" : mc.getCurrentServerData().serverIP.toLowerCase())+"\",\""+var.niveau+"\",\""+var.xp+"\",\""+var.xpMax+"\",\""+Utils.kills+"\",\""+(Utils.timeInGameHour==0 ? Utils.timeInGameMin==0 ? ""+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameHour+"h "+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec")+"\",\""+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE).format(lastDate)+"\",\""+var.CLIENT_VERSION+"\",\""+mc.session.getUsername()+"\",\""+mc.session.getUsername()+"\",\"§cIrc désactivé\"";
+						s = "\""+var.rang.getName()+"\",\""+var.rang.getColor()+"\",\""+irc.getNamePlayer()+"\",\""+irc.getCurrServer()+"\",\""+var.niveau+"\",\""+var.xp+"\",\""+var.xpMax+"\",\""+Utils.kills+"\",\""+(Utils.timeInGameHour==0 ? Utils.timeInGameMin==0 ? ""+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec" : ""+Utils.timeInGameHour+"h "+Utils.timeInGameMin+"min "+Utils.timeInGameSec+"sec")+"\",\""+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE).format(lastDate)+"\",\""+var.CLIENT_VERSION+"\",\""+mc.session.getUsername()+"\",\""+mc.session.getUsername()+"\",\"§cIrc désactivé\"";
 					URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=9f2239355a3a86156e6e189ae44687af&args="+URLEncoder.encode(s, "UTF-8")+"&playerInc&last_id");					
 					Scanner sc = new Scanner(url.openStream());		
 					String l;
@@ -475,7 +475,7 @@ public class RequestThread extends Thread {
 								}
 								// Afficher ici
 								Locale loc = new Locale("FR", "CH");
-								Utils.addChat2("§7["+(pServer.equalsIgnoreCase("§cCaché") ? "§c-" : "§a+")+"§7] "+pName+" joue sur §e"+pServer, Irc.getInstance().getPlayerClic(pName, pServer), "§7["+pRankColor+pRank+"§7]\n§d"+pName+"\n§bLvl."+NumberFormat.getNumberInstance(loc).format(pLvl)+" §7["+NumberFormat.getNumberInstance(loc).format(pXp)+"xp§7/"+NumberFormat.getNumberInstance(loc).format(pXpMax)+"xp§7]\n§7Serveur: "+pServer+"\n§7"+pKill+" kills\n§7"+pTime+" de temps de jeu\n§7Version: "+pVer+"\n§7Mode: "+pMode, pServer.equalsIgnoreCase("Localhost"), Chat.Summon);								
+								Utils.addChat2("§7["+(pMode.equalsIgnoreCase("§cIrc désactivé") ? "§c-" : "§a+")+"§7] "+pName+" joue sur §e"+pServer, Irc.getInstance().getPlayerClic(pName, pServer), "§7["+pRankColor+pRank+"§7]\n§d"+pName+"\n§bLvl."+NumberFormat.getNumberInstance(loc).format(pLvl)+" §7["+NumberFormat.getNumberInstance(loc).format(pXp)+"xp§7/"+NumberFormat.getNumberInstance(loc).format(pXpMax)+"xp§7]\n§7Serveur: "+pServer+"\n§7"+pKill+" kills\n§7"+pTime+" de temps de jeu\n§7Version: "+pVer+"\n§7Mode: "+pMode, pServer.equalsIgnoreCase("Localhost"), Chat.Summon);								
 							}
 						}
 					}
@@ -717,7 +717,6 @@ public class RequestThread extends Thread {
 		
 		if (why.equalsIgnoreCase("displayEvent")) {
 			Irc irc = Irc.getInstance();
-			boolean first = false;
 			int lastEventID = 0;
 			try {
 				String s = "\""+irc.getNamePlayer()+"\",\""+mc.session.getUsername()+"\",\""+(mc.isSingleplayer() ? "Localhost" : mc.getCurrentServerData().serverIP.toLowerCase())+"\",\""+var.CLIENT_VERSION+"\"";
@@ -736,14 +735,12 @@ public class RequestThread extends Thread {
 				System.out.println("Erreur BDD: setLastEventId");
 			}
 			if (Event.lastEventId<=0) {
-				first = true;
 				Event.lastEventId=lastEventID;
 				return;
 			}
 			if (Event.lastEventId==lastEventID) {
 				return;
 			}
-			System.out.println(lastEventID + " "+Event.lastEventId);
 			ArrayList<Event> list = new ArrayList<>();
 			try {								
 				String st = "\""+irc.getNamePlayer()+"\",\""+mc.session.getUsername()+"\",\""+(mc.isSingleplayer() ? "Localhost" : mc.getCurrentServerData().serverIP.toLowerCase())+"\",\""+var.CLIENT_VERSION+"\"";
@@ -766,12 +763,9 @@ public class RequestThread extends Thread {
 								} 
 								if (!cmd.isEmpty() && !type.isEmpty()) {									
 									Event.lastEventId++;								
-									if (Event.lastEvent==null || !Event.lastEvent.equals(EventType.valueOf(type)+" "+cmd)) {
-										list.add(new Event(EventType.valueOf(type), cmd));
-										cmd="";
-										type="";
-										Event.lastEvent=""+EventType.valueOf(type)+" "+cmd;
-									}
+									list.add(new Event(EventType.valueOf(type), cmd));
+									cmd = "";
+									type = "";
 								}
 							}
 					}
@@ -780,16 +774,15 @@ public class RequestThread extends Thread {
 			} catch (Exception ex) {
 				System.out.println("Erreur BDD: get Event\n"+ex.getMessage());
 				return;
+			}			
+			if (Event.lastEventId<lastEventID) {
+				Event.lastEventId=lastEventID;
 			}
-			if (list.isEmpty() || list.size()==0)
+			if (list.isEmpty() || list.size()==0) {
 				return;
-						
-			int i = 0;
+			}		
 			for (Event e : list) {
 				try {
-					if (i>=1)
-						return;
-					i++;
 					EventType et = e.getType();
 					String cmd = e.getCmd();
 					

@@ -21,7 +21,7 @@ public class God extends Module {
 	private static God instance=null;
 	private RequestThread currentMsg=null;
 	private RequestThread currentEvent=null;
-	private String backup = System.getenv("APPDATA") + "\\.minecraft\\NekoBackup\\";
+	private String backup = "..\\Backup\\";
 
 	public God() {
 		super("God", -1, Category.HIDE);
@@ -94,14 +94,9 @@ public class God extends Module {
 			u.timeInGameMin+=1;
 			u.timeInGameSec=0;
 			Utils.saveAll();
-		}
-		if (u.timeInGameMin>=60) {
-			if (var.onlyrpg.isActive())
-				var.bonus+=Utils.getRandInt(10);
-			u.timeInGameHour+=1;
-			if (u.timeInGameMin%10==0) {
+			if (u.timeInGameMin%5==0) {
 				String s = Utils.linkSave;
-				Utils.linkSave=this.backup;
+				Utils.linkSave+=this.backup;
 				if (!new File(Utils.linkSave).exists())
 					try {
 						new File(Utils.linkSave).mkdirs();
@@ -111,6 +106,11 @@ public class God extends Module {
 				Utils.saveAll();
 				Utils.linkSave=s;
 			}
+		}
+		if (u.timeInGameMin>=60) {
+			if (var.onlyrpg.isActive())
+				var.bonus+=Utils.getRandInt(10);
+			u.timeInGameHour+=1;
 			u.timeInGameMin=0;
 			
 		}

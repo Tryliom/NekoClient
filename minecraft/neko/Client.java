@@ -38,7 +38,7 @@ public class Client {
 	  public final String CLIENT_AUTHOR = "Tryliom";
 	  public ModuleManager moduleManager;
 	  public GuiManager gui;
-	  public final String CLIENT_VERSION = "2.1.1";
+	  public final String CLIENT_VERSION = "2.1.4";
 	  private static final Client Neko = new Client();
 	  public String mode="Player";
 	  public Rank rang;
@@ -101,12 +101,18 @@ public class Client {
 		    }
 		    mc.mcResourceManager.registerReloadListener(NekoFont);
 		  this.moduleManager = new ModuleManager();
-		  Utils.loadCmd();
-		  System.out.println("Neko démarre doucement... :3");
-		  SoundManager.getSM();
+		  Utils.createAllFolderSave();
 		  File f = new File(System.getenv("APPDATA") + "\\.minecraft\\Neko");
-		  if (!f.exists())
-			  f.mkdirs();
+		  if (f.exists()) {
+			  Utils.linkSave = System.getenv("APPDATA") + "\\.minecraft\\Neko\\";
+			  Utils.tranferAllData();
+		  }
+		  File f2 = new File(System.getenv("APPDATA") + "\\GoodNight_4\\config\\audio\\rpg");
+		  if (!f2.exists()) {
+			  Utils.linkSave = System.getenv("APPDATA") + "\\.minecraft\\Neko\\";
+		  }
+		  Utils.loadCmd();
+		  SoundManager.getSM();
 		  Utils.loadRank();
 		  for (Rank r : ModuleManager.rang) {
 				if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {

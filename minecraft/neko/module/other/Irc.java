@@ -20,6 +20,7 @@ public class Irc {
 	private boolean hideJl=false;
 	private String lastMsg="";
 	private String playerClic="connect";
+	private String currServer;
 		
 	public Irc() {
 		if (instance==null)
@@ -30,6 +31,14 @@ public class Irc {
 		if (instance==null)
 			instance=new Irc();
 		return instance;
+	}	
+
+	public String getCurrServer() {
+		return currServer;
+	}
+
+	public void setCurrServer(String currServer) {
+		this.currServer = currServer;
 	}
 
 	public String getPrefix() {

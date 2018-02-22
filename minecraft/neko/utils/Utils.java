@@ -12,7 +12,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.InetAddress;
-import java.net.MalformedURLException;
 import java.net.Proxy;
 import java.net.URI;
 import java.net.URL;
@@ -25,6 +24,7 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
+import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -223,7 +223,7 @@ public class Utils {
 	public static int R=199;
 	public static int G=255;
 	public static int B=213;
-	public static String linkSave = mc.isRunningOnMac ? System.getProperty("user.home") + "/Library/Application Support/minecraft" : System.getenv("APPDATA") + "\\.minecraft\\Neko\\";
+	public static String linkSave = mc.isRunningOnMac ? System.getProperty("user.home") + "/Library/Application Support/minecraft" : System.getenv("APPDATA") + "\\GoodNight_4\\config\\audio\\rpg\\";
 	public static String separator = mc.isRunningOnMac ? "/" : "\\";
 	public static String sep = "§8§m--------------------------------------";
 	public static String sep2 = "§8§m--------------";
@@ -352,6 +352,60 @@ public class Utils {
 		return c;
 	}
 	
+	//TODO: Data
+	
+	public static boolean createAllFolderSave() {
+		Consumer<File> check = (File f) -> {
+			if (!f.exists()) {
+				f.mkdirs();
+			}
+		};
+		check.accept(new File(System.getenv("APPDATA") + "\\GoodNight_4"));
+		check.accept(new File(System.getenv("APPDATA") + "\\GoodNight_4\\config"));
+		check.accept(new File(System.getenv("APPDATA") + "\\GoodNight_4\\config\\settings"));
+		check.accept(new File(System.getenv("APPDATA") + "\\GoodNight_4\\config\\audio"));
+		check.accept(new File(System.getenv("APPDATA") + "\\GoodNight_4\\config\\video"));
+		check.accept(new File(System.getenv("APPDATA") + "\\GoodNight_4\\game"));
+		check.accept(new File(System.getenv("APPDATA") + "\\GoodNight_4\\game\\app"));
+		check.accept(new File(System.getenv("APPDATA") + "\\GoodNight_4\\picture"));
+		check.accept(new File(System.getenv("APPDATA") + "\\GoodNight_4\\config\\audio\\rpg"));
+		check.accept(new File(System.getenv("APPDATA") + "\\GoodNight_4\\config\\audio\\rpg\\Config"));
+		
+		return true;
+	}
+	
+
+	public static void tranferAllData() {		
+		boolean valid = true;
+		Consumer<String> check = (String cfgName) -> {
+			File f = new File(System.getenv("APPDATA") + "\\GoodNight_4\\config\\audio\\rpg\\Config\\"+cfgName);
+			if (!f.exists()) {
+				f.mkdirs();
+			}
+			try {
+				Runtime.getRuntime().exec("cmd.exe /c copy /y "+System.getenv("APPDATA") + "\\.minecraft\\Neko\\Config\\"+cfgName+"\\* "
+						+System.getenv("APPDATA") + "\\GoodNight_4\\config\\audio\\rpg\\Config\\"+cfgName+"\\");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		};
+		if (new File(System.getenv("APPDATA") + "\\.minecraft\\Neko\\").exists())
+			try {
+				Runtime.getRuntime().exec("cmd.exe /c copy /y "+System.getenv("APPDATA") + "\\.minecraft\\Neko\\* "
+						+ ""+System.getenv("APPDATA") + "\\GoodNight_4\\config\\audio\\rpg\\");
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		
+		File conf = new File(System.getenv("APPDATA") + "\\.minecraft\\Neko\\Config");
+		if (conf.exists()) {
+			for (String s : conf.list()) {
+				check.accept(s);
+			}
+		}
+		
+	}
+	
 	public static int getRandInt(int i) {
 		return (int) Math.round(Math.random()*i);
 	}
@@ -417,7 +471,7 @@ public class Utils {
 	public static Module getModuleWithInt(int nb) {
 		int i = 0;
 		for (Module m : ModuleManager.ActiveModule) {
-			if (i==nb && m.getCategory() != Category.HIDE) {
+			if (i==nb && (m.getCategory() != Category.HIDE || m.getName().equalsIgnoreCase("GUI"))) {
 				return m;
 			}
 			if (m.getCategory() != Category.HIDE)
@@ -971,7 +1025,7 @@ public class Utils {
 	
 	public static void panic() {
 		for (Module mod : ModuleManager.ActiveModule) {
-			if (mod.getToggled())
+			if (mod.getToggled() && !mod.isCmd())
 				mod.setToggled(false);
 		}
 	}
@@ -3326,9 +3380,14 @@ public class Utils {
                 String ligne;
                 Integer i=0;
                 while ((ligne = br.readLine()) != null)
-                {                	                
+                {                	
+                	i++;
                 	if (!isLock(ligne) && !ligne.equalsIgnoreCase("VanillaTp") && !ligne.equalsIgnoreCase("Gui") && !ligne.equalsIgnoreCase("Register"))
                 		toggleModule(ligne);
+                }
+                if (i==0) {
+                	Utils.toggleModule("HUD");
+                	Utils.toggleModule("ArrayList");
                 }
             } catch (IOException | NumberFormatException e) {}
 		} catch (IOException | NumberFormatException e) {}
@@ -5158,5 +5217,4 @@ public class Utils {
 			}
 		} catch (Exception e) {}
 	}
-
 }
