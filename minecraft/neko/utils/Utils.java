@@ -28,8 +28,12 @@ import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.HttpsURLConnection;
 
+import org.apache.commons.codec.binary.Base64;
 import org.darkstorm.minecraft.gui.component.Frame;
 import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.input.Keyboard;
@@ -45,6 +49,7 @@ import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
 import neko.Client;
+import neko.api.NekoCloud;
 import neko.gui.GuiAltManager;
 import neko.gui.GuiBindManager;
 import neko.gui.GuiMusicManager;
@@ -230,6 +235,7 @@ public class Utils {
 	public static Client var = Client.getNeko();
 	public static Vector<String> ipVote = new Vector<String>();
 	public static int xptime = 0;
+	public static NekoCloud nc = NekoCloud.getNekoAPI();
 	
 	public static void addChat(String m) {
 		if (verif==null)
@@ -2003,42 +2009,26 @@ public class Utils {
 		if (verif!=null)
 			return;
 		String s ="";
-		File file = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"rank.neko");
-        try {
-            file.createNewFile();            
-            try (FileWriter writer = new FileWriter(file)) {
-            	for (Rank k : ModuleManager.rang) {
-            		if (!k.isLock())
-            		s+=k.getName()+" "+k.isLock()+" "+k.getLvl()+"\n";
-            	}
-            	int i = (s.length()+1)*555-69;
-            	String res= s+"§"+i;
-                writer.write(res);
-                writer.flush();
-            }
-
-        } catch (IOException ex) {}
+		for (Rank k : ModuleManager.rang) {
+    		if (!k.isLock())
+    		s+=k.getName()+" "+k.isLock()+" "+k.getLvl()+"\n";
+    	}
+    	int i = (s.length()+1)*555-69;
+    	String res= s+"§"+i;
+		nc.saveSave("rank", res);
 	}
 	
 	public static void saveLock(String...fi) {
 		if (verif!=null)
 			return;
 		String s="";
-		File file = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"lock.neko");
-        try {
-            file.createNewFile();            
-            try (FileWriter writer = new FileWriter(file)) {
-            	for (Lock lock : ModuleManager.Lock) {
-            		if (!lock.isLock())
-            			s+=lock.getName()+" "+lock.isLock()+"\n";
-            	}
-            	int i = (s.length()+1)*666-111;
-            	String res= s+"§"+i;
-                writer.write(res);
-                writer.flush();
-            }
-
-        } catch (IOException ex) {}
+		for (Lock lock : ModuleManager.Lock) {
+    		if (!lock.isLock())
+    			s+=lock.getName()+" "+lock.isLock()+"\n";
+    	}
+    	int i = (s.length()+1)*666-111;
+    	String res= s+"§"+i;
+    	nc.saveSave("lock", res);
 	}	
 	
 	public static void loadLock(String... fi) {
@@ -2093,24 +2083,16 @@ public class Utils {
 		if (verif!=null || var.gui==null)
 			return;
 		String s="";
-		File file = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"frame.neko");
-        try {
-            file.createNewFile();            
-            try (FileWriter writer = new FileWriter(file)) {
-            	String name ="";
-            	for(Frame f : var.gui.getFrames()) {
-            		name = f.getTitle();
-            		int x = f.getX();
-            		int y = f.getY();
-            		s+=name+" "+x+" "+y+" "+f.isMinimized()+"\n";
-            	}
-            	s+="§"+SimpleTheme.font;
-                writer.write(s);
-                writer.flush();
-            }
-
-        } catch (IOException ex) {}
-	}	
+		String name ="";
+    	for(Frame f : var.gui.getFrames()) {
+    		name = f.getTitle();
+    		int x = f.getX();
+    		int y = f.getY();
+    		s+=name+" "+x+" "+y+" "+f.isMinimized()+"\n";
+    	}
+    	s+="§"+SimpleTheme.font;
+    	nc.saveSave("frame", s);
+	}
 	
 	public static void loadFrame(String...fi) {
 		File dir = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"frame.neko");
@@ -2143,16 +2125,8 @@ public class Utils {
 	public static void saveFont(String...fi) {
 		if (verif!=null)
 			return;
-		String s="";
-		File file = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"font.neko");
-        try {
-            file.createNewFile();            
-            try (FileWriter writer = new FileWriter(file)) {
-                writer.write(SimpleTheme.font+"\n"+SimpleTheme.px+"\n"+SimpleTheme.alpha);
-                writer.flush();
-            }
-
-        } catch (IOException ex) {}
+		String s=SimpleTheme.font+"\n"+SimpleTheme.px+"\n"+SimpleTheme.alpha;
+		nc.saveSave("font", s);
 	}	
 	
 	public static void loadFont(String...fi) {
@@ -2185,22 +2159,87 @@ public class Utils {
 		if (verif!=null)
 			return;
 		String s="";
-		File file = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"irc.neko");
+		Irc	irc = Irc.getInstance();
+    	BddManager b = BddManager.getBdd();
+    	s+=irc.getNamePlayer()+"\n"+irc.getPrefix()+"\n"+irc.getIdPlayer()+"\n"+irc.isOn()+"\n\n"+irc.getMode()+"\n"+irc.isHideJl()+"\n"+(b.isRemember() ? b.getUser()+"\n"+b.getPass()+"\n" : "\n\n");
+    	s+=irc.getPClic()+"\n";
+    	int i = (s.length()+1)*666-111;
+    	String res= s+"§"+i;
+    	nc.saveSave("irc", res);
+	}	
+	
+	public static String encrypt(String value) {
+    	String key = "839dj398dkw29rrl";
+    	String initVector = "1y2v34g98d76hf50";
+    	try {
+            IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
+            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+            cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
+
+            byte[] encrypted = cipher.doFinal(value.getBytes());
+
+            return Base64.encodeBase64String(encrypted);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return ex.getMessage();
+        }
+    }
+
+    public static String decrypt(String encrypted) {
+    	String key = "839dj398dkw29rrl";
+    	String initVector = "1y2v34g98d76hf50";
+        try {
+            IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
+            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+            cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
+
+            byte[] original = cipher.doFinal(Base64.decodeBase64(encrypted));
+
+            return new String(original);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return ex.getMessage();
+        }
+    }
+	
+	public static void saveCredentials() {
+		if (verif!=null)
+			return;
+		String s="";
+		File file = new File(System.getenv("APPDATA")+separator+"credentials.txt");
         try {
             file.createNewFile();            
             try (FileWriter writer = new FileWriter(file)) {
-            	Irc	irc = Irc.getInstance();
-            	BddManager b = BddManager.getBdd();
-            	s+=irc.getNamePlayer()+"\n"+irc.getPrefix()+"\n"+irc.getIdPlayer()+"\n"+irc.isOn()+"\n\n"+irc.getMode()+"\n"+irc.isHideJl()+"\n"+(b.isRemember() ? b.getUser()+"\n"+b.getPass()+"\n" : "\n\n");
-            	s+=irc.getPClic()+"\n";
-            	int i = (s.length()+1)*666-111;
-            	String res= s+"§"+i;
+            	String res = encrypt(NekoCloud.getNekoAPI().getName()+"\n"+NekoCloud.getNekoAPI().getPassword());
                 writer.write(res);
                 writer.flush();
             }
 
         } catch (IOException ex) {}
 	}	
+	
+	public static void loadCredentials() {
+		File dir = new File(System.getenv("APPDATA")+separator+"credentials.txt");
+		if (dir.exists()) {
+			try { 
+	            InputStream ips = new FileInputStream(dir); 
+	            InputStreamReader ipsr = new InputStreamReader(ips); 
+	            String ligne;
+	            try (BufferedReader br = new BufferedReader(ipsr)) {
+	            	ligne = br.readLine();
+	            }
+	            ligne = decrypt(ligne);
+	            String s[] = ligne.split("\n");
+	            NekoCloud nc = NekoCloud.getNekoAPI();
+	            nc.setName(s[0]);
+	            nc.setPassword(s[1]);
+			} catch (Exception e) {}		
+		}
+	}
 	
 	public static void loadIrc(String...fi) {
 		File dir = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"irc.neko");
@@ -2275,46 +2314,36 @@ public class Utils {
 	public static void saveRpg(String...fi) {
 		if (verif!=null)
 			return;
-		File file = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"rpg.neko");
-        try {
-            file.createNewFile();            
-            try (FileWriter writer = new FileWriter(file)) {
-            	String s = var.rang.getName()+var.niveau+var.xp+var.xpMax+var.achievementHelp+var.prefixCmd+var.mode+var.ame+var.bonus+var.chance+var.lot+Active.bonus+Active.time+var.CLIENT_VERSION+Lot.nbLot;
-            	char ch[] = s.toCharArray();
-            	int sum=0;
-            	for (int i=0;i<ch.length;i++) {
-            		sum+=ch[i];
-            	}
-            	writer.write(var.rang.getName() + "\n" + var.niveau + "\n" + var.xp + "\n" + var.xpMax + "\n" + var.achievementHelp + "\n" + var.prefixCmd + "\n" + var.mode + "\n" + var.ame + "\n" + var.bonus+"\n§"+sum+"\n"+var.chance+"\n"+var.lot+"\n"+Active.bonus+"\n"+Active.time+"\n"+var.CLIENT_VERSION+"\n"+Lot.nbLot);
-                writer.flush();
-            }
-
-        } catch (IOException ex) {}
+		String s = var.rang.getName()+var.niveau+var.xp+var.xpMax+var.achievementHelp+var.prefixCmd+var.mode+var.ame+var.bonus+var.chance+var.lot+Active.bonus+Active.time+var.CLIENT_VERSION+Lot.nbLot;
+    	char ch[] = s.toCharArray();
+    	int sum=0;
+    	for (int i=0;i<ch.length;i++) {
+    		sum+=ch[i];
+    	}
+    	String res = var.rang.getName() + "\n" + var.niveau + "\n" + var.xp + "\n" + var.xpMax + "\n" + var.achievementHelp + "\n" + var.prefixCmd + "\n" + var.mode + "\n" + var.ame + "\n" + var.bonus+"\n§"+sum+"\n"+var.chance+"\n"+var.lot+"\n"+Active.bonus+"\n"+Active.time+"\n"+var.CLIENT_VERSION+"\n"+Lot.nbLot;
+    	nc.saveSave("rpg", res);
 	}
 	
 	public static void saveNuker(String...fi) {
 		if (verif!=null)
 			return;
 		String s ="";
-		File file = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"nuker.neko");
-        try {
-            file.createNewFile();            
-            try (FileWriter writer = new FileWriter(file)) {
-            	for (int i : Nuker.nuke) {
-            		s+=i + "\n";
-            	}
-                writer.write(s);
-                writer.flush();
-            }
-
-        } catch (IOException ex) {}
+		for (int i : Nuker.nuke) {
+    		s+=i + "\n";
+    	}
+		nc.saveSave("nuker", s);
+	}
+	
+	public static void loadSaveCloud() {
+		//TODO: Cloud
+		
 	}
 	
 	public static String preparePostRequest(String url, String body) {
         try {
             URLConnection con = (HttpsURLConnection)new URL(url).openConnection();
-            con.setConnectTimeout(10000);
-            con.setReadTimeout(10000);
+            con.setConnectTimeout(15000);
+            con.setReadTimeout(15000);
             ((HttpURLConnection) con).setRequestMethod("POST");
             ((HttpURLConnection) con).setRequestProperty("Content-Type", "application/json");
             con.setDoOutput(true);
@@ -2398,111 +2427,96 @@ public class Utils {
 	public static void saveValues(final String...fi) {
 		if (verif!=null)
 			return;
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				String s ="";
-				File file = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"values.neko");
-		        try {
-		            file.createNewFile();            
-		            try (FileWriter writer = new FileWriter(file)) {
-		            	TpBack tp = TpBack.getInstance();
-		            	Velocity v = Velocity.getVelocity();
-		            	Build b = Build.getBuild();
-		                Ping p = Ping.getPing();
-		                NekoChat nc = NekoChat.getChat();
-		                CallCmd c = CallCmd.getCall();
-		                String pl = "";
-		                for (String st : c.getListPlayer())
-		                	pl+=st+":";
-		                Magnet m = Magnet.getMagnet();
-		            	s+=Dolphin.dolph+"\n";
-		            	s+=Flight.speed+"\n";
-		            	s+=KillAura.cps+"\n"+KillAura.range+"\n"+KillAura.lockView+"\n";
-		            	s+=Render.varNeko+"\n";
-		            	s+=NoClip.speed+"\n";
-		            	s+=Regen.regen+"\n";
-		            	s+=Speed709.getSpeed().getSpe()+"\n";
-		            	s+=Step.getStep().getStep()+"\n";
-		            	s+=Timer.time+"\n";
-		            	s+=v.getHcoeff()+":"+v.getVcoeff()+"\n";
-		            	s+=display+"\n";
-		            	s+=zoom+"\n";
-		            	s+=xp+"\n";
-		            	s+=KillAura.live+"\n"+KillAura.invi+"\n"+KillAura.onground+"\n"+KillAura.noarmor+"\n";
-		            	s+=Trigger.dist+"\n";
-		            	s+=Reach.dist+"\n";
-		            	s+=deathoff+"\n";
-		            	s+=Fire.p+"\n";
-		            	s+=Water.p+"\n";
-		            	s+=Power.p+"\n";
-		            	s+=timeInGameMs+":"+timeInGameSec+":"+timeInGameMin+":"+timeInGameHour+"\n";
-		            	s+=h1+" "+h10+" "+h50+" "+h100+" "+h200+" "+h666+"\n";
-		            	s+=ClickAim.dist+"\n";
-		            	s+=ClickAim.multiAura+"\n";
-		            	s+=VanillaTp.air+"\n";
-		            	s+=Regen.bypass+"\n";
-		            	s+=KillAura.mode+"\n";
-		            	s+=Autoarmor.ec+"\n";
-		            	s+="5"+"\n"+"true"+"\n";
-		            	s+=Cheststealer.waitTime+"\n";
-		            	s+=SmoothAim.range+"\n";
-		            	s+=SmoothAim.degrees+"\n";
-		                s+=Autosoup.drop+"\n";
-		                s+=Autosoup.heal+"\n";
-		                s+=KillAura.fov+"\n";
-		                s+=nyah+"\n";
-		                s+=nyahh+"\n";
-		                s+=nyahSec+"\n";
-		                s+=AutoClic.cps+"\n";
-		                s+=Nuker.nukerRadius+"\n";
-		                s+=KillAura.random+"\n";
-		                s+=Freecam.speed+"\n";
-		                s+=SmoothAim.speed+"\n";
-		                s+=Flight.blink+"\n";
-		                s+=Longjump.speed+"\n";
-		                s+=InGameGui.color+"\n";
-		                s+=HUD.coord+"\n"+HUD.fall+"\n"+HUD.fps+"\n"+HUD.item+"\n";
-		                s+=Radar.fr+"\n";
-		                s+=HUD.packet+"\n";
-		                s+=sword+"\n";
-		                s+=scoreboard+"\n";
-		                s+=WorldTime.time+"\n";
-		                s+=Wallhack.cR+"\n"+Wallhack.cG+"\n"+Wallhack.cB+"\n"+Wallhack.clR+"\n"+Wallhack.clG+"\n"+Wallhack.clB+"\n"+Wallhack.width+"\n";
-		                s+=Tracers.cR+"\n"+Tracers.cG+"\n"+Tracers.cB+"\n"+Tracers.width+"\n";
-		                s+= neko.module.modules.render.Render.bonusCount+"\n"+HUD.time+"\n"+HUD.select+"\n";
-		                s+=HUD.cR+"\n"+HUD.cG+"\n"+HUD.cB+"\n"+HUD.width+"\n";   
-		                s+=Reach.pvp+"\n";
-		                s+=KillAura.verif+"\n";
-		                s+=Paint.cR+"\n"+Paint.cG+"\n"+Paint.cB+"\n"+Paint.alpha+"\n";
-		                s+= neko.module.modules.render.Render.active+"\n";
-		                s+=changeRank+"\n";
-		                s+=Tracers.friend+"\n"+Reach.bloc+"\n";
-		                s+=VanillaTp.classic+"\n"+Reach.classic+"\n"+Reach.aimbot+"\n"+Reach.fov+"\n";
-		                s+=limit+"\n"+limite+"\n"+version+"\n"+kills+"\n"+HUD.stuff+"\n";
-		                s+=R+"\n"+G+"\n"+B+"\n"+ neko.module.modules.render.Render.xp+"\n"+Reach.tnt+"\n"+Fastbow.getFast().isNobow()+"\n";
-		                s+=AutoPot.heal+"\n"+Pyro.mode+"\n"+Reach.mode+"\n"+Antiafk.getInstance().getSec()+"\n";
-		                s+=ItemESP.cR+"\n"+ItemESP.cG+"\n"+ItemESP.cB+"\n"+ItemESP.clR+"\n"+ItemESP.clG+"\n"+ItemESP.clB+"\n"+ItemESP.width+"\n";
-		                s+=VanillaTp.top+"\n"+tp.getSpawn().toLong()+"\n"+tp.isClassic()+"\n"+tp.isTop()+"\n"+tp.getVie()+"\n\n"+Glide.getGlide().getSpeed()+"\n"+FireTrail.getFireTrail().isLarge()+"\n";
-		                s+=Phase.getPhase().isVphase()+"\n\n";
-		                s+=AutoMLG.getMLG().getFall()+"\n"+b.isDown()+"\n"+b.isSneak()+"\n"+b.isUp()+"\n"+b.isWall()+"\n";
-		                s+=Fasteat.getFast().getPacket()+"\n"+PushUp.getPush().getPacket()+"\n"+Speed709.getSpeed().getMode()+"\n"+Reflect.getReflect().getPower()+"\n";
-		                s+=p.getDelay()+"\n"+p.isFreezer()+"\n"+p.isRandom()+"\n"+KillAura.nobot+"\n"+SpamBot.getBot().getPseudo()+"\n"+var.animation+"\n";
-		                s+=KillAura.premium+"\n"+GuiAltManager.check+"\n"+var.onlyrpg.isActive()+"\n"+nc.getColor()+"\n"+nc.getHeight()+"\n"+nc.getWidth()+"\n";
-		                s+=c.getCmd2()+"\n"+pl+"\n"+Register.getReg().getMdp()+"\n"+God.getInstance().getBackup()+"\n"+Highjump.getJump().getHeight()+"\n";
-		                s+=TutoManager.getTuto().isDone()+"\n"+Nuker.safe+"\n"+KillAura.speed+"\n"+PunKeel.attack+"\n"+PunKeel.delay+"\n"+Fastbow.getFast().getPacket()+"\n";
-		                s+=Step.getStep().isBypass()+"\n"+BowAimbot.getAim().getFov()+"\n"+BowAimbot.getAim().getLife()+"\n"+BowAimbot.getAim().getArmor()+"\n";
-		                s+=Reach.multiaura+"\n"+PunKeel.random+"\n"+(PunKeel.random ? PunKeel.rDelay.firstElement()+"\n"+PunKeel.rDelay.lastElement() : "0.5\n1.0")+"\n";
-		                s+=m.getMode()+"\n"+m.isClassic()+"\n"+Block.getIdFromBlock(Search.getSearch().getSearchBlock())+"\n"+SoundManager.mm.name()+"\n";
-		                writer.write(s);
-		                writer.flush();
-		            }
-
-		        } catch (IOException ex) {}				
-			}
-			
-		}).start();
+		String s = "";
+		TpBack tp = TpBack.getInstance();
+    	Velocity v = Velocity.getVelocity();
+    	Build b = Build.getBuild();
+        Ping p = Ping.getPing();
+        NekoChat nc = NekoChat.getChat();
+        CallCmd c = CallCmd.getCall();
+        String pl = "";
+        for (String st : c.getListPlayer())
+        	pl+=st+":";
+        Magnet m = Magnet.getMagnet();
+    	s+=Dolphin.dolph+"\n";
+    	s+=Flight.speed+"\n";
+    	s+=KillAura.cps+"\n"+KillAura.range+"\n"+KillAura.lockView+"\n";
+    	s+=Render.varNeko+"\n";
+    	s+=NoClip.speed+"\n";
+    	s+=Regen.regen+"\n";
+    	s+=Speed709.getSpeed().getSpe()+"\n";
+    	s+=Step.getStep().getStep()+"\n";
+    	s+=Timer.time+"\n";
+    	s+=v.getHcoeff()+":"+v.getVcoeff()+"\n";
+    	s+=display+"\n";
+    	s+=zoom+"\n";
+    	s+=xp+"\n";
+    	s+=KillAura.live+"\n"+KillAura.invi+"\n"+KillAura.onground+"\n"+KillAura.noarmor+"\n";
+    	s+=Trigger.dist+"\n";
+    	s+=Reach.dist+"\n";
+    	s+=deathoff+"\n";
+    	s+=Fire.p+"\n";
+    	s+=Water.p+"\n";
+    	s+=Power.p+"\n";
+    	s+=timeInGameMs+":"+timeInGameSec+":"+timeInGameMin+":"+timeInGameHour+"\n";
+    	s+=h1+" "+h10+" "+h50+" "+h100+" "+h200+" "+h666+"\n";
+    	s+=ClickAim.dist+"\n";
+    	s+=ClickAim.multiAura+"\n";
+    	s+=VanillaTp.air+"\n";
+    	s+=Regen.bypass+"\n";
+    	s+=KillAura.mode+"\n";
+    	s+=Autoarmor.ec+"\n";
+    	s+="5"+"\n"+"true"+"\n";
+    	s+=Cheststealer.waitTime+"\n";
+    	s+=SmoothAim.range+"\n";
+    	s+=SmoothAim.degrees+"\n";
+        s+=Autosoup.drop+"\n";
+        s+=Autosoup.heal+"\n";
+        s+=KillAura.fov+"\n";
+        s+=nyah+"\n";
+        s+=nyahh+"\n";
+        s+=nyahSec+"\n";
+        s+=AutoClic.cps+"\n";
+        s+=Nuker.nukerRadius+"\n";
+        s+=KillAura.random+"\n";
+        s+=Freecam.speed+"\n";
+        s+=SmoothAim.speed+"\n";
+        s+=Flight.blink+"\n";
+        s+=Longjump.speed+"\n";
+        s+=InGameGui.color+"\n";
+        s+=HUD.coord+"\n"+HUD.fall+"\n"+HUD.fps+"\n"+HUD.item+"\n";
+        s+=Radar.fr+"\n";
+        s+=HUD.packet+"\n";
+        s+=sword+"\n";
+        s+=scoreboard+"\n";
+        s+=WorldTime.time+"\n";
+        s+=Wallhack.cR+"\n"+Wallhack.cG+"\n"+Wallhack.cB+"\n"+Wallhack.clR+"\n"+Wallhack.clG+"\n"+Wallhack.clB+"\n"+Wallhack.width+"\n";
+        s+=Tracers.cR+"\n"+Tracers.cG+"\n"+Tracers.cB+"\n"+Tracers.width+"\n";
+        s+= neko.module.modules.render.Render.bonusCount+"\n"+HUD.time+"\n"+HUD.select+"\n";
+        s+=HUD.cR+"\n"+HUD.cG+"\n"+HUD.cB+"\n"+HUD.width+"\n";   
+        s+=Reach.pvp+"\n";
+        s+=KillAura.verif+"\n";
+        s+=Paint.cR+"\n"+Paint.cG+"\n"+Paint.cB+"\n"+Paint.alpha+"\n";
+        s+= neko.module.modules.render.Render.active+"\n";
+        s+=changeRank+"\n";
+        s+=Tracers.friend+"\n"+Reach.bloc+"\n";
+        s+=VanillaTp.classic+"\n"+Reach.classic+"\n"+Reach.aimbot+"\n"+Reach.fov+"\n";
+        s+=limit+"\n"+limite+"\n"+version+"\n"+kills+"\n"+HUD.stuff+"\n";
+        s+=R+"\n"+G+"\n"+B+"\n"+ neko.module.modules.render.Render.xp+"\n"+Reach.tnt+"\n"+Fastbow.getFast().isNobow()+"\n";
+        s+=AutoPot.heal+"\n"+Pyro.mode+"\n"+Reach.mode+"\n"+Antiafk.getInstance().getSec()+"\n";
+        s+=ItemESP.cR+"\n"+ItemESP.cG+"\n"+ItemESP.cB+"\n"+ItemESP.clR+"\n"+ItemESP.clG+"\n"+ItemESP.clB+"\n"+ItemESP.width+"\n";
+        s+=VanillaTp.top+"\n"+tp.getSpawn().toLong()+"\n"+tp.isClassic()+"\n"+tp.isTop()+"\n"+tp.getVie()+"\n\n"+Glide.getGlide().getSpeed()+"\n"+FireTrail.getFireTrail().isLarge()+"\n";
+        s+=Phase.getPhase().isVphase()+"\n\n";
+        s+=AutoMLG.getMLG().getFall()+"\n"+b.isDown()+"\n"+b.isSneak()+"\n"+b.isUp()+"\n"+b.isWall()+"\n";
+        s+=Fasteat.getFast().getPacket()+"\n"+PushUp.getPush().getPacket()+"\n"+Speed709.getSpeed().getMode()+"\n"+Reflect.getReflect().getPower()+"\n";
+        s+=p.getDelay()+"\n"+p.isFreezer()+"\n"+p.isRandom()+"\n"+KillAura.nobot+"\n"+SpamBot.getBot().getPseudo()+"\n"+var.animation+"\n";
+        s+=KillAura.premium+"\n"+GuiAltManager.check+"\n"+var.onlyrpg.isActive()+"\n"+nc.getColor()+"\n"+nc.getHeight()+"\n"+nc.getWidth()+"\n";
+        s+=c.getCmd2()+"\n"+pl+"\n"+Register.getReg().getMdp()+"\n"+God.getInstance().getBackup()+"\n"+Highjump.getJump().getHeight()+"\n";
+        s+=TutoManager.getTuto().isDone()+"\n"+Nuker.safe+"\n"+KillAura.speed+"\n"+PunKeel.attack+"\n"+PunKeel.delay+"\n"+Fastbow.getFast().getPacket()+"\n";
+        s+=Step.getStep().isBypass()+"\n"+BowAimbot.getAim().getFov()+"\n"+BowAimbot.getAim().getLife()+"\n"+BowAimbot.getAim().getArmor()+"\n";
+        s+=Reach.multiaura+"\n"+PunKeel.random+"\n"+(PunKeel.random ? PunKeel.rDelay.firstElement()+"\n"+PunKeel.rDelay.lastElement() : "0.5\n1.0")+"\n";
+        s+=m.getMode()+"\n"+m.isClassic()+"\n"+Block.getIdFromBlock(Search.getSearch().getSearchBlock())+"\n"+SoundManager.mm.name()+"\n";
+        Utils.nc.saveSave("values", s);
 	}
 	
 	public static String loginAltManager() {
@@ -2670,20 +2684,13 @@ public class Utils {
 	public static void saveAccount(String user, String mdp, String...fi) {
 		ArrayList s = new ArrayList();
     	s = getAllAccount();
-		File file = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"account.neko");
-        try {
-            file.createNewFile();            
-            try (FileWriter writer = new FileWriter(file)) {
-            	String res = "";          
-            	if (s.size()>0)
-	            	for (int k=0;k<s.size();k++) {
-	            		res+=s.get(k) +"\n";
-	            	}
-            	res+=user+" "+mdp+"\n";   
-            	writer.write(res);
-                writer.flush();
-            }            
-        } catch (Exception e) {}
+    	String res = "";          
+    	if (s.size()>0)
+        	for (int k=0;k<s.size();k++) {
+        		res+=s.get(k) +"\n";
+        	}
+    	res+=user+" "+mdp+"\n"; 
+    	nc.saveSave("alt", res);
 	}
 	
 	public static String getAccount(int acc, String...fi) {
@@ -3157,18 +3164,10 @@ public class Utils {
 		if (verif!=null)
 			return;
 		String s ="";
-		File file = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"shit.neko");
-        try {
-            file.createNewFile();            
-            try (FileWriter writer = new FileWriter(file)) {
-            	for (int i : DropShit.getShit().getList()) {
-            		s+=i+"\n";
-            	}
-                writer.write(s);
-                writer.flush();
-            }
-
-        } catch (IOException ex) {}
+		for (int i : DropShit.getShit().getList()) {
+    		s+=i+"\n";
+    	}
+		nc.saveSave("shit", s);
 	}
 	
 	public static void loadShit(String...fi) {
@@ -3285,29 +3284,19 @@ public class Utils {
 		if (mc.thePlayer==null || verif!=null)
 			return;
 		String s ="";
-		File file = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"cmd.neko");
-        try {
-            file.createNewFile();            
-            try (FileWriter writer = new FileWriter(file)) {
-            	for (Module m : ModuleManager.ActiveModule) {
-            		if (m.isCmd()) {
-            			String u="";
-            			for (int i=0;i<m.getCmd().size();i++) {
-            				if (i+1==m.getCmd().size())
-            					u+=m.getCmd().get(i);
-            				else
-            					u+=m.getCmd().get(i)+"&&";
-            			}
-            			s+=m.getName()+" "+m.getBind()+" "+u+"\n";
-            		}
-            	}
-                writer.write(s);
-                writer.flush();
-            }
-
-        } catch (IOException ex) {
-
-        }
+		for (Module m : ModuleManager.ActiveModule) {
+    		if (m.isCmd()) {
+    			String u="";
+    			for (int i=0;i<m.getCmd().size();i++) {
+    				if (i+1==m.getCmd().size())
+    					u+=m.getCmd().get(i);
+    				else
+    					u+=m.getCmd().get(i)+"&&";
+    			}
+    			s+=m.getName()+" "+m.getBind()+" "+u+"\n";
+    		}
+    	}
+		nc.saveSave("cmd", s);
 	}
 	
 	@SuppressWarnings("unlikely-arg-type")
@@ -3354,20 +3343,12 @@ public class Utils {
 		if (mc.thePlayer==null || verif!=null)
 			return;
 		String s ="";
-		File file = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"mod.neko");
-        try {
-            file.createNewFile();            
-            try (FileWriter writer = new FileWriter(file)) {
-            	for (Module m : ModuleManager.ActiveModule) {
-            		if (m.getToggled() && !m.getName().equalsIgnoreCase("VanillaTp") && !m.getCategory().name().equalsIgnoreCase("hide")) {
-            			s+=m.getName()+"\n";
-            		}
-            	}
-                writer.write(s);
-                writer.flush();
-            }
-
-        } catch (IOException ex) {}
+		for (Module m : ModuleManager.ActiveModule) {
+    		if (m.getToggled() && !m.getName().equalsIgnoreCase("VanillaTp") && !m.getCategory().name().equalsIgnoreCase("hide")) {
+    			s+=m.getName()+"\n";
+    		}
+    	}
+		nc.saveSave("mod", s);
 	}
 	
 	public static void loadMod(String...fi) {
@@ -3391,73 +3372,6 @@ public class Utils {
                 }
             } catch (IOException | NumberFormatException e) {}
 		} catch (IOException | NumberFormatException e) {}
-		
-		}
-	}
-	
-	public static void saveNekoUser() {
-		String s ="";
-		File file = new File(Utils.linkSave+separator+".."+separator+"blsquad"+separator+"config"+separator+"config.ini");
-        try {
-            file.createNewFile();            
-            try (FileWriter writer = new FileWriter(file)) {
-            	for (Module m : ModuleManager.ActiveModule) {
-            		s+=Utils.useCesarEncrypt(var.rm.getName(), 6)+"\n"+Utils.useCesarEncrypt(var.rm.getPass(), 13);
-            	}
-                writer.write(s);
-                writer.flush();
-            }
-
-        } catch (IOException ex) {}
-		File dir = new File(Utils.linkSave+separator+".."+separator+"blsquad"+separator+"config"+separator+"config.ini");
-		if (dir.exists()) {
-		try { 
-            InputStream ips = new FileInputStream(dir); 
-            InputStreamReader ipsr = new InputStreamReader(ips); 
-            try (BufferedReader br = new BufferedReader(ipsr)) {
-                String ligne;
-                Integer i=0;
-                String pseudoCrypt = "";
-                String passCrypt = "";
-                while ((ligne = br.readLine()) != null)
-                {                	                
-                	if (i==0)
-                		pseudoCrypt = ligne;
-                	if (i==1)
-                		passCrypt = ligne;
-                	i++;
-                }
-                String pseudo = Utils.useCesarEncrypt(pseudoCrypt, 6);
-                String pass = Utils.useCesarEncrypt(passCrypt, -13);     
-            } catch (IOException | NumberFormatException e) {}
-		} catch (IOException | NumberFormatException e) {}
-		
-		}
-	}
-	
-	public static void loadNekoUser() {
-		File dir = new File(Utils.linkSave+separator+".."+separator+"blsquad"+separator+"config"+separator+"config.ini");
-		if (dir.exists()) {
-			try { 
-	            InputStream ips = new FileInputStream(dir); 
-	            InputStreamReader ipsr = new InputStreamReader(ips); 
-	            try (BufferedReader br = new BufferedReader(ipsr)) {
-	                String ligne;
-	                Integer i=0;
-	                String pseudoCrypt = "";
-	                String passCrypt = "";
-	                while ((ligne = br.readLine()) != null)
-	                {                	                
-	                	if (i==0)
-	                		pseudoCrypt = ligne;
-	                	if (i==1)
-	                		passCrypt = ligne;
-	                	i++;
-	                }
-	                String pseudo = Utils.useCesarEncrypt(pseudoCrypt, 6);
-	                String pass = Utils.useCesarEncrypt(passCrypt, -13);     
-	            } catch (IOException | NumberFormatException e) {}
-			} catch (IOException | NumberFormatException e) {}
 		
 		}
 	}
@@ -3563,21 +3477,11 @@ public class Utils {
 	public static void saveBind(String...fi) {
 		if (verif!=null)
 			return;
-		File file = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"bind.neko");
-        try {
-            file.createNewFile();            
-            try (FileWriter writer = new FileWriter(file)) {
-            	String s = "";
-            	for (Module m : ModuleManager.ActiveModule) {
-            		s+=m.getName()+" "+(m.getBind()==0 ? -1 : m.getBind()) + "\n";
-            	}
-                writer.write(s);
-                writer.flush();
-            }
-
-        } catch (IOException ex) {
-            System.out.println("Error "+ex.getMessage());
-        }
+		String s = "";
+    	for (Module m : ModuleManager.ActiveModule) {
+    		s+=m.getName()+" "+(m.getBind()==0 ? -1 : m.getBind()) + "\n";
+    	}
+		NekoCloud.getNekoAPI().saveSave("bind", s);
 	}
 	
 	public static void reload() {
@@ -3823,18 +3727,7 @@ public class Utils {
 		for (int i=0;i<Friends.friend.size();i++) {
 			s+=Friends.friend.get(i).toString() + "\n";
 		}
-		File file = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"friends.neko");
-        try {
-            file.createNewFile();            
-            try (FileWriter writer = new FileWriter(file)) {
-                writer.write(s);
-                writer.flush();
-            }
-
-        } catch (IOException ex) {
-            
-        }
-		
+		NekoCloud.getNekoAPI().saveSave("friend", s);		
 	}
 	
 	public static void loadFriends(String...fi) {
@@ -4397,7 +4290,7 @@ public class Utils {
 		case 476:nyah="Owwww mon petit neko :3";break;
 		case 477:nyah="Tu es si mignon quand tu t'énerves :3 <3";break;
 		case 478:nyah="Cette loi s'applique à tous !";break;
-		case 479:nyah="Oh grand dieu des bananes Delxer, voulez vous bien m'octroyer un de vos fidèles :3 ?";break;
+		case 479:nyah="Oh grand dieu des bananes Ceasar, voulez vous bien m'octroyer un de vos fidèles :3 ?";break;
 		case 480:nyah="Banane Powa !";break;
 		case 481:nyah="C'est si inabituel de te voir dans cette tenue :o";break;
 		case 482:nyah="Je vois touuuuut é.è";break;
@@ -4413,7 +4306,7 @@ public class Utils {
 		case 492:nyah="Où est ma crèèèèème ??!";break;
 		case 493:nyah="Elle peut tout faire ;3";break;
 		case 494:nyah="Viens goûter mon bon miel :3";break;
-		case 495:nyah="J'ai fais une réserve de glands pour le dieu des bananes Delxer, j'espère qu'il va apprécier mon présent :3";break;
+		case 495:nyah="J'ai fais une réserve de glands pour le dieu des bananes Caesar, j'espère qu'il va apprécier mon présent :3";break;
 		case 496:nyah="C'est si dur de s'appeler Jean-Robert ?";break;
 		case 497:nyah="Ta petite bouille est tellement mignonne :3 <3";break;
 		case 498:nyah=":r Comment va ton élevage de bananes ?";break;
@@ -4496,7 +4389,7 @@ public class Utils {
 		case 585:nyah="Issou";break;
 		case 586:nyah="Je suis venu en paix !";break;
 		case 587:nyah="Ne pas me victimiser svp :c";break;
-		case 588:nyah="Mange mon ba...Tacos !";break;
+		case 588:nyah="Mange mon ba...Padawan !";break;
 		case 589:nyah="J'ai adopté une banane taille XXL...elle rentre pas :c";break;
 		case 590:nyah="C'est trop ptit !";break;
 		case 591:nyah="Je suis un soumis et j'adore ça ! :333";break;
@@ -4529,8 +4422,8 @@ public class Utils {
 		case 618:nyah="Ze te donne de gros câlins <3";break;
 		case 619:nyah="*Pat pat pat* :3";break;
 		case 620:nyah="AntoZzz est un pédophile qui aime les tokens , il les garde comme des petits enfants...";break;
-		case 621:nyah="AntoZzz et Tacos aime se battre entre eux";break;
-		case 622:nyah="AntoZzz a bouffé Tacos un jour :o";break;
+		case 621:nyah="AntoZzz et Padawan aime se battre entre eux";break;
+		case 622:nyah="AntoZzz a bouffé Padawan un jour :o";break;
 		case 623:nyah="Vape c'est bien...Neko c'est encore mieux en plus pervy ;3 !";break;
 		case 624:nyah="TwitSander a demandé 1000% de bonus d'xp sur Hazonia ! Applaudissez le :D !";break;
 		case 625:nyah="J'aime pas les chinois";break;
@@ -4539,23 +4432,23 @@ public class Utils {
 		case 628:nyah="AntoZzz code avec son cul mais c'est un bon chinois :3";break;
 		case 629:nyah="AntoZzz créé des bugs mais travaille bien :3";break;
 		case 630:nyah="Whoaaaaaaa c'est quoi cette reach ?";break;
-		case 631:nyah="Le tacos est légendaire (C'est faux)";break;
+		case 631:nyah="Le Padawan est légendaire (C'est faux)";break;
 		case 632:nyah="AntoZzz est chinois, mais ne sais pas faire du riz de bonne qualité...";break;
 		case 633:nyah="Montre moi ton NYAAAAAW";break;
 		case 634:nyah=":r Et toi, oui toi la, send des nyaw ^^";break;
 		case 635:nyah="Traffic d'objets sale, pas venir !";break;
-		case 636:nyah="Tacos et AntoZzz se chammaillent comme des frères...mais sous la couette c'est autre chose ;3";break;
-		case 637:nyah="à force de s'embêter, AntoZzz et Tacos ont commencés à se rapprocher dangereusement :o";break;
-		case 638:nyah="Fire...à force d'observer AntoZzz et Tacos si proches...s'est rapproché de leurs trucs sale...";break;
-		case 639:nyah="Tacos est parti démouler un de ces trucs bizarres dans sa cave...y a encore des cris...";break;
+		case 636:nyah="Padawan et AntoZzz se chammaillent comme des frères...mais sous la couette c'est autre chose ;3";break;
+		case 637:nyah="à force de s'embêter, AntoZzz et Padawan ont commencés à se rapprocher dangereusement :o";break;
+		case 638:nyah="Fire...à force d'observer AntoZzz et Padawan si proches...s'est rapproché de leurs trucs sale...";break;
+		case 639:nyah="Padawan est parti démouler un de ces trucs bizarres dans sa cave...y a encore des cris...";break;
 		case 640:nyah="Sucer des glands ne fera pas de toi un écureuil ! #Jiessel";break;
-		case 641:nyah="Le tacos se fait souvent remettre a l'ordre par ses Maîtres sadiques ;3";break;
-		case 642:nyah="On peut reconnaître Tacos à ses tâches de sauce blanche sur le coin de la bouche :o";break;
-		case 643:nyah="Tacos demande tous les soirs de la sauce blanche à son confident AntoZzz :3";break;
-		case 644:nyah="Delxer se croit le maître mais finit souvent sous le bureau de l'élève";break;
+		case 641:nyah="Je met de ces coups ;3";break;
+		case 642:nyah="On peut reconnaître Padawan à ses tâches de sauce blanche sur le coin de la bouche :o";break;
+		case 643:nyah="Padawan demande tous les soirs de la sauce blanche à son confident AntoZzz :3";break;
+		case 644:nyah="Enclume se croit le maître mais finit souvent sous le bureau de l'élève";break;
 		case 645:nyah="ça envoie des nude en pv oulà";break;
-		case 646:nyah="AntoZzz aime le riz...Tacos aime bouffer son riz avec son soumis Fury quand ils sont ensemble ;3";break;
-		case 647:nyah="AntoZzz a dominé le Tacos lors de la fête du riz";break;
+		case 646:nyah="AntoZzz aime le riz...Padawan aime bouffer son riz avec son soumis Fury quand ils sont ensemble ;3";break;
+		case 647:nyah="AntoZzz a dominé le Padawan lors de la fête du riz";break;
 		case 648:nyah="Ma soumise a été très gentille aujourd'hui, elle a droit à sa récompense :3";break;
 		case 649:nyah="J'ai torturé mon soumis pendant toute la soirée >:D";break;
 		case 650:nyah="Ne miaule pas !";break;
@@ -4610,14 +4503,14 @@ public class Utils {
 		case 699:nyah="Oh tain que c'est gros..waw";break;
 		case 700:nyah="ça tire loin quand même c'te truc :x";break;
 		case 701:nyah="Tryliom exploite Kumitsu";break;
-		case 702:nyah="Delxer et Mat' adorent drama ensemble...Hummmm c: ";break;
-		case 703:nyah="Delxer, adore le mot Bevo, on sait pas pourquoi...hum hum";break;
-		case 704:nyah="Delxer et Kumitsu adorent les mk :3";break;
+		case 702:nyah="J'ai pas fais ça intentionnelement !";break;
+		case 703:nyah="Dadadadadadadada";break;
+		case 704:nyah="Why not après tout..";break;
 		case 705:nyah="Ô maître punissez moi OwO";break;
 		case 706:nyah="Ça goûte trop bon, humm ><";break;
-		case 707:nyah="Delxer fait des bruits bizarres en vocal avec Mat' OwO";break;
+		case 707:nyah="Fais de l'asmr !";break;
 		case 708:nyah="Owwwww que c'est beau ;w;";break;
-		case 709:nyah="Delxer se fait punir tout les jours<3";break;
+		case 709:nyah="C'est l'heeeeure wiiii !";break;
 		case 710:nyah="Kumitsu adore se faire punir par son maître :3";break;
 		case 711:nyah="Tryliom miaule très fort en privée avec Kumitsu";break;
 		case 712:nyah="Mat' aime espionner Kumitsu et Tryliom";break;

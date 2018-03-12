@@ -38,7 +38,7 @@ public class Client {
 	  public final String CLIENT_AUTHOR = "Tryliom";
 	  public ModuleManager moduleManager;
 	  public GuiManager gui;
-	  public final String CLIENT_VERSION = "2.1.4";
+	  public final String CLIENT_VERSION = "2.2";
 	  private static final Client Neko = new Client();
 	  public String mode="Player";
 	  public Rank rang;
@@ -65,7 +65,6 @@ public class Client {
 	  public String ver = "";
 	  public String changelog = "";
 	  public RequestManager rm;
-	  public boolean testComptesNeko = false;
 	  public boolean firstServDisplay = true;
 	  public String strNeko = "§c>>> §9Neko Nightmare v"+CLIENT_VERSION+" §c<<<";
 	  public String strCreator = "§9Créé par Tryliom";
@@ -101,12 +100,6 @@ public class Client {
 		    }
 		    mc.mcResourceManager.registerReloadListener(NekoFont);
 		  this.moduleManager = new ModuleManager();
-		  Utils.createAllFolderSave();
-		  File f = new File(System.getenv("APPDATA") + "\\.minecraft\\Neko");
-		  if (f.exists()) {
-			  Utils.linkSave = System.getenv("APPDATA") + "\\.minecraft\\Neko\\";
-			  Utils.tranferAllData();
-		  }
 		  File f2 = new File(System.getenv("APPDATA") + "\\GoodNight_4\\config\\audio\\rpg");
 		  if (!f2.exists()) {
 			  Utils.linkSave = System.getenv("APPDATA") + "\\.minecraft\\Neko\\";

@@ -5082,10 +5082,6 @@ public class ChatUtils {
 						Event.lastEventId=-1;
 					}
 					irc.setOn(!irc.isOn());
-				} else if (args[1].equalsIgnoreCase("name") && args.length>=3) {
-					ArrayList<String> list = new ArrayList<>();
-					list.add(args[2]);					
-					new RequestThread("nameisfree", list).start();				
 				} else if (args[1].equalsIgnoreCase("playerclic") || args[1].equalsIgnoreCase("pc")) {
 					irc.changePlayerClic();
 					Utils.addChat("§aPlayerClic changé en "+irc.getPClic()+" !");

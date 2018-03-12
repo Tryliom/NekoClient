@@ -60,33 +60,21 @@ public class SoundManager {
 	public void searchMusicList() {
 		Vector<Music> list = new Vector<Music>();
 		try {				
-			// Récupère la liste des musiques dispo via une token
-			URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=m6664fc558b2507c6b63b09c22c75715");
+			// Récupère la liste des musiques dispo via AWS Lambda
+			URL url = new URL("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/music/list");
 			Scanner sc = new Scanner(url.openStream(), "UTF-8");
-			String var1 = "";
-			String var2 = "";
-			String var3 = "";
+			String str = "";
+			while (sc.hasNextLine()) {
+				String s = sc.nextLine();
+				if (s.startsWith("\"")) {
+					str = s.replaceAll("\"", "");
+					break;
+				}
+			}
+			String sr[] = str.split(",");
 			try {
-				while (sc.hasNextLine()) {
-					String sr[] = sc.nextLine().split("<br>");
-					for (int i = 0;i<sr.length;i++) {
-						if (sr[i].startsWith("name=")) {
-							var1=sr[i].replaceFirst(".....", "");
-						}
-						if (sr[i].startsWith("time=")) {
-							var2=sr[i].replaceFirst(".....", "");
-						}
-						if (sr[i].startsWith("path=")) {
-							var3=sr[i].replaceFirst(".....", "");
-						}
-						if (!var3.isEmpty()) {
-							list.add(new Music(var1, var2, var3));
-							var1 = "";
-							var2 = "";
-							var3 = "";
-						}
-						
-					}
+				for (int i = 0;i<sr.length;i++)	{
+					list.add(new Music(sr[i].replaceAll(".mp3", ""), "", "https://s3.eu-central-1.amazonaws.com/musicneko/"+sr[i].replaceAll(" ", "+")));
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

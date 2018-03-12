@@ -52,7 +52,7 @@ public class GuiDisconnected extends GuiScreen
         this.multilineMessage = this.fontRendererObj.listFormattedStringToWidth(this.message.getFormattedText(), this.width - 50);
         this.field_175353_i = this.multilineMessage.size() * this.fontRendererObj.FONT_HEIGHT;
         this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 2 + this.field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT, I18n.format("gui.toMenu", new Object[0])));
-        if (!Irc.getInstance().getCurrServer().isEmpty()) {
+        if (Irc.getInstance().getCurrServer()!=null && !Irc.getInstance().getCurrServer().isEmpty()) {
 	        this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 2 + this.field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 24, "Reconnect"));
 	        this.buttonList.add(new GuiButton(2, this.width / 2 - 100, this.height / 2 + this.field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 48, AutoReco.getActive()));
 	        this.buttonList.add(new GuiButton(3, this.width / 2 - 100, this.height / 2 + this.field_175353_i / 2 + this.fontRendererObj.FONT_HEIGHT + 72, "Reconnect with next Alt"));

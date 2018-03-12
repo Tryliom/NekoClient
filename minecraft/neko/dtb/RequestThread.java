@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.TimeZone;
 import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,7 +62,9 @@ public class RequestThread extends Thread {
 			} catch (Exception e) {
 				System.out.println("Erreur BDD: NOW()");
 			}
-			irc.setCurrServer((mc.isSingleplayer() ? "Solitaire" : mc.getCurrentServerData().serverIP.toLowerCase()));
+			try {
+				irc.setCurrServer((mc.isSingleplayer() ? "Solitaire" : mc.getCurrentServerData().serverIP.toLowerCase()));
+			} catch (Exception e) {}
 			if (irc.getIdPlayer()<=0) {
 				int id=0;
 				try {
@@ -403,24 +406,9 @@ public class RequestThread extends Thread {
 			String pMode="";
 			try {
 				long lastDate=new Date().getTime();
-				try {					
-					URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=2da98670bbc841c7db76dbed8efedf54");
-					Scanner sc = new Scanner(url.openStream());		
-					String l;
-					try {
-						while ((l = sc.nextLine()) != null) {
-							if (l.startsWith("NOW()=")) {
-								lastDate=Long.parseLong(l.replaceFirst("......", ""));
-							}
-						}
-					} catch (Exception e) {}
-					
-					sc.close();
-				} catch (Exception e) {
-					System.out.println("Erreur BDD: NOW()");
-				}				
-				long diff = lastDate-22000;	
-				String s = "\""+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE).format(new Date(diff))+"\",\""+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.FRANCE).format(new Date(lastDate))+"\"";
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				sdf.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));		
+				String s = "\""+sdf.format(new Date().getTime()-22000)+"\",\""+sdf.format(new Date().getTime())+"\"";
 				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=b0ac0857d55ccb7f52303bc7e440b02e&args="+URLEncoder.encode(s, "UTF-8"));
 				Scanner sc = new Scanner(url.openStream(), "UTF-8");		
 				String l;

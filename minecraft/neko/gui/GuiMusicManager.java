@@ -149,7 +149,6 @@ public class GuiMusicManager extends GuiScreen {
 		protected void drawSlot(int id, int x, int y, int var4, int var5, int var6) {
 			try {
 				var.NekoFont.drawString("§c" + SoundManager.getSM().getList().get(id).getName(), x + 31, y + 3, 10526880);
-				var.NekoFont.drawString(String.valueOf(SoundManager.getSM().getList().get(id).getTime()).replaceFirst("00:", ""), x + 31, y + 15, 10526880);
 			} catch (Exception e) {
 			}
 		}

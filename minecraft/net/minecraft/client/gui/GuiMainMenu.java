@@ -21,6 +21,7 @@ import org.lwjgl.util.glu.Project;
 import com.google.common.collect.Lists;
 
 import neko.Client;
+import neko.api.NekoCloud;
 import neko.gui.GuiConnect;
 import neko.gui.GuiMenuNeko;
 import neko.manager.OnlyRpgManager;
@@ -245,8 +246,18 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
             this.field_92020_v = this.field_92022_t + var5;
             this.field_92019_w = this.field_92021_u + 24;
         }
-        if (Client.getNeko().testComptesNeko)
-        	mc.displayGuiScreen(new GuiConnect(this, 1));
+        NekoCloud nc = NekoCloud.getNekoAPI();
+        
+        if (!nc.isLogin()) {
+        	Utils.loadCredentials();
+    	    String res = nc.loginAccount();
+    	    if (res.equalsIgnoreCase("success")) {
+    	    	// Load save
+    	    	Utils.loadSaveCloud();
+    	    	nc.setLogin(true);
+    	    } else
+    	    	mc.displayGuiScreen(new GuiConnect(this, 1));
+        }
     }
 
     /**
