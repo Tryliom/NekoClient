@@ -92,19 +92,9 @@ public class God extends Module {
 		
 		if (u.timeInGameSec>=60) {
 			u.timeInGameMin+=1;
-			u.timeInGameSec=0;
-			Utils.saveAll();
+			u.timeInGameSec=0;			
 			if (u.timeInGameMin%5==0) {
-				String s = Utils.linkSave;
-				Utils.linkSave+=this.backup;
-				if (!new File(Utils.linkSave).exists())
-					try {
-						new File(Utils.linkSave).mkdirs();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
 				Utils.saveAll();
-				Utils.linkSave=s;
 			}
 		}
 		if (u.timeInGameMin>=60) {

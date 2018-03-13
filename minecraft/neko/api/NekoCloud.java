@@ -61,9 +61,13 @@ public class NekoCloud {
 		return s.replaceAll("\"", "");
 	}
 	
+	/**
+	 * Les save sont load uniquement au début du client, donc il faut même que ça charge tout avant sinon dfbhhjab
+	 * @param name
+	 * @return
+	 */
 	public String getSave(String name) {
-		
-		return "";
+		return Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/save/get/"+name, parseHashMapToJson(getBaseBody())).replaceAll("\"", "");
 	}
 	/**
 	 * 

@@ -1013,42 +1013,7 @@ public class ChatUtils {
 				
 			}
 			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"backup") || args[0].equalsIgnoreCase(var.prefixCmd+"bip")) {
-				if (args.length==1) {
-					String name = "";
-					if (args.length>1) {
-						for (int i=1;i<args.length;i++) {
-							if (i+1==args.length)
-								name+=args[i];
-							else 
-								name+=args[i]+" ";
-						}
-					} else {
-						name = "NekoBackup";
-					}
-					String s = Utils.linkSave;
-					Utils.linkSave=System.getenv("APPDATA") + "\\.minecraft\\"+name+"\\";
-					if (!new File(Utils.linkSave).exists())
-						try {
-							new File(Utils.linkSave).mkdirs();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					Utils.saveAll();
-					Utils.linkSave=s;
-					Utils.addChat("§aBackup crée !");
-				} else if (args[1].equalsIgnoreCase("set")) {
-					String name = args[2];
-					for (int i=3;i<args.length;i++) {
-							name+=" "+args[i];
-					}
-					God.getInstance().setBackup(args[2]);
-					Utils.addChat("§aLien de backup automatique changée !");
-				}
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"saveall") || args[0].equalsIgnoreCase(var.prefixCmd+"save")) {
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"save")) {
 				Utils.saveAll();
 				Utils.addChat("§aTout a été sauvé");
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
@@ -1179,16 +1144,13 @@ public class ChatUtils {
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"autopot")) {
-				if (args.length==1) {
-					Utils.toggleModule("AutoPot");
-				} else {
-					try {
-						AutoPot.heal=Integer.parseInt(args[1]);
-						Utils.addChat("§aSeuil de vie mis à "+args[1]+" !");
-					} catch (Exception e) {
-						Utils.addChat(err);
-					}
+				try {
+					AutoPot.heal=Integer.parseInt(args[1]);
+					Utils.addChat("§aSeuil de vie mis à "+args[1]+" !");
+				} catch (Exception e) {
+					Utils.addChat(err);
 				}
+
 				Utils.checkXp(xp);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
@@ -3028,11 +2990,6 @@ public class ChatUtils {
 					Utils.addChat("§aAnimation du lvl activé");
 				}
 				var.animation=!var.animation;
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"reload")) {
-				Utils.reload();
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			

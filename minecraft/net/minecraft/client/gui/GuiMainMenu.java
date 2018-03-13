@@ -248,7 +248,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         }
         NekoCloud nc = NekoCloud.getNekoAPI();
         
-        if (!nc.isLogin()) {
+        if (!nc.isLogin() && Utils.haveInternet()) {
         	Utils.loadCredentials();
     	    String res = nc.loginAccount();
     	    if (res.equalsIgnoreCase("success")) {

@@ -114,6 +114,19 @@ public class GuiConnect extends GuiScreen {
 		case 3:
 			// Importer save
 			this.error = "Importation en cours...";
+			Utils.importSave();
+			this.error = "§aImportation réussie !";
+			for (Object o : this.buttonList) {
+				if (o instanceof GuiButton) {
+					GuiButton gb = (GuiButton) o;
+					if (gb.id==3) {
+						gb.visible = false;
+					}
+					if (gb.id==4) {
+						gb.displayString="§aEntrer";
+					}
+				}
+			}
 			break;
 		case 4:
 			// Ignore
