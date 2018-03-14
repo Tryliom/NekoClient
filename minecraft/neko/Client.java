@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Vector;
 
+import javax.lang.model.element.VariableElement;
 import javax.swing.Timer;
 
 import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
@@ -102,14 +103,6 @@ public class Client {
 		}
 		mc.mcResourceManager.registerReloadListener(NekoFont);
 		SoundManager.getSM();
-		Utils.loadCredentials();
-		NekoCloud nc = NekoCloud.getNekoAPI();
-	    String res = nc.loginAccount();
-	    if (res.equalsIgnoreCase("success")) {
-	    	// Load save
-	    	Utils.loadSaveCloud();
-	    	nc.setLogin(true);
-	    }
 		n = Utils.getRandInt(11);
 		switch (n) {
 		case 0:
@@ -178,7 +171,9 @@ class ch implements ActionListener {
 			neko.currentThread = new RequestThread("majPlayer", null);
 			neko.currentThread.start();
 		}
-
+		
+		
+		
 		if (Minecraft.getMinecraft().thePlayer != null)
 			try {
 				URL url = new URL("http://neko.alwaysdata.net/controler/Neko/an.html");

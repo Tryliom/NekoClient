@@ -59,6 +59,7 @@ public class GuiConnect extends GuiScreen {
 					"§aImporter votre sauvegarde local"));
 			this.buttonList.add(new GuiButton(4, this.width / 2 - 50, this.height / 3 + 74, 100, 20, "§cIgnorer"));
 		}
+		this.buttonList.add(new GuiButton(5, this.width-110, 10, 100, 20, "Music Manager"));
 	}
 
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -131,6 +132,9 @@ public class GuiConnect extends GuiScreen {
 		case 4:
 			// Ignore
 			this.mc.displayGuiScreen(new GuiMainMenu());
+			break;
+		case 5:
+			this.mc.displayGuiScreen(new GuiMusicManager(this));
 			break;
 		}
 	}

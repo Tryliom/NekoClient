@@ -68,7 +68,7 @@ public class NekoCloud {
 	 */
 	public String getSave(String name) {
 		String s = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/save/get/"+name, parseHashMapToJson(getBaseBody()));
-		System.out.println(s);
+//		System.out.println(s);
 		return s.replaceAll("\"", "");
 	}
 	/**
@@ -83,7 +83,7 @@ public class NekoCloud {
 			
 			@Override
 			public void run() {
-				System.out.println(content);
+//				System.out.println(content);
 				String s = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/save/update/"+name, NekoCloud.getNekoAPI().parseHashMapToJson(hm));
 			}
 		}).start();
