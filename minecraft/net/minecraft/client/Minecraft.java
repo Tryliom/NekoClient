@@ -1987,10 +1987,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                         if (Utils.mod) {
                         	if (Utils.display) {
 	                        	Utils.display=false;
-	                        	Utils.loadMod();
+	                        	Utils.loadCloudMod();
 	                        	Utils.display=true;
                         	} else {
-                        		Utils.loadMod();
+                        		Utils.loadCloudMod();
                         	}
                         	Utils.mod=false;
                         }

@@ -2291,11 +2291,6 @@ public class ChatUtils {
 							Utils.addChat("§cErreur");
 						}
 					}							
-				} else if (args[1].equalsIgnoreCase("clear")) {
-					try {
-						Utils.clearAccount();
-						Utils.addChat("Comptes clear !");
-					} catch (Exception e) {Utils.addChat("§cErreur, pas réussi à clear les comptes");}
 				} else {
 					if (MCLeaks.isAltActive()) {
 						MCLeaks.remove();

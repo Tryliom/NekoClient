@@ -25,8 +25,6 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.Vector;
 import java.util.function.Consumer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -56,7 +54,6 @@ import neko.gui.GuiMusicManager;
 import neko.gui.GuiWikiMenu;
 import neko.gui.InGameGui;
 import neko.lock.Lock;
-import neko.manager.BddManager;
 import neko.manager.GuiManager;
 import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
@@ -2328,10 +2325,7 @@ public class Utils {
         for (String ligne : list)
         {       
         	i++;
-        	if (ligne.startsWith("§")) {
-        		j = Integer.parseInt(ligne.replaceFirst("§", ""))-111;
-        		j/=666;
-        	} else {
+        	if (!ligne.startsWith("§")) {
             	str+=ligne.length()+1;
             	if (i==1) 
             		irc.setNamePlayer(nc.getName());
@@ -2352,11 +2346,6 @@ public class Utils {
             		irc.setPlayerClic(ligne);	                	
         	}
         }
-    	if (j!=str) {
-    		System.out.println("Fichier modifié détécté: Reset de l'Irc !");
-    		irc.setPrefix("$");
-    		irc.setIdPlayer(0);
-    	}
 		if (Irc.getInstance().getNamePlayer()==null)
 			Irc.getInstance().setNamePlayer(mc.session.getUsername());
 	}
@@ -2416,13 +2405,7 @@ public class Utils {
 	public static void saveRpg() {
 		if (verif!=null)
 			return;
-		String s = var.rang.getName()+var.niveau+var.xp+var.xpMax+var.achievementHelp+var.prefixCmd+var.mode+var.ame+var.bonus+var.chance+var.lot+Active.bonus+Active.time+var.CLIENT_VERSION+Lot.nbLot;
-    	char ch[] = s.toCharArray();
-    	int sum=0;
-    	for (int i=0;i<ch.length;i++) {
-    		sum+=ch[i];
-    	}
-    	String res = var.rang.getName() + "\n" + var.niveau + "\n" + var.xp + "\n" + var.xpMax + "\n" + var.achievementHelp + "\n" + var.prefixCmd + "\n" + var.mode + "\n" + var.ame + "\n" + var.bonus+"\n§"+sum+"\n"+var.chance+"\n"+var.lot+"\n"+Active.bonus+"\n"+Active.time+"\n"+var.CLIENT_VERSION+"\n"+Lot.nbLot;
+    	String res = var.rang.getName() + "\n" + var.niveau + "\n" + var.xp + "\n" + var.xpMax + "\n" + var.achievementHelp + "\n" + var.prefixCmd + "\n" + var.mode + "\n" + var.ame + "\n" + var.bonus+"\n\n"+var.chance+"\n"+var.lot+"\n"+Active.bonus+"\n"+Active.time+"\n"+var.CLIENT_VERSION+"\n"+Lot.nbLot;
     	nc.saveSave("rpg", res);
 	}
 	
@@ -2431,9 +2414,9 @@ public class Utils {
 			return;
 		String s ="";
 		for (int i : Nuker.nuke) {
-    		s+=i + "\n";
+    		s+=i + ":";
     	}
-		nc.saveSave("nuker", s);
+		nc.saveSave("nuker", s.substring(0, s.length()-1));
 	}
 	
 	public static String preparePostRequest(String url, String body) {
@@ -2535,84 +2518,84 @@ public class Utils {
         for (String st : c.getListPlayer())
         	pl+=st+":";
         Magnet m = Magnet.getMagnet();
-    	s+=Dolphin.dolph+"\n";
-    	s+=Flight.speed+"\n";
-    	s+=KillAura.cps+"\n"+KillAura.range+"\n"+KillAura.lockView+"\n";
-    	s+=Render.varNeko+"\n";
-    	s+=NoClip.speed+"\n";
-    	s+=Regen.regen+"\n";
-    	s+=Speed709.getSpeed().getSpe()+"\n";
-    	s+=Step.getStep().getStep()+"\n";
-    	s+=Timer.time+"\n";
-    	s+=v.getHcoeff()+":"+v.getVcoeff()+"\n";
-    	s+=display+"\n";
-    	s+=zoom+"\n";
-    	s+=xp+"\n";
-    	s+=KillAura.live+"\n"+KillAura.invi+"\n"+KillAura.onground+"\n"+KillAura.noarmor+"\n";
-    	s+=Trigger.dist+"\n";
-    	s+=Reach.dist+"\n";
-    	s+=deathoff+"\n";
-    	s+=Fire.p+"\n";
-    	s+=Water.p+"\n";
-    	s+=Power.p+"\n";
-    	s+=timeInGameMs+":"+timeInGameSec+":"+timeInGameMin+":"+timeInGameHour+"\n";
-    	s+=h1+" "+h10+" "+h50+" "+h100+" "+h200+" "+h666+"\n";
-    	s+=ClickAim.dist+"\n";
-    	s+=ClickAim.multiAura+"\n";
-    	s+=VanillaTp.air+"\n";
-    	s+=Regen.bypass+"\n";
-    	s+=KillAura.mode+"\n";
-    	s+=Autoarmor.ec+"\n";
-    	s+="5"+"\n"+"true"+"\n";
-    	s+=Cheststealer.waitTime+"\n";
-    	s+=SmoothAim.range+"\n";
-    	s+=SmoothAim.degrees+"\n";
-        s+=Autosoup.drop+"\n";
-        s+=Autosoup.heal+"\n";
-        s+=KillAura.fov+"\n";
-        s+=nyah+"\n";
-        s+=nyahh+"\n";
-        s+=nyahSec+"\n";
-        s+=AutoClic.cps+"\n";
-        s+=Nuker.nukerRadius+"\n";
-        s+=KillAura.random+"\n";
-        s+=Freecam.speed+"\n";
-        s+=SmoothAim.speed+"\n";
-        s+=Flight.blink+"\n";
-        s+=Longjump.speed+"\n";
-        s+=InGameGui.color+"\n";
-        s+=HUD.coord+"\n"+HUD.fall+"\n"+HUD.fps+"\n"+HUD.item+"\n";
-        s+=Radar.fr+"\n";
-        s+=HUD.packet+"\n";
-        s+=sword+"\n";
-        s+=scoreboard+"\n";
-        s+=WorldTime.time+"\n";
-        s+=Wallhack.cR+"\n"+Wallhack.cG+"\n"+Wallhack.cB+"\n"+Wallhack.clR+"\n"+Wallhack.clG+"\n"+Wallhack.clB+"\n"+Wallhack.width+"\n";
-        s+=Tracers.cR+"\n"+Tracers.cG+"\n"+Tracers.cB+"\n"+Tracers.width+"\n";
-        s+= neko.module.modules.render.Render.bonusCount+"\n"+HUD.time+"\n"+HUD.select+"\n";
-        s+=HUD.cR+"\n"+HUD.cG+"\n"+HUD.cB+"\n"+HUD.width+"\n";   
-        s+=Reach.pvp+"\n";
-        s+=KillAura.verif+"\n";
-        s+=Paint.cR+"\n"+Paint.cG+"\n"+Paint.cB+"\n"+Paint.alpha+"\n";
-        s+= neko.module.modules.render.Render.active+"\n";
-        s+=changeRank+"\n";
-        s+=Tracers.friend+"\n"+Reach.bloc+"\n";
-        s+=VanillaTp.classic+"\n"+Reach.classic+"\n"+Reach.aimbot+"\n"+Reach.fov+"\n";
-        s+=limit+"\n"+limite+"\n"+version+"\n"+kills+"\n"+HUD.stuff+"\n";
-        s+=R+"\n"+G+"\n"+B+"\n"+ neko.module.modules.render.Render.xp+"\n"+Reach.tnt+"\n"+Fastbow.getFast().isNobow()+"\n";
-        s+=AutoPot.heal+"\n"+Pyro.mode+"\n"+Reach.mode+"\n"+Antiafk.getInstance().getSec()+"\n";
-        s+=ItemESP.cR+"\n"+ItemESP.cG+"\n"+ItemESP.cB+"\n"+ItemESP.clR+"\n"+ItemESP.clG+"\n"+ItemESP.clB+"\n"+ItemESP.width+"\n";
-        s+=VanillaTp.top+"\n"+tp.getSpawn().toLong()+"\n"+tp.isClassic()+"\n"+tp.isTop()+"\n"+tp.getVie()+"\n\n"+Glide.getGlide().getSpeed()+"\n"+FireTrail.getFireTrail().isLarge()+"\n";
-        s+=Phase.getPhase().isVphase()+"\n\n";
-        s+=AutoMLG.getMLG().getFall()+"\n"+b.isDown()+"\n"+b.isSneak()+"\n"+b.isUp()+"\n"+b.isWall()+"\n";
-        s+=Fasteat.getFast().getPacket()+"\n"+PushUp.getPush().getPacket()+"\n"+Speed709.getSpeed().getMode()+"\n"+Reflect.getReflect().getPower()+"\n";
-        s+=p.getDelay()+"\n"+p.isFreezer()+"\n"+p.isRandom()+"\n"+KillAura.nobot+"\n"+SpamBot.getBot().getPseudo()+"\n"+var.animation+"\n";
-        s+=KillAura.premium+"\n"+GuiAltManager.check+"\n"+var.onlyrpg.isActive()+"\n"+nc.getColor()+"\n"+nc.getHeight()+"\n"+nc.getWidth()+"\n";
-        s+=c.getCmd2()+"\n"+pl+"\n"+Register.getReg().getMdp()+"\n"+God.getInstance().getBackup()+"\n"+Highjump.getJump().getHeight()+"\n";
-        s+=TutoManager.getTuto().isDone()+"\n"+Nuker.safe+"\n"+KillAura.speed+"\n"+PunKeel.attack+"\n"+PunKeel.delay+"\n"+Fastbow.getFast().getPacket()+"\n";
-        s+=Step.getStep().isBypass()+"\n"+BowAimbot.getAim().getFov()+"\n"+BowAimbot.getAim().getLife()+"\n"+BowAimbot.getAim().getArmor()+"\n";
-        s+=Reach.multiaura+"\n"+PunKeel.random+"\n"+(PunKeel.random ? PunKeel.rDelay.firstElement()+"\n"+PunKeel.rDelay.lastElement() : "0.5\n1.0")+"\n";
-        s+=m.getMode()+"\n"+m.isClassic()+"\n"+Block.getIdFromBlock(Search.getSearch().getSearchBlock())+"\n"+SoundManager.mm.name()+"\n";
+    	s+=Dolphin.dolph+":";
+    	s+=Flight.speed+":";
+    	s+=KillAura.cps+":"+KillAura.range+":"+KillAura.lockView+":";
+    	s+=Render.varNeko+":";
+    	s+=NoClip.speed+":";
+    	s+=Regen.regen+":";
+    	s+=Speed709.getSpeed().getSpe()+":";
+    	s+=Step.getStep().isBypass()+":";
+    	s+=Timer.time+":";
+    	s+=v.getHcoeff()+":"+v.getVcoeff()+":";
+    	s+=display+":";
+    	s+=zoom+":";
+    	s+=xp+":";
+    	s+=KillAura.live+":"+KillAura.invi+":"+KillAura.onground+":"+KillAura.noarmor+":";
+    	s+=Trigger.dist+":";
+    	s+=Reach.dist+":";
+    	s+=deathoff+":";
+    	s+=Fire.p+":";
+    	s+=Water.p+":";
+    	s+=Power.p+":";
+    	s+=timeInGameMs+":"+timeInGameSec+":"+timeInGameMin+":"+timeInGameHour+":";
+    	s+=h1+" "+h10+" "+h50+" "+h100+" "+h200+" "+h666+":";
+    	s+=ClickAim.dist+":";
+    	s+=ClickAim.multiAura+":";
+    	s+=VanillaTp.air+":";
+    	s+=Regen.bypass+":";
+    	s+=KillAura.mode+":";
+    	s+=Autoarmor.ec+":";
+    	s+="5"+":"+"true"+":";
+    	s+=Cheststealer.waitTime+":";
+    	s+=SmoothAim.range+":";
+    	s+=SmoothAim.degrees+":";
+        s+=Autosoup.drop+":";
+        s+=Autosoup.heal+":";
+        s+=KillAura.fov+":";
+        s+=nyah+":";
+        s+=nyahh+":";
+        s+=nyahSec+":";
+        s+=AutoClic.cps+":";
+        s+=Nuker.nukerRadius+":";
+        s+=KillAura.random+":";
+        s+=Freecam.speed+":";
+        s+=SmoothAim.speed+":";
+        s+=Flight.blink+":";
+        s+=Longjump.speed+":";
+        s+=InGameGui.color+":";
+        s+=HUD.coord+":"+HUD.fall+":"+HUD.fps+":"+HUD.item+":";
+        s+=Radar.fr+":";
+        s+=HUD.packet+":";
+        s+=sword+":";
+        s+=scoreboard+":";
+        s+=WorldTime.time+":";
+        s+=Wallhack.cR+":"+Wallhack.cG+":"+Wallhack.cB+":"+Wallhack.clR+":"+Wallhack.clG+":"+Wallhack.clB+":"+Wallhack.width+":";
+        s+=Tracers.cR+":"+Tracers.cG+":"+Tracers.cB+":"+Tracers.width+":";
+        s+= neko.module.modules.render.Render.bonusCount+":"+HUD.time+":"+HUD.select+":";
+        s+=HUD.cR+":"+HUD.cG+":"+HUD.cB+":"+HUD.width+":";   
+        s+=Reach.pvp+":";
+        s+=KillAura.verif+":";
+        s+=Paint.cR+":"+Paint.cG+":"+Paint.cB+":"+Paint.alpha+":";
+        s+= neko.module.modules.render.Render.active+":";
+        s+=changeRank+":";
+        s+=Tracers.friend+":"+Reach.bloc+":";
+        s+=VanillaTp.classic+":"+Reach.classic+":"+Reach.aimbot+":"+Reach.fov+":";
+        s+=limit+":"+limite+":"+version+":"+kills+":"+HUD.stuff+":";
+        s+=R+":"+G+":"+B+":"+ neko.module.modules.render.Render.xp+":"+Reach.tnt+":"+Fastbow.getFast().isNobow()+":";
+        s+=AutoPot.heal+":"+Pyro.mode+":"+Reach.mode+":"+Antiafk.getInstance().getSec()+":";
+        s+=ItemESP.cR+":"+ItemESP.cG+":"+ItemESP.cB+":"+ItemESP.clR+":"+ItemESP.clG+":"+ItemESP.clB+":"+ItemESP.width+":";
+        s+=VanillaTp.top+":"+tp.getSpawn().toLong()+":"+tp.isClassic()+":"+tp.isTop()+":"+tp.getVie()+"::"+Glide.getGlide().getSpeed()+":"+FireTrail.getFireTrail().isLarge()+":";
+        s+=Phase.getPhase().isVphase()+"::";
+        s+=AutoMLG.getMLG().getFall()+":"+b.isDown()+":"+b.isSneak()+":"+b.isUp()+":"+b.isWall()+":";
+        s+=Fasteat.getFast().getPacket()+":"+PushUp.getPush().getPacket()+":"+Speed709.getSpeed().getMode()+":"+Reflect.getReflect().getPower()+":";
+        s+=p.getDelay()+":"+p.isFreezer()+":"+p.isRandom()+":"+KillAura.nobot+":"+SpamBot.getBot().getPseudo()+":"+var.animation+":";
+        s+=KillAura.premium+":"+GuiAltManager.check+":"+var.onlyrpg.isActive()+":"+nc.getColor()+":"+nc.getHeight()+":"+nc.getWidth()+":";
+        s+=c.getCmd2()+":"+pl+":"+Register.getReg().getMdp()+":"+God.getInstance().getBackup()+":"+Highjump.getJump().getHeight()+":";
+        s+=TutoManager.getTuto().isDone()+":"+Nuker.safe+":"+KillAura.speed+":"+PunKeel.attack+":"+PunKeel.delay+":"+Fastbow.getFast().getPacket()+":";
+        s+=Step.getStep().isBypass()+":"+BowAimbot.getAim().getFov()+":"+BowAimbot.getAim().getLife()+":"+BowAimbot.getAim().getArmor()+":";
+        s+=Reach.multiaura+":"+PunKeel.random+":"+(PunKeel.random ? PunKeel.rDelay.firstElement()+":"+PunKeel.rDelay.lastElement() : "0.5:1.0")+":";
+        s+=m.getMode()+":"+m.isClassic()+":"+Block.getIdFromBlock(Search.getSearch().getSearchBlock())+":"+SoundManager.mm.name();
         Utils.nc.saveSave("values", s);
 	}
 	
@@ -2746,7 +2729,7 @@ public class Utils {
 	}
 	
 	public static void loadCloudValues() {
-        String list[] = nc.getSave("values").split("\n");        
+        String list[] = nc.getSave("values").split(":");        
 		Integer i=0;
         for (String ligne : list) {                	
         	try {
@@ -3577,7 +3560,9 @@ public class Utils {
 	                	if (i==168) {
 	                		SoundManager.getSM().mm = MusicMode.valueOf(ligne);
 	                	}
-                	} catch (Exception e) {}                	
+                	} catch (Exception e) {
+                		System.out.println("dsf");
+                	}                	
                 	i++;
                 }
             } catch (Exception e) {}
@@ -3597,8 +3582,13 @@ public class Utils {
 	
 	public static void loadCloudShit() {
 		String list[] = nc.getSave("shit").split("\n");
-		for (String ligne : list)
-			DropShit.getShit().getList().add(Integer.parseInt(ligne));
+		for (String ligne : list) {
+			try {
+				DropShit.getShit().getList().add(Integer.parseInt(ligne));
+			} catch (Exception e) {
+				System.out.println("Erreur dropshit");
+			}
+		}
 	}
 	
 	public static void loadShit(String...fi) {
@@ -3622,10 +3612,17 @@ public class Utils {
 	}
 	
 	public static void loadCloudNuker() {
-		String list[] = nc.getSave("nuker").split("\n");
+		String test = nc.getSave("nuker");
+		String list[] = test.split(":");
 		Nuker.nuke.clear();
-		for (String ligne : list)
-			Nuker.nuke.add(Integer.parseInt(ligne));
+		for (String ligne : list) {
+			try {
+				System.out.println(ligne+" "+list.length);
+				Nuker.nuke.add(Integer.parseInt(ligne));
+			} catch (Exception e) {
+				System.out.println("Erreur nuker");
+			}
+		}
 	}
 	
 	public static void loadNuker(String...fi) {
@@ -3807,7 +3804,7 @@ public class Utils {
 		String s ="";
 		for (Module m : ModuleManager.ActiveModule) {
     		if (m.getToggled() && !m.getName().equalsIgnoreCase("VanillaTp") && !m.getCategory().name().equalsIgnoreCase("hide") && !m.isCmd()) {
-    			s+=m.getName()+"\n";
+    			s+=m.getName()+":";
     		}
     	}
 		nc.saveSave("mod", s);
@@ -3830,7 +3827,7 @@ public class Utils {
 	                		if (tot.isEmpty())
 	                			tot = ligne;
 	                		else
-	                			tot+="\n"+ligne;
+	                			tot+=":"+ligne;
 	                	
 	                }
 	            } catch (IOException | NumberFormatException e) {}
@@ -3840,7 +3837,7 @@ public class Utils {
 	}
 	
 	public static void loadCloudMod() {
-		String list[] = nc.getSave("mod").split("\n");
+		String list[] = nc.getSave("mod").split(":");
 		for (String ligne : list) {
 			if (!isLock(ligne) && !ligne.equalsIgnoreCase("VanillaTp") && !ligne.equalsIgnoreCase("Gui") && !ligne.equalsIgnoreCase("Register"))
 	    		toggleModule(ligne);
