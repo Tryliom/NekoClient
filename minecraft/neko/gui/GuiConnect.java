@@ -99,7 +99,12 @@ public class GuiConnect extends GuiScreen {
 			if (result.equalsIgnoreCase("success")) {
 				Utils.saveCredentials();
 				this.nc.setLogin(true);
-				this.mc.displayGuiScreen(new GuiConnect(new GuiMainMenu(), 2));
+				if (this.loginOrCreate.equalsIgnoreCase("create"))
+					this.mc.displayGuiScreen(new GuiConnect(new GuiMainMenu(), 2));
+				else {
+					Utils.loadSaveCloud();
+					this.mc.displayGuiScreen(new GuiMainMenu());
+				}
 				break;
 			} else {
 				this.error = result;

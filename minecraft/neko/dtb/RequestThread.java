@@ -582,7 +582,7 @@ public class RequestThread extends Thread {
 		if (why.equalsIgnoreCase("insertMsg")) {
 			String msg = args.get(0); 				
 			HashMap<String, String> hm = NekoCloud.getNekoAPI().getBaseBody();
-			hm.put("message", msg);
+			hm.put("message", msg.replaceAll("\"", "'"));
 			hm.put("message_type", args.size()==2 ? args.get(1) : "all");
 			Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/irc/message/send", NekoCloud.getNekoAPI().parseHashMapToJson(hm));
 		}
