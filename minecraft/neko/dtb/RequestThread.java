@@ -6,6 +6,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.TimeZone;
@@ -14,12 +15,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import neko.Client;
+import neko.api.NekoCloud;
 import neko.manager.ModuleManager;
-import neko.manager.SoundManager;
 import neko.module.modules.render.Render;
 import neko.module.other.Event;
 import neko.module.other.Irc;
-import neko.module.other.Music;
 import neko.module.other.Rank;
 import neko.module.other.enums.Chat;
 import neko.module.other.enums.EventType;
@@ -580,26 +580,11 @@ public class RequestThread extends Thread {
 		}
 		
 		if (why.equalsIgnoreCase("insertMsg")) {
-			
-			try {
-				URL url=null;
-				String msg = args.get(0);
-				msg = msg.replaceAll("\"", "'");
-				msg = msg.replaceAll("&", "§");
-				msg = msg.replaceAll(" § ", " & ");
-				msg = msg.replaceAll(" §§ ", " && ");
-				if (msg==null || msg.isEmpty())
-					return;
-				if (args.size()==1)
-					url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=493879c2eec80a89314195eeb50a510b&args=\""+Irc.getInstance().getIdPlayer()+"\",\""+URLEncoder.encode(msg, "UTF-8")+"\",\"all\"&messageInc");
-				else if (args.size()==2)
-					url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=493879c2eec80a89314195eeb50a510b&args=\""+Irc.getInstance().getIdPlayer()+"\",\""+URLEncoder.encode(msg, "UTF-8")+"\",\""+args.get(1)+"\"&messageInc");
-				Scanner sc = new Scanner(url.openStream());	
-				sc.close();
-			} catch (Exception e) {
-				System.out.println("Erreur BDD: Insert Msg");
-			}
-			
+			String msg = args.get(0); 				
+			HashMap<String, String> hm = NekoCloud.getNekoAPI().getBaseBody();
+			hm.put("message", msg);
+			hm.put("message_type", args.size()==2 ? args.get(1) : "all");
+			Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/irc/message/send", NekoCloud.getNekoAPI().parseHashMapToJson(hm));
 		}
 		
 		if (why.equalsIgnoreCase("ban")) {			
@@ -672,35 +657,6 @@ public class RequestThread extends Thread {
 			} catch (Exception e) {
 				System.out.println("Erreur BDD: Alert");
 			}		
-		}
-		
-		if (why.equalsIgnoreCase("nameIsFree")) {
-			String name = args.get(0);
-			Pattern p = Pattern.compile("\\W");
-			Matcher m = p.matcher(name);
-			if (m.find() || name.length()>=21 || name.length()<1) {
-				Utils.addError("Veuillez choisir un pseudo entre 1 et 20 caractères et des caractères acceptables !");
-				return;
-			}				
-			try {
-				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=0140b8aafce358ccfbee86bd42c9e14f&args=\""+args.get(0)+"\"");
-				Scanner sc = new Scanner(url.openStream());	
-				String l;					
-				try {
-					while ((l = sc.nextLine()) != null) {
-						if (l.contains("false")) {
-							Irc.getInstance().setNamePlayer(args.get(0));
-							Utils.addChat("§aPseudo de l'irc changé !");
-							new RequestThread("majPlayer", null).start();
-						} else if (l.startsWith("player_id=")) {
-							Utils.addChat("§cErreur, ce pseudo est déjà pris !");
-						}
-					}
-				} catch (Exception e) {}
-				sc.close();
-			} catch (Exception e) {
-				System.out.println("Erreur BDD: name is free");
-			}
 		}
 		
 		if (why.equalsIgnoreCase("displayEvent")) {
