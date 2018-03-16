@@ -587,65 +587,33 @@ public class RequestThread extends Thread {
 			Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/irc/message/send", NekoCloud.getNekoAPI().parseHashMapToJson(hm));
 		}
 		
-		if (why.equalsIgnoreCase("ban")) {			
-			String ip = args.get(0);
-			try {
-				URL url=null;
-				url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=842a0df0db96ee5013d0f019cd17f3be&args=\""+URLEncoder.encode(args.get(0), "UTF-8")+"\",\""+Event.mdp+"\"");				
-				Scanner sc = new Scanner(url.openStream());	
-				String l;
-				
-				try {
-					while ((l = sc.nextLine()) != null) {
-						if (l.startsWith("last_ip=")) {
-							ip=l.replaceFirst("........", "").replace("<br>", "");
-						}
-					}
-				} catch (Exception e) {}
-				sc.close();
-			} catch (Exception e) {
-				System.out.println("Erreur BDD: Get ip from player name");
+		if (why.equalsIgnoreCase("ban")) {
+			HashMap<String, String> hm = NekoCloud.getNekoAPI().getBaseBody();
+			hm.put("player_name", args.get(0));
+			hm.put("reason", args.get(1));
+			String res = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/command/ban", NekoCloud.getNekoAPI().parseHashMapToJson(hm)).replaceAll("\"", "");
+			if (!res.equalsIgnoreCase("success")) {
+				Utils.addError(res);
 			}
-			try {
-				URL url=null;
-				url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=2176fb8b9f2efa32292b0e78bb1cefc9&args=\""+URLEncoder.encode(args.get(1), "UTF-8")+"\",\""+ip+"\",\""+Event.mdp+"\"");
-				System.out.println(url.toString());
-				Scanner sc = new Scanner(url.openStream());	
-				sc.close();
-			} catch (Exception e) {
-				System.out.println("Erreur BDD: Ban ("+e.getMessage()+")");
-			}			
-			ArrayList<String> list = new ArrayList<>();
-			list.add(Utils.setColor("§a"+args.get(0)+" a été banni de Neko pour §c"+Utils.setColor(args.get(1), "§c")+" !", "§a"));
-			new RequestThread("alert", list).start();
 		}
 		
 		if (why.equalsIgnoreCase("mute")) {			
-			try {
-				URL url=null;
-				url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=42feba42915810f59f40daa4943b6dc7&args=\""+URLEncoder.encode(args.get(0), "UTF-8")+"\",\""+Event.mdp+"\"");				
-				Scanner sc = new Scanner(url.openStream());	
-				sc.close();
-			} catch (Exception e) {
-				System.out.println("Erreur BDD: Mute player");
-			}		
-			ArrayList<String> list = new ArrayList<>();
-			list.add(Utils.setColor("§a"+args.get(0)+" a été mute de Neko pour §c"+Utils.setColor(args.get(1), "§c")+" !", "§a"));
-			new RequestThread("alert", list).start();
+			HashMap<String, String> hm = NekoCloud.getNekoAPI().getBaseBody();
+			hm.put("player_name", args.get(0));
+			hm.put("reason", args.get(1));
+			String res = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/command/mute", NekoCloud.getNekoAPI().parseHashMapToJson(hm)).replaceAll("\"", "");
+			if (!res.equalsIgnoreCase("success")) {
+				Utils.addError(res);
+			}
 		}
 		
 		if (why.equalsIgnoreCase("unmute")) {			
-			try {
-				URL url=null;
-				url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=75006a55e8641f6bbfbee9fa9a33846c&args=\""+URLEncoder.encode(args.get(0), "UTF-8")+"\",\""+Event.mdp+"\"");				
-				Scanner sc = new Scanner(url.openStream());	
-				sc.close();
-			} catch (Exception e) {
-				System.out.println("Erreur BDD: Unmute player");
-			}		
-			ArrayList<String> list = new ArrayList<>();
-			list.add(Utils.setColor("§a"+args.get(0)+" a été unmute de Neko !", "§a"));
-			new RequestThread("alert", list).start();
+			HashMap<String, String> hm = NekoCloud.getNekoAPI().getBaseBody();
+			hm.put("player_name", args.get(0));
+			String res = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/command/unmute", NekoCloud.getNekoAPI().parseHashMapToJson(hm)).replaceAll("\"", "");
+			if (!res.equalsIgnoreCase("success")) {
+				Utils.addError(res);
+			}
 		}
 		
 		if (why.equalsIgnoreCase("alert")) {			
@@ -841,22 +809,15 @@ public class RequestThread extends Thread {
 		}
 		
 		if (why.equalsIgnoreCase("insertEvent")) {
-			try {
-				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=4df4389fd8ea0114bbabd2f7a33ad923&args=\""+args.get(0)+"\",\""+args.get(1).toLowerCase()+"\",\""+args.get(2)+"\",\""+args.get(3)+"\",\""+URLEncoder.encode(args.get(4), "UTF-8")+"\",\""+URLEncoder.encode(args.get(5), "UTF-8")+"\"&last_id");
-				Scanner sc = new Scanner(url.openStream());	
-				String l;					
-				try {
-					while ((l = sc.nextLine()) != null) {
-						if (l.startsWith("false")) {
-							Utils.addChat(Utils.setColor("Erreur, vous n'avez pas la permission pour lancer un event !", "§c"));
-						} else if (l.startsWith("lastid=")) {
-							Utils.addChat("§aEvent envoyé avec succès !");
-						}
-					}
-				} catch (Exception e) {}
-				sc.close();
-			} catch (Exception e) {
-				System.out.println("Erreur BDD: insertEvent");
+			HashMap<String, String> hm = NekoCloud.getNekoAPI().getBaseBody();
+			hm.put("player_name", args.get(0));
+			hm.put("server", args.get(1).toLowerCase());
+			hm.put("version", args.get(2));
+			hm.put("type", args.get(3));
+			hm.put("cmd", args.get(4));
+			String res = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/command/event", NekoCloud.getNekoAPI().parseHashMapToJson(hm)).replaceAll("\"", "");
+			if (!res.equalsIgnoreCase("success")) {
+				Utils.addError(res);
 			}
 		}
 		

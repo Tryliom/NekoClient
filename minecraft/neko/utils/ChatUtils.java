@@ -2949,7 +2949,6 @@ public class ChatUtils {
 									cmd = Utils.setColor(cmd, t[0]);
 							}
 						list.add(cmd.replaceAll("&", "§").replaceAll(" § ", " & ").replaceAll("§§", "&&").replaceAll("\"", "'"));
-						list.add(Event.mdp);
 						new RequestThread("insertEvent", list).start();
 					}
 				} else {
