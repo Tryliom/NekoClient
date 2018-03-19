@@ -457,14 +457,7 @@ public class Utils {
 					var.rang=r;
 				r.setLvl(r.getLvl()+1);
 				r.setLock(false);
-				if (isLock("--reach pvp") && (r.getName().contains("JP") || r.getName().contains("Jean-Pierre"))) {
-					addChat("§cReach pvp §adébloquée !");
-					unlock("--reach pvp");					
-				}
-				if (r.getName().equalsIgnoreCase("Pyroman") && isLock("Pyro")) {
-					addChat("§dPyro débloqué !");
-					unlock("Pyro");					
-				}
+				checkRang();
 				return true;
 			}
 		}
@@ -1451,13 +1444,23 @@ public class Utils {
 		}
 		
 		for (Rank r : ModuleManager.rang) {
+			
+			if (isLock("--reach pvp") && (r.getName().contains("JP") || r.getName().contains("Jean-Pierre"))) {
+				addChat("§cReach pvp §adébloquée !");
+				unlock("--reach pvp");					
+			}
+			if (r.getName().equalsIgnoreCase("Pyroman") && isLock("Pyro")) {
+				addChat("§dPyro débloqué !");
+				unlock("Pyro");					
+			}
+			
 			// Supra
 			for (Rate rt : Rate.values())
 				if (r.getName().equalsIgnoreCase("Supra "+rt.name())) {
 					if (Utils.getTotRankRate(rt)==Utils.getTotRankRateUnlock(rt))
 						if (r.isLock()) {
 							setRank("Supra "+rt.name());
-							addChat("§d§koui§cRang §6Supra "+rt.name()+"§c débloqué !!§d§koui");
+							displayTitle("", "§d§koui§cRang §6Supra "+rt.name()+"§c débloqué !!§d§koui");
 						} else if (isAllRateHaveLvl(getRank("Supra "+rt.name()).getLvl()+1, rt)) {
 							setRank("Supra "+rt.name());
 							addChat("§d§koui§cRang §6Supra "+rt.name()+"§c a atteint le lvl "+getRank("Supra "+rt.name()).getLvl()+" !!§d§koui");
@@ -1469,7 +1472,7 @@ public class Utils {
 				if (r.isLock()) {
 					if (!getRank("Neko Army").isLock() && !getRank("JP Originel").isLock() && !getRank("Last Neko Judgement").isLock() && rang>=66) {
 						setRank(r.getName());
-						addChat("§4§koooo§cRang §5Nyaaw Mythique§c débloqué !!§4§koooo");
+						displayTitle("", "§4§koooo§cRang §5Nyaaw Mythique§c débloqué !!§4§koooo");
 						mc.thePlayer.playSound("mob.enderdragon.end", 0.5F, 0.5F);
 					}
 				} else {
@@ -1486,7 +1489,7 @@ public class Utils {
 				if (r.isLock()) {
 					if (!getRank("Jean-Pierre").isLock() && !getRank("Jean-Pierre alias JP").isLock() && !getRank("Jean-Pierre chanceux").isLock() && rang>=15) {
 						setRank(r.getName());
-						addChat("§4§koooo§cRang §dJP Originel§c débloqué !!§4§koooo");
+						displayTitle("", "§4§koooo§cRang §dJP Originel§c débloqué !!§4§koooo");
 						mc.thePlayer.playSound("mob.enderdragon.end", 0.5F, 0.5F);
 					}
 				} else {
@@ -1503,7 +1506,7 @@ public class Utils {
 				if (r.isLock()) {
 					if (!getRank("TryTry Satanique").isLock() && !getRank("Neko Angélique").isLock() && !getRank("Arakiel").isLock() && !getRank("Démon reconverti").isLock() && neko.module.modules.render.Render.bonusCount>=100) {
 						setRank(r.getName());
-						addChat("§4§koooo§cRang §dNeko Army§c débloqué !!§4§koooo");
+						displayTitle("", "§4§koooo§cRang §dNeko Army§c débloqué !!§4§koooo");
 						mc.thePlayer.playSound("mob.enderdragon.end", 0.5F, 0.5F);
 					}
 				} else {
@@ -1516,8 +1519,25 @@ public class Utils {
 				}
 			}
 			
-			if (r.getName().equalsIgnoreCase("Last Neko Judgement") && !r.isLock() && isLock("Pyro")) {
-				unlock("Pyro");
+			if (r.getName().equalsIgnoreCase("CrazyLove") && !r.isLock() && r.getLvl()>=5) {
+				Rank r2 = getRank("CrazyLove II");
+				if (r2.isLock())
+					setRank("CrazyLove II");
+				if (r2.getLvl()!=r.getLvl()/5) {
+					addChat("§cRang §dCrazyLove II§c a atteint le lvl "+r.getLvl()/5+" !");
+					r2.setLvl(r.getLvl()/5);
+				}
+				
+			}
+			if (r.getName().equalsIgnoreCase("CrazyLove II") && !r.isLock() && r.getLvl()>=3) {
+				Rank r2 = getRank("Crazy Frog");
+				if (r2.isLock())
+					setRank("Crazy Frog");
+				if (r2.getLvl()!=r.getLvl()/5) {
+					addChat("§cRang §dCrazyLove Frog§c a atteint le lvl "+r.getLvl()/5+" !");
+					r2.setLvl(r.getLvl()/5);
+				}
+				
 			}
 			
 			// // Last Neko Judgement : TryTry Divin, plus de 20 rangs gagnés, + 2 autres rangs
@@ -1525,7 +1545,7 @@ public class Utils {
 				if (r.isLock()) {
 					if (!getRank("TryTry Divin").isLock() && !getRank("Succube").isLock() && !getRank("Neko Satanique").isLock() && rang>=20) {
 						setRank(r.getName());
-						addChat("§4§koooo§cRang §dLast Neko Judgement§c débloqué !!§4§koooo");
+						displayTitle("", "§4§koooo§cRang §dLast Neko Judgement§c débloqué !!§4§koooo");
 						mc.thePlayer.playSound("mob.enderdragon.end", 0.5F, 0.5F);
 					}
 				} else {
@@ -1583,6 +1603,13 @@ public class Utils {
 			}
 			
 		}
+	}
+	
+	public static void displayTitle(String title, String subtitle) {
+		if (!title.isEmpty())
+			mc.ingameGUI.func_175178_a(title, null, 10, 10, 10);
+		if (!subtitle.isEmpty())
+			mc.ingameGUI.func_175178_a(null, subtitle, 10, 10, 10);
 	}
 	
 	public static BlockPos getRandBlock(int radius, double chance) {
