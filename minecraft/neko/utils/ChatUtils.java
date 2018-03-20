@@ -362,7 +362,7 @@ public class ChatUtils {
 			}
 			//TODO: BAN
 			if (var3.startsWith(var.prefixCmd+"ban")) {
-				if (args.length>=3 && !Event.mdp.isEmpty()) {
+				if (args.length>=3) {
 					ArrayList<String> list = new ArrayList<>();
 					list.add(args[1]);
 					String s = args[2];
@@ -373,16 +373,13 @@ public class ChatUtils {
 					list.add(s);
 					new RequestThread("ban", list).start();
 				} else {
-					if (Event.mdp.isEmpty()) {
-						Utils.addChat(Utils.setColor("Erreur, pas de mot de passe entré", "§c"));
-					} else
-						Utils.addChat(Utils.setColor("Erreur de syntaxe: "+var.prefixCmd+"ban <Nom du joueur> <Raison>", "§c"));
+					Utils.addChat(Utils.setColor("Erreur de syntaxe: "+var.prefixCmd+"ban <Nom du joueur> <Raison>", "§c"));
 				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
 			if (var3.startsWith(var.prefixCmd+"mute")) {
-				if (args.length>=3 && !Event.mdp.isEmpty()) {
+				if (args.length>=3) {
 					ArrayList<String> list = new ArrayList<>();
 					list.add(args[1]);
 					String s = args[2];
@@ -393,24 +390,18 @@ public class ChatUtils {
 					list.add(s);
 					new RequestThread("mute", list).start();
 				} else {
-					if (Event.mdp.isEmpty()) {
-						Utils.addChat(Utils.setColor("Erreur, pas de mot de passe entré", "§c"));
-					} else
-						Utils.addChat(Utils.setColor("Erreur de syntaxe: "+var.prefixCmd+"mute <Nom du joueur> <Raison>", "§c"));
+					Utils.addChat(Utils.setColor("Erreur de syntaxe: "+var.prefixCmd+"mute <Nom du joueur> <Raison>", "§c"));
 				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
 			if (var3.startsWith(var.prefixCmd+"unmute")) {
-				if (args.length==2 && !Event.mdp.isEmpty()) {
+				if (args.length==2) {
 					ArrayList<String> list = new ArrayList<>();
 					list.add(args[1]);
 					new RequestThread("unmute", list).start();
 				} else {
-					if (Event.mdp.isEmpty()) {
-						Utils.addChat(Utils.setColor("Erreur, pas de mot de passe entré", "§c"));
-					} else
-						Utils.addChat(Utils.setColor("Erreur de syntaxe: "+var.prefixCmd+"unmute <Nom du joueur>", "§c"));
+					Utils.addChat(Utils.setColor("Erreur de syntaxe: "+var.prefixCmd+"unmute <Nom du joueur>", "§c"));
 				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
@@ -2915,9 +2906,7 @@ public class ChatUtils {
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"event")) {
 				if (args.length==2) {
 					Event.mdp=args[1];
-					Utils.addChat("§aMot de passe entré !");
-				} else if (Event.mdp.isEmpty()) {
-					Utils.addChat("§cErreur, mot de passe manquant...");
+					Utils.addChat("§aMot de passe entré !");				
 				} else if (args.length==1) {
 					Utils.addChat(Utils.setColor("Utilisation correcte: "+var.prefixCmd+"event <player:all> <server:all> <ver:all> <Type> <cmd>", "§c"));
 					Utils.addChat(Utils.setColor("Type: Unlock, RandUnlock, Rang, RangRate, Cmd, Msg, Xp, Lvl et MeteoreRain", "§c"));

@@ -616,17 +616,6 @@ public class RequestThread extends Thread {
 			}
 		}
 		
-		if (why.equalsIgnoreCase("alert")) {			
-			try {
-				URL url=null;
-				url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=fcf5e6d383b81bc275e742a13dec843a&args=\""+URLEncoder.encode(args.get(0), "UTF-8")+"\"&messageInc");				
-				Scanner sc = new Scanner(url.openStream());	
-				sc.close();
-			} catch (Exception e) {
-				System.out.println("Erreur BDD: Alert");
-			}		
-		}
-		
 		if (why.equalsIgnoreCase("displayEvent")) {
 			Irc irc = Irc.getInstance();
 			int lastEventID = 0;
