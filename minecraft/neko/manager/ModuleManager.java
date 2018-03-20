@@ -300,18 +300,8 @@ public class ModuleManager {
 		// Rank
 		
 		// CrazyLove
-		rang.add(new Rank("La tentacule divine", 5000, Rate.CrazyLove, "§9", true, 0));
-		Utils.getRank("La tentacule divine").setDesc("Si gluante et visqueuse, votre amie pour votre vie de pervy ;3");
-		rang.add(new Rank("Développeur Neko", 1000, Rate.CrazyLove, "§2", true, 0));
-		Utils.getRank("Développeur Neko").setDesc("Développe chaque jours !");
-		rang.add(new Rank("Amour à Tryliom <3", 5000, Rate.CrazyLove, "§4", true, 0));
-		Utils.getRank("Amour à Tryliom <3").setDesc("Adore son Tryliom, ferais tout pour lui et est sa soumise absolue :3");
-		rang.add(new Rank("Administrateur", 3000, Rate.CrazyLove, "§4", true, 0));
-		Utils.getRank("Administrateur").setDesc("Administrateur Neko");
-		rang.add(new Rank("Modérateur", 2000, Rate.CrazyLove, "§9", true, 0));
-		Utils.getRank("Modérateur").setDesc("Modérateur Neko");
-		rang.add(new Rank("Helper", 1000, Rate.CrazyLove, "§3", true, 0));
-		Utils.getRank("Helper").setDesc("Helper Neko");
+		rang.add(new Rank("Crazymeal", 5000, Rate.CrazyLove, "§9", true, 0));
+		Utils.getRank("Crazymeal").setDesc("Miam miam");
 		
 		// Titan
 		rang.add(new Rank("Tryliom", 4000, Rate.Titan, "§4§o", true, 0));

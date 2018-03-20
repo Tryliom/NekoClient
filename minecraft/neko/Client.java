@@ -21,6 +21,7 @@ import neko.gui.RequestManager;
 import neko.manager.GuiManager;
 import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
+import neko.manager.QuestManager;
 import neko.manager.SoundManager;
 import neko.module.other.Conditions;
 import neko.module.other.Irc;
@@ -170,6 +171,14 @@ class ch implements ActionListener {
 				&& (neko.currentThread == null ? true : !neko.currentThread.isAlive())) {
 			neko.currentThread = new RequestThread("majPlayer", null);
 			neko.currentThread.start();
+		}
+		
+		if (mc.thePlayer != null && Utils.verif == null) {
+			// Random quest
+			if (Utils.getRandInt(100)==5 && (QuestManager.getQM().getCurrent()==null || !QuestManager.getQM().isHasBegin())) {
+				Utils.getRandQuest();
+				Utils.addChat2("§aNouveau défi ! (Voir ici)", neko.prefixCmd+"startquest", "§7Défi: "+QuestManager.getQM().getCurrent().getDesc()+"\n§aCliquez pour accepter le défi (Activer le cheat ou la commande que vous pensez être la bonne)", false, Chat.Click);
+			}
 		}
 		
 		

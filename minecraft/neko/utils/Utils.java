@@ -17,7 +17,9 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -31,7 +33,6 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.HttpsURLConnection;
 
-import org.apache.commons.codec.binary.Base64;
 import org.darkstorm.minecraft.gui.component.Frame;
 import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.input.Keyboard;
@@ -40,8 +41,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.ibm.icu.text.SimpleDateFormat;
-import com.mojang.authlib.Agent;
 import com.mojang.authlib.UserAuthentication;
 import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
@@ -57,6 +56,7 @@ import neko.lock.Lock;
 import neko.manager.GuiManager;
 import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
+import neko.manager.QuestManager;
 import neko.manager.SoundManager;
 import neko.manager.TutoManager;
 import neko.module.Category;
@@ -127,6 +127,7 @@ import neko.module.other.Active;
 import neko.module.other.Conditions;
 import neko.module.other.Irc;
 import neko.module.other.Music;
+import neko.module.other.Quest;
 import neko.module.other.Rank;
 import neko.module.other.TempBon;
 import neko.module.other.Xp;
@@ -172,6 +173,7 @@ import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Session;
 import net.minecraft.world.WorldSettings.GameType;
+import sun.management.Agent;
 
 /**
  * Utilité de cette classe:<br>
@@ -1603,6 +1605,55 @@ public class Utils {
 			}
 			
 		}
+	}
+	
+	public static void getRandQuest() {
+		Vector<Quest> v = new Vector<Quest>();
+		v.add(new Quest("J'ai de longs bras et suis très rapide", getModule("Reach"), null, 3));
+		if (!isLock("Pyro"))
+			v.add(new Quest("L'endroit où je regarde se consume lentement par les flammes", getModule("Pyro"), null, 3));
+		v.add(new Quest("Mais j- l-- c'e-- -as ma f--te...", getModule("PunKeel"), null, 3));
+		v.add(new Quest("Je viens d'où déjà ?", getModule("Trail"), null, 3));
+		v.add(new Quest("Le viseur pointe exactement le millieu de ta petite tête :D", getModule("Premonition"), null, 3));
+		v.add(new Quest("Comment je peux mourir --- l'eau..?", getModule("Jesus"), null, 3));
+		v.add(new Quest("Aucunes armure ne me résiste :3", getModule("FastDura"), null, 3));
+		v.add(new Quest("Ces montagnes ne sont plus bien loin à cette vitesse", getModule("Step"), null, 3));
+		v.add(new Quest("Ce mode multiplie aussi bien les pains que les brioches", null, var.prefixCmd+"size", 3));
+		v.add(new Quest("Aucun outils n'a de secret pour moi", getModule("AutoTool"), null, 3));
+		v.add(new Quest("On me chante mais tout change quand on m'utilise", getModule("Nausicaah"), null, 3));
+		v.add(new Quest("Parle en couleur avec moi :D", getModule("NekoChat"), null, 3));
+		v.add(new Quest("J'attire tout à moi dans le plus grand des calmes", getModule("Magnet"), null, 3));
+		v.add(new Quest("Tout change quand je suis là", getModule("Switch"), null, 3));
+		v.add(new Quest("Ces lunettes permettent de voir ce que tu désires", getModule("WallHack"), null, 3));
+		v.add(new Quest("Saute bien comme un lapin", getModule("Highjump"), null, 3));
+		v.add(new Quest("Qui serait le plus rapide pour un 100 blocs ?", getModule("VanillaTp"), null, 3));
+		v.add(new Quest("Qui serait le plus rapide pour un 10000 blocs ?", getModule("Speed"), null, 3));
+		v.add(new Quest("Viens à l'intérieur, on étouffe un peu mais on est bien :D", getModule("NoClip"), null, 3));
+		v.add(new Quest("Retour à la base !", getModule("TpBack"), null, 3));
+		v.add(new Quest("C'est quoi ces doubles sauts ?", getModule("AirWalk"), null, 3));
+		v.add(new Quest("Il me reste qu'une toute petite barre tiens", getModule("Ping"), null, 3));
+		v.add(new Quest("ça va exploser à 100 blocs !", getModule("Reach"), null, 3));
+		v.add(new Quest("J'ai trop mangé..burp!", getModule("Fasteat"), null, 3));
+		v.add(new Quest("Je ne veux pas regarder ça...", getModule("NoLook"), null, 3));
+		v.add(new Quest("Qui serait le plus rapide pour un saut de 100 blocs ?", getModule("Timer"), null, 3));
+		v.add(new Quest("Qui serait le plus lent pour un saut de 100 blocs ?", getModule("Glide"), null, 3));
+		v.add(new Quest("Qui serait le plus rapide sans mourir pour un saut de 100 blocs ?", getModule("NoFall"), null, 3));
+		v.add(new Quest("Qui va très vite mais le feu au cul ?", getModule("Flight"), null, 3));
+		v.add(new Quest("Je ne veux plus jamais tomber !", getModule("SafeWalk"), null, 3));
+		v.add(new Quest("Mes arrières sont protégées par le Pyromaniac !", getModule("FireTrail"), null, 3));
+		v.add(new Quest("C'est de l'art ou bien un repaire ?", getModule("Paint"), null, 3));
+		v.add(new Quest("Je traite chaques morceaux avant de les essayer pour trouver le plus résistant !", getModule("AutoArmor"), null, 3));
+		v.add(new Quest("Utilise moi et tu feras encore plus mal ! Quoi y a plus fort ?", getModule("Crit"), null, 3));
+		v.add(new Quest("Retrouve moi dans l'autre monde..", getModule("Freecam"), null, 3));
+		v.add(new Quest("Laisse moi rentrer ou je te le ferais regretter !", getModule("Phase"), null, 3));
+		v.add(new Quest("Cache toi mais je te verrais quand même !", getModule("Nametag"), null, 3));
+		v.add(new Quest("Comment tu veux me ralentir avec ça ?", getModule("Noslow"), null, 3));
+		v.add(new Quest("Je vois clair en toi", getModule("Xray"), null, 3));
+		v.add(new Quest("Je le vois...c'est tout bleu...j'y arrive bientôt..", getModule("Search"), null, 3));
+		v.add(new Quest("", getModule(""), null, 3));
+		
+		int rand = getRandInt(v.size());
+		QuestManager.getQM().setCurrent(v.get(rand));
 	}
 	
 	public static void displayTitle(String title, String subtitle) {

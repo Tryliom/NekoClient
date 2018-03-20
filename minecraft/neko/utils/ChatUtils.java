@@ -32,6 +32,7 @@ import neko.lock.Lock;
 import neko.manager.GuiManager;
 import neko.manager.LockManager;
 import neko.manager.ModuleManager;
+import neko.manager.QuestManager;
 import neko.manager.SoundManager;
 import neko.module.Category;
 import neko.module.Module;
@@ -2145,6 +2146,13 @@ public class ChatUtils {
 				else
 					mc.displayGuiScreen(new GuiMainMenu());
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"startquest")) {
+				if (QuestManager.getQM().getCurrent()!=null && !QuestManager.getQM().isHasBegin()) {
+					QuestManager.getQM().setHasBegin(true);
+					Utils.addChat("§aDéfi accepté !");
+				}
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"clickaim")) {
