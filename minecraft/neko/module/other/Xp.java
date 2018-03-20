@@ -193,16 +193,6 @@ class checkXp implements ActionListener {
 						Rank r = Utils.getRank("Homme de lettres");
 						Utils.addChat("§dRang de "+r.getColor()+r.getName()+"§d obtenu !");
 						Utils.addChat("§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=");
-					} else if (var.niveau>=2000 && Utils.getRank("Cannibal vicieux").isLock()) {
-						Utils.setRank("Cannibal vicieux");
-						Rank r = Utils.getRank("Cannibal vicieux");
-						Utils.addChat("§dRang de "+r.getColor()+r.getName()+"§d obtenu !");
-						Utils.addChat("§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=");
-					} else if (var.niveau>=3000 && Utils.getRank("^>.<^").isLock()) {
-						Utils.setRank("^>.<^");
-						Rank r = Utils.getRank("^>.<^");
-						Utils.addChat("§dRang de "+r.getColor()+r.getName()+"§d obtenu !");
-						Utils.addChat("§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=");
 					} else {
 						Utils.addChat("§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=§b-§6=");
 					}					

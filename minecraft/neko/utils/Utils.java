@@ -17,7 +17,9 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -31,7 +33,6 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.HttpsURLConnection;
 
-import org.apache.commons.codec.binary.Base64;
 import org.darkstorm.minecraft.gui.component.Frame;
 import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.input.Keyboard;
@@ -40,8 +41,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.ibm.icu.text.SimpleDateFormat;
-import com.mojang.authlib.Agent;
 import com.mojang.authlib.UserAuthentication;
 import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
@@ -57,6 +56,7 @@ import neko.lock.Lock;
 import neko.manager.GuiManager;
 import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
+import neko.manager.QuestManager;
 import neko.manager.SoundManager;
 import neko.manager.TutoManager;
 import neko.module.Category;
@@ -127,6 +127,7 @@ import neko.module.other.Active;
 import neko.module.other.Conditions;
 import neko.module.other.Irc;
 import neko.module.other.Music;
+import neko.module.other.Quest;
 import neko.module.other.Rank;
 import neko.module.other.TempBon;
 import neko.module.other.Xp;
@@ -172,6 +173,7 @@ import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Session;
 import net.minecraft.world.WorldSettings.GameType;
+import sun.management.Agent;
 
 /**
  * Utilité de cette classe:<br>
@@ -457,14 +459,7 @@ public class Utils {
 					var.rang=r;
 				r.setLvl(r.getLvl()+1);
 				r.setLock(false);
-				if (isLock("--reach pvp") && (r.getName().contains("JP") || r.getName().contains("Jean-Pierre"))) {
-					addChat("§cReach pvp §adébloquée !");
-					unlock("--reach pvp");					
-				}
-				if (r.getName().equalsIgnoreCase("Pyroman") && isLock("Pyro")) {
-					addChat("§dPyro débloqué !");
-					unlock("Pyro");					
-				}
+				checkRang();
 				return true;
 			}
 		}
@@ -1451,13 +1446,23 @@ public class Utils {
 		}
 		
 		for (Rank r : ModuleManager.rang) {
+			
+			if (isLock("--reach pvp") && (r.getName().contains("JP") || r.getName().contains("Jean-Pierre"))) {
+				addChat("§cReach pvp §adébloquée !");
+				unlock("--reach pvp");					
+			}
+			if (r.getName().equalsIgnoreCase("Pyroman") && isLock("Pyro")) {
+				addChat("§dPyro débloqué !");
+				unlock("Pyro");					
+			}
+			
 			// Supra
 			for (Rate rt : Rate.values())
 				if (r.getName().equalsIgnoreCase("Supra "+rt.name())) {
 					if (Utils.getTotRankRate(rt)==Utils.getTotRankRateUnlock(rt))
 						if (r.isLock()) {
 							setRank("Supra "+rt.name());
-							addChat("§d§koui§cRang §6Supra "+rt.name()+"§c débloqué !!§d§koui");
+							displayTitle("", "§d§koui§cRang §6Supra "+rt.name()+"§c débloqué !!§d§koui");
 						} else if (isAllRateHaveLvl(getRank("Supra "+rt.name()).getLvl()+1, rt)) {
 							setRank("Supra "+rt.name());
 							addChat("§d§koui§cRang §6Supra "+rt.name()+"§c a atteint le lvl "+getRank("Supra "+rt.name()).getLvl()+" !!§d§koui");
@@ -1469,7 +1474,7 @@ public class Utils {
 				if (r.isLock()) {
 					if (!getRank("Neko Army").isLock() && !getRank("JP Originel").isLock() && !getRank("Last Neko Judgement").isLock() && rang>=66) {
 						setRank(r.getName());
-						addChat("§4§koooo§cRang §5Nyaaw Mythique§c débloqué !!§4§koooo");
+						displayTitle("", "§4§koooo§cRang §5Nyaaw Mythique§c débloqué !!§4§koooo");
 						mc.thePlayer.playSound("mob.enderdragon.end", 0.5F, 0.5F);
 					}
 				} else {
@@ -1486,7 +1491,7 @@ public class Utils {
 				if (r.isLock()) {
 					if (!getRank("Jean-Pierre").isLock() && !getRank("Jean-Pierre alias JP").isLock() && !getRank("Jean-Pierre chanceux").isLock() && rang>=15) {
 						setRank(r.getName());
-						addChat("§4§koooo§cRang §dJP Originel§c débloqué !!§4§koooo");
+						displayTitle("", "§4§koooo§cRang §dJP Originel§c débloqué !!§4§koooo");
 						mc.thePlayer.playSound("mob.enderdragon.end", 0.5F, 0.5F);
 					}
 				} else {
@@ -1503,7 +1508,7 @@ public class Utils {
 				if (r.isLock()) {
 					if (!getRank("TryTry Satanique").isLock() && !getRank("Neko Angélique").isLock() && !getRank("Arakiel").isLock() && !getRank("Démon reconverti").isLock() && neko.module.modules.render.Render.bonusCount>=100) {
 						setRank(r.getName());
-						addChat("§4§koooo§cRang §dNeko Army§c débloqué !!§4§koooo");
+						displayTitle("", "§4§koooo§cRang §dNeko Army§c débloqué !!§4§koooo");
 						mc.thePlayer.playSound("mob.enderdragon.end", 0.5F, 0.5F);
 					}
 				} else {
@@ -1516,8 +1521,25 @@ public class Utils {
 				}
 			}
 			
-			if (r.getName().equalsIgnoreCase("Last Neko Judgement") && !r.isLock() && isLock("Pyro")) {
-				unlock("Pyro");
+			if (r.getName().equalsIgnoreCase("CrazyLove") && !r.isLock() && r.getLvl()>=5) {
+				Rank r2 = getRank("CrazyLove II");
+				if (r2.isLock())
+					setRank("CrazyLove II");
+				if (r2.getLvl()!=r.getLvl()/5) {
+					addChat("§cRang §dCrazyLove II§c a atteint le lvl "+r.getLvl()/5+" !");
+					r2.setLvl(r.getLvl()/5);
+				}
+				
+			}
+			if (r.getName().equalsIgnoreCase("CrazyLove II") && !r.isLock() && r.getLvl()>=3) {
+				Rank r2 = getRank("Crazy Frog");
+				if (r2.isLock())
+					setRank("Crazy Frog");
+				if (r2.getLvl()!=r.getLvl()/5) {
+					addChat("§cRang §dCrazyLove Frog§c a atteint le lvl "+r.getLvl()/5+" !");
+					r2.setLvl(r.getLvl()/5);
+				}
+				
 			}
 			
 			// // Last Neko Judgement : TryTry Divin, plus de 20 rangs gagnés, + 2 autres rangs
@@ -1525,7 +1547,7 @@ public class Utils {
 				if (r.isLock()) {
 					if (!getRank("TryTry Divin").isLock() && !getRank("Succube").isLock() && !getRank("Neko Satanique").isLock() && rang>=20) {
 						setRank(r.getName());
-						addChat("§4§koooo§cRang §dLast Neko Judgement§c débloqué !!§4§koooo");
+						displayTitle("", "§4§koooo§cRang §dLast Neko Judgement§c débloqué !!§4§koooo");
 						mc.thePlayer.playSound("mob.enderdragon.end", 0.5F, 0.5F);
 					}
 				} else {
@@ -1583,6 +1605,110 @@ public class Utils {
 			}
 			
 		}
+	}
+	
+	public static void checkQuest(String tryGuess) {
+		QuestManager qm = QuestManager.getQM();
+		if (qm.isHasBegin() && qm.getCurrent()!=null) {
+			qm.guessQuest(tryGuess);
+		}
+	}
+	
+	public static void getRandQuest() {
+		Vector<Quest> v = new Vector<Quest>();
+		v.add(new Quest("J'ai de longs bras et suis très rapide", getModule("Reach"), null, 3));
+		if (!isLock("Pyro"))
+			v.add(new Quest("L'endroit où je regarde se consume lentement par les flammes", getModule("Pyro"), null, 3));
+		v.add(new Quest("Mais j- l-- c'e-- -as ma f--te...", getModule("PunKeel"), null, 3));
+		v.add(new Quest("Je viens d'où déjà ?", getModule("Trail"), null, 3));
+		v.add(new Quest("Le viseur pointe exactement le millieu de ta petite tête :D", getModule("Premonition"), null, 3));
+		v.add(new Quest("Comment je peux mourir --- l'eau..?", getModule("Jesus"), null, 3));
+		v.add(new Quest("Aucunes armure ne me résiste :3", getModule("FastDura"), null, 3));
+		v.add(new Quest("Ces montagnes ne sont plus bien loin à cette vitesse", getModule("Step"), null, 3));
+		v.add(new Quest("Ce mode multiplie aussi bien les pains que les brioches", null, var.prefixCmd+"size", 3));
+		v.add(new Quest("Aucun outils n'a de secret pour moi", getModule("AutoTool"), null, 3));
+		v.add(new Quest("On me chante mais tout change quand on m'utilise", getModule("Nausicaah"), null, 3));
+		v.add(new Quest("Parle en couleur avec moi :D", getModule("NekoChat"), null, 3));
+		v.add(new Quest("J'attire tout à moi dans le plus grand des calmes", getModule("Magnet"), null, 3));
+		v.add(new Quest("Tout change quand je suis là", getModule("Switch"), null, 3));
+		v.add(new Quest("Ces lunettes permettent de voir ce que tu désires", getModule("WallHack"), null, 3));
+		v.add(new Quest("Saute bien comme un lapin", getModule("Highjump"), null, 3));
+		v.add(new Quest("Qui serait le plus rapide pour un 100 blocs ?", getModule("VanillaTp"), null, 3));
+		v.add(new Quest("Qui serait le plus rapide pour un 10000 blocs ?", getModule("Speed"), null, 3));
+		v.add(new Quest("Viens à l'intérieur, on étouffe un peu mais on est bien :D", getModule("NoClip"), null, 3));
+		v.add(new Quest("Retour à la base !", getModule("TpBack"), null, 3));
+		v.add(new Quest("C'est quoi ces doubles sauts ?", getModule("AirWalk"), null, 3));
+		v.add(new Quest("Il me reste qu'une toute petite barre tiens", getModule("Ping"), null, 3));
+		v.add(new Quest("ça va exploser à 100 blocs !", getModule("Reach"), null, 3));
+		v.add(new Quest("J'ai trop mangé..burp!", getModule("Fasteat"), null, 3));
+		v.add(new Quest("Je ne veux pas regarder ça...", getModule("NoLook"), null, 3));
+		v.add(new Quest("Qui serait le plus rapide pour un saut de 100 blocs ?", getModule("Timer"), null, 3));
+		v.add(new Quest("Qui serait le plus lent pour un saut de 100 blocs ?", getModule("Glide"), null, 3));
+		v.add(new Quest("Qui serait le plus rapide sans mourir pour un saut de 100 blocs ?", getModule("NoFall"), null, 3));
+		v.add(new Quest("Qui va très vite mais le feu au cul ?", getModule("Flight"), null, 3));
+		v.add(new Quest("Je ne veux plus jamais tomber !", getModule("SafeWalk"), null, 3));
+		v.add(new Quest("Mes arrières sont protégées par le Pyromaniac !", getModule("FireTrail"), null, 3));
+		v.add(new Quest("C'est de l'art ou bien un repaire ?", getModule("Paint"), null, 3));
+		v.add(new Quest("Je traite chaques morceaux avant de les essayer pour trouver le plus résistant !", getModule("AutoArmor"), null, 3));
+		v.add(new Quest("Utilise moi et tu feras encore plus mal ! Quoi y a plus fort ?", getModule("Crit"), null, 3));
+		v.add(new Quest("Retrouve moi dans l'autre monde..", getModule("Freecam"), null, 3));
+		v.add(new Quest("Laisse moi rentrer ou je te le ferais regretter !", getModule("Phase"), null, 3));
+		v.add(new Quest("Cache toi mais je te verrais quand même !", getModule("Nametag"), null, 3));
+		v.add(new Quest("Comment tu veux me ralentir avec ça ?", getModule("Noslow"), null, 3));
+		v.add(new Quest("Je vois clair en toi", getModule("Xray"), null, 3));
+		v.add(new Quest("Je le vois...c'est tout bleu...j'y arrive bientôt..", getModule("Search"), null, 3));
+		v.add(new Quest("Viens à moi...non, éloigne toi..", getModule("Reflect"), null, 3));
+		v.add(new Quest("Oulala ça tourne dans tous les sens...je m'y retrouve plus..", getModule("Likaotique"), null, 3));
+		v.add(new Quest("Quelle ambiance chaotique ici..", getModule("Likaotique"), null, 3));
+		v.add(new Quest("Sans moi tu n'aurais rien", getModule("Cheststealer"), null, 3));
+		v.add(new Quest("Avec moi tu pourras monter tout en haut avant lui", getModule("Fastladder"), null, 3));
+		v.add(new Quest("Je t'indique tout et pas de merci ?", getModule("HUD"), null, 3));
+		v.add(new Quest("Voilà ! Tout est encodé !", getModule("Unicode"), null, 3));
+		v.add(new Quest("Je t'aide et tu me délaisse après !", null, var.prefixCmd+"help", 3));
+		v.add(new Quest("Il ne restera plus rien après mon passage !", getModule("Nuker"), null, 3));
+		v.add(new Quest("Utilise moi sur un item et la puissance tu auras !", null, var.prefixCmd+"enchant", 3));
+		v.add(new Quest("Clique encore !", null, var.prefixCmd+"startquest", 3));
+		v.add(new Quest("Tu vas encore envoyer un message gênant C:", null, var.prefixCmd+"nyah", 3));
+		v.add(new Quest("Ton ip n'as plus de secret pour moi..", null, var.prefixCmd+"myip", 3));
+		v.add(new Quest("Il y en a peu mais...C'est très efficace !", null, var.prefixCmd+"Potion", 3));
+		v.add(new Quest("J'ai vu ce que tu as fais...tout l'historique...", null, var.prefixCmd+"namemc", 3));
+		v.add(new Quest("La musique..viens l'écouter avec moi...", null, var.prefixCmd+"disc", 3));
+		v.add(new Quest("Wut je suis à l'envers...j'ai mis ça trop haut..", null, var.prefixCmd+"fov", 3));
+		v.add(new Quest("J'aide mon adversaire à contruire son pont :3", getModule("Reach"), null, 3));
+		v.add(new Quest("Même cachée, j'arrive à l'attraper !", getModule("Reach"), null, 3));
+		v.add(new Quest("Pourquoi tu m'actives juste pour arriver par derrière ?", getModule("Blink"), null, 3));
+		v.add(new Quest("Ninja !", getModule("VanillaTp"), null, 3));
+		v.add(new Quest("7 joueurs autour, 7 mort", getModule("TpKill"), null, 3));
+		v.add(new Quest("Affiche les tous !", getModule("Gui"), null, 3));
+		v.add(new Quest("Les invisibles en premier !", getModule("KillAura"), null, 3));
+		v.add(new Quest("Viens en face de moi que je puisse distribuer des pains", getModule("Trigger"), null, 3));
+		v.add(new Quest("Je tire à l'épée et tu trouves ça normal :o ?", getModule("Fastbow"), null, 3));
+		v.add(new Quest("Laisse moi avec mes champi !", getModule("Autosoup"), null, 3));
+		v.add(new Quest("Glou glou glou...burp!", getModule("Autopot"), null, 3));
+		v.add(new Quest("Glou glou glou", getModule("Dolphin"), null, 3));
+		v.add(new Quest("Je t'aide toujours avec ton bras cassé", getModule("ClickAim"), null, 3));
+		v.add(new Quest("100% touché en \"legit\"", getModule("SmoothAim"), null, 3));
+		v.add(new Quest("Scannage en cours..", getModule("Radar"), null, 3));
+		v.add(new Quest("C'est comme un tapis volant mais c'est pas un tapis", getModule("Scaffold"), null, 3));
+		v.add(new Quest("Je suis comme un couteau Suisse", getModule("Exploit"), null, 3));
+		v.add(new Quest("Tu ne trouveras jamais ! Aussitôt activé, aussitôt oublié...bonne chance :c", getModule("Fullbright"), null, 3));
+		v.add(new Quest("Pourquoi la nuit ? Pourquoi le jour ?", getModule("Worldtime"), null, 3));
+		v.add(new Quest("Un petit coup et je te met K.O. ;3", getModule("Nausicaah"), null, 3));
+		v.add(new Quest("De quel commande rêves-tu depuis toujours ? Essaye-la maintenant !", null, var.prefixCmd+"forceop", 3));
+		v.add(new Quest("Base trouvée !", getModule("ChestESP"), null, 3));
+		v.add(new Quest("C'était quoi le gros tube de liquide rose ? Non...j'ai pas finis..", getModule("Regen"), null, 3));
+		v.add(new Quest("Stuff gratuit au sol !", getModule("Reach"), null, 3));
+		
+		// v.add(new Quest("", getModule(""), null, 3));
+		int rand = getRandInt(v.size());
+		QuestManager.getQM().setCurrent(v.get(rand));
+	}
+	
+	public static void displayTitle(String title, String subtitle) {
+		if (!title.isEmpty())
+			mc.ingameGUI.func_175178_a(title, null, 10, 10, 10);
+		if (!subtitle.isEmpty())
+			mc.ingameGUI.func_175178_a(null, subtitle, 10, 10, 10);
 	}
 	
 	public static BlockPos getRandBlock(int radius, double chance) {

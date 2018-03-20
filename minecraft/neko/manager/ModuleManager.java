@@ -284,26 +284,24 @@ public class ModuleManager {
 		lm.setLock("TpBack", "tpback", "TpBack");
 		this.Lock.add(new Lock("Flash", 0, "???", "Cheat", "Vous retp sur la position set à l'activation", "", true));
 		this.Lock.add(new Lock("PunKeel", 0, "???", "Cheat", "Génére un véritable lag suivant vos désirs", "pk", true));
-		this.Lock.add(new Lock("--step bypass", 0, "???", "Commande", "Bypass step", "", true));
-
+		this.Lock.add(new Lock("NekoChat", 3, "Lvl", "Cheat", "Chat personnalisable", "nc", true));
+		this.Lock.add(new Lock("Reflect", 4, "Lvl", "Cheat", "Vouis fait rebondir, accèlerer ou vous coller à l'entité près de vous", "", true));
+		this.Lock.add(new Lock("--size", 6, "Lvl", "Commande", "Choisis le nombre d'item que vous avez dans la main", "", true));
+		this.Lock.add(new Lock("--wear", 6, "Lvl", "Commande", "Met l'item en main sur votre tête", "", true));
+		this.Lock.add(new Lock("--give", 6, "Lvl", "Commande", "Vous donne un objet", "", true));
+		this.Lock.add(new Lock("--gm", 7, "Lvl", "Commande", "Vous met dans le gamemode choisis", "", true));
+		this.Lock.add(new Lock("--enchant", 7, "Lvl", "Commande", "Enchante à l'enchantement choisis l'item que vous avez dans la main", "", true));		
+		this.Lock.add(new Lock("PotionEffect", 8, "Lvl", "Cheat", "HUD pour l'effet des potions sur l'écran", "", true));
+		this.Lock.add(new Lock("ArmorHUD", 9, "Lvl", "Cheat", "HUD pour voir ses points d'armure restant et arme tenue", "", true));
+		this.Lock.add(new Lock("Autoeat", 10, "Lvl", "Cheat", "Vous fais manger auto et rapidement", "", true));
 		
 		
 		// Utils.getRank("").setDesc("");
 		// Rank
 		
 		// CrazyLove
-		rang.add(new Rank("La tentacule divine", 5000, Rate.CrazyLove, "§9", true, 0));
-		Utils.getRank("La tentacule divine").setDesc("Si gluante et visqueuse, votre amie pour votre vie de pervy ;3");
-		rang.add(new Rank("Développeur Neko", 1000, Rate.CrazyLove, "§2", true, 0));
-		Utils.getRank("Développeur Neko").setDesc("Développe chaque jours !");
-		rang.add(new Rank("Amour à Tryliom <3", 5000, Rate.CrazyLove, "§4", true, 0));
-		Utils.getRank("Amour à Tryliom <3").setDesc("Adore son Tryliom, ferais tout pour lui et est sa soumise absolue :3");
-		rang.add(new Rank("Administrateur", 3000, Rate.CrazyLove, "§4", true, 0));
-		Utils.getRank("Administrateur").setDesc("Administrateur Neko");
-		rang.add(new Rank("Modérateur", 2000, Rate.CrazyLove, "§9", true, 0));
-		Utils.getRank("Modérateur").setDesc("Modérateur Neko");
-		rang.add(new Rank("Helper", 1000, Rate.CrazyLove, "§3", true, 0));
-		Utils.getRank("Helper").setDesc("Helper Neko");
+		rang.add(new Rank("Crazymeal", 5000, Rate.CrazyLove, "§9", true, 0));
+		Utils.getRank("Crazymeal").setDesc("Miam miam");
 		
 		// Titan
 		rang.add(new Rank("Tryliom", 4000, Rate.Titan, "§4§o", true, 0));
@@ -342,9 +340,17 @@ public class ModuleManager {
 		Utils.getRank("Ambassadeur de l'Armagedon").setGiftPlus(5);
 		rang.add(new Rank("Gardien de la Déesse du neko", 3400, Rate.Titan, "§4§o", true, 0));
 		Utils.getRank("Gardien de la Déesse du neko").setDesc("Protège sa Déesse de tout déesarroi. Il la respecte par la loyauté et la soumission, passe le plus grand de son temps à ses côtés ;3");
-		Utils.getRank("Gardien de la Déesse du neko").setLotRateTitan(1);
-		Utils.getRank("Gardien de la Déesse du neko").setLotRateDivin(0.2);
+		Utils.getRank("Gardien de la Déesse du neko").setLotRateTitan(1.5);
+		Utils.getRank("Gardien de la Déesse du neko").setLotRateSatanique(0.2);
 		Utils.getRank("Gardien de la Déesse du neko").setRadiusGift(10);
+		rang.add(new Rank("Dévloppeur full stack", 3000, Rate.Titan, "§4§o", true, 0));
+		Utils.getRank("Dévloppeur full stack").setDesc("Bosse de tout dans tout en traitant n'importe quoi. L'utilité suprême. Prend vos âmes trois par trois...");
+		Utils.getRank("Dévloppeur full stack").setGiftPlusAme(3);
+		Utils.getRank("Dévloppeur full stack").setRadiusGift(20);
+		rang.add(new Rank("Crazy Frog", 3400, Rate.Titan, "§2", true, 0));
+		Utils.getRank("Crazy Frog").setDesc("Il a enfin finaliser son ascension par cet acte, il est maintenant prêt à CRCRCR...");
+		Utils.getRank("Crazy Frog").setGiftPlus(5);
+		Utils.getRank("Crazy Frog").setRadiusGift(25);
 		
 		
 		// Mythique
@@ -384,15 +390,21 @@ public class ModuleManager {
 		Utils.getRank("Last Neko Judgement").setLotRateSatanique(0.8);
 		Utils.getRank("Last Neko Judgement").setGiftPlus(5);
 		
-		rang.add(new Rank("Pyroman", 555, Rate.Légendaire, "§4§n", true, 0));
+		rang.add(new Rank("Pyroman", 800, Rate.Légendaire, "§4§n", true, 0));
 		Utils.getRank("Pyroman").setDesc("Possède la volonté suprême de détruire tout autour de soit sur des distances inconcevables, un maître des flammes. On raconte qu'une fois il a réussi à faire fuir le fou en tutu rose paillette de sa forêt...par le feu.");
 		Utils.getRank("Pyroman").setGiftPlusAme(0.5);
 		
+		rang.add(new Rank("CrazyLove II", 1700, Rate.Légendaire, "§4", true, 0));
+		Utils.getRank("CrazyLove II").setDesc("Cela fait déjà longtemps qu'il attend de rejoindre ce qu'il était, il ne va pas attendre plus longtemps avant d'y arriver..");
+		Utils.getRank("CrazyLove II").setLotRateTitan(1.5);
+		Utils.getRank("CrazyLove II").setRadiusGift(10);
+		
 		// Satanique <1000
-		String info = "Pour ceux qui se demandent, mon inspiration principale vient de Supernatural (Et de l'Armagedon) c:";
 		rang.add(new Rank("Supra Satanique", 1000, Rate.Supra, "§6", true, 0));
-		Utils.getRank("Supra Satanique").setDesc("Etre suprême parmis les Sataniques");
-		rang.add(new Rank("TryTry Satanique", 827, Rate.Satanique, "§c", true, 0));
+		Utils.getRank("Supra Satanique").setDesc("Etre suprême parmis les Sataniques qui veut atteindre les Titans");
+		Utils.getRank("Supra Satanique").setLotRateTitan(1.5);
+		Utils.getRank("Supra Satanique").setLotRang(0.8);
+		rang.add(new Rank("TryTry Satanique", 999, Rate.Satanique, "§c", true, 0));
 		Utils.getRank("TryTry Satanique").setDesc("Un Tryliom Satanique pouvant à tout moment appeller sa Neko Army démoniaque sur le champs de bataille");
 		Utils.getRank("TryTry Satanique").setLotRang(0.5);
 		Utils.getRank("TryTry Satanique").setLotRateUltraRare(0.4);
@@ -497,13 +509,19 @@ public class ModuleManager {
 		Utils.getRank("Seme").setDesc("Dominateur torturant les âmes de l'Enfer, son âme s'assombrit le long de sa peine. On raconte que vous pouvez écouter son rire vous hantez si vous frôlez la mort avec de mauvaises intentions...");
 		rang.add(new Rank("Dullahan", 142, Rate.Satanique, "§5", true, 0));
 		Utils.getRank("Dullahan").setDesc("Créature sans tête souvent à cheval étouffant sa soif de sang en prenant au piège de vils étrangers. Gardien de l'Antre de la Neko Army Démoniaque");
+		rang.add(new Rank("CrazyLove", 750, Rate.Satanique, "§5", true, 0));
+		Utils.getRank("CrazyLove").setDesc("Après des milliers d'années dans le sommeil, il est redevenu à votre niveau mais grandit rapidement..qui sait ce qui pourrait arriver s'il évolue..");
+		Utils.getRank("CrazyLove").setLotRateTitan(1);
+		Utils.getRank("CrazyLove").setRadiusGift(5);
 		
 		// Divin 100-400
 		rang.add(new Rank("Supra Divin", 500, Rate.Supra, "§6", true, 0));
 		Utils.getRank("Supra Divin").setDesc("Etre suprême parmis les créatures Divines");
+		Utils.getRank("Supra Divin").setLotRateTitan(0.5);
+		Utils.getRank("Supra Divin").setLotRang(0.5);
 		rang.add(new Rank("TryTry Divin", 200, Rate.Divin, "§d§n", true, 0));
 		Utils.getRank("TryTry Divin").setDesc("Un Tryliom version divine humble et lumineux de ses idéaux, préside le divin Last Neko Judgement");
-		Utils.getRank("TryTry Divin").setLotRang(0.05);
+		Utils.getRank("TryTry Divin").setLotRang(0.5);
 		Utils.getRank("TryTry Divin").setLotRateUltraRare(0.6);
 		Utils.getRank("TryTry Divin").setLotRateMagical(0.7);
 		Utils.getRank("TryTry Divin").setLotRateDivin(0.8);
@@ -580,8 +598,10 @@ public class ModuleManager {
 		Utils.getRank("Le sage").setGiftXp(0.5);
 		
 		// Magical 50-100
-		rang.add(new Rank("Supra Magical", 500, Rate.Supra, "§6", true, 0));
+		rang.add(new Rank("Supra Magical", 500, Rate.Supra, "§6", true, 0));		
 		Utils.getRank("Supra Magical").setDesc("Etre Magique suprême utilisant un niveau de magie ultra puissant");
+		Utils.getRank("Supra Magical").setLotRateDivin(0.5);
+		Utils.getRank("Supra Magical").setLotRang(0.4);
 		rang.add(new Rank("Leviathan", 100, Rate.Magical, "§d", true, 0));
 		Utils.getRank("Leviathan").setDesc("Autrefois ces créatures démoniaque à tentacules étaient crainte mais aujourd'hui le Pervers prend un plaisir fou à s'en servir pour son plaisir personnel...");
 		Utils.getRank("Leviathan").setRadiusGift(3);
@@ -724,8 +744,9 @@ public class ModuleManager {
 		Utils.getRank("Link").setDesc("Ya ! YA YA OUYA !");
 		
 		// Ordinaire 0-10
-		rang.add(new Rank("Supra Ordinaire", 10, Rate.Supra, "§6", true, 0));
-		Utils.getRank("Supra Ordinaire").setDesc("Etre suprême tout à fait ordinaire");
+		rang.add(new Rank("Supra Ordinaire", 10, Rate.Supra, "§6", true, 0));		
+		Utils.getRank("Supra Ordinaire").setDesc("Etre suprême tout à fait ordinaire qui voudrait se dresser contre une plus haute rareté");
+		Utils.getRank("Supra Ordinaire").setLotRateRare(0.3);
 		rang.add(new Rank("Bovin", 2, Rate.Ordinaire, "§7", true, 0));
 		Utils.getRank("Bovin").setDesc("Homme pauvre");
 		rang.add(new Rank("Ecuyer", 1.5, Rate.Ordinaire, "§7", true, 0));
@@ -780,46 +801,48 @@ public class ModuleManager {
 		Utils.getRank("Maître Neko").setDesc("Alerte N-n-nyaaaah..mais mais...j'ai rien fait...me punissez pas maître je faisais que vous décrire..NYAAAAH vous êtes cruel maître ! dkjsfhbdbfshj..d'accord d'accord...ze me calme maître..");
 		rang.add(new Rank("Maître Méchant", 700, Rate.Event, "§2", true, 0));
 		Utils.getRank("Maître Méchant").setDesc("Mon Maître est méchant...help plz..AIIIE CA FAIT MAL MAÎTRE :c");
-		rang.add(new Rank("AntoZzz x Delxer", 600, Rate.Event, "§2", true, 0));
-		Utils.getRank("AntoZzz x Delxer").setDesc("Ils se disputent très souvent mais au fond, ce ne sont que des querelles de couple..Vous n'imaginez pas comment ça dérape en privé..;3");
-
+		rang.add(new Rank("AntoZzz x IAM", 600, Rate.Event, "§2", true, 0));
+		Utils.getRank("AntoZzz x IAM").setDesc("Ils se disputent très souvent mais au fond, ce ne sont que des querelles de couple..Vous n'imaginez pas comment ça dérape en privé..;3");
 		
 		// Neko
-		rang.add(new Rank("Supra Neko", 500, Rate.Supra, "§6", true, 0));
+		rang.add(new Rank("Supra Neko", 1500, Rate.Supra, "§6", true, 0));
 		Utils.getRank("Supra Neko").setDesc("Etre suprême pur et Neko");
+		Utils.getRank("Supra Neko").setLotRateTitan(2);
 		rang.add(new Rank("Petit Neko Novice", 0, Rate.Neko, "§5", false, 0));
 		Utils.getRank("Petit Neko Novice").setDesc("Neko de base");
-		rang.add(new Rank("Petit Neko", 5, Rate.Neko, "§5", true, 0));
+		Utils.getRank("Petit Neko Novice").setGiftXp(0.1);
+		rang.add(new Rank("Petit Neko", 50, Rate.Neko, "§5", true, 0));
 		Utils.getRank("Petit Neko").setDesc("Petit mais espiègle !");
-		rang.add(new Rank("Apprenti Neko", 10, Rate.Neko, "§5", true, 0));
+		Utils.getRank("Petit Neko").setGiftXp(0.3);
+		rang.add(new Rank("Apprenti Neko", 100, Rate.Neko, "§5", true, 0));
 		Utils.getRank("Apprenti Neko").setDesc("Deviendra un Neko puissant");
-		rang.add(new Rank("Neko", 15, Rate.Neko, "§5", true, 0));
+		Utils.getRank("Apprenti Neko").setGiftXp(0.5);
+		rang.add(new Rank("Neko", 150, Rate.Neko, "§5", true, 0));
 		Utils.getRank("Neko").setDesc("Neko au sang pur, souillage à venir c:");
-		rang.add(new Rank("Neko Aguerri", 20, Rate.Neko, "§5", true, 0));
+		Utils.getRank("Neko").setGiftXp(1);
+		rang.add(new Rank("Neko Aguerri", 200, Rate.Neko, "§5", true, 0));
 		Utils.getRank("Neko Aguerri").setDesc("Prêt pour la bagarre ?!");
-		rang.add(new Rank("Sorcier Neko", 25, Rate.Neko, "§5", true, 0));
+		Utils.getRank("Neko Aguerri").setGiftPlus(0.5);
+		rang.add(new Rank("Sorcier Neko", 250, Rate.Neko, "§5", true, 0));
 		Utils.getRank("Sorcier Neko").setDesc("Manipule le temps");
-		rang.add(new Rank("Neko Pervers", 30, Rate.Neko, "§5", true, 0));
+		Utils.getRank("Sorcier Neko").setGiftPlus(1);
+		rang.add(new Rank("Neko Pervers", 300, Rate.Neko, "§5", true, 0));
 		Utils.getRank("Neko Pervers").setDesc("Chéri par la Perverse lors des jours de pluie");
-		rang.add(new Rank("Neko Vicieux", 35, Rate.Neko, "§5", true, 0));
+		rang.add(new Rank("Neko Vicieux", 350, Rate.Neko, "§5", true, 0));
 		Utils.getRank("Neko Vicieux").setDesc("Comme son cousin très pervers, le fait cocu avec la Perverse");
-		rang.add(new Rank("Neko Kawaii", 40, Rate.Neko, "§5", true, 0));
+		rang.add(new Rank("Neko Kawaii", 400, Rate.Neko, "§5", true, 0));
 		Utils.getRank("Neko Kawaii").setDesc("Petit Neko tellement mignon que le CRCRCR Légendaire lui a même remis un bisous !");
-		rang.add(new Rank("Neko Suprême", 50, Rate.Neko, "§5", true, 0));
+		rang.add(new Rank("Neko Suprême", 500, Rate.Neko, "§5", true, 0));
 		Utils.getRank("Neko Suprême").setDesc(">>IMPERATUM<<");
-		rang.add(new Rank("Like A Cat", 80, Rate.Neko, "§5", true, 0));
+		rang.add(new Rank("Like A Cat", 800, Rate.Neko, "§5", true, 0));
 		Utils.getRank("Like A Cat").setDesc("Everyone were cat. Everyone speak like a cat. Everyone fuck like a cat");
-		rang.add(new Rank("NyanCat", 90, Rate.Neko, "§5", true, 0));
+		rang.add(new Rank("NyanCat", 900, Rate.Neko, "§5", true, 0));
 		Utils.getRank("NyanCat").setDesc("Je doute que quelqu'un arrive un jour à ce lvl mais si ça arrivais: Nyan-sama va vous ***** la ****** avec la ***** :3");
-		rang.add(new Rank("Colonel de la Neko Army", 100, Rate.Neko, "§5", true, 0));
+		rang.add(new Rank("Colonel de la Neko Army", 1000, Rate.Neko, "§5", true, 0));
 		Utils.getRank("Colonel de la Neko Army").setDesc("Aux commandes depuis des millénaire à cette tâche, un des principaux acteurs de sa division");
-		rang.add(new Rank("Clone d'un Léviathan", 120, Rate.Neko, "§5", true, 0));
+		rang.add(new Rank("Clone d'un Léviathan", 1200, Rate.Neko, "§5", true, 0));
 		Utils.getRank("Clone d'un Léviathan").setDesc("Cloné autrefois et béni pour sa puissance démoniaque, ce Léviathan a été éduqué par la secte du Last Neko Judgement afin de devenir un soldat surpuissant");
-		rang.add(new Rank("Homme de lettres", 150, Rate.Neko, "§5", true, 0));
+		rang.add(new Rank("Homme de lettres", 1300, Rate.Neko, "§5", true, 0));
 		Utils.getRank("Homme de lettres").setDesc("Homme étudiant toute sorte de magie, connais de puissants sorts et créature comme le Légendaire Pyroman, pour l'invoquer il faut s'entourer de flammes pendant un orage la nuit et lui dire : \"Pyroman des abîmes, je t'invoque en t'offrant mon sang comme présent\"");
-		rang.add(new Rank("Cannibal vicieux", 300, Rate.Neko, "§5", true, 0));
-		Utils.getRank("Cannibal vicieux").setDesc("Aime la bonne viande et la chair ;3");
-		rang.add(new Rank("^>.<^", 350, Rate.Neko, "§5", true, 0));
-		Utils.getRank("^>.<^").setDesc(">.> ^°^°^ <.<");	
 	}
 }

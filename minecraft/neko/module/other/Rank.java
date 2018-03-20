@@ -11,7 +11,7 @@ public class Rank {
 	private String color;
 	private boolean lock;
 	private int lvl;
-	// Liste des différents bonus, de base à 0, modifiable via les getters/setters Tout fait
+	// Liste des différents bonus, de base à 0, modifiable via les getters/setters
 	private double radiusGift = 0;
 	private double lotRang = 0;  
 	private double lotUnlock = 0; 

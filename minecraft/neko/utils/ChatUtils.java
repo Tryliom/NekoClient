@@ -32,6 +32,7 @@ import neko.lock.Lock;
 import neko.manager.GuiManager;
 import neko.manager.LockManager;
 import neko.manager.ModuleManager;
+import neko.manager.QuestManager;
 import neko.manager.SoundManager;
 import neko.module.Category;
 import neko.module.Module;
@@ -230,6 +231,8 @@ public class ChatUtils {
 				Utils.addChat(error); 
 				Utils.checkXp(xp);
 			}
+			
+			Utils.checkQuest(var3);
 			
 			if (args.length==1) {
 				String s = args[0].replaceFirst(var.prefixCmd, "").toLowerCase();		
@@ -2138,6 +2141,13 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"startquest")) {
+				if (QuestManager.getQM().getCurrent()!=null && !QuestManager.getQM().isHasBegin()) {
+					QuestManager.getQM().setHasBegin(true);
+					Utils.addChat("§aDéfi accepté !");
+				}
+			}
+			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"clickaim")) {
 				if (args.length==1) {
 					Utils.toggleModule("ClickAim");
@@ -2659,21 +2669,7 @@ public class ChatUtils {
 				
 				Utils.checkXp(xp);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"test")) {
-				if (args.length==1) {
-					Utils.addError("blabla");
-				} else {
-					mc.ingameGUI.func_175178_a("§atitle", null, 10, 10, 10);
-					mc.ingameGUI.func_175178_a(null, "subtitle", 10, 10, 10);
-				}
-				
-				Utils.checkXp(xp);
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			// 
+			} 
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"push") || args[0].equalsIgnoreCase(var.prefixCmd+"pushup")) {
 				if (args.length==1) {
