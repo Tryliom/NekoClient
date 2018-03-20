@@ -1607,6 +1607,13 @@ public class Utils {
 		}
 	}
 	
+	public static void checkQuest(String tryGuess) {
+		QuestManager qm = QuestManager.getQM();
+		if (qm.isHasBegin() && qm.getCurrent()!=null) {
+			qm.guessQuest(tryGuess);
+		}
+	}
+	
 	public static void getRandQuest() {
 		Vector<Quest> v = new Vector<Quest>();
 		v.add(new Quest("J'ai de longs bras et suis très rapide", getModule("Reach"), null, 3));
@@ -1650,8 +1657,49 @@ public class Utils {
 		v.add(new Quest("Comment tu veux me ralentir avec ça ?", getModule("Noslow"), null, 3));
 		v.add(new Quest("Je vois clair en toi", getModule("Xray"), null, 3));
 		v.add(new Quest("Je le vois...c'est tout bleu...j'y arrive bientôt..", getModule("Search"), null, 3));
-		v.add(new Quest("", getModule(""), null, 3));
+		v.add(new Quest("Viens à moi...non, éloigne toi..", getModule("Reflect"), null, 3));
+		v.add(new Quest("Oulala ça tourne dans tous les sens...je m'y retrouve plus..", getModule("Likaotique"), null, 3));
+		v.add(new Quest("Quelle ambiance chaotique ici..", getModule("Likaotique"), null, 3));
+		v.add(new Quest("Sans moi tu n'aurais rien", getModule("Cheststealer"), null, 3));
+		v.add(new Quest("Avec moi tu pourras monter tout en haut avant lui", getModule("Fastladder"), null, 3));
+		v.add(new Quest("Je t'indique tout et pas de merci ?", getModule("HUD"), null, 3));
+		v.add(new Quest("Voilà ! Tout est encodé !", getModule("Unicode"), null, 3));
+		v.add(new Quest("Je t'aide et tu me délaisse après !", null, var.prefixCmd+"help", 3));
+		v.add(new Quest("Il ne restera plus rien après mon passage !", getModule("Nuker"), null, 3));
+		v.add(new Quest("Utilise moi sur un item et la puissance tu auras !", null, var.prefixCmd+"enchant", 3));
+		v.add(new Quest("Clique encore !", null, var.prefixCmd+"startquest", 3));
+		v.add(new Quest("Tu vas encore envoyer un message gênant C:", null, var.prefixCmd+"nyah", 3));
+		v.add(new Quest("Ton ip n'as plus de secret pour moi..", null, var.prefixCmd+"myip", 3));
+		v.add(new Quest("Il y en a peu mais...C'est très efficace !", null, var.prefixCmd+"Potion", 3));
+		v.add(new Quest("J'ai vu ce que tu as fais...tout l'historique...", null, var.prefixCmd+"namemc", 3));
+		v.add(new Quest("La musique..viens l'écouter avec moi...", null, var.prefixCmd+"disc", 3));
+		v.add(new Quest("Wut je suis à l'envers...j'ai mis ça trop haut..", null, var.prefixCmd+"fov", 3));
+		v.add(new Quest("J'aide mon adversaire à contruire son pont :3", getModule("Reach"), null, 3));
+		v.add(new Quest("Même cachée, j'arrive à l'attraper !", getModule("Reach"), null, 3));
+		v.add(new Quest("Pourquoi tu m'actives juste pour arriver par derrière ?", getModule("Blink"), null, 3));
+		v.add(new Quest("Ninja !", getModule("VanillaTp"), null, 3));
+		v.add(new Quest("7 joueurs autour, 7 mort", getModule("TpKill"), null, 3));
+		v.add(new Quest("Affiche les tous !", getModule("Gui"), null, 3));
+		v.add(new Quest("Les invisibles en premier !", getModule("KillAura"), null, 3));
+		v.add(new Quest("Viens en face de moi que je puisse distribuer des pains", getModule("Trigger"), null, 3));
+		v.add(new Quest("Je tire à l'épée et tu trouves ça normal :o ?", getModule("Fastbow"), null, 3));
+		v.add(new Quest("Laisse moi avec mes champi !", getModule("Autosoup"), null, 3));
+		v.add(new Quest("Glou glou glou...burp!", getModule("Autopot"), null, 3));
+		v.add(new Quest("Glou glou glou", getModule("Dolphin"), null, 3));
+		v.add(new Quest("Je t'aide toujours avec ton bras cassé", getModule("ClickAim"), null, 3));
+		v.add(new Quest("100% touché en \"legit\"", getModule("SmoothAim"), null, 3));
+		v.add(new Quest("Scannage en cours..", getModule("Radar"), null, 3));
+		v.add(new Quest("C'est comme un tapis volant mais c'est pas un tapis", getModule("Scaffold"), null, 3));
+		v.add(new Quest("Je suis comme un couteau Suisse", getModule("Exploit"), null, 3));
+		v.add(new Quest("Tu ne trouveras jamais ! Aussitôt activé, aussitôt oublié...bonne chance :c", getModule("Fullbright"), null, 3));
+		v.add(new Quest("Pourquoi la nuit ? Pourquoi le jour ?", getModule("Worldtime"), null, 3));
+		v.add(new Quest("Un petit coup et je te met K.O. ;3", getModule("Nausicaah"), null, 3));
+		v.add(new Quest("De quel commande rêves-tu depuis toujours ? Essaye-la maintenant !", null, var.prefixCmd+"forceop", 3));
+		v.add(new Quest("Base trouvée !", getModule("ChestESP"), null, 3));
+		v.add(new Quest("C'était quoi le gros tube de liquide rose ? Non...j'ai pas finis..", getModule("Regen"), null, 3));
+		v.add(new Quest("Stuff gratuit au sol !", getModule("Reach"), null, 3));
 		
+		// v.add(new Quest("", getModule(""), null, 3));
 		int rand = getRandInt(v.size());
 		QuestManager.getQM().setCurrent(v.get(rand));
 	}
