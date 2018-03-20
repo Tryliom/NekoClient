@@ -4,10 +4,15 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.input.Keyboard;
 
 import neko.Client;
 import neko.api.NekoCloud;
+import neko.manager.GuiManager;
+import neko.manager.ModuleManager;
+import neko.manager.OnlyRpgManager;
+import neko.module.other.Rank;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -136,6 +141,19 @@ public class GuiConnect extends GuiScreen {
 			break;
 		case 4:
 			// Ignore
+			var.moduleManager = new ModuleManager();
+			var.onlyrpg = OnlyRpgManager.getRpg();
+			var.gui = new GuiManager();
+			var.gui.setTheme(new SimpleTheme());
+			var.gui.setup();
+			if (var.rang==null)
+				for (Rank r : ModuleManager.rang) {
+					if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {
+						var.rang=r;
+						r.setLvl(r.getLvl()!=1 ? r.getLvl() : 1);
+						r.setLock(false);
+					}
+				}
 			this.mc.displayGuiScreen(new GuiMainMenu());
 			break;
 		case 5:

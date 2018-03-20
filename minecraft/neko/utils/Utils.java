@@ -19,7 +19,6 @@ import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -33,6 +32,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.HttpsURLConnection;
 
+import org.apache.commons.codec.binary.Base64;
 import org.darkstorm.minecraft.gui.component.Frame;
 import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.input.Keyboard;
@@ -41,6 +41,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.authlib.Agent;
 import com.mojang.authlib.UserAuthentication;
 import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
@@ -173,7 +174,6 @@ import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Session;
 import net.minecraft.world.WorldSettings.GameType;
-import sun.management.Agent;
 
 /**
  * Utilité de cette classe:<br>
@@ -1447,11 +1447,11 @@ public class Utils {
 		
 		for (Rank r : ModuleManager.rang) {
 			
-			if (isLock("--reach pvp") && (r.getName().contains("JP") || r.getName().contains("Jean-Pierre"))) {
+			if (isLock("--reach pvp") && !r.isLock() && (r.getName().contains("JP") || r.getName().contains("Jean-Pierre"))) {
 				addChat("§cReach pvp §adébloquée !");
 				unlock("--reach pvp");					
 			}
-			if (r.getName().equalsIgnoreCase("Pyroman") && isLock("Pyro")) {
+			if (!r.isLock() && r.getName().equalsIgnoreCase("Pyroman") && isLock("Pyro")) {
 				addChat("§dPyro débloqué !");
 				unlock("Pyro");					
 			}
@@ -2527,7 +2527,8 @@ public class Utils {
 		for (int i : Nuker.nuke) {
     		s+=i + "§";
     	}
-		nc.saveSave("nuker", s.substring(0, s.length()-1));
+		if (!s.isEmpty())
+			nc.saveSave("nuker", s.substring(0, s.length()-1));
 	}
 	
 	public static String preparePostRequest(String url, String body) {
@@ -3843,6 +3844,7 @@ public class Utils {
 		nc.saveSave("cmd", s);
 	}
 	
+	@SuppressWarnings("unlikely-arg-type")
 	public static void loadCloudCmd() {
 		Vector<Module> vm = new Vector<Module>();
 		for (Module m : ModuleManager.ActiveModule) {
@@ -3870,6 +3872,7 @@ public class Utils {
 		}
 	}
 	
+	@SuppressWarnings("unlikely-arg-type")
 	public static void loadCmd(String...fi) {
 		Vector<Module> vm = new Vector<Module>();
 		for (Module m : ModuleManager.ActiveModule) {

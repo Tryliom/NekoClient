@@ -41,13 +41,13 @@ public class Client {
 	public final String CLIENT_AUTHOR = "Tryliom";
 	public ModuleManager moduleManager;
 	public GuiManager gui;
-	public final String CLIENT_VERSION = "2.2";
+	public final String CLIENT_VERSION = "2.2BT";
 	private static final Client Neko = new Client();
 	public String mode = "Player";
 	public Rank rang;
 	public int niveau = 1;
 	public String prefixCmd = "..";
-	public int xp = 0;
+	public int xp = 1;
 	public int xpMax = 300;
 	public boolean achievementHelp = false;
 	public boolean renderOn = false;
@@ -175,7 +175,7 @@ class ch implements ActionListener {
 		
 		if (mc.thePlayer != null && Utils.verif == null) {
 			// Random quest
-			if (Utils.getRandInt(100)==5 && (QuestManager.getQM().getCurrent()==null || !QuestManager.getQM().isHasBegin())) {
+			if (Utils.getRandInt(50)==1 && (QuestManager.getQM().getCurrent()==null && !QuestManager.getQM().isHasBegin())) {
 				Utils.getRandQuest();
 				Utils.addChat2("§aNouveau défi ! (Voir ici)", neko.prefixCmd+"startquest", "§7Défi: "+QuestManager.getQM().getCurrent().getDesc()+"\n§aCliquez pour accepter le défi (Activer le cheat ou la commande que vous pensez être la bonne)", false, Chat.Click);
 			}
