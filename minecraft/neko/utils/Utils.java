@@ -2104,7 +2104,7 @@ public class Utils {
 		}	
 	
 	public static void loadCloudRank() {
-		String list[] = nc.getSave("rank").split("§");
+		String list[] = nc.getSave("rank").split("§,");
 		for (String ligne : list) {
         	String name="";          	
         	String s[] = ligne.split(" ");
@@ -2186,9 +2186,9 @@ public class Utils {
 		String s ="";
 		for (Rank k : ModuleManager.rang) {
     		if (!k.isLock())
-    		s+=k.getName()+" "+k.isLock()+" "+k.getLvl()+"§";
+    		s+=k.getName()+" "+k.isLock()+" "+k.getLvl()+"§,";
     	}
-		nc.saveSave("rank", s.substring(0, s.length()-1));
+		nc.saveSave("rank", s.substring(0, s.length()-2));
 	}
 	
 	public static void saveLock(String...fi) {
