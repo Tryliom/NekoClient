@@ -5,14 +5,19 @@ import neko.module.other.Quest;
 import neko.utils.Utils;
 
 public class QuestManager {
-	private static QuestManager instance = null;
-	private Quest current = null;
+	private static QuestManager instance;
+	private Quest current;
 	private boolean hasBegin;
 
 	public static QuestManager getQM() {
 		return instance == null ? instance = new QuestManager() : instance;
 	}
 
+	public QuestManager() {
+		this.current = null;
+		this.hasBegin = false;
+	}
+	
 	public void stopQuest() {
 		Utils.addChat(Utils.setColor("Défi annulé", "§c"));
 		instance = null;
@@ -20,8 +25,8 @@ public class QuestManager {
 
 	private void finishQuest() {
 		// gagne un truc random via Utils
-		Utils.addChat(Utils.setColor("Défi réussit !", "§d"));
-		
+		Utils.addChat(Utils.setColor("Défi réussit en "+(3-current.getTrials())+" essais !", "§d"));
+		Utils.checkXp(Utils.getRandInt(500));
 		instance = null;
 	}
 
@@ -30,22 +35,18 @@ public class QuestManager {
 		instance = null;
 	}
 
-	public void guessQuest(Object cmdOrCheat) {
+	public void guessQuest(String cmdOrCheat) {
 		if (hasBegin)
 			if (current.getResponseCheat() == null) {
-				if (cmdOrCheat instanceof String) {
-					if (((String) cmdOrCheat).equalsIgnoreCase(current.getResponseCmd())) {
-						this.finishQuest();
-					} else
-						failed();
-				}
+				if (cmdOrCheat.equalsIgnoreCase(current.getResponseCmd())) {
+					this.finishQuest();
+				} else
+					failed();
 			} else {
-				if (cmdOrCheat instanceof Module) {
-					if (((Module) cmdOrCheat).getName().equalsIgnoreCase(current.getResponseCheat().getName())) {
-						this.finishQuest();
-					} else
-						failed();
-				}
+				if (Utils.getModule(cmdOrCheat).getName().equalsIgnoreCase(current.getResponseCheat().getName())) {
+					this.finishQuest();
+				} else
+					failed();
 			}
 	}
 
