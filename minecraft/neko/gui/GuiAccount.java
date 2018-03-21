@@ -27,8 +27,8 @@ public class GuiAccount extends GuiScreen {
 
 	public void initGui() {
 		this.buttonList.clear();
-		this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 98, "Retour"));
-		this.buttonList.add(new GuiButton(4, this.width / 2 - 50, this.height / 3 + 74, 100, 20, "§cSe déconnecter"));
+		this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 3 + 98, "Retour"));
+		this.buttonList.add(new GuiButton(4, this.width / 2, this.height / 3 + 74, 50, 20, "§cSe déconnecter"));
 		this.buttonList.add(new GuiButton(5, this.width-110, 10, 100, 20, "Music Manager"));
 	}
 
@@ -50,6 +50,9 @@ public class GuiAccount extends GuiScreen {
 	protected void actionPerformed(GuiButton button) throws IOException {
 		super.actionPerformed(button);
 		switch (button.id) {
+		case 1:
+			mc.displayGuiScreen(this.prevGui);
+			break;
 		case 4:
 			this.mc.displayGuiScreen(new GuiConnect(new GuiMainMenu(), 1));
 			break;

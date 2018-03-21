@@ -284,7 +284,6 @@ public class ModuleManager {
 		lm.setLock("TpBack", "tpback", "TpBack");
 		this.Lock.add(new Lock("Flash", 0, "???", "Cheat", "Vous retp sur la position set à l'activation", "", true));
 		this.Lock.add(new Lock("PunKeel", 0, "???", "Cheat", "Génére un véritable lag suivant vos désirs", "pk", true));
-		this.Lock.add(new Lock("NekoChat", 3, "Lvl", "Cheat", "Chat personnalisable", "nc", true));
 		this.Lock.add(new Lock("Reflect", 4, "Lvl", "Cheat", "Vouis fait rebondir, accèlerer ou vous coller à l'entité près de vous", "", true));
 		this.Lock.add(new Lock("--size", 6, "Lvl", "Commande", "Choisis le nombre d'item que vous avez dans la main", "", true));
 		this.Lock.add(new Lock("--wear", 6, "Lvl", "Commande", "Met l'item en main sur votre tête", "", true));
@@ -293,15 +292,17 @@ public class ModuleManager {
 		this.Lock.add(new Lock("--enchant", 7, "Lvl", "Commande", "Enchante à l'enchantement choisis l'item que vous avez dans la main", "", true));		
 		this.Lock.add(new Lock("PotionEffect", 8, "Lvl", "Cheat", "HUD pour l'effet des potions sur l'écran", "", true));
 		this.Lock.add(new Lock("ArmorHUD", 9, "Lvl", "Cheat", "HUD pour voir ses points d'armure restant et arme tenue", "", true));
-		this.Lock.add(new Lock("Autoeat", 10, "Lvl", "Cheat", "Vous fais manger auto et rapidement", "", true));
 		
 		
 		// Utils.getRank("").setDesc("");
 		// Rank
 		
 		// CrazyLove
-		rang.add(new Rank("Crazymeal", 5000, Rate.CrazyLove, "§9", true, 0));
-		Utils.getRank("Crazymeal").setDesc("Miam miam");
+		rang.add(new Rank("Crazymeal", 7777, Rate.CrazyLove, "§9", true, 0));
+		Utils.getRank("Crazymeal").setDesc("Miam miam, il a tout dévoré de 100 par 100");
+		Utils.getRank("Crazymeal").setRadiusGift(100);
+		Utils.getRank("Crazymeal").setGiftPlus(10);
+		Utils.getRank("Crazymeal").setGiftPlusAme(3);
 		
 		// Titan
 		rang.add(new Rank("Tryliom", 4000, Rate.Titan, "§4§o", true, 0));
@@ -351,6 +352,11 @@ public class ModuleManager {
 		Utils.getRank("Crazy Frog").setDesc("Il a enfin finaliser son ascension par cet acte, il est maintenant prêt à CRCRCR...");
 		Utils.getRank("Crazy Frog").setGiftPlus(5);
 		Utils.getRank("Crazy Frog").setRadiusGift(25);
+		rang.add(new Rank("Nyaaw Antique", 4500, Rate.Mythique, "§2§n", true, 0));
+		Utils.getRank("Nyaaw Antique").setDesc("Il a évolué de manière mythique depuis sa dernière invocation, il peut atteindre la puissance des Titans");
+		Utils.getRank("Nyaaw Antique").setRadiusGift(20);
+		Utils.getRank("Nyaaw Antique").setGiftRang(0.7);
+		Utils.getRank("Nyaaw Antique").setLotRateTitan(2);
 		
 		
 		// Mythique

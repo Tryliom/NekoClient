@@ -1445,6 +1445,13 @@ public class Utils {
 				rang++;
 		}
 		
+		for (Lock lock : ModuleManager.Lock) {
+			if (lock.getUnit().equalsIgnoreCase("Lvl") && lock.getCout()<=var.niveau && lock.isLock()) {
+				Utils.unlock(lock.getName());
+				Utils.addChat("§d"+lock.getType()+" "+lock.getName().replaceAll("--", var.prefixCmd)+" débloqué"+(lock.getType().equalsIgnoreCase("Commande") ? "e" : "" )+" !");
+			}
+		}
+		
 		for (Rank r : ModuleManager.rang) {
 			
 			if (isLock("--reach pvp") && (r.getName().contains("JP") || r.getName().contains("Jean-Pierre"))) {
@@ -1483,6 +1490,28 @@ public class Utils {
 						setRank(r.getName());
 						addChat("§4§koooo§cRang §5Nyaaw Mythique§c a atteint le lvl "+getRank("Nyaaw Mythique").getLvl()+" !!§4§koooo");
 						mc.thePlayer.playSound("mob.enderdragon.end", 0.5F, 0.5F);
+					}
+					if (r.getLvl()>=2) {
+						Rank r2 = getRank("Nyaaw Antique");
+						if (r2.isLock()) {
+							setRank("Nyaaw Antique");
+							displayTitle("", "§4§koooo§cRang §5Nyaaw Antique§c débloqué !!§4§koooo");
+						}
+						if (r2.getLvl()!=r.getLvl()/2) {
+							addChat("§cRang §dNyaaw Antique§c a atteint le lvl "+r.getLvl()/5+" !");
+							r2.setLvl(r.getLvl()/2);
+						}	
+						if (r2.getLvl()>=3) {
+							Rank r3 = getRank("Crazymeal");
+							if (r3.isLock()) {
+								setRank("Crazymeal");
+								displayTitle("", "§4§koooo§cRang §5Crazymeal§c débloqué !!§4§koooo");
+							}
+							if (r3.getLvl()!=r2.getLvl()/3) {
+								addChat("§cRang §dCrazymeal§c a atteint le lvl "+r2.getLvl()/3+" !");
+								r3.setLvl(r2.getLvl()/3);
+							}						
+						}
 					}
 				}				
 			}
