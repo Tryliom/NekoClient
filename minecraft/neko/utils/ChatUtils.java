@@ -3158,46 +3158,45 @@ public class ChatUtils {
 									float re=0.88F;
 									float g=0.44F;
 									float bl=0.88F;
-									if (Math.random()<0.1) {
+									if (Math.random()<0.01) {
 										gain="bonus";
-										bonus=(double) Math.round(Math.random()*25);
+										bonus=(double) Math.round(Math.random()*25+var.rang.getLuck()*25);
 										time=Utils.getRandInt(700);
-									} else if (Math.random()<0.04) {
-										
+									} else if (Math.random()<0.05) {										
 										gain="malus";
-										bonus=(double) Math.round(Math.random()*-10*10/10);
+										bonus=(double) Math.round(Math.random()*-10);
 										time=Utils.getRandInt(1200);										
 									} else if (Math.random()<0.3+var.rang.getLotRang()) {
-										if (Utils.getRandInt((int) (5000000-Math.round(1000000*var.rang.getLotRateTitan())))==4) {
+										if (Math.random()<0.0000001+0.0000001*var.rang.getLotRateTitan()) {
 											r=Rate.Titan;
-										} else if (Math.random()<0.007+0.007*var.rang.getLotRateSatanique()) {
+										} else if (Math.random()<0.0007+0.0007*var.rang.getLotRateSatanique()) {
 											r=Rate.Satanique;
-										} else if (Math.random()<0.01+0.01*var.rang.getLotRateDivin()) {
+										} else if (Math.random()<0.001+0.001*var.rang.getLotRateDivin()) {
 											r=Rate.Divin;
-										} else if (Math.random()<0.05+0.05*var.rang.getLotRateMagical()) {
+										} else if (Math.random()<0.01+0.01*var.rang.getLotRateMagical()) {
 											r=Rate.Magical;
-										} else if (Math.random()<0.1+0.1*var.rang.getLotRateUltraRare()) {
+										} else if (Math.random()<0.05+0.05*var.rang.getLotRateUltraRare()) {
 											r=Rate.UltraRare;
 										} else if (Math.random()<0.15+0.15*var.rang.getLotRateRare()) {
 											r=Rate.Rare;
 										} else 
 											r=Rate.Ordinaire;
 										gain="rang";
-										if (Math.random()<0.2) {
+										if (Math.random()<0.2+var.rang.getLuck()*0.2) {
 											re=0.88F;
 											g=0.22F;
 											bl=0.33F;
 										}
 									} else if (Math.random()<0.05+var.rang.getLotUnlock()) {
 										gain="unlock";
-										if (Math.random()<0.1) {
+										if (Math.random()<0.1+var.rang.getLuck()*0.1) {
 											re=0.22F;
 											g=0.22F;
 											bl=0.99F;
 										}
 									} else if (Math.random()<0.05+var.rang.getGiftAme()) {
 										gain="souls";
-										if (Math.random()<0.1) {
+										if (Math.random()<0.1+var.rang.getLuck()*0.1) {
 											re=0.44F;
 											g=0.44F;
 											bl=0.99F;

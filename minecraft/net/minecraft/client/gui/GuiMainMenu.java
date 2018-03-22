@@ -9,10 +9,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
+import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.LogManager;
 
 import org.apache.commons.io.Charsets;
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
@@ -642,6 +643,17 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
 	        	GuiButton gb = (GuiButton) o;
 	        	if (SoundManager.getSM().canStart && gb.id==665)
 	    			gb.displayString = SoundManager.getSM().isActive() ? "♫ Stop ♫" : "♪ Restart ♪";
+	        	if (gb.id==666 && Math.random()<0.01) {
+	        		Vector<String> list = new Vector<String>();
+	        		list.add("Neko...");
+	        		list.add("Bind Manager");
+	        		list.add("Music Manager");
+	        		list.add("Alt Manager");
+	        		list.add("Wiki Neko");
+	        		list.add("Mon compte Neko");
+	        		int i = Utils.getRandInt(list.size()-1);
+	        		gb.displayString = "§9"+list.get(i);
+	        	}
         	}
         }
         

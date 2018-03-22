@@ -57,8 +57,6 @@ public class Bloc {
 		this.time = time;
 	}
 
-
-
 	public BlockPos getBloc() {
 		return bloc;
 	}

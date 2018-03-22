@@ -1,7 +1,6 @@
 package neko.module.modules.hide;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import neko.Client;
 import neko.manager.ModuleManager;
@@ -78,16 +77,15 @@ public class Lot extends Module {
 						Active a1 = new Active(b.getBonus(), b.getTime());
 						u.addChat("§5Vous avez reçu un bonus de §d"+a1.getBonus()+"%\n§aActif pendant encore "+a1.getTime()/60+" minutes");
 					} else {
-						u.addChat("§aVotre temps et bonus s'additionnent à  celui déjà  actif !");
+						u.addChat("§aVotre bonus s'additionnent à celui déjà actif !");
 						Active.bonus+=b.getBonus();
-						Active.time+=b.getTime();
 					}										
 				} else if (gain.equalsIgnoreCase("malus")) {
 					if (Active.time==0) {
 						Active a1 = new Active(b.getBonus(), b.getTime());
-						u.addChat("§cVous avez reçu un impôt de §d"+a1.getBonus()+"%\n§aActif pendant encore "+a1.getTime()/60+" minutes");
+						u.addChat("§cVous avez reçu un malus de §d"+a1.getBonus()+"%\n§aActif pendant encore "+a1.getTime()/60+" minutes");
 					} else {
-						u.addChat("§cVotre temps et bonus s'additionnent à celui déjà actif !");
+						u.addChat("§cVotre malus s'additionnent à celui déjà actif !");
 						Active.bonus+=b.getBonus();
 						Active.time+=b.getTime();
 					}	

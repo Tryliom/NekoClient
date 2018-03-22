@@ -451,7 +451,11 @@ public class Utils {
 		}
 		return false;
 	}
-	
+	/**
+	 * ça ne dit pas dans le chat que le rang est gagné
+	 * @param rang
+	 * @return
+	 */
 	public static boolean setRank(String rang) {
 		for (Rank r : ModuleManager.rang) {
 			if (r.getName().equalsIgnoreCase(rang)) {
@@ -1552,8 +1556,10 @@ public class Utils {
 			
 			if (r.getName().equalsIgnoreCase("CrazyLove") && !r.isLock() && r.getLvl()>=5) {
 				Rank r2 = getRank("CrazyLove II");
-				if (r2.isLock())
+				if (r2.isLock()) {
 					setRank("CrazyLove II");
+					displayTitle("", "§4§koooo§cRang §dCrazyLove II§c débloqué !!§4§koooo");
+				}
 				if (r2.getLvl()!=r.getLvl()/5) {
 					addChat("§cRang §dCrazyLove II§c a atteint le lvl "+r.getLvl()/5+" !");
 					r2.setLvl(r.getLvl()/5);
@@ -1562,8 +1568,10 @@ public class Utils {
 			}
 			if (r.getName().equalsIgnoreCase("CrazyLove II") && !r.isLock() && r.getLvl()>=3) {
 				Rank r2 = getRank("Crazy Frog");
-				if (r2.isLock())
+				if (r2.isLock()) {
 					setRank("Crazy Frog");
+					displayTitle("", "§4§koooo§cRang §dCrazy Frog§c débloqué !!§4§koooo");
+				}
 				if (r2.getLvl()!=r.getLvl()/5) {
 					addChat("§cRang §dCrazyLove Frog§c a atteint le lvl "+r.getLvl()/5+" !");
 					r2.setLvl(r.getLvl()/5);
@@ -1734,9 +1742,9 @@ public class Utils {
 	}
 	
 	public static void displayTitle(String title, String subtitle) {
-		if (!title.isEmpty())
+		if (title!=null && !title.isEmpty())
 			mc.ingameGUI.func_175178_a(title, null, 10, 10, 10);
-		if (!subtitle.isEmpty())
+		if (subtitle!=null && !subtitle.isEmpty())
 			mc.ingameGUI.func_175178_a(null, subtitle, 10, 10, 10);
 	}
 	
@@ -2083,24 +2091,24 @@ public class Utils {
 			xp-=xp*0.9;
 		}
 		if (Utils.xp)
-			addChat("§b+"+xp+"xp");
+			displayTitle(null, "§d+"+xp+"xp");
 		
-		if (Math.random()<0.0001) {
+		if (Math.random()<0.0001+var.rang.getLuck()*0.0001) {
 			double b= getRandInt(20);
 			var.bonus+=b;
-			addChat("§5§kii§5Bonus de §d"+b+"%§5 ajouté !§5§kii");
+			displayTitle(null, "§dBonus permanent de "+b+"% gagné !");
 			doWin(10);
 		}		
 		
-		if (Math.random()<0.01) {
-			if (Math.random()<0.0025) {
-				addChat(" +10 souls");
+		if (Math.random()<0.01+var.rang.getLuck()*0.01) {
+			if (Math.random()<0.0025+var.rang.getLuck()*0.0025) {
+				addChat("+10 souls");
 				var.ame+=10;
 			} else {
 				var.ame+=1;
 			}
 		}	
-			Xp exp = new Xp(xp);
+			new Xp(xp);
 		}	
 	
 	public static void loadCloudRank() {
@@ -2140,10 +2148,8 @@ public class Utils {
             String name = "";
             int l=0;
             int str=0;
-            int i=0;
             while ((ligne = br.readLine()) != null)
-            {                	
-            	i++;            	
+            {                	         	
             	name="";
             	if (ligne.startsWith("§")) {
             		l = Integer.parseInt(ligne.replaceFirst("§", ""))-69;
@@ -4058,7 +4064,7 @@ public class Utils {
 	public static void randomSouls() {
 		int count=0;
 		for (int i=0;i<10;i++)
-			if (new Random().nextBoolean() && Math.random()<0.5)
+			if (new Random().nextBoolean() && Math.random()<0.3+var.rang.getLuck()*0.3)
 				count++;
 		switch (count) {
 		case 0:
@@ -4079,28 +4085,28 @@ public class Utils {
 			var.ame+=100;
 			break;
 		case 4:
-			Utils.addChat("§d★ ★ ★ ★ ★   §7-> §9Tu as gagné 500 souls !");
-			var.ame+=500;
+			Utils.addChat("§d★ ★ ★ ★ ★   §7-> §9Tu as gagné 150 souls !");
+			var.ame+=150;
 			break;
 		case 5:
-			Utils.addChat("§d★ ★ ★ ★ ★ ★   §7-> §9Tu as gagné 750 souls !");
-			var.ame+=750;
+			Utils.addChat("§d★ ★ ★ ★ ★ ★   §7-> §9Tu as gagné 200 souls !");
+			var.ame+=200;
 			break;
 		case 6:
-			Utils.addChat("§d★ ★ ★ ★ ★ ★ ★   §7-> §9Tu as gagné 1000 souls !");
-			var.ame+=1000;
+			Utils.addChat("§d★ ★ ★ ★ ★ ★ ★   §7-> §9Tu as gagné 500 souls !");
+			var.ame+=500;
 			break;
 		case 7:
-			Utils.addChat("§d★ ★ ★ ★ ★ ★ ★ ★   §7-> §9Tu as gagné 1500 souls !");
-			var.ame+=1500;
+			Utils.addChat("§d★ ★ ★ ★ ★ ★ ★ ★   §7-> §9Tu as gagné 750 souls !");
+			var.ame+=750;
 			break;
 		case 8:
-			Utils.addChat("§d★ ★ ★ ★ ★ ★ ★ ★ ★   §7-> §9Tu as gagné 2000 souls !");
-			var.ame+=2000;
+			Utils.addChat("§d★ ★ ★ ★ ★ ★ ★ ★ ★   §7-> §9Tu as gagné 1000 souls !");
+			var.ame+=1000;
 			break;
 		case 9:
-			Utils.addChat("§d★ ★ ★ ★ ★ ★ ★ ★ ★ ★   §7-> §9Tu as gagné 2500 souls !");
-			var.ame+=2500;
+			Utils.addChat("§d★ ★ ★ ★ ★ ★ ★ ★ ★ ★   §7-> §9Tu as gagné 1111 souls !");
+			var.ame+=1111;
 			break;
 		}
 	}
@@ -4130,11 +4136,6 @@ public class Utils {
 	}
 	
 	public static void loadSaveCloud() {
-		var.moduleManager = new ModuleManager();
-		var.onlyrpg = OnlyRpgManager.getRpg();
-		var.gui = new GuiManager();
-		var.gui.setTheme(new SimpleTheme());
-		var.gui.setup();
 		loadCloudCmd();
 		loadCloudRank();
 		for (Rank r : ModuleManager.rang) {
@@ -4157,25 +4158,13 @@ public class Utils {
 		// FINISHHH
 	}
 	
-	public static void importSave() {
-		if (var.time.isRunning())
-			var.time.stop();
-		var.time.start();			  
-		var.moduleManager = new ModuleManager();
+	public static void importSave() {		  
 		  File f2 = new File(System.getenv("APPDATA") + "\\GoodNight_4\\config\\audio\\rpg");
 		  if (!f2.exists()) {
 			  Utils.linkSave = System.getenv("APPDATA") + "\\.minecraft\\Neko\\";
 		  }
 		  Utils.loadCmd();
-		  SoundManager.getSM();
 		  Utils.loadRank();
-		  for (Rank r : ModuleManager.rang) {
-				if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {
-					var.rang=r;
-					r.setLvl(r.getLvl()!=1 ? r.getLvl() : 1);
-					r.setLock(false);
-				}
-		  }
 		  boolean legit = Utils.loadRpg();
 		  Utils.loadFriends();
 		  Utils.loadBind();
@@ -4192,16 +4181,12 @@ public class Utils {
 						r.setLock(true);
 					}
 			  }
-		  }				
-		  var.onlyrpg = OnlyRpgManager.getRpg();	  
+		  }				  
 		  Utils.loadValues();
 		  Utils.loadNuker();
 		  Utils.loadIrc();
 		  Utils.loadFont();
 		  Utils.loadShit();		  
-		  var.gui = new GuiManager();
-		  var.gui.setTheme(new SimpleTheme());
-		  var.gui.setup();
 		  Utils.loadFrame();
 		  Utils.importAllAccountToCloud();
 		  Utils.importMod();

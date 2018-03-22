@@ -21,6 +21,7 @@ public class Rank {
 	private double giftAme = 0;
 	private double giftPlusAme = 0;
 	private double giftPlus = 0;
+	private double luck = 0;
 	private String desc="null";
 	
 	// Pour les rate, combien de chance * (ex 1.5 fois plus de chance d'en gagner, mettre 0.5 vu que le calcul est de x + 0.5*x) Fait	
@@ -225,6 +226,14 @@ public class Rank {
 		this.lotRateTitan = lotRateTitan;
 	}		
 	
+	public double getLuck() {
+		return luck;
+	}
+
+	public void setLuck(double luck) {
+		this.luck = luck;
+	}
+
 	public ArrayList<String> getAllBonus(String color1, String color2) {
 		ArrayList<String> list = new ArrayList<>();
 		if (this.giftAme>0) {
@@ -271,7 +280,10 @@ public class Rank {
 		}
 		if (this.lotUnlock>0) {
 			list.add(color1+"+Unlock dans les lots : "+color2+this.lotUnlock*100+"%");
-		}		
+		}	
+		if (this.luck>0) {
+			list.add(color1+"+Chance : "+color2+this.luck*100+"%");
+		}	
 		return list;
 	}
 	

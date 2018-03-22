@@ -141,19 +141,6 @@ public class GuiConnect extends GuiScreen {
 			break;
 		case 4:
 			// Ignore
-			var.moduleManager = new ModuleManager();
-			var.onlyrpg = OnlyRpgManager.getRpg();
-			var.gui = new GuiManager();
-			var.gui.setTheme(new SimpleTheme());
-			var.gui.setup();
-			if (var.rang==null)
-				for (Rank r : ModuleManager.rang) {
-					if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {
-						var.rang=r;
-						r.setLvl(r.getLvl()!=1 ? r.getLvl() : 1);
-						r.setLock(false);
-					}
-				}
 			this.mc.displayGuiScreen(new GuiMainMenu());
 			break;
 		case 5:

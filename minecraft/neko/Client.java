@@ -74,6 +74,19 @@ public class Client {
 
 	public void startClient() {
 		time.start();
+		moduleManager = new ModuleManager();
+		onlyrpg = OnlyRpgManager.getRpg();
+		gui = new GuiManager();
+		gui.setTheme(new SimpleTheme());
+		gui.setup();
+		if (rang==null)
+			for (Rank r : ModuleManager.rang) {
+				if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {
+					rang=r;
+					r.setLvl(r.getLvl()!=1 ? r.getLvl() : 1);
+					r.setLock(false);
+				}
+			}
 		try {
 			URL url = new URL("http://nekohc.fr/ver.html");
 			Scanner sc = new Scanner(url.openStream(), "UTF-8");

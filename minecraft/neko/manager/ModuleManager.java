@@ -303,6 +303,7 @@ public class ModuleManager {
 		Utils.getRank("Crazymeal").setRadiusGift(100);
 		Utils.getRank("Crazymeal").setGiftPlus(10);
 		Utils.getRank("Crazymeal").setGiftPlusAme(3);
+		Utils.getRank("Crazymeal").setLuck(3);
 		
 		// Titan
 		rang.add(new Rank("Tryliom", 4000, Rate.Titan, "§4§o", true, 0));
@@ -404,6 +405,7 @@ public class ModuleManager {
 		Utils.getRank("CrazyLove II").setDesc("Cela fait déjà longtemps qu'il attend de rejoindre ce qu'il était, il ne va pas attendre plus longtemps avant d'y arriver..");
 		Utils.getRank("CrazyLove II").setLotRateTitan(1.5);
 		Utils.getRank("CrazyLove II").setRadiusGift(10);
+		Utils.getRank("CrazyLove II").setLuck(1);
 		
 		// Satanique <1000
 		rang.add(new Rank("Supra Satanique", 1000, Rate.Supra, "§6", true, 0));
@@ -417,6 +419,7 @@ public class ModuleManager {
 		Utils.getRank("TryTry Satanique").setLotRateMagical(0.6);
 		Utils.getRank("TryTry Satanique").setLotRateDivin(1);
 		Utils.getRank("TryTry Satanique").setGiftPlus(3);
+		Utils.getRank("TryTry Satanique").setLuck(1);
 		rang.add(new Rank("Satan", 666, Rate.Satanique, "§c§n", true, 0));
 		Utils.getRank("Satan").setDesc("Le roi de l'Enfer, il possède 18 enfants");
 		rang.add(new Rank("Maître Satanique", 888, Rate.Satanique, "§c", true, 0));
@@ -531,7 +534,8 @@ public class ModuleManager {
 		Utils.getRank("TryTry Divin").setLotRateUltraRare(0.6);
 		Utils.getRank("TryTry Divin").setLotRateMagical(0.7);
 		Utils.getRank("TryTry Divin").setLotRateDivin(0.8);
-		Utils.getRank("TryTry Divin").setGiftPlus(0.0005);	
+		Utils.getRank("TryTry Divin").setGiftPlus(0.0005);
+		Utils.getRank("TryTry Divin").setLuck(0.5);
 		rang.add(new Rank("Abel aux flammes purifiées", 500, Rate.Divin, "§d§o", true, 0));
 		Utils.getRank("Abel aux flammes purifiées").setDesc("Abel, tué par son grand frère Caïn et envoyé au Paradis, il cherche à venger l'acte fratricide de celui-ci. On chuchote qu'il se serait allié avec un chevalier de l'Enfer...");
 		rang.add(new Rank("AntoZzz", 600, Rate.Divin, "§d", true, 0));

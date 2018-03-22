@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//minecraft/neko/Client.java=ISO-8859-1
 encoding//minecraft/neko/gui/GuiMenuNeko.java=UTF-8
+encoding//minecraft/neko/module/modules/hide/Lot.java=UTF-8
 encoding//minecraft/neko/module/modules/render/Search.java=ISO-8859-1
 encoding//minecraft/neko/utils/ChatUtils.java=ISO-8859-1
 encoding//minecraft/neko/utils/Utils.java=UTF-8
