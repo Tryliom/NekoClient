@@ -66,8 +66,12 @@ public class NekoCloud {
 	 * @param name
 	 * @return
 	 */
-	public String getSave(String name) {
-		String s = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/save/get/"+name, parseHashMapToJson(getBaseBody()));
+	public String getSave(String name, String...config) {
+		HashMap<String, String> hm = this.getBaseBody();
+		if (config.length>0) {
+			hm.put("config", config[0]);
+		}
+		String s = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/save/get/"+name, parseHashMapToJson(hm));
 //		System.out.println(s);
 		return s.replaceAll("\"", "");
 	}
@@ -76,9 +80,12 @@ public class NekoCloud {
 	 * @param name Sans le .neko, juste le nom
 	 * @param content	Le contenu du fichier
 	 */
-	public void saveSave(String name, String content) {
+	public void saveSave(String name, String content, String...config) {
 		HashMap<String, String> hm = this.getBaseBody();
 		hm.put("content", content);
+		if (config.length>0) {
+			hm.put("config", config[0]);
+		}
 		new Thread(new Runnable() {
 			
 			@Override

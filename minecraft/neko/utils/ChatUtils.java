@@ -1355,8 +1355,7 @@ public class ChatUtils {
 					Utils.addChat(var.prefixCmd+"config load <Nom>: "+Utils.setColor("Charge une config existante", "§7"));
 					Utils.addChat(var.prefixCmd+"config list: "+Utils.setColor("Affiche la liste des configs disponibles", "§7"));
 				} else if (args[1].equalsIgnoreCase("save") && args.length>=3) {
-					String fi = Utils.linkSave+(mc.isRunningOnMac ? "/Config/"+args[2]+"/" : "\\Config\\"+args[2]+"\\");
-					new File(fi).mkdirs();
+					String fi = args[2];
 					Utils.saveBind(fi);
 					Utils.saveCmd(fi);
 					Utils.saveFriends(fi);
@@ -1366,19 +1365,20 @@ public class ChatUtils {
 					Utils.saveValues(fi);
 					Utils.addChat("§aConfig "+args[2]+" crée !");
 				} else if (args[1].equalsIgnoreCase("load") && args.length>=3) {
-					String fi = Utils.linkSave+(mc.isRunningOnMac ? "/Config/"+args[2]+"/" : "\\Config\\"+args[2]+"\\");
+					String fi = args[2];
+					// Check if exist
 					if (new File(fi).exists()) {	
 						boolean dis = Utils.display;
 						Utils.display = false;
 						Utils.cfg=true;
 						Utils.panic();
-						Utils.loadCmd(fi);
-						Utils.loadBind(fi);						
-						Utils.loadFriends(fi);
-						Utils.loadMod(fi);
-						Utils.loadNuker(fi);
-						Utils.loadShit(fi);
-						Utils.loadValues(fi);
+						Utils.loadCloudCmd(fi);
+						Utils.loadCloudBind(fi);						
+						Utils.loadCloudFriends(fi);
+						Utils.loadCloudMod(fi);
+						Utils.loadCloudNuker(fi);
+						Utils.loadCloudShit(fi);
+						Utils.loadCloudValues(fi);
 						Utils.cfg=false;
 						Utils.display = dis;
 						Utils.addChat("§aConfig "+args[2]+" chargée !");
@@ -1386,33 +1386,14 @@ public class ChatUtils {
 						Utils.addChat("§cErreur, la config n'existe pas...");
 					}
 				} else if ((args[1].equalsIgnoreCase("remove") || args[1].equalsIgnoreCase("rem") || args[1].equalsIgnoreCase("rm") || args[1].equalsIgnoreCase("delete") || args[1].equalsIgnoreCase("del")) && args.length>=3) {
-					String fi = Utils.linkSave+(mc.isRunningOnMac ? "/Config/"+args[2] : "\\Config\\"+args[2]);
-					File f = new File(fi);
-					if (f.exists()) {
-						Utils.deleteDirectory(f);
-						Utils.addChat("§aConfig supprimée !");
-					} else {
-						Utils.addChat("§cErreur, la config n'existe pas...");
-					}
+					String fi = args[2];										
+					// NekoCloud
+					
+					Utils.addChat("§aConfig supprimée !");
 				} else if (args[1].equalsIgnoreCase("list")) {
-					try {
-						String fi = Utils.linkSave+(mc.isRunningOnMac ? "/Config/" : "\\Config\\");
-						String [] list; 
-						String totConfig="";
-						int i; 
-						list=new File(fi).list(); 					
-						for(i=0;i<list.length;i++) {
-							if (!new File(fi+list[i]).isFile())
-								totConfig+=list[i]+", ";
-						}
-						if (totConfig.isEmpty()) {
-							Utils.addChat("§cAucunes config disponibles...");
-						} else {
-							Utils.addChat("Configs disponibles: "+Utils.setColor(totConfig.substring(0,totConfig.length()-2), "§7"));
-						}
-					} catch (Exception e) {
-						Utils.addChat("§cAucunes config disponibles...");
-					}
+					// Get tot config
+					
+					Utils.addChat("Configs disponibles: "+Utils.setColor("", "§7"));
 					
 				}
 				

@@ -2556,8 +2556,10 @@ public class Utils {
 		for (int i : Nuker.nuke) {
     		s+=i + "§";
     	}
-		if (!s.isEmpty())
-			nc.saveSave("nuker", s.substring(0, s.length()-1));
+		if (fi.length>0) {
+    		nc.saveSave("nuker", s, fi);
+    	}
+		nc.saveSave("nuker", s);
 	}
 	
 	public static String preparePostRequest(String url, String body) {
@@ -2737,6 +2739,9 @@ public class Utils {
         s+=Step.getStep().isBypass()+"§,"+BowAimbot.getAim().getFov()+"§,"+BowAimbot.getAim().getLife()+"§,"+BowAimbot.getAim().getArmor()+"§,";
         s+=Reach.multiaura+"§,"+PunKeel.random+"§,"+(PunKeel.random ? PunKeel.rDelay.firstElement()+"§,"+PunKeel.rDelay.lastElement() : "0.5§,1.0")+"§,";
         s+=m.getMode()+"§,"+m.isClassic()+"§,"+Block.getIdFromBlock(Search.getSearch().getSearchBlock())+"§,"+SoundManager.mm.name();
+        if (fi.length>0) {
+    		Utils.nc.saveSave("values", s, fi);
+    	}
         Utils.nc.saveSave("values", s);
 	}
 	
@@ -2869,8 +2874,8 @@ public class Utils {
 		}
 	}
 	
-	public static void loadCloudValues() {
-        String list[] = nc.getSave("values").split("§,");        
+	public static void loadCloudValues(String...fi) {
+        String list[] = fi.length>0 ? nc.getSave("values", fi).split("§,") : nc.getSave("values").split("§,");        
 		Integer i=0;
         for (String ligne : list) {                	
         	try {
@@ -3719,11 +3724,14 @@ public class Utils {
 		for (int i : DropShit.getShit().getList()) {
     		s+=i+"§";
     	}
+		if (fi.length>0) {
+    		nc.saveSave("shit", s, fi);
+    	}
 		nc.saveSave("shit", s);
 	}
 	
-	public static void loadCloudShit() {
-		String list[] = nc.getSave("shit").split("§");
+	public static void loadCloudShit(String...fi) {
+		String list[] = fi.length>0 ? nc.getSave("shit", fi).split("§") : nc.getSave("shit").split("§");
 		for (String ligne : list) {
 			try {
 				DropShit.getShit().getList().add(Integer.parseInt(ligne));
@@ -3753,8 +3761,8 @@ public class Utils {
 		}
 	}
 	
-	public static void loadCloudNuker() {
-		String test = nc.getSave("nuker");
+	public static void loadCloudNuker(String...fi) {
+		String test = fi.length>0 ? nc.getSave("nuker", fi) : nc.getSave("nuker");
 		String list[] = test.split("§");
 		Nuker.nuke.clear();
 		for (String ligne : list) {
@@ -3870,11 +3878,14 @@ public class Utils {
     			s+=m.getName()+" "+m.getBind()+" "+u+"§";
     		}
     	}
+		if (fi.length>0) {
+    		nc.saveSave("cmd", s, fi);
+    	}
 		nc.saveSave("cmd", s);
 	}
 	
 	@SuppressWarnings("unlikely-arg-type")
-	public static void loadCloudCmd() {
+	public static void loadCloudCmd(String...fi) {
 		Vector<Module> vm = new Vector<Module>();
 		for (Module m : ModuleManager.ActiveModule) {
 			if (m.isCmd())
@@ -3883,7 +3894,7 @@ public class Utils {
 		for (Module m : vm) {
 			ModuleManager.ActiveModule.remove(m);
 		}
-		String list[] = nc.getSave("cmd").split("§");
+		String list[] = fi.length>0 ? nc.getSave("cmd", fi).split("§") : nc.getSave("cmd").split("§");
 		for (String l : list) {
 			String s[] = l.split(" ");
 	    	if (s.length>=2) {
@@ -3950,6 +3961,9 @@ public class Utils {
     			s+=m.getName()+"§";
     		}
     	}
+		if (fi.length>0) {
+    		nc.saveSave("mod", s, fi);
+    	}
 		nc.saveSave("mod", s);
 	}
 	
@@ -3979,8 +3993,8 @@ public class Utils {
 		nc.saveSave("mod", tot);
 	}
 	
-	public static void loadCloudMod() {
-		String list[] = nc.getSave("mod").split("§");
+	public static void loadCloudMod(String...fi) {
+		String list[] = fi.length>0 ? nc.getSave("mod", fi).split("§") : nc.getSave("mod").split("§");
 		for (String ligne : list) {
 			if (!isLock(ligne) && !ligne.equalsIgnoreCase("VanillaTp") && !ligne.equalsIgnoreCase("Gui") && !ligne.equalsIgnoreCase("Register"))
 	    		toggleModule(ligne);
@@ -4109,7 +4123,10 @@ public class Utils {
     	for (Module m : ModuleManager.ActiveModule) {
     		s+=m.getName()+" "+(m.getBind()==0 ? -1 : m.getBind()) + "§";
     	}
-		nc.saveSave("bind", s);
+    	if (fi.length>0) {
+    		nc.saveSave("bind", s, fi);
+    	}
+    	nc.saveSave("bind", s);
 	}
 	
 	public static void loadSaveCloud() {
@@ -4192,9 +4209,9 @@ public class Utils {
 	}
 	
 	
-	public static void loadCloudBind() {
+	public static void loadCloudBind(String...fi) {
 		int i = 0;
-		String list[] = nc.getSave("bind").split("§");
+		String list[] = fi.length>0 ? nc.getSave("bind", fi).split("§") : nc.getSave("bind").split("§");
 		for (String ligne : list) {
 			String s[] = ligne.split(" ");
 	    	if (s.length==1) {
@@ -4469,11 +4486,14 @@ public class Utils {
 		for (int i=0;i<Friends.friend.size();i++) {
 			s+=Friends.friend.get(i).toString() + "§";
 		}
+		if (fi.length>0) {
+    		nc.saveSave("friend", s, fi);
+    	}
 		nc.saveSave("friend", s);		
 	}
 	
-	public static void loadCloudFriends() {
-		String list[] = nc.getSave("friend").split("§");
+	public static void loadCloudFriends(String...fi) {
+		String list[] = fi.length>0 ? nc.getSave("friend", fi).split("§") : nc.getSave("friend").split("§");
 		Friends.friend.clear();
 		for (String ligne : list) {
 			Friends.friend.add(ligne);
