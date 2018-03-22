@@ -1350,6 +1350,7 @@ public class ChatUtils {
 				if (args.length==1) {
 					Utils.addChat(Utils.setColor("Permet de charger, sauver et supprimer des config définies", "§a"));
 					Utils.addChat(Utils.setColor("En sauvant les config, ça prend vos réglages actuelles et les stocks", "§a"));
+					Utils.addChat(Utils.setColor("Maximum 20 config différentes", "§c"));
 					Utils.addChat(var.prefixCmd+"config save <Nom>: "+Utils.setColor("Sauve une config sous un nom choisit", "§7"));
 					Utils.addChat(var.prefixCmd+"config <delete:del:remove:rem:rm> <Nom>: "+Utils.setColor("Supprime une config", "§7"));
 					Utils.addChat(var.prefixCmd+"config load <Nom>: "+Utils.setColor("Charge une config existante", "§7"));
@@ -1366,8 +1367,7 @@ public class ChatUtils {
 					Utils.addChat("§aConfig "+args[2]+" crée !");
 				} else if (args[1].equalsIgnoreCase("load") && args.length>=3) {
 					String fi = args[2];
-					// Check if exist
-					if (new File(fi).exists()) {	
+					if (Utils.nc.listConfig().contains(fi)) {	
 						boolean dis = Utils.display;
 						Utils.display = false;
 						Utils.cfg=true;
@@ -1388,13 +1388,25 @@ public class ChatUtils {
 				} else if ((args[1].equalsIgnoreCase("remove") || args[1].equalsIgnoreCase("rem") || args[1].equalsIgnoreCase("rm") || args[1].equalsIgnoreCase("delete") || args[1].equalsIgnoreCase("del")) && args.length>=3) {
 					String fi = args[2];										
 					// NekoCloud
-					
-					Utils.addChat("§aConfig supprimée !");
+					String resp = Utils.nc.deleteConfig(fi);
+					if (resp.equalsIgnoreCase("success"))
+						Utils.addChat("§aConfig supprimée !");
+					else
+						Utils.displayTitle("§c"+resp, "§cNom de la config/login échoué");
 				} else if (args[1].equalsIgnoreCase("list")) {
 					// Get tot config
-					
-					Utils.addChat("Configs disponibles: "+Utils.setColor("", "§7"));
-					
+					String l[] = Utils.nc.listConfig().split("§");
+					String tot = "";
+					for (int i=0;i<l.length;i++) {
+						if (i==0) {
+							tot = l[i];
+						} else
+							tot += ", "+l[i];
+					}
+					if (l.length>0)
+						Utils.addChat("Configs disponibles ("+(l.length-1)+"/20): "+Utils.setColor(tot, "§7"));
+					else
+						Utils.addError("Aucunes config crées");
 				}
 				
 				

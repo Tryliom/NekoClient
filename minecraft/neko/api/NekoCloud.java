@@ -91,9 +91,22 @@ public class NekoCloud {
 			@Override
 			public void run() {
 //				System.out.println(content);
-				String s = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/save/update/"+name, NekoCloud.getNekoAPI().parseHashMapToJson(hm));
+				Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/save/update/"+name, NekoCloud.getNekoAPI().parseHashMapToJson(hm));
 			}
 		}).start();
+	}
+	
+	public String listConfig() {
+		HashMap<String, String> hm = this.getBaseBody();
+		String s = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/save/config/get", parseHashMapToJson(hm));
+		return s.replaceAll("\"", "");
+	}
+		
+	public String deleteConfig(String name) {
+		HashMap<String, String> hm = this.getBaseBody();
+		hm.put("configname", name);
+		String s = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/save/config/delete", parseHashMapToJson(hm));
+		return s.replaceAll("\"", "");
 	}
 	
 	public HashMap<String, String> getBaseBody() {
