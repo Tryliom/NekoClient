@@ -1366,25 +1366,31 @@ public class ChatUtils {
 					Utils.saveValues(fi);
 					Utils.addChat("§aConfig "+args[2]+" crée !");
 				} else if (args[1].equalsIgnoreCase("load") && args.length>=3) {
-					String fi = args[2];
-					if (Utils.nc.listConfig().contains(fi)) {	
-						boolean dis = Utils.display;
-						Utils.display = false;
-						Utils.cfg=true;
-						Utils.panic();
-						Utils.loadCloudCmd(fi);
-						Utils.loadCloudBind(fi);						
-						Utils.loadCloudFriends(fi);
-						Utils.loadCloudMod(fi);
-						Utils.loadCloudNuker(fi);
-						Utils.loadCloudShit(fi);
-						Utils.loadCloudValues(fi);
-						Utils.cfg=false;
-						Utils.display = dis;
-						Utils.addChat("§aConfig "+args[2]+" chargée !");
-					} else {
-						Utils.addChat("§cErreur, la config n'existe pas...");
-					}
+					new Thread(new Runnable() {
+						
+						@Override
+						public void run() {
+							String fi = args[2];
+							if (Utils.nc.listConfig().contains(fi)) {	
+								boolean dis = Utils.display;
+								Utils.display = false;
+								Utils.cfg=true;
+								Utils.panic();
+								Utils.loadCloudCmd(fi);
+								Utils.loadCloudBind(fi);						
+								Utils.loadCloudFriends(fi);
+								Utils.loadCloudMod(fi);
+								Utils.loadCloudNuker(fi);
+								Utils.loadCloudShit(fi);
+								Utils.loadCloudValues(fi);
+								Utils.cfg=false;
+								Utils.display = dis;
+								Utils.addChat("§aConfig "+args[2]+" chargée !");
+							} else {
+								Utils.addChat("§cErreur, la config n'existe pas...");
+							}
+						}
+					}).start();
 				} else if ((args[1].equalsIgnoreCase("remove") || args[1].equalsIgnoreCase("rem") || args[1].equalsIgnoreCase("rm") || args[1].equalsIgnoreCase("delete") || args[1].equalsIgnoreCase("del")) && args.length>=3) {
 					String fi = args[2];										
 					// NekoCloud
@@ -1395,18 +1401,25 @@ public class ChatUtils {
 						Utils.displayTitle("§c"+resp, "§cNom de la config/login échoué");
 				} else if (args[1].equalsIgnoreCase("list")) {
 					// Get tot config
-					String l[] = Utils.nc.listConfig().split("§");
-					String tot = "";
-					for (int i=0;i<l.length;i++) {
-						if (i==0) {
-							tot = l[i];
-						} else
-							tot += ", "+l[i];
-					}
-					if (l.length>0)
-						Utils.addChat("Configs disponibles ("+(l.length-1)+"/20): "+Utils.setColor(tot, "§7"));
-					else
-						Utils.addError("Aucunes config crées");
+					new Thread(new Runnable() {
+						
+						@Override
+						public void run() {
+							String l[] = Utils.nc.listConfig().split("§");
+							String tot = "";
+							for (int i=0;i<l.length;i++) {
+								if (i==0) {
+									tot = l[i];
+								} else
+									tot += ", "+l[i];
+							}
+							if (!l[0].contains("Error"))
+								Utils.addChat("Configs disponibles ("+(l.length-1)+"/20): "+Utils.setColor(tot, "§7"));
+							else
+								Utils.addError("Aucunes config crées");
+						}
+					}).start();
+					
 				}
 				
 				

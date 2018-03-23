@@ -16,6 +16,10 @@ public class Gui extends Module {
 		super("Gui", Keyboard.KEY_RCONTROL, Category.HIDE);
 	}
 	
+	public void onDisabled() {
+		Utils.saveFrame();
+	}
+	
 	public void onToggle() {
 		if(!(mc.currentScreen instanceof GuiManagerDisplayScreen)) {
 			mc.displayGuiScreen(new GuiManagerDisplayScreen(var.gui));

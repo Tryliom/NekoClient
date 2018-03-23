@@ -12,6 +12,7 @@ import neko.api.NekoCloud;
 import neko.manager.GuiManager;
 import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
+import neko.module.other.Irc;
 import neko.module.other.Rank;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -141,6 +142,7 @@ public class GuiConnect extends GuiScreen {
 			break;
 		case 4:
 			// Ignore
+			Irc.getInstance().setNamePlayer(NekoCloud.getNekoAPI().getName());
 			this.mc.displayGuiScreen(new GuiMainMenu());
 			break;
 		case 5:

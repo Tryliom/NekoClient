@@ -11,9 +11,9 @@ import java.util.Date;
 import java.util.Random;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.LogManager;
 
 import org.apache.commons.io.Charsets;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;

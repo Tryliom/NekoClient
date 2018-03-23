@@ -2323,6 +2323,11 @@ public class Utils {
 	
 	public static void loadCloudFrame() {
 	    String list[] = nc.getSave("frame").split("§");
+	    if (var.gui==null) {
+	    	var.gui = new GuiManager();
+			var.gui.setTheme(new SimpleTheme());
+			var.gui.setup();
+	    }
 	    for (String ligne : list)
 	    {           
 	    	String s[] = ligne.split(" ");
@@ -4138,6 +4143,7 @@ public class Utils {
 	public static void loadSaveCloud() {
 		loadCloudCmd();
 		loadCloudRank();
+		if (var.rang==null)
 		for (Rank r : ModuleManager.rang) {
 			if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {
 				var.rang=r;

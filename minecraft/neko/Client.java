@@ -76,9 +76,11 @@ public class Client {
 		time.start();
 		moduleManager = new ModuleManager();
 		onlyrpg = OnlyRpgManager.getRpg();
-		gui = new GuiManager();
-		gui.setTheme(new SimpleTheme());
-		gui.setup();
+		if (gui==null) {
+			gui = new GuiManager();
+			gui.setTheme(new SimpleTheme());
+			gui.setup();
+		}
 		if (rang==null)
 			for (Rank r : ModuleManager.rang) {
 				if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {
@@ -177,7 +179,7 @@ class ch implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		Minecraft mc = Minecraft.getMinecraft();
-		Client neko = Client.getNeko();
+		Client neko = Client.getNeko();			
 
 		// ça set l'id tout seul
 		if (mc.thePlayer != null && Utils.verif == null
