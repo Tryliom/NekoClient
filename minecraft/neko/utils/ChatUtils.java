@@ -1392,29 +1392,41 @@ public class ChatUtils {
 						}
 					}).start();
 				} else if ((args[1].equalsIgnoreCase("remove") || args[1].equalsIgnoreCase("rem") || args[1].equalsIgnoreCase("rm") || args[1].equalsIgnoreCase("delete") || args[1].equalsIgnoreCase("del")) && args.length>=3) {
-					String fi = args[2];										
-					// NekoCloud
-					String resp = Utils.nc.deleteConfig(fi);
-					if (resp.equalsIgnoreCase("success"))
-						Utils.addChat("§aConfig supprimée !");
-					else
-						Utils.displayTitle("§c"+resp, "§cNom de la config/login échoué");
+					new Thread(new Runnable() {
+						
+						@Override
+						public void run() {
+							String fi = args[2];										
+							String resp = Utils.nc.deleteConfig(fi);
+							if (resp.equalsIgnoreCase("success"))
+								Utils.addChat("§aConfig supprimée !");
+							else
+								Utils.displayTitle("§c"+resp, "§cNom de la config/login échoué");
+						}
+					}).start();
+
 				} else if (args[1].equalsIgnoreCase("list")) {
 					// Get tot config
 					new Thread(new Runnable() {
 						
 						@Override
 						public void run() {
-							String l[] = Utils.nc.listConfig().split("§");
+							String s = Utils.nc.listConfig();
+							String l[] = s.split("§");
 							String tot = "";
+							Boolean first = true;
 							for (int i=0;i<l.length;i++) {
-								if (i==0) {
+								if (l[i].isEmpty()) {
+									continue;
+								}
+								if (first) {
 									tot = l[i];
+									first = false;
 								} else
 									tot += ", "+l[i];
 							}
 							if (!l[0].contains("Error"))
-								Utils.addChat("Configs disponibles ("+(l.length-1)+"/20): "+Utils.setColor(tot, "§7"));
+								Utils.addChat("Configs disponibles ("+(l.length)+"/20): "+Utils.setColor(tot, "§7"));
 							else
 								Utils.addError("Aucunes config crées");
 						}

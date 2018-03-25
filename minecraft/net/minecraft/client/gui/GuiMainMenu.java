@@ -15,6 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.commons.io.Charsets;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
@@ -25,9 +26,12 @@ import neko.Client;
 import neko.api.NekoCloud;
 import neko.gui.GuiConnect;
 import neko.gui.GuiMenuNeko;
+import neko.manager.GuiManager;
+import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
 import neko.manager.SoundManager;
 import neko.manager.TutoManager;
+import neko.module.other.Rank;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.GuiConnecting;
@@ -249,7 +253,24 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         }
         NekoCloud nc = NekoCloud.getNekoAPI();
         
+        
         if (!nc.isLogin() && Utils.haveInternet()) {
+        	Client var = Client.getNeko();
+    		var.moduleManager = new ModuleManager();
+    		var.onlyrpg = OnlyRpgManager.getRpg();
+    		if (var.gui==null) {
+    			var.gui = new GuiManager();
+    			var.gui.setTheme(new SimpleTheme());
+    			var.gui.setup();
+    		}
+    		if (var.rang==null)
+    			for (Rank r : ModuleManager.rang) {
+    				if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {
+    					var.rang=r;
+    					r.setLvl(r.getLvl()!=1 ? r.getLvl() : 1);
+    					r.setLock(false);
+    				}
+    			}
         	Utils.loadCredentials();
     	    String res = nc.loginAccount();
     	    if (res.equalsIgnoreCase("success")) {

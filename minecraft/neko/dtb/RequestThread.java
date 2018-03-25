@@ -412,6 +412,7 @@ public class RequestThread extends Thread {
 				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=b0ac0857d55ccb7f52303bc7e440b02e&args="+URLEncoder.encode(s, "UTF-8"));
 				Scanner sc = new Scanner(url.openStream(), "UTF-8");		
 				String l;
+				String last = "";
 				Utils.addChat("§7--[§aJoueurs connectés§7]--");
 				try {
 					while ((l = sc.nextLine()) != null) {
@@ -463,6 +464,7 @@ public class RequestThread extends Thread {
 								}
 								// Afficher ici
 								Locale loc = new Locale("FR", "CH");
+								last = pName;
 								Utils.addChat2("§7["+(pMode.equalsIgnoreCase("§cIrc désactivé") ? "§c-" : "§a+")+"§7] "+pName+" joue sur §e"+pServer, Irc.getInstance().getPlayerClic(pName, pServer), "§7["+pRankColor+pRank+"§7]\n§d"+pName+"\n§bLvl."+NumberFormat.getNumberInstance(loc).format(pLvl)+" §7["+NumberFormat.getNumberInstance(loc).format(pXp)+"xp§7/"+NumberFormat.getNumberInstance(loc).format(pXpMax)+"xp§7]\n§7Serveur: "+pServer+"\n§7"+pKill+" kills\n§7"+pTime+" de temps de jeu\n§7Version: "+pVer+"\n§7Mode: "+pMode, pServer.equalsIgnoreCase("Localhost"), Chat.Summon);								
 							}
 						}

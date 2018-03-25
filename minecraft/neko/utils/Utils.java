@@ -4141,16 +4141,16 @@ public class Utils {
 	}
 	
 	public static void loadSaveCloud() {
+		if (var.rang==null)
+			for (Rank r : ModuleManager.rang) {
+				if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {
+					var.rang=r;
+					r.setLvl(r.getLvl()!=1 ? r.getLvl() : 1);
+					r.setLock(false);
+				}
+			}
 		loadCloudCmd();
 		loadCloudRank();
-		if (var.rang==null)
-		for (Rank r : ModuleManager.rang) {
-			if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {
-				var.rang=r;
-				r.setLvl(r.getLvl()!=1 ? r.getLvl() : 1);
-				r.setLock(false);
-			}
-		}
 		loadCloudRpg();
 		loadCloudFriends();
 		loadCloudBind();
