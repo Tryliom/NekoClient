@@ -57,7 +57,7 @@ public class GuiAltManager extends GuiScreen {
 	    this.buttonList.add(new GuiButton(2, this.width / 2 - 50, this.height - 28, 100, 20, "Supprimer")); 
 	    this.buttonList.add(new GuiButton(3, this.width / 2 - 154, this.height - 52, 100, 20, "Login")); 
 	    this.buttonList.add(new GuiButton(4, this.width / 2 - 50, this.height - 52, 100, 20, "McLeaks"));
-	    this.buttonList.add(new GuiButton(5, this.width / 2 - 154, this.height - 28, 100, 20, "Import")); 
+	    this.buttonList.add(new GuiButton(5, this.width / 2 - 154, this.height - 28, 100, 20, "Refresh")); 
 	    this.buttonList.add(new GuiButton(0, this.width / 2 + 4 + 50, this.height - 28, 100, 20, "Retour"));
 	    this.buttonList.add(new GuiButton(6, this.width - 150, 10, 100, 20, (check ? "§a" : "§c")+"Checker")); 
 	  }
@@ -106,11 +106,10 @@ public class GuiAltManager extends GuiScreen {
 	    case 2: 
 	      if (this.list.getSelectedSlot() != -1) {
 	        try
-	        {
-	          Account account = (Account)this.accounts.get(this.list.getSelectedSlot());
+	        {	          
 	          Utils.deleteAccount(this.list.getSelectedSlot()+1);
+	          this.accounts.remove(this.list.getSelectedSlot());
 	          this.displaytext = "Le compte a été supprimé !";
-	          load();
 	        }
 	        catch (Exception e)
 	        {
@@ -133,17 +132,7 @@ public class GuiAltManager extends GuiScreen {
 	    	this.mc.displayGuiScreen(new GuiMcleaks(this));
 		      break;
 	    case 5: 
-	    	if (!mc.isRunningOnMac)
-		    	try {
-			    	ProcessBuilder pb = new ProcessBuilder("C:\\Program Files (x86)\\Notepad++\\notepad++.exe", Utils.linkSave+"account.neko");
-			    	pb.start();
-		    	} catch (Exception e) {
-		    		ProcessBuilder pb = new ProcessBuilder("Notepad.exe", Utils.linkSave+"account.neko");
-			    	pb.start();
-		    	}
-	    	else {
-	    		this.displaytext = "§cFonction indisponible pour Mac/Linux";
-	    	}
+	    	load();
 		    break;
 	    case 6:
 	    	check = !check;

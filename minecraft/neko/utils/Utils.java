@@ -166,6 +166,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.play.client.C00PacketKeepAlive;
 import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.client.C03PacketPlayer;
+import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatStyle;
@@ -1263,7 +1264,8 @@ public class Utils {
 	
 	public static boolean haveInternet() {
 		try {
-			new URL("http://www.perdu.com").openConnection();
+			URL u = new URL("http://www.perdu.com");
+			u.openConnection().setConnectTimeout(1000);
 		} catch (Exception e) {
 			return false;
 		}
@@ -1704,7 +1706,6 @@ public class Utils {
 		v.add(new Quest("Je t'aide et tu me délaisse après !", null, var.prefixCmd+"help", 3));
 		v.add(new Quest("Il ne restera plus rien après mon passage !", getModule("Nuker"), null, 3));
 		v.add(new Quest("Utilise moi sur un item et la puissance tu auras !", null, var.prefixCmd+"enchant", 3));
-		v.add(new Quest("Clique encore !", null, var.prefixCmd+"startquest", 3));
 		v.add(new Quest("Tu vas encore envoyer un message gênant C:", null, var.prefixCmd+"nyah", 3));
 		v.add(new Quest("Ton ip n'as plus de secret pour moi..", null, var.prefixCmd+"myip", 3));
 		v.add(new Quest("Il y en a peu mais...C'est très efficace !", null, var.prefixCmd+"Potion", 3));
@@ -1989,26 +1990,42 @@ public class Utils {
 	}
 	
 	public static void attack(Entity entity) {
+		if (Utils.isToggle("Knockback")) {
+        	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SPRINTING));
+        }
 		if (isToggle("FastDura")) {
 			FastDura.doDura(entity);
 		} else if (isToggle("Nausicaah")) {
 			Nausicaah.getNausi().doNausicaah(entity);
 		} else
 			mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK));
+		if (Utils.isToggle("Knockback")) {
+        	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
+        }
 	}
 	
 	public static void attack(Entity entity, boolean ma) {
+		if (Reach.knock || Utils.isToggle("Knockback")) {
+        	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SPRINTING));
+        }
 		if (isToggle("FastDura")) {
 			FastDura.doDura(entity);
 		} else if (isToggle("Nausicaah")) {
 			Nausicaah.getNausi().doNausicaah(entity);
 		} else
 			mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK));
+		if (Reach.knock || Utils.isToggle("Knockback")) {
+        	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
+        }
 		if (ma)
 			for (Object o : (var.mode.equalsIgnoreCase("Player") ? mc.theWorld.playerEntities : mc.theWorld.loadedEntityList)) {
 				if (o instanceof EntityLivingBase) {
 					EntityLivingBase en = (EntityLivingBase) o;
 					if (isEntityValid(en) && mc.thePlayer.getDistanceToEntity(en) <= 6 && entity!=en) {
+						
+						if (Reach.knock || Utils.isToggle("Knockback")) {
+                        	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SPRINTING));
+                        }
 						if (isToggle("FastDura")) {
 							KillAura.giveMoney(en);
 							FastDura.doDura(en);
@@ -2019,6 +2036,9 @@ public class Utils {
 							mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(en, net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK));
 							KillAura.giveMoney(en);
 						}
+						if (Reach.knock || Utils.isToggle("Knockback")) {
+                			mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
+                        }
 					}
 				}
 			}
@@ -2576,8 +2596,8 @@ public class Utils {
 	public static String preparePostRequest(String url, String body) {
         try {
             URLConnection con = (HttpsURLConnection)new URL(url).openConnection();
-            con.setConnectTimeout(15000);
-            con.setReadTimeout(15000);
+            con.setConnectTimeout(10000);
+            con.setReadTimeout(45000);
             ((HttpURLConnection) con).setRequestMethod("POST");
             ((HttpURLConnection) con).setRequestProperty("Content-Type", "application/json");
             con.setDoOutput(true);
@@ -2749,7 +2769,7 @@ public class Utils {
         s+=TutoManager.getTuto().isDone()+"§,"+Nuker.safe+"§,"+KillAura.speed+"§,"+PunKeel.attack+"§,"+PunKeel.delay+"§,"+Fastbow.getFast().getPacket()+"§,";
         s+=Step.getStep().isBypass()+"§,"+BowAimbot.getAim().getFov()+"§,"+BowAimbot.getAim().getLife()+"§,"+BowAimbot.getAim().getArmor()+"§,";
         s+=Reach.multiaura+"§,"+PunKeel.random+"§,"+(PunKeel.random ? PunKeel.rDelay.firstElement()+"§,"+PunKeel.rDelay.lastElement() : "0.5§,1.0")+"§,";
-        s+=m.getMode()+"§,"+m.isClassic()+"§,"+Block.getIdFromBlock(Search.getSearch().getSearchBlock())+"§,"+SoundManager.mm.name();
+        s+=m.getMode()+"§,"+m.isClassic()+"§,"+Block.getIdFromBlock(Search.getSearch().getSearchBlock())+"§,"+SoundManager.mm.name()+"§"+Reach.knock;
         if (fi.length>0) {
     		Utils.nc.saveSave("values", s, fi);
     	}
@@ -2814,23 +2834,29 @@ public class Utils {
 	}
 	
 	public static void deleteAccount(int i) {
-		ArrayList<String> s = new ArrayList<String>();
-    	s = getAllAccount();
-    	String res="";
-    	for (int k=0;k<s.size();k++) {
-    		if (i!=k+1) {
-    			if (k==s.size())
-    				res+=s.get(k);
-    			else
-    				res+=s.get(k)+"§";
-    		}
-    	}
-    	if (i==lastAccount || lastAccount==0) {
-    		lastAccount=0;
-    	} else if (i<lastAccount){
-    		lastAccount-=1;
-    	}
-    	nc.saveSave("alt", res);
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				ArrayList<String> s = new ArrayList<String>();
+		    	s = getAllAccount();
+		    	String res="";
+		    	for (int k=0;k<s.size();k++) {
+		    		if (i!=k+1) {
+		    			if (k==s.size())
+		    				res+=s.get(k);
+		    			else
+		    				res+=s.get(k)+"§";
+		    		}
+		    	}
+		    	if (i==lastAccount || lastAccount==0) {
+		    		lastAccount=0;
+		    	} else if (i<lastAccount){
+		    		lastAccount-=1;
+		    	}
+		    	nc.saveSave("alt", res);				
+			}
+		}).start();
 	}
 	
 	public static void saveAccount(String user, String mdp) {
@@ -3294,6 +3320,8 @@ public class Utils {
             	if (i==168) {
             		SoundManager.getSM().mm = MusicMode.valueOf(ligne);
             	}
+            	if (i==169)
+            		Reach.knock=Boolean.parseBoolean(ligne);
         	} catch (Exception e) {
         		System.out.println(e.getMessage());
         	}                	
@@ -3834,7 +3862,6 @@ public class Utils {
 	            while (sc.hasNextLine())
 	            {                	
 	            	l = sc.nextLine();
-	            	System.out.println(l);
 	            	if (l.equalsIgnoreCase("")) {
 	            		hm.put(nom, (Vector<String>)desc.clone());
 	            		nom = "";

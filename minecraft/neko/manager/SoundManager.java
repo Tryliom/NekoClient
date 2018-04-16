@@ -99,7 +99,7 @@ public class SoundManager {
 	}
 	
 	public boolean isActive() {
-		return canStart && !stopByButton && this.currAudio!=null;
+		return canStart && !stopByButton && this.currAudio!=null && Utils.haveInternet();
 	}
 	
 	public void restartMusic(String...s) {

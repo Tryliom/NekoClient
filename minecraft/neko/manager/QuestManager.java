@@ -36,6 +36,7 @@ public class QuestManager {
 	}
 
 	public void guessQuest(String cmdOrCheat) {
+		try {
 		if (hasBegin)
 			if (current.getResponseCheat() == null) {
 				if (cmdOrCheat.equalsIgnoreCase(current.getResponseCmd())) {
@@ -48,6 +49,7 @@ public class QuestManager {
 				} else
 					failed();
 			}
+		} catch (Exception e) {}
 	}
 
 	private void failed() {

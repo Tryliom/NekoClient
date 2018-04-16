@@ -15,7 +15,7 @@ public class Search extends Module {
 	private Block searchBlock;
 	private int delay = 0;
 	private int delay_ = 0;
-	private int refreshTime = 10;
+	private int refreshTime = 5;
 	private int renderDistance = 75;
 	private Vector<BlockPos> list = new Vector<>();
 	private static Search instance = null;
@@ -108,8 +108,12 @@ public class Search extends Module {
 
 	public void onRender3D() {
 		try {
+			int i = 0;
 			if (searchBlock != null) {
 				for (BlockPos b : list) {
+					i++;
+					if (i>=700)
+						return;
 					RenderUtils.drawOutlinedBlockESP(b.getX() - mc.getRenderManager().renderPosX,
 							b.getY() - mc.getRenderManager().renderPosY,
 							b.getZ() - mc.getRenderManager().renderPosZ, 

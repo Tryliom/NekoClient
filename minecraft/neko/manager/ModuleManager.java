@@ -15,6 +15,7 @@ import neko.module.modules.combat.Crit;
 import neko.module.modules.combat.Exploit;
 import neko.module.modules.combat.Fastbow;
 import neko.module.modules.combat.KillAura;
+import neko.module.modules.combat.Knockback;
 import neko.module.modules.combat.Reach;
 import neko.module.modules.combat.Regen;
 import neko.module.modules.combat.SmoothAim;
@@ -240,6 +241,7 @@ public class ModuleManager {
 		this.ActiveModule.add(new Likaotique()); // Key NONE
 		this.ActiveModule.add(new PotionEffect()); // Key NONE
 		this.ActiveModule.add(new ArmorHUD()); // Key NONE
+		this.ActiveModule.add(new Knockback()); // Key NONE
 		
 		LockManager lm = LockManager.getManager();
 		// Ajouter les locks | -- = ..;
@@ -694,6 +696,7 @@ public class ModuleManager {
 		rang.add(new Rank("Ultime Chanceux", 99, Rate.UltraRare, "§b", true, 0));
 		Utils.getRank("Ultime Chanceux").setDesc("Tout es dit !");
 		Utils.getRank("Ultime Chanceux").setGiftLotterie(0.5);
+		Utils.getRank("Ultime Chanceux").setLuck(0.5);
 		rang.add(new Rank("Pikachu", 62, Rate.UltraRare, "§e§n", true, 0));
 		Utils.getRank("Pikachu").setDesc("Pika pika pikachuuuuu !");
 		rang.add(new Rank("Shyrogan", 68, Rate.UltraRare, "§b", true, 0));
@@ -704,6 +707,7 @@ public class ModuleManager {
 		Utils.getRank("You are a little byte !").setDesc("Il aime les grosses bytes");
 		rang.add(new Rank("Jean-Pierre chanceux", 44, Rate.UltraRare, "§b", true, 0));
 		Utils.getRank("Jean-Pierre chanceux").setDesc("La chance y est mise pour celui-là, il vous autorise à utiliser sa reach si rare");
+		Utils.getRank("Jean-Pierre chanceux").setLuck(0.5);
 		rang.add(new Rank("My life is Potato", 59, Rate.UltraRare, "§b", true, 0));
 		Utils.getRank("My life is Potato").setDesc("Les patates c'est la vie.");
 		rang.add(new Rank("Hentai", 69, Rate.UltraRare, "§b", true, 0));
@@ -718,6 +722,7 @@ public class ModuleManager {
 		rang.add(new Rank("Chanceux", 7, Rate.Rare, "§e", true, 0));
 		Utils.getRank("Chanceux").setDesc("Si chanceux que votre prochain rang sera plus facile à obtenir");
 		Utils.getRank("Chanceux").setLotRateUltraRare(0.3);
+		Utils.getRank("Chanceux").setLuck(0.3);
 		rang.add(new Rank("Bananya", 22, Rate.Rare, "§e", true, 0));
 		Utils.getRank("Bananya").setDesc("Avez-vous vu déjà des neko dans des bananes ? >> Bananya");
 		rang.add(new Rank("atoZ", 20, Rate.Rare, "§e", true, 0));
@@ -813,6 +818,11 @@ public class ModuleManager {
 		Utils.getRank("Maître Méchant").setDesc("Mon Maître est méchant...help plz..AIIIE CA FAIT MAL MAÎTRE :c");
 		rang.add(new Rank("AntoZzz x IAM", 600, Rate.Event, "§2", true, 0));
 		Utils.getRank("AntoZzz x IAM").setDesc("Ils se disputent très souvent mais au fond, ce ne sont que des querelles de couple..Vous n'imaginez pas comment ça dérape en privé..;3");
+		rang.add(new Rank("Coucou", 500, Rate.Event, "§2", true, 0));
+		Utils.getRank("Coucou").setDesc("Coucou");
+		rang.add(new Rank("CrazyLove", 500, Rate.Event, "§2", true, 0));
+		Utils.getRank("CrazyLove").setDesc("C'est pour faire joli :3");
+		
 		
 		// Neko
 		rang.add(new Rank("Supra Neko", 1500, Rate.Supra, "§6", true, 0));

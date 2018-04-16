@@ -31,6 +31,7 @@ import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.client.C02PacketUseEntity.Action;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
+import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraft.util.BlockPos;
 
 public class Reach extends Module {
@@ -47,6 +48,7 @@ public class Reach extends Module {
 	public static boolean tnt=false;
 	public static boolean multiaura=false;
 	public static double fov=7;
+	public static boolean knock=true;
 	double entityPosX;				
 	double entityPosY;
 	double entityPosZ;	
@@ -78,7 +80,8 @@ public class Reach extends Module {
 		+ "§6Aimbot:§7 "+(Reach.aimbot ? "§aActivée" : "§cDésactivée")+"\n"
 		+ "§6Fov:§7 "+Reach.fov+"°"+"\n"
 		+ "§6Tnt:§7 "+(Reach.tnt ? "§aActivée" : "§cDésactivée")+"\n"
-		+ "§6MultiAura: "+Utils.displayBool(multiaura);
+		+ "§6MultiAura: "+Utils.displayBool(multiaura)+"\n"
+		+ "§6Knockback: "+(Reach.knock ? "§aActivée" : "§cDésactivée");
 	}
 	
 	// Réglé dans PlayerControllerMP
@@ -224,7 +227,13 @@ public class Reach extends Module {
 			if (en!=null && !Friends.isFriend(en.getName()) && mc.thePlayer!=en) {
 				if (mc.thePlayer.getDistanceToEntity(en)>5) {
 	        		String s = doTpAller(en);
-	        		Utils.attack(en, multiaura);
+	        		if (knock) {
+                    	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SPRINTING));
+                    }
+            		Utils.attack(en, multiaura);
+            		if (knock) {
+            			mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
+                    }
 	        		doTpRetour(s);	        			        			
 	        		
 	        		// Puis on re set notre position initiale
@@ -246,8 +255,14 @@ public class Reach extends Module {
 				for (Object theObject : mc.theWorld.playerEntities) {
 	                EntityPlayer entity = (EntityPlayer) theObject;
 	                if (u.isEntityInFov(entity, fov) && !Friends.isFriend(entity.getName()) && mc.thePlayer!=entity) {
-                        String s = doTpAller(entity);	 
+                        String s = doTpAller(entity);
+                        if (knock) {
+                        	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SPRINTING));
+                        }
                 		Utils.attack(entity, multiaura);
+                		if (knock) {
+                			mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
+                        }
                 		doTpRetour(s);
                 		mc.thePlayer.setPosition(lastX, lastY+0.005*Math.random(), lastZ);
                 		KillAura.giveMoney(entity);	
@@ -270,7 +285,13 @@ public class Reach extends Module {
     	                        	        	                        
         	                        String s = doTpAller(entity);
         	                        
-        	                        Utils.attack(entity, multiaura);
+        	                        if (knock) {
+    		                        	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SPRINTING));
+    		                        }
+    		                		Utils.attack(entity, multiaura);
+    		                		if (knock) {
+    		                			mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
+    		                        }
         	                		doTpRetour(s);
         	                		mc.thePlayer.setPosition(lastX, lastY+0.005*Math.random(), lastZ);;
         	                		KillAura.giveMoney(entity);
@@ -290,7 +311,13 @@ public class Reach extends Module {
 
 		                        String s = doTpAller(entity);
 		                        
-		                        Utils.attack(entity, multiaura);
+		                        if (knock) {
+		                        	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SPRINTING));
+		                        }
+		                		Utils.attack(entity, multiaura);
+		                		if (knock) {
+		                			mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
+		                        }
 		                		doTpRetour(s);
 		                		mc.thePlayer.setPosition(lastX, lastY+0.005*Math.random(), lastZ);
 		                		KillAura.giveMoney(entity);
@@ -304,9 +331,17 @@ public class Reach extends Module {
 	}
 		
 	public String doTpAller(Entity en) {
-		entityPosX = en.posX-mc.thePlayer.posX;				
+		int x = 0;
+		int z = 0;
+		// Knock
+		if (knock) {
+			x=(en.posX<mc.thePlayer.posX ? 1 : -1);
+			z=(en.posZ<mc.thePlayer.posZ ? 1 : -1);
+		}
+		
+		entityPosX = en.posX+x-mc.thePlayer.posX;				
 		entityPosY = en.posY-mc.thePlayer.posY+1;
-		entityPosZ = en.posZ-mc.thePlayer.posZ;
+		entityPosZ = en.posZ+z-mc.thePlayer.posZ;
 		
 		lastX = mc.thePlayer.posX;
 		lastY = mc.thePlayer.posY;
@@ -315,9 +350,11 @@ public class Reach extends Module {
 		for (;u.verif(entityPosY, k) > 4;k++) {}
 		for (;u.verif(entityPosZ, k) > 4;k++) {} 
 		
-		TpUtils tp = new TpUtils();
-		tp.getK(en.getPosition());
-		return tp.doTpAller(en, entityPosX, entityPosY, entityPosZ, classic, k);		
+		TpUtils tp = new TpUtils();		
+		tp.getK(new BlockPos(en.posX+x, en.posY, en.posZ+z));
+		Entity e = new EntityWitch(mc.theWorld);
+		e.setPosition(en.posX+x, en.posY, en.posZ+z);
+		return tp.doTpAller(e, entityPosX, entityPosY, entityPosZ, classic, k);		
 	}
 	
 	public void doTpRetour(String how) {

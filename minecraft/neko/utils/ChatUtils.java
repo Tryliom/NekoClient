@@ -231,8 +231,8 @@ public class ChatUtils {
 				Utils.addChat(error); 
 				Utils.checkXp(xp);
 			}
-			
-			Utils.checkQuest(var3);
+			if (!var3.equalsIgnoreCase(var.prefixCmd+"startquest"))
+				Utils.checkQuest(var3);
 			
 			if (args.length==1) {
 				String s = args[0].replaceFirst(var.prefixCmd, "").toLowerCase();		
@@ -693,6 +693,7 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Reach fov <Double>", var.prefixCmd+"reach fov ", "§7Change le fov pour la Reach aimbot", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Reach tnt", var.prefixCmd+"reach tnt", "§7Permet de poser et allumer de la tnt à distance avec le clic droit.\n§7Le Reach tnt <Mode> permet de changer de mode de posage.\n§7Faîtes Reach tnt list pour la liste des modes", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Reach multiaura", var.prefixCmd+"reach multiaura", "§7Permet de frapper toutes les entités autour du joueur frappé à distance", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Reach knockback", var.prefixCmd+"reach kb", "§7Permet d'appliquer un knockback au joueur tapé dans la direction où vous frappezu", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("trigger")) {
@@ -3580,6 +3581,16 @@ public class ChatUtils {
 							Utils.addChat("§aReach pvp activée !");
 						}
 						Reach.pvp=!Reach.pvp;
+					} else
+						Utils.addWarn("reach pvp");
+				} else if (args[1].equalsIgnoreCase("knockback") || args[1].equalsIgnoreCase("knock") || args[1].equalsIgnoreCase("kb")) {
+					if (!Utils.isLock("--reach pvp")) {
+						if (Reach.knock) {
+							Utils.addChat("§cReach knockback désactivée !");
+						} else {
+							Utils.addChat("§aReach knockback activée !");
+						}
+						Reach.knock=!Reach.knock;
 					} else
 						Utils.addWarn("reach pvp");
 				} else if (args[1].equalsIgnoreCase("multi") || args[1].equalsIgnoreCase("ma") || args[1].equalsIgnoreCase("multiaura")) {
