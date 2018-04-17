@@ -1,6 +1,8 @@
 package neko.gui;
 
 import java.awt.Desktop;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
@@ -56,7 +58,7 @@ public class GuiAltManager extends GuiScreen {
 		this.buttonList.add(new GuiButton(2, this.width / 2 - 50, this.height - 28, 100, 20, "Supprimer"));
 		this.buttonList.add(new GuiButton(3, this.width / 2 - 154, this.height - 52, 100, 20, "Login"));
 		this.buttonList.add(new GuiButton(4, this.width / 2 - 50, this.height - 52, 100, 20, "McLeaks"));
-		this.buttonList.add(new GuiButton(5, this.width / 2 - 154, this.height - 28, 100, 20, "Refresh"));
+		this.buttonList.add(new GuiButton(5, this.width / 2 - 154, this.height - 28, 100, 20, "Copier la liste d'alt"));
 		this.buttonList.add(new GuiButton(0, this.width / 2 + 4 + 50, this.height - 28, 100, 20, "Retour"));
 		this.buttonList.add(new GuiButton(6, this.width - 150, 10, 100, 20, (check ? "§a" : "§c") + "Checker"));
 	}
@@ -127,7 +129,14 @@ public class GuiAltManager extends GuiScreen {
 			this.mc.displayGuiScreen(new GuiMcleaks(this));
 			break;
 		case 5:
-			load();
+			String tot = "";		
+			if (this.list.selectedSlot==-1)
+				for (String s : this.listAcc) {
+					tot+=s+"\n";
+				}
+			else
+				tot=this.listAcc.get(this.list.selectedSlot);
+			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(tot), null);
 			break;
 		case 6:
 			check = !check;
