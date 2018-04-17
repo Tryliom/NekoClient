@@ -124,6 +124,7 @@ import neko.module.modules.special.Reflect;
 import neko.module.modules.special.SpamBot;
 import neko.module.modules.special.TpBack;
 import neko.module.modules.special.VanillaTp;
+import neko.module.other.Account;
 import neko.module.other.Active;
 import neko.module.other.Conditions;
 import neko.module.other.Irc;
@@ -2882,11 +2883,15 @@ public class Utils {
 	
 	
 	public static ArrayList<String> getAllAccount() {
+		return GuiAltManager.listAcc;
+	}
+	
+	public static void loadAllAccountFromCloud() {
 		String list[] = nc.getSave("alt").split("§");
 		ArrayList<String> account = new ArrayList<String>();
 	    for (String ligne : list)
 	    	account.add(ligne);            
-        return account;
+	    GuiAltManager.listAcc = account;
 	}
 	
 	

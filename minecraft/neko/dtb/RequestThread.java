@@ -11,8 +11,6 @@ import java.util.Locale;
 import java.util.Scanner;
 import java.util.TimeZone;
 import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import neko.Client;
 import neko.api.NekoCloud;
@@ -993,7 +991,14 @@ public class RequestThread extends Thread {
 			        } else {
 			        	first="§7["+pRankColor+pRank+"§7] "+pName+":§f "+m;
 			        }
-			        String sec="§7["+pRankColor+pRank+"§7]\n§d"+pName+"\n§bLvl."+NumberFormat.getNumberInstance(loc).format(pLvl)+" §7["+NumberFormat.getNumberInstance(loc).format(pXp)+"xp§7/"+NumberFormat.getNumberInstance(loc).format(pXpMax)+"xp§7]\n§7Serveur: 	"+pServer+"\n§7"+pKill+" kills\n§7"+pTime+" de temps de jeu\n§7Version: "+pVer+"\n§7Mode: "+pMode;
+			        HashMap<String, String> hm = NekoCloud.getNekoAPI().getBaseBody();
+			        hm.put("player_name", pName);
+					String realname = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/access", NekoCloud.getNekoAPI().parseHashMapToJson(hm)).replaceAll("\"", "");
+					if (realname.startsWith(pName+"=")) {
+						realname = realname.replaceFirst(pName+"=", "");
+					} else
+						realname = "";
+			        String sec="§7["+pRankColor+pRank+"§7]\n§d"+pName+"\n"+(realname.isEmpty() ? "" :"§cNom en jeu: "+realname)+"§bLvl."+NumberFormat.getNumberInstance(loc).format(pLvl)+" §7["+NumberFormat.getNumberInstance(loc).format(pXp)+"xp§7/"+NumberFormat.getNumberInstance(loc).format(pXpMax)+"xp§7]\n§7Serveur: 	"+pServer+"\n§7"+pKill+" kills\n§7"+pTime+" de temps de jeu\n§7Version: "+pVer+"\n§7Mode: "+pMode;
 			        
 			        if (Utils.verif==null && Irc.getInstance().isOn()) {
 				        if (!Irc.getInstance().getLastMsg().equalsIgnoreCase(msg2) && !isPv)
