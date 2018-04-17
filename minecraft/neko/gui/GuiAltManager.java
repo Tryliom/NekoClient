@@ -130,7 +130,7 @@ public class GuiAltManager extends GuiScreen {
 			break;
 		case 5:
 			String tot = "";		
-			if (this.list.selectedSlot==-1)
+			if (this.list.selectedSlot==-1 || this.listAcc.size()>=this.list.selectedSlot)
 				for (String s : this.listAcc) {
 					tot+=s+"\n";
 				}
@@ -206,6 +206,7 @@ public class GuiAltManager extends GuiScreen {
 			currentThread.interrupt();
 			currentThread.stop();
 		}
+		Utils.saveCloudAlt();
 	}
 
 	private class GuiMcleaks extends GuiScreen {
@@ -333,6 +334,7 @@ public class GuiAltManager extends GuiScreen {
 			case 1:
 				try {
 					String ms[] = this.name_mail.getText().split(",");
+					String fname = "";
 					for (String nm : ms) {
 						String s[] = nm.split(":");
 						String name = s[0];
@@ -352,8 +354,11 @@ public class GuiAltManager extends GuiScreen {
 						}
 						this.error = "";
 						Utils.saveAccount(name, pass);
-						displaytext = "Le compte " + name + " a été ajouté !";
 					}
+					if (ms.length>1)
+						displaytext = "Les comptes ont été ajouté !";
+					else
+						displaytext = "Le compte " + fname + " a été ajouté !";
 					this.mc.displayGuiScreen(this.prevGui);
 				} catch (Exception e) {
 					e.printStackTrace();
