@@ -1322,6 +1322,7 @@ public class Utils {
 		saveFont();
 		saveShit();
 		saveCmd();
+		saveCloudAlt();
 	}
 	
 	public static boolean isModule(String cheat) {
@@ -2861,6 +2862,7 @@ public class Utils {
 	}
 	
 	public static void saveAccount(String user, String mdp) {
+		GuiAltManager.listAcc.add(user+" "+mdp);
 		ArrayList<String> s = new ArrayList<String>();
     	s = getAllAccount();
     	String res = "";          
@@ -2872,7 +2874,36 @@ public class Utils {
         			res+=s.get(k) +"§";
         	}
     	res+=user+" "+mdp; 
-    	nc.saveSave("alt", res);
+    	final String r = res;
+    	new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				nc.saveSave("alt", r);
+				
+			}
+		}).start();
+	}
+	
+	public static void saveCloudAlt() {
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				ArrayList<String> s = new ArrayList<String>();
+		    	s = getAllAccount();
+		    	String res = "";          
+		    	if (s.size()>0)
+		        	for (int k=0;k<s.size();k++) {
+		        		if (k==s.size())
+		        			res+=s.get(k);
+		        		else
+		        			res+=s.get(k) +"§";
+		        	}
+				nc.saveSave("alt", res);
+				
+			}
+		}).start();
 	}
 	
 	public static String getAccount(int acc) {
@@ -4181,6 +4212,7 @@ public class Utils {
 					r.setLock(false);
 				}
 			}
+		loadAllAccountFromCloud();
 		loadCloudCmd();
 		loadCloudRank();
 		loadCloudRpg();

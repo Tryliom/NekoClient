@@ -104,6 +104,7 @@ public class GuiAltManager extends GuiScreen {
 				try {
 					Utils.deleteAccount(this.list.getSelectedSlot() + 1);
 					this.accounts.remove(this.list.getSelectedSlot());
+					this.listAcc.remove(this.list.getSelectedSlot());
 					this.displaytext = "Le compte a été supprimé !";
 				} catch (Exception e) {
 					this.displaytext = ("Erreur\n" + e.getMessage());
