@@ -138,11 +138,14 @@ class tptimer implements ActionListener {
 				double psz = mc.thePlayer.posZ;
 				if (k>30)
 					Likaotique.getLik().setCurrPos(mc.thePlayer.getPosition());
-				else
+				else {
 					for (int j=0;j<k;j++)  {  
 		        		Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C04PacketPlayerPosition(psx+px/k, 
 		        				mc.thePlayer.posY, psz+pz/k, true));
 					}
+					Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C04PacketPlayerPosition(psx+px+0.5, 
+	        				mc.thePlayer.posY, psz+pz+0.5, true));
+				}
 			}
 			
 		} catch (Exception e) {}

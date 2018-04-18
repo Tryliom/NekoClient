@@ -463,11 +463,13 @@ public class RequestThread extends Thread {
 								// Afficher ici
 								HashMap<String, String> hm = NekoCloud.getNekoAPI().getBaseBody();
 						        hm.put("player_name", pName);
-								String realname = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/access/realname", NekoCloud.getNekoAPI().parseHashMapToJson(hm)).replaceAll("\"", "");
-								if (realname.startsWith(pName+"=")) {
-									realname = realname.replaceFirst(pName+"=", "");
-								} else
-									realname = "";
+						        String realname = "";
+						        if (Utils.admin) {
+									realname = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/access/realname", NekoCloud.getNekoAPI().parseHashMapToJson(hm)).replaceAll("\"", "");
+									if (realname.startsWith(pName+"=")) {
+										realname = realname.replaceFirst(pName+"=", "");
+									}
+								}
 								Locale loc = new Locale("FR", "CH");
 								Utils.addChat2("§7["+(pMode.equalsIgnoreCase("§cIrc désactivé") ? "§c-" : "§a+")+"§7] "+pName+" joue sur §e"+pServer, Irc.getInstance().getPlayerClic(pName, pServer), "§7["+pRankColor+pRank+"§7]\n§d"+pName+"\n"+(realname.isEmpty() ? "" : "§cNom en jeu: "+realname+"\n")+"§bLvl."+NumberFormat.getNumberInstance(loc).format(pLvl)+" §7["+NumberFormat.getNumberInstance(loc).format(pXp)+"xp§7/"+NumberFormat.getNumberInstance(loc).format(pXpMax)+"xp§7]\n§7Serveur: "+pServer+"\n§7"+pKill+" kills\n§7"+pTime+" de temps de jeu\n§7Version: "+pVer+"\n§7Mode: "+pMode, pServer.equalsIgnoreCase("Localhost"), Chat.Summon);								
 							}
@@ -1000,11 +1002,13 @@ public class RequestThread extends Thread {
 			        }
 			        HashMap<String, String> hm = NekoCloud.getNekoAPI().getBaseBody();
 			        hm.put("player_name", pName);
-					String realname = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/access/realname", NekoCloud.getNekoAPI().parseHashMapToJson(hm)).replaceAll("\"", "");
-					if (realname.startsWith(pName+"=")) {
-						realname = realname.replaceFirst(pName+"=", "");
-					} else
-						realname = "";
+			        String realname = "";
+			        if (Utils.admin) {
+						realname = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/access/realname", NekoCloud.getNekoAPI().parseHashMapToJson(hm)).replaceAll("\"", "");
+						if (realname.startsWith(pName+"=")) {
+							realname = realname.replaceFirst(pName+"=", "");
+						}
+					}
 			        String sec="§7["+pRankColor+pRank+"§7]\n§d"+pName+"\n"+(realname.isEmpty() ? "" :"§cNom en jeu: "+realname+"\n")+"§bLvl."+NumberFormat.getNumberInstance(loc).format(pLvl)+" §7["+NumberFormat.getNumberInstance(loc).format(pXp)+"xp§7/"+NumberFormat.getNumberInstance(loc).format(pXpMax)+"xp§7]\n§7Serveur: 	"+pServer+"\n§7"+pKill+" kills\n§7"+pTime+" de temps de jeu\n§7Version: "+pVer+"\n§7Mode: "+pMode;
 			        
 			        if (Utils.verif==null && Irc.getInstance().isOn()) {

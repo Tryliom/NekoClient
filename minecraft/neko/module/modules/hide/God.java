@@ -1,13 +1,11 @@
 package neko.module.modules.hide;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import neko.dtb.Alt;
 import neko.dtb.RequestThread;
 import neko.gui.InGameGui;
-import neko.manager.SoundManager;
 import neko.module.Category;
 import neko.module.Module;
 import neko.module.modules.misc.Timer;
@@ -67,6 +65,11 @@ public class God extends Module {
 				if (var.onlyrpg.isActive())
 					var.onlyrpg.addTimer();
 				u.timeInGameSec+=1;
+				for (Module m : var.moduleManager.ActiveModule) {
+					if (m.getToggled() && m.getCategory()!=Category.HIDE && !m.isCmd()) {
+						m.incrementTime();
+					}
+				}
 				if (Utils.xptime<60)
 					Utils.xptime+=1;
 				u.timeInGameMs=0;

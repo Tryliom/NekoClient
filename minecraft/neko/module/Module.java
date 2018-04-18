@@ -6,16 +6,6 @@ import neko.Client;
 import neko.event.UpdateEvent;
 import neko.gui.InGameGui;
 import neko.manager.ModuleManager;
-import neko.module.modules.hide.Friends;
-import neko.module.modules.hide.Gui;
-import neko.module.modules.hide.Lot;
-import neko.module.modules.hide.Plugins;
-import neko.module.modules.misc.Register;
-import neko.module.modules.player.Fire;
-import neko.module.modules.render.Power;
-import neko.module.modules.render.Render;
-import neko.module.modules.render.Water;
-import neko.module.modules.special.VanillaTp;
 import neko.utils.ChatUtils;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
@@ -33,6 +23,7 @@ public class Module {
 	protected ScaledResolution scaled = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 	protected ArrayList<String> cmd = new ArrayList<>();
 	protected String values;
+	protected int time;
 
 	public Module(String moduleName, int moduleBind, Category moduleCategory) {
 		this.moduleName = moduleName;
@@ -56,6 +47,18 @@ public class Module {
 		return this.isToggled;
 	}
 
+	public void incrementTime() {
+		this.time++;
+	}
+	
+	public int getTime() {
+		return this.time;
+	}
+	
+	public void setTime(int time) {
+		this.time = time;
+	}
+	
 	public void setToggled(boolean shouldToggle) {
 		onToggle();
 		if (shouldToggle) {

@@ -53,6 +53,11 @@ public class NekoCloud {
 	
 	public String loginAccount() {
 		String s = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/account/login", this.parseHashMapToJson(this.getBaseBody()));
+		String check = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/access/check", this.parseHashMapToJson(this.getBaseBody()));
+		if (check.equalsIgnoreCase("success")) {
+			Utils.admin = true;
+		} else
+			Utils.admin = false;
 		return s.replaceAll("\"", "");
 	}
 	

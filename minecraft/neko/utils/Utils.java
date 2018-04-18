@@ -237,6 +237,7 @@ public class Utils {
 	public static Vector<String> ipVote = new Vector<String>();
 	public static int xptime = 0;
 	public static NekoCloud nc = NekoCloud.getNekoAPI();
+	public static boolean admin = false;
 	
 	public static void addChat(String m) {
 		if (verif==null)
@@ -1323,6 +1324,7 @@ public class Utils {
 		saveShit();
 		saveCmd();
 		saveCloudAlt();
+		saveStat();
 	}
 	
 	public static boolean isModule(String cheat) {
@@ -4041,6 +4043,28 @@ public class Utils {
 		nc.saveSave("mod", s);
 	}
 	
+	public static void saveStat() {
+		if (mc.thePlayer==null || verif!=null)
+			return;
+		String s ="";
+		for (Module m : ModuleManager.ActiveModule) {
+    		if (!m.getCategory().name().equalsIgnoreCase("hide") && !m.isCmd()) {
+    			s+=m.getName()+"="+m.getTime()+"§";
+    		}
+    	}
+		nc.saveSave("stat", s);		
+	}
+		
+	public static void loadCloudStat() {
+		String list[] = nc.getSave("stat").split("§");
+		for (String ligne : list) {
+			String s[] = ligne.split("=");
+			try {
+				Utils.getModule(s[0]).setTime(Integer.parseInt(s[1]));
+			} catch (Exception e) {}
+		}
+	}
+	
 	public static void importMod(String...fi) {
 		File dir = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"mod.neko");
 		String tot = "";
@@ -4213,6 +4237,7 @@ public class Utils {
 				}
 			}
 		loadAllAccountFromCloud();
+		loadCloudStat();
 		loadCloudCmd();
 		loadCloudRank();
 		loadCloudRpg();
