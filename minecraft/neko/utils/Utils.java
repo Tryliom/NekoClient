@@ -1233,7 +1233,7 @@ public class Utils {
 			addChat2("§6"+var.prefixCmd+"Nbt <Tag> <Value>", var.prefixCmd+"nbt ", "§7Ajoute un nbt à l'item, comprend les values int, double, boolean et string.\n"
 					+ "§7Exemple simple, rendre incassable un item: "+var.prefixCmd+"nbt Unbreakable true", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Give <ID ou Name>", var.prefixCmd+"give ", "§7Juste en créatif, vous donne l'item que vous avez spécifié avec l'ID ou son nom (minecraft:stone ou 1 fonctionnent)", false, Chat.Summon);
-//			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Stat <rien ou Global>", var.prefixCmd+"stat", "§7Affiche les stats du joueur qui utilise plus tel cheat", false, Chat.Summon);
 //			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
 //			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
 			break;
@@ -2757,7 +2757,7 @@ public class Utils {
         s+=TutoManager.getTuto().isDone()+"§,"+Nuker.safe+"§,"+KillAura.speed+"§,"+PunKeel.attack+"§,"+PunKeel.delay+"§,"+Fastbow.getFast().getPacket()+"§,";
         s+=Step.getStep().isBypass()+"§,"+BowAimbot.getAim().getFov()+"§,"+BowAimbot.getAim().getLife()+"§,"+BowAimbot.getAim().getArmor()+"§,";
         s+=Reach.multiaura+"§,"+PunKeel.random+"§,"+(PunKeel.random ? PunKeel.rDelay.firstElement()+"§,"+PunKeel.rDelay.lastElement() : "0.5§,1.0")+"§,";
-        s+=m.getMode()+"§,"+m.isClassic()+"§,"+Block.getIdFromBlock(Search.getSearch().getSearchBlock())+"§,"+SoundManager.mm.name()+"§"+Reach.knock;
+        s+=m.getMode()+"§,"+m.isClassic()+"§,"+Block.getIdFromBlock(Search.getSearch().getSearchBlock())+"§,"+SoundManager.mm.name()+"§,"+Reach.knock;
         if (fi.length>0) {
     		Utils.nc.saveSave("values", s, fi);
     	}
@@ -4033,7 +4033,7 @@ public class Utils {
 		String s ="";
 		for (Module m : ModuleManager.ActiveModule) {
     		if (!m.getCategory().name().equalsIgnoreCase("hide") && !m.isCmd()) {
-    			s+=m.getName()+"="+m.getTime()+"§";
+    			s+=m.getName()+"="+m.getTimeStat()+"§";
     		}
     	}
 		nc.saveSave("stat", s);		
@@ -4054,30 +4054,31 @@ public class Utils {
 			// Faire niveau cloud
 			String totModule = "";
 			for (Module m : var.moduleManager.ActiveModule) {
-				if (m.getCategory()!=Category.HIDE && !m.isCmd() && m.getTime()!=0) {
+				if (m.getCategory()!=Category.HIDE && !m.isCmd() && m.getTimeStat()!=0) {
 					totModule+=m.getName()+"§";
 				}
 			}
 			String res = NekoCloud.getNekoAPI().getGlobalStat(totModule);
-			addChat("[Stat de temps global]");
+			System.out.println(res);
+			addChat("§a[Stat de temps global]");
 			String cheat[] = res.split("§");
 			for (String b : cheat) {
 				try {
 					String c[] = b.split("=");
 					String st[] = c[1].split(",");
-					addChat(c[0]+":§9"+st[0]+" --> "+st[1]);
+					addChat(c[0]+":§c "+st[0]+"§e --> "+st[1]);
 				} catch (Exception e) {}
 			}
 		} else {
 			// Stats locale
-			addChat("[Stat de temps]");
+			addChat("§a[Stat de temps]");
 			for (Module m : var.moduleManager.ActiveModule) {
-				if (m.getCategory()!=Category.HIDE && !m.isCmd() && m.getTime()!=0) {
-					int h = m.getTime() / 3600;
-					int min = (m.getTime() % 3600) / 60;
-					int s = (m.getTime() % 3600) % 60;
+				if (m.getCategory()!=Category.HIDE && !m.isCmd() && m.getTimeStat()!=0) {
+					int h = m.getTimeStat() / 3600;
+					int min = (m.getTimeStat() % 3600) / 60;
+					int s = (m.getTimeStat() % 3600) % 60;
 					String time = (h!=0 ? h+"h " : "")+(min!=0 ? min+"min " : "")+(s!=0 ? s+"s" : "");
-					addChat(m.getName()+":§9"+time);
+					addChat(m.getName()+":§e "+time);
 				}
 			}
 		}
@@ -4111,6 +4112,7 @@ public class Utils {
 	
 	public static void loadCloudMod(String...fi) {
 		String list[] = fi.length>0 ? nc.getSave("mod", fi).split("§") : nc.getSave("mod").split("§");
+		System.out.println(list.length);
 		for (String ligne : list) {
 			if (!isLock(ligne) && !ligne.equalsIgnoreCase("VanillaTp") && !ligne.equalsIgnoreCase("Gui") && !ligne.equalsIgnoreCase("Register"))
 	    		toggleModule(ligne);
@@ -4254,20 +4256,24 @@ public class Utils {
 					r.setLock(false);
 				}
 			}
-		loadAllAccountFromCloud();
-		loadCloudStat();
-		loadCloudCmd();
-		loadCloudRank();
-		loadCloudRpg();
-		loadCloudFriends();
-		loadCloudBind();
-		loadCloudLock();
-		loadCloudValues();
-		loadCloudNuker();
-		loadCloudIrc();
-		loadCloudFont();
-		loadCloudShit();
-		loadCloudFrame();
+		try {
+			loadAllAccountFromCloud();
+			loadCloudStat();
+			loadCloudCmd();
+			loadCloudRank();
+			loadCloudRpg();
+			loadCloudFriends();
+			loadCloudBind();
+			loadCloudLock();
+			loadCloudValues();
+			loadCloudNuker();
+			loadCloudIrc();
+			loadCloudFont();
+			loadCloudShit();
+			loadCloudFrame();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		// FINISHHH
 	}
 	
@@ -4373,59 +4379,61 @@ public class Utils {
 		double b = 0d;
 		String list[] = nc.getSave("rpg").split("§");
 		for (String ligne : list) {
-            i++;
-            if (i==1) {
-            	for (Rank r : ModuleManager.rang) {
-            		if (r.getName().equalsIgnoreCase(ligne)) {
-            			var.rang=r;
-            		}
-            	}
-            }
-            if (i==2) {
-                var.niveau=Integer.parseInt(ligne);
-            }
-            if (i==3) {
-                var.xp=Integer.parseInt(ligne);
-            }
-            if (i==4) {
-                var.xpMax=Integer.parseInt(ligne);
-            }
-            if (i==5) {
-            	if (ligne.equals("true")) {
-            		var.achievementHelp=true;
-            	} else {
-            		var.achievementHelp=false;                    		
-            	}
-            }
-            if (i==6) {
-            	var.prefixCmd=ligne;
-            }
-            if (i==7) {
-            	var.mode=ligne;
-            }
-            if (i==8) {
-            	var.ame=Integer.parseInt(ligne);
-            }
-            if (i==9) {
-            	var.bonus=Double.parseDouble(ligne);
-            }
-            if (i==11)
-            	var.chance=Double.parseDouble(ligne);
-            if (i==12)
-            	var.lot=Integer.parseInt(ligne);
-            if (i==13)
-        		b=Double.parseDouble(ligne);
-        	if (i==14) {
-        		int time = Integer.parseInt(ligne);
-        		if (time!=0) {
-        			new Active(b, time);
-        		}
-        	}
-        	if (i==15) 
-        		var.prevVer=ligne;
-        	if (i==16) {
-        		Lot.nbLot=Integer.parseInt(ligne);
-        	}
+			try {
+	            i++;
+	            if (i==1) {
+	            	for (Rank r : ModuleManager.rang) {
+	            		if (r.getName().equalsIgnoreCase(ligne)) {
+	            			var.rang=r;
+	            		}
+	            	}
+	            }
+	            if (i==2) {
+	                var.niveau=Integer.parseInt(ligne);
+	            }
+	            if (i==3) {
+	                var.xp=Integer.parseInt(ligne);
+	            }
+	            if (i==4) {
+	                var.xpMax=Integer.parseInt(ligne);
+	            }
+	            if (i==5) {
+	            	if (ligne.equals("true")) {
+	            		var.achievementHelp=true;
+	            	} else {
+	            		var.achievementHelp=false;                    		
+	            	}
+	            }
+	            if (i==6) {
+	            	var.prefixCmd=ligne;
+	            }
+	            if (i==7) {
+	            	var.mode=ligne;
+	            }
+	            if (i==8) {
+	            	var.ame=Integer.parseInt(ligne);
+	            }
+	            if (i==9) {
+	            	var.bonus=Double.parseDouble(ligne);
+	            }
+	            if (i==11)
+	            	var.chance=Double.parseDouble(ligne);
+	            if (i==12)
+	            	var.lot=Integer.parseInt(ligne);
+	            if (i==13)
+	        		b=Double.parseDouble(ligne);
+	        	if (i==14) {
+	        		int time = Integer.parseInt(ligne);
+	        		if (time!=0) {
+	        			new Active(b, time);
+	        		}
+	        	}
+	        	if (i==15) 
+	        		var.prevVer=ligne;
+	        	if (i==16) {
+	        		Lot.nbLot=Integer.parseInt(ligne);
+	        	}
+			} catch (Exception e) {}
     	}             
 	}
 	

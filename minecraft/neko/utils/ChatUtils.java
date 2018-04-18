@@ -25,7 +25,6 @@ import org.lwjgl.opengl.Display;
 import com.mojang.authlib.GameProfile;
 
 import neko.Client;
-import neko.dtb.Alt;
 import neko.dtb.RequestThread;
 import neko.gui.InGameGui;
 import neko.lock.Lock;

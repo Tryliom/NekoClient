@@ -377,9 +377,9 @@ public class ModuleManager {
 		// JP Légendaire : Tous les JP + plus de 15 rangs
 		rang.add(new Rank("Supra Légendaire", 2000, Rate.Supra, "§6", true, 0));
 		Utils.getRank("Supra Légendaire").setDesc("Etre légendaire surpassant les légendes elles-mêmes");
-		Utils.getRank("Supra Satanique").setLotRateTitan(2);
-		Utils.getRank("Supra Satanique").setLotRang(0.5);
-		Utils.getRank("Supra Satanique").setMeteoreRain(2);
+		Utils.getRank("Supra Légendaire").setLotRateTitan(2);
+		Utils.getRank("Supra Légendaire").setLotRang(0.5);
+		Utils.getRank("Supra Légendaire").setMeteoreRain(2);
 		rang.add(new Rank("JP Originel", 1500, Rate.Légendaire, "§5§o", true, 0));
 		Utils.getRank("JP Originel").setDesc("Jean-Pierre l'originel, ou Kali pour les intimes. L'ancêtre de la reach...");
 		Utils.getRank("JP Originel").setGiftAme(0.2);

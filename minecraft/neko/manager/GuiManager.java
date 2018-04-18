@@ -27,7 +27,6 @@ import org.darkstorm.minecraft.gui.listener.SelectableComponentListener;
 import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 
 import neko.Client;
-import neko.dtb.Alt;
 import neko.dtb.RequestThread;
 import neko.module.Category;
 import neko.module.Module;

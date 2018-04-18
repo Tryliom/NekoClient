@@ -3,7 +3,6 @@ package neko.module.modules.hide;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import neko.dtb.Alt;
 import neko.dtb.RequestThread;
 import neko.gui.InGameGui;
 import neko.module.Category;

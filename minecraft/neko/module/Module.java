@@ -51,7 +51,7 @@ public class Module {
 		this.time++;
 	}
 	
-	public int getTime() {
+	public int getTimeStat() {
 		return this.time;
 	}
 	

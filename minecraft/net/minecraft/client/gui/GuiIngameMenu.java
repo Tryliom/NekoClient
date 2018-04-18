@@ -33,6 +33,7 @@ public class GuiIngameMenu extends GuiScreen
 		Utils.saveRank();
 		Utils.saveShit();
 		Utils.saveCmd();
+		Utils.saveStat();
         this.field_146445_a = 0;
         this.buttonList.clear();
         byte var1 = -16;

@@ -170,7 +170,7 @@ public class RequestThread extends Thread {
 									pLvl=Integer.parseInt(r[i].replaceFirst("...........", ""));
 								}
 								
-								Utils.addChat("§eN°"+j+" §7["+pRankColor+pRank+"§7] "+pRankColor+pName+"§e (Lvl §b"+NumberFormat.getNumberInstance(new Locale("FR", "CH")).format(pLvl)+")");								
+								Utils.addChat("§eN°"+j+" §7["+pRankColor+pRank+"§7] "+pRankColor+pName+"§e (Lvl "+NumberFormat.getNumberInstance(new Locale("FR", "CH")).format(pLvl)+")\n");								
 							}
 						}
 					}
@@ -198,7 +198,7 @@ public class RequestThread extends Thread {
 									}
 									if (Irc.getInstance().getNamePlayer().equalsIgnoreCase(pName) && var.niveau==pLvl) {
 										if (j>=11)
-											Utils.addChat("§eN°"+j+" §7["+var.rang.getColor()+var.rang.getName()+"§7] "+var.rang.getColor()+Irc.getInstance().getNamePlayer()+"§e (Lvl §d"+NumberFormat.getNumberInstance(new Locale("FR", "CH")).format(var.niveau)+")");
+											Utils.addChat("§eN°"+j+" §7["+var.rang.getColor()+var.rang.getName()+"§7] "+var.rang.getColor()+Irc.getInstance().getNamePlayer()+"§e (Lvl "+NumberFormat.getNumberInstance(new Locale("FR", "CH")).format(var.niveau)+")");
 										sc.close();
 										return;
 									}
