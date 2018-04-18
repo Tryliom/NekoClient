@@ -2887,7 +2887,22 @@ public class ChatUtils {
 				}
 				
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}			
+			}		
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"stat")) {
+				if (args.length>1 && (args[1].equalsIgnoreCase("global") || args[1].equalsIgnoreCase("all")))
+					new Thread(new Runnable() {
+						
+						@Override
+						public void run() {
+							Utils.displayStat(true);
+							
+						}
+					}).start();
+				else
+					Utils.displayStat(false);
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"startevent")) {
 				if (Event.mdp.isEmpty()) {
