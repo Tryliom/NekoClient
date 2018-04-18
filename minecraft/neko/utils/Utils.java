@@ -1750,7 +1750,7 @@ public class Utils {
 		if (title!=null && !title.isEmpty())
 			mc.ingameGUI.func_175178_a(title, null, 10, 10, 10);
 		if (subtitle!=null && !subtitle.isEmpty())
-			mc.ingameGUI.func_175178_a(null, subtitle, 10, 10, 10);
+			mc.ingameGUI.func_175178_a("", subtitle, 10, 10, 10);
 	}
 	
 	public static BlockPos getRandBlock(int radius, double chance) {

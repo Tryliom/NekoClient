@@ -23,7 +23,6 @@ import neko.module.other.enums.Chat;
 import neko.module.other.enums.EventType;
 import neko.module.other.enums.Rate;
 import neko.utils.ChatUtils;
-import neko.utils.LoginThread;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 
@@ -171,7 +170,7 @@ public class RequestThread extends Thread {
 									pLvl=Integer.parseInt(r[i].replaceFirst("...........", ""));
 								}
 								
-								Utils.addChat("§eN°"+j+" - §7["+pRankColor+pRank+"§7] §f"+pName+"§e - Lvl. §d"+NumberFormat.getNumberInstance(new Locale("FR", "CH")).format(pLvl)+"\n");								
+								Utils.addChat("§eN°"+j+" §7["+pRankColor+pRank+"§7] "+pRankColor+pName+"§e (Lvl §b"+NumberFormat.getNumberInstance(new Locale("FR", "CH")).format(pLvl)+")");								
 							}
 						}
 					}
@@ -198,7 +197,8 @@ public class RequestThread extends Thread {
 										pLvl=Integer.parseInt(r[i].replaceFirst("...........", ""));
 									}
 									if (Irc.getInstance().getNamePlayer().equalsIgnoreCase(pName) && var.niveau==pLvl) {
-										Utils.addChat("§eN°"+j+" - §7["+var.rang.getColor()+var.rang.getName()+"§7] §f"+Irc.getInstance().getNamePlayer()+"§e - Lvl. §d"+NumberFormat.getNumberInstance(new Locale("FR", "CH")).format(var.niveau));
+										if (j>=11)
+											Utils.addChat("§eN°"+j+" §7["+var.rang.getColor()+var.rang.getName()+"§7] "+var.rang.getColor()+Irc.getInstance().getNamePlayer()+"§e (Lvl §d"+NumberFormat.getNumberInstance(new Locale("FR", "CH")).format(var.niveau)+")");
 										sc.close();
 										return;
 									}
@@ -316,7 +316,6 @@ public class RequestThread extends Thread {
 				String s = "\""+args.get(0)+"\",\""+args.get(1)+"\",\""+Event.mdp+"\"";					
 				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=9c49ef4c5819643a1806314dec166237&args="+URLEncoder.encode(s, "UTF-8"));
 				Scanner sc = new Scanner(url.openStream());		
-				String l;
 				sc.close();
 			} catch (Exception e) {
 				System.out.println("Erreur BDD: Start Event");
@@ -382,7 +381,6 @@ public class RequestThread extends Thread {
 				String s = "\""+Event.mdp+"\"";					
 				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=8ab5fda7e220db3dc80dffe6ad3bf216&args="+URLEncoder.encode(s, "UTF-8"));
 				Scanner sc = new Scanner(url.openStream());		
-				String l;
 				sc.close();
 			} catch (Exception e) {
 				System.out.println("Erreur BDD: Stop Event");
@@ -403,7 +401,6 @@ public class RequestThread extends Thread {
 			String pVer="";
 			String pMode="";
 			try {
-				long lastDate=new Date().getTime();
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				sdf.setTimeZone(TimeZone.getTimeZone("Europe/Paris"));	
 				String s = "\""+sdf.format(new Date().getTime()-10000)+"\",\""+sdf.format(new Date().getTime())+"\"";
@@ -484,82 +481,6 @@ public class RequestThread extends Thread {
 				System.out.println("Erreur BDD: DisplayList");
 			}
 			Utils.addChat("§7--------------------");
-			
-		}
-		
-		if (why.equalsIgnoreCase("loginAlt")) {
-			int id=0;
-			boolean useId=false;
-			if (args!=null) {
-				if (Utils.isInteger(args.get(0))) {
-					useId=true;
-					id=Integer.parseInt(args.get(0));
-				}
-			} else {
-				try {
-					URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=b1889a93d7eea3c3c1e116f40b3d09ac");
-					Scanner sc = new Scanner(url.openStream());		
-					String l;
-					try {
-						while ((l = sc.nextLine()) != null) {
-							if (l.startsWith("id=")) {
-								id=Integer.parseInt(l.replaceFirst("...", "").replace("<br>", ""));
-							}
-						}
-					} catch (Exception e) {}
-					sc.close();
-				} catch (Exception e) {
-					System.out.println("Erreur BDD: GetAltId");
-				}
-			}
-			String user="";
-			String pass="";
-			try {
-				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=f76166a32edd966642fb3c26798af6e7&args=\""+id+"\"");
-				Scanner sc = new Scanner(url.openStream());		
-				String l;
-				
-				try {
-					while ((l = sc.nextLine()) != null) {
-						String s[] = l.split("<br>");
-						if (s.length>1) {
-							if (s[0].startsWith("username=")) {
-								user=s[0].replaceFirst(".........", "");
-							}
-							if (s[1].startsWith("password=")) {
-								pass=s[1].replaceFirst(".........", "");
-							}
-						}
-					}
-				} catch (Exception e) {}
-				sc.close();
-			} catch (Exception e) {
-				System.out.println("Erreur BDD: Log alt");
-			}
-			
-			new LoginThread(user, pass, true, id).start();		    
-			
-		}
-		if (why.equalsIgnoreCase("totAlt")) {
-			String tot="";
-			try {
-				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=54ed1631ada12d33696b34f49da1843b");
-				Scanner sc = new Scanner(url.openStream());		
-				String l;
-				
-				try {
-					while ((l = sc.nextLine()) != null) {
-						if (l.startsWith("COUNT(Alt.id)=")) {
-							tot=l.replaceFirst("..............", "").replace("<br>", "");
-						}
-					}
-				} catch (Exception e) {}
-				sc.close();
-			} catch (Exception e) {
-				System.out.println("Erreur BDD: Get tot alt");
-			}
-			
-			Utils.addChat("Nombre d'alt disponible:§7 "+tot);
 			
 		}
 		
