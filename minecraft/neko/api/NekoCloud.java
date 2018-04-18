@@ -80,6 +80,15 @@ public class NekoCloud {
 //		System.out.println(s);
 		return s.replaceAll("\"", "");
 	}
+	
+	public String getGlobalStat(String listModule) {
+		HashMap<String, String> hm = this.getBaseBody();
+		hm.put("list_module", listModule);
+		String s = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/other/stat", parseHashMapToJson(hm));
+//		System.out.println(s);
+		return s.replaceAll("\"", "");
+	}
+	
 	/**
 	 * 
 	 * @param name Sans le .neko, juste le nom

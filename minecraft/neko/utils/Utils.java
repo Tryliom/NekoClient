@@ -4065,6 +4065,40 @@ public class Utils {
 		}
 	}
 	
+	public static void displayStat(boolean global) {
+		if (global) {
+			// Faire niveau cloud
+			String totModule = "";
+			for (Module m : var.moduleManager.ActiveModule) {
+				if (m.getCategory()!=Category.HIDE && !m.isCmd() && m.getTime()!=0) {
+					totModule+=m.getName()+"§";
+				}
+			}
+			String res = NekoCloud.getNekoAPI().getGlobalStat(totModule);
+			addChat("[Stat de temps global]");
+			String cheat[] = res.split("§");
+			for (String b : cheat) {
+				try {
+					String c[] = b.split("=");
+					String st[] = c[1].split(",");
+					addChat(c[0]+":§9"+st[0]+" --> "+st[1]);
+				} catch (Exception e) {}
+			}
+		} else {
+			// Stats locale
+			addChat("[Stat de temps]");
+			for (Module m : var.moduleManager.ActiveModule) {
+				if (m.getCategory()!=Category.HIDE && !m.isCmd() && m.getTime()!=0) {
+					int h = m.getTime() / 3600;
+					int min = (m.getTime() % 3600) / 60;
+					int s = (m.getTime() % 3600) % 60;
+					String time = (h!=0 ? h+"h " : "")+(min!=0 ? min+"min " : "")+(s!=0 ? s+"s" : "");
+					addChat(m.getName()+":§9"+time);
+				}
+			}
+		}
+	}
+	
 	public static void importMod(String...fi) {
 		File dir = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"mod.neko");
 		String tot = "";
