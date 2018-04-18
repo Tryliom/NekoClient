@@ -308,6 +308,10 @@ public class ModuleManager {
 		Utils.getRank("Crazymeal").setLuck(3);
 		
 		// Titan
+		rang.add(new Rank("Supra Titan", 5000, Rate.Supra, "§6", true, 0));
+		Utils.getRank("Supra Titan").setDesc("Etre titanesque, on raconte qu'il peut faire pleuvoir des météores");
+		Utils.getRank("Supra Titan").setLotRang(0.5);
+		Utils.getRank("Supra Titan").setMeteoreRain(5);
 		rang.add(new Rank("Tryliom", 4000, Rate.Titan, "§4§o", true, 0));
 		Utils.getRank("Tryliom").setDesc("Le créateur suprême, seigneur des Neko. Déclenche des tempêtes et explosions lorsqu'il est invoqué");
 		Utils.getRank("Tryliom").setRadiusGift(20);
@@ -355,7 +359,7 @@ public class ModuleManager {
 		Utils.getRank("Crazy Frog").setDesc("Il a enfin finaliser son ascension par cet acte, il est maintenant prêt à CRCRCR...");
 		Utils.getRank("Crazy Frog").setGiftPlus(5);
 		Utils.getRank("Crazy Frog").setRadiusGift(25);
-		rang.add(new Rank("Nyaaw Antique", 4500, Rate.Mythique, "§2§n", true, 0));
+		rang.add(new Rank("Nyaaw Antique", 4500, Rate.Titan, "§2§n", true, 0));
 		Utils.getRank("Nyaaw Antique").setDesc("Il a évolué de manière mythique depuis sa dernière invocation, il peut atteindre la puissance des Titans");
 		Utils.getRank("Nyaaw Antique").setRadiusGift(20);
 		Utils.getRank("Nyaaw Antique").setGiftRang(0.7);
@@ -363,7 +367,6 @@ public class ModuleManager {
 		
 		
 		// Mythique
-		
 		// Nyaaw Légendaire : Les 3 grades légendaires et plus de 66 rangs obtenus
 		rang.add(new Rank("Nyaaw Mythique", 2000, Rate.Mythique, "§2§n", true, 0));
 		Utils.getRank("Nyaaw Mythique").setDesc("Certainement le plus puissant Neko invoqué par les forces divines soutenue par les Légendaires");
@@ -372,6 +375,11 @@ public class ModuleManager {
 		Utils.getRank("Nyaaw Mythique").setLotRateSatanique(1);
 		Utils.getRank("Nyaaw Mythique").setLotRateDivin(1);
 		// JP Légendaire : Tous les JP + plus de 15 rangs
+		rang.add(new Rank("Supra Légendaire", 2000, Rate.Supra, "§6", true, 0));
+		Utils.getRank("Supra Légendaire").setDesc("Etre légendaire surpassant les légendes elles-mêmes");
+		Utils.getRank("Supra Satanique").setLotRateTitan(2);
+		Utils.getRank("Supra Satanique").setLotRang(0.5);
+		Utils.getRank("Supra Satanique").setMeteoreRain(2);
 		rang.add(new Rank("JP Originel", 1500, Rate.Légendaire, "§5§o", true, 0));
 		Utils.getRank("JP Originel").setDesc("Jean-Pierre l'originel, ou Kali pour les intimes. L'ancêtre de la reach...");
 		Utils.getRank("JP Originel").setGiftAme(0.2);
@@ -422,6 +430,14 @@ public class ModuleManager {
 		Utils.getRank("TryTry Satanique").setLotRateDivin(1);
 		Utils.getRank("TryTry Satanique").setGiftPlus(3);
 		Utils.getRank("TryTry Satanique").setLuck(1);
+		Utils.getRank("TryTry Satanique").setMeteoreRain(1);
+		rang.add(new Rank("Nightmare", 1500, Rate.Satanique, "§9", true, 0));
+		Utils.getRank("Nightmare").setDesc("Il a hérité de sombre pouvoir, il évolue très vite et se retrouve supérieur à tous de son rang");
+		Utils.getRank("Nightmare").setGiftPlusAme(0.8);
+		Utils.getRank("Nightmare").setGiftPlus(0.8);
+		Utils.getRank("Nightmare").setGiftAme(0.8);
+		Utils.getRank("Nightmare").setLuck(1);
+		Utils.getRank("Nightmare").setMeteoreRain(1);
 		rang.add(new Rank("Satan", 666, Rate.Satanique, "§c§n", true, 0));
 		Utils.getRank("Satan").setDesc("Le roi de l'Enfer, il possède 18 enfants");
 		rang.add(new Rank("Maître Satanique", 888, Rate.Satanique, "§c", true, 0));
@@ -538,6 +554,7 @@ public class ModuleManager {
 		Utils.getRank("TryTry Divin").setLotRateDivin(0.8);
 		Utils.getRank("TryTry Divin").setGiftPlus(0.0005);
 		Utils.getRank("TryTry Divin").setLuck(0.5);
+		Utils.getRank("TryTry Divin").setMeteoreRain(0.5);
 		rang.add(new Rank("Abel aux flammes purifiées", 500, Rate.Divin, "§d§o", true, 0));
 		Utils.getRank("Abel aux flammes purifiées").setDesc("Abel, tué par son grand frère Caïn et envoyé au Paradis, il cherche à venger l'acte fratricide de celui-ci. On chuchote qu'il se serait allié avec un chevalier de l'Enfer...");
 		rang.add(new Rank("AntoZzz", 600, Rate.Divin, "§d", true, 0));
@@ -680,6 +697,7 @@ public class ModuleManager {
 		// UltraRare 30-70
 		rang.add(new Rank("Supra UltraRare", 70, Rate.Supra, "§6", true, 0));
 		Utils.getRank("Supra UltraRare").setDesc("Etre suprême parmis les créatures Divines");
+		Utils.getRank("Supra UltraRare").setMeteoreRain(0.2);
 		rang.add(new Rank("Mr. Smile", 50, Rate.UltraRare, "§b", true, 0));
 		Utils.getRank("Mr. Smile").setDesc("Esprit frappeur de niveau moyen, defeat by Mob");
 		rang.add(new Rank("Goku", 70, Rate.UltraRare, "§b", true, 0));
