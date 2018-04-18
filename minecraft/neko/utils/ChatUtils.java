@@ -1437,13 +1437,7 @@ public class ChatUtils {
 				
 				
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"reset")) {
-				Utils.resetValues();
-				Utils.addChat("§aValues reset !");
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}						
+			}					
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"fastbow") || args[0].equalsIgnoreCase(var.prefixCmd+"fb")) {
 				if (args[1].equalsIgnoreCase("nobow")) {
@@ -5103,24 +5097,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"classement") || args[0].equalsIgnoreCase(var.prefixCmd+"gl")) {
 				new RequestThread("displaygl", null).start();
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"alt")) {
-				Alt a = Alt.getAlt();
-				if (args.length==1) {
-					if (a.getAltTimer()==0) {
-						new RequestThread("loginAlt", null).start();
-						a.setAltTimer(15);
-					} else {
-						Utils.addChat(Utils.setColor("Vous pourrez utiliser cette commande dans "+a.getAltTimer()+" secondes !", "§c"));
-					}
-				} else if (args[1].equalsIgnoreCase("list")) {
-					new RequestThread("totAlt", null).start();
-				} else if (Utils.isInteger(args[1])) {
-					ArrayList<String> l = new ArrayList<>();
-					new RequestThread("loginAlt", l).start();
-				}			
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			

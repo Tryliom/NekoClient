@@ -9,6 +9,7 @@ import neko.gui.InGameGui;
 import neko.module.Category;
 import neko.module.Module;
 import neko.module.modules.misc.Timer;
+import neko.module.modules.render.Render;
 import neko.module.other.Irc;
 import neko.utils.Utils;
 
@@ -87,9 +88,10 @@ public class God extends Module {
 					currentEvent.start();
 				} else if (u.verif!=null)
 					currentEvent.stop();
-				Alt b = Alt.getAlt();
-				if (b.getAltTimer()>0)
-					b.decrementAltTimer();
+				if (Math.random()<0.00001+var.rang.getMeteoreRain()*0.00001) {
+					Utils.addChat("§9Pluie de météores !");
+					Render.MeteoreRain();
+				}
 			}
 		} catch (Exception e) {}
 		

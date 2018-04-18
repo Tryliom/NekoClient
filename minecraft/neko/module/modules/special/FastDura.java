@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
 import net.minecraft.network.play.client.C02PacketUseEntity;
+import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraft.network.play.client.C02PacketUseEntity.Action;
 
 public class FastDura extends Module {
@@ -47,8 +48,10 @@ public class FastDura extends Module {
 	public static void doDura(Entity en) {
 		int itemSlot;
 		// 36 à 44 (En les comptant avec
-		
-		if (mc.thePlayer.getCurrentEquippedItem()!=null ? mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemTool : false) {
+		if (Utils.isToggle("Knockback")) {
+        	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SPRINTING));
+        }
+		if (mc.thePlayer.getCurrentEquippedItem()!=null ? mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemTool : false) {			
 			int i = getItemLess();
 			int j = mc.thePlayer.inventory.currentItem;
 			if (i!=-1) {
@@ -78,6 +81,9 @@ public class FastDura extends Module {
 				attack(en, true);
 			}
 		}
+		if (Utils.isToggle("Knockback")) {
+        	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
+        }
 		
 	}
 	

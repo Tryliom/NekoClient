@@ -1807,22 +1807,6 @@ public class Utils {
 		else
 			return false;		
 	}
-	
-	public static void resetValues(String...fi) {
-		File file = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"values.neko");
-        try {
-            file.createNewFile();            
-            try (FileWriter writer = new FileWriter(file)) {
-                writer.write("");
-                writer.flush();
-            }
-
-        } catch (IOException ex) {
-            
-        }
-    	loadValues();
-	}
-
 	public static boolean isToggle(String module) {
 		try {
 			for (Module mod : ModuleManager.ActiveModule) {

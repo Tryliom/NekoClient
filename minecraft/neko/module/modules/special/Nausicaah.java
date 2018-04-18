@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
 import net.minecraft.network.play.client.C02PacketUseEntity;
+import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraft.network.play.client.C02PacketUseEntity.Action;
 
 public class Nausicaah extends Module {
@@ -48,6 +49,9 @@ public class Nausicaah extends Module {
 		try {
 			int i = AutoSword.getSword().getBestWeaponFromInventory();
 			int j = mc.thePlayer.inventory.currentItem;
+			if (Utils.isToggle("Knockback")) {
+	        	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SPRINTING));
+	        }
 			if (i!=-1) {
 				FastDura.swap(j, i);
 				FastDura.attack(en, true);
@@ -55,6 +59,9 @@ public class Nausicaah extends Module {
 			} else {
 				FastDura.attack(en, true);
 			}
+			if (Utils.isToggle("Knockback")) {
+	        	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
+	        }
 		} catch (Exception e) {}
 	}
 }

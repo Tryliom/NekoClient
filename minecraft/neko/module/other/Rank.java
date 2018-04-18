@@ -13,6 +13,7 @@ public class Rank {
 	private int lvl;
 	// Liste des différents bonus, de base à 0, modifiable via les getters/setters
 	private double radiusGift = 0;
+	private double meteoreRain = 0;
 	private double lotRang = 0;  
 	private double lotUnlock = 0; 
 	private double giftRang = 0;  
@@ -46,6 +47,14 @@ public class Rank {
 		return this.bonus + this.bonus*lvl*0.1;
 	}
 	
+	public double getMeteoreRain() {
+		return meteoreRain;
+	}
+
+	public void setMeteoreRain(double meteoreRain) {
+		this.meteoreRain = meteoreRain;
+	}
+
 	public int getLvl() {
 		return lvl;
 	}

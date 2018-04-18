@@ -15,6 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemSword;
+import net.minecraft.network.play.client.C0BPacketEntityAction;
 
 public class Trigger extends Module {
 	public static Minecraft mc = Minecraft.getMinecraft();
@@ -93,7 +94,9 @@ class attack implements ActionListener {
 		        	
 		        	if (Utils.isToggle("Crit"))
 		        		Utils.crit();
-		        		                			
+		        	if (Utils.isToggle("Knockback")) {
+		            	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SPRINTING));
+		            }	                			
 	        		if (Reach.pvp && Trigger.dist>6) {
 	        			try {
 							Robot r = new Robot();
@@ -113,6 +116,9 @@ class attack implements ActionListener {
 							r.mouseRelease(16);
 						} catch (AWTException e) {}
 	    			}
+	        		if (Utils.isToggle("Knockback")) {
+	                	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
+	                }
 				}
 			}
 	}

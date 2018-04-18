@@ -169,6 +169,7 @@ import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.network.login.client.C00PacketLoginStart;
+import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraft.network.play.client.C16PacketClientStatus;
 import net.minecraft.profiler.IPlayerUsage;
 import net.minecraft.profiler.PlayerUsageSnooper;
@@ -1569,7 +1570,13 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                 switch (Minecraft.SwitchEnumMinecartType.field_152390_a[this.objectMouseOver.typeOfHit.ordinal()])
                 {
                     case 1:
+                    	if (Utils.isToggle("Knockback")) {
+                        	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SPRINTING));
+                        }
                         this.playerController.attackEntity(this.thePlayer, this.objectMouseOver.entityHit);
+                        if (Utils.isToggle("Knockback")) {
+                        	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
+                        }
                         break;
 
                     case 2:
