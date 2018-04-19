@@ -51,7 +51,7 @@ public class GuiAltManager extends GuiScreen {
 		this.load();
 		this.list = new GuiList(this);
 		this.list.registerScrollButtons(7, 8);
-		this.list.elementClicked(Utils.lastAccount - 1, false, 0, 0);
+		this.list.elementClicked(Utils.lastAccount, false, 0, 0);
 
 		int j = 28;
 		this.buttonList.add(new GuiButton(1, this.width / 2 + 4 + 50, this.height - 52, 100, 20, "Ajouter"));
@@ -120,7 +120,7 @@ public class GuiAltManager extends GuiScreen {
 			if (((this.list.getSelectedSlot() != -1 ? 1 : 0)
 					& (this.list.getSelectedSlot() < this.list.getSize() ? 1 : 0)) != 0) {
 				this.displaytext = ((Account) this.accounts.get(this.list.getSelectedSlot())).login();
-				Utils.lastAccount = this.list.getSelectedSlot() + 1;
+				Utils.lastAccount = this.list.getSelectedSlot();
 			} else {
 				this.displaytext = "§cSélectionnez un compte avant !";
 			}
@@ -157,7 +157,7 @@ public class GuiAltManager extends GuiScreen {
 	}
 
 	private void load() {
-
+		this.accounts.clear();
 		try {
 			for (Object o : Utils.getAllAccount()) {
 				String[] s = ((String) o).split(" ");

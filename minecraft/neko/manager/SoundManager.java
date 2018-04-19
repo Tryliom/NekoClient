@@ -154,7 +154,6 @@ class SoundJLayer extends JLayerPlayerPausable.PlaybackListener implements Runna
 	public void pause()
 	{
 		this.player.pause();
-
 		this.playerThread.interrupt();
 		this.playerThread = null;
 	}

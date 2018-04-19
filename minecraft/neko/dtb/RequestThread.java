@@ -926,7 +926,7 @@ public class RequestThread extends Thread {
 			        String realname = "";
 			        if (Utils.admin) {
 						realname = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/access/realname", NekoCloud.getNekoAPI().parseHashMapToJson(hm)).replaceAll("\"", "");
-						if (realname.startsWith(pName+"=")) {
+						if (realname.startsWith(pName+"=") && realname.length()<64) {
 							realname = realname.replaceFirst(pName+"=", "");
 						}
 					}

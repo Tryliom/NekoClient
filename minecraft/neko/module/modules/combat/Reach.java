@@ -335,8 +335,8 @@ public class Reach extends Module {
 		int z = 0;
 		// Knock
 		if (knock) {
-			x=(en.posX<mc.thePlayer.posX ? 1 : -1);
-			z=(en.posZ<mc.thePlayer.posZ ? 1 : -1);
+			x=(en.posX<mc.thePlayer.posX ? 2 : -2);
+			z=(en.posZ<mc.thePlayer.posZ ? 2 : -2);
 		}
 		
 		entityPosX = en.posX+x-mc.thePlayer.posX;				

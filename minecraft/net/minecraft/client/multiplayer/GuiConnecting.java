@@ -60,7 +60,7 @@ public class GuiConnecting extends GuiScreen
                 InetAddress var1 = null;
 
                 try
-                {
+                {                	
                     if (GuiConnecting.this.cancel)
                     {
                         return;
@@ -68,7 +68,7 @@ public class GuiConnecting extends GuiScreen
                     try {
                         mc.theWorld.sendQuittingDisconnectingPacket();
                         mc.loadWorld((WorldClient)null);
-                        GuiConnecting.this.networkManager.getNetHandler().onDisconnect(new ChatComponentText(""));
+//                        GuiConnecting.this.networkManager.getNetHandler().onDisconnect(new ChatComponentText(""));
                 	} catch (Exception e) {}
                     var1 = InetAddress.getByName(ip);
                     GuiConnecting.this.networkManager = NetworkManager.provideLanClient(var1, port);

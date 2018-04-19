@@ -181,19 +181,8 @@ public class JLayerPlayerPausable
         if (this.audioDevice != null)
         {
             this.isClosed = true;
-
             this.audioDevice.close();
-
             this.audioDevice = null;
-
-            try
-            {
-                this.bitstream.close();
-            }
-            catch (Exception ex)
-            {
-            	
-            }
         }
     }
 
