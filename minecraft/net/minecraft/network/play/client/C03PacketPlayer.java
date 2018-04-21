@@ -24,7 +24,11 @@ public class C03PacketPlayer implements Packet
         this.field_149474_g = p_i45256_1_;
     }
 
-    /**
+    public void setGround(boolean field_149474_g) {
+		this.field_149474_g = field_149474_g;
+	}
+
+	/**
      * Passes this Packet on to the NetHandler for processing.
      */
     public void processPacket(INetHandlerPlayServer handler)

@@ -65,7 +65,7 @@ public class SimpleFrameUI extends AbstractComponentUI<Frame> {
 		for(int i = 0; i < checks.length; i++) {
 			if(!checks[i])
 				continue;
-			glColor4f(0.1f, 0.1f, 0.1f, 0.75f);
+			RenderUtil.setColor(Utils.colorGui);
 			glBegin(GL_QUADS);
 			{
 				glVertex2d(offset - fontHeight, 2);

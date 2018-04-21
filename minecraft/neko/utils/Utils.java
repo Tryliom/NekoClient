@@ -1989,13 +1989,13 @@ public class Utils {
 			Nausicaah.getNausi().doNausicaah(entity);
 		} else
 			mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK));
-		if (Utils.isToggle("Knockback")) {
+		if (Utils.isToggle("Knockback") && !Utils.isToggle("Sprint")) {
         	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
         }
 	}
 	
 	public static void attack(Entity entity, boolean ma) {
-		if (Reach.knock || Utils.isToggle("Knockback")) {
+		if (Reach.knock) {
         	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SPRINTING));
         }
 		if (isToggle("FastDura")) {
@@ -2004,7 +2004,7 @@ public class Utils {
 			Nausicaah.getNausi().doNausicaah(entity);
 		} else
 			mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(entity, net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK));
-		if (Reach.knock || Utils.isToggle("Knockback")) {
+		if (Reach.knock && !Utils.isToggle("Sprint")) {
         	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
         }
 		if (ma)
@@ -2013,7 +2013,7 @@ public class Utils {
 					EntityLivingBase en = (EntityLivingBase) o;
 					if (isEntityValid(en) && mc.thePlayer.getDistanceToEntity(en) <= 6 && entity!=en) {
 						
-						if (Reach.knock || Utils.isToggle("Knockback")) {
+						if (Reach.knock) {
                         	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SPRINTING));
                         }
 						if (isToggle("FastDura")) {
@@ -2026,7 +2026,7 @@ public class Utils {
 							mc.thePlayer.sendQueue.addToSendQueue(new C02PacketUseEntity(en, net.minecraft.network.play.client.C02PacketUseEntity.Action.ATTACK));
 							KillAura.giveMoney(en);
 						}
-						if (Reach.knock || Utils.isToggle("Knockback")) {
+						if (Reach.knock && !Utils.isToggle("Sprint")) {
                 			mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
                         }
 					}

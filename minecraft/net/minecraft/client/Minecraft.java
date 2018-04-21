@@ -1574,7 +1574,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                         	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SPRINTING));
                         }
                         this.playerController.attackEntity(this.thePlayer, this.objectMouseOver.entityHit);
-                        if (Utils.isToggle("Knockback")) {
+                        if (Utils.isToggle("Knockback") && !Utils.isToggle("Sprint")) {
                         	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
                         }
                         break;
