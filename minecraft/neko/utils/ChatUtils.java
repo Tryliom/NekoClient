@@ -1,5 +1,6 @@
 package neko.utils;
 
+import java.awt.Color;
 import java.awt.Desktop;
 import java.io.File;
 import java.net.InetAddress;
@@ -1345,6 +1346,27 @@ public class ChatUtils {
 				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}	
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"gui")) {
+				if (args.length>=6 && args[1].equalsIgnoreCase("color")) {
+					try {
+						Utils.colorGui = new Color(Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]));
+						Utils.addChat("§aCouleur du gui changée !");
+					} catch (Exception e) {
+						Utils.addError("Syntaxe correcte: "+var.prefixCmd+"gui color <R> <G> <B> <Alpha> en nombre entier, 0-255");
+					}
+				} else if (args.length>=6 && args[1].equalsIgnoreCase("font")) {
+					try {
+						Utils.colorFontGui = new Color(Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]), Integer.parseInt(args[5]));
+						Utils.addChat("§aCouleur du font du gui changée !");
+					} catch (Exception e) {
+						Utils.addError("Syntaxe correcte: "+var.prefixCmd+"gui font <R> <G> <B> <Alpha> en nombre entier, 0-255");
+					}
+				} else {
+					Utils.addError("Syntaxe correcte: "+var.prefixCmd+"gui color <R> <G> <B> <Alpha> en nombre entier, 0-255");
+				}
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"config") || args[0].equalsIgnoreCase(var.prefixCmd+"cfg")) {
 				if (args.length==1) {

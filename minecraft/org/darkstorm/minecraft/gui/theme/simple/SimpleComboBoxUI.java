@@ -6,6 +6,8 @@ import java.awt.*;
 
 import org.lwjgl.input.Mouse;
 
+import neko.utils.Utils;
+
 import org.darkstorm.minecraft.gui.component.*;
 import org.darkstorm.minecraft.gui.component.Component;
 import org.darkstorm.minecraft.gui.theme.AbstractComponentUI;
@@ -42,15 +44,6 @@ public class SimpleComboBoxUI extends AbstractComponentUI<ComboBox> {
 			extendedHeight += 2;
 		}
 
-		RenderUtil.setColor(component.getBackgroundColor());
-		glBegin(GL_QUADS);
-		{
-			glVertex2d(0, 0);
-			glVertex2d(area.width, 0);
-			glVertex2d(area.width, area.height + extendedHeight);
-			glVertex2d(0, area.height + extendedHeight);
-		}
-		glEnd();
 		Point mouse = RenderUtil.calculateMouseLocation();
 		Component parent = component.getParent();
 		while(parent != null) {
@@ -58,7 +51,7 @@ public class SimpleComboBoxUI extends AbstractComponentUI<ComboBox> {
 			mouse.y -= parent.getY();
 			parent = parent.getParent();
 		}
-		glColor4f(0.0f, 0.0f, 0.0f, Mouse.isButtonDown(0) ? 0.5f : 0.3f);
+		RenderUtil.setColor(new Color(Utils.colorGui.getRed(), Utils.colorGui.getGreen(), Utils.colorGui.getBlue(), Mouse.isButtonDown(0) ? 150 : 90));
 		if(area.contains(mouse)) {
 			glBegin(GL_QUADS);
 			{
@@ -152,7 +145,7 @@ public class SimpleComboBoxUI extends AbstractComponentUI<ComboBox> {
 		String text = component.getSelectedElement();
 		theme.getFontRenderer().drawString(text, 2,
 				area.height / 2 - theme.getFontRenderer().FONT_HEIGHT / 2,
-				RenderUtil.toRGBA(component.getForegroundColor()));
+				RenderUtil.toRGBA(Utils.colorFontGui));
 		if(component.isSelected()) {
 			int offset = area.height + 2;
 			String[] elements = component.getElements();

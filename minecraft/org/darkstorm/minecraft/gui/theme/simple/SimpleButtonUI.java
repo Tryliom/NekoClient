@@ -6,6 +6,8 @@ import java.awt.*;
 
 import org.lwjgl.input.Mouse;
 
+import neko.utils.Utils;
+
 import org.darkstorm.minecraft.gui.component.Button;
 import org.darkstorm.minecraft.gui.component.Component;
 import org.darkstorm.minecraft.gui.theme.AbstractComponentUI;
@@ -19,7 +21,7 @@ public class SimpleButtonUI extends AbstractComponentUI<Button> {
 		this.theme = theme;
 
 		foreground = new Color(180, 100, 100);
-		background = new Color(30, 30, 30, 30 + 30 / 2);
+		background = null;
 	}
 
 	@Override
@@ -30,15 +32,6 @@ public class SimpleButtonUI extends AbstractComponentUI<Button> {
 		glDisable(GL_CULL_FACE);
 
 		glDisable(GL_TEXTURE_2D);
-		RenderUtil.setColor(button.getBackgroundColor());
-		glBegin(GL_QUADS);
-		{
-			glVertex2d(0, 0);
-			glVertex2d(area.width, 0);
-			glVertex2d(area.width, area.height);
-			glVertex2d(0, area.height);
-		}
-		glEnd();
 		Point mouse = RenderUtil.calculateMouseLocation();
 		Component parent = button.getParent();
 		while(parent != null) {
@@ -47,7 +40,7 @@ public class SimpleButtonUI extends AbstractComponentUI<Button> {
 			parent = parent.getParent();
 		}
 		if(area.contains(mouse)) {
-			glColor4f(0.0f, 0.0f, 0.0f, Mouse.isButtonDown(0) ? 0.5f : 0.3f);
+			RenderUtil.setColor(new Color(Utils.colorGui.getRed(), Utils.colorGui.getGreen(), Utils.colorGui.getBlue(), Mouse.isButtonDown(0) ? 150 : 90));
 			glBegin(GL_QUADS);
 			{
 				glVertex2d(0, 0);

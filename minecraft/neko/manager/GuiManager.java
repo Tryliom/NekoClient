@@ -57,11 +57,10 @@ public class GuiManager extends AbstractGuiManager  {
 
 		public GuiManager() {
 			setup = new AtomicBoolean();
-			
 		}
 
 		@Override
-		public void setup() {		
+		public void setup() {					
 			final Minecraft mc = Minecraft.getMinecraft();
 			final Map<Category, ModuleFrame> categoryFrames = new HashMap<Category, ModuleFrame>();
 			for(final Module m : var.moduleManager.ActiveModule) {
@@ -92,8 +91,9 @@ public class GuiManager extends AbstractGuiManager  {
 							Button button = new BasicButton(m.getName()) {
 								@Override
 								public void update() {
-									if (!m.isCmd())
+									if (!m.isCmd()) {
 										setForegroundColor(m.getToggled() ? Utils.shouldChat(m) ? new Color(120, 190, 120, 220) : new Color(120, 120, 190, 220) : new Color(120, 120, 190, 220));
+									}
 								}
 							};
 							button.addButtonListener(new ButtonListener(){
@@ -103,8 +103,9 @@ public class GuiManager extends AbstractGuiManager  {
 										m.toggleModule();
 									else
 										Utils.addWarn(m.getName());
-									if (!m.isCmd())
+									if (!m.isCmd()) {
 										button.setForegroundColor(m.getToggled() ? Utils.shouldChat(m) ? new Color(120, 190, 120, 220) : button.getForegroundColor() : new Color(120, 120, 190, 220));
+									}
 								}
 							});
 							frame.add(button, HorizontalGridConstraint.FILL);
@@ -148,27 +149,7 @@ public class GuiManager extends AbstractGuiManager  {
 			f.setMinimized(true);	
 			f.setPinnable(false);
 			
-			addFrame(f);	
-			
-			CheckButton cbAlpha = new BasicCheckButton();
-			cbAlpha.setText("Transparent");
-			cbAlpha.setSelected(SimpleTheme.alpha);
-			cbAlpha.addButtonListener(new ButtonListener() {
-				
-				@Override
-				public void onButtonPress(Button c) {
-					CheckButton cb = (CheckButton) c;
-					if (cb.isSelected()) {
-						SimpleTheme.alpha=true;
-					} else {
-						SimpleTheme.alpha=false;
-					}
-					Utils.saveFont();
-					
-				}
-			});
-			
-			f.add(cbAlpha, HorizontalGridConstraint.FILL);			
+			addFrame(f);			
 			
 			ComboBox cbox = new BasicComboBox();
 			cbox.setElements("12", "14", "16", "18", "20", "22");

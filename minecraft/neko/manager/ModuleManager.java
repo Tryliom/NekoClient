@@ -30,7 +30,6 @@ import neko.module.modules.hide.Test;
 import neko.module.modules.misc.Antiafk;
 import neko.module.modules.misc.AutoMLG;
 import neko.module.modules.misc.Autonyah;
-import neko.module.modules.misc.BedGod;
 import neko.module.modules.misc.CallCmd;
 import neko.module.modules.misc.Crasher;
 import neko.module.modules.misc.HeadRoll;
@@ -233,7 +232,6 @@ public class ModuleManager {
 		this.ActiveModule.add(new PunKeel()); // Key NONE
 		this.ActiveModule.add(new Crasher()); // Key NONE
 		this.ActiveModule.add(new BowAimbot()); // Key NONE
-		this.ActiveModule.add(new BedGod()); // Key NONE
 		this.ActiveModule.add(new AutoTool()); // Key NONE
 		this.ActiveModule.add(new Nausicaah()); // Key NONE
 		this.ActiveModule.add(new Magnet()); // Key NONE

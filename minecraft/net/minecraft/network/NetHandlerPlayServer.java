@@ -5,6 +5,8 @@ import com.google.common.util.concurrent.Futures;
 import io.netty.buffer.Unpooled;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
+import neko.utils.Utils;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -860,7 +862,8 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, IUpdatePlaye
                 break;
 
             case 4:
-                this.playerEntity.setSprinting(false);
+            	if (!Utils.isToggle("Sprint"))
+            		this.playerEntity.setSprinting(false);
                 break;
 
             case 5:
@@ -907,7 +910,7 @@ public class NetHandlerPlayServer implements INetHandlerPlayServer, IUpdatePlaye
 
             if (!var4)
             {
-                var5 = 9.0D;
+                var5 = Utils.isToggle("Exploit") ? 20d : 9.0D;
             }
 
             if (this.playerEntity.getDistanceSqToEntity(var3) < var5)

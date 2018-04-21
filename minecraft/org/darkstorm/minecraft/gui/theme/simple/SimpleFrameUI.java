@@ -11,6 +11,8 @@ import org.darkstorm.minecraft.gui.theme.AbstractComponentUI;
 import org.darkstorm.minecraft.gui.util.RenderUtil;
 import org.newdawn.slick.geom.Circle;
 
+import neko.utils.Utils;
+
 public class SimpleFrameUI extends AbstractComponentUI<Frame> {
 	private final SimpleTheme theme;
 
@@ -18,8 +20,8 @@ public class SimpleFrameUI extends AbstractComponentUI<Frame> {
 		super(Frame.class);
 		this.theme = theme;
 
-		foreground = new Color(200, 200, 200, 190);
-		background = new Color(130, 130, 180, 250);
+		foreground = Utils.colorFontGui;
+		background = Utils.colorGui;
 	}
 
 	@Override
@@ -31,11 +33,11 @@ public class SimpleFrameUI extends AbstractComponentUI<Frame> {
 		glDisable(GL_CULL_FACE);
 		glDisable(GL_TEXTURE_2D);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+		
 		// Draw frame background
 		if(component.isMinimized())
-			area.height = fontHeight + 4;
-		RenderUtil.setColor(new Color(10, 10, 60, 250));
+			area.height = fontHeight * 2;
+		RenderUtil.setColor(Utils.colorGui);
 		if (SimpleTheme.alpha)
 			glColor4f(0.0f, 0.0f, 0.0f, 0.55f);
 		glBegin(GL_QUADS);
@@ -63,8 +65,7 @@ public class SimpleFrameUI extends AbstractComponentUI<Frame> {
 		for(int i = 0; i < checks.length; i++) {
 			if(!checks[i])
 				continue;
-			RenderUtil.setColor(component.getBackgroundColor());
-			glColor4f(0.0f, 0.0f, 0.0f, 0.35f);
+			glColor4f(0.1f, 0.1f, 0.1f, 0.75f);
 			glBegin(GL_QUADS);
 			{
 				glVertex2d(offset - fontHeight, 2);
@@ -101,8 +102,8 @@ public class SimpleFrameUI extends AbstractComponentUI<Frame> {
 		}
 
 		glEnable(GL_TEXTURE_2D);
-		theme.getFontRenderer().func_175063_a(component.getTitle(), 2,
-				4, RenderUtil.toRGBA(component.getForegroundColor()));
+		theme.getFontRenderer().func_175063_a(component.getTitle(), 3,
+				2, RenderUtil.toRGBA(Utils.colorFontGui));
 		glEnable(GL_CULL_FACE);
 		glDisable(GL_BLEND);
 		translateComponent(component, true);

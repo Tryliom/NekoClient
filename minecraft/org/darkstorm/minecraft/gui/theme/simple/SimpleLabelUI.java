@@ -16,7 +16,7 @@ public class SimpleLabelUI extends AbstractComponentUI<Label> {
 		this.theme = theme;
 
 		foreground = new Color(30, 30, 90);
-		background = new Color(60, 60, 60, 60 + 60 / 2);
+		background = new Color(60, 60, 60, 90);
 	}
 
 	@Override

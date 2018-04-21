@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Locale;
 
+import org.darkstorm.minecraft.gui.GuiManager;
+import org.darkstorm.minecraft.gui.util.GuiManagerDisplayScreen;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.util.FontUtils;
 
@@ -134,6 +136,8 @@ public class InGameGui {
 	}	
 	
 	public static void renderHUD() {
+		if (Minecraft.getMinecraft().currentScreen instanceof GuiManagerDisplayScreen)
+			return;
 		  yP=20;
 		  String var3="";
 		  Minecraft mc = Minecraft.getMinecraft();

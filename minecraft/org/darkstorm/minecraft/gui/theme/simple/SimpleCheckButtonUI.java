@@ -6,6 +6,8 @@ import java.awt.*;
 
 import org.lwjgl.input.Mouse;
 
+import neko.utils.Utils;
+
 import org.darkstorm.minecraft.gui.component.*;
 import org.darkstorm.minecraft.gui.component.Component;
 import org.darkstorm.minecraft.gui.theme.AbstractComponentUI;
@@ -30,7 +32,7 @@ public class SimpleCheckButtonUI extends AbstractComponentUI<CheckButton> {
 		glDisable(GL_CULL_FACE);
 
 		glDisable(GL_TEXTURE_2D);
-		RenderUtil.setColor(button.getBackgroundColor());
+		RenderUtil.setColor(Utils.colorGui);
 		int size = area.height - 4;
 		glBegin(GL_QUADS);
 		{
@@ -69,7 +71,7 @@ public class SimpleCheckButtonUI extends AbstractComponentUI<CheckButton> {
 			parent = parent.getParent();
 		}
 		if(area.contains(mouse)) {
-			glColor4f(0.0f, 0.0f, 0.0f, Mouse.isButtonDown(0) ? 0.5f : 0.3f);
+			RenderUtil.setColor(new Color(Utils.colorGui.getRed(), Utils.colorGui.getGreen(), Utils.colorGui.getBlue(), Mouse.isButtonDown(0) ? 150 : 90));
 			glBegin(GL_QUADS);
 			{
 				glVertex2d(0, 0);
@@ -84,7 +86,7 @@ public class SimpleCheckButtonUI extends AbstractComponentUI<CheckButton> {
 		String text = button.getText();
 		theme.getFontRenderer().drawString(text, size + 4,
 				area.height / 2 - theme.getFontRenderer().FONT_HEIGHT / 2,
-				RenderUtil.toRGBA(button.getForegroundColor()));
+				RenderUtil.toRGBA(Utils.colorFontGui));
 
 		glEnable(GL_CULL_FACE);
 		glDisable(GL_BLEND);

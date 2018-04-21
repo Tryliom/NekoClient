@@ -238,6 +238,8 @@ public class Utils {
 	public static int xptime = 0;
 	public static NekoCloud nc = NekoCloud.getNekoAPI();
 	public static boolean admin = false;
+	public static Color colorGui = new Color(0, 0, 0, 250);
+	public static Color colorFontGui = new Color(200, 200, 200, 190);
 	
 	public static void addChat(String m) {
 		if (verif==null)
@@ -2757,7 +2759,9 @@ public class Utils {
         s+=TutoManager.getTuto().isDone()+"§,"+Nuker.safe+"§,"+KillAura.speed+"§,"+PunKeel.attack+"§,"+PunKeel.delay+"§,"+Fastbow.getFast().getPacket()+"§,";
         s+=Step.getStep().isBypass()+"§,"+BowAimbot.getAim().getFov()+"§,"+BowAimbot.getAim().getLife()+"§,"+BowAimbot.getAim().getArmor()+"§,";
         s+=Reach.multiaura+"§,"+PunKeel.random+"§,"+(PunKeel.random ? PunKeel.rDelay.firstElement()+"§,"+PunKeel.rDelay.lastElement() : "0.5§,1.0")+"§,";
-        s+=m.getMode()+"§,"+m.isClassic()+"§,"+Block.getIdFromBlock(Search.getSearch().getSearchBlock())+"§,"+SoundManager.mm.name()+"§,"+Reach.knock;
+        s+=m.getMode()+"§,"+m.isClassic()+"§,"+Block.getIdFromBlock(Search.getSearch().getSearchBlock())+"§,"+SoundManager.mm.name()+"§,"+Reach.knock+"§,";
+        s+=Utils.colorGui.getRed()+"§,"+Utils.colorGui.getGreen()+"§,"+Utils.colorGui.getBlue()+"§,"+Utils.colorGui.getAlpha()+"§,";
+        s+=Utils.colorFontGui.getRed()+"§,"+Utils.colorFontGui.getGreen()+"§,"+Utils.colorFontGui.getBlue()+"§,"+Utils.colorFontGui.getAlpha()+"§,";
         if (fi.length>0) {
     		Utils.nc.saveSave("values", s, fi);
     	}
@@ -3344,6 +3348,23 @@ public class Utils {
             	}
             	if (i==169)
             		Reach.knock=Boolean.parseBoolean(ligne);
+            	if (i==170)
+            		Utils.colorGui = new Color(Integer.parseInt(ligne), 0, 0, 0);
+            	if (i==171)
+            		Utils.colorGui = new Color(Utils.colorGui.getRed(), Integer.parseInt(ligne), 0, 0);
+            	if (i==172)
+            		Utils.colorGui = new Color(Utils.colorGui.getRed(), Utils.colorGui.getGreen(), Integer.parseInt(ligne), 0);
+            	if (i==173)
+            		Utils.colorGui = new Color(Utils.colorGui.getRed(), Utils.colorGui.getGreen(), Utils.colorGui.getBlue(), Integer.parseInt(ligne));
+            	if (i==174)
+            		Utils.colorFontGui = new Color(Integer.parseInt(ligne), 0, 0, 0);
+            	if (i==175)
+            		Utils.colorFontGui = new Color(Utils.colorFontGui.getRed(), Integer.parseInt(ligne), 0, 0);
+            	if (i==176)
+            		Utils.colorFontGui = new Color(Utils.colorFontGui.getRed(), Utils.colorFontGui.getGreen(), Integer.parseInt(ligne), 0);
+            	if (i==177)
+            		Utils.colorFontGui = new Color(Utils.colorFontGui.getRed(), Utils.colorFontGui.getGreen(), Utils.colorFontGui.getBlue(), Integer.parseInt(ligne));
+            	
         	} catch (Exception e) {
         		System.out.println(e.getMessage());
         	}                	
