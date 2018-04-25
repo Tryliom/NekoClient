@@ -308,7 +308,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
      * WorldClient and sets the player initial dimension
      */
     public void handleJoinGame(S01PacketJoinGame packetIn)
-    {
+    {    	
         PacketThreadUtil.func_180031_a(packetIn, this, this.getGameController());
         this.getGameController().playerController = new PlayerControllerMP(this.getGameController(), this);
         this.clientWorldController = new WorldClient(this, new WorldSettings(0L, packetIn.func_149198_e(), false, packetIn.func_149195_d(), packetIn.func_149196_i()), packetIn.func_149194_f(), packetIn.func_149192_g(), this.getGameController().mcProfiler);

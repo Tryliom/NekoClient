@@ -2,7 +2,6 @@ package neko.utils;
 
 import java.awt.Color;
 import java.awt.Desktop;
-import java.io.File;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
@@ -11,13 +10,12 @@ import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.Scanner;
 import java.util.UUID;
 import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.input.Keyboard;
@@ -48,7 +46,6 @@ import neko.module.modules.combat.Regen;
 import neko.module.modules.combat.SmoothAim;
 import neko.module.modules.combat.Trigger;
 import neko.module.modules.hide.Friends;
-import neko.module.modules.hide.God;
 import neko.module.modules.hide.Lot;
 import neko.module.modules.misc.Antiafk;
 import neko.module.modules.misc.AutoMLG;
@@ -237,13 +234,27 @@ public class ChatUtils {
 			if (args.length==1) {
 				String s = args[0].replaceFirst(var.prefixCmd, "").toLowerCase();		
 				for (Module m : ModuleManager.ActiveModule) {
-					if (m.getName().toLowerCase().equalsIgnoreCase(s) && !Utils.isLock(m.getName())) {
-						Utils.toggleModule(s);
+					boolean link = false;
+					HashMap<Module, String> hm = ModuleManager.link;
+					if (hm.containsKey(m)) {
+						if (hm.get(m).contains(",")) {
+							for (String str : hm.get(m).split(",")) {
+								if (str.equalsIgnoreCase(s))
+									link = true;
+							}
+						} else
+							if (hm.get(m).equalsIgnoreCase(s))
+								link = true;
+					}
+					if (link || m.getName().toLowerCase().equalsIgnoreCase(s))
+						link = true;
+					if (link && !Utils.isLock(m.getName())) {
+						Utils.toggleModule(m.getName());
 						Utils.checkXp(xp);
 						mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 						this.mc.displayGuiScreen((GuiScreen)null);
 						return;
-					} else if (m.getName().toLowerCase().equalsIgnoreCase(s) && Utils.isLock(m.getName())) {
+					} else if (link && Utils.isLock(m.getName())) {
 						Utils.addWarn(m.getName());
 					}
 				}
@@ -2737,10 +2748,32 @@ public class ChatUtils {
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"values") || args[0].equalsIgnoreCase(var.prefixCmd+"v")) {
-				if (args.length>1 && Utils.isModule(args[1]))
-					Utils.displayValues(args[1]);
-				else
+				if (args.length<1) {
 					Utils.displayValues(null);
+				} else {
+					String s = args[1];
+					String f = "";
+					for (Module m : ModuleManager.ActiveModule) {
+						boolean link = false;
+						HashMap<Module, String> hm = ModuleManager.link;
+						if (hm.containsKey(m)) {
+							if (hm.get(m).contains(",")) {
+								for (String str : hm.get(m).split(",")) {
+									if (str.equalsIgnoreCase(s))
+										link = true;
+								}
+							} else
+								if (hm.get(m).equalsIgnoreCase(s))
+									link = true;
+						}
+						if (link || m.getName().toLowerCase().equalsIgnoreCase(s)) {
+							link = true;
+							f = m.getName();
+						}
+					}
+					if (args.length>1 && Utils.isModule(args[1]))
+						Utils.displayValues(args[1]);
+				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			

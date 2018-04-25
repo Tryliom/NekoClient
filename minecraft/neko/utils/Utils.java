@@ -1341,7 +1341,7 @@ public class Utils {
 		if (cheat==null)
 			for (Category c : Category.values()) {
 				for (Module m : ModuleManager.ActiveModule) {
-					if (!m.isCmd() && c!=Category.HIDE && c==m.getCategory() && !m.getValues().isEmpty()) {
+					if (!m.isCmd() && c!=Category.HIDE && c==m.getCategory() && m.getValues()!=null && !m.getValues().isEmpty()) {
 						Utils.addChat2("§7 "+m.getName(), "", m.getValues(), true, Chat.Click);
 					}
 				}
@@ -1350,7 +1350,7 @@ public class Utils {
 			}
 		else {
 			for (Module m : ModuleManager.ActiveModule) {
-				if (m.getName().equalsIgnoreCase(cheat))
+				if (m.getName().equalsIgnoreCase(cheat) && m.getValues()!=null && !m.getValues().isEmpty())
 					Utils.addChat2("§7 "+m.getName(), "", m.getValues(), true, Chat.Click);
 			}
 		}

@@ -265,9 +265,6 @@ class cps implements ActionListener {
 	                            	}
 	                            	Utils.attack(entity);
 	    	                		Minecraft.getMinecraft().thePlayer.swingItem();
-	                            	if (entity.getHealth()<2) {
-	                            		Utils.checkXp(4);
-	                            	}
 	                            	if (KillAura.mode.equalsIgnoreCase("Multi"))
 	        	                		continue;
 	        	                	else

@@ -1,6 +1,7 @@
 package neko.manager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import neko.lock.Lock;
 import neko.module.Module;
@@ -121,6 +122,7 @@ public class ModuleManager {
 	public static ArrayList<Lock> Lock = new ArrayList<Lock>();
 	public static ArrayList<Rank> rang = new ArrayList<Rank>();
 	public static ArrayList<String> values = new ArrayList<String>();
+	public static HashMap<Module, String> link = new HashMap<Module, String>();
 	
 	public Xray xrayModule;
 
@@ -240,6 +242,17 @@ public class ModuleManager {
 		this.ActiveModule.add(new PotionEffect()); // Key NONE
 		this.ActiveModule.add(new ArmorHUD()); // Key NONE
 		this.ActiveModule.add(new Knockback()); // Key NONE
+		
+		this.link.put(Utils.getModule("KillAura"), "ka");
+		this.link.put(Utils.getModule("FastBow"), "fb");
+		this.link.put(Utils.getModule("Knockback"), "kb");
+		this.link.put(Utils.getModule("VanillaTp"), "vtp");
+		this.link.put(Utils.getModule("TpBack"), "tpb");
+		this.link.put(Utils.getModule("Velocity"), "velo");
+		this.link.put(Utils.getModule("PunKeel"), "pk");
+		this.link.put(Utils.getModule("nekochat"), "chat");
+		this.link.put(Utils.getModule("BowAimbot"), "bowaim");
+		this.link.put(Utils.getModule("Wallhack"), "wh");
 		
 		LockManager lm = LockManager.getManager();
 		// Ajouter les locks | -- = ..;

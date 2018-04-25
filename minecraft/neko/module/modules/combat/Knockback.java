@@ -21,4 +21,8 @@ public class Knockback extends Module {
 		super.onDisabled();
 	}
 
+	public void setValues() {
+		this.values = "";
+	}
+	
 }
