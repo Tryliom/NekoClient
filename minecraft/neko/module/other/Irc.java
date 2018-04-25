@@ -165,7 +165,6 @@ public class Irc {
 			if (msg.startsWith("§§")) {
 				Utils.toChat("§6[§9IRC§6]§9 [§cMoi §9-> §e"+player+"§9]§7 "+Utils.setColor(msg.replaceFirst("..", "").replaceAll("&", "§").replaceAll(" § ", " & "), "§7"));
 			}
-			Utils.saveAll();
 		}
 	}
 	

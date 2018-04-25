@@ -5251,14 +5251,12 @@ public class ChatUtils {
 			} else if (var3.equalsIgnoreCase("Pyroman des abîmes, je t'invoque en t'offrant mon sang comme présent")) {
 				new PyroThread().canBeAPyroman();
 			} else {
-				Utils.saveAll();
 				mc.thePlayer.sendChatMessage(var3);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				this.mc.displayGuiScreen((GuiScreen)null);
 				return;
 			}
 		}					
-		Utils.saveAll();
 		if (var3.startsWith(var.prefixCmd+"log add")) {
 			mc.displayGuiScreen(new GuiChat(var.prefixCmd+"log add "));
 		} else {

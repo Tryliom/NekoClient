@@ -337,10 +337,9 @@ public class RequestThread extends Thread {
 							if (s.startsWith("server=")) {
 								s = s.replaceFirst(".......", "");
 								boolean cont = true;
-								for (String r : list)
-									if (r.equalsIgnoreCase(s) || r.contains("§"))
-										cont=false;
-								if (cont && !Utils.isSameServerIP(list, s) && !s.equalsIgnoreCase("127.0.0.1") && !s.contains("0.0.0.0") && !s.equalsIgnoreCase("localhost") && !s.equalsIgnoreCase("null") && !s.contains("§") && !s.equalsIgnoreCase("Solitaire")) {
+								if (list.contains(s))
+									cont=false;
+								if (cont && !s.equalsIgnoreCase("127.0.0.1") && !s.contains("0.0.0.0") && !s.equalsIgnoreCase("null") && !s.contains("§")) {
 									list.add(s.toLowerCase());
 								}
 							}
