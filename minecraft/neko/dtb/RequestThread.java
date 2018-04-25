@@ -16,6 +16,7 @@ import neko.Client;
 import neko.api.NekoCloud;
 import neko.manager.ModuleManager;
 import neko.module.modules.render.Render;
+import neko.module.other.Active;
 import neko.module.other.Event;
 import neko.module.other.Irc;
 import neko.module.other.Rank;
@@ -337,10 +338,9 @@ public class RequestThread extends Thread {
 							if (s.startsWith("server=")) {
 								s = s.replaceFirst(".......", "");
 								boolean cont = true;
-								for (String r : list)
-									if (r.equalsIgnoreCase(s) || r.contains("§"))
-										cont=false;
-								if (cont && !Utils.isSameServerIP(list, s) && !s.equalsIgnoreCase("127.0.0.1") && !s.contains("0.0.0.0") && !s.equalsIgnoreCase("localhost") && !s.equalsIgnoreCase("null") && !s.contains("§") && !s.equalsIgnoreCase("Solitaire")) {
+								if (list.contains(s))
+									cont=false;
+								if (cont && !s.equalsIgnoreCase("127.0.0.1") && !s.contains("0.0.0.0") && !s.equalsIgnoreCase("null") && !s.contains("§")) {
 									list.add(s.toLowerCase());
 								}
 							}
@@ -620,13 +620,33 @@ public class RequestThread extends Thread {
 						Utils.checkXp(Integer.parseInt(cmd));
 						Utils.addChat("§dEvent: "+Utils.setColor("Gain de "+cmd+" xp !", "§9"));
 					}
+					
+					if (et.equals(EventType.Souls)) {
+						var.ame+=Integer.parseInt(cmd);
+						Utils.addChat("§dEvent: "+Utils.setColor("Gain de "+cmd+" souls !", "§9"));
+					}
+					if (et.equals(EventType.Bonus)) {
+						int bonus = Integer.parseInt(cmd);
+						if (Active.time==0) {
+							new Active(bonus, 60*15);
+						} else {
+							Active.time+=15*60;
+							Active.bonus+=bonus;
+						}
+						
+						Utils.addChat("§dEvent: "+Utils.setColor("Gain d'un bonus de "+cmd+"% pour 15min !", "§9"));
+					}
+					
 					if (et.equals(EventType.Lvl)) {
 						int lvl = Integer.parseInt(cmd);						
 						Utils.addChat("§dEvent: Mis au lvl §7"+lvl);
 						var.niveau=lvl;
 						var.xp=1;
-						int r = Utils.getRandInt(1000);
-						var.xpMax=300+(r<200 ? 200+r : r)*(lvl);
+						int xpM = 0;
+						for (int i = 1;i<lvl+1;i++) {
+							xpM+=Utils.getRandInt(80*i);
+						}
+						var.xpMax=xpM;
 						var.chance=0.0001*lvl/25;
 					}
 					if (et.equals(EventType.Unlock)) {

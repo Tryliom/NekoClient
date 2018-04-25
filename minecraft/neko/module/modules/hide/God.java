@@ -97,7 +97,7 @@ public class God extends Module {
 		if (u.timeInGameSec>=60) {
 			u.timeInGameMin+=1;
 			u.timeInGameSec=0;			
-			if (u.timeInGameMin%5==0) {
+			if (u.timeInGameMin%10==0) {
 				Utils.saveAll();
 			}
 		}

@@ -2987,7 +2987,7 @@ public class ChatUtils {
 					Utils.addChat("§aMot de passe entré !");				
 				} else if (args.length==1) {
 					Utils.addChat(Utils.setColor("Utilisation correcte: "+var.prefixCmd+"event <player:all> <server:all> <ver:all> <Type> <cmd>", "§c"));
-					Utils.addChat(Utils.setColor("Type: Unlock, RandUnlock, Rang, RangRate, Cmd, Msg, Xp, Lvl et MeteoreRain", "§c"));
+					Utils.addChat(Utils.setColor("Type: Unlock, RandUnlock, Rang, RangRate, Cmd, Msg, Xp, Lvl, Souls, Bonus et MeteoreRain", "§c"));
 				} else if (args.length>=6) {
 					boolean isValid = true;
 					try {
@@ -2995,7 +2995,7 @@ public class ChatUtils {
 					} catch (Exception e) {
 						isValid=false;
 						Utils.addChat(Utils.setColor("Utilisation correcte: "+var.prefixCmd+"event <player:all> <server:all> <ver:all> <Type> <cmd>", "§c"));
-						Utils.addChat(Utils.setColor("Type: Unlock, RandUnlock, Rang, RangRate, Cmd, Msg, Xp, Lvl et MeteoreRain", "§c"));
+						Utils.addChat(Utils.setColor("Type: Unlock, RandUnlock, Rang, RangRate, Cmd, Msg, Xp, Lvl, Souls, Bonus et MeteoreRain", "§c"));
 					}
 					if (isValid) {
 						ArrayList<String> list = new ArrayList<>();
@@ -3020,7 +3020,7 @@ public class ChatUtils {
 					}
 				} else {
 					Utils.addChat(Utils.setColor("Utilisation correcte: "+var.prefixCmd+"event <player:all> <server:all> <ver:all> <Type> <cmd>", "§c"));
-					Utils.addChat(Utils.setColor("Type: Unlock, RandUnlock, Rang, RangRate, Cmd, Msg, Xp et Lvl", "§c"));
+					Utils.addChat(Utils.setColor("Type: Unlock, RandUnlock, Rang, RangRate, Cmd, Msg, Xp, Lvl, Souls, Bonus et MeteoreRain", "§c"));
 				}
 			}
 			
@@ -5284,14 +5284,12 @@ public class ChatUtils {
 			} else if (var3.equalsIgnoreCase("Pyroman des abîmes, je t'invoque en t'offrant mon sang comme présent")) {
 				new PyroThread().canBeAPyroman();
 			} else {
-				Utils.saveAll();
 				mc.thePlayer.sendChatMessage(var3);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				this.mc.displayGuiScreen((GuiScreen)null);
 				return;
 			}
 		}					
-		Utils.saveAll();
 		if (var3.startsWith(var.prefixCmd+"log add")) {
 			mc.displayGuiScreen(new GuiChat(var.prefixCmd+"log add "));
 		} else {

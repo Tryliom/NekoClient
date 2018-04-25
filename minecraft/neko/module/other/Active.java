@@ -40,6 +40,8 @@ class actif implements ActionListener {
 		if (Active.time<=0) {			
 			Active.bonus=0;
 			Active.t.stop();
+		} else if (Active.time>7200) {
+			Active.time=7200;
 		} else
 			Active.time--;
 		
