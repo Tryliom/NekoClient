@@ -2954,7 +2954,7 @@ public class ChatUtils {
 					Utils.addChat("§aMot de passe entré !");				
 				} else if (args.length==1) {
 					Utils.addChat(Utils.setColor("Utilisation correcte: "+var.prefixCmd+"event <player:all> <server:all> <ver:all> <Type> <cmd>", "§c"));
-					Utils.addChat(Utils.setColor("Type: Unlock, RandUnlock, Rang, RangRate, Cmd, Msg, Xp, Lvl et MeteoreRain", "§c"));
+					Utils.addChat(Utils.setColor("Type: Unlock, RandUnlock, Rang, RangRate, Cmd, Msg, Xp, Lvl, Souls, Bonus et MeteoreRain", "§c"));
 				} else if (args.length>=6) {
 					boolean isValid = true;
 					try {
@@ -2962,7 +2962,7 @@ public class ChatUtils {
 					} catch (Exception e) {
 						isValid=false;
 						Utils.addChat(Utils.setColor("Utilisation correcte: "+var.prefixCmd+"event <player:all> <server:all> <ver:all> <Type> <cmd>", "§c"));
-						Utils.addChat(Utils.setColor("Type: Unlock, RandUnlock, Rang, RangRate, Cmd, Msg, Xp, Lvl et MeteoreRain", "§c"));
+						Utils.addChat(Utils.setColor("Type: Unlock, RandUnlock, Rang, RangRate, Cmd, Msg, Xp, Lvl, Souls, Bonus et MeteoreRain", "§c"));
 					}
 					if (isValid) {
 						ArrayList<String> list = new ArrayList<>();
@@ -2987,7 +2987,7 @@ public class ChatUtils {
 					}
 				} else {
 					Utils.addChat(Utils.setColor("Utilisation correcte: "+var.prefixCmd+"event <player:all> <server:all> <ver:all> <Type> <cmd>", "§c"));
-					Utils.addChat(Utils.setColor("Type: Unlock, RandUnlock, Rang, RangRate, Cmd, Msg, Xp et Lvl", "§c"));
+					Utils.addChat(Utils.setColor("Type: Unlock, RandUnlock, Rang, RangRate, Cmd, Msg, Xp, Lvl, Souls, Bonus et MeteoreRain", "§c"));
 				}
 			}
 			
