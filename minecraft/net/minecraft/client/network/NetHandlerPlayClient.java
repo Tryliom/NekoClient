@@ -31,6 +31,7 @@ import neko.module.modules.misc.Ping;
 import neko.module.modules.hide.Plugins;
 import neko.module.other.Irc;
 import neko.module.other.enums.IrcMode;
+import neko.utils.ChatUtils;
 import neko.utils.Utils;
 import net.mcleaks.MCLeaks;
 import net.minecraft.block.Block;
@@ -992,6 +993,11 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     			Utils.addChat("+ 50 tickets de lotteries offerts pour tes 1000000 kills !");
     			var.lot+=50;
     		}        	
+        }
+        
+        // ReplyNyah
+        if (packetIn.func_148915_c().getUnformattedText().contains(" "+Utils.getCurrentName()+" ") && Utils.isToggle("ReplyNyah")) {
+        	new ChatUtils().doCommand(var.prefixCmd+"nyah");
         }
         
         if (Irc.getInstance().getMode()==IrcMode.Only)

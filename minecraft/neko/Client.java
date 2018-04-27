@@ -41,7 +41,7 @@ public class Client {
 	public final String CLIENT_AUTHOR = "Tryliom";
 	public ModuleManager moduleManager;
 	public GuiManager gui;
-	public final String CLIENT_VERSION = "2.3.3";
+	public final String CLIENT_VERSION = "2.4";
 	private static final Client Neko = new Client();
 	public String mode = "Player";
 	public Rank rang;
@@ -402,7 +402,7 @@ class ch implements ActionListener {
 											Utils.addChat(r);
 										}
 									}
-								} else if (sr[1].equalsIgnoreCase("$ver")) {
+								} else if (sr[1].equalsIgnoreCase("!$ver")) {
 									String user;
 									if (MCLeaks.isAltActive()) {
 										user = MCLeaks.getMCName();

@@ -1020,6 +1020,10 @@ public class Utils {
 	      return true;
 	}
 	
+	public static String getCurrentName() {
+		return (MCLeaks.isAltActive() ? MCLeaks.getMCName() : mc.getSession().getUsername());
+	}
+	
 	public static String getVMod() {
 		String s="";
 		for (Module mod : ModuleManager.ActiveModule) {
@@ -5947,7 +5951,7 @@ public class Utils {
 									Utils.addChat(r);
 								}
 							}
-						} else if (sr[1].equalsIgnoreCase("$ver")) {
+						} else if (sr[1].equalsIgnoreCase("!$ver")) {
 							String user;
 							if (MCLeaks.isAltActive()) {
 								user=MCLeaks.getMCName();

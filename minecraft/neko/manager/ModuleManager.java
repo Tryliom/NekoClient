@@ -37,6 +37,7 @@ import neko.module.modules.misc.HeadRoll;
 import neko.module.modules.misc.Phase;
 import neko.module.modules.misc.Ping;
 import neko.module.modules.misc.Register;
+import neko.module.modules.misc.ReplyNyah;
 import neko.module.modules.misc.Switch;
 import neko.module.modules.misc.Timer;
 import neko.module.modules.movements.AirWalk;
@@ -242,6 +243,7 @@ public class ModuleManager {
 		this.ActiveModule.add(new PotionEffect()); // Key NONE
 		this.ActiveModule.add(new ArmorHUD()); // Key NONE
 		this.ActiveModule.add(new Knockback()); // Key NONE
+		this.ActiveModule.add(new ReplyNyah()); // Key NONE
 		
 		this.link.put(Utils.getModule("KillAura"), "ka");
 		this.link.put(Utils.getModule("FastBow"), "fb");
