@@ -11,6 +11,7 @@ import org.lwjgl.opengl.GL11;
 import neko.Client;
 import neko.gui.InGameGui;
 import neko.module.Module;
+import neko.module.modules.misc.Nameprotect;
 import neko.utils.Utils;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -612,6 +613,8 @@ public class GuiIngame extends Gui
             int var18 = var23 - var11 * this.func_175179_f().FONT_HEIGHT;
             int var19 = p_180475_2_.getScaledWidth() - var24 + 2;
             drawRect(var25 - 2, var18, var19, var18 + this.func_175179_f().FONT_HEIGHT, 1342177280);
+            if (Utils.isToggle("Nameprotect"))
+            	var15 = Nameprotect.getNP().changeName(var15);
             this.func_175179_f().drawString(var15, var25, var18, 553648127);
             this.func_175179_f().drawString(var16, var19 - this.func_175179_f().getStringWidth(var16), var18, 553648127);
 

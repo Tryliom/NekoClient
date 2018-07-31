@@ -41,8 +41,8 @@ public class Trigger extends Module {
 	
 	public void setValues() {
 		this.values = "§6Range:§7 "+dist
-				+ "§6Cps:§7 "+cps
-				+ "§6Random:§7 "+(Trigger.random ? "§aActivé" : "§cDésactivé");
+				+ "\n§6Cps:§7 "+cps
+				+ "\n§6Random:§7 "+(Trigger.random ? "§aActivé" : "§cDésactivé");
 	}
 	
 	public void onUpdate() {

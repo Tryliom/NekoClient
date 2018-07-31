@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import neko.module.modules.misc.Nameprotect;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -181,7 +182,8 @@ public class GuiPlayerTabOverlay extends Gui
 
                     var22 += 9;
                 }
-
+                if (Utils.isToggle("Nameprotect"))
+                	var25 = Nameprotect.getNP().changeName(var25);
                 if (var24.getGameType() == WorldSettings.GameType.SPECTATOR)
                 {
                     var25 = EnumChatFormatting.ITALIC + var25;

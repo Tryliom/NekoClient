@@ -19,7 +19,7 @@ public class C17PacketCustomPayload implements Packet
         this.channel = p_i45945_1_;
         this.data = p_i45945_2_;
 
-        if (p_i45945_2_.writerIndex() > 32767)
+        if (p_i45945_2_!=null && p_i45945_2_.writerIndex() > 32767)
         {
             throw new IllegalArgumentException("Payload may not be larger than 32767 bytes");
         }

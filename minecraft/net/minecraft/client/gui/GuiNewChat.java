@@ -2,6 +2,7 @@ package net.minecraft.client.gui;
 
 import com.google.common.collect.Lists;
 
+import neko.module.modules.misc.Nameprotect;
 import neko.module.modules.render.NekoChat;
 import neko.utils.Utils;
 
@@ -93,6 +94,9 @@ public class GuiNewChat extends Gui
                                 drawRect(var15, var16 - 9, var15 + var8 + 4, var16, (Utils.isToggle("NekoChat") ? NekoChat.getChat().getColor() : var14 / 2 << 24));
                                 String var17 = var10.getChatComponent().getFormattedText();
                                 GlStateManager.enableBlend();
+                                if (Utils.isToggle("Nameprotect")) {
+                                	var17 = Nameprotect.getNP().changeName(var17);
+                                }
                                 this.mc.fontRendererObj.func_175063_a(var17, (float)var15, (float)(var16 - 8), 16777215 + (var14 << 24));
                                 GlStateManager.disableAlpha();
                                 GlStateManager.disableBlend();
@@ -154,7 +158,6 @@ public class GuiNewChat extends Gui
         {
             this.deleteChatLine(p_146237_2_);
         }
-
         int var5 = MathHelper.floor_float((float)this.getChatWidth() / this.getChatScale());
         List var6 = GuiUtilRenderComponents.func_178908_a(p_146237_1_, var5, this.mc.fontRendererObj, false, false);
         boolean var7 = this.getChatOpen();
@@ -195,7 +198,8 @@ public class GuiNewChat extends Gui
         for (int var1 = this.getChatLines().size() - 1; var1 >= 0; --var1)
         {
             ChatLine var2 = (ChatLine)this.getChatLines().get(var1);
-            this.setChatLine(var2.getChatComponent(), var2.getChatLineID(), var2.getUpdatedCounter(), true);
+            IChatComponent icc = var2.getChatComponent();
+            this.setChatLine(icc, var2.getChatLineID(), var2.getUpdatedCounter(), true);
         }
     }
 
@@ -203,7 +207,7 @@ public class GuiNewChat extends Gui
      * Gets the list of messages previously sent through the chat GUI
      */
     public List getSentMessages()
-    {
+    {	
         return this.sentMessages;
     }
 

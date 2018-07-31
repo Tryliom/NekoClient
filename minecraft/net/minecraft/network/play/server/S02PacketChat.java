@@ -51,9 +51,17 @@ public class S02PacketChat implements Packet
         handler.handleChat(this);
     }
 
-    public IChatComponent func_148915_c()
+    public IChatComponent getChatComponent()
     {
         return this.chatComponent;
+    }
+    
+    public void setChatComponent(IChatComponent cc)
+    {
+    	if (cc.getUnformattedText().contains("https://")) {
+    		
+    	}
+    	this.chatComponent = cc;
     }
 
     public boolean isChat()

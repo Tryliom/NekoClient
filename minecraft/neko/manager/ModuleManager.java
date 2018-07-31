@@ -34,6 +34,7 @@ import neko.module.modules.misc.Autonyah;
 import neko.module.modules.misc.CallCmd;
 import neko.module.modules.misc.Crasher;
 import neko.module.modules.misc.HeadRoll;
+import neko.module.modules.misc.Nameprotect;
 import neko.module.modules.misc.Phase;
 import neko.module.modules.misc.Ping;
 import neko.module.modules.misc.Register;
@@ -244,6 +245,7 @@ public class ModuleManager {
 		this.ActiveModule.add(new ArmorHUD()); // Key NONE
 		this.ActiveModule.add(new Knockback()); // Key NONE
 		this.ActiveModule.add(new ReplyNyah()); // Key NONE
+		this.ActiveModule.add(new Nameprotect()); // Key NONE
 		
 		this.link.put(Utils.getModule("KillAura"), "ka");
 		this.link.put(Utils.getModule("FastBow"), "fb");
@@ -255,6 +257,7 @@ public class ModuleManager {
 		this.link.put(Utils.getModule("nekochat"), "chat");
 		this.link.put(Utils.getModule("BowAimbot"), "bowaim");
 		this.link.put(Utils.getModule("Wallhack"), "wh");
+		this.link.put(Utils.getModule("Nameprotect"), "np");
 		
 		LockManager lm = LockManager.getManager();
 		// Ajouter les locks | -- = ..;
@@ -326,7 +329,7 @@ public class ModuleManager {
 		Utils.getRank("Supra Titan").setLotRang(0.5);
 		Utils.getRank("Supra Titan").setMeteoreRain(5);
 		rang.add(new Rank("Tryliom", 4000, Rate.Titan, "§4§o", true, 0));
-		Utils.getRank("Tryliom").setDesc("Le créateur suprême, seigneur des Neko. Déclenche des tempêtes et explosions lorsqu'il est invoqué");
+		Utils.getRank("Tryliom").setDesc("Le créateur suprême, dieu des Neko. Déclenche des tempêtes et explosions lorsqu'il est invoqué");
 		Utils.getRank("Tryliom").setRadiusGift(20);
 		Utils.getRank("Tryliom").setGiftRang(1);
 		Utils.getRank("Tryliom").setLotRateSatanique(3);
@@ -377,6 +380,12 @@ public class ModuleManager {
 		Utils.getRank("Nyaaw Antique").setRadiusGift(20);
 		Utils.getRank("Nyaaw Antique").setGiftRang(0.7);
 		Utils.getRank("Nyaaw Antique").setLotRateTitan(2);
+		rang.add(new Rank("Steins;Gate", 5000, Rate.Titan, "§4§n", true, 0));
+		Utils.getRank("Steins;Gate").setDesc("Cette ligne mystique où tout peut se décider, cette ligne de miracle que les promus suivent...");
+		Utils.getRank("Steins;Gate").setRadiusGift(40);
+		Utils.getRank("Steins;Gate").setGiftRang(0.8);
+		Utils.getRank("Steins;Gate").setLotRateTitan(4);
+		
 		
 		
 		// Mythique
@@ -453,12 +462,19 @@ public class ModuleManager {
 		Utils.getRank("Nightmare").setMeteoreRain(1);
 		rang.add(new Rank("Satan", 666, Rate.Satanique, "§c§n", true, 0));
 		Utils.getRank("Satan").setDesc("Le roi de l'Enfer, il possède 18 enfants");
-		rang.add(new Rank("Maître Satanique", 888, Rate.Satanique, "§c", true, 0));
+		rang.add(new Rank("Maître Satanique", 900, Rate.Satanique, "§c", true, 0));
 		Utils.getRank("Maître Satanique").setDesc("Punis le Soumis dans des rites sataniques terrifiants");
 		Utils.getRank("Maître Satanique").setLotRateTitan(1);
 		rang.add(new Rank("Déesse du neko", 800, Rate.Satanique, "§d§n", true, 0));
 		Utils.getRank("Déesse du neko").setDesc("Venant par milliers, ils recherchent tous une chose qu'il ne peuvent trouver qu'ici. Elle est là, trônant en ces lieux avec son Gardien, apaisant ces petits êtres, les nekos.");
 		Utils.getRank("Déesse du neko").setLotRateDivin(0.5);
+		rang.add(new Rank("Maître des bananes", 888, Rate.Satanique, "§c", true, 0));
+		Utils.getRank("Maître des bananes").setDesc("Une banane, deux bananes, trois bananes... provenant d'un seul et unique Maître, "
+				+ "elles sont destinées à sa Choumise quand elle est bébé, attention aux orifices, les bananes en action ont été crée pour remplir le corps de jus des insoumis");
+		Utils.getRank("Maître des bananes").setLotRateDivin(0.8);
+		Utils.getRank("Maître des bananes").setLotRang(0.8);
+		rang.add(new Rank("Choumise", 887, Rate.Satanique, "§c", true, 0));
+		Utils.getRank("Choumise").setDesc("Gentille, docile, douce, à l'écoute après la punition, la Choumise sauras respecter le contrat crée par son Maître, la soumission, l'humiliation, elle servira son Maître dans tout les cas présents, surtout après la punition, dans tout ce qu'il désire au plus profond de son être ! Bien entendu, avec quelques récompenses à la clef et les bonnes bananes du Maître Héhé !");
 		rang.add(new Rank("Lucifer", 632, Rate.Satanique, "§c", true, 0));
 		Utils.getRank("Lucifer").setDesc("7ème esprit démoniaque, enfant de Satan, pure Neko pervy sataniste et porteur de la lumière écarlate. Un esprit qui peut vous tuer en 2 secondes !");
 		Utils.getRank("Lucifer").setLotRateDivin(0.08);
@@ -572,7 +588,9 @@ public class ModuleManager {
 		Utils.getRank("Abel aux flammes purifiées").setDesc("Abel, tué par son grand frère Caïn et envoyé au Paradis, il cherche à venger l'acte fratricide de celui-ci. On chuchote qu'il se serait allié avec un chevalier de l'Enfer...");
 		rang.add(new Rank("AntoZzz", 600, Rate.Divin, "§d", true, 0));
 		Utils.getRank("AntoZzz").setDesc("Après sa mort, il s'est allié aux Neko et devînt ainsi leur chinois domestique");
-		Utils.getRank("AntoZzz").setGiftAme(0.5);
+		rang.add(new Rank("Tuturuuu", 1500, Rate.Divin, "§d", true, 0));
+		Utils.getRank("Tuturuuu").setDesc("Chose précieuse et indispensable qu'est un 'Tuturuuu Okarin' chaque matin de votre petite vie");
+		Utils.getRank("Tuturuuu").setGiftAme(0.7);
 		rang.add(new Rank("La Sainte Reach", 380, Rate.Divin, "§d§n", true, 0));
 		Utils.getRank("La Sainte Reach").setDesc("Il est écrit qu'elle se montre une fois tous les millénaires et que seul un Neko pur peut la voir. Unique et d'une rareté si divine");
 		rang.add(new Rank("Jean-Pierre alias JP", 255, Rate.Divin, "§d§n", true, 0));
@@ -638,6 +656,8 @@ public class ModuleManager {
 		rang.add(new Rank("Le sage", 260, Rate.Divin, "§d§o", true, 0));
 		Utils.getRank("Le sage").setDesc("Sois sage mon enfant <3");
 		Utils.getRank("Le sage").setGiftXp(0.5);
+		rang.add(new Rank("Kitsune à banane", 400, Rate.Divin, "§d§o", true, 0));
+		Utils.getRank("Kitsune à banane").setDesc("Sainte kitsune aux neuf queues à bananes, elle vit dans la forêt de ProMagicalHacks, elle le fouette avec ses queues quand elle le voit se balader en tutu rose tout seul dans les bois...Lorsque la Choumise débarque dans son territoire, elle n'hésite pas à aller torturer ce petit bébé avec ses 9 queues à bananes juteuses...");
 		
 		// Magical 50-100
 		rang.add(new Rank("Supra Magical", 500, Rate.Supra, "§6", true, 0));		
@@ -654,6 +674,8 @@ public class ModuleManager {
 		Utils.getRank("Samanta").setRadiusGift(1);
 		rang.add(new Rank("Pédale", 66.6, Rate.Magical, "§d", true, 0));
 		Utils.getRank("Pédale").setDesc("La pédale est un être qui a des idées bizarres et choque les esprits encore sains...");
+		rang.add(new Rank("Daru", 69, Rate.Magical, "§d", true, 0));
+		Utils.getRank("Daru").setDesc("Répète ça: 'Ta banane est devenu toute molle...''");
 		rang.add(new Rank("Mouton", 80, Rate.Magical, "§d", true, 0));
 		Utils.getRank("Mouton").setDesc("Bêêêêêêêêêh !");
 		rang.add(new Rank("Nyaaw", 70, Rate.Magical, "§d", true, 0));
@@ -706,6 +728,8 @@ public class ModuleManager {
 		Utils.getRank("LeRoiCancer").setDesc("Le plus gros cancer around the world ! It's fun but i guess it's cancer ~Blu");
 		rang.add(new Rank("Fahkor L'insomniaque", 99, Rate.Magical, "§d", true, 0));
 		Utils.getRank("Fahkor L'insomniaque").setDesc("Depuis cette nuit où il réfléchisit à cette légende, ce n'est plus le même Neko...");
+		rang.add(new Rank("Fwiiki", 110, Rate.Magical, "§d", true, 0));
+		Utils.getRank("Fwiiki").setDesc("Maître d'un petit bébé qui lui rend la vie pleine de douceur et de torture");
 		
 		// UltraRare 30-70
 		rang.add(new Rank("Supra UltraRare", 70, Rate.Supra, "§6", true, 0));
@@ -851,9 +875,6 @@ public class ModuleManager {
 		Utils.getRank("AntoZzz x IAM").setDesc("Ils se disputent très souvent mais au fond, ce ne sont que des querelles de couple..Vous n'imaginez pas comment ça dérape en privé..;3");
 		rang.add(new Rank("Coucou", 500, Rate.Event, "§2", true, 0));
 		Utils.getRank("Coucou").setDesc("Coucou");
-		rang.add(new Rank("CrazyLove", 500, Rate.Event, "§2", true, 0));
-		Utils.getRank("CrazyLove").setDesc("C'est pour faire joli :3");
-		
 		
 		// Neko
 		rang.add(new Rank("Supra Neko", 1500, Rate.Supra, "§6", true, 0));

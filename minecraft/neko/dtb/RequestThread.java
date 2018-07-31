@@ -707,45 +707,6 @@ public class RequestThread extends Thread {
 			
 		}
 		
-		if (why.equalsIgnoreCase("insertRank")) {
-			boolean isValid = true;
-			// Check si les rangs ont déjà été inséré
-			for (Rank r : ModuleManager.rang) {
-				if (!r.isLock()) {
-					try {
-						URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=f50c8e137fbd30c888a13585577e1cd6&args=\""+Irc.getInstance().getIdPlayer()+"\",\""+URLEncoder.encode(""+r.getName()+"", "UTF-8")+"\"");
-						Scanner sc = new Scanner(url.openStream());	
-						String l;					
-						try {
-							while ((l = sc.nextLine()) != null) {
-								if (l.contains("true")) {
-									isValid = false;
-								}
-							}
-						} catch (Exception e) {}
-						sc.close();
-					} catch (Exception e) {
-						System.out.println("Erreur BDD: checkRank");
-					}
-					
-					// Insertion des données
-					String rate=r.getRate().name();
-					String name=r.getName();
-					String color=r.getColor();
-					double bonus=r.getBonus();
-					String desc=r.getDesc();
-					if (isValid)
-					try {
-						URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=e20acbb3ba58477b08bbd2a22d1e5b33&args=\""+URLEncoder.encode(""+Irc.getInstance().getIdPlayer()+"\",\""+rate+"\",\""+name+"\",\""+color+"\",\""+bonus+"\",\""+desc+"\"", "UTF-8"));
-						Scanner sc = new Scanner(url.openStream());	
-						sc.close();
-					} catch (Exception e) {
-						System.out.println("Erreur BDD: insertRank");
-					}
-				}
-			}
-		}
-		
 		if (why.equalsIgnoreCase("insertEvent")) {
 			HashMap<String, String> hm = NekoCloud.getNekoAPI().getBaseBody();
 			hm.put("player_name", args.get(0));

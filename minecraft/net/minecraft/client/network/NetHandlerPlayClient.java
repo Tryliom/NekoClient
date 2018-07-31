@@ -27,6 +27,7 @@ import neko.module.modules.movements.Blink;
 import neko.module.modules.special.PunKeel;
 import neko.module.modules.combat.BowAimbot;
 import neko.module.modules.combat.KillAura;
+import neko.module.modules.misc.Nameprotect;
 import neko.module.modules.misc.Ping;
 import neko.module.modules.hide.Plugins;
 import neko.module.other.Irc;
@@ -549,7 +550,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
      */
     public void handleEntityMetadata(S1CPacketEntityMetadata packetIn)
     {
-        PacketThreadUtil.func_180031_a(packetIn, this, this.getGameController());
+    	PacketThreadUtil.func_180031_a(packetIn, this, this.getGameController());
         Entity var2 = this.clientWorldController.getEntityByID(packetIn.func_149375_d());
 
         if (var2 != null && packetIn.func_149376_c() != null)
@@ -965,7 +966,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         list.add("s'est fait faucher par ");
         list.add("s'est fait liquider par ");
         for (String s : list)
-        if (packetIn.func_148915_c().getUnformattedText().contains(s+mc.session.getUsername()) || packetIn.func_148915_c().getUnformattedText().contains(s+(MCLeaks.isAltActive() ? MCLeaks.getMCName() : "")) && packetIn.func_148915_c().getUnformattedText().split(" ").length==5) {        	
+        if (packetIn.getChatComponent().getUnformattedText().contains(s+mc.session.getUsername()) || packetIn.getChatComponent().getUnformattedText().contains(s+(MCLeaks.isAltActive() ? MCLeaks.getMCName() : "")) && packetIn.getChatComponent().getUnformattedText().split(" ").length==5) {        	
         	
         	if (Math.random()<0.1) {
     			var.ame++;    			    			
@@ -996,20 +997,31 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         }
         
         // ReplyNyah
-        if (packetIn.func_148915_c().getUnformattedText().contains(" "+Utils.getCurrentName()+" ") && Utils.isToggle("ReplyNyah")) {
-        	new ChatUtils().doCommand(var.prefixCmd+"nyah");
+        String s = packetIn.getChatComponent().getUnformattedText();
+        if (s.contains(":") && Utils.isToggle("ReplyNyah")) {
+        	s = s.substring(s.indexOf(":"), s.length());
+        
+	        if ((s.contains(Utils.getCurrentName()+" ") || s.contains(" "+Utils.getCurrentName()))) {
+	        	new ChatUtils().doCommand(var.prefixCmd+"nyah");
+	        }
         }
+        
+        s = packetIn.getChatComponent().getUnformattedTextForChat();
+        if (s.contains(Utils.getCurrentName()) && Utils.isToggle("Nameprotect")) {
+        	packetIn.setChatComponent(new ChatComponentText(Nameprotect.getNP().changeName(s)));
+        }
+        
         
         if (Irc.getInstance().getMode()==IrcMode.Only)
         	return;
         
         if (packetIn.func_179841_c() == 2)
         {
-            this.getGameController().ingameGUI.func_175188_a(packetIn.func_148915_c(), false);
+            this.getGameController().ingameGUI.func_175188_a(packetIn.getChatComponent(), false);
         }
         else
         {
-            this.getGameController().ingameGUI.getChatGUI().printChatMessage(packetIn.func_148915_c());
+            this.getGameController().ingameGUI.getChatGUI().printChatMessage(packetIn.getChatComponent());
         }
     }
 
@@ -2133,8 +2145,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
      * name)
      */
     public void handleDisplayScoreboard(S3DPacketDisplayScoreboard packetIn)
-    {
-    	
+    {    	
     	if ((!Utils.scoreboard) && Utils.verif==null)
     		return;
     	

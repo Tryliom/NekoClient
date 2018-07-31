@@ -87,7 +87,7 @@ public class God extends Module {
 					currentEvent.start();
 				} else if (u.verif!=null)
 					currentEvent.stop();
-				if (Math.random()<0.00001+var.rang.getMeteoreRain()*0.00001) {
+				if (Math.random()<0.0001+var.rang.getMeteoreRain()*0.0001) {
 					Utils.addChat("§9Pluie de météores !");
 					Render.MeteoreRain();
 				}

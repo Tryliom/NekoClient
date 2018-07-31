@@ -3,6 +3,7 @@ package net.minecraft.client.multiplayer;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.mcleaks.MCLeaks;
@@ -16,6 +17,7 @@ import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.network.login.client.C00PacketLoginStart;
+import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 
@@ -68,7 +70,6 @@ public class GuiConnecting extends GuiScreen
                     try {
                         mc.theWorld.sendQuittingDisconnectingPacket();
                         mc.loadWorld((WorldClient)null);
-//                        GuiConnecting.this.networkManager.getNetHandler().onDisconnect(new ChatComponentText(""));
                 	} catch (Exception e) {}
                     var1 = InetAddress.getByName(ip);
                     GuiConnecting.this.networkManager = NetworkManager.provideLanClient(var1, port);

@@ -2,6 +2,9 @@ package net.minecraft.scoreboard;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+
+import neko.utils.Utils;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -93,13 +96,12 @@ public class Scoreboard
         }
 
         Score var4 = (Score)((Map)var3).get(p_96529_2_);
-
         if (var4 == null)
-        {
+        {        	
             var4 = new Score(this, p_96529_2_, p_96529_1_);
             ((Map)var3).put(p_96529_2_, var4);
         }
-
+        
         return var4;
     }
 

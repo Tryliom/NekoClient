@@ -41,7 +41,7 @@ public class Client {
 	public final String CLIENT_AUTHOR = "Tryliom";
 	public ModuleManager moduleManager;
 	public GuiManager gui;
-	public final String CLIENT_VERSION = "2.4";
+	public final String CLIENT_VERSION = "2.5.1";
 	private static final Client Neko = new Client();
 	public String mode = "Player";
 	public Rank rang;
@@ -56,7 +56,7 @@ public class Client {
 	public String name = "";
 	public int n = 0;
 	public FontRenderer NekoFont;
-	public Timer time = new Timer(5000, new ch());
+	public Timer time = new Timer(1000, new ch());
 	public String rec = " ";
 	public double chance = 0;
 	public int lot = 0;
@@ -69,7 +69,7 @@ public class Client {
 	public String changelog = "";
 	public RequestManager rm;
 	public boolean firstServDisplay = true;
-	public String strNeko = "§c>>> §9Neko Nightmare v" + CLIENT_VERSION + " §c<<<";
+	public String strNeko = "§c>>> §9Neko v" + CLIENT_VERSION + " §c<<<";
 	public String strCreator = "§9Créé par Tryliom";
 
 	public void startClient() {
@@ -175,7 +175,7 @@ class ch implements ActionListener {
 		
 		if (mc.thePlayer != null && Utils.verif == null) {
 			// Random quest
-			if (Utils.getRandInt(50)==1 && (QuestManager.getQM().getCurrent()==null && !QuestManager.getQM().isHasBegin())) {
+			if (Utils.getRandInt(100)==1 && (QuestManager.getQM().getCurrent()==null && !QuestManager.getQM().isHasBegin())) {
 				Utils.getRandQuest();
 				Utils.addChat2("§aNouveau défi ! (Voir ici)", neko.prefixCmd+"startquest", "§7Défi: "+QuestManager.getQM().getCurrent().getDesc()+"\n§aCliquez pour accepter le défi (Activer le cheat ou la commande que vous pensez être la bonne)", false, Chat.Click);
 			}
@@ -185,7 +185,7 @@ class ch implements ActionListener {
 		
 		if (Minecraft.getMinecraft().thePlayer != null)
 			try {
-				URL url = new URL("http://neko.alwaysdata.net/controler/Neko/an.html");
+				URL url = new URL("http://nekohc.fr/controler/Neko/an.html");
 				Scanner sc = new Scanner(url.openStream());
 				ArrayList<String> s = new ArrayList<>();
 				String l;

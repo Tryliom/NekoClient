@@ -81,6 +81,7 @@ import neko.module.modules.hide.Plugins;
 import neko.module.modules.misc.Antiafk;
 import neko.module.modules.misc.AutoMLG;
 import neko.module.modules.misc.CallCmd;
+import neko.module.modules.misc.Nameprotect;
 import neko.module.modules.misc.Phase;
 import neko.module.modules.misc.Ping;
 import neko.module.modules.misc.Register;
@@ -155,6 +156,7 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
@@ -1610,49 +1612,27 @@ public class Utils {
 			}
 			
 			if (r.getName().equalsIgnoreCase("Tryliom")) {
-				if (r.isLock() && mc.playerController.isNotCreative() && !mc.isSingleplayer()) {
+				if (r.isLock() && mc.playerController.isNotCreative() && !mc.isSingleplayer() && 
+						Utils.getArmorEnchant(mc.thePlayer, 3).contains("555") && Utils.getArmorUsed(mc.thePlayer, 3).contains("Golden Helmet")) {
 					int cat=0;
+					int pig = 0;
 					for (Object o : mc.theWorld.loadedEntityList) {
 						if (o instanceof EntityOcelot) {
 							EntityOcelot en = (EntityOcelot) o;
-							if (en.isInLove() && en.isTamed() && mc.thePlayer.getDistanceSqToEntity(en)<69) {
+							if (en.isTamed()) {
 								cat++;
 							}
 						}
+						if (o instanceof EntityPigZombie) {
+							pig++;
+						}
 					}
-					if (cat==69) {
+					if (cat==42 && pig==69) {
 						setRank(r.getName());
 						addChat("§4§koooo§cRang §c§k55§dTryliom§c§k55 débloqué !!§4§koooo");
-						for (Object o : mc.theWorld.loadedEntityList) {
-							if (o instanceof EntityOcelot) {
-								EntityOcelot en = (EntityOcelot) o;
-								mc.theWorld.removeEntity(en);
-							}
-						}
-					}
-				} else if (!r.isLock()) {
-					int cat=0;
-					for (Object o : mc.theWorld.loadedEntityList) {
-						if (o instanceof EntityOcelot) {
-							EntityOcelot en = (EntityOcelot) o;
-							if (en.isInLove() && en.isTamed() && mc.thePlayer.getDistanceSqToEntity(en)<69) {
-								cat++;
-							}
-						}
-					}
-					if (cat==69) {
-						addChat("§4§koooo§cRang §c§k55§dTryliom§c§k55 atteint le lvl §d"+(r.getLvl()+1)+" !!§4§koooo");
-						r.setLvl(r.getLvl()+1);
-						for (Object o : mc.theWorld.loadedEntityList) {
-							if (o instanceof EntityOcelot) {
-								EntityOcelot en = (EntityOcelot) o;
-								mc.theWorld.removeEntity(en);
-							}
-						}
 					}
 				}
 			}
-			
 		}
 	}
 	
@@ -2766,6 +2746,10 @@ public class Utils {
         s+=m.getMode()+"§,"+m.isClassic()+"§,"+Block.getIdFromBlock(Search.getSearch().getSearchBlock())+"§,"+SoundManager.mm.name()+"§,"+Reach.knock+"§,";
         s+=Utils.colorGui.getRed()+"§,"+Utils.colorGui.getGreen()+"§,"+Utils.colorGui.getBlue()+"§,"+Utils.colorGui.getAlpha()+"§,";
         s+=Utils.colorFontGui.getRed()+"§,"+Utils.colorFontGui.getGreen()+"§,"+Utils.colorFontGui.getBlue()+"§,"+Utils.colorFontGui.getAlpha()+"§,";
+        for (String n : Nameprotect.getNP().getList()) {
+			s+=n+"§";
+		}
+        s+="§,";
         if (fi.length>0) {
     		Utils.nc.saveSave("values", s, fi);
     	}
@@ -3368,6 +3352,13 @@ public class Utils {
             		Utils.colorFontGui = new Color(Utils.colorFontGui.getRed(), Utils.colorFontGui.getGreen(), Integer.parseInt(ligne), 0);
             	if (i==177)
             		Utils.colorFontGui = new Color(Utils.colorFontGui.getRed(), Utils.colorFontGui.getGreen(), Utils.colorFontGui.getBlue(), Integer.parseInt(ligne));
+            	if (i==178) {
+            		String s[] = ligne.split("§");
+            		for (String a : s) {
+            			if (a.contains("="))
+            			Nameprotect.getNP().getList().add(a);
+            		}
+            	}
             	
         	} catch (Exception e) {
         		System.out.println(e.getMessage());
@@ -4666,17 +4657,17 @@ public class Utils {
 		int randy = (int) Math.round(Math.random()*10);
 		String s = "";
 		switch (randy) {
-			case 0:s+="§eTu es supérieur !";break;
+			case 0:s+="§eTes yeux de pervers veulent tout dire ;3";break;
 			case 1:s+="§dPrêt à mieux faire crier ;3 ?";break;
 			case 2:s+="§dOwi fais moi monter plus haut :3";break;
-			case 3:s+="§cENCORE PLUS DE LEVEL";break;
+			case 3:s+="§dTutturuuu, "+mc.session.getUsername()+"-san";break;
 			case 4:s+="§dJe sens que tu es bien fort sous ton...";break;
 			case 5:s+="§dLa puissance de ton niveau m'envahit :3";break;
-			case 6:s+="§cWow, t'as fais comment ?";break;
-			case 7:s+="§bGO §fGO §cGO §d!";break;
+			case 6:s+="§cPurr...purrrrr";break;
+			case 7:s+="§dSi tu me faisais un câlin ce serais mieux ;3";break;
 			case 8:s+="§aC'est bien mon petit :3";break;
 			case 9:s+="§dVas-y plus fort ! Aller !";break;
-			case 10:s+="§cEz rekt all";break;
+			case 10:s+="§cT'es tout mignon mon petit chaton :3";break;
 		}
 		return s;
 	}
@@ -5532,8 +5523,8 @@ public class Utils {
 		case 827:nyah="SorryNoName code, mais ne dev pas :D";break;
 		case 828:nyah="SorryNoName aime CTRL + c & CTRL + v <3";break;
 		case 829:nyah="Kutmisu fouette Tryliom pour qu'il dev O_o";break;
-		case 830:nyah="";break;
-		case 831:nyah="";break;
+		case 830:nyah="Arrête de tenir ces choses >w<";break;
+		case 831:int i= Utils.getRandInt(1000);nyah="Download complete: "+i+"/"+i+" objects";break;
 		case 832:nyah="";break;
 		case 833:nyah="";break;
 		case 834:nyah="";break;
