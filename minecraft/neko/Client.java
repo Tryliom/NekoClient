@@ -144,7 +144,7 @@ public class Client {
 			Display.setTitle("Je suis un vilain neko ;3");
 			break;
 		case 10:
-			Display.setTitle("Fire et Enclume nyanyatent ensemble souvent ;3");
+			Display.setTitle("Ne viens pas me fouetter dans ma tente !");
 			break;
 		case 11:
 			Display.setTitle("Github > Gitlab :3");
