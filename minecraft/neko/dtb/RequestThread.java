@@ -889,6 +889,7 @@ public class RequestThread extends Thread {
 			        String first="";
 			        boolean isPv=false;
 			        String msg2 = m;
+			        // When user is mentionned
 			        if (m.contains(Irc.getInstance().getNamePlayer())) {
 			        	m = m.replaceAll(" "+Irc.getInstance().getNamePlayer()+" ", " §d"+Irc.getInstance().getNamePlayer()+"§f ");
 			        	mc.thePlayer.playSound("random.successful_hit", 0.5F, 0.5F);

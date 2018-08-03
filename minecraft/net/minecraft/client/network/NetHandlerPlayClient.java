@@ -953,6 +953,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         PacketThreadUtil.func_180031_a(packetIn, this, this.getGameController());  
         ArrayList<String> list = new ArrayList<>();
         list.add("was slain by ");
+        list.add("was destroyed by ");
         list.add("s'est fait défoncer par ");
         list.add("s'est fait poutrer par ");
         list.add("s'est fait démolir par ");

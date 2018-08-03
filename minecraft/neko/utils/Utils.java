@@ -5706,7 +5706,7 @@ public class Utils {
 	
 	public static String getAn() {
 		try {
-			URL url = new URL("http://neko.alwaysdata.net/controler/Neko/an.html");
+			URL url = new URL("https://nekohc.fr/controler/Neko/an.html");
 			Scanner sc = new Scanner(url.openStream());
 			ArrayList<String> s = new ArrayList<>();
 			String l;
@@ -5742,7 +5742,7 @@ public class Utils {
 
 	public static void displayAn() {
 		try {
-			URL url = new URL("http://neko.alwaysdata.net/controler/Neko/an.html");
+			URL url = new URL("https://nekohc.fr/controler/Neko/an.html");
 			Scanner sc = new Scanner(url.openStream());
 			ArrayList<String> s = new ArrayList<>();
 			String l;

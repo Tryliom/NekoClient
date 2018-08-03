@@ -104,7 +104,7 @@ public class Client {
 		}
 		mc.mcResourceManager.registerReloadListener(NekoFont);
 		SoundManager.getSM();
-		n = Utils.getRandInt(11);
+		n = Utils.getRandInt(12);
 		switch (n) {
 		case 0:
 			Display.setTitle("Tu joues à la version divine de Neko :3");
@@ -116,7 +116,7 @@ public class Client {
 			Display.setTitle("C'est tout un concept d'être enfermé là dedans...");
 			break;
 		case 3:
-			while (n == 5) {
+			while (n == 3) {
 				try {
 					Display.setTitle(Utils.getNyah());
 					n = 0;
@@ -135,7 +135,7 @@ public class Client {
 			Display.setTitle("Coucou petit neko :3");
 			break;
 		case 7:
-			Display.setTitle("Merci Brwserv pour les boutons reconnect");
+			Display.setTitle("C'est communautaire.");
 			break;
 		case 8:
 			Display.setTitle("Je suis un neko tout innocent :3");
@@ -147,7 +147,10 @@ public class Client {
 			Display.setTitle("Ne viens pas me fouetter dans ma tente !");
 			break;
 		case 11:
-			Display.setTitle("Github > Gitlab :3");
+			Display.setTitle("Redresse la tout de suite !");
+			break;
+		case 12:
+			Display.setTitle("Montre moi tout ton potenciel jeune Lycan !");
 			break;
 		}
 		name = CLIENT_NAME + "/vanilla";

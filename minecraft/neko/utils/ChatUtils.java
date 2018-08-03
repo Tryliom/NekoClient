@@ -4072,7 +4072,7 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"invsee")) {
 				if (args.length==1) {
-					Utils.toggleModule(err);
+					Utils.addError(err);
 				} else {
 					try {
 						EntityPlayer en = Utils.getPlayer(args[1]);	

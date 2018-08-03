@@ -14,13 +14,13 @@ public class TpUtils {
 	Minecraft mc = Minecraft.getMinecraft();		
 	
 	/**
-	 * <h1>Sert à se tp de manière intelligente à une entité/cible</h1>
+	 * <div style="font-size: 17px; margin-bottom: 15px;">Sert à se tp de manière intelligente à une entité/cible</div><hr style="width: 80%; color: rgba(0, 88, 180, 0.5);" />
 	 * @param en			Entité sur laquelle on se tp
 	 * @param entityPosX	Coord X de l'entité après déduction des coord du joueur
 	 * @param entityPosY	Coord Y de l'entité après déduction des coord du joueur
 	 * @param entityPosZ	Coord Z de l'entité après déduction des coord du joueur
 	 * @param classic		Boolean si le tp est de manière classique ou sinon suivant la détection du terrain
-	 * @param k				Nombre par lequel sont divisés les coord
+	 * @param k				Nombre par lequel sont divisés les coord<hr />
 	 * @return				String de la manière de comment on se tp, utilisé par le doTpRetour
 	 */
 	public String doTpAller(Entity en, double entityPosX, double entityPosY, double entityPosZ, boolean classic, int k) {
