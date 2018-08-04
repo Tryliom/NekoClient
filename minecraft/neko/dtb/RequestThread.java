@@ -135,6 +135,7 @@ public class RequestThread extends Thread {
 					System.out.println("Erreur BDD: MajPlayer Insert");
 				}
 			}
+			
 			new RequestThread("insertRank", null).start();
 		}
 		

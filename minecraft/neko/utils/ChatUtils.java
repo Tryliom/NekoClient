@@ -166,6 +166,7 @@ public class ChatUtils {
 	String error;
 	String err = "§c§lErreur, valeur incorrecte";
 	Irc irc;
+	String discord = "§dhttps://discord.gg/Dt4npbR";
 	
 	public ChatUtils() {}
 	
@@ -378,6 +379,9 @@ public class ChatUtils {
 					}
 				}).start();				
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			if (var3.startsWith(var.prefixCmd+"discord")) {
+				Utils.addChat("§6Meooooww voilà le discord : "+discord);
 			}
 			//TODO: BAN
 			if (var3.startsWith(var.prefixCmd+"ban")) {

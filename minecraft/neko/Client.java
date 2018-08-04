@@ -104,7 +104,7 @@ public class Client {
 		}
 		mc.mcResourceManager.registerReloadListener(NekoFont);
 		SoundManager.getSM();
-		n = Utils.getRandInt(12);
+		n = Utils.getRandInt(13);
 		switch (n) {
 		case 0:
 			Display.setTitle("Tu joues à la version divine de Neko :3");
@@ -151,6 +151,9 @@ public class Client {
 			break;
 		case 12:
 			Display.setTitle("Montre moi tout ton potenciel jeune Lycan !");
+			break;
+		case 13:
+			Display.setTitle("Tu t'engraisses bien dans ce domaine >w<");
 			break;
 		}
 		name = CLIENT_NAME + "/vanilla";

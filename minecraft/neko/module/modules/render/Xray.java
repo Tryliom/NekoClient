@@ -1,30 +1,27 @@
 package neko.module.modules.render;
 
-import java.util.ArrayList;
-
 import org.lwjgl.input.Keyboard;
 
 import neko.module.Category;
 import neko.module.Module;
-import neko.utils.RenderUtils;
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiChat;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.util.BlockPos;
+import neko.utils.Utils;
 
-public class Xray extends Module {
-
+public final class Xray extends Module {
+	
 	public Xray() {
 		super("Xray", Keyboard.KEY_X, Category.RENDER);
 	}
 
 	public void onEnabled() {
 		mc.renderGlobal.loadRenderers();
+		Utils.addChat("§a§oXRay activé !");
+		Utils.addChat("§6Le §d§lXRay §6comporte quelques bugs, nous vous conseillons d'utiliser le §d§l..search ");
+		Utils.addChat("§d§l..help search §6pour connaître l'utilisation de ce module ! Meow.");
 	}
 
 	public void onDisabled() {
 		mc.renderGlobal.loadRenderers();
+		Utils.addChat("§c§oXRay désactivé !");
 	}
 
 	public void setValues() {

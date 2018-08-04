@@ -79,7 +79,7 @@ public class God extends Module {
 				if (Irc.getInstance().isOn() && u.verif==null && (currentMsg!=null ? !currentMsg.isAlive() : true)) {				
 					currentMsg = new RequestThread("displaymsg", null);
 					currentMsg.start();
-				} else if (!Irc.getInstance().isOn() && (currentMsg!=null ? currentMsg.isAlive() : true)) {
+				} else if (!Irc.getInstance().isOn() && (currentMsg!=null ? currentMsg.isAlive() : false)) {
 					currentMsg.stop();
 				}
 				if (u.timeInGameSec%2==0 && u.verif==null && (currentEvent!=null ? !currentEvent.isAlive() : true)) {
@@ -92,7 +92,9 @@ public class God extends Module {
 					Render.MeteoreRain();
 				}
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		if (u.timeInGameSec>=60) {
 			u.timeInGameMin+=1;
