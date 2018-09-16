@@ -42,7 +42,6 @@ import neko.module.modules.misc.ReplyNyah;
 import neko.module.modules.misc.Switch;
 import neko.module.modules.misc.Timer;
 import neko.module.modules.movements.AirWalk;
-import neko.module.modules.movements.AutoWalk;
 import neko.module.modules.movements.Blink;
 import neko.module.modules.movements.Dolphin;
 import neko.module.modules.movements.Fastladder;
@@ -64,7 +63,6 @@ import neko.module.modules.player.AntiFire;
 import neko.module.modules.player.AutoTool;
 import neko.module.modules.player.Autoarmor;
 import neko.module.modules.player.Autoeat;
-import neko.module.modules.player.Automine;
 import neko.module.modules.player.Autorespawn;
 import neko.module.modules.player.Build;
 import neko.module.modules.player.Cheststealer;
@@ -117,7 +115,6 @@ import neko.module.modules.special.TpBack;
 import neko.module.modules.special.Unicode;
 import neko.module.modules.special.VanillaTp;
 import neko.module.other.Conditions;
-import neko.module.other.Necklace;
 import neko.module.other.Rank;
 import neko.module.other.enums.Rate;
 import neko.utils.Utils;
@@ -126,7 +123,6 @@ public class ModuleManager {
 	public static ArrayList<Module> ActiveModule = new ArrayList<Module>();
 	public static ArrayList<Lock> Lock = new ArrayList<Lock>();
 	public static ArrayList<Rank> rang = new ArrayList<Rank>();
-	public static ArrayList<Necklace> necklace = new ArrayList<Necklace>();
 	public static ArrayList<String> values = new ArrayList<String>();
 	public static HashMap<Module, String> link = new HashMap<Module, String>();
 	
@@ -151,7 +147,6 @@ public class ModuleManager {
 		this.ActiveModule.add(new Regen()); // Key G
 		this.ActiveModule.add(new Flight()); // Key R
 		this.ActiveModule.add(new Autoarmor()); // Key NONE
-		this.ActiveModule.add(new Automine()); //Key NONE
 		this.ActiveModule.add(new Dolphin()); // Key J
 		this.ActiveModule.add(new VanillaTp()); // Key TAB
 		this.ActiveModule.add(new Timer()); // Key Y
@@ -161,7 +156,6 @@ public class ModuleManager {
 		this.ActiveModule.add(new Nametag()); // Key NONE
 		this.ActiveModule.add(new Noslow()); // Key NONE
 		this.ActiveModule.add(new Safewalk()); // Key NONE
-		this.ActiveModule.add(new AutoWalk()); // Key NONE
 		this.ActiveModule.add(new Phase()); // Key NONE
 		this.ActiveModule.add(new God()); // Key NONE HIDE
 		this.ActiveModule.add(new Reach()); // Key NONE
@@ -317,55 +311,9 @@ public class ModuleManager {
 		this.Lock.add(new Lock("PotionEffect", 8, "Lvl", "Cheat", "HUD pour l'effet des potions sur l'écran", "", true));
 		this.Lock.add(new Lock("ArmorHUD", 9, "Lvl", "Cheat", "HUD pour voir ses points d'armure restant et arme tenue", "", true));
 		
-		// Utils.getNecklace("").setDesc("");
-		//TODO : Necklace
-		
-		//CrazyLove
-		necklace.add(new Necklace("Dentelle", 3888.5, Rate.CrazyLove, "§9", true, 0));
-		Utils.getNecklace("Dentelle").setDesc("Hé bien.. Nous voyons tout à travers Héhé");
-		Utils.getNecklace("Dentelle").setRadiusGift(50);
-		Utils.getNecklace("Dentelle").setGiftPlus(5);
-		Utils.getNecklace("Dentelle").setGiftPlusAme(1.5);
-		Utils.getNecklace("Dentelle").setLuck(1.5);
-		
-		// Supra
-		
-		necklace.add(new Necklace("Supra Dominant", 2500, Rate.Supra, "§6", true, 0));
-		Utils.getNecklace("Supra Dominant").setDesc("QAQ, ce pouvoir ! Non .. ! Il te domine !");
-		Utils.getNecklace("Supra Dominant").setLotNecklace(0.25);
-		Utils.getNecklace("Supra Dominant").setMeteoreRain(2.5);
-		
-		// Titan
-		
-		necklace.add(new Necklace("Dominant", 2000, Rate.Titan, "§4§o", true, 0));
-		Utils.getNecklace("Dominant").setDesc("Accepte.. Respecte.. Laisse-toi guider par ton pouvoir en toutes circonstances !");
-		Utils.getNecklace("Dominant").setRadiusGift(10);
-		Utils.getNecklace("Dominant").setGiftPlus(0.5);
-		Utils.getNecklace("Dominant").setGiftPlusAme(1.5);
-		Utils.getNecklace("Dominant").setLuck(1.5);
-		
-		// Mythique
-		
-		necklace.add(new Necklace("Protection", 1000, Rate.Mythique, "§2§n", true, 0));
-		Utils.getNecklace("Protection").setDesc("À moi, ton intégrité est à moi, simplement. À bas les chasseurs, tu es ma propriété.");
-		Utils.getNecklace("Protection").setRadiusGift(5);
-		Utils.getNecklace("Protection").setGiftNecklace(0.25);
-		Utils.getNecklace("Protection").setLotRateSatanique(0.5);
-		Utils.getNecklace("Protection").setLotRateDivin(0.5);
-		
-		// Légendaire
-		
-		necklace.add(new Necklace("Travail", 750, Rate.Légendaire, "§5§o", true, 0));
-		Utils.getNecklace("Travail").setDesc("À moi, ton intégrité est à moi, simplement. À bas les chasseurs, tu es ma propriété.");
-		Utils.getNecklace("Travail").setGiftAme(0.25);
-		Utils.getNecklace("Travail").setGiftPlusAme(0.25);
-		Utils.getNecklace("Travail").setGiftNecklace(0.05);
-		Utils.getNecklace("Travail").setLotRateSatanique(0.25);
-		Utils.getNecklace("Travail").setGiftPlus(2.5);
-		
 		
 		// Utils.getRank("").setDesc("");
-		//TODO : Rank
+		// Rank
 		
 		// CrazyLove
 		rang.add(new Rank("Crazymeal", 7777, Rate.CrazyLove, "§9", true, 0));

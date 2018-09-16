@@ -130,7 +130,6 @@ import neko.module.other.Active;
 import neko.module.other.Conditions;
 import neko.module.other.Irc;
 import neko.module.other.Music;
-import neko.module.other.Necklace;
 import neko.module.other.Quest;
 import neko.module.other.Rank;
 import neko.module.other.TempBon;
@@ -557,44 +556,6 @@ public class Utils {
 	public static int getNbRankUnlock() {
 		int i=0;
 		for (Rank r : ModuleManager.rang) {
-			if (!r.isLock()) {
-				i++;
-			}
-		}
-		return i;
-	}
-	
-	public static boolean changeNecklace(String necklace) {
-		for (Necklace r : ModuleManager.necklace) {
-			if (r.getName().equalsIgnoreCase(necklace) && !r.isLock()) {
-				var.necklace=r;
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public static String getNecklaceColor(String s) {
-		for (Necklace r : ModuleManager.necklace) {
-			if (r.getName().equalsIgnoreCase(s)) {
-				return r.getColor();
-			}
-		}
-		return "§f";
-	}
-	
-	public static Necklace getNecklace(String s) {
-		for (Necklace r : ModuleManager.necklace) {
-			if (r.getName().equalsIgnoreCase(s)) {
-				return r;
-			}
-		}
-		return null;
-	}
-	
-	public static int getNbNecklaceUnlock() {
-		int i=0;
-		for (Necklace r : ModuleManager.necklace) {
 			if (!r.isLock()) {
 				i++;
 			}
@@ -1715,8 +1676,6 @@ public class Utils {
 		v.add(new Quest("Qui serait le plus rapide sans mourir pour un saut de 100 blocs ?", getModule("NoFall"), null, 3));
 		v.add(new Quest("Qui va très vite mais le feu au cul ?", getModule("Flight"), null, 3));
 		v.add(new Quest("Je ne veux plus jamais tomber !", getModule("SafeWalk"), null, 3));
-		v.add(new Quest("Je ne peux pas m'arrêter d'avancer!!", getModule("AutoWalk"), null, 3));
-		v.add(new Quest("Je mine, tu mines, il mine...", getModule("Automine"), null, 3));
 		v.add(new Quest("Mes arrières sont protégées par le Pyromaniac !", getModule("FireTrail"), null, 3));
 		v.add(new Quest("C'est de l'art ou bien un repaire ?", getModule("Paint"), null, 3));
 		v.add(new Quest("Je traite chaques morceaux avant de les essayer pour trouver le plus résistant !", getModule("AutoArmor"), null, 3));
@@ -5565,8 +5524,8 @@ public class Utils {
 		case 828:nyah="SorryNoName aime CTRL + c & CTRL + v <3";break;
 		case 829:nyah="Kutmisu fouette Tryliom pour qu'il dev O_o";break;
 		case 830:nyah="Arrête de tenir ces choses >w<";break;
-		case 831:nyah="KaZu__ stop ! Les Furry's ont une anatomie différente... C'est pas par là !";break;
-		case 832:int i= Utils.getRandInt(1000);nyah="Download complete: "+i+"/"+i+" objects";break;
+		case 831:int i= Utils.getRandInt(1000);nyah="Download complete: "+i+"/"+i+" objects";break;
+		case 832:nyah="";break;
 		case 833:nyah="";break;
 		case 834:nyah="";break;
 		case 835:nyah="";break;
