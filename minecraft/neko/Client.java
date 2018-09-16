@@ -25,6 +25,7 @@ import neko.manager.QuestManager;
 import neko.manager.SoundManager;
 import neko.module.other.Conditions;
 import neko.module.other.Irc;
+import neko.module.other.Necklace;
 import neko.module.other.Rank;
 import neko.module.other.TempBon;
 import neko.module.other.enums.Chat;
@@ -45,6 +46,7 @@ public class Client {
 	private static final Client Neko = new Client();
 	public String mode = "Player";
 	public Rank rang;
+	public Necklace necklace;
 	public int niveau = 1;
 	public String prefixCmd = "..";
 	public int xp = 1;
