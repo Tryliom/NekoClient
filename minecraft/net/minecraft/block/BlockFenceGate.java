@@ -151,9 +151,6 @@ public class BlockFenceGate extends BlockDirectional
 
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
     {
-    	if (Utils.isToggle("Xray")) {
-    		return false;
-    	}
 		
         return true;
     }

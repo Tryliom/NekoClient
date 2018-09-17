@@ -69,9 +69,6 @@ public class BlockPane extends Block
 
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
     {
-    	if (Utils.isToggle("Xray")) {
-    		return false;
-    	}
 		
         return worldIn.getBlockState(pos).getBlock() == this ? false : super.shouldSideBeRendered(worldIn, pos, side);
     }

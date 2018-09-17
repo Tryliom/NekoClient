@@ -27,9 +27,6 @@ public class BlockBreakable extends Block
 
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
     {
-    	if (Utils.isToggle("Xray")) {
-    		return false;
-    	}
     	
         IBlockState var4 = worldIn.getBlockState(pos);
         Block var5 = var4.getBlock();      

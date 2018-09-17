@@ -98,7 +98,7 @@ public abstract class BlockLiquid extends Block
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
     {
     	if (Utils.isToggle("Xray")) {
-    		return false;
+    		return true;
     	}
     	
         return worldIn.getBlockState(pos).getBlock().getMaterial() == this.blockMaterial ? false : (side == EnumFacing.UP ? true : super.shouldSideBeRendered(worldIn, pos, side));

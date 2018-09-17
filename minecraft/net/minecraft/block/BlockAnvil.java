@@ -112,9 +112,6 @@ public class BlockAnvil extends BlockFalling
 
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
     {
-    	if (Utils.isToggle("Xray")) {
-    		return false;
-    	}
     	
         return true;
     }

@@ -244,6 +244,7 @@ public class Utils {
 	public static boolean admin = false;
 	public static Color colorGui = new Color(0, 0, 0, 250);
 	public static Color colorFontGui = new Color(200, 200, 200, 190);
+	public static int xrayBlockOpacity = 100;
 	
 	public static void addChat(String m) {
 		if (verif==null)

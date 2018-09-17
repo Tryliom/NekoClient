@@ -25,9 +25,6 @@ public class BlockLeavesBase extends Block
 
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
     {
-    	if (Utils.isToggle("Xray")) {
-    		return false;
-    	}
 		
         return !this.field_150121_P && worldIn.getBlockState(pos).getBlock() == this ? false : super.shouldSideBeRendered(worldIn, pos, side);
     }

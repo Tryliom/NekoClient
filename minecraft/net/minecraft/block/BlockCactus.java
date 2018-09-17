@@ -32,6 +32,7 @@ public class BlockCactus extends Block
 
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
     {
+    	
         BlockPos var5 = pos.offsetUp();
 
         if (worldIn.isAirBlock(var5))

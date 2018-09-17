@@ -1,6 +1,8 @@
 package net.minecraft.block;
 
 import java.util.Random;
+
+import neko.utils.Utils;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.IBlockState;
@@ -9,6 +11,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.world.ColorizerFoliage;
@@ -32,6 +35,7 @@ public abstract class BlockLeaves extends BlockLeavesBase
         this.setHardness(0.2F);
         this.setLightOpacity(1);
         this.setStepSound(soundTypeGrass);
+
     }
 
     public int getBlockColor()
