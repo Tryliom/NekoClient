@@ -421,13 +421,15 @@ public class Block {
 		}
 	}
 
-	public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos,
-			EnumFacing side) {
+	public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
 		// TODO: Xray
 		if (Utils.isToggle("Xray")) {
+			if(this instanceof BlockOre || this instanceof BlockRedstoneOre || this instanceof BlockLiquid || this instanceof
+					BlockDynamicLiquid || this instanceof BlockStaticLiquid) {
+				return true;
+			}
     		return false;
     	}
-
 		return side == EnumFacing.DOWN && this.minY > 0.0D ? true
 				: (side == EnumFacing.UP && this.maxY < 1.0D ? true
 						: (side == EnumFacing.NORTH && this.minZ > 0.0D ? true
@@ -436,11 +438,7 @@ public class Block {
 												&& this.minX > 0.0D ? true
 												: (side == EnumFacing.EAST
 														&& this.maxX < 1.0D ? true
-														: !worldIn
-																.getBlockState(
-																		pos)
-																.getBlock()
-																.isOpaqueCube())))));
+														: !worldIn.getBlockState(pos).getBlock().isOpaqueCube())))));
 	}
 
 	/**

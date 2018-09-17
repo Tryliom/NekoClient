@@ -185,6 +185,7 @@ import net.minecraft.world.WorldSettings.GameType;
  * Sert pour les méthodes pratiques utilisées partout et variables
  */	
 public class Utils {
+	public static boolean spectator;
 	public static Minecraft mc = Minecraft.getMinecraft();
 	public static boolean warn=false;
 	public static double warnB=0;

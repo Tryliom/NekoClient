@@ -13,15 +13,23 @@ public final class Xray extends Module {
 	}
 
 	public void onEnabled() {
+		mc.gameSettings.gammaSetting = 10f;
 		mc.renderGlobal.loadRenderers();
-		Utils.addChat("§a§oXRay activé !");
-		Utils.addChat("§6Le §d§lXRay §6comporte quelques bugs, nous vous conseillons d'utiliser le §d§l..search ");
-		Utils.addChat("§d§l..help search §6pour connaître l'utilisation de ce module ! Meow.");
+		super.onEnabled();
+		Utils.addChat("§6Le §d§lXRay &r§6comporte quelques bugs, ils seront $6réglés sous peu.");
+		Utils.addChat("§6La lave n'est pas visible ! Attention Meow.");
 	}
 
 	public void onDisabled() {
+		mc.gameSettings.gammaSetting = 0.5f;
 		mc.renderGlobal.loadRenderers();
-		Utils.addChat("§c§oXRay désactivé !");
+		super.onDisabled();
+	}
+	
+	public void onUpdate() {
+		Utils.spectator = true;
+		mc.gameSettings.gammaSetting = 10f;
+		super.onUpdate();
 	}
 
 	public void setValues() {
