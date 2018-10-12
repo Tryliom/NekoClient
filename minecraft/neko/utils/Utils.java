@@ -4185,7 +4185,7 @@ public class Utils {
 	//TODO : isHalloween
 	public static boolean isHalloween() {
 		LocalDate Date = LocalDate.now();
-		LocalDate HalloweenDate = LocalDate.of(2018, 10, 30);
+		LocalDate HalloweenDate = LocalDate.of(2018, 10, 31);
 		if(Date.isEqual(Date)) {
 			return true;
 		} else {

@@ -77,7 +77,7 @@ public class SoundManager {
 				String sr[] = str.split(",");
 				try {
 					for (int i = 0;i<sr.length;i++)	{
-						list.add(new Music(sr[i].replaceAll(".mp3", ""), "", "https://s3.eu-central-1.amazonaws.com/musicneko/"+sr[i].replaceAll(" ", "+")));
+						list.add(new Music("This is Halloween", "", "https://s3.eu-central-1.amazonaws.com/musicneko/"+sr[i].replaceAll(" ", "+")));
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
