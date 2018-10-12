@@ -140,8 +140,8 @@ public class BlockFence extends Block
         this.setBlockBounds(var7, 0.0F, var9, var8, 1.0F, var10);
     }
 
-    public boolean isOpaqueCube()
-    {
+    public boolean isOpaqueCube() {
+    	
         return false;
     }
 
@@ -163,7 +163,6 @@ public class BlockFence extends Block
 
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
     {
-		
         return true;
     }
 

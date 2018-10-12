@@ -25,6 +25,7 @@ public class Module {
 	protected ArrayList<String> cmd = new ArrayList<>();
 	protected String values;
 	protected int time;
+	public int toggleTime = 0;
 
 	public Module(String moduleName, int moduleBind, Category moduleCategory) {
 		this.moduleName = moduleName;
@@ -126,6 +127,7 @@ public class Module {
 	}
 
 	public void onToggle() {
+		toggleTime = 0;
 	}
 
 	public void onEnabled() {
@@ -151,6 +153,7 @@ public class Module {
 	 * Est appelée chaques tick (20/sec)
 	 */
 	public void onUpdate() {
+		toggleTime++;
 	}
 
 	/**
@@ -158,6 +161,14 @@ public class Module {
 	 * pour qu'il soit exec
 	 */
 	public void onAction() {
+	}
+	
+	public void onLateUpdate() {
+
+	}
+
+	public void onRender() {
+
 	}
 
 	public void onRender3D() {

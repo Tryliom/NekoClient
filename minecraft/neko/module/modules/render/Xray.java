@@ -16,7 +16,7 @@ public final class Xray extends Module {
 		mc.gameSettings.gammaSetting = 10f;
 		mc.renderGlobal.loadRenderers();
 		super.onEnabled();
-		Utils.addChat("§6Le §d§lXRay §r§6comporte quelques bugs, ils seront §6réglés sous peu. Meow");
+		Utils.addChat("§eLe §6XRay §en'est pas modulable et a quelques bugs. Utilisez le §6..search §epour §echercher §eun bloc spécifique.");
 	}
 
 	public void onDisabled() {

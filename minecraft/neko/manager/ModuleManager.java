@@ -30,6 +30,7 @@ import neko.module.modules.hide.Plugins;
 import neko.module.modules.hide.Test;
 import neko.module.modules.misc.Antiafk;
 import neko.module.modules.misc.AutoMLG;
+import neko.module.modules.misc.AutoSellAll;
 import neko.module.modules.misc.Autonyah;
 import neko.module.modules.misc.CallCmd;
 import neko.module.modules.misc.Crasher;
@@ -152,6 +153,7 @@ public class ModuleManager {
 		this.ActiveModule.add(new Flight()); // Key R
 		this.ActiveModule.add(new Autoarmor()); // Key NONE
 		this.ActiveModule.add(new Automine()); //Key NONE
+		this.ActiveModule.add(new AutoSellAll()); //Key NONE
 		this.ActiveModule.add(new Dolphin()); // Key J
 		this.ActiveModule.add(new VanillaTp()); // Key TAB
 		this.ActiveModule.add(new Timer()); // Key Y

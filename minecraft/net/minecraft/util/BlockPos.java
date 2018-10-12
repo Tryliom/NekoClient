@@ -236,62 +236,46 @@ public class BlockPos extends Vec3i
      * @param from The first corner (inclusive)
      * @param to the second corner (exclusive)
      */
-    public static Iterable getAllInBox(BlockPos from, BlockPos to)
-    {
-        final BlockPos var2 = new BlockPos(Math.min(from.getX(), to.getX()), Math.min(from.getY(), to.getY()), Math.min(from.getZ(), to.getZ()));
-        final BlockPos var3 = new BlockPos(Math.max(from.getX(), to.getX()), Math.max(from.getY(), to.getY()), Math.max(from.getZ(), to.getZ()));
-        return new Iterable()
-        {
-            public Iterator iterator()
-            {
-                return new AbstractIterator()
-                {
-                    private BlockPos lastReturned = null;
-                    protected BlockPos computeNext0()
-                    {
-                        if (this.lastReturned == null)
-                        {
-                            this.lastReturned = var2;
-                            return this.lastReturned;
-                        }
-                        else if (this.lastReturned.equals(var3))
-                        {
-                            return (BlockPos)this.endOfData();
-                        }
-                        else
-                        {
-                            int var1 = this.lastReturned.getX();
-                            int var2x = this.lastReturned.getY();
-                            int var3x = this.lastReturned.getZ();
+    public static Iterable<BlockPos> getAllInBox(BlockPos from, BlockPos to) {
+		final BlockPos blockpos = new BlockPos(Math.min(from.getX(), to.getX()), Math.min(from.getY(), to.getY()),
+				Math.min(from.getZ(), to.getZ()));
+		final BlockPos blockpos1 = new BlockPos(Math.max(from.getX(), to.getX()), Math.max(from.getY(), to.getY()),
+				Math.max(from.getZ(), to.getZ()));
+		return new Iterable<BlockPos>() {
+			public Iterator<BlockPos> iterator() {
+				return new AbstractIterator<BlockPos>() {
+					private BlockPos lastReturned = null;
 
-                            if (var1 < var3.getX())
-                            {
-                                ++var1;
-                            }
-                            else if (var2x < var3.getY())
-                            {
-                                var1 = var2.getX();
-                                ++var2x;
-                            }
-                            else if (var3x < var3.getZ())
-                            {
-                                var1 = var2.getX();
-                                var2x = var2.getY();
-                                ++var3x;
-                            }
+					protected BlockPos computeNext() {
+						if (this.lastReturned == null) {
+							this.lastReturned = blockpos;
+							return this.lastReturned;
+						} else if (this.lastReturned.equals(blockpos1)) {
+							return (BlockPos) this.endOfData();
+						} else {
+							int i = this.lastReturned.getX();
+							int j = this.lastReturned.getY();
+							int k = this.lastReturned.getZ();
 
-                            this.lastReturned = new BlockPos(var1, var2x, var3x);
-                            return this.lastReturned;
-                        }
-                    }
-                    protected Object computeNext()
-                    {
-                        return this.computeNext0();
-                    }
-                };
-            }
-        };
-    }
+							if (i < blockpos1.getX()) {
+								++i;
+							} else if (j < blockpos1.getY()) {
+								i = blockpos.getX();
+								++j;
+							} else if (k < blockpos1.getZ()) {
+								i = blockpos.getX();
+								j = blockpos.getY();
+								++k;
+							}
+
+							this.lastReturned = new BlockPos(i, j, k);
+							return this.lastReturned;
+						}
+					}
+				};
+			}
+		};
+	}
 
     /**
      * Like getAllInBox but reuses a single MutableBlockPos instead. If this method is used, the resulting BlockPos

@@ -7,9 +7,9 @@ import com.darkmagician6.eventapi.types.EventType;
 public class UpdateEvent
   implements Event, Cancellable
 {
-       float pitch, yaw;
-       boolean cancel = false;
-       boolean onGround, pre;
+       public float pitch, yaw;
+       public boolean cancel = false;
+       public boolean onGround, pre;
        public double x;
        public double y;
        public double z;
@@ -27,8 +27,7 @@ public class UpdateEvent
         this.pre = pre;
       }
 
-      public UpdateEvent()
-      {
+      public UpdateEvent() {
       }
 
 

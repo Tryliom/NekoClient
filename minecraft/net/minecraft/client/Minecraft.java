@@ -206,7 +206,9 @@ import net.minecraft.world.storage.WorldInfo;
 public class Minecraft implements IThreadListener, IPlayerUsage
 {
     private static final Logger logger = LogManager.getLogger();
-    private static final ResourceLocation locationMojangPng = new ResourceLocation("textures/gui/title/neko_laoder.png");
+    //private static final ResourceLocation locationMojangPng = new ResourceLocation("textures/gui/title/neko_laoder.png");
+    public static ResourceLocation locationMojangPng = new ResourceLocation("textures/gui/title/neko_halloweenlaoder.png");
+    
     public static final boolean isRunningOnMac = Util.getOSType() == Util.EnumOS.OSX;
 
     /** A 10MiB preallocation to ensure the heap is reasonably sized. */

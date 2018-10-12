@@ -5,6 +5,7 @@ import net.minecraft.entity.Entity;
 public class MovingObjectPosition
 {
     private BlockPos field_178783_e;
+    
 
     /** What type of ray trace hit was this? 0 = block, 1 = entity */
     public MovingObjectPosition.MovingObjectType typeOfHit;
@@ -55,6 +56,10 @@ public class MovingObjectPosition
     {
         return "HitResult{type=" + this.typeOfHit + ", blockpos=" + this.field_178783_e + ", f=" + this.field_178784_b + ", pos=" + this.hitVec + ", entity=" + this.entityHit + '}';
     }
+    
+    public BlockPos getBlockPos() {
+		return this.field_178783_e;
+	}
 
     public static enum MovingObjectType
     {

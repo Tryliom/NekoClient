@@ -9,9 +9,11 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.Vec3;
 
 public class RenderUtils {
 	
+	public static Minecraft mc = Minecraft.getMinecraft();
 	
 	public static void drawRect(double left, double top, double right, double bottom, int color)
 	  {
@@ -71,6 +73,35 @@ public class RenderUtils {
 	    GlStateManager.disableBlend();
 	    GlStateManager.popMatrix();
 	  }
+	
+	public static Vec3 getRenderPosZone(double x, double y, double z) {
+
+		x = x - mc.getRenderManager().renderPosX;
+		y = y - mc.getRenderManager().renderPosY;
+		z = z - mc.getRenderManager().renderPosZ;
+
+		return new Vec3(x, y, z);
+	}
+	
+	public static void drawOutlinedBlockESPZone(double x, double y, double z, float red, float green, float blue,
+			float alpha, float lineWidth) {
+		GL11.glPushMatrix();
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(770, 771);
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
+		GL11.glEnable(GL11.GL_LINE_SMOOTH);
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
+		GL11.glDepthMask(false);
+		GL11.glLineWidth(lineWidth);
+		GL11.glColor4f(red, green, blue, alpha);
+		drawOutlinedBoundingBox(new AxisAlignedBB(x, y, z, x + 1D, y + 1D, z + 1D));
+		GL11.glDisable(GL11.GL_LINE_SMOOTH);
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glDepthMask(true);
+		GL11.glDisable(GL11.GL_BLEND);
+		GL11.glPopMatrix();
+	}
 
 	public static void drawOutlinedBoundingBox(AxisAlignedBB aa) {
 		Tessellator tessellator = Tessellator.getInstance();
@@ -205,6 +236,28 @@ public class RenderUtils {
 		GL11.glDisable(GL11.GL_LINE_SMOOTH);
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		// GL11.glEnable(GL11.GL_LIGHTING);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glDepthMask(true);
+		GL11.glDisable(GL11.GL_BLEND);
+		GL11.glPopMatrix();
+	}
+	
+	public static void drawBlockESPZone(double x, double y, double z, float red, float green, float blue, float alpha,
+			float lineRed, float lineGreen, float lineBlue, float lineAlpha, float lineWidth) {
+		GL11.glPushMatrix();
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(770, 771);
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
+		GL11.glEnable(GL11.GL_LINE_SMOOTH);
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
+		GL11.glDepthMask(false);
+		GL11.glColor4f(red, green, blue, alpha);
+		drawBoundingBox(new AxisAlignedBB(x, y, z, x + 1D, y + 1D, z + 1D));
+		GL11.glLineWidth(lineWidth);
+		GL11.glColor4f(lineRed, lineGreen, lineBlue, lineAlpha);
+		drawOutlinedBoundingBox(new AxisAlignedBB(x, y, z, x + 1D, y + 1D, z + 1D));
+		GL11.glDisable(GL11.GL_LINE_SMOOTH);
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glDepthMask(true);
 		GL11.glDisable(GL11.GL_BLEND);
