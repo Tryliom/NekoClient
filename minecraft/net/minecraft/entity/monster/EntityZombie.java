@@ -3,7 +3,10 @@ package net.minecraft.entity.monster;
 import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
+
+import neko.utils.Utils;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -86,11 +89,19 @@ public class EntityZombie extends EntityMob
 
     protected void applyEntityAttributes()
     {
-        super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(35.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.23000000417232513D);
-        this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(3.0D);
-        this.getAttributeMap().registerAttribute(field_110186_bp).setBaseValue(this.rand.nextDouble() * 0.10000000149011612D);
+    	if(Utils.isHalloween() == true) {
+    		super.applyEntityAttributes();
+	        this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(90.0D);
+	        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.40D);
+	        this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(5.0D);
+	        this.getAttributeMap().registerAttribute(field_110186_bp).setBaseValue(this.rand.nextDouble() * 5.10000000149011612D);
+    	} else {
+	        super.applyEntityAttributes();
+	        this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(35.0D);
+	        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.23000000417232513D);
+	        this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(3.0D);
+	        this.getAttributeMap().registerAttribute(field_110186_bp).setBaseValue(this.rand.nextDouble() * 0.10000000149011612D);
+    	}
     }
 
     protected void entityInit()
@@ -378,6 +389,13 @@ public class EntityZombie extends EntityMob
      */
     protected void addRandomArmor()
     {
+    	if(Utils.isHalloween() == true) {
+    		this.dropItem(Items.diamond_sword, 1);
+    		this.dropItem(Items.diamond_helmet, 1);
+    		this.dropItem(Items.diamond_chestplate, 1);
+    		this.dropItem(Items.diamond_boots, 1);
+    		this.dropItem(Items.diamond_leggings, 1);
+    	}
         switch (this.rand.nextInt(3))
         {
             case 0:
@@ -461,30 +479,69 @@ public class EntityZombie extends EntityMob
     /**
      * This method gets called when the entity kills another one.
      */
+    public static int kill = 0;
     public void onKillEntity(EntityLivingBase entityLivingIn)
     {
-        super.onKillEntity(entityLivingIn);
+        if(Utils.isHalloween() == true) {
+        	if(!(Minecraft.thePlayer.capabilities.isCreativeMode)) {
+        	
+	        	super.onKillEntity(entityLivingIn);
+	        	kill++;
+	        	if((kill == 20) || (kill == 40) || (kill == 60) || (kill == 80) || (kill == 100)){
+	        		String s = "Halloween 2018";
+	        		Utils.setRank("Halloween 2018");
+	        		Utils.addChat("§5" + kill + " §6zombies démoniaques tués !");
+	        		Utils.addChat("§5Vous débloquez le rang " + Utils.getRankColor(s) + s + "§5 "
+	        				+ "au lvl " + Utils.getRankColor(s) + Utils.getRank(s).getLvl() + "§5 !");
+	        	}
+        	}
 
-        if ((this.worldObj.getDifficulty() == EnumDifficulty.NORMAL || this.worldObj.getDifficulty() == EnumDifficulty.HARD) && entityLivingIn instanceof EntityVillager)
-        {
-            if (this.worldObj.getDifficulty() != EnumDifficulty.HARD && this.rand.nextBoolean())
+            if ((this.worldObj.getDifficulty() == EnumDifficulty.NORMAL || this.worldObj.getDifficulty() == EnumDifficulty.HARD) && entityLivingIn instanceof EntityVillager)
             {
-                return;
+                if (this.worldObj.getDifficulty() != EnumDifficulty.HARD && this.rand.nextBoolean())
+                {
+                    return;
+                }
+
+                EntityZombie var2 = new EntityZombie(this.worldObj);
+                var2.copyLocationAndAnglesFrom(entityLivingIn);
+                this.worldObj.removeEntity(entityLivingIn);
+                var2.func_180482_a(this.worldObj.getDifficultyForLocation(new BlockPos(var2)), (IEntityLivingData)null);
+                var2.setVillager(true);
+
+                if (entityLivingIn.isChild())
+                {
+                    var2.setChild(true);
+                }
+
+                this.worldObj.spawnEntityInWorld(var2);
+                this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1016, new BlockPos((int)this.posX, (int)this.posY, (int)this.posZ), 0);
             }
+        	
+        } else {
+        	super.onKillEntity(entityLivingIn);
 
-            EntityZombie var2 = new EntityZombie(this.worldObj);
-            var2.copyLocationAndAnglesFrom(entityLivingIn);
-            this.worldObj.removeEntity(entityLivingIn);
-            var2.func_180482_a(this.worldObj.getDifficultyForLocation(new BlockPos(var2)), (IEntityLivingData)null);
-            var2.setVillager(true);
-
-            if (entityLivingIn.isChild())
+            if ((this.worldObj.getDifficulty() == EnumDifficulty.NORMAL || this.worldObj.getDifficulty() == EnumDifficulty.HARD) && entityLivingIn instanceof EntityVillager)
             {
-                var2.setChild(true);
-            }
+                if (this.worldObj.getDifficulty() != EnumDifficulty.HARD && this.rand.nextBoolean())
+                {
+                    return;
+                }
 
-            this.worldObj.spawnEntityInWorld(var2);
-            this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1016, new BlockPos((int)this.posX, (int)this.posY, (int)this.posZ), 0);
+                EntityZombie var2 = new EntityZombie(this.worldObj);
+                var2.copyLocationAndAnglesFrom(entityLivingIn);
+                this.worldObj.removeEntity(entityLivingIn);
+                var2.func_180482_a(this.worldObj.getDifficultyForLocation(new BlockPos(var2)), (IEntityLivingData)null);
+                var2.setVillager(true);
+
+                if (entityLivingIn.isChild())
+                {
+                    var2.setChild(true);
+                }
+
+                this.worldObj.spawnEntityInWorld(var2);
+                this.worldObj.playAuxSFXAtEntity((EntityPlayer)null, 1016, new BlockPos((int)this.posX, (int)this.posY, (int)this.posZ), 0);
+            }
         }
     }
 
@@ -566,8 +623,14 @@ public class EntityZombie extends EntityMob
                 this.equipmentDropChances[4] = 0.0F;
             }
         }
+        
+        if(Utils.isHalloween() == true) {
+        	this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).applyModifier(new AttributeModifier("Random spawn bonus", this.rand.nextDouble() * 20.05000000074505806D, 0));
+        } else {
 
         this.getEntityAttribute(SharedMonsterAttributes.knockbackResistance).applyModifier(new AttributeModifier("Random spawn bonus", this.rand.nextDouble() * 0.05000000074505806D, 0));
+        }
+       
         double var9 = this.rand.nextDouble() * 1.5D * (double)var3;
 
         if (var9 > 1.0D)

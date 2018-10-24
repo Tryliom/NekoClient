@@ -113,6 +113,19 @@ public class Render extends Module {
 			        		bon.add(new Bonus(b, gain, cR, cG, cB, 0));
 			        	if (xp && (gain.equals("xp") || gain.equals("xp+"))) {
 			        		u.addChat("§2§oUn pack d'xp a été déposé !");
+			        		if(Utils.isHalloween() == true) {
+			        			Rank r = Utils.getRank("Halloween 2018");
+			                	String ra = r.toString();
+			                	if(r.isLock()) {
+			                		//Utils.getRank(ra);
+			                		Utils.setRank("Halloween 2018");
+			                		//Utils.changeRank(ra);
+			                		u.addChat("§6This is Halloween ! Halloween ! Halloweeeeeeeen !");
+			                		u.addChat("§6Rang Event §dHalloween 2018 §6Obtenu ! !");
+			                	}
+			        		} else {
+			        			
+			        		}
 			        	} else if (gain.equals("lot")) {
 			        		u.addChat("§oUn ticket de lotterie a été déposé !");
 			        	} else if (gain.equals("soul")) {

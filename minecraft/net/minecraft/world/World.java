@@ -3,6 +3,9 @@ package net.minecraft.world;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+
+import neko.utils.Utils;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -1416,13 +1419,17 @@ public abstract class World implements IBlockAccess
      */
     public float getSunBrightness(float p_72971_1_)
     {
-        float var2 = this.getCelestialAngle(p_72971_1_);
-        float var3 = 1.0F - (MathHelper.cos(var2 * (float)Math.PI * 2.0F) * 2.0F + 0.2F);
-        var3 = MathHelper.clamp_float(var3, 0.0F, 1.0F);
-        var3 = 1.0F - var3;
-        var3 = (float)((double)var3 * (1.0D - (double)(this.getRainStrength(p_72971_1_) * 5.0F) / 16.0D));
-        var3 = (float)((double)var3 * (1.0D - (double)(this.getWeightedThunderStrength(p_72971_1_) * 5.0F) / 16.0D));
-        return var3 * 0.8F + 0.2F;
+    	if(Utils.isHalloween() == true) {
+    		return 0F;
+    	} else {
+	        float var2 = this.getCelestialAngle(p_72971_1_);
+	        float var3 = 1.0F - (MathHelper.cos(var2 * (float)Math.PI * 2.0F) * 2.0F + 0.2F);
+	        var3 = MathHelper.clamp_float(var3, 0.0F, 1.0F);
+	        var3 = 1.0F - var3;
+	        var3 = (float)((double)var3 * (1.0D - (double)(this.getRainStrength(p_72971_1_) * 5.0F) / 16.0D));
+	        var3 = (float)((double)var3 * (1.0D - (double)(this.getWeightedThunderStrength(p_72971_1_) * 5.0F) / 16.0D));
+	        return var3 * 0.8F + 0.2F;
+    	}
     }
 
     /**

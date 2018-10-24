@@ -4,6 +4,7 @@ import org.lwjgl.input.Keyboard;
 
 import neko.module.Category;
 import neko.module.Module;
+import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 
 public class Fullbright extends Module {
@@ -14,10 +15,14 @@ public class Fullbright extends Module {
 	}
 
 	public void onEnabled() {
-		while (mc.gameSettings.gammaSetting < 101F) {
-			mc.gameSettings.gammaSetting += 0.5F;
+		if(Utils.isHalloween() == true) {
+			Utils.addChat("§cFullBright impossible, c'est Halloween !");
+		} else {
+			while (mc.gameSettings.gammaSetting < 101F) {
+				mc.gameSettings.gammaSetting += 0.5F;
+			}
+			super.onEnabled();
 		}
-		super.onEnabled();
 	}
 	
 	public void onDisabled() {

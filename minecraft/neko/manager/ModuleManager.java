@@ -527,6 +527,13 @@ public class ModuleManager {
 				+ "elles sont destinées à sa Choumise quand elle est bébé, attention aux orifices, les bananes en action ont été crée pour remplir le corps de jus des insoumis");
 		Utils.getRank("Maître des bananes").setLotRateDivin(0.8);
 		Utils.getRank("Maître des bananes").setLotRang(0.8);
+			rang.add(new Rank("Halloween 2018", 666, Rate.Event, "§6", true, 0));
+			Utils.getRank("Halloween 2018").setDesc("Mais.. Non... Que ce passe-t'il ? Des zom.. des zom.. des HORDES DE ZOMBIES .. NYAAAAAWH... Halloween..2018.. C'est.. l'invas........meow.");
+			Utils.getRank("Halloween 2018").setRadiusGift(2);
+			Utils.getRank("Halloween 2018").setGiftRang(0.2);
+			Utils.getRank("Halloween 2018").setLotRateSatanique(0.1);
+			Utils.getRank("Halloween 2018").setLotRateMagical(0.2);
+			Utils.getRank("Halloween 2018").setLotRateRare(0.5);
 		rang.add(new Rank("Choumise", 887, Rate.Satanique, "§c", true, 0));
 		Utils.getRank("Choumise").setDesc("Gentille, docile, douce, à l'écoute après la punition, la Choumise sauras respecter le contrat crée par son Maître, la soumission, l'humiliation, elle servira son Maître dans tout les cas présents, surtout après la punition, dans tout ce qu'il désire au plus profond de son être ! Bien entendu, avec quelques récompenses à la clef et les bonnes bananes du Maître Héhé !");
 		rang.add(new Rank("Lucifer", 632, Rate.Satanique, "§c", true, 0));

@@ -110,6 +110,7 @@ public class Nuker extends Module {
 						BlockPos b = new BlockPos(this.xPos, this.yPos, this.zPos);
 						Chunk var2 = mc.theWorld.getChunkFromBlockCoords(b);
 						Block blockId = var2.getBlock(this.xPos, this.yPos, this.zPos);
+						Block bl = mc.theWorld.getBlockState(b).getBlock();
 						if ((blockId != Blocks.air)) {
 							if (Utils.verifBlock(blockId)) {
 								mc.thePlayer.sendQueue.addToSendQueue(
@@ -122,7 +123,8 @@ public class Nuker extends Module {
 					}
 				}
 			}
-			this.delayNuker = 4;
+			//this.delayNuker = 4;
+			super.onUpdate();
 		}
 	}
 
@@ -144,9 +146,11 @@ public class Nuker extends Module {
 						BlockPos b = new BlockPos(this.xPos, this.yPos, this.zPos);
 						Chunk var2 = mc.theWorld.getChunkFromBlockCoords(b);
 						Block blockId = var2.getBlock(this.xPos, this.yPos, this.zPos);
+						
 
 						if ((blockId != Blocks.air) && (blockId != Blocks.flowing_water) && (blockId != Blocks.water)
 								&& (blockId != Blocks.flowing_lava) && (blockId != Blocks.lava)) {
+							
 							RenderUtils.drawOutlinedBlockESP(b.getX() - mc.getRenderManager().renderPosX,
 									b.getY() - mc.getRenderManager().renderPosY,
 									b.getZ() - mc.getRenderManager().renderPosZ, 0.99F, 0.33F, 0.33F, 0.2F, 5F, 1D, 1D,
@@ -167,6 +171,7 @@ public class Nuker extends Module {
 						BlockPos b = new BlockPos(this.xPos, this.yPos, this.zPos);
 						Chunk var2 = mc.theWorld.getChunkFromBlockCoords(b);
 						Block blockId = var2.getBlock(this.xPos, this.yPos, this.zPos);
+						Block bl = mc.theWorld.getBlockState(b).getBlock();
 						if ((blockId != Blocks.air) && (blockId != Blocks.bedrock) && (blockId != Blocks.flowing_water)
 								&& (blockId != Blocks.water) && (blockId != Blocks.flowing_lava)
 								&& (blockId != Blocks.lava)) {

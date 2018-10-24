@@ -180,6 +180,7 @@ import net.minecraft.stats.AchievementList;
 import net.minecraft.stats.IStatStringFormat;
 import net.minecraft.stats.StatFileWriter;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IThreadListener;
@@ -248,6 +249,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     public static EntityPlayerSP thePlayer;
     private Entity field_175622_Z;
     public Entity pointedEntity;
+    public TileEntityChest pointedChestEntity;
     public EffectRenderer effectRenderer;
     public Session session;
     private boolean isGamePaused;

@@ -107,56 +107,60 @@ public class Client {
 		mc.mcResourceManager.registerReloadListener(NekoFont);
 		SoundManager.getSM();
 		n = Utils.getRandInt(13);
-		switch (n) {
-		case 0:
-			Display.setTitle("Tu joues à la version divine de Neko :3");
-			break;
-		case 1:
-			Display.setTitle("Waw quel joueur expérimenté :o");
-			break;
-		case 2:
-			Display.setTitle("C'est tout un concept d'être enfermé là dedans...");
-			break;
-		case 3:
-			while (n == 3) {
-				try {
-					Display.setTitle(Utils.getNyah());
-					n = 0;
-				} catch (Exception ex) {
-					Display.setTitle("Boum boum boum !");
+		if(Utils.isHalloween() == true) {
+			Display.setTitle("THIS IS HALLOWEEN HALLOWEEN HALLOWEEN ! Meow!");
+		} else {
+			switch (n) {
+			case 0:
+				Display.setTitle("Tu joues à la version divine de Neko :3");
+				break;
+			case 1:
+				Display.setTitle("Waw quel joueur expérimenté :o");
+				break;
+			case 2:
+				Display.setTitle("C'est tout un concept d'être enfermé là dedans...");
+				break;
+			case 3:
+				while (n == 3) {
+					try {
+						Display.setTitle(Utils.getNyah());
+						n = 0;
+					} catch (Exception ex) {
+						Display.setTitle("Boum boum boum !");
+					}
 				}
+				break;
+			case 4:
+				Display.setTitle("Ne touche pas à ça ! NYAAAAAAH");
+				break;
+			case 5:
+				Display.setTitle("Ce jeu est si malsain...");
+				break;
+			case 6:
+				Display.setTitle("Coucou petit neko :3");
+				break;
+			case 7:
+				Display.setTitle("C'est communautaire.");
+				break;
+			case 8:
+				Display.setTitle("Je suis un neko tout innocent :3");
+				break;
+			case 9:
+				Display.setTitle("Je suis un vilain neko ;3");
+				break;
+			case 10:
+				Display.setTitle("Ne viens pas me fouetter dans ma tente !");
+				break;
+			case 11:
+				Display.setTitle("Redresse la tout de suite !");
+				break;
+			case 12:
+				Display.setTitle("Montre moi tout ton potenciel jeune Lycan !");
+				break;
+			case 13:
+				Display.setTitle("Tu t'engraisses bien dans ce domaine >w<");
+				break;
 			}
-			break;
-		case 4:
-			Display.setTitle("Ne touche pas à ça ! NYAAAAAAH");
-			break;
-		case 5:
-			Display.setTitle("Ce jeu est si malsain...");
-			break;
-		case 6:
-			Display.setTitle("Coucou petit neko :3");
-			break;
-		case 7:
-			Display.setTitle("C'est communautaire.");
-			break;
-		case 8:
-			Display.setTitle("Je suis un neko tout innocent :3");
-			break;
-		case 9:
-			Display.setTitle("Je suis un vilain neko ;3");
-			break;
-		case 10:
-			Display.setTitle("Ne viens pas me fouetter dans ma tente !");
-			break;
-		case 11:
-			Display.setTitle("Redresse la tout de suite !");
-			break;
-		case 12:
-			Display.setTitle("Montre moi tout ton potenciel jeune Lycan !");
-			break;
-		case 13:
-			Display.setTitle("Tu t'engraisses bien dans ce domaine >w<");
-			break;
 		}
 		name = CLIENT_NAME + "/vanilla";
 	}

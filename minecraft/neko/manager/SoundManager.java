@@ -59,36 +59,6 @@ public class SoundManager {
 	
 	public void searchMusicList() {
 		Vector<Music> list = new Vector<Music>();
-		
-		if(Utils.isHalloween() == true) {
-			
-			try {				
-				// Récupère la liste des musiques dispo via AWS Lambda
-				URL url = new URL("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/music/list");
-				Scanner sc = new Scanner(url.openStream(), "UTF-8");
-				String str = "";
-				while (sc.hasNextLine()) {
-					String s = sc.nextLine();
-					if (s.startsWith("\"")) {
-						str = s.replaceAll("\"", "");
-						break;
-					}
-				}
-				String sr[] = str.split(",");
-				try {
-					for (int i = 0;i<sr.length;i++)	{
-						list.add(new Music("This is Halloween", "", "https://s3.eu-central-1.amazonaws.com/musicneko/"+sr[i].replaceAll(" ", "+")));
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				sc.close();
-			} catch (Exception e) {
-				System.out.println("Erreur BDD: Get Sound");
-			}			
-			this.list = list;
-			
-		} else {
 			
 			try {				
 				// Récupère la liste des musiques dispo via AWS Lambda
@@ -116,7 +86,6 @@ public class SoundManager {
 			}			
 			this.list = list;
 		}
-	}
 	
 	public Vector<Music> getList() {
 		return this.list;

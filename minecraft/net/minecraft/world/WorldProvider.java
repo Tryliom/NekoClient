@@ -1,5 +1,6 @@
 package net.minecraft.world;
 
+import neko.utils.Utils;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
@@ -151,25 +152,29 @@ public abstract class WorldProvider
      */
     public float[] calcSunriseSunsetColors(float p_76560_1_, float p_76560_2_)
     {
-        float var3 = 0.4F;
-        float var4 = MathHelper.cos(p_76560_1_ * (float)Math.PI * 2.0F) - 0.0F;
-        float var5 = -0.0F;
-
-        if (var4 >= var5 - var3 && var4 <= var5 + var3)
-        {
-            float var6 = (var4 - var5) / var3 * 0.5F + 0.5F;
-            float var7 = 1.0F - (1.0F - MathHelper.sin(var6 * (float)Math.PI)) * 0.99F;
-            var7 *= var7;
-            this.colorsSunriseSunset[0] = var6 * 0.3F + 0.7F;
-            this.colorsSunriseSunset[1] = var6 * var6 * 0.7F + 0.2F;
-            this.colorsSunriseSunset[2] = var6 * var6 * 0.0F + 0.2F;
-            this.colorsSunriseSunset[3] = var7;
-            return this.colorsSunriseSunset;
-        }
-        else
-        {
-            return null;
-        }
+    	if(Utils.isHalloween() == true) {
+    		return null;
+    	} else {
+	        float var3 = 0.4F;
+	        float var4 = MathHelper.cos(p_76560_1_ * (float)Math.PI * 2.0F) - 0.0F;
+	        float var5 = -0.0F;
+	
+	        if (var4 >= var5 - var3 && var4 <= var5 + var3)
+	        {
+	            float var6 = (var4 - var5) / var3 * 0.5F + 0.5F;
+	            float var7 = 1.0F - (1.0F - MathHelper.sin(var6 * (float)Math.PI)) * 0.99F;
+	            var7 *= var7;
+	            this.colorsSunriseSunset[0] = var6 * 0.3F + 0.7F;
+	            this.colorsSunriseSunset[1] = var6 * var6 * 0.7F + 0.2F;
+	            this.colorsSunriseSunset[2] = var6 * var6 * 0.0F + 0.2F;
+	            this.colorsSunriseSunset[3] = var7;
+	            return this.colorsSunriseSunset;
+	        }
+	        else
+	        {
+	            return null;
+	        }
+    	}
     }
 
     /**
@@ -211,7 +216,11 @@ public abstract class WorldProvider
 
     public boolean isSkyColored()
     {
-        return true;
+    	if(Utils.isHalloween() == true) {
+    		return false;
+    	} else {
+    		return true;
+    	}
     }
 
     public BlockPos func_177496_h()
@@ -261,7 +270,11 @@ public abstract class WorldProvider
 
     public boolean getHasNoSky()
     {
-        return this.hasNoSky;
+    	if(Utils.isHalloween() == true) {
+    		return true;
+    	} else {
+    		return this.hasNoSky;
+    	}
     }
 
     public float[] getLightBrightnessTable()

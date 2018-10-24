@@ -4,6 +4,9 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonSyntaxException;
+
+import neko.utils.Utils;
+
 import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -1525,6 +1528,24 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
 
             if (Config.isSunMoonEnabled())
             {
+            	
+            	if(Utils.isHalloween() == true){
+            		var14 = 20.0F;
+                    this.renderEngine.bindTexture(locationMoonPhasesPng);
+                    int var27 = this.theWorld.getMoonPhase();
+                    int var28 = var27 % 4;
+                    var31 = var27 / 4 % 2;
+                    var18 = (float)(var28 + 0) / 4.0F;
+                    var19 = (float)(var31 + 0) / 2.0F;
+                    float var20 = (float)(var28 + 1) / 4.0F;
+                    float var21 = (float)(var31 + 1) / 2.0F;
+                    var251.startDrawingQuads();
+                    var251.addVertexWithUV((double)(-var14), -100.0D, (double)var14, (double)var20, (double)var21);
+                    var251.addVertexWithUV((double)var14, -100.0D, (double)var14, (double)var18, (double)var21);
+                    var251.addVertexWithUV((double)var14, -100.0D, (double)(-var14), (double)var18, (double)var19);
+                    var251.addVertexWithUV((double)(-var14), -100.0D, (double)(-var14), (double)var20, (double)var19);
+                    var241.draw();
+            	} else {
                 var14 = 30.0F;
                 this.renderEngine.bindTexture(locationSunPng);
                 var251.startDrawingQuads();
@@ -1548,6 +1569,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                 var251.addVertexWithUV((double)var14, -100.0D, (double)(-var14), (double)var18, (double)var19);
                 var251.addVertexWithUV((double)(-var14), -100.0D, (double)(-var14), (double)var20, (double)var19);
                 var241.draw();
+            	}
             }
 
             GlStateManager.func_179090_x();

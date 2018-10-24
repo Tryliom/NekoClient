@@ -4181,12 +4181,13 @@ public class Utils {
 	    		toggleModule(ligne);
 		}
 	}
-	
 	//TODO : isHalloween
+	public static LocalDate Date = LocalDate.now();
 	public static boolean isHalloween() {
-		LocalDate Date = LocalDate.now();
+		LocalDate AvantHalloweenDate = LocalDate.of(2018, 10, 30);
 		LocalDate HalloweenDate = LocalDate.of(2018, 10, 31);
-		if(Date.isEqual(Date)) {
+		LocalDate ApresHalloweenDate = LocalDate.of(2018, 11, 1);
+		if((Date.isEqual(AvantHalloweenDate)) || (Date.isEqual(HalloweenDate)) || (Date.isEqual(ApresHalloweenDate))) {
 			return true;
 		} else {
 			return false;
@@ -4766,40 +4767,46 @@ public class Utils {
 		//TODO : IsHalloween ..nyah
 		if (Utils.isHalloween() == true) {
 			
-			int neko = (int) Math.round(Math.random()*30);
+			int neko = (int) Math.round(Math.random()*35);
 			switch(neko) {
 			
-			case 0:nyah="";break;
-			case 1:nyah="";break;
-			case 2:nyah="";break;
-			case 3:nyah="";break;
-			case 4:nyah="";break;
-			case 5:nyah="";break;
-			case 6:nyah="";break;
-			case 7:nyah="";break;
-			case 8:nyah="";break;
-			case 9:nyah="";break;
-			case 10:nyah="";break;
-			case 11:nyah="";break;
-			case 12:nyah="";break;
-			case 13:nyah="";break;
-			case 14:nyah="";break;
-			case 15:nyah="";break;
-			case 16:nyah="";break;
-			case 17:nyah="";break;
-			case 18:nyah="";break;
-			case 19:nyah="";break;
-			case 20:nyah="";break;
-			case 21:nyah="";break;
-			case 22:nyah="";break;
-			case 23:nyah="";break;
-			case 24:nyah="";break;
-			case 25:nyah="";break;
-			case 26:nyah="";break;
-			case 27:nyah="";break;
-			case 28:nyah="";break;
-			case 29:nyah="";break;
-			case 30:nyah="";break;
+			case 0:nyah="Le poing de mes mots s’enfonce dans ta bouche et te nyah dans la gorge. ";break;
+			case 1:nyah="Mes extrêmes attirent la foule.";break;
+			case 2:nyah="Dis.. t’imagines mes mains gantées, mes pieds juchés au bord d'une citrouille ?";break;
+			case 3:nyah="Trolls et monstres velus, engouffrez-vous dans tout aussi velus...";break;
+			case 4:nyah="Il paraît que Tryliom est un esprit, vous y croyez ?";break;
+			case 5:nyah="ça GRIIIINCE dans le grenier.. Des galipettes il y a...";break;
+			case 6:nyah="Nyaaawh, j'ai passée une soirée effroyable en jouant à l'intérieur de moi même !";break;
+			case 7:nyah="Bouh.. Je t'ai vu.. Je me suis cru dans la maison des horreurs.";break;
+			case 8:nyah="Apparement les Nekos sont des forces obscures !";break;
+			case 9:nyah="A la pleine lune.. Attention..";break;
+			case 10:nyah="Halloween, C'est.. Erotique, enjaillant !";break;
+			case 11:nyah="Mais c'est que ce ver translucide te vas bien !";break;
+			case 12:nyah="Tout doux à l'intérieur d'une citrouille !";break;
+			case 13:nyah="Tachée de sang..";break;
+			case 14:nyah="This is Halloween , halloween , halloweeeeen !";break;
+			case 15:nyah="Nyawwwh satisfaisant ce rouge pur !";break;
+			case 16:nyah="Vivre sous la contrainte de la nuit, cela paraît excitant.";break;
+			case 17:nyah="C'est la croix ! L'enemi de Satan, la position de croix !";break;
+			case 18:nyah="Prive moi de mes sens durant ce râle instable..";break;
+			case 19:nyah="Vas-y, attaque moi jeune vampire !";break;
+			case 20:nyah="Plante moi tes griffes de l'interieur !";break;
+			case 21:nyah="Cette bougie... NYAAAWH Arrête ! Pas ici QAAAAQ!!";break;
+			case 22:nyah="Le faire avec un troll, pourquoi pas.";break;
+			case 23:nyah="C'est humiliant Maître..";break;
+			case 24:nyah="Qui as-t'il dans cette boite pleine d'objet venant de succubes ?";break;
+			case 25:nyah="La nuit je pense à satan, me violentant dans sa cabane... /o/";break;
+			case 26:nyah="Lucifer utilise Neko à chaques Halloween !";break;
+			case 27:nyah="Castiel à beaucoup trop de travail.. Tu m'étonnes il a des conquêtes.";break;
+			case 28:nyah="Soit gentil petit squelette ! Ne bouge pas :3";break;
+			case 29:nyah="La horde démoniaque est de sortie ! Habillés vous chaudement.";break;
+			case 30:nyah="Neko Halloween est disponible !!!";break;
+			case 31:nyah="Un Neko ou un sort ! =n_n=";break;
+			case 32:nyah="Je connais un admin qui ne vas pas avoir besoin de masques.. é_é";break;
+			case 33:nyah="J'ai touché tout ce qu'il y avait à l'intérieur...ça me fait penser à l'intérieur de tes citrouilles...c'était quoi ?";break;
+			case 34:nyah="Arrête de prendre ma bouche pour une citrouille-ehmmm- hé !";break;
+			case 35:nyah="Donne moi tes bonbons ! Hé ! C'est quoi ça ? C'est tout petit et sensible...si je..";break;
+			case 36:int i= Utils.getRandInt(36);nyah="Download complete: "+i+"/"+i+" objects";break;
 		
 			case -1:nyah="";break;
 			
@@ -6109,5 +6116,11 @@ public class Utils {
 				}
 			}
 		} catch (Exception e) {}
+	}
+
+	public static void addChat(Exception e) {
+		if (verif==null) {
+			mc.ingameGUI.getChatGUI().printChatMessage(new ChatComponentText("§8[§9Neko§8]§6 " + e));
+		}
 	}
 }

@@ -34,11 +34,11 @@ public class AutoSellAll extends Module {
 	
 	@Override
 	public void onEnabled() {
+		Utils.addChat("§dCommande en test, sujette à des bugs.");
 
 		running = true;
         thread.start();
 		super.onEnabled();
-		mc.thePlayer.sendChatMessage("/block");
 		mc.thePlayer.sendChatMessage("/sellall");
 	}
 	
@@ -60,7 +60,7 @@ public class AutoSellAll extends Module {
 				
 				try {
 					mc.thePlayer.sendChatMessage("/sellall");
-	                thread.sleep(2000);
+	                thread.sleep(10000);
 	            } catch (InterruptedException e) {
 	                e.printStackTrace();
 	            }

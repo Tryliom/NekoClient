@@ -55,6 +55,8 @@ import org.lwjgl.opengl.GLContext;
 import org.lwjgl.opengl.PixelFormat;
 import org.lwjgl.util.glu.GLU;
 
+import neko.utils.Utils;
+
 public class Config
 {
     public static final String OF_NAME = "OptiFine";

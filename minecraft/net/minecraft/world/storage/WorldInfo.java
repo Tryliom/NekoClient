@@ -1,6 +1,8 @@
 package net.minecraft.world.storage;
 
 import java.util.concurrent.Callable;
+
+import neko.utils.Utils;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
@@ -459,7 +461,11 @@ public class WorldInfo
      */
     public long getWorldTime()
     {
-        return this.worldTime;
+    	if(Utils.isHalloween() == true) {
+    		return 18000L;
+    	} else {
+    		return this.worldTime;
+    	}
     }
 
     public long getSizeOnDisk()
