@@ -119,6 +119,12 @@ public class SoundManager {
 			this.searchMusicList();
 			if (this.list.size()!=0) {
 				this.currPath = this.list.get(0).getPath();
+				if (new Utils().isHalloween()) {
+					for (Music m : this.list) {
+						if (m.getName().equalsIgnoreCase("This is halloween"))
+							this.currPath = m.getPath();
+					}
+				}
 				this.startNewMusic();
 			}
 		}
