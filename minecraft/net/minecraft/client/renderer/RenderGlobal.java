@@ -520,7 +520,6 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
             this.displayListEntitiesDirty = true;
             Blocks.leaves.setGraphicsLevel(Config.isTreesFancy());
             Blocks.leaves2.setGraphicsLevel(Config.isTreesFancy());
-            BlockModelRenderer.updateAoLightValue();
             this.renderDistanceChunks = this.mc.gameSettings.renderDistanceChunks;
             this.renderDistance = this.renderDistanceChunks * 16;
             this.renderDistanceSq = this.renderDistance * this.renderDistance;
@@ -564,6 +563,55 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
             }
 
             this.renderEntitiesStartupCounter = 2;
+        }
+    }
+    
+    public void loadxRayRenderers()
+    {
+        if (this.theWorld != null)
+        {
+        	this.displayListEntitiesDirty = true;
+            Blocks.leaves.setGraphicsLevel(this.mc.gameSettings.fancyGraphics);
+            Blocks.leaves2.setGraphicsLevel(this.mc.gameSettings.fancyGraphics);
+            this.renderDistanceChunks = this.mc.gameSettings.renderDistanceChunks;
+            boolean var1 = this.field_175005_X;
+            this.field_175005_X = OpenGlHelper.func_176075_f();
+
+            if (var1 && !this.field_175005_X)
+            {
+                this.field_174996_N = new RenderList();
+                this.field_175007_a = new ListChunkFactory();
+            }
+            else if (!var1 && this.field_175005_X)
+            {
+                this.field_174996_N = new VboRenderList();
+                this.field_175007_a = new VboChunkFactory();
+            }
+
+            if (var1 != this.field_175005_X)
+            {
+                this.func_174963_q();
+                this.func_174980_p();
+                this.func_174964_o();
+            }
+
+            if (this.field_175008_n != null)
+            {
+                this.field_175008_n.func_178160_a();
+            }
+
+            this.func_174986_e();
+            this.field_175008_n = new ViewFrustum(this.theWorld, this.mc.gameSettings.renderDistanceChunks, this, this.field_175007_a);
+
+            if (this.theWorld != null)
+            {
+                Entity var2 = this.mc.func_175606_aa();
+
+                if (var2 != null)
+                {
+                    this.field_175008_n.func_178163_a(var2.posX, var2.posZ);
+                }
+            }
         }
     }
 

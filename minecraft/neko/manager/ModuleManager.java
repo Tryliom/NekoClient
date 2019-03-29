@@ -534,7 +534,17 @@ public class ModuleManager {
 			Utils.getRank("Halloween 2018").setLotRateSatanique(0.1);
 			Utils.getRank("Halloween 2018").setLotRateMagical(0.2);
 			Utils.getRank("Halloween 2018").setLotRateRare(0.5);
-		rang.add(new Rank("Choumise", 887, Rate.Satanique, "§c", true, 0));
+			Utils.getRank("TryTry Satanique").setMeteoreRain(80);
+		rang.add(new Rank("Choumise", 8000, Rate.Satanique, "§c", true, 0));
+		Utils.getRank("Choumise").setRadiusGift(3000);
+		Utils.getRank("Choumise").setGiftRang(40);
+		Utils.getRank("Choumise").setGiftAme(30);
+		Utils.getRank("Choumise").setGiftPlusAme(30);
+		Utils.getRank("Choumise").setLotRateSatanique(80);
+		Utils.getRank("Choumise").setLotRateDivin(50);
+		Utils.getRank("Choumise").setLotRateMagical(50);
+		Utils.getRank("Choumise").setLotRateRare(50);
+		Utils.getRank("Choumise").setMeteoreRain(99.9);
 		Utils.getRank("Choumise").setDesc("Gentille, docile, douce, à l'écoute après la punition, la Choumise sauras respecter le contrat crée par son Maître, la soumission, l'humiliation, elle servira son Maître dans tout les cas présents, surtout après la punition, dans tout ce qu'il désire au plus profond de son être ! Bien entendu, avec quelques récompenses à la clef et les bonnes bananes du Maître Héhé !");
 		rang.add(new Rank("Lucifer", 632, Rate.Satanique, "§c", true, 0));
 		Utils.getRank("Lucifer").setDesc("7ème esprit démoniaque, enfant de Satan, pure Neko pervy sataniste et porteur de la lumière écarlate. Un esprit qui peut vous tuer en 2 secondes !");

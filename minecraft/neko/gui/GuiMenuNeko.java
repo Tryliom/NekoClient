@@ -5,6 +5,7 @@ import java.io.IOException;
 import neko.Client;
 import neko.manager.OnlyRpgManager;
 import neko.manager.SoundManager;
+import neko.utils.Utils;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.gui.GuiMultiplayer;
@@ -37,8 +38,8 @@ public class GuiMenuNeko extends GuiScreen {
         		this.buttonList.add(new GuiButton(9, this.width / 2 - 100, this.height / 4 + 72 + var1, 98, 20, "Multiplayer"));
         	else
         		this.buttonList.add(new GuiButton(9, this.width / 2 - 100, this.height / 4 + 72 + var1, "Multiplayer"));
-        	if (SoundManager.getSM().canStart)
-    			this.buttonList.add(new GuiButton(665, this.width / 2 -100, 10, SoundManager.getSM().isActive() ? "♫ Stop ♫" : "♪ Restart ♪"));
+        	if (SoundManager.getSM().canStart || Utils.haveInternet())
+    			this.buttonList.add(new GuiButton(665, this.width / 2 -100, 10, SoundManager.getSM().isActive() ? "♫ Stop ♫" : "♪ Start Music ♪"));
     		else
     			this.buttonList.add(new GuiButton(665, this.width / 2 -100, 10, "Music loading..."));
     }
@@ -48,6 +49,15 @@ public class GuiMenuNeko extends GuiScreen {
         switch (button.id)
         {
         	case 665:
+        		if ((button.displayString.equals("♪ Start Music ♪")) && !button.displayString.equals("Music loading...")) {
+        			if(SoundManager.getSM().getList().size() != 0) {
+        				SoundManager.getSM().currPath = SoundManager.getSM().getList().get(0).getPath();
+        				SoundManager.getSM().startNewMusic();
+
+            			button.displayString =  "♫ Stop ♫";
+            			return;
+        			}
+        		}
         		if (SoundManager.getSM().isActive() && !button.displayString.equals("Music loading..."))
         			SoundManager.getSM().stopMusic();
         		else if (!button.displayString.equals("Music loading...")) {

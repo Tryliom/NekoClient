@@ -245,7 +245,7 @@ public class GuiSelectWorld extends GuiScreen implements GuiYesNoCallback
 
         public List(Minecraft mcIn)
         {
-            super(mcIn, GuiSelectWorld.this.width, GuiSelectWorld.this.height, 32, GuiSelectWorld.this.height - 64, 36);
+            super(mcIn, GuiSelectWorld.this.width, GuiSelectWorld.this.height, 32, GuiSelectWorld.this.height - 64, 36, 0, GuiSelectWorld.this.width);
         }
 
         protected int getSize()

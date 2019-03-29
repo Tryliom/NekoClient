@@ -42,7 +42,7 @@ public class Client {
 	public final String CLIENT_AUTHOR = "Tryliom";
 	public ModuleManager moduleManager;
 	public GuiManager gui;
-	public final String CLIENT_VERSION = "2.6 | This is Halloween";
+	public final String CLIENT_VERSION = "2.7";
 	private static final Client Neko = new Client();
 	public String mode = "Player";
 	public Rank rang;
@@ -71,8 +71,8 @@ public class Client {
 	public String changelog = "";
 	public RequestManager rm;
 	public boolean firstServDisplay = true;
-	public String strNeko = "§c>>> §6Neko v" + CLIENT_VERSION + " §c<<<";
-	public String strCreator = "§6Créé par Tryliom";
+	public String strNeko = "§f>>> §bNeko v" + CLIENT_VERSION + " §f<<<";
+	public String strCreator = "§eCréé par §f§lTryliom";
 
 	public void startClient() {
 		time.start();
@@ -96,7 +96,7 @@ public class Client {
 			}
 			sc.close();
 		} catch (Exception e) {
-			System.out.println("Adresse inateignable :c");
+			System.out.println("Adresse inatteignable :c");
 		}
 		NekoFont = new FontRenderer(mc.gameSettings, new ResourceLocation("neko/font/ascii.png"), mc.renderEngine,
 				false);

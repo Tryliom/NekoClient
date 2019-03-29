@@ -27,8 +27,9 @@ import net.minecraft.util.ResourceLocation;
 public class GuiConnect extends GuiScreen {
 	private GuiScreen prevGui;
 	private Minecraft mc = Minecraft.getMinecraft();
-	private ResourceLocation background = mc.getTextureManager().getDynamicTextureLocation("background",
-			GuiMainMenu.viewportTexture);
+	/*private ResourceLocation background = mc.getTextureManager().getDynamicTextureLocation("background",
+			GuiMainMenu.viewportTexture);*/
+	private ResourceLocation background = new ResourceLocation("textures/gui/title/background/npanorama_0.png");
 	private Client var = Client.getNeko();
 	private GuiTextField user;
 	private GuiTextField pass;
@@ -52,12 +53,13 @@ public class GuiConnect extends GuiScreen {
 		this.buttonList.clear();
 		int j = 28;
 		if (this.part == 1) {
-			this.buttonList.add(new GuiButton(1, this.width / 2 + 5, this.height / 3 + 50, 100, 20,
+			this.buttonList.add(new GuiButton(1, this.width / 2 + 5, this.height / 2 + 50, 100, 20,
 					this.loginOrCreate.equalsIgnoreCase("create") ? "Créer" : "Login"));
-			this.buttonList.add(new GuiButton(2, this.width / 2 - 105, this.height / 3 + 50, 100, 20,
+			this.buttonList.add(new GuiButton(2, this.width / 2 - 105, this.height / 2 + 50, 100, 20,
 					this.loginOrCreate.equalsIgnoreCase("create") ? "Passer au login" : "Créer un compte"));
-			this.user = new GuiTextField(2, this.fontRendererObj, this.width / 2 - 100, 60, 200, 20);
-			this.pass = new GuiTextField(3, this.fontRendererObj, this.width / 2 - 100, 98, 200, 20);
+			this.user = new GuiTextField(2, this.fontRendererObj, this.width / 2 - 100, this.height / 2 - 20, 200, 20);
+			this.pass = new GuiTextField(3, this.fontRendererObj, this.width / 2 - 100, this.height / 2 + 10, 200, 20);
+			
 			this.user.setText("Pseudo");
 			this.pass.setText("Mot de passe");
 		} else if (this.part == 2) {
@@ -69,26 +71,30 @@ public class GuiConnect extends GuiScreen {
 	}
 
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		
 		ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 		this.mc.getTextureManager().bindTexture(this.background);
+		
 		Gui.drawScaledCustomSizeModalRect(0, 0, 0.0F, 0.0F, sr.getScaledWidth(), sr.getScaledHeight(),
 				sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight());
 
-		drawDefaultBackground();
-
-		drawCenteredString(var.NekoFont, "§e§nConnexion à Neko", this.width / 2, 10, 16777215);
-		drawCenteredString(var.NekoFont, "§c" + this.error, this.width / 2, 130, 16777215);
+		//drawDefaultBackground();
+		
+		drawCenteredString(var.NekoFont, "§e§nConnexion à Neko", this.width / 2, this.height / 2 - 70, 16777215);
+		
+		drawCenteredString(var.NekoFont, "§c" + this.error, this.width / 2, this.height / 2 - 50, 16777215);
 		String var10 = Client.getNeko().strNeko;
 		if (this.part == 1) {
-			this.user.drawTextBox();
-			this.pass.drawTextBox();
+			this.user.drawRGBATextBox(-13882323, -14737633);
+			this.pass.drawRGBATextBox(-13882323, -14737633);
+			//Calcul des INT RGBA : https://www.shodor.org/stella2java/rgbint.html
 		}
 		this.drawString(var.NekoFont, var10, 2, this.height - 10, -1);
 		String var11 = Client.getNeko().strCreator;
 		this.drawString(var.NekoFont, var11, this.width - var.NekoFont.getStringWidth(var11) - 2, this.height - 10, -1);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
-
+	
 	protected void actionPerformed(GuiButton button) throws IOException {
 		super.actionPerformed(button);
 		switch (button.id) {

@@ -60,16 +60,28 @@ public abstract class GuiSlot
     protected int headerPadding;
     private boolean enabled = true;
 
-    public GuiSlot(Minecraft mcIn, int width, int height, int p_i1052_4_, int p_i1052_5_, int p_i1052_6_)
+    public GuiSlot(Minecraft mcIn, int width, int height, int top, int bot, int slotheight)
     {
         this.mc = mcIn;
         this.width = width;
         this.height = height;
-        this.top = p_i1052_4_;
-        this.bottom = p_i1052_5_;
-        this.slotHeight = p_i1052_6_;
+        this.top = top;
+        this.bottom = bot;
+        this.slotHeight = slotheight;
         this.left = 0;
         this.right = width;
+    }
+    
+    public GuiSlot(Minecraft mcIn, int width, int height, int top, int bot, int slotheight, int left, int right)
+    {
+        this.mc = mcIn;
+        this.width = width;
+        this.height = height;
+        this.top = top;
+        this.bottom = bot;
+        this.slotHeight = slotheight;
+        this.left = left;
+        this.right = right;
     }
 
     public void setDimensions(int p_148122_1_, int p_148122_2_, int p_148122_3_, int p_148122_4_)
@@ -236,7 +248,8 @@ public abstract class GuiSlot
             GlStateManager.disableFog();
             Tessellator var6 = Tessellator.getInstance();
             WorldRenderer var7 = var6.getWorldRenderer();
-            this.mc.getTextureManager().bindTexture(Gui.optionsBackground);
+            //this.mc.getTextureManager().bindTexture(Gui.optionsBackground);
+            this.mc.getTextureManager().bindTexture(Gui.getOptionsBackground());
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             float var8 = 32.0F;
             var7.startDrawingQuads();
@@ -493,7 +506,8 @@ public abstract class GuiSlot
     {
         Tessellator var5 = Tessellator.getInstance();
         WorldRenderer var6 = var5.getWorldRenderer();
-        this.mc.getTextureManager().bindTexture(Gui.optionsBackground);
+        //this.mc.getTextureManager().bindTexture(Gui.optionsBackground);
+        this.mc.getTextureManager().bindTexture(Gui.getOptionsBackground());
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         float var7 = 32.0F;
         var6.startDrawingQuads();

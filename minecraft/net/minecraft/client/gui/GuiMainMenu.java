@@ -1,6 +1,11 @@
 package net.minecraft.client.gui;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Desktop;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,6 +16,9 @@ import java.util.Date;
 import java.util.Random;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 import org.apache.commons.io.Charsets;
 import org.apache.logging.log4j.LogManager;
@@ -24,6 +32,7 @@ import com.google.common.collect.Lists;
 
 import neko.Client;
 import neko.api.NekoCloud;
+import neko.gui.GuiAltManager;
 import neko.gui.GuiConnect;
 import neko.gui.GuiMenuNeko;
 import neko.manager.GuiManager;
@@ -33,6 +42,7 @@ import neko.manager.SoundManager;
 import neko.manager.TutoManager;
 import neko.module.other.Rank;
 import neko.utils.Utils;
+import net.mcleaks.MCLeaks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
@@ -43,12 +53,14 @@ import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.realms.RealmsBridge;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.demo.DemoWorldServer;
 import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.WorldInfo;
+import tv.twitch.broadcast.FrameBuffer;
 
 public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
 {	
@@ -78,6 +90,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     private String Bc;
     private static final ResourceLocation splashTexts = new ResourceLocation("texts/splashes.txt");
     private static final ResourceLocation minecraftTitleTextures = new ResourceLocation("textures/gui/title/minecraft.png");
+    private static final ResourceLocation nekoentete = new ResourceLocation("textures/gui/EnteteNeko.png");
+    
 
     /** An array of all the paths to the panorama pictures. */
     private static final ResourceLocation[] titlePanoramaPaths = new ResourceLocation[] {new ResourceLocation("textures/gui/title/background/"+Utils.getPan()+"_0.png"), new ResourceLocation("textures/gui/title/background/"+Utils.getPan()+"_1.png"), new ResourceLocation("textures/gui/title/background/"+Utils.getPan()+"_2.png"), new ResourceLocation("textures/gui/title/background/"+Utils.getPan()+"_3.png"), new ResourceLocation("textures/gui/title/background/"+Utils.getPan()+"_4.png"), new ResourceLocation("textures/gui/title/background/"+Utils.getPan()+"_5.png")};
@@ -92,6 +106,19 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     private GuiButton field_175372_K;
     private TutoManager tm = TutoManager.getTuto();
     private int leftPx;
+    
+    private static int options = 40;
+    private static int solo = 50;
+    private static int multi = 50;
+    private static int stop = 90;
+    private static int load = 90;
+    private static int pseudo = 90;
+    private static int activertuto = 100;
+    private static int update = 100;
+    private static int wikiother = 100;
+    private static int discord = 100;
+    private static int quitterneko = 200;
+    private static int serverList = 140;
 
     public GuiMainMenu()
     {
@@ -200,7 +227,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         {
         	try {
         	if (Utils.verif==null)
-        		this.splashText = "§cJ§fo§cy§fe§cu§fx§c n§fo§cë§fl §ca§fv§ce§fc §9Neko §f!§c :§f3";
+        		this.splashText = "§cJ§fo§cy§fe§cu§fx§c n§fo§cë§fl §ca§fv§ce§fc §3Neko §f!§c :§f3";
         	} catch (Exception e) {}
             this.splashText = "Merry X-mas!";
         }
@@ -219,24 +246,31 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         this.leftPx=wid + 212;
 
         this.addSingleplayerMultiplayerButtons(Utils.verif==null ? var3+36 : var3, 24);
-        this.buttonList.add(new GuiButton(0, Utils.verif==null ? wid : this.width / 2 - 100, Utils.verif==null ? var3+104+12 : var3 + 72 + 12, 98, 20, Utils.verif==null ? "Options du jeu.." : I18n.format("menu.options", new Object[0])));
-        this.buttonList.add(new GuiButton(4, Utils.verif==null ? wid : this.width / 2 + 2, Utils.verif==null ? var3+128+12 : var3 + 72 + 12, Utils.verif==null ? 200 : 98, 20, Utils.verif==null ? "§c§nQuitter Neko ?" : I18n.format("menu.quit", new Object[0])));
+        this.buttonList.add(new GuiButton(0, Utils.verif==null ? this.width/2 - 19 : this.width / 2 - 100,
+        		Utils.verif==null ? 8 : var3 + 72 + 12,
+        				Utils.verif==null ? 40 : 98, 20, Utils.verif==null ? "Options..." : I18n.format("menu.options", new Object[0])));
+        this.buttonList.add(new GuiButton(4, Utils.verif==null ? this.width/2 - 100 : this.width / 2 + 2,
+        		Utils.verif==null ? this.height - 27 : var3 + 72 + 12,
+        				Utils.verif==null ? 200 : 98, 20, Utils.verif==null ? "§c§lQuitter Neko ?" : I18n.format("menu.quit", new Object[0])));
         if (Utils.verif==null) {
-        	this.buttonList.add(new GuiButton(668, wid, var3, 200, 20, "§5Discord Neko"));
-        	this.buttonList.add(new GuiButton(5, wid + 102, var3+104+12, 98, 20, "Langue"));
+        	this.buttonList.add(new GuiButton(668, this.width/2, this.height - 52, 50, 20, "§5Discord"));
+        	this.buttonList.add(new GuiButton(669, this.width/2 + 50, this.height - 52, 50, 20, "§5Site Web"));
+        	this.buttonList.add(new GuiButton(670, 94 + Minecraft.getMinecraft().getSession().getUsername().length() * 4, 40, 35, 10, "Modifier"));
+        	//this.buttonList.add(new GuiButton(5, wid + 102, var3+104+12, 98, 20, "Langue"));
         	String s[] = this.Bc.split("\n");
         	int h = 0;
         	for (int i=1;i<s.length+1;i++) {
         		if (s[i-1].startsWith("§d") && s[i-1].contains("%")) {
-        			h = 89 + 15 * i;
-            		this.buttonList.add(new GuiButton(771, this.leftPx, h, 200, 11, "§6"+s[i-1]));
+        			h = this.height/2 + -70 + 15 * i;
+            		this.buttonList.add(new GuiButton(771, 0, h, 140, 11, "§6"+s[i-1]));
         		}
         	}
-    		this.buttonList.add(new GuiButton(769, 10, 10, 100, 20, tm.isDone() ? "§7Activer le tuto" : "§7Passer le tuto"));
-    		if (SoundManager.getSM().canStart)
-    			this.buttonList.add(new GuiButton(665, this.width-110, 10, 100, 20, SoundManager.getSM().isActive() ? "♫ Stop ♫" : "♪ Restart ♪"));
+    		this.buttonList.add(new GuiButton(769, this.width/2 - 50, 40, 100, 20, tm.isDone() ? "§7Activer le tuto" : "§7Passer le tuto"));
+			int widdthtt = this.width - 100;
+    		if (SoundManager.getSM().canStart || Utils.haveInternet())
+    			this.buttonList.add(new GuiButton(665, widdthtt, 8, 90, 20, SoundManager.getSM().isActive() ? "♫ Stop ♫" : "♪ Start Music ♪"));
     		else
-    			this.buttonList.add(new GuiButton(665, this.width-110, 10, 100, 20, "Music loading..."));
+    			this.buttonList.add(new GuiButton(665, widdthtt, 8, 90, 20, "Music loading..."));
         } else
         	this.buttonList.add(new GuiButtonLanguage(5, Utils.verif==null ? 100 : this.width / 2 - 124, Utils.verif==null ? var3+104+12 : var3 + 72 + 12));
         Object var4 = this.field_104025_t;
@@ -288,14 +322,46 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
      */
     private void addSingleplayerMultiplayerButtons(int p_73969_1_, int p_73969_2_)
     {
-    	int wid = 10;
-        this.buttonList.add(new GuiButton(1, Utils.verif==null ? wid : this.width / 2 - 100, p_73969_1_, !tm.isDone() ? "§aCommencer le tuto !" : Utils.verif==null ? "§eSolitaire" : I18n.format("menu.singleplayer", new Object[0])));
-        this.buttonList.add(new GuiButton(2, Utils.verif==null ? wid : this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 1, !tm.isDone() ? "§c§kdsjfnkjndsj" : Utils.verif==null ? "§6Multijoueur" : I18n.format("menu.multiplayer", new Object[0])));
+    	int wid = 125;
+    	/**
+         * Buttons off & visible.
+         */
+        if(Utils.verif==null) {
+        wid = 0; this.buttonList.add(new GuiButton(236, wid, 0, 200, 20, false, !tm.isDone() ? "" : Utils.verif==null ? "" : I18n.format("menu.singleplayer", new Object[0])));
+        wid = 200; this.buttonList.add(new GuiButton(237, wid, 0, 200, 20, false, !tm.isDone() ? "" : Utils.verif==null ? "" : I18n.format("menu.singleplayer", new Object[0])));
+        wid = 400; this.buttonList.add(new GuiButton(238, wid, 0, 200, 20, false, !tm.isDone() ? "" : Utils.verif==null ? "" : I18n.format("menu.singleplayer", new Object[0])));
+        wid = 600; this.buttonList.add(new GuiButton(239, wid, 0, 200, 20, false, !tm.isDone() ? "" : Utils.verif==null ? "" : I18n.format("menu.singleplayer", new Object[0])));
+        wid = 0; this.buttonList.add(new GuiButton(240, wid, 19, 200, 19, false, !tm.isDone() ? "" : Utils.verif==null ? "" : I18n.format("menu.singleplayer", new Object[0])));
+        wid = 200; this.buttonList.add(new GuiButton(241, wid, 19, 200, 19, false, !tm.isDone() ? "" : Utils.verif==null ? "" : I18n.format("menu.singleplayer", new Object[0])));
+        wid = 400; this.buttonList.add(new GuiButton(242, wid, 19, 200, 19, false, !tm.isDone() ? "" : Utils.verif==null ? "" : I18n.format("menu.singleplayer", new Object[0])));
+        wid = 600; this.buttonList.add(new GuiButton(243, wid, 19, 200, 19, false, !tm.isDone() ? "" : Utils.verif==null ? "" : I18n.format("menu.singleplayer", new Object[0])));
+        
+        }
+        /**
+         * 
+         */
+        wid = 70;
+    	if(Utils.verif==null) {
+    		this.buttonList.add(new GuiButton(1, tm.isDone() ? this.width/2 - 90 : this.width/2 - 105, 8, tm.isDone() ? 50 : 80, 20,
+            		!tm.isDone() ? "§bCommencer le tuto !" : "§f§lSolo"));
+    		this.buttonList.add(new GuiButton(2, tm.isDone() ? this.width/2 + 40 : this.width/2 + 26, 8, tm.isDone() ? 50 : 80, 20,
+            				!tm.isDone() ? "§c§kdsjfnkjndsj" : "§f§lMulti"));
+    		this.buttonList.add(new GuiButton(359, 10, 8, 100, 20, NekoCloud.getName() == null ? "§b§lNeko" : "§b§l" + NekoCloud.getName()));
+    	} else {
+    		this.buttonList.add(new GuiButton(1, this.width / 2 - 100, p_73969_1_, I18n.format("menu.singleplayer", new Object[0])));
+    		this.buttonList.add(new GuiButton(2, this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 1, I18n.format("menu.multiplayer", new Object[0])));
+    	}
+        
+        
+        
+        wid = 5;
+        //TODO ACTIVE BUTTON
         if (Utils.verif==null && !OnlyRpgManager.getRpg().isActive()) {
-        	this.buttonList.add(this.field_175372_K = new GuiButton(666, wid, p_73969_1_ + p_73969_2_ * 2, (!tm.isDone() ? "§k" : "§9")+"Neko..."));
+        	this.buttonList.add(this.field_175372_K = new GuiButton(666, this.width/2 - 100, this.height - 52, 100, 20, (!tm.isDone() ? "§k" : "§3")+"Neko..."));
         } else
         	this.buttonList.add(this.field_175372_K = new GuiButton(14, OnlyRpgManager.getRpg().isActive() ? wid : this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 2, I18n.format("menu.online", new Object[0])));
     }
+	
 
     /**
      * Adds Demo buttons on Main Menu for players who are playing Demo.
@@ -317,6 +383,15 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     {	
     	if (button.id == 665)
         {
+    		if ((button.displayString.equals("♪ Start Music ♪")) && !button.displayString.equals("Music loading...")) {
+    			if(SoundManager.getSM().getList().size() != 0) {
+    				SoundManager.getSM().currPath = SoundManager.getSM().getList().get(0).getPath();
+    				SoundManager.getSM().startNewMusic();
+
+        			button.displayString =  "♫ Stop ♫";
+        			return;
+    			}
+    		}
     		if (SoundManager.getSM().isActive() && !button.displayString.equals("Music loading..."))
     			SoundManager.getSM().stopMusic();
     		else if (!button.displayString.equals("Music loading...")) {
@@ -332,11 +407,23 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     	if (button.id == 668)
         {
     		try {
-    			URI url = URI.create("https://discord.gg/sSwkX7d");
+    			URI url = URI.create("https://discord.gg/Dt4npbR");
     			Desktop.getDesktop().browse(url);
     		} catch (Exception e) {}	
         }
     	
+    	if (button.id == 669)
+        {
+    		try {
+    			URI url = URI.create("https://neko.nekohc.fr/#/login");
+    			Desktop.getDesktop().browse(url);
+    		} catch (Exception e) {}	
+        }
+    	
+    	if (button.id == 670)
+    	{
+    		mc.displayGuiScreen(new GuiAltManager(this));
+    	}
     	if (button.id == 769)
         {
     		if (!tm.isDone()) {
@@ -611,6 +698,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
+    	
         GlStateManager.disableAlpha();
         this.renderSkybox(mouseX, mouseY, partialTicks);
         GlStateManager.enableAlpha();
@@ -619,8 +707,15 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         short var6 = 274;
         int var7 = this.width / 2 - var6 / 2;
         byte var8 = 30;
+        
         this.drawGradientRect(0, 0, this.width, this.height, -2130706433, 16777215);
         this.drawGradientRect(0, 0, this.width, this.height, 0, Integer.MIN_VALUE);
+        
+        /*this.mc.getTextureManager().bindTexture(nekoentete);
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        this.drawTexturedModalRect(0, 0, 0, 0, 680, 40);*/
+        
+        
         if (Utils.verif!=null) {
         this.mc.getTextureManager().bindTexture(minecraftTitleTextures);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -636,7 +731,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         {
             this.drawTexturedModalRect(var7 + 0, var8 + 0, 0, 0, 155, 44);
             this.drawTexturedModalRect(var7 + 155, var8 + 0, 0, 45, 155, 44);
-        }        
+        }
+        
         var5.func_178991_c(-1);
         GlStateManager.pushMatrix();
         GlStateManager.translate((float)(this.width / 2 + 90), 70.0F, 0.0F);
@@ -651,6 +747,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         GlStateManager.popMatrix();
         String var10="";
         if (Utils.verif==null)
+        	
         	var10 = Client.getNeko().strNeko;
         else
         	var10 = "Minecraft 1.8";
@@ -674,11 +771,10 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
 	        		list.add("Wiki Neko");
 	        		list.add("Mon compte Neko");
 	        		int i = Utils.getRandInt(list.size()-1);
-	        		gb.displayString = "§9"+list.get(i);
+	        		gb.displayString = "§3"+list.get(i);
 	        	}
         	}
         }
-        
         this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, var10, 2, this.height - 10, -1);
         String var11 = "Copyright Mojang AB. Do not distribute!";
         if (Utils.verif==null) {
@@ -689,13 +785,42 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     			if (s[i-1].startsWith("§d") && s[i-1].contains("%")) {
     				
     			} else
-    				this.drawString(Client.getNeko().NekoFont, "§6"+s[i-1], this.leftPx, h, -1);        		
+    				this.drawString(Client.getNeko().NekoFont, "§6"+s[i-1], this.width * 0, this.height/2 - 60, -1);        		
         	}
         	
         	if (!Client.getNeko().ver.isEmpty()) {
-        		this.drawString(Client.getNeko().NekoFont, Utils.sep, this.leftPx, h+24, -1);
-        		this.drawString(Client.getNeko().NekoFont, "§eVersion supérieur: "+Client.getNeko().ver, this.leftPx, h+39, -1);
-        		this.drawString(Client.getNeko().NekoFont, "§eAjout principal: "+Client.getNeko().changelog, this.leftPx, h+54, -1);
+
+                    /*this.drawVerticalLine(this.width/2, 0, this.height, -500);
+                    this.drawHorizontalLine(0, this.width, this.height/2, -500);
+                    
+                    int abcd = 10;
+                    while(abcd < 500) {
+                    	//WEST
+                    this.drawVerticalLine(this.width/2 - abcd, 0, this.height, -1);
+                    	//EST
+                    this.drawVerticalLine(this.width/2 + abcd, 0, this.height, -1);
+                    	//NORTH
+                    this.drawHorizontalLine(0, this.width, this.height/2 - abcd, -1);
+                    	//SOUTH
+                    this.drawHorizontalLine(0, this.width, this.height/2 + abcd, -1);
+                    
+                    this.drawString(fontRendererObj, Integer.toString(abcd), this.width/2 + abcd, this.height/2, -10000);
+                    this.drawString(fontRendererObj, Integer.toString(abcd), this.width/2 - abcd, this.height/2, -10000);
+                    this.drawString(fontRendererObj, Integer.toString(abcd), this.width/2, this.height/2 + abcd, -10000);
+                    this.drawString(fontRendererObj, Integer.toString(abcd), this.width/2, this.height/2 - abcd, -10000);
+                    abcd = abcd + 10;
+                    }*/
+                    //this.drawVerticalLine(x, startY, endY, color);
+        		this.drawString(Client.getNeko().NekoFont, Utils.sep3, this.width * 0 , this.height/2 + 40, -1);
+        		this.drawString(Client.getNeko().NekoFont, "§3§nUne nouvelle version est disponible ! ", this.width/2 - 85, this.height/2 - this.height/12, -1);
+        		this.drawString(Client.getNeko().NekoFont, "§eVersion supérieure: §b"+Client.getNeko().ver, this.width/2 - 60, this.height/2 - this.height/60, -1);
+        		this.drawString(Client.getNeko().NekoFont, "§eAjout principal: §b"+Client.getNeko().changelog, this.width/2 - 75, this.height/2 + this.height/30, -1);
+        		//this.drawString(Client.getNeko().NekoFont, "§eWidth: §b"+ this.width + " §eHeight: §b" + this.height, this.width/2 - 75, this.height/2 + this.height/5, -1);
+        		
+        		this.drawString(fontRendererObj, "§eConnecté en tant que: §b" + Minecraft.getMinecraft().getSession().getUsername(), 10, 40, -1);
+        		
+        		
+        		
         		boolean b = true;
         		for (Object gb : this.buttonList) {
         			if (gb instanceof GuiButton) {
@@ -704,12 +829,12 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         			}
         		}
         		if (b)
-        			this.buttonList.add(new GuiButton(770, this.leftPx, h+69, 100, 20, "Update"));
+        			this.buttonList.add(new GuiButton(770, this.width/2 - 50, this.height/2 + 25, 100, 20, "§f§lMettre à jour"));
         	}
         	var11=Client.getNeko().strCreator;
         }
         this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, var11, this.width - (Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj).getStringWidth(var11) - 2, this.height - 10, -1);
-
+        
         if (this.field_92025_p != null && this.field_92025_p.length() > 0)
         {
             drawRect(this.field_92022_t - 2, this.field_92021_u - 2, this.field_92020_v + 2, this.field_92019_w - 1, 1428160512);

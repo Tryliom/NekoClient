@@ -32,8 +32,7 @@ import net.minecraft.util.ResourceLocation;
 public class GuiMusicManager extends GuiScreen {
 	private GuiScreen prevGui;
 	private Minecraft mc = Minecraft.getMinecraft();
-	private ResourceLocation background = mc.getTextureManager().getDynamicTextureLocation("background",
-			GuiMainMenu.viewportTexture);
+	private ResourceLocation background = new ResourceLocation("textures/gui/GuiAccount/background.png");
 	private GuiList list;
 	private Client var = Client.getNeko();
 	private int lastIndex = -1;
@@ -51,10 +50,13 @@ public class GuiMusicManager extends GuiScreen {
 	}
 
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		
 		ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
 		this.mc.getTextureManager().bindTexture(this.background);
+		
 		Gui.drawScaledCustomSizeModalRect(0, 0, 0.0F, 0.0F, sr.getScaledWidth(), sr.getScaledHeight(),
 				sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight());
+		
 		this.buttonList.clear();
 		if (SoundManager.getSM().canStart) {
 			if (this.list.selectedSlot!=-1)
@@ -62,11 +64,11 @@ public class GuiMusicManager extends GuiScreen {
 			this.buttonList.add(new GuiButton(2, this.width / 2 - 154, this.height - 52, 100, 20, "Mode: §a"+SoundManager.getSM().mm.name()));
 		}
 		this.buttonList.add(new GuiButton(0, this.width / 2 + 4 + 50, this.height - 52, 100, 20, "Retour"));
-		if (SoundManager.getSM().canStart)
-			this.buttonList.add(new GuiButton(665, this.width-110, 10, 100, 20, SoundManager.getSM().isActive() ? "♫ Stop ♫" : "♪ Restart ♪"));
+		if (SoundManager.getSM().canStart || Utils.haveInternet())
+			this.buttonList.add(new GuiButton(665, this.width-110, 10, 100, 20, SoundManager.getSM().isActive() ? "♫ Stop ♫" : "♪ Start Music ♪"));
 		else
 			this.buttonList.add(new GuiButton(665, this.width-110, 10, 100, 20, "Music loading..."));
-		drawDefaultBackground();
+		//drawDefaultBackground();
 		this.list.drawScreen(mouseX, mouseY, partialTicks);
 		drawCenteredString(var.NekoFont, "Music Manager", this.width / 2, 10, 16777215);
 		super.drawScreen(mouseX, mouseY, partialTicks);
@@ -89,6 +91,15 @@ public class GuiMusicManager extends GuiScreen {
 			SoundManager.getSM().changeMode.accept(SoundManager.getSM().mm);
 			break;
 		case 665:
+			if ((button.displayString.equals("♪ Start Music ♪")) && !button.displayString.equals("Music loading...")) {
+    			if(SoundManager.getSM().getList().size() != 0) {
+    				SoundManager.getSM().currPath = SoundManager.getSM().getList().get(0).getPath();
+    				SoundManager.getSM().startNewMusic();
+
+        			button.displayString =  "♫ Stop ♫";
+        			return;
+    			}
+    		}
     		if (SoundManager.getSM().isActive() && !button.displayString.equals("Music loading..."))
     			SoundManager.getSM().stopMusic();
     		else if (!button.displayString.equals("Music loading...")) {

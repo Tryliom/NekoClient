@@ -51,7 +51,7 @@ public class ScreenChatOptions extends GuiScreen
             ++var1;
         }
 
-        this.field_146397_s = this.height / 6 + 24 * (var1 >> 1);
+        //this.field_146397_s = this.height / 6 + 24 * (var1 >> 1);
         this.buttonList.add(new GuiButton(200, this.width / 2 - 100, this.height / 6 + 120, I18n.format("gui.done", new Object[0])));
     }
 

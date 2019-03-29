@@ -30,6 +30,9 @@ public class Search extends Module {
 	}
 
 	public void onEnabled() {
+		if(this.searchBlock.getLocalizedName() != null) {
+		Utils.addChat("§aLe module SEARCH contient le bloc §2" + this.searchBlock.getLocalizedName());
+		}
 		this.refresh();
 		super.onEnabled();
 	}

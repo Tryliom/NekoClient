@@ -239,6 +239,7 @@ public class Utils {
 	public static String separator = mc.isRunningOnMac ? "/" : "\\";
 	public static String sep = "§8§m--------------------------------------";
 	public static String sep2 = "§8§m--------------";
+	public static String sep3 = "§8§m------------------------";
 	public static Client var = Client.getNeko();
 	public static Vector<String> ipVote = new Vector<String>();
 	public static int xptime = 0;
@@ -1202,7 +1203,7 @@ public class Utils {
 			addChat2("§6"+var.prefixCmd+"Keybind", var.prefixCmd+"keybind", "§7Affiche quel cheat est assigné à quel touche", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Option", var.prefixCmd+"option ", "§7Quelques petits gadjets intressants", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Mcleaks <Token>", var.prefixCmd+"mcleaks ", "§7Permet de se connecter à un compte MCLeaks", false, Chat.Summon);
-			addChat2("§6"+var.prefixCmd+"Login <User> <Mdp>", var.prefixCmd+"login ", "§7Vous connecte à un compte.\n§7Si vous laissez vide le champs du mot de passe, le compte devient un crack", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Login <User> <Mdp>", var.prefixCmd+" ", "§7Vous connecte à un compte.\n§7Si vous laissez vide le champs du mot de passe, le compte devient un crack", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Log", var.prefixCmd+"log ", "§7AltManager qui permet de gérer les comptes.", false, Chat.Summon);
 			addChat2("§7Le help log vous aidera pour toutes ses commandes", var.prefixCmd+"help log", "§7Cliquez pour afficher le help complet sur le log", false, Chat.Click);
 			addChat2("§6"+var.prefixCmd+"Locklvl", var.prefixCmd+"locklvl", "§7Affiche ce qui est débloqué à quel lvl", false, Chat.Summon);								
@@ -5636,7 +5637,7 @@ public class Utils {
 			case 826:nyah="Qu'as tu fais jeune Padawan2Neko :o C'est tout blanc partout :c";break;
 			case 827:nyah="SorryNoName code, mais ne dev pas :D";break;
 			case 828:nyah="SorryNoName aime CTRL + c & CTRL + v <3";break;
-			case 829:nyah="Kutmisu fouette Tryliom pour qu'il dev O_o";break;
+			case 829:nyah="Kumitsu fouette Tryliom pour qu'il dev O_o";break;
 			case 830:nyah="Arrête de tenir ces choses >w<";break;
 			case 831:nyah="KaZu__ stop ! Les Furry's ont une anatomie différente... C'est pas par là !";break;
 			case 832:int i= Utils.getRandInt(1000);nyah="Download complete: "+i+"/"+i+" objects";break;

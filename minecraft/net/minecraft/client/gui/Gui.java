@@ -1,5 +1,6 @@
 package net.minecraft.client.gui;
 
+import neko.utils.Utils;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
@@ -12,6 +13,16 @@ public class Gui
     public static final ResourceLocation statIcons = new ResourceLocation("textures/gui/container/stats_icons.png");
     public static final ResourceLocation icons = new ResourceLocation("textures/gui/icons.png");
     protected float zLevel;
+    
+    public static final ResourceLocation getOptionsBackground() {
+    	return Utils.verif == null ? new ResourceLocation("textures/gui/neko_options_background.png")
+    			: new ResourceLocation("textures/gui/options_background.png");
+    }
+    
+    public static final ResourceLocation getWhiteOptionsBackground() {
+    	return Utils.verif == null ? new ResourceLocation("textures/gui/neko_white_options_background.png")
+    			: new ResourceLocation("textures/gui/options_background.png");
+    }
 
     /**
      * Draw a 1 pixel wide horizontal line. Args: x1, x2, y, color
@@ -83,6 +94,45 @@ public class Gui
         GlStateManager.func_179098_w();
         GlStateManager.disableBlend();
     }
+    
+    public static void drawRGBARect(int left, int top, int right, int bottom, float colorR, float colorG, float colorB, float colorAlpha)
+    {
+        int var5;
+
+        if (left < right)
+        {
+            var5 = left;
+            left = right;
+            right = var5;
+        }
+
+        if (top < bottom)
+        {
+            var5 = top;
+            top = bottom;
+            bottom = var5;
+        }
+
+        /*float var11 = (float)(color >> 24 & 255) / 255.0F;
+        float var6 = (float)(color >> 16 & 255) / 255.0F;
+        float var7 = (float)(color >> 8 & 255) / 255.0F;
+        float var8 = (float)(color & 255) / 255.0F;*/
+        float var11 = colorR, var6 = colorG, var7 = colorB, var8 = colorAlpha;
+        Tessellator var9 = Tessellator.getInstance();
+        WorldRenderer var10 = var9.getWorldRenderer();
+        GlStateManager.enableBlend();
+        GlStateManager.func_179090_x();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.color(var6, var7, var8, var11);
+        var10.startDrawingQuads();
+        var10.addVertex((double)left, (double)bottom, 0.0D);
+        var10.addVertex((double)right, (double)bottom, 0.0D);
+        var10.addVertex((double)right, (double)top, 0.0D);
+        var10.addVertex((double)left, (double)top, 0.0D);
+        var9.draw();
+        GlStateManager.func_179098_w();
+        GlStateManager.disableBlend();
+    }
 
     /**
      * Draws a rectangle with a vertical gradient between the specified colors (ARGB format). Args : x1, y1, x2, y2,
@@ -134,6 +184,7 @@ public class Gui
     {
         fontRendererIn.func_175063_a(text, (float)x, (float)y, color);
     }
+    
 
     /**
      * Draws a textured rectangle at the stored z-value. Args: x, y, u, v, width, height

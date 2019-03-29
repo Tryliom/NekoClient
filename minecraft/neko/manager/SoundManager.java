@@ -1,6 +1,7 @@
 package neko.manager;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.Vector;
 import java.util.function.Consumer;
@@ -49,10 +50,10 @@ public class SoundManager {
 	public SoundManager() {
 		if (Utils.haveInternet())
 			this.searchMusicList();
-		if (this.list.size()!=0) {
+		/*if (this.list.size()!=0) {
 			this.currPath = this.list.get(0).getPath();
 			this.startNewMusic();
-		}
+		}*/
 		if (this.mm==null)
 			this.mm = MusicMode.Loop;
 	}

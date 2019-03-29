@@ -34,11 +34,12 @@ public class FontRenderer implements IResourceManagerReloadListener
 {
     private static final ResourceLocation[] unicodePageLocations = new ResourceLocation[256];
 
+
     /** Array of width of all the characters in default.png */
     private float[] charWidth = new float[256];
 
     /** the height in pixels of default text */
-    public int FONT_HEIGHT = 9;
+    public static int FONT_HEIGHT = 9;
     public Random fontRandom = new Random();
 
     /**
@@ -108,7 +109,7 @@ public class FontRenderer implements IResourceManagerReloadListener
     public GameSettings gameSettings;
     public ResourceLocation locationFontTextureBase;
     public boolean enabled = true;
-    public float scaleFactor = 1.0F;
+    public static float scaleFactor = 1.0F;
 
     public FontRenderer(GameSettings p_i1035_1_, ResourceLocation p_i1035_2_, TextureManager p_i1035_3_, boolean p_i1035_4_)
     {

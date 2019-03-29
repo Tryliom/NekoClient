@@ -5,7 +5,7 @@ import java.util.HashMap;
 import neko.utils.Utils;
 
 public class NekoCloud {
-	private String name;
+	private static String name;
 	private String password;
 	private static NekoCloud instance = null;
 	private boolean login = false;
@@ -22,7 +22,7 @@ public class NekoCloud {
 		this.login = login;
 	}
 
-	public String getName() {
+	public static String getName() {
 		return name;
 	}
 

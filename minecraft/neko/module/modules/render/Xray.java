@@ -8,26 +8,40 @@ import neko.utils.Utils;
 
 public final class Xray extends Module {
 	
+	private boolean alreadyactivated;
+	private boolean active;
+	
 	public Xray() {
 		super("Xray", Keyboard.KEY_X, Category.RENDER);
 	}
 
 	public void onEnabled() {
-		mc.gameSettings.gammaSetting = 10f;
-		mc.renderGlobal.loadRenderers();
+		
+		if(Utils.getModule("Fullbright").getToggled() == true) {
+			this.alreadyactivated = true;
+		} else {
+			Utils.getModule("Fullbright").setToggled(true);
+		}
 		super.onEnabled();
+		mc.renderGlobal.loadxRayRenderers();
 		Utils.addChat("§eLe §6XRay §en'est pas modulable et a quelques bugs. Utilisez le §6..search §epour §echercher §eun bloc spécifique.");
 	}
 
 	public void onDisabled() {
-		mc.gameSettings.gammaSetting = 0.5f;
-		mc.renderGlobal.loadRenderers();
+		
+		if(this.alreadyactivated == false) {
+			Utils.getModule("Fullbright").setToggled(false);
+		}
+		mc.renderGlobal.loadxRayRenderers();
 		super.onDisabled();
 	}
 	
 	public void onUpdate() {
+		
+		if(Utils.getModule("Fullbright").getToggled() == false) {
+			Utils.getModule("Fullbright").setToggled(true);
+		}
 		Utils.spectator = true;
-		mc.gameSettings.gammaSetting = 10f;
 		super.onUpdate();
 	}
 

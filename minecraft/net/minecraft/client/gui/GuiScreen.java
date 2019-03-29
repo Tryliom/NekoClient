@@ -658,7 +658,8 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
         GlStateManager.disableFog();
         Tessellator var2 = Tessellator.getInstance();
         WorldRenderer var3 = var2.getWorldRenderer();
-        this.mc.getTextureManager().bindTexture(optionsBackground);
+        //this.mc.getTextureManager().bindTexture(optionsBackground);
+        this.mc.getTextureManager().bindTexture(Gui.getOptionsBackground());
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         float var4 = 32.0F;
         var3.startDrawingQuads();
