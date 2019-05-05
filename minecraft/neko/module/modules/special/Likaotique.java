@@ -98,7 +98,7 @@ public class Likaotique extends Module {
             EntityPlayer entity = (EntityPlayer) theObject;
             EntityWitch en = new EntityWitch(Minecraft.getMinecraft().theWorld);
             en.setPosition(position.getX(), position.getY(), position.getZ());
-            if(en.getDistanceToEntity(entity) <= 4.5 && entity!=mc.thePlayer) {
+            if(en.getDistanceToEntity(entity) <= 5 && entity!=mc.thePlayer) {
                 if(entity.isEntityAlive() && !entity.isDead && !entity.getInRange() && !Friends.isFriend(entity.getName())) {
                 	return true;
                 }

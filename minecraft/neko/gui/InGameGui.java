@@ -295,6 +295,8 @@ public class InGameGui {
 		  String f = "§d";
 		  int c=0;
 		  for (EntityPlayer en : fin) {
+			  if (en.getDistanceToEntity(mc.thePlayer)>200)
+				  continue;
 			  if (en.getDistanceToEntity(mc.thePlayer)>20) {
 				  color="§a";
 			  } else 

@@ -1580,7 +1580,28 @@ public class ChatUtils {
 				}
 				Utils.checkXp(xp);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}			
+			}	
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"near")) {
+				int blocs = 0;
+				if (args.length==2 && Utils.isInteger(args[1])) {
+					blocs = Integer.parseInt(args[1]);
+				} else if (args.length==2 && args[1].equalsIgnoreCase("active")) {
+					Utils.near = !Utils.near;
+					Utils.addChat("§aNear activé en continu");
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+					return;
+				}
+				ArrayList<EntityPlayer> en = Utils.getAllPlayer();
+				Utils.addChat("Joueurs proches:");
+				for (EntityPlayer entity : en) {
+					BlockPos bp = entity.getPosition();
+					if (entity.getDistanceToEntity(mc.thePlayer)>blocs) {
+						Utils.addChat("§d"+entity.getName()+"§8:§6 "+bp.getX()+", "+bp.getY()+", "+bp.getZ()+" §8(§2"+Math.round(entity.getDistanceToEntity(mc.thePlayer))+"m§8)");
+					}
+				}
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"option")) {
 				if (args.length==1) {

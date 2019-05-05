@@ -195,6 +195,7 @@ public class Utils {
 	public static boolean xp=false;
 	public static boolean deathoff=false;
 	public static boolean mod=true;
+	public static boolean near=false;
 	public static int timeInGameMs=0;
 	public static int timeInGameSec=0;
 	public static int timeInGameMin=0;
@@ -804,8 +805,8 @@ public class Utils {
 	public static ArrayList<EntityPlayer> getAllPlayer() {
 		ArrayList<EntityPlayer> s = new ArrayList<>();		
 		for (Object theObject : mc.theWorld.playerEntities) {
-			EntityPlayer en = (EntityPlayer) theObject;                         
-                int l=0;
+			EntityPlayer en = (EntityPlayer) theObject;
+            int l=0;
             if (en.getName().equalsIgnoreCase(mc.session.getUsername()) || en.getName().equalsIgnoreCase(mc.thePlayer.getName()))
 				l++;
             if (MCLeaks.isAltActive())

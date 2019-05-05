@@ -4,6 +4,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
+import neko.Client;
 import neko.utils.Utils;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import net.minecraft.block.BlockSnow;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.command.IEntitySelector;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
@@ -1164,6 +1166,10 @@ public abstract class World implements IBlockAccess
             if (p_72838_1_ instanceof EntityPlayer)
             {
                 EntityPlayer var5 = (EntityPlayer)p_72838_1_;
+                BlockPos bp = var5.getPosition();
+                EntityPlayer entity = var5;
+                if (Utils.near)
+                	Utils.addChat("==================\n"+Utils.getNeko()+"§d"+entity.getName()+"§8:§6 "+bp.getX()+", "+bp.getY()+", "+bp.getZ()+" §8(§2"+Math.round(entity.getDistanceToEntity(Minecraft.getMinecraft().thePlayer))+"m§8)\n"+Utils.getNeko()+"§6==================");
                 this.playerEntities.add(var5);
                 this.updateAllPlayersSleepingFlag();
             }
