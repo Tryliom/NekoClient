@@ -1,6 +1,5 @@
 package neko.module.modules.render;
 
-import neko.gui.InGameGui;
 import neko.module.Category;
 import neko.module.Module;
 import neko.utils.Utils;

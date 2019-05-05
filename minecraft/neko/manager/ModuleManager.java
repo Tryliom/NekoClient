@@ -113,7 +113,6 @@ import neko.module.modules.special.NoLook;
 import neko.module.modules.special.PunKeel;
 import neko.module.modules.special.Pyro;
 import neko.module.modules.special.Reflect;
-import neko.module.modules.special.SpamBot;
 import neko.module.modules.special.TpBack;
 import neko.module.modules.special.Unicode;
 import neko.module.modules.special.VanillaTp;
@@ -233,7 +232,6 @@ public class ModuleManager {
 		this.ActiveModule.add(new Reflect()); // Key NONE
 		this.ActiveModule.add(new Fastbreak()); // Key NONE
 		this.ActiveModule.add(new Test()); // Key NONE
-		this.ActiveModule.add(new SpamBot()); // Key NONE
 		this.ActiveModule.add(new NekoChat()); // Key NONE
 		this.ActiveModule.add(new Premonition()); // Key NONE
 		this.ActiveModule.add(new Highjump()); // Key NONE

@@ -7,14 +7,20 @@ import neko.Client;
 import neko.manager.ModuleManager;
 import neko.module.Category;
 import neko.module.Module;
+import neko.module.modules.combat.KillAura;
+import neko.module.modules.hide.Friends;
+import neko.module.modules.hide.God;
 import neko.module.other.enums.MagnetWay;
 import neko.utils.RenderUtils;
 import neko.utils.TpUtils;
 import neko.utils.Utils;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityOtherPlayerMP;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityWitch;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemFood;
@@ -27,6 +33,7 @@ public class Likaotique extends Module {
 	private javax.swing.Timer timer = new javax.swing.Timer(delay, new tptimer());
 	private BlockPos currPos = null;
 	private int radius = 5;
+	private boolean safe = false;
 	private static Likaotique instance;
 	
 	public Likaotique() {
@@ -70,10 +77,34 @@ public class Likaotique extends Module {
 		this.radius = radius;
 	}
 
+	public boolean isSafe() {
+		return safe;
+	}
+
+	public void setSafe(boolean safe) {
+		this.safe = safe;
+	}
+
 	public Boolean isPositionValid(BlockPos bp) {
-		if (mc.theWorld.getBlockState(bp).getBlock().isSolidFullCube() || mc.theWorld.getBlockState(new BlockPos(bp.getX(), bp.getY(), bp.getZ())).getBlock().isSolidFullCube())
+		if (mc.theWorld.getBlockState(bp).getBlock().isSolidFullCube() 
+				|| mc.theWorld.getBlockState(new BlockPos(bp.getX(), bp.getY(), bp.getZ())).getBlock().isSolidFullCube() 
+				|| (this.isSafe() ? isNearPlayer(bp) : false))
 			return false;
 		return true;
+	}
+	
+	public boolean isNearPlayer(BlockPos position) {
+		for (Object theObject : mc.theWorld.playerEntities) {
+            EntityPlayer entity = (EntityPlayer) theObject;
+            EntityWitch en = new EntityWitch(Minecraft.getMinecraft().theWorld);
+            en.setPosition(position.getX(), position.getY(), position.getZ());
+            if(en.getDistanceToEntity(entity) <= 4.5 && entity!=mc.thePlayer) {
+                if(entity.isEntityAlive() && !entity.isDead && !entity.getInRange() && !Friends.isFriend(entity.getName())) {
+                	return true;
+                }
+            }
+		}
+		return false;
 	}
 	
 	public void tpToPlayer() {
@@ -109,6 +140,58 @@ public class Likaotique extends Module {
 		this.delay = delay;
 	}
 	
+	public void onUpdate() {
+		if (!Likaotique.getLik().isSafe())
+			return;
+		
+		TpUtils tp = new TpUtils();
+		
+		if (!isNearPlayer(mc.thePlayer.getPosition()) && this.currPos!=null) {
+			this.tpToPlayer();
+			this.currPos = null;
+		}
+		
+		if (this.getCurrPos()==null ? isNearPlayer(mc.thePlayer.getPosition()) : isNearPlayer(this.getCurrPos())) {
+			
+			try {
+				boolean find = false;
+				BlockPos b = null;
+				for (int i=0;i<20;i++) {
+					b = Utils.getRandBlock(Likaotique.getLik().getRadius(), 2d/100d);
+					
+					if (b!=null && Likaotique.getLik().isPositionValid(b)) {
+						find = true;
+						break;
+					}
+				}
+				if (find) {		
+					if (this.currPos!=null)
+						Likaotique.getLik().tpToPlayer();
+					Likaotique.getLik().setCurrPos(b);
+					int k = tp.getK(b);
+					double px = tp.getTargetInPos(b).get(0);
+					double pz = tp.getTargetInPos(b).get(2);
+					double psx = mc.thePlayer.posX;
+					double psz = mc.thePlayer.posZ;
+					if (k>30)
+						Likaotique.getLik().setCurrPos(mc.thePlayer.getPosition());
+					else {
+						for (int j=0;j<k;j++)  {  
+			        		Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C04PacketPlayerPosition(psx+px/k, 
+			        				mc.thePlayer.posY, psz+pz/k, true));
+						}
+						Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C04PacketPlayerPosition(psx+px+0.5, 
+		        				mc.thePlayer.posY, psz+pz+0.5, true));
+					}
+				}
+				
+			} catch (Exception e) {
+//				System.out.println(e.getLocalizedMessage());
+			}
+		}
+		
+	}
+	
 }
 
 class tptimer implements ActionListener {
@@ -118,6 +201,8 @@ class tptimer implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent ae) {
+		if (Likaotique.getLik().isSafe())
+			return;
 		try {
 			boolean find = false;
 			BlockPos b = null;

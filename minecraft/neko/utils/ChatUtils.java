@@ -23,7 +23,6 @@ import org.lwjgl.opengl.Display;
 
 import com.mojang.authlib.GameProfile;
 
-import io.netty.buffer.Unpooled;
 import neko.Client;
 import neko.dtb.RequestThread;
 import neko.gui.InGameGui;
@@ -91,7 +90,6 @@ import neko.module.modules.special.Magnet;
 import neko.module.modules.special.PunKeel;
 import neko.module.modules.special.Pyro;
 import neko.module.modules.special.Reflect;
-import neko.module.modules.special.SpamBot;
 import neko.module.modules.special.TpBack;
 import neko.module.modules.special.VanillaTp;
 import neko.module.other.Active;
@@ -122,7 +120,6 @@ import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.multiplayer.ServerAddress;
 import net.minecraft.client.multiplayer.ServerData;
@@ -136,25 +133,19 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.inventory.InventoryLargeChest;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.NetworkManager;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.network.login.client.C00PacketLoginStart;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 import net.minecraft.network.play.client.C09PacketHeldItemChange;
 import net.minecraft.network.play.client.C10PacketCreativeInventoryAction;
-import net.minecraft.network.play.client.C14PacketTabComplete;
-import net.minecraft.network.play.client.C17PacketCustomPayload;
-import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
@@ -695,6 +686,7 @@ public class ChatUtils {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Likaotique delay <Secondes>", var.prefixCmd+"lik delay ", "§7Change le delais entre les tp", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Likaotique radius <Int>", var.prefixCmd+"Likaotique radius ", "§7Change l'aura autour du joueur maximal", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Likaotique safe", var.prefixCmd+"Likaotique safe", "§7Option qui tp le faux joueur uniquement lorsqu'un autre joueur est proche de plus de 4.5 blocs", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("Nameprotect") || args[1].equalsIgnoreCase("np")) {
@@ -1166,6 +1158,24 @@ public class ChatUtils {
 					} else {
 						mc.playerController.setGameType(GameType.getByName(args[1]));
 						mc.thePlayer.sendChatMessage("/gamemode "+args[1]);
+					}
+				}
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"gmf")) {
+				if (args.length==1) {
+					Utils.addChat(err);
+				} else {
+					if (Utils.isInteger(args[1])) {
+						int id = Integer.parseInt(args[1]);
+						try {
+							mc.playerController.setGameType(GameType.getByID(id));
+						} catch (Exception e) {
+							Utils.addChat(err);
+						}
+					} else {
+						mc.playerController.setGameType(GameType.getByName(args[1]));
 					}
 				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
@@ -1694,19 +1704,27 @@ public class ChatUtils {
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"likaotique") || args[0].equalsIgnoreCase(var.prefixCmd+"lik")) {
+				Likaotique lik = Likaotique.getLik();
 				if (args[1].equalsIgnoreCase("delay")) {
 					if (Utils.isDouble(args[2])) {
 						if (Double.parseDouble(args[2])==0d)
 							args[2] = "1";
-						Likaotique.getLik().getTimer().setDelay((int) Double.parseDouble(args[2])*1000);
-						Likaotique.getLik().setDelay((int) Math.round(Double.parseDouble(args[2])*1000));
+						lik.getTimer().setDelay((int) Double.parseDouble(args[2])*1000);
+						lik.setDelay((int) Math.round(Double.parseDouble(args[2])*1000));
 						Utils.addChat("§aDelay du Likaotique changé à "+args[2]+"sec !");
 					}											
 				} else if (args[1].equalsIgnoreCase("radius")) {
 					if (Utils.isInteger(args[2])) {
-						Likaotique.getLik().setRadius(Integer.parseInt(args[2]));
+						lik.setRadius(Integer.parseInt(args[2]));
 						Utils.addChat("§aRadius du Likaotique changé à "+args[2]+" !");
 					}
+				} else if (args[1].equalsIgnoreCase("safe")) {
+					if (!lik.isSafe()) {
+						Utils.addChat("§aMode safe du Likaotique activé !");
+					} else {
+						Utils.addChat("§cMode safe du Likaotique desactivé !");
+					}
+					lik.setSafe(!lik.isSafe());
 				}
 			}
 			
@@ -2761,7 +2779,7 @@ public class ChatUtils {
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"values") || args[0].equalsIgnoreCase(var.prefixCmd+"v")) {
-				if (args.length<1) {
+				if (args.length<=1) {
 					Utils.displayValues(null);
 				} else {
 					String s = args[1];
@@ -3787,18 +3805,6 @@ public class ChatUtils {
 					Utils.addChat(err);
 				}
 				Utils.checkXp(xp);
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"spambot") || args[0].equalsIgnoreCase(var.prefixCmd+"bot")) {
-				if (args.length==1) {
-					Utils.toggleModule("SpamBot");
-				} else if (args[1].length()<13) {
-					SpamBot.getBot().setPseudo(args[1]);
-					Utils.addChat("§aPseudo du SpamBot changé en §c"+args[1]+"§a !");
-				} else if (args[1].length()>13) {
-					Utils.addChat("§cErreur, Pseudo trop long !");
-				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			

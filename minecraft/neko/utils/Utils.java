@@ -57,7 +57,6 @@ import neko.gui.InGameGui;
 import neko.lock.Lock;
 import neko.manager.GuiManager;
 import neko.manager.ModuleManager;
-import neko.manager.OnlyRpgManager;
 import neko.manager.QuestManager;
 import neko.manager.SoundManager;
 import neko.manager.TutoManager;
@@ -118,15 +117,14 @@ import neko.module.modules.render.WorldTime;
 import neko.module.modules.special.DropShit;
 import neko.module.modules.special.FastDura;
 import neko.module.modules.special.FireTrail;
+import neko.module.modules.special.Likaotique;
 import neko.module.modules.special.Magnet;
 import neko.module.modules.special.Nausicaah;
 import neko.module.modules.special.PunKeel;
 import neko.module.modules.special.Pyro;
 import neko.module.modules.special.Reflect;
-import neko.module.modules.special.SpamBot;
 import neko.module.modules.special.TpBack;
 import neko.module.modules.special.VanillaTp;
-import neko.module.other.Account;
 import neko.module.other.Active;
 import neko.module.other.Conditions;
 import neko.module.other.Irc;
@@ -179,7 +177,6 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Session;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.WorldSettings.GameType;
 
 /**
@@ -245,8 +242,8 @@ public class Utils {
 	public static int xptime = 0;
 	public static NekoCloud nc = NekoCloud.getNekoAPI();
 	public static boolean admin = false;
-	public static Color colorGui = new Color(0, 0, 0, 250);
-	public static Color colorFontGui = new Color(200, 200, 200, 190);
+	public static Color colorGui = new Color(110, 110, 200, 100);
+	public static Color colorFontGui = new Color(200, 200, 200, 255);
 	public static int xrayBlockOpacity = 100;
 	public static ArrayList<String> xrayBlocks = new ArrayList<String>();
 	
@@ -1792,14 +1789,15 @@ public class Utils {
 	      for (int z = (int)-radius; z <= radius; z++) {
 	        for (int x = (int)-radius; x <= radius; x++)
 	        {
+	        	if (Math.random()<chance) {
 		          int xPos = ((int)Math.round(mc.thePlayer.posX + x));
 		          int yPos = ((int)Math.round(mc.thePlayer.posY));
 		          int zPos = ((int)Math.round(mc.thePlayer.posZ + z));
 		          
 		          b = new BlockPos(xPos, yPos, zPos);
-		          if (Math.random()<chance) {
-		        	  return b;
-		          }
+		          
+		          return b;
+		        }
 	        }
 	      }
 	      return b;
@@ -2785,7 +2783,7 @@ public class Utils {
         s+=Phase.getPhase().isVphase()+"§,§,";
         s+=AutoMLG.getMLG().getFall()+"§,"+b.isDown()+"§,"+b.isSneak()+"§,"+b.isUp()+"§,"+b.isWall()+"§,";
         s+=Fasteat.getFast().getPacket()+"§,"+PushUp.getPush().getPacket()+"§,"+Speed709.getSpeed().getMode()+"§,"+Reflect.getReflect().getPower()+"§,";
-        s+=p.getDelay()+"§,"+p.isFreezer()+"§,"+p.isRandom()+"§,"+KillAura.nobot+"§,"+SpamBot.getBot().getPseudo()+"§,"+var.animation+"§,";
+        s+=p.getDelay()+"§,"+p.isFreezer()+"§,"+p.isRandom()+"§,"+KillAura.nobot+"§,§,"+var.animation+"§,";
         s+=KillAura.premium+"§,"+GuiAltManager.check+"§,"+var.onlyrpg.isActive()+"§,"+nc.getColor()+"§,"+nc.getHeight()+"§,"+nc.getWidth()+"§,";
         s+=c.getCmd2()+"§,"+pl+"§,"+Register.getReg().getMdp()+"§,§,"+Highjump.getJump().getHeight()+"§,";
         s+=TutoManager.getTuto().isDone()+"§,"+Nuker.safe+"§,"+KillAura.speed+"§,"+PunKeel.attack+"§,"+PunKeel.delay+"§,"+Fastbow.getFast().getPacket()+"§,";
@@ -2801,6 +2799,7 @@ public class Utils {
         if (fi.length>0) {
     		Utils.nc.saveSave("values", s, fi);
     	}
+        s+="§,"+Likaotique.getLik().isSafe();
         Utils.nc.saveSave("values", s);
 	}
 	
@@ -3315,7 +3314,7 @@ public class Utils {
             	if (i==137)
             		KillAura.nobot=Boolean.parseBoolean(ligne);
             	if (i==138)
-            		SpamBot.getBot().setPseudo(ligne);
+            		;
             	if (i==139)
             		var.animation=Boolean.parseBoolean(ligne);
             	if (i==140)
@@ -3406,6 +3405,9 @@ public class Utils {
             			if (a.contains("="))
             			Nameprotect.getNP().getList().add(a);
             		}
+            	}
+            	if (i==179) {
+            		Likaotique.getLik().setSafe(Boolean.parseBoolean(ligne));
             	}
             	
         	} catch (Exception e) {
@@ -3763,7 +3765,7 @@ public class Utils {
 	                	if (i==137)
 	                		KillAura.nobot=Boolean.parseBoolean(ligne);
 	                	if (i==138)
-	                		SpamBot.getBot().setPseudo(ligne);
+	                		;
 	                	if (i==139)
 	                		var.animation=Boolean.parseBoolean(ligne);
 	                	if (i==140)
@@ -5822,16 +5824,14 @@ public class Utils {
 	
 	public static String getAn() {
 		try {
-			URL url = new URL("https://nekohc.fr/controler/Neko/an.html");
+			URL url = new URL("http://nekohc.fr/controler/Neko/an.html");
 			Scanner sc = new Scanner(url.openStream());
 			ArrayList<String> s = new ArrayList<>();
 			String l;
-			String cl="";
 			try {
 					while ((l = sc.nextLine()) != null) {
 						if (!l.equalsIgnoreCase("")) {
 							s.add(l);
-							cl+=l+"\n";
 						}
 					}
 			} catch (Exception e) {}
@@ -5852,8 +5852,10 @@ public class Utils {
 				}					
 			}
 			return res;
-		} catch (Exception e) {}
-		return "§cErreur";
+		} catch (Exception e) {
+			return e.getMessage();
+		}
+//		return "§cErreur";
 	}
 
 	public static void displayAn() {
@@ -5862,17 +5864,14 @@ public class Utils {
 			Scanner sc = new Scanner(url.openStream());
 			ArrayList<String> s = new ArrayList<>();
 			String l;
-			String cl="";
 			try {
 					while ((l = sc.nextLine()) != null) {
 						if (!l.equalsIgnoreCase("")) {
 							s.add(l);
-							cl+=l+"\n";
 						}
 					}
 			} catch (Exception e) {}
 			sc.close();
-			int k=0;
 			for (int i=0;i<s.size();i++) {
 				if (s.get(i).startsWith("..")) {
 					ChatUtils c = new ChatUtils();

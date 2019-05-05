@@ -42,7 +42,7 @@ public class Client {
 	public final String CLIENT_AUTHOR = "Tryliom";
 	public ModuleManager moduleManager;
 	public GuiManager gui;
-	public final String CLIENT_VERSION = "2.7";
+	public final String CLIENT_VERSION = "2.8";
 	private static final Client Neko = new Client();
 	public String mode = "Player";
 	public Rank rang;
@@ -71,8 +71,8 @@ public class Client {
 	public String changelog = "";
 	public RequestManager rm;
 	public boolean firstServDisplay = true;
-	public String strNeko = "§f>>> §bNeko v" + CLIENT_VERSION + " §f<<<";
-	public String strCreator = "§eCréé par §f§lTryliom";
+	public String strNeko = "§bNeko v" + CLIENT_VERSION;
+	public String strCreator = "§eCréé par §f§lTryliom§e et §f§lMarie";
 
 	public void startClient() {
 		time.start();

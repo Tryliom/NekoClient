@@ -254,7 +254,7 @@ public class Reach extends Module {
 				case "Player" :
 				for (Object theObject : mc.theWorld.playerEntities) {
 	                EntityPlayer entity = (EntityPlayer) theObject;
-	                if (u.isEntityInFov(entity, fov) && !Friends.isFriend(entity.getName()) && mc.thePlayer!=entity) {
+	                if (u.isEntityInFov(entity, fov) && !Friends.isFriend(entity.getName()) && mc.thePlayer!=entity && mc.thePlayer.getDistanceToEntity(entity)<100) {
                         String s = doTpAller(entity);
                         if (knock) {
                         	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.START_SPRINTING));

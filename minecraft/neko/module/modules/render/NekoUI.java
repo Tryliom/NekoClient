@@ -6,7 +6,6 @@ import neko.utils.Utils;
 import net.minecraft.client.gui.GuiNewChat;
 
 public class NekoUI extends Module {
-	private static NekoUI instance;		
 	
 	public NekoUI() {
 		super("NekoUI", -1, Category.RENDER);

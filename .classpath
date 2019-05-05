@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="minecraft"/>
 	<classpathentry kind="lib" path="C:/Users/Alexis/Desktop/Client/librairies/authlib-1.5.21.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alexis/Desktop/Client/librairies/codecjorbis-20101023.jar"/>
@@ -24,9 +23,12 @@
 	<classpathentry kind="lib" path="C:/Users/Alexis/Desktop/Client/librairies/librarylwjglopenal-20100824.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alexis/Desktop/Client/librairies/log4j-api-2.0-beta9.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alexis/Desktop/Client/librairies/log4j-core-2.0-beta9.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Alexis/Desktop/Client/librairies/lwjgl_util-2.9.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Alexis/Desktop/Client/librairies/lwjgl-2.9.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Alexis/Desktop/Client/librairies/lwjgl-platform-2.9.1-natives-windows.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexis/Desktop/Client/librairies/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Alexis/Desktop/Client/librairies/lwjgl.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="C:/Users/Alexis/Desktop/Client/librairies/lwjgl-native/windows"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/Alexis/Desktop/Client/librairies/netty-all-4.0.15.Final.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alexis/Desktop/Client/librairies/realms-1.6.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alexis/Desktop/Client/librairies/slick.jar"/>
@@ -36,5 +38,7 @@
 	<classpathentry kind="lib" path="C:/Users/Alexis/Desktop/Client/librairies/twitch-external-platform-4.5-natives-windows-64.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alexis/Desktop/Client/librairies/twitch-platform-6.5-natives-windows-64.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Alexis/Desktop/Client/librairies/vecmath-1.5.2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="C:/Users/Alexis/Desktop/Client/librairies/lwjgl-platform-2.9.1-natives-windows.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

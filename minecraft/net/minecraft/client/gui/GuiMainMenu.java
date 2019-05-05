@@ -1,11 +1,6 @@
 package net.minecraft.client.gui;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Desktop;
-import java.awt.Font;
-import java.awt.Graphics;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,10 +10,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 import java.util.Vector;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 
 import org.apache.commons.io.Charsets;
 import org.apache.logging.log4j.LogManager;
@@ -42,7 +33,6 @@ import neko.manager.SoundManager;
 import neko.manager.TutoManager;
 import neko.module.other.Rank;
 import neko.utils.Utils;
-import net.mcleaks.MCLeaks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
@@ -53,18 +43,15 @@ import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.realms.RealmsBridge;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.demo.DemoWorldServer;
 import net.minecraft.world.storage.ISaveFormat;
 import net.minecraft.world.storage.WorldInfo;
-import tv.twitch.broadcast.FrameBuffer;
 
 public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
 {	
-    private static final AtomicInteger field_175373_f = new AtomicInteger(0);
     private static final Logger logger = LogManager.getLogger();
     private static final Random field_175374_h = new Random();
 
@@ -73,7 +60,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
 
     /** The splash message. */
     private String splashText;
-    private GuiButton buttonResetDemo;
 
     /** Timer used to rotate the panorama, increases every tick. */
     private int panoramaTimer;
@@ -82,7 +68,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
      * Texture allocated for the current viewport of the main menu's panorama background.
      */
     public static DynamicTexture viewportTexture;
-    private boolean field_175375_v = true;
     private final Object field_104025_t = new Object();
     private String field_92025_p;
     private String field_146972_A;
@@ -90,7 +75,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     private String Bc;
     private static final ResourceLocation splashTexts = new ResourceLocation("texts/splashes.txt");
     private static final ResourceLocation minecraftTitleTextures = new ResourceLocation("textures/gui/title/minecraft.png");
-    private static final ResourceLocation nekoentete = new ResourceLocation("textures/gui/EnteteNeko.png");
     
 
     /** An array of all the paths to the panorama pictures. */
@@ -105,20 +89,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     private ResourceLocation field_110351_G;
     private GuiButton field_175372_K;
     private TutoManager tm = TutoManager.getTuto();
-    private int leftPx;
-    
-    private static int options = 40;
-    private static int solo = 50;
-    private static int multi = 50;
-    private static int stop = 90;
-    private static int load = 90;
-    private static int pseudo = 90;
-    private static int activertuto = 100;
-    private static int update = 100;
-    private static int wikiother = 100;
-    private static int discord = 100;
-    private static int quitterneko = 200;
-    private static int serverList = 140;
 
     public GuiMainMenu()
     {
@@ -128,7 +98,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
 
         try
         {
-            ArrayList var2 = Lists.newArrayList();
+            ArrayList<String> var2 = Lists.newArrayList();
             var1 = new BufferedReader(new InputStreamReader(Minecraft.getMinecraft().getResourceManager().getResource(splashTexts).getInputStream(), Charsets.UTF_8));
             String var3;
 
@@ -240,29 +210,25 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
             this.splashText = "OOoooOOOoooo! Spooky!";
         }
 
-        boolean var2 = true;
         int var3 = Utils.verif==null ? 104 : this.height / 4 + 48;
-        int wid = 10;
-        this.leftPx=wid + 212;
 
         this.addSingleplayerMultiplayerButtons(Utils.verif==null ? var3+36 : var3, 24);
         this.buttonList.add(new GuiButton(0, Utils.verif==null ? this.width/2 - 19 : this.width / 2 - 100,
         		Utils.verif==null ? 8 : var3 + 72 + 12,
-        				Utils.verif==null ? 40 : 98, 20, Utils.verif==null ? "Options..." : I18n.format("menu.options", new Object[0])));
+        				Utils.verif==null ? 40 : 98, 20, Utils.verif==null ? "Options" : I18n.format("menu.options", new Object[0])));
         this.buttonList.add(new GuiButton(4, Utils.verif==null ? this.width/2 - 100 : this.width / 2 + 2,
         		Utils.verif==null ? this.height - 27 : var3 + 72 + 12,
-        				Utils.verif==null ? 200 : 98, 20, Utils.verif==null ? "§c§lQuitter Neko ?" : I18n.format("menu.quit", new Object[0])));
+        				Utils.verif==null ? 200 : 98, 20, Utils.verif==null ? "§c§lQuitter Neko" : I18n.format("menu.quit", new Object[0])));
         if (Utils.verif==null) {
         	this.buttonList.add(new GuiButton(668, this.width/2, this.height - 52, 50, 20, "§5Discord"));
         	this.buttonList.add(new GuiButton(669, this.width/2 + 50, this.height - 52, 50, 20, "§5Site Web"));
-        	this.buttonList.add(new GuiButton(670, 94 + Minecraft.getMinecraft().getSession().getUsername().length() * 4, 40, 35, 10, "Modifier"));
-        	//this.buttonList.add(new GuiButton(5, wid + 102, var3+104+12, 98, 20, "Langue"));
+        	this.buttonList.add(new GuiButton(670, 10, 55, 130, 15, "Modifier > Alt Manager"));
         	String s[] = this.Bc.split("\n");
         	int h = 0;
         	for (int i=1;i<s.length+1;i++) {
         		if (s[i-1].startsWith("§d") && s[i-1].contains("%")) {
         			h = this.height/2 + -70 + 15 * i;
-            		this.buttonList.add(new GuiButton(771, 0, h, 140, 11, "§6"+s[i-1]));
+            		this.buttonList.add(new GuiButton(771, 5, h, 170, 11, "§6"+s[i-1]));
         		}
         	}
     		this.buttonList.add(new GuiButton(769, this.width/2 - 50, 40, 100, 20, tm.isDone() ? "§7Activer le tuto" : "§7Passer le tuto"));
@@ -273,7 +239,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     			this.buttonList.add(new GuiButton(665, widdthtt, 8, 90, 20, "Music loading..."));
         } else
         	this.buttonList.add(new GuiButtonLanguage(5, Utils.verif==null ? 100 : this.width / 2 - 124, Utils.verif==null ? var3+104+12 : var3 + 72 + 12));
-        Object var4 = this.field_104025_t;
 
         synchronized (this.field_104025_t)
         {
@@ -322,25 +287,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
      */
     private void addSingleplayerMultiplayerButtons(int p_73969_1_, int p_73969_2_)
     {
-    	int wid = 125;
-    	/**
-         * Buttons off & visible.
-         */
-        if(Utils.verif==null) {
-        wid = 0; this.buttonList.add(new GuiButton(236, wid, 0, 200, 20, false, !tm.isDone() ? "" : Utils.verif==null ? "" : I18n.format("menu.singleplayer", new Object[0])));
-        wid = 200; this.buttonList.add(new GuiButton(237, wid, 0, 200, 20, false, !tm.isDone() ? "" : Utils.verif==null ? "" : I18n.format("menu.singleplayer", new Object[0])));
-        wid = 400; this.buttonList.add(new GuiButton(238, wid, 0, 200, 20, false, !tm.isDone() ? "" : Utils.verif==null ? "" : I18n.format("menu.singleplayer", new Object[0])));
-        wid = 600; this.buttonList.add(new GuiButton(239, wid, 0, 200, 20, false, !tm.isDone() ? "" : Utils.verif==null ? "" : I18n.format("menu.singleplayer", new Object[0])));
-        wid = 0; this.buttonList.add(new GuiButton(240, wid, 19, 200, 19, false, !tm.isDone() ? "" : Utils.verif==null ? "" : I18n.format("menu.singleplayer", new Object[0])));
-        wid = 200; this.buttonList.add(new GuiButton(241, wid, 19, 200, 19, false, !tm.isDone() ? "" : Utils.verif==null ? "" : I18n.format("menu.singleplayer", new Object[0])));
-        wid = 400; this.buttonList.add(new GuiButton(242, wid, 19, 200, 19, false, !tm.isDone() ? "" : Utils.verif==null ? "" : I18n.format("menu.singleplayer", new Object[0])));
-        wid = 600; this.buttonList.add(new GuiButton(243, wid, 19, 200, 19, false, !tm.isDone() ? "" : Utils.verif==null ? "" : I18n.format("menu.singleplayer", new Object[0])));
-        
-        }
-        /**
-         * 
-         */
-        wid = 70;
     	if(Utils.verif==null) {
     		this.buttonList.add(new GuiButton(1, tm.isDone() ? this.width/2 - 90 : this.width/2 - 105, 8, tm.isDone() ? 50 : 80, 20,
             		!tm.isDone() ? "§bCommencer le tuto !" : "§f§lSolo"));
@@ -354,29 +300,12 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         
         
         
-        wid = 5;
+        int wid = 5;
         //TODO ACTIVE BUTTON
         if (Utils.verif==null && !OnlyRpgManager.getRpg().isActive()) {
         	this.buttonList.add(this.field_175372_K = new GuiButton(666, this.width/2 - 100, this.height - 52, 100, 20, (!tm.isDone() ? "§k" : "§3")+"Neko..."));
         } else
         	this.buttonList.add(this.field_175372_K = new GuiButton(14, OnlyRpgManager.getRpg().isActive() ? wid : this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 2, I18n.format("menu.online", new Object[0])));
-    }
-	
-
-    /**
-     * Adds Demo buttons on Main Menu for players who are playing Demo.
-     */
-    private void addDemoButtons(int p_73972_1_, int p_73972_2_)
-    {
-        this.buttonList.add(new GuiButton(11, this.width / 2 - 100, p_73972_1_, I18n.format("menu.playdemo", new Object[0])));
-        this.buttonList.add(this.buttonResetDemo = new GuiButton(12, this.width / 2 - 100, p_73972_1_ + p_73972_2_ * 1, I18n.format("menu.resetdemo", new Object[0])));
-        ISaveFormat var3 = this.mc.getSaveLoader();
-        WorldInfo var4 = var3.getWorldInfo("Demo_World");
-
-        if (var4 == null)
-        {
-            this.buttonResetDemo.enabled = false;
-        }
     }
 
     protected void actionPerformed(GuiButton button) throws IOException
@@ -524,7 +453,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
             {
                 try
                 {
-                    Class var3 = Class.forName("java.awt.Desktop");
+                    Class<?> var3 = Class.forName("java.awt.Desktop");
                     Object var4 = var3.getMethod("getDesktop", new Class[0]).invoke((Object)null, new Object[0]);
                     var3.getMethod("browse", new Class[] {URI.class}).invoke(var4, new Object[] {new URI(this.field_104024_v)});
                 }
@@ -711,11 +640,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         this.drawGradientRect(0, 0, this.width, this.height, -2130706433, 16777215);
         this.drawGradientRect(0, 0, this.width, this.height, 0, Integer.MIN_VALUE);
         
-        /*this.mc.getTextureManager().bindTexture(nekoentete);
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        this.drawTexturedModalRect(0, 0, 0, 0, 680, 40);*/
-        
-        
         if (Utils.verif!=null) {
         this.mc.getTextureManager().bindTexture(minecraftTitleTextures);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
@@ -742,12 +666,11 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         GlStateManager.scale(var9, var9, var9);
         }
         if (Utils.verif!=null)
-        this.drawCenteredString(this.fontRendererObj, this.splashText, 0, -8, -256);
+        	this.drawCenteredString(this.fontRendererObj, this.splashText, 0, -8, -256);
         if (Utils.verif!=null)
-        GlStateManager.popMatrix();
+        	GlStateManager.popMatrix();
         String var10="";
         if (Utils.verif==null)
-        	
         	var10 = Client.getNeko().strNeko;
         else
         	var10 = "Minecraft 1.8";
@@ -762,7 +685,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
 	        	GuiButton gb = (GuiButton) o;
 	        	if (SoundManager.getSM().canStart && gb.id==665)
 	    			gb.displayString = SoundManager.getSM().isActive() ? "♫ Stop ♫" : "♪ Restart ♪";
-	        	if (gb.id==666 && Math.random()<0.01) {
+	        	if (gb.id==666 && Math.random()<0.005) {
 	        		Vector<String> list = new Vector<String>();
 	        		list.add("Neko...");
 	        		list.add("Bind Manager");
@@ -779,43 +702,20 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         String var11 = "Copyright Mojang AB. Do not distribute!";
         if (Utils.verif==null) {
         	String s[] = this.Bc.split("\n");
-        	int h = 0;
         	for (int i=1;i<s.length+1;i++) {
-    			h = 89 + 15 * i;
-    			if (s[i-1].startsWith("§d") && s[i-1].contains("%")) {
-    				
-    			} else
-    				this.drawString(Client.getNeko().NekoFont, "§6"+s[i-1], this.width * 0, this.height/2 - 60, -1);        		
+    			if (!s[i-1].startsWith("§d") && !s[i-1].contains("%")) {
+    				this.drawString(Client.getNeko().NekoFont, "§6"+s[i-1], 5, this.height/2 - 60, -1);
+    			}      		
         	}
+        	
+        	// Draw grey box in the main menu
+        	drawRect(0, 0, this.width, 35, Integer.MIN_VALUE);
         	
         	if (!Client.getNeko().ver.isEmpty()) {
 
-                    /*this.drawVerticalLine(this.width/2, 0, this.height, -500);
-                    this.drawHorizontalLine(0, this.width, this.height/2, -500);
-                    
-                    int abcd = 10;
-                    while(abcd < 500) {
-                    	//WEST
-                    this.drawVerticalLine(this.width/2 - abcd, 0, this.height, -1);
-                    	//EST
-                    this.drawVerticalLine(this.width/2 + abcd, 0, this.height, -1);
-                    	//NORTH
-                    this.drawHorizontalLine(0, this.width, this.height/2 - abcd, -1);
-                    	//SOUTH
-                    this.drawHorizontalLine(0, this.width, this.height/2 + abcd, -1);
-                    
-                    this.drawString(fontRendererObj, Integer.toString(abcd), this.width/2 + abcd, this.height/2, -10000);
-                    this.drawString(fontRendererObj, Integer.toString(abcd), this.width/2 - abcd, this.height/2, -10000);
-                    this.drawString(fontRendererObj, Integer.toString(abcd), this.width/2, this.height/2 + abcd, -10000);
-                    this.drawString(fontRendererObj, Integer.toString(abcd), this.width/2, this.height/2 - abcd, -10000);
-                    abcd = abcd + 10;
-                    }*/
-                    //this.drawVerticalLine(x, startY, endY, color);
-        		this.drawString(Client.getNeko().NekoFont, Utils.sep3, this.width * 0 , this.height/2 + 40, -1);
-        		this.drawString(Client.getNeko().NekoFont, "§3§nUne nouvelle version est disponible ! ", this.width/2 - 85, this.height/2 - this.height/12, -1);
-        		this.drawString(Client.getNeko().NekoFont, "§eVersion supérieure: §b"+Client.getNeko().ver, this.width/2 - 60, this.height/2 - this.height/60, -1);
-        		this.drawString(Client.getNeko().NekoFont, "§eAjout principal: §b"+Client.getNeko().changelog, this.width/2 - 75, this.height/2 + this.height/30, -1);
-        		//this.drawString(Client.getNeko().NekoFont, "§eWidth: §b"+ this.width + " §eHeight: §b" + this.height, this.width/2 - 75, this.height/2 + this.height/5, -1);
+        		this.drawCenteredString(Client.getNeko().NekoFont, "§3§nUne nouvelle version est disponible !", this.width - 110, this.height/2 - this.height/12, -1);
+        		this.drawCenteredString(Client.getNeko().NekoFont, "§eVersion supérieure: §b"+Client.getNeko().ver, this.width - 110, this.height/2 - this.height/60, -1);
+        		this.drawCenteredString(Client.getNeko().NekoFont, "§eAjout principal: §b"+Client.getNeko().changelog, this.width - 110, this.height/2 + this.height/30, -1);
         		
         		this.drawString(fontRendererObj, "§eConnecté en tant que: §b" + Minecraft.getMinecraft().getSession().getUsername(), 10, 40, -1);
         		
@@ -829,7 +729,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         			}
         		}
         		if (b)
-        			this.buttonList.add(new GuiButton(770, this.width/2 - 50, this.height/2 + 25, 100, 20, "§f§lMettre à jour"));
+        			this.buttonList.add(new GuiButton(770, this.width - 155, this.height/2 + 25, 90, 20, "§f§lMettre à jour"));
         	}
         	var11=Client.getNeko().strCreator;
         }
@@ -851,7 +751,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
     {
         super.mouseClicked(mouseX, mouseY, mouseButton);
-        Object var4 = this.field_104025_t;
 
         synchronized (this.field_104025_t)
         {

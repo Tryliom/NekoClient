@@ -271,7 +271,7 @@ public class InGameGui {
 				  s.clear();
 				  break;
 			  }
-			  double d=1000000;
+			  double d=200;
 			  EntityPlayer actualEn=null;
 			  int num=0;
 			  int o=0;
@@ -281,7 +281,7 @@ public class InGameGui {
 					  d=en.getDistanceToEntity(mc.thePlayer);
 					  actualEn=en;	
 					  num=o;
-				  } else if (en.getDistanceToEntity(mc.thePlayer)>200) {
+				  } else {
 					  s.remove(o);
 				  }
 				  o++;
