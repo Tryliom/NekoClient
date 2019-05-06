@@ -196,6 +196,7 @@ public class Utils {
 	public static boolean deathoff=false;
 	public static boolean mod=true;
 	public static boolean near=false;
+	public static boolean near_say=false;
 	public static int timeInGameMs=0;
 	public static int timeInGameSec=0;
 	public static int timeInGameMin=0;

@@ -1170,6 +1170,8 @@ public abstract class World implements IBlockAccess
                 EntityPlayer entity = var5;
                 if (Utils.near)
                 	Utils.addChat("==================\n"+Utils.getNeko()+"§d"+entity.getName()+"§8:§6 "+bp.getX()+", "+bp.getY()+", "+bp.getZ()+" §8(§2"+Math.round(entity.getDistanceToEntity(Minecraft.getMinecraft().thePlayer))+"m§8)\n"+Utils.getNeko()+"§6==================");
+                if (Utils.near_say)
+                	Minecraft.getMinecraft().thePlayer.sendChatMessage(entity.getName()+" s'est téléporté/est arrivé en "+bp.getX()+", "+bp.getY()+", "+bp.getZ()+" avec une vie de "+entity.getHealth()+"/"+entity.getMaxHealth());                
                 this.playerEntities.add(var5);
                 this.updateAllPlayersSleepingFlag();
             }

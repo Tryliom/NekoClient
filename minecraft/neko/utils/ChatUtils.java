@@ -2,6 +2,9 @@ package neko.utils;
 
 import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
@@ -726,6 +729,21 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Trigger <Double>", var.prefixCmd+"trigger ", "§7Change la portée du Trigger", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Trigger cps <Int>", var.prefixCmd+"trigger cps ", "§7Change les coups/secondes du Trigger", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Trigger random", var.prefixCmd+"trigger random", "§7Active ou non les cps aléatoire pour le Trigger", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("gui")) {
+					Utils.addChat(Utils.sep);
+					Utils.addChat2("§6"+var.prefixCmd+"Gui color <R> <G> <B> <Alpha> (0-255)", var.prefixCmd+"gui color ", "§7Change la couleur du fond du Gui", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Gui font <R> <G> <B> <Alpha> (0-255)", var.prefixCmd+"gui font ", "§7Change la couleur de la police du Gui", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("near")) {
+					Utils.addChat(Utils.sep);
+					Utils.addChat2("§6"+var.prefixCmd+"Near", var.prefixCmd+"near", "§7Affiche les joueurs avec leurs coordonnées et distance de vous dernièrement enregistrés", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Near <Int>", var.prefixCmd+"near ", "§7Affiche les joueurs avec leurs coordonnées et distance de vous dernièrement enregistrés uniquement si à une distance plus grande que celle spécifiée", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Near active", var.prefixCmd+"near active", "§7Affiche les joueurs avec leurs coordonnées et distance de vous peu à peu quand les données arrievent", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Near copy", var.prefixCmd+"near copy", "§7Copie la liste des joueurs du "+var.prefixCmd+"near avec leurs coordonnées", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Near say", var.prefixCmd+"near say", "§7Comme le "+var.prefixCmd+"near active, mais en disant dans le chat public", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("callcmd")) {
@@ -1584,20 +1602,42 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"near")) {
 				int blocs = 0;
+				boolean cont = true;
 				if (args.length==2 && Utils.isInteger(args[1])) {
 					blocs = Integer.parseInt(args[1]);
-				} else if (args.length==2 && args[1].equalsIgnoreCase("active")) {
+				} 
+				if (args.length==2 && args[1].equalsIgnoreCase("active")) {
 					Utils.near = !Utils.near;
 					Utils.addChat("§aNear activé en continu");
-					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-					return;
+					cont = false;
 				}
-				ArrayList<EntityPlayer> en = Utils.getAllPlayer();
-				Utils.addChat("Joueurs proches:");
-				for (EntityPlayer entity : en) {
-					BlockPos bp = entity.getPosition();
-					if (entity.getDistanceToEntity(mc.thePlayer)>blocs) {
-						Utils.addChat("§d"+entity.getName()+"§8:§6 "+bp.getX()+", "+bp.getY()+", "+bp.getZ()+" §8(§2"+Math.round(entity.getDistanceToEntity(mc.thePlayer))+"m§8)");
+				if (args.length==2 && args[1].equalsIgnoreCase("say")) {
+					Utils.near_say = !Utils.near_say;
+					Utils.addChat("§aNear activé en continu pour envoyer les messages de tp dans le chat");
+					cont = false;
+				}
+				if (args.length==2 && args[1].equalsIgnoreCase("copy")) {
+					ArrayList<EntityPlayer> en = Utils.getAllPlayer();
+					Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+					String list = "";
+					for (EntityPlayer entity : en) {
+						BlockPos bp = entity.getPosition();
+						if (list.isEmpty())
+							list=entity.getName()+"=["+bp.getX()+","+bp.getY()+","+bp.getZ()+"]";
+						list+="|"+entity.getName()+"=["+bp.getX()+","+bp.getY()+","+bp.getZ()+"]";
+					}
+					clipboard.setContents(new StringSelection(list), null);
+					Utils.addChat("§aListe des joueurs copiées !");
+					cont = false;
+				}
+				if (cont) {
+					ArrayList<EntityPlayer> en = Utils.getAllPlayer();
+					Utils.addChat("Joueurs proches:");
+					for (EntityPlayer entity : en) {
+						BlockPos bp = entity.getPosition();
+						if (entity.getDistanceToEntity(mc.thePlayer)>blocs) {
+							Utils.addChat("§d"+entity.getName()+"§8:§6 "+bp.getX()+", "+bp.getY()+", "+bp.getZ()+" §8(§2"+Math.round(entity.getDistanceToEntity(mc.thePlayer))+"m§8)");
+						}
 					}
 				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
