@@ -1816,7 +1816,7 @@ public abstract class EntityLivingBase extends Entity
         	delay++;
         }
         	
-        if (Utils.isToggle("Freecam") || Utils.isToggle("NoClip") || Utils.isToggle("Phase"))
+        if (Utils.isToggle("Freecam") || Utils.isToggle("NoClip"))
     		Minecraft.getMinecraft().thePlayer.noClip=true;
         
         if (!this.worldObj.isRemote)

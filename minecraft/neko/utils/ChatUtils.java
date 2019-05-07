@@ -26,7 +26,6 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.properties.Property;
 
 import neko.Client;
 import neko.dtb.RequestThread;
@@ -53,6 +52,7 @@ import neko.module.modules.combat.Trigger;
 import neko.module.modules.hide.Friends;
 import neko.module.modules.hide.Lot;
 import neko.module.modules.misc.Antiafk;
+import neko.module.modules.misc.AutoCmd;
 import neko.module.modules.misc.AutoMLG;
 import neko.module.modules.misc.CallCmd;
 import neko.module.modules.misc.Nameprotect;
@@ -150,7 +150,9 @@ import net.minecraft.network.login.client.C00PacketLoginStart;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 import net.minecraft.network.play.client.C09PacketHeldItemChange;
+import net.minecraft.network.play.client.C0CPacketInput;
 import net.minecraft.network.play.client.C10PacketCreativeInventoryAction;
+import net.minecraft.network.play.client.C13PacketPlayerAbilities;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
@@ -737,6 +739,12 @@ public class ChatUtils {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Gui color <R> <G> <B> <Alpha> (0-255)", var.prefixCmd+"gui color ", "§7Change la couleur du fond du Gui", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Gui font <R> <G> <B> <Alpha> (0-255)", var.prefixCmd+"gui font ", "§7Change la couleur de la police du Gui", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("autocmd")) {
+					Utils.addChat(Utils.sep);
+					Utils.addChat2("§6"+var.prefixCmd+"AutoCmd delay <secondes>", var.prefixCmd+"autocmd delay ", "§7Défini le nombre de seconde entre chaque commandes", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"AutoCmd cmd <Commande>", var.prefixCmd+"autocmd cmd ", "§7Défini la commande à executer toutes les x secondes", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("near")) {
@@ -1601,17 +1609,6 @@ public class ChatUtils {
 					}
 				}
 				Utils.checkXp(xp);
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}	
-			// npi.func_178850_i().getRegisteredName() Nom rôle
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"tablist")) {
-				Collection c = mc.getNetHandler().getPlayerInfoMap().values();
-				Utils.addChat("Joueurs dans le tab ("+c.size()+"):");
-				for (Object o : c) {
-					NetworkPlayerInfo npi = (NetworkPlayerInfo) o;
-					GameProfile gp = npi.func_178845_a();
-					Utils.addChat("§d"+gp.getName());
-				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
@@ -4005,6 +4002,41 @@ public class ChatUtils {
 						Utils.getLock(lock.getName());
 				}
 				Utils.checkXp(xp);
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"autocmd")) {
+				if (args.length>=3) {
+					if (args[1].equalsIgnoreCase("delay")) {
+						if (Utils.isInteger(args[2])) {
+							AutoCmd.sec = Integer.parseInt(args[2]);
+							Utils.addChat("§aLe délai des commandes du AutoCmd a été mis à "+args[2]+" !");
+						} else {
+							Utils.addError("Les secondes doivent être un nombre entier !");
+						}
+					}
+					if (args[1].equalsIgnoreCase("cmd")) {
+						String cmd = "";
+						for (int i=2;i<args.length;i++) {
+							if (cmd.isEmpty())
+								cmd = args[i];
+							else
+								cmd += " "+args[i];
+						}
+						AutoCmd.cmd = cmd;
+						Utils.addChat("§aLa commande du AutoCmd a été mis à "+cmd+" !");
+					}
+				}
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"fakepos")) {				
+				if (args.length==4) {
+					if (Utils.isInteger(args[1]) && Utils.isInteger(args[2]) && Utils.isInteger(args[3])) {
+						mc.thePlayer.sendQueue.addToSendQueue(new C04PacketPlayerPosition(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), true));
+						
+					}
+				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			

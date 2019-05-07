@@ -33,7 +33,6 @@ public class Phase extends Module {
 	
 	public void onUpdate() {
 		double p = 4*Math.random();
-		mc.thePlayer.noClip=true;
 		if (vphase && mc.thePlayer.isCollidedVertically) {
 			mc.getNetHandler().addToSendQueue(new C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY-p, mc.thePlayer.posZ, false));
 			mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY-p, mc.thePlayer.posZ);

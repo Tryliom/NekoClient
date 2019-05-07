@@ -79,6 +79,7 @@ import neko.module.modules.hide.Gui;
 import neko.module.modules.hide.Lot;
 import neko.module.modules.hide.Plugins;
 import neko.module.modules.misc.Antiafk;
+import neko.module.modules.misc.AutoCmd;
 import neko.module.modules.misc.AutoMLG;
 import neko.module.modules.misc.CallCmd;
 import neko.module.modules.misc.Nameprotect;
@@ -2801,7 +2802,7 @@ public class Utils {
         if (fi.length>0) {
     		Utils.nc.saveSave("values", s, fi);
     	}
-        s+="§,"+Likaotique.getLik().isSafe();
+        s+="§,"+Likaotique.getLik().isSafe()+"§,"+AutoCmd.cmd+"§,"+AutoCmd.sec;
         Utils.nc.saveSave("values", s);
 	}
 	
@@ -3410,6 +3411,12 @@ public class Utils {
             	}
             	if (i==179) {
             		Likaotique.getLik().setSafe(Boolean.parseBoolean(ligne));
+            	}
+            	if (i==181) {
+            		AutoCmd.cmd = ligne;
+            	}
+            	if (i==182) {
+            		AutoCmd.sec = Integer.parseInt(ligne);
             	}
             	
         	} catch (Exception e) {
