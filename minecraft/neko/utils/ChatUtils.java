@@ -1958,6 +1958,13 @@ public class ChatUtils {
 					Utils.addChat("§aNuker safe activé !");
 				}
 				Nuker.safe=!Nuker.safe;
+			} else if (args[1].equalsIgnoreCase("oneHit")) {
+				if (Nuker.onehit) {
+					Utils.addChat("§cNuker OneHit désactivé !");
+				} else {
+					Utils.addChat("§aNuker OneHit Activé !");
+				}
+				Nuker.onehit=!Nuker.onehit;
 			} else if (args[1].equalsIgnoreCase("list")) {
 				try {
 					if (Nuker.nuke.size()==0) {
