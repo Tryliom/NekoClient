@@ -3099,7 +3099,7 @@ public class Utils {
             	if (i==44) 
             		AutoClic.cps=Integer.parseInt(ligne);
             	if (i==45) 
-            		Nuker.nukerRadius=Double.parseDouble(ligne);
+            		Nuker.nukerRadius=Integer.parseInt(ligne);
             	if (i==46) {
             		if (!isLock("--ka random")) 
             			KillAura.random=Boolean.parseBoolean(ligne);
@@ -3556,7 +3556,7 @@ public class Utils {
 	                	if (i==44) 
 	                		AutoClic.cps=Integer.parseInt(ligne);
 	                	if (i==45) 
-	                		Nuker.nukerRadius=Double.parseDouble(ligne);
+	                		Nuker.nukerRadius=Integer.parseInt(ligne);
 	                	if (i==46) {
 	                		if (!isLock("--ka random")) 
 	                			KillAura.random=Boolean.parseBoolean(ligne);
