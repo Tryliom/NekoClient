@@ -948,6 +948,7 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Nuker add <Bloc>", var.prefixCmd+"nuker add ", "§7Ajoute un bloc à votre liste", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Nuker rem <Bloc>", var.prefixCmd+"nuker rem ", "§7Supprime un bloc de votre liste", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Nuker range <double>", var.prefixCmd+"nuker range ", "§7Change la distance d'atteinte des blocs", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Nuker onehit", var.prefixCmd+"nuker onehit", "§7Détruit en 1 coup les blocs", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Nuker clear", var.prefixCmd+"nuker clear", "§7Vide votre liste", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Nuker list", var.prefixCmd+"nuker list", "§7Affiche la liste", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Nuker safe", var.prefixCmd+"nuker safe", "§7Ne casse pas le bloc en dessous de vous", false, Chat.Summon);
