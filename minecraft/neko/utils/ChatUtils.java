@@ -1939,7 +1939,7 @@ public class ChatUtils {
 				Utils.saveNuker();	
 			} else if (args[1].equalsIgnoreCase("range")) {
 				try {
-					Nuker.nukerRadius=Double.parseDouble(args[2]);
+					Nuker.nukerRadius=Integer.parseInt(args[2]);
 					Utils.addChat("§aLa range du Nuker a été changée à "+args[2]+" !");
 				} catch (Exception e) {
 					Utils.addChat(err);
