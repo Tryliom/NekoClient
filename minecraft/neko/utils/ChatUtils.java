@@ -12,6 +12,7 @@ import java.net.Proxy.Type;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -25,6 +26,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
 import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 
 import neko.Client;
 import neko.dtb.RequestThread;
@@ -743,7 +745,9 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Near <Int>", var.prefixCmd+"near ", "§7Affiche les joueurs avec leurs coordonnées et distance de vous dernièrement enregistrés uniquement si à une distance plus grande que celle spécifiée", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Near active", var.prefixCmd+"near active", "§7Affiche les joueurs avec leurs coordonnées et distance de vous peu à peu quand les données arrievent", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Near copy", var.prefixCmd+"near copy", "§7Copie la liste des joueurs du "+var.prefixCmd+"near avec leurs coordonnées", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Near copy <player>", var.prefixCmd+"near copy ", "§7Copie les coordonnées du joueur spécifié du "+var.prefixCmd+"near", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Near say", var.prefixCmd+"near say", "§7Comme le "+var.prefixCmd+"near active, mais en disant dans le chat public", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Near say <player>", var.prefixCmd+"near say ", "§7Comme le "+var.prefixCmd+"near active, mais en disant dans le chat public avec le joueur spécifié", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("callcmd")) {
@@ -1599,6 +1603,17 @@ public class ChatUtils {
 				Utils.checkXp(xp);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}	
+			// npi.func_178850_i().getRegisteredName() Nom rôle
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"tablist")) {
+				Collection c = mc.getNetHandler().getPlayerInfoMap().values();
+				Utils.addChat("Joueurs dans le tab ("+c.size()+"):");
+				for (Object o : c) {
+					NetworkPlayerInfo npi = (NetworkPlayerInfo) o;
+					GameProfile gp = npi.func_178845_a();
+					Utils.addChat("§d"+gp.getName());
+				}
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"near")) {
 				int blocs = 0;
@@ -1607,24 +1622,43 @@ public class ChatUtils {
 					blocs = Integer.parseInt(args[1]);
 				} 
 				if (args.length==2 && args[1].equalsIgnoreCase("active")) {
-					Utils.near = !Utils.near;
-					Utils.addChat("§aNear activé en continu");
+					if (Utils.near) {
+						Utils.addChat("§cNear désactivé en continu");
+					} else {
+						Utils.addChat("§aNear activé en continu");
+					}
+					Utils.near = !Utils.near;					
 					cont = false;
 				}
-				if (args.length==2 && args[1].equalsIgnoreCase("say")) {
-					Utils.near_say = !Utils.near_say;
-					Utils.addChat("§aNear activé en continu pour envoyer les messages de tp dans le chat");
+				if (args.length>=2 && args[1].equalsIgnoreCase("say")) {
+					if (args.length==3) {
+						EntityPlayer entity = Utils.getPlayer(args[2]);
+						BlockPos bp = entity.getPosition();
+						mc.thePlayer.sendChatMessage(entity.getName()+" a été aperçu en "+bp.getX()+", "+bp.getY()+", "+bp.getZ()+" un jour de grand soleil");
+					} else {
+						if (Utils.near_say) {
+							Utils.addChat("§aNear désactivé en continu pour envoyer les messages de tp dans le chat");
+						} else {
+							Utils.addChat("§aNear activé en continu pour envoyer les messages de tp dans le chat");
+						}
+						Utils.near_say = !Utils.near_say;
+					}
 					cont = false;
 				}
-				if (args.length==2 && args[1].equalsIgnoreCase("copy")) {
+				if (args.length>=2 && args[1].equalsIgnoreCase("copy")) {
 					ArrayList<EntityPlayer> en = Utils.getAllPlayer();
 					Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 					String list = "";
+					String player = "";
+					if (args.length==3)
+						player = args[2];
 					for (EntityPlayer entity : en) {
 						BlockPos bp = entity.getPosition();
-						if (list.isEmpty())
-							list=entity.getName()+"=["+bp.getX()+","+bp.getY()+","+bp.getZ()+"]";
-						list+="|"+entity.getName()+"=["+bp.getX()+","+bp.getY()+","+bp.getZ()+"]";
+						if (player.isEmpty() ? true : entity.getName().equalsIgnoreCase(player))
+							if (list.isEmpty())
+								list=entity.getName()+"=["+bp.getX()+","+bp.getY()+","+bp.getZ()+"]";
+							else
+								list+=", "+entity.getName()+"=["+bp.getX()+","+bp.getY()+","+bp.getZ()+"]";
 					}
 					clipboard.setContents(new StringSelection(list), null);
 					Utils.addChat("§aListe des joueurs copiées !");

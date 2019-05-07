@@ -27,45 +27,27 @@ public class AutoSellAll extends Module {
 	public int y = -1;
 	public int z = -1;
 	public boolean running;
+	public int count = 0;
 
 	public AutoSellAll() {
 		super("AutoSellAll", -1, Category.MISC);
 	}
 	
-	@Override
 	public void onEnabled() {
-		Utils.addChat("§dCommande en test, sujette à des bugs.");
-
-		running = true;
-        thread.start();
 		super.onEnabled();
-		mc.thePlayer.sendChatMessage("/sellall");
 	}
 	
-	@Override
 	public void onDisabled() {
-		running = false;
-		thread.interrupt();
+		count = 0;
 		super.onDisabled();
 	}
 	
-	@Override
 	public void onUpdate() {
-		super.onUpdate();
-	}
-	
-	public Thread thread = new Thread(new Runnable() {
-		public void run() {
-			while (running) {
-				
-				try {
-					mc.thePlayer.sendChatMessage("/sellall");
-	                thread.sleep(10000);
-	            } catch (InterruptedException e) {
-	                e.printStackTrace();
-	            }
-			}
+		count++;
+		if (count==40) {
+			mc.thePlayer.sendChatMessage("/sell all");
+			count = 0;
 		}
-	});
+	}
 	
 }
