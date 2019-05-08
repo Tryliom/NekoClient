@@ -699,6 +699,10 @@ public abstract class EntityPlayer extends EntityLivingBase
             }
         }
     }
+    
+    public boolean isAllowEdit() {
+		return this.capabilities.allowEdit;
+	}
 
     private void collideWithPlayer(Entity p_71044_1_)
     {

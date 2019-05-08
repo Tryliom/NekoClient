@@ -390,4 +390,23 @@ public class BlockPos extends Vec3i
             this(p_i46025_1_, p_i46025_2_, p_i46025_3_);
         }
     }
+
+	public BlockPos down() {
+		return this.down(1);
+	}
+	
+	public BlockPos down(int n) {
+		return this.offset(EnumFacing.DOWN, n);
+	}
+
+	public BlockPos up() {
+		return this.up(1);
+	}
+
+	/**
+	 * Offset this BlockPos n blocks up
+	 */
+	public BlockPos up(int n) {
+		return this.offset(EnumFacing.UP, n);
+	}
 }

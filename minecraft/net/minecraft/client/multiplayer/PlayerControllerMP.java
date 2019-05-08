@@ -39,6 +39,7 @@ public class PlayerControllerMP
     private final Minecraft mc;
     private final NetHandlerPlayClient netClientHandler;
     private BlockPos field_178895_c = new BlockPos(-1, -1, -1);
+    private BlockPos currentBlock = new BlockPos(-1, -1, -1);
 
     /** The Item currently being used to destroy a block */
     private ItemStack currentItemHittingBlock;
@@ -630,4 +631,194 @@ public class PlayerControllerMP
     {
         return this.currentGameType;
     }
+    
+    public static void clickBlockCreative(Minecraft mcIn, PlayerControllerMP p_178891_1_, BlockPos p_178891_2_,
+			EnumFacing p_178891_3_) {
+		if (!mcIn.theWorld.extinguishFire(mcIn.thePlayer, p_178891_2_, p_178891_3_)) {
+			p_178891_1_.onPlayerDestroyBlock(p_178891_2_, p_178891_3_);
+		}
+	}
+    
+    public boolean onPlayerDestroyBlock(BlockPos pos, EnumFacing side) {
+		if (this.currentGameType.isAdventure()) {
+			if (this.currentGameType == WorldSettings.GameType.SPECTATOR) {
+				return false;
+			}
+
+			if (!this.mc.thePlayer.isAllowEdit()) {
+				Block block = this.mc.theWorld.getBlockState(pos).getBlock();
+				ItemStack itemstack = this.mc.thePlayer.getCurrentEquippedItem();
+
+				if (itemstack == null) {
+					return false;
+				}
+
+				if (!itemstack.canDestroy(block)) {
+					return false;
+				}
+			}
+		}
+
+		if (this.currentGameType.isCreative() && this.mc.thePlayer.getHeldItem() != null
+				&& this.mc.thePlayer.getHeldItem().getItem() instanceof ItemSword) {
+			return false;
+		} else {
+			World world = this.mc.theWorld;
+			IBlockState iblockstate = world.getBlockState(pos);
+			Block block1 = iblockstate.getBlock();
+
+			if (block1.getMaterial() == Material.air) {
+				return false;
+			} else {
+				world.playAuxSFX(2001, pos, Block.getStateId(iblockstate));
+				boolean flag = world.setBlockToAir(pos);
+
+				if (flag) {
+					block1.onBlockDestroyedByPlayer(world, pos, iblockstate);
+				}
+
+				this.currentBlock = new BlockPos(this.currentBlock.getX(), -1, this.currentBlock.getZ());
+
+				if (!this.currentGameType.isCreative()) {
+					ItemStack itemstack1 = this.mc.thePlayer.getCurrentEquippedItem();
+
+					if (itemstack1 != null) {
+						itemstack1.onBlockDestroyed(world, block1, pos, this.mc.thePlayer);
+
+						if (itemstack1.stackSize == 0) {
+							this.mc.thePlayer.destroyCurrentEquippedItem();
+						}
+					}
+				}
+
+				return flag;
+			}
+		}
+	}
+    
+    private boolean isHittingPosition(BlockPos pos) {
+		ItemStack itemstack = this.mc.thePlayer.getHeldItem();
+		boolean flag = this.currentItemHittingBlock == null && itemstack == null;
+
+		if (this.currentItemHittingBlock != null && itemstack != null) {
+			flag = itemstack.getItem() == this.currentItemHittingBlock.getItem()
+					&& ItemStack.areItemStackTagsEqual(itemstack, this.currentItemHittingBlock)
+					&& (itemstack.isItemStackDamageable()
+							|| itemstack.getMetadata() == this.currentItemHittingBlock.getMetadata());
+		}
+
+		return pos.equals(this.currentBlock) && flag;
+	}
+    
+    public boolean clickBlock(BlockPos loc, EnumFacing face) {
+		if (this.currentGameType.isAdventure()) {
+			if (this.currentGameType == WorldSettings.GameType.SPECTATOR) {
+				return false;
+			}
+
+			if (!this.mc.thePlayer.isAllowEdit()) {
+				Block block = this.mc.theWorld.getBlockState(loc).getBlock();
+				ItemStack itemstack = this.mc.thePlayer.getCurrentEquippedItem();
+
+				if (itemstack == null) {
+					return false;
+				}
+
+				if (!itemstack.canDestroy(block)) {
+					return false;
+				}
+			}
+		}
+
+		if (!this.mc.theWorld.getWorldBorder().contains(loc)) {
+			return false;
+		} else {
+			if (this.currentGameType.isCreative()) {
+				this.netClientHandler.addToSendQueue(
+						new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.START_DESTROY_BLOCK, loc, face));
+				clickBlockCreative(this.mc, this, loc, face);
+				this.blockHitDelay = 5;
+			} else if (!this.isHittingBlock || !this.isHittingPosition(loc)) {
+				if (this.isHittingBlock) {
+					this.netClientHandler.addToSendQueue(new C07PacketPlayerDigging(
+							C07PacketPlayerDigging.Action.ABORT_DESTROY_BLOCK, this.currentBlock, face));
+				}
+
+				this.netClientHandler.addToSendQueue(
+						new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.START_DESTROY_BLOCK, loc, face));
+				Block block1 = this.mc.theWorld.getBlockState(loc).getBlock();
+				boolean flag = block1.getMaterial() != Material.air;
+
+				if (flag && this.curBlockDamageMP == 0.0F) {
+					block1.onBlockClicked(this.mc.theWorld, loc, this.mc.thePlayer);
+				}
+
+				if (flag && block1.getPlayerRelativeBlockHardness(this.mc.thePlayer, this.mc.thePlayer.worldObj,
+						loc) >= 1.0F) {
+					this.onPlayerDestroyBlock(loc, face);
+				} else {
+					this.isHittingBlock = true;
+					this.currentBlock = loc;
+					this.currentItemHittingBlock = this.mc.thePlayer.getHeldItem();
+					this.curBlockDamageMP = 0.0F;
+					this.stepSoundTickCounter = 0.0F;
+					this.mc.theWorld.sendBlockBreakProgress(this.mc.thePlayer.getEntityId(), this.currentBlock,
+							(int) (this.curBlockDamageMP * 10.0F) - 1);
+				}
+			}
+
+			return true;
+		}
+	}
+
+    public boolean onPlayerDamageBlock(BlockPos posBlock, EnumFacing directionFacing) {
+		this.syncCurrentPlayItem();
+
+		if (this.blockHitDelay > 0) {
+			--this.blockHitDelay;
+			return true;
+		} else if (this.currentGameType.isCreative() && this.mc.theWorld.getWorldBorder().contains(posBlock)) {
+			this.blockHitDelay = 5;
+			this.netClientHandler.addToSendQueue(new C07PacketPlayerDigging(
+					C07PacketPlayerDigging.Action.START_DESTROY_BLOCK, posBlock, directionFacing));
+			clickBlockCreative(this.mc, this, posBlock, directionFacing);
+			return true;
+		} else if (this.isHittingPosition(posBlock)) {
+			Block block = this.mc.theWorld.getBlockState(posBlock).getBlock();
+
+			if (block.getMaterial() == Material.air) {
+				this.isHittingBlock = false;
+				return false;
+			} else {
+				this.curBlockDamageMP += block.getPlayerRelativeBlockHardness(this.mc.thePlayer,
+						this.mc.thePlayer.worldObj, posBlock);
+
+				if (this.stepSoundTickCounter % 4.0F == 0.0F) {
+					this.mc.getSoundHandler()
+							.playSound(new PositionedSoundRecord(new ResourceLocation(block.stepSound.getStepSound()),
+									(block.stepSound.getVolume() + 1.0F) / 8.0F, block.stepSound.getFrequency() * 0.5F,
+									(float) posBlock.getX() + 0.5F, (float) posBlock.getY() + 0.5F,
+									(float) posBlock.getZ() + 0.5F));
+				}
+
+				++this.stepSoundTickCounter;
+
+				if (this.curBlockDamageMP >= 1.0F) {
+					this.isHittingBlock = false;
+					this.netClientHandler.addToSendQueue(new C07PacketPlayerDigging(
+							C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK, posBlock, directionFacing));
+					this.onPlayerDestroyBlock(posBlock, directionFacing);
+					this.curBlockDamageMP = 0.0F;
+					this.stepSoundTickCounter = 0.0F;
+					this.blockHitDelay = 5;
+				}
+
+				this.mc.theWorld.sendBlockBreakProgress(this.mc.thePlayer.getEntityId(), this.currentBlock,
+						(int) (this.curBlockDamageMP * 10.0F) - 1);
+				return true;
+			}
+		} else {
+			return this.clickBlock(posBlock, directionFacing);
+		}
+	}
 }

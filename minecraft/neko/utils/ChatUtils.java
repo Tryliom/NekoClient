@@ -99,6 +99,7 @@ import neko.module.modules.special.TpBack;
 import neko.module.modules.special.VanillaTp;
 import neko.module.other.Active;
 import neko.module.other.Bloc;
+import neko.module.other.DiscThread;
 import neko.module.other.Event;
 import neko.module.other.HackerDetector;
 import neko.module.other.Irc;
@@ -745,6 +746,11 @@ public class ChatUtils {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"AutoCmd delay <secondes>", var.prefixCmd+"autocmd delay ", "§7Défini le nombre de seconde entre chaque commandes", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"AutoCmd cmd <Commande>", var.prefixCmd+"autocmd cmd ", "§7Défini la commande à executer toutes les x secondes", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("autocmd")) {
+					Utils.addChat(Utils.sep);
+					Utils.addChat2("§6"+var.prefixCmd+"novanish", var.prefixCmd+"novanish", "§7Vous montre les joueurs vanish (tab & IG)", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("near")) {
@@ -2634,6 +2640,23 @@ public class ChatUtils {
 				}
 				Utils.checkXp(xp);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			if(args[0].equalsIgnoreCase(var.prefixCmd+"tp")) {
+				if(args.length<3) {
+					Utils.addChat("§6..tp x y z");
+				} else if (Utils.isDouble(args[1]) && Utils.isDouble(args[2]) && Utils.isDouble(args[3])) {
+					try {
+						Double x = Double.parseDouble(args[1]);
+						Double y = Double.parseDouble(args[2]);
+						Double z = Double.parseDouble(args[3]);
+						mc.thePlayer.setPosition(x, y, z);
+						Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(x, y, z, true));
+						mc.thePlayer.sendChatMessage("/sethome");
+						Utils.addChat("§6Téléportation....");
+					} catch (Exception e) {
+                        Utils.addChat(err);
+                    }
+				}
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"vclip")) {
@@ -5470,6 +5493,8 @@ public class ChatUtils {
 				return;
 			} else if (var3.equalsIgnoreCase("Pyroman des abîmes, je t'invoque en t'offrant mon sang comme présent")) {
 				new PyroThread().canBeAPyroman();
+			} else if (var3.equalsIgnoreCase("Déesse de la choumission, j'implore à recevoir votre Discipline, mon corps est à vous.")) {
+				new DiscThread().canBeADisciplinné();
 			} else {
 				mc.thePlayer.sendChatMessage(var3);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);

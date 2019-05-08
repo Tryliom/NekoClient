@@ -1223,6 +1223,18 @@ public abstract class World implements IBlockAccess
             this.onEntityRemoved(p_72900_1_);
         }
     }
+    
+    public boolean extinguishFire(EntityPlayer player, BlockPos pos, EnumFacing side) {
+		pos = pos.offset(side);
+
+		if (this.getBlockState(pos).getBlock() == Blocks.fire) {
+			this.playAuxSFXAtEntity(player, 1004, pos, 0);
+			this.setBlockToAir(pos);
+			return true;
+		} else {
+			return false;
+		}
+	}
 
     /**
      * Do NOT use this method to remove normal entities- use normal removeEntity

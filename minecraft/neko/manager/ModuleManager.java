@@ -485,6 +485,13 @@ public class ModuleManager {
 		Utils.getRank("Pyroman").setDesc("Possède la volonté suprême de détruire tout autour de soit sur des distances inconcevables, un maître des flammes. On raconte qu'une fois il a réussi à faire fuir le fou en tutu rose paillette de sa forêt...par le feu.");
 		Utils.getRank("Pyroman").setGiftPlusAme(0.5);
 		
+		rang.add(new Rank("Disciple de la Déesse de la Choumission", 1150, Rate.Légendaire, "§d§n", true, 0));
+		Utils.getRank("Disciple de la Déesse de la Choumission").setDesc("Disciple de notre Déesse de la Choumission à tous, les épreuves ont été passées avec brios, un très bon petit oiseau choumis dans sa cage, fidèle à sa Déesse, avec sa laisse et son lait, ils passent des jours fous et des nuits folles!");
+		Utils.getRank("Disciple de la Déesse de la Choumission").setGiftPlusAme(0.5);
+		Utils.getRank("Disciple de la Déesse de la Choumission").setRadiusGift(6);
+		Utils.getRank("Disciple de la Déesse de la Choumission").setGiftRang(20);
+		Utils.getRank("Disciple de la Déesse de la Choumission").setMeteoreRain(2);
+		
 		rang.add(new Rank("CrazyLove II", 1700, Rate.Légendaire, "§4", true, 0));
 		Utils.getRank("CrazyLove II").setDesc("Cela fait déjà longtemps qu'il attend de rejoindre ce qu'il était, il ne va pas attendre plus longtemps avant d'y arriver..");
 		Utils.getRank("CrazyLove II").setLotRateTitan(1.5);

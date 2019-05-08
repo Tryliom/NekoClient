@@ -144,6 +144,8 @@ import neko.module.other.enums.Rate;
 import neko.module.other.enums.SpeedEnum;
 import net.mcleaks.MCLeaks;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiMainMenu;
@@ -157,6 +159,7 @@ import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
@@ -178,6 +181,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Session;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.WorldSettings.GameType;
 
 /**
@@ -235,6 +239,7 @@ public class Utils {
 	public static int R=199;
 	public static int G=255;
 	public static int B=213;
+	public static double autoMineBlockLimit = 13;
 	public static String linkSave = mc.isRunningOnMac ? System.getProperty("user.home") + "/Library/Application Support/minecraft" : System.getenv("APPDATA") + "\\GoodNight_4\\config\\audio\\rpg\\";
 	public static String separator = mc.isRunningOnMac ? "/" : "\\";
 	public static String sep = "§8§m--------------------------------------";
@@ -1378,6 +1383,91 @@ public class Utils {
 		saveCmd();
 		saveCloudAlt();
 		saveStat();
+	}
+	
+	public static Block getBlockRelativeToEntity(Entity en, double d) {
+		return getBlock(new BlockPos(en.posX, en.posY + d, en.posZ));
+	}
+	
+	public static Block getBlock(BlockPos pos) {
+		return mc.theWorld.getBlockState(pos).getBlock();
+	}
+	
+	public static BlockPos getBlockPosRelativeToEntity(Entity en, double d) {
+		return new BlockPos(en.posX, en.posY + d, en.posZ);
+	}
+	
+	public static IBlockState getBlockState(BlockPos blockPos) {
+		return mc.theWorld.getBlockState(blockPos);
+	}
+	
+	public static ArrayList<EntityItem> getNearbyItems(int range) {
+		ArrayList<EntityItem> eList = new ArrayList<EntityItem>();
+		for (Object o : Minecraft.getMinecraft().theWorld.getLoadedEntityList()) {
+			if (!(o instanceof EntityItem)) {
+				continue;
+			}
+			EntityItem e = (EntityItem) o;
+			if (Minecraft.getMinecraft().thePlayer.getDistanceToEntity(e) >= range) {
+				continue;
+			}
+
+			eList.add(e);
+		}
+		return eList;
+	}
+	
+	public static boolean isBlockPosAir(BlockPos blockPos) {
+		return mc.theWorld.getBlockState(blockPos).getBlock().getMaterial() == Material.air;
+	}
+	
+	public static Vec3 getVec3(BlockPos blockPos) {
+		return new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+	}
+	
+	public static float[] getFacePos(Vec3 vec) {
+		double diffX = vec.xCoord + 0.5 - Minecraft.getMinecraft().thePlayer.posX;
+		double diffY = vec.yCoord + 0.5
+				- (Minecraft.getMinecraft().thePlayer.posY + Minecraft.getMinecraft().thePlayer.getEyeHeight());
+		double diffZ = vec.zCoord + 0.5 - Minecraft.getMinecraft().thePlayer.posZ;
+		double dist = MathHelper.sqrt_double(diffX * diffX + diffZ * diffZ);
+		float yaw = (float) (Math.atan2(diffZ, diffX) * 180.0D / Math.PI) - 90.0F;
+		float pitch = (float) -(Math.atan2(diffY, dist) * 180.0D / Math.PI);
+		return new float[] {
+				Minecraft.getMinecraft().thePlayer.rotationYaw
+						+ MathHelper.wrapAngleTo180_float(yaw - Minecraft.getMinecraft().thePlayer.rotationYaw),
+				Minecraft.getMinecraft().thePlayer.rotationPitch
+						+ MathHelper.wrapAngleTo180_float(pitch - Minecraft.getMinecraft().thePlayer.rotationPitch) };
+	}
+	
+	public static double normalizeAngle(double angle) {
+		return (angle + 360) % 360;
+	}
+
+	public static float normalizeAngle(float angle) {
+		return (angle + 360) % 360;
+	}
+	
+	public static void faceBlock(BlockPos blockPos) {
+		facePos(getVec3(blockPos));
+	}
+	
+	public static void faceEntity(Entity en) {
+		facePos(new Vec3(en.posX - 0.5, en.posY + (en.getEyeHeight() - en.height / 1.5), en.posZ - 0.5));
+	}
+	
+	public static void facePos(Vec3 vec) {
+		double diffX = vec.xCoord + 0.5 - Minecraft.getMinecraft().thePlayer.posX;
+		double diffY = vec.yCoord + 0.5
+				- (Minecraft.getMinecraft().thePlayer.posY + Minecraft.getMinecraft().thePlayer.getEyeHeight());
+		double diffZ = vec.zCoord + 0.5 - Minecraft.getMinecraft().thePlayer.posZ;
+		double dist = MathHelper.sqrt_double(diffX * diffX + diffZ * diffZ);
+		float yaw = (float) (Math.atan2(diffZ, diffX) * 180.0D / Math.PI) - 90.0F;
+		float pitch = (float) -(Math.atan2(diffY, dist) * 180.0D / Math.PI);
+		Minecraft.getMinecraft().thePlayer.rotationYaw = Minecraft.getMinecraft().thePlayer.rotationYaw
+				+ MathHelper.wrapAngleTo180_float(yaw - Minecraft.getMinecraft().thePlayer.rotationYaw);
+		Minecraft.getMinecraft().thePlayer.rotationPitch = Minecraft.getMinecraft().thePlayer.rotationPitch
+				+ MathHelper.wrapAngleTo180_float(pitch - Minecraft.getMinecraft().thePlayer.rotationPitch);
 	}
 	
 	public static boolean isModule(String cheat) {

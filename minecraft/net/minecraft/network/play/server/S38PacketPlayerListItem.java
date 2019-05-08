@@ -244,7 +244,7 @@ public class S38PacketPlayerListItem implements Packet
     {
         private final int field_179966_b;
         private final WorldSettings.GameType field_179967_c;
-        private final GameProfile field_179964_d;
+        public final GameProfile field_179964_d;
         private final IChatComponent field_179965_e;
 
         public AddPlayerData(GameProfile p_i45965_2_, int p_i45965_3_, WorldSettings.GameType p_i45965_4_, IChatComponent p_i45965_5_)

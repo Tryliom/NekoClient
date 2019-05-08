@@ -221,4 +221,8 @@ public class NetworkPlayerInfo
             }
         }
     }
+
+	public IChatComponent getDisplayName() {
+		return this.field_178872_h;
+	}
 }
