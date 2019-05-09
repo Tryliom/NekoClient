@@ -711,15 +711,13 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         	// Draw grey box in the main menu
         	drawRect(0, 0, this.width, 35, Integer.MIN_VALUE);
         	
+        	this.drawString(fontRendererObj, "§eConnecté en tant que: §b" + Minecraft.getMinecraft().getSession().getUsername(), 10, 40, -1);
+        	
         	if (!Client.getNeko().ver.isEmpty()) {
 
         		this.drawCenteredString(Client.getNeko().NekoFont, "§3§nUne nouvelle version est disponible !", this.width - 110, this.height/2 - this.height/12, -1);
         		this.drawCenteredString(Client.getNeko().NekoFont, "§eVersion supérieure: §b"+Client.getNeko().ver, this.width - 110, this.height/2 - this.height/60, -1);
         		this.drawCenteredString(Client.getNeko().NekoFont, "§eAjout principal: §b"+Client.getNeko().changelog, this.width - 110, this.height/2 + this.height/30, -1);
-        		
-        		this.drawString(fontRendererObj, "§eConnecté en tant que: §b" + Minecraft.getMinecraft().getSession().getUsername(), 10, 40, -1);
-        		
-        		
         		
         		boolean b = true;
         		for (Object gb : this.buttonList) {

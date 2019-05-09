@@ -655,6 +655,17 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Prefix <String>", var.prefixCmd+"prefix ", "§7Change le preifx des commandes", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("tppos")) {
+					Utils.addChat(Utils.sep);
+					Utils.addChat2("§6"+var.prefixCmd+"Tppos <X> <Y> <Z>", var.prefixCmd+"tppos ", "§7Téléporte par voie des air aux coordonnées indiquées", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("phantom")) {
+					Utils.addChat(Utils.sep);
+					Utils.addChat2("§6"+var.prefixCmd+"Phantom <X> <Y> <Z>", var.prefixCmd+"phantom ", "§7Téléporte par voie de la terre aux coordonnées indiquées", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Phantom <[X,Y,Z]>", var.prefixCmd+"phantom ", "§7Téléporte par voie de la terre aux coordonnées indiquées au format du Near copy", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("velocity") || args[1].equalsIgnoreCase("velo")) {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Velocity <Double>", var.prefixCmd+"velo ", "§7Change le coefficient de knockback en horizontal et vertical de base", false, Chat.Summon);
@@ -746,11 +757,6 @@ public class ChatUtils {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"AutoCmd delay <secondes>", var.prefixCmd+"autocmd delay ", "§7Défini le nombre de seconde entre chaque commandes", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"AutoCmd cmd <Commande>", var.prefixCmd+"autocmd cmd ", "§7Défini la commande à executer toutes les x secondes", false, Chat.Summon);
-					Utils.checkXp(xp);
-					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-				} else if (args[1].equalsIgnoreCase("autocmd")) {
-					Utils.addChat(Utils.sep);
-					Utils.addChat2("§6"+var.prefixCmd+"novanish", var.prefixCmd+"novanish", "§7Vous montre les joueurs vanish (tab & IG)", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("near")) {
@@ -1651,7 +1657,6 @@ public class ChatUtils {
 				}
 				if (args.length>=2 && args[1].equalsIgnoreCase("copy")) {
 					ArrayList<EntityPlayer> en = Utils.getAllPlayer();
-					Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 					String list = "";
 					String player = "";
 					if (args.length==3)
@@ -1664,6 +1669,7 @@ public class ChatUtils {
 							else
 								list+=", "+entity.getName()+"=["+bp.getX()+","+bp.getY()+","+bp.getZ()+"]";
 					}
+					Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 					clipboard.setContents(new StringSelection(list), null);
 					Utils.addChat("§aListe des joueurs copiées !");
 					cont = false;
@@ -2505,7 +2511,7 @@ public class ChatUtils {
 				if (Utils.isLock("--tppos")) {
 					Utils.addWarn("tppos");
 					mc.thePlayer.playSound("mob.villager.no", 1.0F, 1.0F);
-				} else if (args.length==1 || args.length==2 || args.length==3) {
+				} else if (args.length<=3) {
 					Utils.addChat(error);
 				} else {
 					Minecraft.getMinecraft().thePlayer.posY+=1.0F;
@@ -2525,6 +2531,70 @@ public class ChatUtils {
                         Utils.addChat(err);
                     }
                 	Utils.checkXp(xp);
+				}
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"phantom")) {
+				int posY = 1;
+				int x = 0;
+				int y = 0;
+				int z = 0;
+				boolean valid = false;
+				if (args.length==2) {
+					try {
+						if (args[1].startsWith("[") && args[1].endsWith("]")) {
+							String[] l = args[1].replaceAll("\\[", "").replaceAll("\\]", "").split(",");
+							x = Integer.parseInt(l[0]);
+							y = Integer.parseInt(l[1]);
+							z = Integer.parseInt(l[2]);
+							valid = true;
+						}
+					} catch (Exception e) {
+						Utils.addError("Si vous utilisez 2 arguments seulement, vous devez écrire comme ceci: "+var.prefixCmd+"phantom [x,y,z]");
+					}
+				}
+				if (args.length==4 && Utils.isInteger(args[1]) && Utils.isInteger(args[2]) && Utils.isInteger(args[3])) {
+					x = Integer.parseInt(args[1]);
+					y = Integer.parseInt(args[2]);
+					z = Integer.parseInt(args[3]);
+					valid = true;
+				}
+				if (valid) {
+					boolean nc = false;
+					if (!Utils.isToggle("NoClip")) {
+						Utils.toggleModule("NoClip");
+						nc = true;
+//						mc.thePlayer.noClip = true;
+					}
+					BlockPos bp = mc.thePlayer.getPosition();
+					int pX = bp.getX();
+					int pZ = bp.getZ();
+					
+					// Tp in y=3
+					EntityWitch en = new EntityWitch(mc.theWorld);
+					en.setPosition(pX, posY, pZ);
+            		TpUtils tp = new TpUtils();
+            		Vector<Double> vl = tp.getTargetInPos(new BlockPos(en));
+            		tp.doTpAller(en, vl.get(0), vl.get(1), vl.get(2), true, tp.getK(new BlockPos(en)));
+            		
+            		// Tp in pos given
+            		BlockPos target = new BlockPos(x, y, z);
+            		int tX = target.getX();
+            		int tY = target.getY();
+            		int tZ = target.getZ();
+					en.setPosition(tX, posY, tZ);
+            		vl = tp.getTargetInPos(new BlockPos(en));
+            		tp.doTpAller(en, vl.get(0), vl.get(1), vl.get(2), true, tp.getK(new BlockPos(en)));
+            		
+            		// Tp in pos given with Y
+            		en.setPosition(tX, tY, tZ);
+            		vl = tp.getTargetInPos(new BlockPos(en));
+            		tp.doTpAller(en, vl.get(0), vl.get(1), vl.get(2), true, tp.getK(new BlockPos(en)));
+            		
+            		// Desactivate NoClip if not toggled
+            		if (nc)
+            			Utils.toggleModule("NoClip");
 				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
@@ -4061,16 +4131,6 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"fakepos")) {				
-				if (args.length==4) {
-					if (Utils.isInteger(args[1]) && Utils.isInteger(args[2]) && Utils.isInteger(args[3])) {
-						mc.thePlayer.sendQueue.addToSendQueue(new C04PacketPlayerPosition(Integer.parseInt(args[1]), Integer.parseInt(args[2]), Integer.parseInt(args[3]), true));
-						
-					}
-				}
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"tochat")) {				
 				String s = ".......";
 				for (int i=0;i<var.prefixCmd.length();i++)
@@ -5354,8 +5414,9 @@ public class ChatUtils {
 			}
 
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"coord")) {
-				Utils.addChat("Vos coordonnées: X:"+Math.round(mc.thePlayer.posX)+" Y:"+Math.round(mc.thePlayer.posY)+" Z:"+Math.round(mc.thePlayer.posZ));
-				Utils.checkXp(xp);
+				Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+				clipboard.setContents(new StringSelection("["+Math.round(mc.thePlayer.posX)+","+Math.round(mc.thePlayer.posY)+","+Math.round(mc.thePlayer.posZ)+"]"), null);
+				Utils.addChat("§aCoordonnées copiées !");
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}		
 			
