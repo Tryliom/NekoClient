@@ -162,7 +162,7 @@ import net.minecraft.world.WorldSettings.GameType;
 
 public class ChatUtils {
 	Minecraft mc = Minecraft.getMinecraft();
-	Client var = Client.getNeko();
+	Client var = neko.Client.getNeko();
 	String var3;
 	String args[];
 	int xp = 0;
@@ -195,7 +195,7 @@ public class ChatUtils {
 				return;
 			}
 		}
-		if (irc.isOn() && !var3.startsWith(Client.getNeko().prefixCmd)) {
+		if (irc.isOn() && !var3.startsWith(neko.Client.getNeko().prefixCmd)) {
 			boolean inIrc=false;	
 			
 			if (irc.getMode()==IrcMode.Only && (!var3.startsWith("/") || var3.startsWith("//r") || var3.startsWith("//w") || var3.startsWith("//m") || var3.startsWith("//msg"))) {
@@ -203,7 +203,7 @@ public class ChatUtils {
 					var3=Irc.getInstance().getPrefix()+var3;
 				inIrc=true;			
 			}
-			if (irc.getMode()!=IrcMode.Only && (irc.getMode()==IrcMode.Hybride && !var3.startsWith(irc.getPrefix()) || irc.getMode()!=IrcMode.Hybride && var3.startsWith(irc.getPrefix())) && !var3.startsWith(Client.getNeko().prefixCmd) && (!var3.startsWith("/") || var3.startsWith("//r") || var3.startsWith("//w") || var3.startsWith("//m") || var3.startsWith("//msg"))) {
+			if (irc.getMode()!=IrcMode.Only && (irc.getMode()==IrcMode.Hybride && !var3.startsWith(irc.getPrefix()) || irc.getMode()!=IrcMode.Hybride && var3.startsWith(irc.getPrefix())) && !var3.startsWith(neko.Client.getNeko().prefixCmd) && (!var3.startsWith("/") || var3.startsWith("//r") || var3.startsWith("//w") || var3.startsWith("//m") || var3.startsWith("//msg"))) {
 				var3=Irc.getInstance().getPrefix()+var3;
 				inIrc=true;
 			}
@@ -1785,8 +1785,8 @@ public class ChatUtils {
 						} catch (Exception e) {}
 						
 						if (!s.get(0).equals(var.CLIENT_VERSION)) {
-							Client.getNeko().ver=s.get(0);
-							Client.getNeko().changelog=s.get(1);
+							neko.Client.getNeko().ver=s.get(0);
+							neko.Client.getNeko().changelog=s.get(1);
 							try {
 								URI url1 = URI.create("https://nekohc.fr");
 								Desktop.getDesktop().browse(url1);
@@ -5208,7 +5208,7 @@ public class ChatUtils {
 					if (args.length==1 || !Utils.isDouble(args[1])) {
 						Utils.addChat(err);
 					} else {
-						Entity var2 = this.mc.func_175606_aa();
+						Entity var2 = this.mc.getRenderViewEntity();
 				        EnumFacing face = var2.func_174811_aO();				        
 				        switch (face.getIndex()) {
 				        case 4:

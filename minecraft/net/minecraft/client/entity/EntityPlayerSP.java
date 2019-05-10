@@ -5,11 +5,14 @@ import com.darkmagician6.eventapi.types.EventType;
 
 import neko.Client;
 import neko.event.UpdateEvent;
+import neko.event.events.EventPostMotionUpdate;
+import neko.event.events.EventPreMotionUpdate;
+import neko.event.events.EventUpdate;
 import neko.module.Module;
 import neko.module.modules.combat.KillAura;
+import neko.module.modules.player.Noslow;
 import neko.module.modules.special.Likaotique;
 import neko.module.modules.special.NoLook;
-import neko.module.modules.player.Noslow;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.MovingSoundMinecartRiding;
@@ -52,7 +55,6 @@ import net.minecraft.network.play.client.C16PacketClientStatus;
 import net.minecraft.potion.Potion;
 import net.minecraft.stats.StatBase;
 import net.minecraft.stats.StatFileWriter;
-import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntitySign;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
@@ -67,16 +69,16 @@ import net.minecraft.world.World;
 public class EntityPlayerSP extends AbstractClientPlayer
 {
     public final NetHandlerPlayClient sendQueue;
-    private final StatFileWriter field_146108_bO;
-    private double field_175172_bI;
-    private double field_175166_bJ;
-    private double field_175167_bK;
-    private float field_175164_bL;
-    private float field_175165_bM;
-    private boolean field_175170_bN;
-    private boolean field_175171_bO;
-    private int field_175168_bP;
-    private boolean field_175169_bQ;
+    private final StatFileWriter statWriter;
+    private double lastReportedPosX;
+    private double lastReportedPosY;
+    private double lastReportedPosZ;
+    private float lastReportedYaw;
+    private float lastReportedPitch;
+    private boolean serverSneakState;
+    private boolean serverSprintState;
+    private int positionUpdateTicks;
+    private boolean hasValidHealth;
     private String clientBrand;
     public MovementInput movementInput;
     protected Minecraft mc;
@@ -104,11 +106,11 @@ public class EntityPlayerSP extends AbstractClientPlayer
     public float prevTimeInPortal;
     public static UpdateEvent e = null;
 
-    public EntityPlayerSP(Minecraft mcIn, World worldIn, NetHandlerPlayClient p_i46278_3_, StatFileWriter p_i46278_4_)
+    public EntityPlayerSP(Minecraft mcIn, World worldIn, NetHandlerPlayClient netHandler, StatFileWriter statFile)
     {
-        super(worldIn, p_i46278_3_.func_175105_e());
-        this.sendQueue = p_i46278_3_;
-        this.field_146108_bO = p_i46278_4_;
+        super(worldIn, netHandler.getGameProfile());
+        this.sendQueue = netHandler;
+        this.statWriter = statFile;
         this.mc = mcIn;
         this.dimension = 0;
     }
@@ -124,7 +126,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Heal living entity (param: amount of half-hearts)
      */
-    public void heal(float p_70691_1_) {}
+    public void heal(float healAmount) {}
 
     /**
      * Called when a player mounts an entity. e.g. mounts a pig, mounts a boat.
@@ -147,6 +149,9 @@ public class EntityPlayerSP extends AbstractClientPlayer
         if (this.worldObj.isBlockLoaded(new BlockPos(this.posX, 0.0D, this.posZ)))
         {
         	
+        	EventUpdate eventUpdate = new EventUpdate();
+        	eventUpdate.call();
+        	
             super.onUpdate();
 
             if (this.isRiding())
@@ -160,16 +165,22 @@ public class EntityPlayerSP extends AbstractClientPlayer
             }
             else
             {
-                this.func_175161_p();
+                this.onUpdateWalkingPlayer();
+                
+                EventPostMotionUpdate eventPostMotionUpdate = new EventPostMotionUpdate();
+                eventPostMotionUpdate.call();
             }
         }
     }
 
-    public void func_175161_p()
+    public void onUpdateWalkingPlayer()
     {
+    	EventPreMotionUpdate eventPreMotionUpdate = new EventPreMotionUpdate(this.rotationYaw, this.rotationPitch, this.onGround, this.posX, this.posY, this.posZ);
+    	eventPreMotionUpdate.call();
+    	
     	e = new UpdateEvent(this.rotationYaw, this.rotationPitch, this.posX, this.posY, this.posZ, this.onGround, EventType.PRE, true);
     	// TODO: Client
-    	Client var = Client.getNeko();
+    	Client var = neko.Client.getNeko();
     	for(Module eventModule : var.moduleManager.ActiveModule) {
     		if (eventModule.getToggled() && !Utils.isLock(eventModule.getName())) {
     			eventModule.onUpdate();
@@ -182,11 +193,11 @@ public class EntityPlayerSP extends AbstractClientPlayer
     	if (e.isCancelled()) {
   	      return;
   	    }
-        boolean var1 = this.isSprinting();
+        boolean flag = this.isSprinting();
 
-        if (var1 != this.field_175171_bO)
+        if (flag != this.serverSprintState)
         {
-            if (var1)
+            if (flag)
             {
                 this.sendQueue.addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.START_SPRINTING));
             }
@@ -195,18 +206,18 @@ public class EntityPlayerSP extends AbstractClientPlayer
                 this.sendQueue.addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.STOP_SPRINTING));
             }
 
-            this.field_175171_bO = var1;
+            this.serverSprintState = flag;
         }
         
-        boolean var2 = this.isSneaking();
+        boolean flag1 = this.isSneaking();
         //TODO: Sneak
         if (Utils.isToggle("Sneak")) {
-        	var2=true;
+        	flag1=true;
         } 
 
-        if (var2 != this.field_175170_bN)
+        if (flag1 != this.serverSneakState)
         {
-            if (var2)
+            if (flag1)
             {
                 this.sendQueue.addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.START_SNEAKING));
             }
@@ -215,22 +226,22 @@ public class EntityPlayerSP extends AbstractClientPlayer
                 this.sendQueue.addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.STOP_SNEAKING));
             }
 
-            this.field_175170_bN = var2;
+            this.serverSneakState = flag1;
         }
 
-        if (this.func_175160_A())
+        if (this.isCurrentViewEntity())
         {
-            double var3 = this.posX - this.field_175172_bI;
-            double var5 = this.getEntityBoundingBox().minY - this.field_175166_bJ;
-            double var7 = this.posZ - this.field_175167_bK;
-            double var9 = (double)(this.rotationYaw - this.field_175164_bL);
-            double var11 = (double)(this.rotationPitch - this.field_175165_bM);
-            boolean var13 = var3 * var3 + var5 * var5 + var7 * var7 > 9.0E-4D || this.field_175168_bP >= 20;
-            boolean var14 = var9 != 0.0D || var11 != 0.0D;
+            double var3 = this.posX - this.lastReportedPosX;
+            double var5 = this.getEntityBoundingBox().minY - this.lastReportedPosY;
+            double var7 = this.posZ - this.lastReportedPosZ;
+            double var9 = (double)(this.rotationYaw - this.lastReportedYaw);
+            double var11 = (double)(this.rotationPitch - this.lastReportedPitch);
+            boolean flag2 = var3 * var3 + var5 * var5 + var7 * var7 > 9.0E-4D || this.positionUpdateTicks >= 20;
+            boolean flag3 = var9 != 0.0D || var11 != 0.0D;
             
             if (this.ridingEntity == null)
             {
-                if (var13 && var14)
+                if (flag2 && flag3)
                 {
                 	if (Utils.isToggle("NoLook")) {
                 		NoLook n = NoLook.getLook();
@@ -244,14 +255,14 @@ public class EntityPlayerSP extends AbstractClientPlayer
                 	} else
                 		this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.posX, e.y, this.posZ, e.getYaw(), e.getPitch(), e.isOnGround()));
                 }
-                else if (var13)
+                else if (flag2)
                 {                	
                 	if (Utils.isToggle("Likaotique") && Likaotique.getLik().getCurrPos()!=null) {
                 		Utils.sendTpPos(Likaotique.getLik().getCurrPos());
                 	} else
                 		this.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(this.posX, e.y, this.posZ, e.isOnGround()));
                 }
-                else if (var14)
+                else if (flag3)
                 {
                 	if (Utils.isToggle("NoLook")) {
                 		NoLook n = NoLook.getLook();
@@ -271,23 +282,23 @@ public class EntityPlayerSP extends AbstractClientPlayer
             		this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.motionX, -999.0D, this.motionZ, n.getYaw(), n.getPitch(), this.onGround));
             	} else
             		this.sendQueue.addToSendQueue(new C03PacketPlayer.C06PacketPlayerPosLook(this.motionX, -999.0D, this.motionZ, this.rotationYaw, this.rotationPitch, this.onGround));
-                var13 = false;
+                flag2 = false;
             }
 
-            ++this.field_175168_bP;
+            ++this.positionUpdateTicks;
 
-            if (var13)
+            if (flag2)
             {
-                this.field_175172_bI = this.posX;
-                this.field_175166_bJ = this.getEntityBoundingBox().minY;
-                this.field_175167_bK = this.posZ;
-                this.field_175168_bP = 0;
+                this.lastReportedPosX = this.posX;
+                this.lastReportedPosY = this.getEntityBoundingBox().minY;
+                this.lastReportedPosZ = this.posZ;
+                this.positionUpdateTicks = 0;
             }
 
-            if (var14)
+            if (flag3)
             {
-                this.field_175164_bL = this.rotationYaw;
-                this.field_175165_bM = this.rotationPitch;
+                this.lastReportedYaw = this.rotationYaw;
+                this.lastReportedPitch = this.rotationPitch;
             }
             EventManager.call(new UpdateEvent(this.rotationYaw, this.rotationPitch, this.posX, this.posY, this.posZ, this.onGround, EventType.POST, false));
         }
@@ -296,9 +307,9 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Called when player presses the drop item key
      */
-    public EntityItem dropOneItem(boolean p_71040_1_)
+    public EntityItem dropOneItem(boolean dropAll)
     {
-        C07PacketPlayerDigging.Action var2 = p_71040_1_ ? C07PacketPlayerDigging.Action.DROP_ALL_ITEMS : C07PacketPlayerDigging.Action.DROP_ITEM;
+        C07PacketPlayerDigging.Action var2 = dropAll ? C07PacketPlayerDigging.Action.DROP_ALL_ITEMS : C07PacketPlayerDigging.Action.DROP_ITEM;
         this.sendQueue.addToSendQueue(new C07PacketPlayerDigging(var2, BlockPos.ORIGIN, EnumFacing.DOWN));
         return null;
     }
@@ -306,14 +317,14 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Joins the passed in entity item with the world. Args: entityItem
      */
-    protected void joinEntityItemWithWorld(EntityItem p_71012_1_) {}
+    protected void joinEntityItemWithWorld(EntityItem itemIn) {}
 
     /**
      * Sends a chat message from the player. Args: chatMessage
      */
-    public void sendChatMessage(String p_71165_1_)
+    public void sendChatMessage(String message)
     {
-        this.sendQueue.addToSendQueue(new C01PacketChatMessage(p_71165_1_));
+        this.sendQueue.addToSendQueue(new C01PacketChatMessage(message));
     }
 
     /**
@@ -334,11 +345,11 @@ public class EntityPlayerSP extends AbstractClientPlayer
      * Deals damage to the entity. If its a EntityPlayer then will take damage from the armor first and then health
      * second with the reduced value. Args: damageAmount
      */
-    protected void damageEntity(DamageSource p_70665_1_, float p_70665_2_)
+    protected void damageEntity(DamageSource damageSrc, float damageAmount)
     {
-        if (!this.func_180431_b(p_70665_1_))
+        if (!this.func_180431_b(damageSrc))
         {
-            this.setHealth(this.getHealth() - p_70665_2_);
+            this.setHealth(this.getHealth() - damageAmount);
         }
     }
 
@@ -348,10 +359,10 @@ public class EntityPlayerSP extends AbstractClientPlayer
     public void closeScreen()
     {
         this.sendQueue.addToSendQueue(new C0DPacketCloseWindow(this.openContainer.windowId));
-        this.func_175159_q();
+        this.closeScreenAndDropStack();
     }
 
-    public void func_175159_q()
+    public void closeScreenAndDropStack()
     {
         this.inventory.setItemStack((ItemStack)null);
         super.closeScreen();
@@ -361,15 +372,15 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Updates health locally.
      */
-    public void setPlayerSPHealth(float p_71150_1_)
+    public void setPlayerSPHealth(float health)
     {
-        if (this.field_175169_bQ)
+        if (this.hasValidHealth)
         {
-            float var2 = this.getHealth() - p_71150_1_;
+            float var2 = this.getHealth() - health;
 
             if (var2 <= 0.0F)
             {
-                this.setHealth(p_71150_1_);
+                this.setHealth(health);
 
                 if (var2 < 0.0F)
                 {
@@ -387,21 +398,21 @@ public class EntityPlayerSP extends AbstractClientPlayer
         }
         else
         {
-            this.setHealth(p_71150_1_);
-            this.field_175169_bQ = true;
+            this.setHealth(health);
+            this.hasValidHealth = true;
         }
     }
 
     /**
      * Adds a value to a statistic field.
      */
-    public void addStat(StatBase p_71064_1_, int p_71064_2_)
+    public void addStat(StatBase stat, int amount)
     {
-        if (p_71064_1_ != null)
+        if (stat != null)
         {
-            if (p_71064_1_.isIndependent)
+            if (stat.isIndependent)
             {
-                super.addStat(p_71064_1_, p_71064_2_);
+                super.addStat(stat, amount);
             }
         }
     }
@@ -414,7 +425,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
         this.sendQueue.addToSendQueue(new C13PacketPlayerAbilities(this.capabilities));
     }
 
-    public boolean func_175144_cb()
+    public boolean isUser()
     {
         return true;
     }
@@ -424,14 +435,14 @@ public class EntityPlayerSP extends AbstractClientPlayer
         this.sendQueue.addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.RIDING_JUMP, (int)(this.getHorseJumpPower() * 100.0F)));
     }
 
-    public void func_175163_u()
+    public void sendHorseInventory()
     {
         this.sendQueue.addToSendQueue(new C0BPacketEntityAction(this, C0BPacketEntityAction.Action.OPEN_INVENTORY));
     }
 
-    public void func_175158_f(String p_175158_1_)
+    public void setClientBrand(String brand)
     {
-        this.clientBrand = p_175158_1_;
+        this.clientBrand = brand;
     }
 
     public String getClientBrand()
@@ -441,12 +452,12 @@ public class EntityPlayerSP extends AbstractClientPlayer
 
     public StatFileWriter getStatFileWriter()
     {
-        return this.field_146108_bO;
+        return this.statWriter;
     }
 
-    public void addChatComponentMessage(IChatComponent p_146105_1_)
+    public void addChatComponentMessage(IChatComponent chatComponent)
     {
-        this.mc.ingameGUI.getChatGUI().printChatMessage(p_146105_1_);
+        this.mc.ingameGUI.getChatGUI().printChatMessage(chatComponent);
     }
 
     protected boolean pushOutOfBlocks(double x, double y, double z)
@@ -461,30 +472,30 @@ public class EntityPlayerSP extends AbstractClientPlayer
             double var8 = x - (double)var7.getX();
             double var10 = z - (double)var7.getZ();
 
-            if (!this.func_175162_d(var7))
+            if (!this.isOpenBlockSpace(var7))
             {
                 byte var12 = -1;
                 double var13 = 9999.0D;
 
-                if (this.func_175162_d(var7.offsetWest()) && var8 < var13)
+                if (this.isOpenBlockSpace(var7.offsetWest()) && var8 < var13)
                 {
                     var13 = var8;
                     var12 = 0;
                 }
 
-                if (this.func_175162_d(var7.offsetEast()) && 1.0D - var8 < var13)
+                if (this.isOpenBlockSpace(var7.offsetEast()) && 1.0D - var8 < var13)
                 {
                     var13 = 1.0D - var8;
                     var12 = 1;
                 }
 
-                if (this.func_175162_d(var7.offsetNorth()) && var10 < var13)
+                if (this.isOpenBlockSpace(var7.offsetNorth()) && var10 < var13)
                 {
                     var13 = var10;
                     var12 = 4;
                 }
 
-                if (this.func_175162_d(var7.offsetSouth()) && 1.0D - var10 < var13)
+                if (this.isOpenBlockSpace(var7.offsetSouth()) && 1.0D - var10 < var13)
                 {
                     var13 = 1.0D - var10;
                     var12 = 5;
@@ -517,9 +528,9 @@ public class EntityPlayerSP extends AbstractClientPlayer
         }
     }
 
-    private boolean func_175162_d(BlockPos p_175162_1_)
+    private boolean isOpenBlockSpace(BlockPos pos)
     {
-        return !this.worldObj.getBlockState(p_175162_1_).getBlock().isNormalCube() && !this.worldObj.getBlockState(p_175162_1_.offsetUp()).getBlock().isNormalCube();
+        return !this.worldObj.getBlockState(pos).getBlock().isNormalCube() && !this.worldObj.getBlockState(pos.offsetUp()).getBlock().isNormalCube();
     }
 
     /**
@@ -534,13 +545,13 @@ public class EntityPlayerSP extends AbstractClientPlayer
     /**
      * Sets the current XP, total XP, and level number.
      */
-    public void setXPStats(float p_71152_1_, int p_71152_2_, int p_71152_3_)
+    public void setXPStats(float currentXP, int maxXP, int level)
     {
     	if (Math.random()<0.2)
     		Utils.checkXp(1);
-        this.experience = p_71152_1_;
-        this.experienceTotal = p_71152_2_;
-        this.experienceLevel = p_71152_3_;
+        this.experience = currentXP;
+        this.experienceTotal = maxXP;
+        this.experienceLevel = level;
     }
 
     /**
@@ -591,14 +602,14 @@ public class EntityPlayerSP extends AbstractClientPlayer
         return this.horseJumpPower;
     }
 
-    public void func_175141_a(TileEntitySign p_175141_1_)
+    public void openEditSign(TileEntitySign signTile)
     {
-        this.mc.displayGuiScreen(new GuiEditSign(p_175141_1_));
+        this.mc.displayGuiScreen(new GuiEditSign(signTile));
     }
 
-    public void func_146095_a(CommandBlockLogic p_146095_1_)
+    public void openEditCommandBlock(CommandBlockLogic cmdBlockLogic)
     {
-        this.mc.displayGuiScreen(new GuiCommandBlock(p_146095_1_));
+        this.mc.displayGuiScreen(new GuiCommandBlock(cmdBlockLogic));
     }
 
     
@@ -714,7 +725,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
     {
         super.updateEntityActionState();
 
-        if (this.func_175160_A())
+        if (this.isCurrentViewEntity())
         {
             this.moveStrafing = this.movementInput.moveStrafe;
             this.moveForward = this.movementInput.moveForward;
@@ -726,9 +737,9 @@ public class EntityPlayerSP extends AbstractClientPlayer
         }
     }
 
-    protected boolean func_175160_A()
+    protected boolean isCurrentViewEntity()
     {
-        return this.mc.func_175606_aa() == this;
+        return this.mc.getRenderViewEntity() == this;
     }
 
     /**
@@ -869,7 +880,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
             }
         }
 
-        if (this.capabilities.isFlying && this.func_175160_A())
+        if (this.capabilities.isFlying && this.isCurrentViewEntity())
         {
             if (this.movementInput.sneak)
             {

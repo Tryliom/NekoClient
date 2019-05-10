@@ -35,7 +35,7 @@ public class GuiWikiMenu extends GuiScreen {
 	private GuiScreen prevGui;
 	private Minecraft mc = Minecraft.getMinecraft();
 	public static HashMap<String, Vector<HashMap<String, Vector<String>>>> listWiki = new HashMap<String, Vector<HashMap<String, Vector<String>>>>();
-	private Client var = Client.getNeko();
+	private Client var = neko.Client.getNeko();
 	public static boolean check = false;
 
 	public GuiWikiMenu(GuiScreen gui) {

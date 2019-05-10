@@ -13,7 +13,7 @@ public class Conditions extends Module {
 	private String activeServer;
 	private int count=0;
 	private static Conditions instance=null;
-	Client var = Client.getNeko();
+	Client var = neko.Client.getNeko();
 	
 	public Conditions() {
 		super("Conditions", -1, Category.HIDE);

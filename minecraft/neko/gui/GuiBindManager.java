@@ -33,7 +33,7 @@ public class GuiBindManager extends GuiScreen {
 	private ResourceLocation background = mc.getTextureManager().getDynamicTextureLocation("background",
 			GuiMainMenu.viewportTexture);
 	private GuiList list;
-	private Client var = Client.getNeko();
+	private Client var = neko.Client.getNeko();
 	private int lastIndex = -1;
 	private boolean waitKey = false;
 

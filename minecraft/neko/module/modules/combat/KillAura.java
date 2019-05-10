@@ -30,7 +30,7 @@ import net.minecraft.util.MathHelper;
 public class KillAura extends Module {
 	EntityPlayer Player;
 	public static Minecraft mc = Minecraft.getMinecraft();
-	public static Client var = Client.getNeko();
+	public static Client var = neko.Client.getNeko();
 	public int delay=0;
 	public static int cps=6;
 	public static boolean lockView=false;
@@ -211,7 +211,7 @@ public class KillAura extends Module {
 
 class cps implements ActionListener {
 	Minecraft mc = Minecraft.getMinecraft();
-	Client var = Client.getNeko();
+	Client var = neko.Client.getNeko();
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (Utils.sword ? mc.thePlayer.getCurrentEquippedItem()!=null ? mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemSword : false : true) {

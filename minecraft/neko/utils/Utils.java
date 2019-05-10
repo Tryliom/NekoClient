@@ -245,7 +245,7 @@ public class Utils {
 	public static String sep = "§8§m--------------------------------------";
 	public static String sep2 = "§8§m--------------";
 	public static String sep3 = "§8§m------------------------";
-	public static Client var = Client.getNeko();
+	public static Client var = neko.Client.getNeko();
 	public static Vector<String> ipVote = new Vector<String>();
 	public static int xptime = 0;
 	public static NekoCloud nc = NekoCloud.getNekoAPI();
@@ -5974,7 +5974,7 @@ public class Utils {
 			for (int i=0;i<s.size();i++) {
 				if (s.get(i).startsWith("..")) {
 					ChatUtils c = new ChatUtils();
-					c.doCommand(s.get(i).replaceFirst("..", Client.getNeko().prefixCmd));
+					c.doCommand(s.get(i).replaceFirst("..", neko.Client.getNeko().prefixCmd));
 				} else if (s.get(i).startsWith("if")) {									
 					String sr[] = s.get(i).split(" ");
 					if (s.get(i).startsWith("if $serv ") && sr[3].equalsIgnoreCase("bonus") && (mc.isSingleplayer() || InetAddress.getByName(mc.getCurrentServerData().serverIP).getHostAddress()!=InetAddress.getByName(sr[2]).getHostAddress())) {
@@ -5999,21 +5999,21 @@ public class Utils {
 								}
 								if (r.startsWith("..")) {
 									ChatUtils c = new ChatUtils();
-									r = r.replaceFirst("..", Client.getNeko().prefixCmd);
-									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
+									r = r.replaceFirst("..", neko.Client.getNeko().prefixCmd);
+									r = r.replaceAll("!!ver", neko.Client.getNeko().CLIENT_VERSION);
 									c.doCommand(r.replaceAll("!!player", user));
 								} else if (r.startsWith("bonus")) {
 									String var[] = r.replaceFirst("bonus ", "").split(" ");
 									int sec = Integer.parseInt(var[1]);
 									double bon = Double.parseDouble(var[0]);
-									Client.getNeko().tempBonus=bon;
+									neko.Client.getNeko().tempBonus=bon;
 									TempBon t = new TempBon(sec);	
 									if (bon>0)
 										Utils.addChat("§aBonus cadeau de §d"+Math.round(bon)+"% §aajouté :3 !");
 									else 
 										Utils.addChat("§cMalus cadeau de §d"+Math.round(bon)+"% §cajouté >:3 !");
 								} else {
-									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
+									r = r.replaceAll("!!ver", neko.Client.getNeko().CLIENT_VERSION);
 									r = r.replaceAll("!!player", user);
 									Utils.addChat(r);
 								}
@@ -6032,21 +6032,21 @@ public class Utils {
 								}
 								if (r.startsWith("..")) {
 									ChatUtils c = new ChatUtils();
-									r = r.replaceFirst("..", Client.getNeko().prefixCmd);
-									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
+									r = r.replaceFirst("..", neko.Client.getNeko().prefixCmd);
+									r = r.replaceAll("!!ver", neko.Client.getNeko().CLIENT_VERSION);
 									c.doCommand(r.replaceAll("!!player", user));
 								} else if (r.startsWith("bonus")) {
 									String var[] = r.replaceFirst("bonus ", "").split(" ");
 									int sec = Integer.parseInt(var[1]);
 									double bon = Double.parseDouble(var[0]);
-									Client.getNeko().tempBonus=bon;
+									neko.Client.getNeko().tempBonus=bon;
 									TempBon t = new TempBon(sec);
 									if (bon>0)
 										Utils.addChat("§aBonus cadeau de §d"+Math.round(bon)+"% §aajouté :3 !");
 									else 
 										Utils.addChat("§cMalus cadeau de §d"+Math.round(bon)+"% §cajouté >:3 !");
 								} else {
-									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
+									r = r.replaceAll("!!ver", neko.Client.getNeko().CLIENT_VERSION);
 									r = r.replaceAll("!!player", user);
 									Utils.addChat(r);
 								}
@@ -6068,21 +6068,21 @@ public class Utils {
 								}
 								if (r.startsWith("..")) {
 									ChatUtils c = new ChatUtils();
-									r = r.replaceFirst("..", Client.getNeko().prefixCmd);
-									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
+									r = r.replaceFirst("..", neko.Client.getNeko().prefixCmd);
+									r = r.replaceAll("!!ver", neko.Client.getNeko().CLIENT_VERSION);
 									c.doCommand(r.replaceAll("!!player", user));
 								} else if (r.startsWith("bonus")) {
 									String var[] = r.replaceFirst("bonus ", "").split(" ");
 									int sec = Integer.parseInt(var[1]);
 									double bon = Double.parseDouble(var[0]);
-									Client.getNeko().tempBonus=bon;
+									neko.Client.getNeko().tempBonus=bon;
 									TempBon t = new TempBon(sec);
 									if (bon>0)
 										Utils.addChat("§aBonus cadeau de §d"+Math.round(bon)+"% §aajouté :3 !");
 									else 
 										Utils.addChat("§cMalus cadeau de §d"+Math.round(bon)+"% §cajouté >:3 !");
 								} else {
-									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
+									r = r.replaceAll("!!ver", neko.Client.getNeko().CLIENT_VERSION);
 									r = r.replaceAll("!!player", user);
 									Utils.addChat(r);
 								}
@@ -6104,21 +6104,21 @@ public class Utils {
 								}
 								if (r.startsWith("..")) {
 									ChatUtils c = new ChatUtils();
-									r = r.replaceFirst("..", Client.getNeko().prefixCmd);
-									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
+									r = r.replaceFirst("..", neko.Client.getNeko().prefixCmd);
+									r = r.replaceAll("!!ver", neko.Client.getNeko().CLIENT_VERSION);
 									c.doCommand(r.replaceAll("!!player", user));
 								} else if (r.startsWith("bonus")) {
 									String var[] = r.replaceFirst("bonus ", "").split(" ");
 									int sec = Integer.parseInt(var[1]);
 									double bon = Double.parseDouble(var[0]);
-									Client.getNeko().tempBonus=bon;
+									neko.Client.getNeko().tempBonus=bon;
 									TempBon t = new TempBon(sec);
 									if (bon>0)
 										Utils.addChat("§aBonus cadeau de §d"+Math.round(bon)+"% §aajouté :3 !");
 									else 
 										Utils.addChat("§cMalus cadeau de §d"+Math.round(bon)+"% §cajouté >:3 !");
 								} else {
-									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
+									r = r.replaceAll("!!ver", neko.Client.getNeko().CLIENT_VERSION);
 									r = r.replaceAll("!!player", user);
 									Utils.addChat(r);
 								}
@@ -6130,28 +6130,28 @@ public class Utils {
 							} else {
 								user=mc.session.getUsername();
 							}
-							if (Client.getNeko().CLIENT_VERSION.equalsIgnoreCase(sr[2])) {
+							if (neko.Client.getNeko().CLIENT_VERSION.equalsIgnoreCase(sr[2])) {
 								String r="";
 								for (int m=3;m<sr.length;m++) {
 									r+=sr[m] + " ";
 								}
 								if (r.startsWith("..")) {
 									ChatUtils c = new ChatUtils();
-									r = r.replaceFirst("..", Client.getNeko().prefixCmd);
+									r = r.replaceFirst("..", neko.Client.getNeko().prefixCmd);
 									r = r.replaceAll("!!player", user);
-									c.doCommand(r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION));
+									c.doCommand(r.replaceAll("!!ver", neko.Client.getNeko().CLIENT_VERSION));
 								} else if (r.startsWith("bonus")) {
 									String var[] = r.replaceFirst("bonus ", "").split(" ");
 									int sec = Integer.parseInt(var[1]);
 									double bon = Double.parseDouble(var[0]);
-									Client.getNeko().tempBonus=bon;
+									neko.Client.getNeko().tempBonus=bon;
 									TempBon t = new TempBon(sec);
 									if (bon>0)
 										Utils.addChat("§aBonus cadeau de §d"+Math.round(bon)+"% §aajouté :3 !");
 									else 
 										Utils.addChat("§cMalus cadeau de §d"+Math.round(bon)+"% §cajouté >:3 !");
 								} else {
-									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
+									r = r.replaceAll("!!ver", neko.Client.getNeko().CLIENT_VERSION);
 									r = r.replaceAll("!!player", user);
 									Utils.addChat(r);
 								}
@@ -6163,28 +6163,28 @@ public class Utils {
 							} else {
 								user=mc.session.getUsername();
 							}
-							if (!Client.getNeko().CLIENT_VERSION.equalsIgnoreCase(sr[2])) {
+							if (!neko.Client.getNeko().CLIENT_VERSION.equalsIgnoreCase(sr[2])) {
 								String r="";
 								for (int m=3;m<sr.length;m++) {
 									r+=sr[m] + " ";
 								}
 								if (r.startsWith("..")) {
 									ChatUtils c = new ChatUtils();
-									r = r.replaceFirst("..", Client.getNeko().prefixCmd);
+									r = r.replaceFirst("..", neko.Client.getNeko().prefixCmd);
 									r = r.replaceAll("!!player", user);
-									c.doCommand(r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION));
+									c.doCommand(r.replaceAll("!!ver", neko.Client.getNeko().CLIENT_VERSION));
 								} else if (r.startsWith("bonus")) {
 									String var[] = r.replaceFirst("bonus ", "").split(" ");
 									int sec = Integer.parseInt(var[1]);
 									double bon = Double.parseDouble(var[0]);
-									Client.getNeko().tempBonus=bon;
+									neko.Client.getNeko().tempBonus=bon;
 									TempBon t = new TempBon(sec);
 									if (bon>0)
 										Utils.addChat("§aBonus cadeau de §d"+Math.round(bon)+"% §aajouté :3 !");
 									else 
 										Utils.addChat("§cMalus cadeau de §d"+Math.round(bon)+"% §cajouté >:3 !");
 								} else {
-									r = r.replaceAll("!!ver", Client.getNeko().CLIENT_VERSION);
+									r = r.replaceAll("!!ver", neko.Client.getNeko().CLIENT_VERSION);
 									r = r.replaceAll("!!player", user);
 									Utils.addChat(r);
 								}
@@ -6195,7 +6195,7 @@ public class Utils {
 					String var[] = s.get(i).replaceFirst("bonus ", "").split(" ");
 					int sec = Integer.parseInt(var[1]);
 					double bon = Double.parseDouble(var[0]);
-					Client.getNeko().tempBonus=bon;
+					neko.Client.getNeko().tempBonus=bon;
 					TempBon t = new TempBon(sec);
 					if (bon>0)
 						Utils.addChat("§aBonus cadeau de §d"+Math.round(bon)+"% §aajouté :3 !");

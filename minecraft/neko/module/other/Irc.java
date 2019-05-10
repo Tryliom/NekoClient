@@ -125,7 +125,7 @@ public class Irc {
 		if (this.getNamePlayer().isEmpty() || this.idPlayer<=0) {
 			Utils.addChat("§cErreur, veuillez choisir votre pseudo pour le chat !");
 		} else {
-			Client var = Client.getNeko();
+			Client var = neko.Client.getNeko();
 			Minecraft mc = Minecraft.getMinecraft();
 			String s="";					
 			String player="";
@@ -178,7 +178,7 @@ public class Irc {
 	
 	public String getPlayerClic(String name, String serv) {
 		String s = "";
-		Client var = Client.getNeko();
+		Client var = neko.Client.getNeko();
 		if (this.playerClic.equalsIgnoreCase("connect")) {
 			s=var.prefixCmd+"connect "+serv;
 		} else {

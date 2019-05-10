@@ -133,10 +133,13 @@ public class ModuleManager {
 	public Xray xrayModule;
 
 	public ModuleManager() {	
+
 		this.ActiveModule.clear();
 		this.Lock.clear();
 		this.rang.clear();
 		this.values.clear();
+
+		Combat(); Render(); Player(); Movement(); Misc(); Hide(); Special();
 		
 		// Ajouter les modules
 		this.ActiveModule.add(new Sprint()); // Key K
@@ -992,5 +995,32 @@ public class ModuleManager {
 		Utils.getRank("Clone d'un Léviathan").setDesc("Cloné autrefois et béni pour sa puissance démoniaque, ce Léviathan a été éduqué par la secte du Last Neko Judgement afin de devenir un soldat surpuissant");
 		rang.add(new Rank("Homme de lettres", 1300, Rate.Neko, "§5", true, 0));
 		Utils.getRank("Homme de lettres").setDesc("Homme étudiant toute sorte de magie, connais de puissants sorts et créature comme le Légendaire Pyroman, pour l'invoquer il faut s'entourer de flammes pendant un orage la nuit et lui dire : \"Pyroman des abîmes, je t'invoque en t'offrant mon sang comme présent\"");
+	}
+
+	public void Combat() {
+		
+	}
+	public void Render() {
+		
+	}
+	public void Player() {
+		
+	}
+	public void Movement() {
+		
+	}
+	public void Misc() {
+		
+	}
+	public void Hide() {
+		
+	}
+	public void Special() {
+		
+	}
+	
+	
+	public ArrayList<Module> getModules(){
+		return ActiveModule;
 	}
 }

@@ -1221,9 +1221,9 @@ public abstract class EntityPlayer extends EntityLivingBase
         }
     }
 
-    public void func_175141_a(TileEntitySign p_175141_1_) {}
+    public void openEditSign(TileEntitySign p_175141_1_) {}
 
-    public void func_146095_a(CommandBlockLogic p_146095_1_) {}
+    public void openEditCommandBlock(CommandBlockLogic p_146095_1_) {}
 
     public void displayVillagerTradeGui(IMerchant villager) {}
 
@@ -1497,7 +1497,7 @@ public abstract class EntityPlayer extends EntityLivingBase
         return !this.sleeping && super.isEntityInsideOpaqueBlock();
     }
 
-    public boolean func_175144_cb()
+    public boolean isUser()
     {
         return false;
     }

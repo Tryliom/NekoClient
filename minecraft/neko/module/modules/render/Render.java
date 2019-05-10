@@ -27,7 +27,7 @@ public class Render extends Module {
 	public static int count=0;
 	public static boolean active=true;
 	public static boolean xp=true;
-	Client var = Client.getNeko();
+	Client var = neko.Client.getNeko();
 	
 	public Render() {
 		super("Render", -1, Category.HIDE);
@@ -261,7 +261,7 @@ public class Render extends Module {
 	}
 	
 	public static void MeteoreRain() {
-		Client var = Client.getNeko();
+		Client var = neko.Client.getNeko();
 		Minecraft mc = Minecraft.getMinecraft();
 		for (int j=0;j<100;j++)
 		for (int k=0;k<100;k++) {

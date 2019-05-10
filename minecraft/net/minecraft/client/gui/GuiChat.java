@@ -224,7 +224,7 @@ public class GuiChat extends GuiScreen {
 			break;
 		}
 		case 4: {
-			mc.displayGuiScreen(new GuiChat(Client.getNeko().prefixCmd+this.inputField.getText()));
+			mc.displayGuiScreen(new GuiChat(neko.Client.getNeko().prefixCmd+this.inputField.getText()));
 			break;
 		}
 		case 5: {
@@ -241,8 +241,8 @@ public class GuiChat extends GuiScreen {
 			}
 			Utils.checkXp(xp);
 			int rand = (int) Math.round(Math.random() * 1000);
-			if (!Client.getNeko().achievementHelp) {
-				Client.getNeko().achievementHelp = true;
+			if (!neko.Client.getNeko().achievementHelp) {
+				neko.Client.getNeko().achievementHelp = true;
 				Utils.addChat("§dAchievement Help get !§b +" + rand + "xp !");
 				Utils.checkXp(rand);
 			}
@@ -271,14 +271,14 @@ public class GuiChat extends GuiScreen {
 
 	protected void func_175274_a(String p_175274_1_, boolean p_175274_2_) {
 		if (p_175274_2_) {
-			if (p_175274_1_.startsWith(("<>".equalsIgnoreCase(Client.getNeko().prefixCmd) ? "><" : "<>")))
+			if (p_175274_1_.startsWith(("<>".equalsIgnoreCase(neko.Client.getNeko().prefixCmd) ? "><" : "<>")))
 				this.inputField.setText(p_175274_1_.replaceFirst("..", ""));
 			else
 				this.inputField.setText(p_175274_1_);
 		} else {
 			this.inputField.writeText(p_175274_1_);
 		}
-		if (p_175274_1_.startsWith(Client.getNeko().prefixCmd) && p_175274_2_) {
+		if (p_175274_1_.startsWith(neko.Client.getNeko().prefixCmd) && p_175274_2_) {
 			new Thread(new Runnable() {
 				public void run() {
 					try {

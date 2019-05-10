@@ -6,7 +6,7 @@ public class TutoManager {
 	private boolean done = true;
 	private int part=1;
 	private int totPart=8;
-	private Client var = Client.getNeko();
+	private Client var = neko.Client.getNeko();
 	private static TutoManager instance = null;
 	
 	public static TutoManager getTuto() {

@@ -43,7 +43,7 @@ public class FireTrail extends Module {
 		BlockPos a = null;
 		BlockPos b = null;
 		BlockPos c = null;
-		Entity var2 = this.mc.func_175606_aa();
+		Entity var2 = this.mc.getRenderViewEntity();
         EnumFacing face = var2.func_174811_aO();				        
         switch (face.getIndex()) {
         case 4:

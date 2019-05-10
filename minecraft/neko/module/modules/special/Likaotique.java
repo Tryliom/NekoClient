@@ -196,7 +196,7 @@ public class Likaotique extends Module {
 
 class tptimer implements ActionListener {
 	Minecraft mc = Minecraft.getMinecraft();
-	Client var = Client.getNeko();
+	Client var = neko.Client.getNeko();
 	TpUtils tp = new TpUtils();
 	
 	@Override

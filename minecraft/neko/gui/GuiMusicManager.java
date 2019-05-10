@@ -34,7 +34,7 @@ public class GuiMusicManager extends GuiScreen {
 	private Minecraft mc = Minecraft.getMinecraft();
 	private ResourceLocation background = new ResourceLocation("textures/gui/GuiAccount/background.png");
 	private GuiList list;
-	private Client var = Client.getNeko();
+	private Client var = neko.Client.getNeko();
 	private int lastIndex = -1;
 
 	public GuiMusicManager(GuiScreen gui) {

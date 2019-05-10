@@ -12,7 +12,7 @@ import neko.module.Category;
 import neko.module.Module;
 
 public class UIRender {
-	Client var = Client.getNeko();
+	Client var = neko.Client.getNeko();
 	
 	public void renderAndUpdateFrames(){
 		for(Frame f: var.gui.getFrames()) {

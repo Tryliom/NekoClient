@@ -37,7 +37,7 @@ public class Xp {
 
 class checkXp implements ActionListener {
 	Minecraft mc = Minecraft.getMinecraft();
-	Client var = Client.getNeko();
+	Client var = neko.Client.getNeko();
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {

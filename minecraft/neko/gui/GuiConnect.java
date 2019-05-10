@@ -30,7 +30,7 @@ public class GuiConnect extends GuiScreen {
 	/*private ResourceLocation background = mc.getTextureManager().getDynamicTextureLocation("background",
 			GuiMainMenu.viewportTexture);*/
 	private ResourceLocation background = new ResourceLocation("textures/gui/title/background/npanorama_0.png");
-	private Client var = Client.getNeko();
+	private Client var = neko.Client.getNeko();
 	private GuiTextField user;
 	private GuiTextField pass;
 	private String error = "";
@@ -83,14 +83,14 @@ public class GuiConnect extends GuiScreen {
 		drawCenteredString(var.NekoFont, "§e§nConnexion à Neko", this.width / 2, this.height / 2 - 70, 16777215);
 		
 		drawCenteredString(var.NekoFont, "§c" + this.error, this.width / 2, this.height / 2 - 50, 16777215);
-		String var10 = Client.getNeko().strNeko;
+		String var10 = neko.Client.getNeko().strNeko;
 		if (this.part == 1) {
 			this.user.drawRGBATextBox(-13882323, -14737633);
 			this.pass.drawRGBATextBox(-13882323, -14737633);
 			//Calcul des INT RGBA : https://www.shodor.org/stella2java/rgbint.html
 		}
 		this.drawString(var.NekoFont, var10, 2, this.height - 10, -1);
-		String var11 = Client.getNeko().strCreator;
+		String var11 = neko.Client.getNeko().strCreator;
 		this.drawString(var.NekoFont, var11, this.width - var.NekoFont.getStringWidth(var11) - 2, this.height - 10, -1);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}

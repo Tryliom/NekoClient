@@ -22,7 +22,7 @@ public class Lot extends Module {
 	public static double large=0.2;
 	public static boolean signPlus=true;
 	public static int nbLot=3;
-	Client var = Client.getNeko();
+	Client var = neko.Client.getNeko();
 	
 	public Lot() {
 		super("Lot", -1, Category.HIDE);

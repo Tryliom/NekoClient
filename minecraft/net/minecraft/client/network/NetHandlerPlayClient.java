@@ -851,7 +851,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
 
     public void addToSendQueue(Packet p_147297_1_) {	   
     	Minecraft mc = Minecraft.getMinecraft();
-    	Client var = Client.getNeko();
+    	Client var = neko.Client.getNeko();
     	//TODO: Freecam & Blink & Unicode	
     	if (p_147297_1_ instanceof C14PacketTabComplete) {
     		if (((C14PacketTabComplete) p_147297_1_).getMessage().startsWith(var.prefixCmd)) {
@@ -947,7 +947,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
      */
     public void handleChat(S02PacketChat packetIn)
     {
-    	Client var = Client.getNeko();
+    	Client var = neko.Client.getNeko();
     	Minecraft mc = Minecraft.getMinecraft();
     	//TODO: Kill
         PacketThreadUtil.func_180031_a(packetIn, this, this.getGameController());  
@@ -1392,7 +1392,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
             ((TileEntity)var2).setPos(packetIn.func_179777_a());
         }
 
-        this.getGameController().thePlayer.func_175141_a((TileEntitySign)var2);
+        this.getGameController().thePlayer.openEditSign((TileEntitySign)var2);
     }
 
     /**
@@ -1478,7 +1478,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     public void handleCloseWindow(S2EPacketCloseWindow packetIn)
     {
         PacketThreadUtil.func_180031_a(packetIn, this, this.getGameController());
-        this.getGameController().thePlayer.func_175159_q();
+        this.getGameController().thePlayer.closeScreenAndDropStack();
     }
 
     /**
@@ -2069,7 +2069,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         else if ("MC|Brand".equals(packetIn.getChannelName()))
         {
         	try {
-        		this.getGameController().thePlayer.func_175158_f(packetIn.getBufferData().readStringFromBuffer(32767));
+        		this.getGameController().thePlayer.setClientBrand(packetIn.getBufferData().readStringFromBuffer(32767));
         	} catch (Exception e) {}
         }
         else if ("MC|BOpen".equals(packetIn.getChannelName()))
@@ -2357,7 +2357,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         return var3;
     }
 
-    public GameProfile func_175105_e()
+    public GameProfile getGameProfile()
     {
         return this.field_175107_d;
     }

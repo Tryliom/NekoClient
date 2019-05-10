@@ -15,7 +15,7 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 public class Module {
 	protected Minecraft mc = Minecraft.getMinecraft();
 	protected static Utils u;
-	protected Client var = Client.getNeko();
+	protected Client var = neko.Client.getNeko();
 	protected InGameGui g;
 	protected String moduleName;
 	protected int moduleBind;
@@ -31,6 +31,10 @@ public class Module {
 		this.moduleName = moduleName;
 		this.moduleBind = moduleBind;
 		this.moduleCategory = moduleCategory;
+		setup();
+	}
+	
+	public void setup() {
 	}
 
 	public String getName() {
@@ -134,6 +138,7 @@ public class Module {
 
 		if (Utils.shouldChat(this))
 			Utils.addChat("§a§o" + getName() + " activé !");
+		neko.Client.getNeko().eventManager.register(this);
 
 	}
 
@@ -141,6 +146,7 @@ public class Module {
 
 		if (Utils.shouldChat(this))
 			Utils.addChat("§c§o" + getName() + " désactivé !");
+		neko.Client.getNeko().eventManager.unregister(this);
 
 	}
 

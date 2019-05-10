@@ -58,6 +58,7 @@ import com.mojang.authlib.properties.PropertyMap;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
 import neko.Client;
+import neko.event.events.EventKey;
 import neko.gui.GuiAltManager;
 import neko.gui.GuiTuto;
 import neko.manager.SoundManager;
@@ -596,7 +597,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         }
         
         //TODO: Client
-        Client var = Client.getNeko();
+        Client var = neko.Client.getNeko();
         var.startClient();
         
         try
@@ -1061,6 +1062,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     {
         try
         {
+        	
+        	neko.Client.getNeko().stopClient();
+        	
             this.stream.shutdownStream();
             logger.info("Stopping!");
 
@@ -1547,7 +1551,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     		}
     	}
     		
-    	Client var = Client.getNeko();
+    	Client var = neko.Client.getNeko();
     	for(Module m : var.moduleManager.ActiveModule) {
     		if(m.getToggled() && Utils.verif==null) {
     			m.onClick();
@@ -1609,7 +1613,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
      */
     public void rightClickMouse()
     {
-    	Client var = Client.getNeko();
+    	Client var = neko.Client.getNeko();
     	for(Module m : var.moduleManager.ActiveModule) {
     		if(m.getToggled() && Utils.verif==null) {
     			m.onRightClick();
@@ -1994,6 +1998,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                     }
                     else
                     {
+                    	EventKey eventKey = new EventKey(var1);
+                    	eventKey.call();
+                    	
                     	//TODO: Client 
                         if (Utils.mod) {
                         	if (Utils.display) {
@@ -2005,7 +2012,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                         	}
                         	Utils.mod=false;
                         }
-                        Client var = Client.getNeko();
+                        Client var = neko.Client.getNeko();
                     	for(Module eventModule : var.moduleManager.ActiveModule) {
                     		if(Keyboard.getEventKey() == eventModule.getBind() && Utils.verif==null && !Utils.isLock(eventModule.getName())) {
                     			eventModule.toggleModule();
@@ -2112,7 +2119,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
                             if (this.gameSettings.thirdPersonView == 0)
                             {
-                                this.entityRenderer.func_175066_a(this.func_175606_aa());
+                                this.entityRenderer.func_175066_a(this.getRenderViewEntity());
                             }
                             else if (this.gameSettings.thirdPersonView == 1)
                             {
@@ -2165,7 +2172,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             {
                 if (this.playerController.isRidingHorse())
                 {
-                    this.thePlayer.func_175163_u();
+                    this.thePlayer.sendHorseInventory();
                 }
                 else
                 {
@@ -2528,7 +2535,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         this.thePlayer.dimension = dimension;
         this.field_175622_Z = this.thePlayer;
         this.thePlayer.preparePlayerToSpawn();
-        this.thePlayer.func_175158_f(var3);
+        this.thePlayer.setClientBrand(var3);
         this.theWorld.spawnEntityInWorld(this.thePlayer);
         this.playerController.flipPlayer(this.thePlayer);
         this.thePlayer.movementInput = new MovementInputFromOptions(this.gameSettings);
@@ -3222,7 +3229,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         return this.skinManager;
     }
 
-    public Entity func_175606_aa()
+    public Entity getRenderViewEntity()
     {
         return this.field_175622_Z;
     }

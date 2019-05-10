@@ -2,21 +2,20 @@ package neko;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.net.InetAddress;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Vector;
 
-import javax.lang.model.element.VariableElement;
 import javax.swing.Timer;
 
-import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.opengl.Display;
 
-import neko.api.NekoCloud;
+import de.Hero.clickgui.ClickGUI;
+import de.Hero.settings.SettingsManager;
 import neko.dtb.RequestThread;
+import neko.event.EventManager;
 import neko.gui.RequestManager;
 import neko.manager.GuiManager;
 import neko.manager.ModuleManager;
@@ -38,7 +37,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class Client {
 	Minecraft mc = Minecraft.getMinecraft();
-	public final String CLIENT_NAME = "Neko";
+	public SettingsManager settingsManager;
+	public final static String CLIENT_NAME = "Neko";
 	public final String CLIENT_AUTHOR = "Tryliom";
 	public ModuleManager moduleManager;
 	public GuiManager gui;
@@ -73,6 +73,8 @@ public class Client {
 	public boolean firstServDisplay = true;
 	public String strNeko = "§bNeko v" + CLIENT_VERSION;
 	public String strCreator = "§eCréé par §f§lTryliom§e et §f§lMarie";
+	public EventManager eventManager;
+	public ClickGUI clickGui;
 
 	public void startClient() {
 		time.start();
@@ -98,6 +100,13 @@ public class Client {
 		} catch (Exception e) {
 			System.out.println("Adresse inatteignable :c");
 		}
+
+		settingsManager = new SettingsManager();
+		eventManager = new EventManager();
+		eventManager.register(this);
+		moduleManager = new ModuleManager();
+		clickGui = new ClickGUI();
+		
 		NekoFont = new FontRenderer(mc.gameSettings, new ResourceLocation("neko/font/ascii.png"), mc.renderEngine,
 				false);
 		if (mc.gameSettings.language != null) {
@@ -167,6 +176,10 @@ public class Client {
 
 	public static final Client getNeko() {
 		return Neko;
+	}
+	
+	public void stopClient() {
+		eventManager.unregister(this);
 	}
 
 }

@@ -95,6 +95,44 @@ public class Gui
         GlStateManager.disableBlend();
     }
     
+    public static void drawRect(double left, double top, double right, double bottom, int color)
+    {
+    	double var5;
+
+        if (left < right)
+        {
+            var5 = left;
+            left = right;
+            right = var5;
+        }
+
+        if (top < bottom)
+        {
+            var5 = top;
+            top = bottom;
+            bottom = var5;
+        }
+
+        float var11 = (float)(color >> 24 & 255) / 255.0F;
+        float var6 = (float)(color >> 16 & 255) / 255.0F;
+        float var7 = (float)(color >> 8 & 255) / 255.0F;
+        float var8 = (float)(color & 255) / 255.0F;
+        Tessellator var9 = Tessellator.getInstance();
+        WorldRenderer var10 = var9.getWorldRenderer();
+        GlStateManager.enableBlend();
+        GlStateManager.func_179090_x();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+        GlStateManager.color(var6, var7, var8, var11);
+        var10.startDrawingQuads();
+        var10.addVertex((double)left, (double)bottom, 0.0D);
+        var10.addVertex((double)right, (double)bottom, 0.0D);
+        var10.addVertex((double)right, (double)top, 0.0D);
+        var10.addVertex((double)left, (double)top, 0.0D);
+        var9.draw();
+        GlStateManager.func_179098_w();
+        GlStateManager.disableBlend();
+    }
+    
     public static void drawRGBARect(int left, int top, int right, int bottom, float colorR, float colorG, float colorB, float colorAlpha)
     {
         int var5;

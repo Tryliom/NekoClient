@@ -18,7 +18,7 @@ public class GuiAccount extends GuiScreen {
 	private Minecraft mc = Minecraft.getMinecraft();
 	private ResourceLocation background = mc.getTextureManager().getDynamicTextureLocation("background",
 			GuiMainMenu.viewportTexture);
-	private Client var = Client.getNeko();
+	private Client var = neko.Client.getNeko();
 	private String error = "";
 
 	public GuiAccount(GuiScreen gui) {
@@ -42,7 +42,7 @@ public class GuiAccount extends GuiScreen {
 
 		drawCenteredString(var.NekoFont, "§e§nVotre compte Neko", this.width / 2, 10, 16777215);
 		drawCenteredString(var.NekoFont, "§c" + this.error, this.width / 2, 130, 16777215);
-		String var11 = Client.getNeko().strCreator;
+		String var11 = neko.Client.getNeko().strCreator;
 		this.drawString(var.NekoFont, var11, this.width - var.NekoFont.getStringWidth(var11) - 2, this.height - 10, -1);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}

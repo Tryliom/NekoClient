@@ -15,7 +15,7 @@ import net.minecraft.client.gui.ScaledResolution;
 public class GuiShop extends GuiScreen {
 	private GuiScreen prevGui;
 	private Minecraft mc = Minecraft.getMinecraft();
-	private Client var = Client.getNeko();
+	private Client var = neko.Client.getNeko();
 	private String info="§aConnecté au NekoShop !";
 	
 	public GuiShop(GuiScreen gui) {

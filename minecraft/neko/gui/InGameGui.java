@@ -48,7 +48,7 @@ public class InGameGui {
 	public static int p=0;
 	static int yPos = 10;
 	static int multi=0;
-	static Client var = Client.getNeko();
+	static Client var = neko.Client.getNeko();
 	public static int hudWid;
 	
 	public static void render() {

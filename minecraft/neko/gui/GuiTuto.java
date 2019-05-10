@@ -17,7 +17,7 @@ import net.minecraft.client.gui.ScaledResolution;
 public class GuiTuto extends GuiScreen {
 	private GuiScreen prevGui;
 	private Minecraft mc = Minecraft.getMinecraft();
-	private Client var = Client.getNeko();
+	private Client var = neko.Client.getNeko();
 	private TutoManager tm = TutoManager.getTuto();
 	private String part=tm.getPart(tm.getPart());
 	private int hBtn=0;

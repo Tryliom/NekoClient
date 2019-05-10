@@ -9,6 +9,7 @@ import java.util.Random;
 import org.lwjgl.opengl.GL11;
 
 import neko.Client;
+import neko.event.events.Event2D;
 import neko.gui.InGameGui;
 import neko.module.Module;
 import neko.module.modules.misc.Nameprotect;
@@ -149,14 +150,17 @@ public class GuiIngame extends Gui
             }
         }
 
-        if (this.mc.playerController.enableEverythingIsScrewedUpMode())
+        if (this.mc.playerController.enableEverythingIsScrewedUpMode()) //== if (this.mc.playerController.isSpectator()) {
         {
-            this.field_175197_u.func_175264_a(var2, p_175180_1_);
+            this.field_175197_u.func_175264_a(var2, p_175180_1_); //==this.spectatorGui.renderTooltip(scaledresolution, partialTicks);
         }
         else
         {
-            this.func_180479_a(var2, p_175180_1_);
+            this.func_180479_a(var2, p_175180_1_); //==this.renderTooltip(scaledresolution, partialTicks);
         }
+        
+        Event2D event2D = new Event2D(var2.getScaledWidth(), var2.getScaledHeight());
+        event2D.call();
 
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(icons);
@@ -205,7 +209,7 @@ public class GuiIngame extends Gui
         }
         
         //TODO: Render 2D
-        Client var = Client.getNeko();
+        Client var = neko.Client.getNeko();
         for(Module m : var.moduleManager.ActiveModule) {
     		if(m.getToggled() && Utils.verif==null) {
     			m.onRender2D();
@@ -375,11 +379,11 @@ public class GuiIngame extends Gui
 
     protected void func_180479_a(ScaledResolution p_180479_1_, float p_180479_2_)
     {
-        if (this.mc.func_175606_aa() instanceof EntityPlayer)
+        if (this.mc.getRenderViewEntity() instanceof EntityPlayer)
         {
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.mc.getTextureManager().bindTexture(widgetsTexPath);
-            EntityPlayer var3 = (EntityPlayer)this.mc.func_175606_aa();
+            EntityPlayer var3 = (EntityPlayer)this.mc.getRenderViewEntity();
             int var4 = p_180479_1_.getScaledWidth() / 2;
             float var5 = this.zLevel;
             this.zLevel = -90.0F;
@@ -630,9 +634,9 @@ public class GuiIngame extends Gui
 
     private void func_180477_d(ScaledResolution p_180477_1_)
     {
-        if (this.mc.func_175606_aa() instanceof EntityPlayer)
+        if (this.mc.getRenderViewEntity() instanceof EntityPlayer)
         {
-            EntityPlayer var2 = (EntityPlayer)this.mc.func_175606_aa();
+            EntityPlayer var2 = (EntityPlayer)this.mc.getRenderViewEntity();
             int var3 = MathHelper.ceiling_float_int(var2.getHealth());
             boolean var4 = this.field_175191_F > (long)this.updateCounter && (this.field_175191_F - (long)this.updateCounter) / 3L % 2L == 1L;
 
