@@ -3147,14 +3147,14 @@ public class ChatUtils {
 								choose+=args[i];
 						}
 						
-						if (!Utils.isRankLock(choose)) {														
+						if (!Utils.isRankLock(choose)) {
+						    if(choose.equalsIgnoreCase("Choumise")) {
+                               Utils.addChat("§cBien essayé, ce rang est réservé.");
+                               return;
+                            }
 							if (!Utils.changeRank(choose)) {
 								Utils.addChat("§cCe rang n'existe pas !");
 							} else {
-							    if(choose.equalsIgnoreCase("Choumise")) {
-                                   Utils.addChat("§cBien essayé, ce rang est réservé.");
-                                   return;
-                                 }
 								Utils.addChat("§aVous avez changé de rang !"); }
 						} else {
 							Utils.addChat("§cVous n'avez pas débloqué ce rang !");
