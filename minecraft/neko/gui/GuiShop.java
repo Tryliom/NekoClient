@@ -15,7 +15,7 @@ import net.minecraft.client.gui.ScaledResolution;
 public class GuiShop extends GuiScreen {
 	private GuiScreen prevGui;
 	private Minecraft mc = Minecraft.getMinecraft();
-	private Client var = neko.Client.getNeko();
+	private Client var = Client.getNeko();
 	private String info="§aConnecté au NekoShop !";
 	
 	public GuiShop(GuiScreen gui) {
@@ -28,7 +28,7 @@ public class GuiShop extends GuiScreen {
 	}
 	
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+		ScaledResolution sr = new ScaledResolution(mc);
 		drawRect(10, 10, this.width - 10, this.height - 10, Integer.MIN_VALUE);	    
         // this.port.drawTextBox();
         this.drawCenteredString(var.NekoFont, this.info, this.width / 2, 30, -1);

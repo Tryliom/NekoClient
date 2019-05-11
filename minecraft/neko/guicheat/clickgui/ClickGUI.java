@@ -1,4 +1,4 @@
-package de.Hero.clickgui;
+package neko.guicheat.clickgui;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -8,12 +8,16 @@ import java.util.Collections;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
-import de.Hero.clickgui.elements.Element;
-import de.Hero.clickgui.elements.ModuleButton;
-import de.Hero.clickgui.elements.menu.ElementSlider;
-import de.Hero.clickgui.util.ColorUtil;
-import de.Hero.clickgui.util.FontUtil;
-import de.Hero.settings.SettingsManager;
+import neko.guicheat.clickgui.elements.Element;
+import neko.guicheat.clickgui.elements.ModuleButton;
+import neko.guicheat.clickgui.elements.menu.ElementSlider;
+import neko.guicheat.clickgui.util.ColorUtil;
+import neko.guicheat.clickgui.util.FontUtil;
+import neko.guicheat.clickgui.settings.SettingsManager;
+import neko.Client;
+import neko.module.Category;
+import neko.module.Module;
+import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
@@ -46,7 +50,7 @@ public class ClickGUI extends GuiScreen {
 	 * werden muss
 	 */
 	public ClickGUI() {
-		setmgr = neko.Client.getNeko().settingsManager;
+		setmgr = Client.Neko.settingsManager;
 		
 		FontUtil.setupFontUtils();
 		panels = new ArrayList<>();
@@ -59,18 +63,22 @@ public class ClickGUI extends GuiScreen {
 		/*
 		 * Zum Sortieren der Panels einfach die Reihenfolge im Enum ändern ;)
 		 */
-		for (neko.module.Category c : neko.module.Category.values()) {
-			String title = Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
-			ClickGUI.panels.add(new Panel(title, px, py, pwidth, pheight, false, this) {
-						@Override
-						public void setup() {
-							for (neko.module.Module m : neko.Client.getNeko().moduleManager.getModules()) {
-								if (!m.getCategory().equals(c))continue;
-								this.Elements.add(new ModuleButton(m, this));
+		for (Category c : Category.values()) {
+			if(c != Category.HIDE) {
+				String title = Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+				ClickGUI.panels.add(new Panel(title, px, py, pwidth, pheight, false, this) {
+							@Override
+							public void setup() {
+								for (Module m : Client.Neko.moduleManager.getModules()) {
+									if(m.getCategory()!=Category.HIDE && !m.isCmd() && !Utils.isLock(m.getName())) {
+										if (!m.getCategory().equals(c))continue;
+										this.Elements.add(new ModuleButton(m, this));
+									}
+								}
 							}
-						}
-			});
-			py += pyplus;
+				});
+				py += pyplus;
+			}
 		}
 		
 		/*
@@ -106,7 +114,7 @@ public class ClickGUI extends GuiScreen {
 		}
 
 		
-		/*															*/ ScaledResolution s = new ScaledResolution(mc, mc.displayWidth,mc.displayHeight);
+		/*															*/ ScaledResolution s = new ScaledResolution(mc);
   		/* DO NOT REMOVE											*/ GL11.glPushMatrix();
 		/* copyright HeroCode 2017									*/ GL11.glTranslated(s.getScaledWidth(), s.getScaledHeight(), 0);GL11.glScaled(0.5, 0.5, 0.5);
 		/* https://www.youtube.com/channel/UCJum3PIbnYvIfIEu05GL_yQ	*/ FontUtil.drawStringWithShadow("b"+"y"+ "H"+"e"+"r"+"o"+"C"+"o"+"d"+"e", -Minecraft.getMinecraft().fontRendererObj.getStringWidth("b"+"y"+ "H"+"e"+"r"+"o"+"C"+"o"+"d"+"e"), -Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT, 0xff11F86B);
@@ -143,11 +151,13 @@ public class ClickGUI extends GuiScreen {
 						double off = 0;
 						Color temp = ColorUtil.getClickGUIColor().darker();
 						int outlineColor = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 170).getRGB();
+						//Color red = new Color(255,0,255); Color green = new Color(26,0,255); Color blue = new Color(42,0,255);
+						//int outlineColor = new Color(255, 26, 42, 170).getRGB();
 						
 						for (Element e : b.menuelements) {
 							e.offset = off;
 							e.update();
-							if(neko.Client.getNeko().settingsManager.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
+							if(Client.Neko.settingsManager.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
 								Gui.drawRect(e.x, e.y, e.x + e.width + 2, e.y + e.height, outlineColor);
 							}
 							e.drawScreen(mouseX, mouseY, partialTicks);
@@ -168,11 +178,12 @@ public class ClickGUI extends GuiScreen {
 			GL11.glPushMatrix();
 			GL11.glTranslatef(s.getScaledWidth() / 2, s.getScaledHeight() / 2, 0.0F);
 			GL11.glScalef(4.0F, 4.0F, 0F);
-			FontUtil.drawTotalCenteredStringWithShadow("Listening...", 0, -10, 0xffffffff);
+			FontUtil.drawTotalCenteredStringWithShadow("["+mb.mod.getName()+"] (Touche:"+(mb.mod.getBind() > -1 ? Keyboard.getKeyName(mb.mod.getBind())+")": "Aucune)"), 0, -10, 0xffffffff);
 			GL11.glScalef(0.5F, 0.5F, 0F);
-			FontUtil.drawTotalCenteredStringWithShadow("Press 'ESCAPE' to unbind " + mb.mod.getName() + (mb.mod.getBind() > -1 ? " (" + Keyboard.getKeyName(mb.mod.getBind())+ ")" : ""), 0, 0, 0xffffffff);
-			GL11.glScalef(0.25F, 0.25F, 0F);
-			FontUtil.drawTotalCenteredStringWithShadow("by HeroCode", 0, 20, 0xffffffff);
+			FontUtil.drawTotalCenteredStringWithShadow("Appuyez sur une touche pour modifier", 0, 0, 0xffffffff);
+			FontUtil.drawTotalCenteredStringWithShadow("Appuyez sur une Echap pour supprimer", 0, 20, 0xffffffff);
+			GL11.glScalef(0.45F, 0.45F, 0F);
+			FontUtil.drawTotalCenteredStringWithShadow("OU", 0, 20, 0xffffffff);
 			GL11.glPopMatrix();
 		}
 		
@@ -289,6 +300,12 @@ public class ClickGUI extends GuiScreen {
 						e1.printStackTrace();
 					}
 				}
+			}
+		}
+		
+		if(mc.currentScreen == Client.Neko.clickGui) {
+			if(keyCode == Client.Neko.moduleManager.getModuleByName("Gui").getBind() || keyCode == Keyboard.KEY_ESCAPE) {
+				Client.Neko.moduleManager.getModuleByName("Gui").toggleModule();
 			}
 		}
 

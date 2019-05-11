@@ -37,7 +37,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.network.play.client.C03PacketPlayer;
 
 public class GuiManager extends AbstractGuiManager  {
-	Client var = neko.Client.getNeko();
+	Client var = Client.getNeko();
 	public int backR=30;
 	public int backG=30;
 	public int backB=80;
@@ -199,7 +199,7 @@ public class GuiManager extends AbstractGuiManager  {
 						for(Frame frame : getFrames()) {						
 							SimpleTheme s = (SimpleTheme) frame.getTheme();
 							if (finalFont.equalsIgnoreCase("Neko")) {
-								s.setFontRenderer(neko.Client.getNeko().NekoFont);
+								s.setFontRenderer(Client.getNeko().NekoFont);
 							} else
 								try {
 									Font ft = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/neko/font/"+finalFont+".ttf"));

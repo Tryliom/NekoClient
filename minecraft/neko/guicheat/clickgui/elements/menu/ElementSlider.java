@@ -1,14 +1,14 @@
-package de.Hero.clickgui.elements.menu;
+package neko.guicheat.clickgui.elements.menu;
 
 import java.awt.Color;
 
 import net.minecraft.client.gui.Gui;
 import net.minecraft.util.MathHelper;
-import de.Hero.clickgui.elements.Element;
-import de.Hero.clickgui.elements.ModuleButton;
-import de.Hero.clickgui.util.ColorUtil;
-import de.Hero.clickgui.util.FontUtil;
-import de.Hero.settings.Setting;
+import neko.guicheat.clickgui.elements.Element;
+import neko.guicheat.clickgui.elements.ModuleButton;
+import neko.guicheat.clickgui.util.ColorUtil;
+import neko.guicheat.clickgui.util.FontUtil;
+import neko.guicheat.clickgui.settings.Setting;
 
 /**
  *  Made by HeroCode

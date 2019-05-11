@@ -18,7 +18,7 @@ public class Wallhack extends Module {
 	public static float clR=0.33F;
 	public static float clG=0.33F;
 	public static float clB=0.33F;
-	Client var = neko.Client.getNeko();
+	Client var = Client.getNeko();
 	
 	public Wallhack() {
 		super("Wallhack", -1, Category.RENDER);

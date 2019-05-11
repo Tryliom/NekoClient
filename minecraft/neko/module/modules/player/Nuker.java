@@ -45,7 +45,7 @@ public class Nuker extends Module {
 	}
 
 	public void setValues() {
-		this.values = "Â§6Range:Â§7 " + nukerRadius + "\n" + "Â§6Safe:Â§7 " + Utils.displayBool(safe);
+		this.values = "§6Range:§7 " + nukerRadius + "\n" + "§6Safe:§7 " + Utils.displayBool(safe);
 	}
 
 	public void onUpdate() {
@@ -61,10 +61,10 @@ public class Nuker extends Module {
 						nuke.remove(i);
 					}
 				}
-				Utils.addChat("Â§cLe bloc " + Block.getBlockById(id).getLocalizedName() + " a Ã©tÃ© supprimÃ© !");
+				Utils.addChat("§cLe bloc " + Block.getBlockById(id).getLocalizedName() + " a été supprimé !");
 			} else {
 				nuke.add(id);
-				Utils.addChat("Â§aLe bloc " + Block.getBlockById(id).getLocalizedName() + " a Ã©tÃ© ajoutÃ© !");
+				Utils.addChat("§aLe bloc " + Block.getBlockById(id).getLocalizedName() + " a été ajouté !");
 			}
 
 			delay = 0;

@@ -33,7 +33,7 @@ public class TpKill extends Module {
 	double lastX;
 	double lastY;
 	double lastZ;
-	Client var = neko.Client.getNeko();
+	Client var = Client.getNeko();
 	
 	public TpKill() {
 		super("TpKill", Keyboard.KEY_F, Category.Special);

@@ -32,7 +32,7 @@ public class UnicodeFontRenderer extends FontRenderer {
 	}
 
 	@Override
-	public int drawString(String string, int x, int y, int color) {
+	public int drawString(String string, double x, double y, int color) {
 		if(string == null)
 			return 0;
 		// glClear(256);
@@ -56,14 +56,14 @@ public class UnicodeFontRenderer extends FontRenderer {
 			glDisable(GL_LIGHTING);
 		if(texture)
 			glDisable(GL_TEXTURE_2D);
-		x *= 2;
-		y *= 2;
+		x *= (int)2;
+		y *= (int)2;
 		// glBegin(GL_LINES);
 		// glVertex3d(x, y, 0);
 		// glVertex3d(x + getStringWidth(string), y + FONT_HEIGHT, 0);
 		// glEnd();
 
-		font.drawString(x, y, string, new org.newdawn.slick.Color(color));
+		font.drawString((int)x, (int)y, string, new org.newdawn.slick.Color(color));
 
 		if(texture)
 			glEnable(GL_TEXTURE_2D);
@@ -72,7 +72,7 @@ public class UnicodeFontRenderer extends FontRenderer {
 		if(!blend)
 			glDisable(GL_BLEND);
 		glPopMatrix();
-		return x;
+		return (int)x;
 	}
 
 	@Override

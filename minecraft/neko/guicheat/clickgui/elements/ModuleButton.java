@@ -1,4 +1,4 @@
-package de.Hero.clickgui.elements;
+package neko.guicheat.clickgui.elements;
 
 import java.awt.Color;
 import java.io.IOException;
@@ -6,14 +6,15 @@ import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
 
-import de.Hero.clickgui.Panel;
-import de.Hero.clickgui.elements.menu.ElementCheckBox;
-import de.Hero.clickgui.elements.menu.ElementComboBox;
-import de.Hero.clickgui.elements.menu.ElementSlider;
-import de.Hero.clickgui.util.ColorUtil;
-import de.Hero.clickgui.util.FontUtil;
-import de.Hero.settings.Setting;
+import neko.guicheat.clickgui.Panel;
+import neko.guicheat.clickgui.elements.menu.ElementCheckBox;
+import neko.guicheat.clickgui.elements.menu.ElementComboBox;
+import neko.guicheat.clickgui.elements.menu.ElementSlider;
+import neko.guicheat.clickgui.util.ColorUtil;
+import neko.guicheat.clickgui.util.FontUtil;
+import neko.guicheat.clickgui.settings.Setting;
 import neko.Client;
+import neko.module.Module;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 
@@ -25,7 +26,7 @@ import net.minecraft.client.gui.Gui;
  *  @author HeroCode
  */
 public class ModuleButton {
-	public neko.module.Module mod;
+	public Module mod;
 	public ArrayList<Element> menuelements;
 	public Panel parent;
 	public double x;
@@ -38,7 +39,7 @@ public class ModuleButton {
 	/*
 	 * Konstrukor
 	 */
-	public ModuleButton(neko.module.Module imod, Panel pl) {
+	public ModuleButton(Module imod, Panel pl) {
 		mod = imod;
 		height = Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT + 2;
 		parent = pl;
@@ -51,8 +52,8 @@ public class ModuleButton {
 		 *  irgendeinen Aufwand bestimmen welches Element
 		 *  für ein Setting benötigt wird :>
 		 */
-		if (neko.Client.getNeko().settingsManager.getSettingsByMod(imod) != null)
-			for (Setting s : neko.Client.getNeko().settingsManager.getSettingsByMod(imod)) {
+		if (Client.Neko.settingsManager.getSettingsByMod(imod) != null)
+			for (Setting s : Client.Neko.settingsManager.getSettingsByMod(imod)) {
 				if (s.isCheck()) {
 					menuelements.add(new ElementCheckBox(this, s));
 				} else if (s.isSlider()) {
@@ -107,9 +108,9 @@ public class ModuleButton {
 		 * Rechtsklick, wenn ja dann Module togglen, 
 		 */
 		if (mouseButton == 0) {
-			mod.onToggle();
+			mod.toggleModule();
 			
-			if(neko.Client.getNeko().settingsManager.getSettingByName("Sound").getValBoolean())
+			if(Client.Neko.settingsManager.getSettingByName("Sound").getValBoolean())
 			Minecraft.getMinecraft().thePlayer.playSound("random.click", 0.5f, 0.5f);
 		} else if (mouseButton == 1) {
 			/*
@@ -118,10 +119,10 @@ public class ModuleButton {
 			 */
 			if (menuelements != null && menuelements.size() > 0) {
 				boolean b = !this.extended;
-				neko.Client.getNeko().clickGui.closeAllSettings();
+				Client.Neko.clickGui.closeAllSettings();
 				this.extended = b;
 				
-				if(neko.Client.getNeko().settingsManager.getSettingByName("Sound").getValBoolean())
+				if(Client.Neko.settingsManager.getSettingByName("Sound").getValBoolean())
 				if(extended)Minecraft.getMinecraft().thePlayer.playSound("tile.piston.out", 1f, 1f);else Minecraft.getMinecraft().thePlayer.playSound("tile.piston.in", 1f, 1f);
 			}
 		} else if (mouseButton == 2) {

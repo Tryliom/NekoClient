@@ -1,11 +1,12 @@
-package de.Hero.clickgui;
+package neko.guicheat.clickgui;
 
 import java.awt.Color;
 import java.util.ArrayList;
 
-import de.Hero.clickgui.elements.ModuleButton;
-import de.Hero.clickgui.util.ColorUtil;
-import de.Hero.clickgui.util.FontUtil;
+import neko.guicheat.clickgui.elements.ModuleButton;
+import neko.guicheat.clickgui.util.ColorUtil;
+import neko.guicheat.clickgui.util.FontUtil;
+import neko.Client;
 import net.minecraft.client.gui.Gui;
 
 /**
@@ -66,10 +67,10 @@ public class Panel {
 		int outlineColor = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 170).getRGB();
 		
 		Gui.drawRect(x, y, x + width, y + height, 0xff121212);
-		if(neko.Client.getNeko().settingsManager.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
+		if(Client.Neko.settingsManager.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
 			Gui.drawRect(x - 2, y, x, y + height, outlineColor);
 			FontUtil.drawStringWithShadow(title, x + 2, y + height / 2 - FontUtil.getFontHeight()/2, 0xffefefef);
-		}else if(neko.Client.getNeko().settingsManager.getSettingByName("Design").getValString().equalsIgnoreCase("JellyLike")){
+		}else if(Client.Neko.settingsManager.getSettingByName("Design").getValString().equalsIgnoreCase("JellyLike")){
 			Gui.drawRect(x + 4,			y + 2, x + 4.3, 		y + height - 2, 0xffaaaaaa);
 			Gui.drawRect(x - 4 + width, y + 2, x - 4.3 + width, y + height - 2, 0xffaaaaaa);
 			FontUtil.drawTotalCenteredStringWithShadow(title, x + width / 2, y + height / 2, 0xffefefef);
@@ -77,9 +78,9 @@ public class Panel {
 		
 		if (this.extended && !Elements.isEmpty()) {
 			double startY = y + height;
-			int epanelcolor = neko.Client.getNeko().settingsManager.getSettingByName("Design").getValString().equalsIgnoreCase("New") ? 0xff232323 : neko.Client.getNeko().settingsManager.getSettingByName("Design").getValString().equalsIgnoreCase("JellyLike") ? 0xbb151515 : 0;;
+			int epanelcolor = Client.Neko.settingsManager.getSettingByName("Design").getValString().equalsIgnoreCase("New") ? 0xff232323 : Client.Neko.settingsManager.getSettingByName("Design").getValString().equalsIgnoreCase("JellyLike") ? 0xbb151515 : 0;;
 			for (ModuleButton et : Elements) {
-				if(neko.Client.getNeko().settingsManager.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
+				if(Client.Neko.settingsManager.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
 					Gui.drawRect(x - 2, startY, x + width, startY + et.height + 1, outlineColor);
 				}
 				Gui.drawRect(x, 	startY, x + width, startY + et.height + 1, epanelcolor);

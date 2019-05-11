@@ -118,7 +118,7 @@ public class GuiIngame extends Gui
 
     public void func_175180_a(float p_175180_1_)
     {
-        ScaledResolution var2 = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
+        ScaledResolution var2 = new ScaledResolution(this.mc);
         int var3 = var2.getScaledWidth();
         int var4 = var2.getScaledHeight();
         this.mc.entityRenderer.setupOverlayRendering();
@@ -209,7 +209,7 @@ public class GuiIngame extends Gui
         }
         
         //TODO: Render 2D
-        Client var = neko.Client.getNeko();
+        Client var = Client.getNeko();
         for(Module m : var.moduleManager.ActiveModule) {
     		if(m.getToggled() && Utils.verif==null) {
     			m.onRender2D();
@@ -936,7 +936,7 @@ public class GuiIngame extends Gui
         {
             --BossStatus.statusBarTime;
             FontRenderer var1 = this.mc.fontRendererObj;
-            ScaledResolution var2 = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
+            ScaledResolution var2 = new ScaledResolution(this.mc);
             int var3 = var2.getScaledWidth();
             short var4 = 182;
             int var5 = var3 / 2 - var4 / 2;

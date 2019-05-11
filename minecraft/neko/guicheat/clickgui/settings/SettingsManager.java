@@ -1,6 +1,9 @@
-package de.Hero.settings;
+package neko.guicheat.clickgui.settings;
 
 import java.util.ArrayList;
+
+import neko.Client;
+import neko.module.Module;
 
 /**
  *  Made by HeroCode
@@ -25,9 +28,10 @@ public class SettingsManager {
 		return this.settings;
 	}
 	
-	public ArrayList<Setting> getSettingsByMod(neko.module.Module mod){
+	public ArrayList<Setting> getSettingsByMod(Module mod){
 		ArrayList<Setting> out = new ArrayList<>();
 		for(Setting s : getSettings()){
+			System.out.println(s + "/" + mod);
 			if(s.getParentMod().equals(mod)){
 				out.add(s);
 			}
@@ -44,7 +48,7 @@ public class SettingsManager {
 				return set;
 			}
 		}
-		System.err.println("["+ neko.Client.CLIENT_NAME + "] Error Setting NOT found: '" + name +"'!");
+		System.err.println("["+ Client.CLIENT_NAME + "] Error Setting NOT found: '" + name +"'!");
 		return null;
 	}
 

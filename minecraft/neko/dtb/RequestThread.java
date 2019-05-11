@@ -31,7 +31,7 @@ public class RequestThread extends Thread {
 	private ArrayList<String> args = new ArrayList<>();
 	private String why;
 	Minecraft mc = Minecraft.getMinecraft();
-	Client var = neko.Client.getNeko();
+	Client var = Client.getNeko();
 	
 	public RequestThread(String why, ArrayList<String> args) {
 		this.args=args;

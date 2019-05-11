@@ -14,7 +14,7 @@ public class ItemESP extends Module {
 	public static float clR=0.99F;
 	public static float clG=0.44F;
 	public static float clB=0.44F;
-	Client var = neko.Client.getNeko();
+	Client var = Client.getNeko();
 	
 	public ItemESP() {
 		super("ItemESP", -1, Category.RENDER);

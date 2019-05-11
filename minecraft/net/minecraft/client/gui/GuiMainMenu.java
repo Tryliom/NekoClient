@@ -255,7 +255,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         
         
         if (!nc.isLogin() && Utils.haveInternet()) {
-        	Client var = neko.Client.getNeko();
+        	Client var = Client.getNeko();
     		var.moduleManager = new ModuleManager();
     		var.onlyrpg = OnlyRpgManager.getRpg();
     		if (var.gui==null) {
@@ -662,7 +662,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         GlStateManager.translate((float)(this.width / 2 + 90), 70.0F, 0.0F);
         GlStateManager.rotate(-20.0F, 0.0F, 0.0F, 1.0F);
         float var9 = 1.8F - MathHelper.abs(MathHelper.sin((float)(Minecraft.getSystemTime() % 1000L) / 1000.0F * (float)Math.PI * 2.0F) * 0.1F);
-        var9 = var9 * 100.0F / (float)((Utils.verif==null ? neko.Client.getNeko().NekoFont : this.fontRendererObj).getStringWidth(this.splashText) + 32);
+        var9 = var9 * 100.0F / (float)((Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj).getStringWidth(this.splashText) + 32);
         GlStateManager.scale(var9, var9, var9);
         }
         if (Utils.verif!=null)
@@ -671,7 +671,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         	GlStateManager.popMatrix();
         String var10="";
         if (Utils.verif==null)
-        	var10 = neko.Client.getNeko().strNeko;
+        	var10 = Client.getNeko().strNeko;
         else
         	var10 = "Minecraft 1.8";
 
@@ -698,13 +698,13 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
 	        	}
         	}
         }
-        this.drawString(Utils.verif==null ? neko.Client.getNeko().NekoFont : this.fontRendererObj, var10, 2, this.height - 10, -1);
+        this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, var10, 2, this.height - 10, -1);
         String var11 = "Copyright Mojang AB. Do not distribute!";
         if (Utils.verif==null) {
         	String s[] = this.Bc.split("\n");
         	for (int i=1;i<s.length+1;i++) {
     			if (!s[i-1].startsWith("§d") && !s[i-1].contains("%")) {
-    				this.drawString(neko.Client.getNeko().NekoFont, "§6"+s[i-1], 5, this.height/2 - 60, -1);
+    				this.drawString(Client.getNeko().NekoFont, "§6"+s[i-1], 5, this.height/2 - 60, -1);
     			}      		
         	}
         	
@@ -713,11 +713,11 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         	
         	this.drawString(fontRendererObj, "§eConnecté en tant que: §b" + Minecraft.getMinecraft().getSession().getUsername(), 10, 40, -1);
         	
-        	if (!neko.Client.getNeko().ver.isEmpty()) {
+        	if (!Client.getNeko().ver.isEmpty()) {
 
-        		this.drawCenteredString(neko.Client.getNeko().NekoFont, "§3§nUne nouvelle version est disponible !", this.width - 110, this.height/2 - this.height/12, -1);
-        		this.drawCenteredString(neko.Client.getNeko().NekoFont, "§eVersion supérieure: §b"+neko.Client.getNeko().ver, this.width - 110, this.height/2 - this.height/60, -1);
-        		this.drawCenteredString(neko.Client.getNeko().NekoFont, "§eAjout principal: §b"+neko.Client.getNeko().changelog, this.width - 110, this.height/2 + this.height/30, -1);
+        		this.drawCenteredString(Client.getNeko().NekoFont, "§3§nUne nouvelle version est disponible !", this.width - 110, this.height/2 - this.height/12, -1);
+        		this.drawCenteredString(Client.getNeko().NekoFont, "§eVersion supérieure: §b"+Client.getNeko().ver, this.width - 110, this.height/2 - this.height/60, -1);
+        		this.drawCenteredString(Client.getNeko().NekoFont, "§eAjout principal: §b"+Client.getNeko().changelog, this.width - 110, this.height/2 + this.height/30, -1);
         		
         		boolean b = true;
         		for (Object gb : this.buttonList) {
@@ -729,15 +729,15 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         		if (b)
         			this.buttonList.add(new GuiButton(770, this.width - 155, this.height/2 + 25, 90, 20, "§f§lMettre à jour"));
         	}
-        	var11=neko.Client.getNeko().strCreator;
+        	var11=Client.getNeko().strCreator;
         }
-        this.drawString(Utils.verif==null ? neko.Client.getNeko().NekoFont : this.fontRendererObj, var11, this.width - (Utils.verif==null ? neko.Client.getNeko().NekoFont : this.fontRendererObj).getStringWidth(var11) - 2, this.height - 10, -1);
+        this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, var11, this.width - (Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj).getStringWidth(var11) - 2, this.height - 10, -1);
         
         if (this.field_92025_p != null && this.field_92025_p.length() > 0)
         {
             drawRect(this.field_92022_t - 2, this.field_92021_u - 2, this.field_92020_v + 2, this.field_92019_w - 1, 1428160512);
-            this.drawString(Utils.verif==null ? neko.Client.getNeko().NekoFont : this.fontRendererObj, this.field_92025_p, this.field_92022_t, this.field_92021_u, -1);
-            this.drawString(Utils.verif==null ? neko.Client.getNeko().NekoFont : this.fontRendererObj, this.field_146972_A, (this.width - this.field_92024_r) / 2, ((GuiButton)this.buttonList.get(0)).yPosition - 12, -1);
+            this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, this.field_92025_p, this.field_92022_t, this.field_92021_u, -1);
+            this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, this.field_146972_A, (this.width - this.field_92024_r) / 2, ((GuiButton)this.buttonList.get(0)).yPosition - 12, -1);
         }
 
         super.drawScreen(mouseX, mouseY, partialTicks);

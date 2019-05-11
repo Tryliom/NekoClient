@@ -6,10 +6,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Locale;
 
-import org.darkstorm.minecraft.gui.GuiManager;
 import org.darkstorm.minecraft.gui.util.GuiManagerDisplayScreen;
 import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.util.FontUtils;
 
 import neko.Client;
 import neko.manager.ModuleManager;
@@ -48,12 +46,12 @@ public class InGameGui {
 	public static int p=0;
 	static int yPos = 10;
 	static int multi=0;
-	static Client var = neko.Client.getNeko();
+	static Client var = Client.getNeko();
 	public static int hudWid;
 	
 	public static void render() {
 		  Minecraft mc = Minecraft.getMinecraft();
-		  ScaledResolution scaled = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+		  ScaledResolution scaled = new ScaledResolution(mc);
 		  yPos = 10;
 		  multi=0;
 		  for(Module module : ModuleManager.ActiveModule) {
@@ -77,7 +75,7 @@ public class InGameGui {
 	
 	public static void renderEffect() {
 		Minecraft mc = Minecraft.getMinecraft();
-		ScaledResolution scaled = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+		ScaledResolution scaled = new ScaledResolution(mc);
 		GL11.glPushMatrix();
         int size = 16;
         int margin = -5;
@@ -104,7 +102,7 @@ public class InGameGui {
 	
 	public static void renderArmor() {
 		Minecraft mc = Minecraft.getMinecraft();
-		ScaledResolution scaled = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+		ScaledResolution scaled = new ScaledResolution(mc);
 		int itemX = scaled.getScaledWidth() / 2 + 9;
         for (int i = 0; i < 5; i++) {
             ItemStack ia = mc.thePlayer.getEquipmentInSlot(i);
@@ -141,7 +139,7 @@ public class InGameGui {
 		  yP=20;
 		  String var3="";
 		  Minecraft mc = Minecraft.getMinecraft();
-		  ScaledResolution scaled = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);	
+		  ScaledResolution scaled = new ScaledResolution(mc);	
 		  NumberFormat form = null;
 		  Locale loc = new Locale("FR", "CH");
 		  int ping=-1;
@@ -253,7 +251,7 @@ public class InGameGui {
 	
 	public static void renderRadar() {
 		  Minecraft mc = Minecraft.getMinecraft();
-		  ScaledResolution scaled = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+		  ScaledResolution scaled = new ScaledResolution(mc);
 		  ArrayList<EntityPlayer> s = Utils.getAllPlayer();
 		  if (!Utils.isToggle("ArrayList"))
 			  yPos=10;

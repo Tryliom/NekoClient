@@ -33,7 +33,7 @@ public class GuiBindManager extends GuiScreen {
 	private ResourceLocation background = mc.getTextureManager().getDynamicTextureLocation("background",
 			GuiMainMenu.viewportTexture);
 	private GuiList list;
-	private Client var = neko.Client.getNeko();
+	private Client var = Client.getNeko();
 	private int lastIndex = -1;
 	private boolean waitKey = false;
 
@@ -52,7 +52,7 @@ public class GuiBindManager extends GuiScreen {
 	}
 
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+		ScaledResolution sr = new ScaledResolution(mc);
 		this.mc.getTextureManager().bindTexture(this.background);
 		Gui.drawScaledCustomSizeModalRect(0, 0, 0.0F, 0.0F, sr.getScaledWidth(), sr.getScaledHeight(),
 				sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight());

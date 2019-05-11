@@ -37,5 +37,29 @@ public class EventPreMotionUpdate extends Event {
 	public void setGround(boolean ground) {
 		this.ground = ground;
 	}
+	
+	public double setX(double x) {
+		return this.x = x;
+	}
+
+	public double getX() {
+		return x;
+	}
+	
+	public double getY() {
+		return y;
+	}
+	
+	public double setY(double y) {
+		return this.y = y;
+	}
+	
+	public double getZ() {
+		return z;
+	}
+	
+	public double setZ(double z) {
+		return this.z = z;
+	}
 
 }

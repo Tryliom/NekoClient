@@ -17,7 +17,7 @@ import net.minecraft.client.gui.ScaledResolution;
 public class GuiTuto extends GuiScreen {
 	private GuiScreen prevGui;
 	private Minecraft mc = Minecraft.getMinecraft();
-	private Client var = neko.Client.getNeko();
+	private Client var = Client.getNeko();
 	private TutoManager tm = TutoManager.getTuto();
 	private String part=tm.getPart(tm.getPart());
 	private int hBtn=0;
@@ -41,7 +41,7 @@ public class GuiTuto extends GuiScreen {
 	}
 	
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+		ScaledResolution sr = new ScaledResolution(mc);
 		drawRect(10, 10, this.width - 10, this.height - 10, Integer.MIN_VALUE);	    
         // this.port.drawTextBox();
 		String s[] = this.part.split("\n");

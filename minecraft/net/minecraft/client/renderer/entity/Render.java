@@ -340,7 +340,7 @@ public abstract class Render
         return this.renderManager.getFontRenderer();
     }
 
-    Client var = neko.Client.getNeko();
+    Client var = Client.getNeko();
     
     /**
      * Renders an entity's name above its head

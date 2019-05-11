@@ -20,7 +20,7 @@ public class TempBon {
 }
 
 class temp implements ActionListener {
-	Client var = neko.Client.getNeko();
+	Client var = Client.getNeko();
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		TempBon.delay--;

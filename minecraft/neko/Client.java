@@ -12,11 +12,11 @@ import javax.swing.Timer;
 
 import org.lwjgl.opengl.Display;
 
-import de.Hero.clickgui.ClickGUI;
-import de.Hero.settings.SettingsManager;
 import neko.dtb.RequestThread;
 import neko.event.EventManager;
 import neko.gui.RequestManager;
+import neko.guicheat.clickgui.ClickGUI;
+import neko.guicheat.clickgui.settings.SettingsManager;
 import neko.manager.GuiManager;
 import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
@@ -36,14 +36,20 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.ResourceLocation;
 
 public class Client {
-	Minecraft mc = Minecraft.getMinecraft();
+	public static Client Neko = new Client();
+
 	public SettingsManager settingsManager;
+	public EventManager eventManager;
+	public ModuleManager moduleManager;
+	public ClickGUI clickGui;
+	
+	Minecraft mc = Minecraft.getMinecraft();
 	public final static String CLIENT_NAME = "Neko";
 	public final String CLIENT_AUTHOR = "Tryliom";
-	public ModuleManager moduleManager;
+
+	
 	public GuiManager gui;
 	public final String CLIENT_VERSION = "2.8.3";
-	private static final Client Neko = new Client();
 	public String mode = "Player";
 	public Rank rang;
 	public Necklace necklace;
@@ -73,10 +79,15 @@ public class Client {
 	public boolean firstServDisplay = true;
 	public String strNeko = "§bNeko v" + CLIENT_VERSION;
 	public String strCreator = "§eCréé par §f§lTryliom§e et §f§lMarie";
-	public EventManager eventManager;
-	public ClickGUI clickGui;
 
 	public void startClient() {
+
+		settingsManager = new SettingsManager();
+		eventManager = new EventManager();
+		eventManager.register(this);
+		moduleManager = new ModuleManager();
+		clickGui = new ClickGUI();
+		
 		time.start();
 		try {
 			URL url = new URL("http://nekohc.fr/ver.html");
@@ -100,12 +111,6 @@ public class Client {
 		} catch (Exception e) {
 			System.out.println("Adresse inatteignable :c");
 		}
-
-		settingsManager = new SettingsManager();
-		eventManager = new EventManager();
-		eventManager.register(this);
-		moduleManager = new ModuleManager();
-		clickGui = new ClickGUI();
 		
 		NekoFont = new FontRenderer(mc.gameSettings, new ResourceLocation("neko/font/ascii.png"), mc.renderEngine,
 				false);
@@ -172,6 +177,7 @@ public class Client {
 			}
 		}
 		name = CLIENT_NAME + "/vanilla";
+		
 	}
 
 	public static final Client getNeko() {

@@ -851,7 +851,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
 
     public void addToSendQueue(Packet p_147297_1_) {	   
     	Minecraft mc = Minecraft.getMinecraft();
-    	Client var = neko.Client.getNeko();
+    	Client var = Client.getNeko();
     	//TODO: Freecam & Blink & Unicode	
     	if (p_147297_1_ instanceof C14PacketTabComplete) {
     		if (((C14PacketTabComplete) p_147297_1_).getMessage().startsWith(var.prefixCmd)) {
@@ -947,7 +947,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
      */
     public void handleChat(S02PacketChat packetIn)
     {
-    	Client var = neko.Client.getNeko();
+    	Client var = Client.getNeko();
     	Minecraft mc = Minecraft.getMinecraft();
     	//TODO: Kill
         PacketThreadUtil.func_180031_a(packetIn, this, this.getGameController());  

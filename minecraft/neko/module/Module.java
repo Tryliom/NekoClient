@@ -14,14 +14,15 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 
 public class Module {
 	protected Minecraft mc = Minecraft.getMinecraft();
+	
 	protected static Utils u;
-	protected Client var = neko.Client.getNeko();
+	protected Client var = Client.getNeko();
 	protected InGameGui g;
-	protected String moduleName;
-	protected int moduleBind;
-	protected Category moduleCategory;
+	private String moduleName;
+	private int moduleBind;
+	private Category moduleCategory;
 	protected boolean isToggled;
-	protected ScaledResolution scaled = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+	protected ScaledResolution scaled = new ScaledResolution(mc);
 	protected ArrayList<String> cmd = new ArrayList<>();
 	protected String values;
 	protected int time;
@@ -34,11 +35,14 @@ public class Module {
 		setup();
 	}
 	
-	public void setup() {
-	}
+	public void setup() {}
 
 	public String getName() {
 		return this.moduleName;
+	}
+	
+	public void setName(String modulename) {
+		this.moduleName = modulename;
 	}
 
 	public int getBind() {
@@ -48,9 +52,21 @@ public class Module {
 	public Category getCategory() {
 		return this.moduleCategory;
 	}
+	
+	public void setCategory(Category category) {
+		this.moduleCategory = category;
+	}
 
 	public boolean getToggled() {
 		return this.isToggled;
+	}
+	
+	public void toggle() {
+		if (this.getToggled()) {
+			this.setToggled(false);
+		} else {
+			this.setToggled(true);
+		}
 	}
 
 	public void incrementTime() {
@@ -138,7 +154,7 @@ public class Module {
 
 		if (Utils.shouldChat(this))
 			Utils.addChat("§a§o" + getName() + " activé !");
-		neko.Client.getNeko().eventManager.register(this);
+		Client.getNeko().eventManager.register(this);
 
 	}
 
@@ -146,7 +162,7 @@ public class Module {
 
 		if (Utils.shouldChat(this))
 			Utils.addChat("§c§o" + getName() + " désactivé !");
-		neko.Client.getNeko().eventManager.unregister(this);
+		Client.getNeko().eventManager.unregister(this);
 
 	}
 

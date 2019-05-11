@@ -597,7 +597,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         }
         
         //TODO: Client
-        Client var = neko.Client.getNeko();
+        Client var = Client.getNeko();
         var.startClient();
         
         try
@@ -911,7 +911,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
     private void func_180510_a(TextureManager p_180510_1_)
     {
-        ScaledResolution var2 = new ScaledResolution(this, this.displayWidth, this.displayHeight);
+        ScaledResolution var2 = new ScaledResolution(this);
         int var3 = var2.getScaleFactor();
         Framebuffer var4 = new Framebuffer(var2.getScaledWidth() * var3, var2.getScaledHeight() * var3, true);
         var4.bindFramebuffer(false);
@@ -1022,7 +1022,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         if (guiScreenIn != null)
         {
             this.setIngameNotInFocus();
-            ScaledResolution var2 = new ScaledResolution(this, this.displayWidth, this.displayHeight);
+            ScaledResolution var2 = new ScaledResolution(this);
             int var3 = var2.getScaledWidth();
             int var4 = var2.getScaledHeight();
             ((GuiScreen)guiScreenIn).setWorldAndResolution(this, var3, var4);
@@ -1063,7 +1063,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         try
         {
         	
-        	neko.Client.getNeko().stopClient();
+        	Client.getNeko().stopClient();
         	
             this.stream.shutdownStream();
             logger.info("Stopping!");
@@ -1551,7 +1551,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     		}
     	}
     		
-    	Client var = neko.Client.getNeko();
+    	Client var = Client.getNeko();
     	for(Module m : var.moduleManager.ActiveModule) {
     		if(m.getToggled() && Utils.verif==null) {
     			m.onClick();
@@ -1613,7 +1613,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
      */
     public void rightClickMouse()
     {
-    	Client var = neko.Client.getNeko();
+    	Client var = Client.getNeko();
     	for(Module m : var.moduleManager.ActiveModule) {
     		if(m.getToggled() && Utils.verif==null) {
     			m.onRightClick();
@@ -1767,7 +1767,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
         if (this.currentScreen != null)
         {
-            ScaledResolution var3 = new ScaledResolution(this, width, height);
+            ScaledResolution var3 = new ScaledResolution(this);
             this.currentScreen.func_175273_b(this, var3.getScaledWidth(), var3.getScaledHeight());
         }
 
@@ -2012,7 +2012,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                         	}
                         	Utils.mod=false;
                         }
-                        Client var = neko.Client.getNeko();
+                        Client var = Client.getNeko();
                     	for(Module eventModule : var.moduleManager.ActiveModule) {
                     		if(Keyboard.getEventKey() == eventModule.getBind() && Utils.verif==null && !Utils.isLock(eventModule.getName())) {
                     			eventModule.toggleModule();

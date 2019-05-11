@@ -1,6 +1,8 @@
-package de.Hero.settings;
+package neko.guicheat.clickgui.settings;
 
 import java.util.ArrayList;
+
+import neko.module.Module;
 
 /**
  *  Made by HeroCode
@@ -12,7 +14,7 @@ import java.util.ArrayList;
 public class Setting {
 	
 	private String name;
-	private neko.module.Module parent;
+	private Module parent;
 	private String mode;
 	
 	private String sval;
@@ -26,7 +28,7 @@ public class Setting {
 	private boolean onlyint = false;
 	
 
-	public Setting(String name, neko.module.Module parent, String sval, ArrayList<String> options){
+	public Setting(String name, Module parent, String sval, ArrayList<String> options){
 		this.name = name;
 		this.parent = parent;
 		this.sval = sval;
@@ -34,14 +36,14 @@ public class Setting {
 		this.mode = "Combo";
 	}
 	
-	public Setting(String name, neko.module.Module parent, boolean bval){
+	public Setting(String name, Module parent, boolean bval){
 		this.name = name;
 		this.parent = parent;
 		this.bval = bval;
 		this.mode = "Check";
 	}
 	
-	public Setting(String name, neko.module.Module parent, double dval, double min, double max, boolean onlyint){
+	public Setting(String name, Module parent, double dval, double min, double max, boolean onlyint){
 		this.name = name;
 		this.parent = parent;
 		this.dval = dval;
@@ -55,7 +57,7 @@ public class Setting {
 		return name;
 	}
 	
-	public neko.module.Module getParentMod(){
+	public Module getParentMod(){
 		return parent;
 	}
 	

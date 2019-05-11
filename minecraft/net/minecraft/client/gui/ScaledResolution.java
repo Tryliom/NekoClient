@@ -11,10 +11,10 @@ public class ScaledResolution
     private int scaledHeight;
     private int scaleFactor;
 
-    public ScaledResolution(Minecraft mcIn, int p_i46324_2_, int p_i46324_3_)
+    public ScaledResolution(Minecraft mcIn)
     {
-        this.scaledWidth = p_i46324_2_;
-        this.scaledHeight = p_i46324_3_;
+        this.scaledWidth = mcIn.displayWidth;
+        this.scaledHeight = mcIn.displayHeight;
         this.scaleFactor = 1;
         boolean var4 = mcIn.isUnicode();
         int var5 = mcIn.gameSettings.guiScale;

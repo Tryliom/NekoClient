@@ -35,7 +35,7 @@ public class GuiWikiMenu extends GuiScreen {
 	private GuiScreen prevGui;
 	private Minecraft mc = Minecraft.getMinecraft();
 	public static HashMap<String, Vector<HashMap<String, Vector<String>>>> listWiki = new HashMap<String, Vector<HashMap<String, Vector<String>>>>();
-	private Client var = neko.Client.getNeko();
+	private Client var = Client.getNeko();
 	public static boolean check = false;
 
 	public GuiWikiMenu(GuiScreen gui) {
@@ -90,7 +90,7 @@ public class GuiWikiMenu extends GuiScreen {
 	}
 
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+		ScaledResolution sr = new ScaledResolution(mc);
 		drawDefaultBackground();
 
 		drawCenteredString(var.NekoFont, "§eWiki Neko pour les cheats", this.width / 2, 34, 16777215);

@@ -38,7 +38,7 @@ public class GuiAltManager extends GuiScreen {
 	public static ArrayList<String> listAcc = new ArrayList<String>();
 	private GuiList list;
 	private static String displaytext = "";
-	private Client var = neko.Client.getNeko();
+	private Client var = Client.getNeko();
 	private Thread currentThread;
 	private int lastIndex = -1;
 	public static boolean check = false;
@@ -64,7 +64,7 @@ public class GuiAltManager extends GuiScreen {
 	}
 
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+		ScaledResolution sr = new ScaledResolution(mc);
 		this.mc.getTextureManager().bindTexture(this.background);
 		Gui.drawScaledCustomSizeModalRect(0, 0, 0.0F, 0.0F, sr.getScaledWidth(), sr.getScaledHeight(),
 				sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight());

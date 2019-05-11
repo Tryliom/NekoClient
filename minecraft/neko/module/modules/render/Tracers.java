@@ -14,7 +14,7 @@ public class Tracers extends Module {
 	public static float cB=0.33F;
 	public static float width=2F;
 	public static boolean friend=true;
-	Client var = neko.Client.getNeko();
+	Client var = Client.getNeko();
 	
 	public Tracers() {
 		super("Tracers", -1, Category.RENDER);

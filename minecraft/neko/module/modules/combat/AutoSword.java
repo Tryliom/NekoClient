@@ -57,8 +57,8 @@ public class AutoSword extends Module {
 	}
 	  
 	/**
-	 * Prend la meilleure des armes ou outils de l'inventaire en comparant avec le matÃ©riaux et les enchantements
-	 * @return	Le slot de la meilleure arme/outil<br>-1 si rien trouvÃ©
+	 * Prend la meilleure des armes ou outils de l'inventaire en comparant avec le matériaux et les enchantements
+	 * @return	Le slot de la meilleure arme/outil<br>-1 si rien trouvé
 	 */
 	public int getBestWeaponFromInventory() {
 		java.util.ArrayList<Integer> list = new java.util.ArrayList<>();

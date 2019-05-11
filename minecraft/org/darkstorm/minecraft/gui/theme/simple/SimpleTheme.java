@@ -25,7 +25,7 @@ public class SimpleTheme extends AbstractTheme {
 
 	public SimpleTheme() {	
 		if (font.equalsIgnoreCase("Neko")) {
-			fontRenderer = neko.Client.getNeko().NekoFont;
+			fontRenderer = Client.getNeko().NekoFont;
 		} else
 			try {
 				Font ft = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/neko/font/"+(font.isEmpty() ? "Wolfram" : font)+".ttf"));

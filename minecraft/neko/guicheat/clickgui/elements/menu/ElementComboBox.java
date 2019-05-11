@@ -1,12 +1,13 @@
-package de.Hero.clickgui.elements.menu;
+package neko.guicheat.clickgui.elements.menu;
 
 import java.awt.Color;
 
-import de.Hero.clickgui.elements.Element;
-import de.Hero.clickgui.elements.ModuleButton;
-import de.Hero.clickgui.util.ColorUtil;
-import de.Hero.clickgui.util.FontUtil;
-import de.Hero.settings.Setting;
+import neko.guicheat.clickgui.elements.Element;
+import neko.guicheat.clickgui.elements.ModuleButton;
+import neko.guicheat.clickgui.util.ColorUtil;
+import neko.guicheat.clickgui.util.FontUtil;
+import neko.guicheat.clickgui.settings.Setting;
+import neko.Client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 
@@ -90,7 +91,7 @@ public class ElementComboBox extends Element {
 			double ay = y + 15;
 			for (String slcd : set.getOptions()) {
 				if (mouseX >= x && mouseX <= x + width && mouseY >= ay && mouseY <= ay + FontUtil.getFontHeight() + 2) {
-					if(neko.Client.getNeko().settingsManager.getSettingByName("Sound").getValBoolean())
+					if(Client.Neko.settingsManager.getSettingByName("Sound").getValBoolean())
 					Minecraft.getMinecraft().thePlayer.playSound("tile.piston.in", 20.0F, 20.0F);
 					
 					if(clickgui != null && clickgui.setmgr != null)

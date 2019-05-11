@@ -21,7 +21,7 @@ public class VanillaTp extends Module {
 	public static boolean air=false;
 	public static boolean classic=false;
 	public static boolean top=false;
-	Client var = neko.Client.getNeko();
+	Client var = Client.getNeko();
 	
 	public VanillaTp() {
 		super("VanillaTp", Keyboard.KEY_TAB, Category.Special);

@@ -1,9 +1,9 @@
-package de.Hero.clickgui.elements;
+package neko.guicheat.clickgui.elements;
 
-import de.Hero.clickgui.ClickGUI;
-import de.Hero.clickgui.elements.menu.ElementComboBox;
-import de.Hero.clickgui.util.FontUtil;
-import de.Hero.settings.Setting;
+import neko.guicheat.clickgui.ClickGUI;
+import neko.guicheat.clickgui.elements.menu.ElementComboBox;
+import neko.guicheat.clickgui.util.FontUtil;
+import neko.guicheat.clickgui.settings.Setting;
 
 /**
  *  Made by HeroCode

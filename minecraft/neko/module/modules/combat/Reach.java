@@ -35,7 +35,7 @@ import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraft.util.BlockPos;
 
 public class Reach extends Module {
-	Client var = neko.Client.getNeko();
+	Client var = Client.getNeko();
 	public static boolean isOn=false;
 	public static Form mode = Form.Normal;
 	public static float dist=5.0F;

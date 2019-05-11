@@ -1218,7 +1218,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
         if (!this.mc.skipRenderWorld)
         {
             anaglyphEnable = this.mc.gameSettings.anaglyph;
-            final ScaledResolution var131 = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
+            final ScaledResolution var131 = new ScaledResolution(this.mc);
             int var141 = var131.getScaledWidth();
             int var151 = var131.getScaledHeight();
             final int var161 = Mouse.getX() * var141 / this.mc.displayWidth;
@@ -1327,7 +1327,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
     public void func_152430_c(float p_152430_1_)
     {
         this.setupOverlayRendering();
-        this.mc.ingameGUI.func_180478_c(new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight));
+        this.mc.ingameGUI.func_180478_c(new ScaledResolution(this.mc));
     }
 
     private boolean func_175070_n()
@@ -1658,7 +1658,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
         event3D.call();
         
         //TODO: Render
-        Client var = neko.Client.getNeko();
+        Client var = Client.getNeko();
         for(Module m : var.moduleManager.ActiveModule) {
     		if(m.getToggled() && Utils.verif==null) {
     			m.onRender3D();
@@ -1960,7 +1960,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
      */
     public void setupOverlayRendering()
     {
-        ScaledResolution var1 = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
+        ScaledResolution var1 = new ScaledResolution(this.mc);
         GlStateManager.clear(256);
         GlStateManager.matrixMode(5889);
         GlStateManager.loadIdentity();

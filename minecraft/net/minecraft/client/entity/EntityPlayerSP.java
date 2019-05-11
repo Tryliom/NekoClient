@@ -180,7 +180,7 @@ public class EntityPlayerSP extends AbstractClientPlayer
     	
     	e = new UpdateEvent(this.rotationYaw, this.rotationPitch, this.posX, this.posY, this.posZ, this.onGround, EventType.PRE, true);
     	// TODO: Client
-    	Client var = neko.Client.getNeko();
+    	Client var = Client.getNeko();
     	for(Module eventModule : var.moduleManager.ActiveModule) {
     		if (eventModule.getToggled() && !Utils.isLock(eventModule.getName())) {
     			eventModule.onUpdate();
