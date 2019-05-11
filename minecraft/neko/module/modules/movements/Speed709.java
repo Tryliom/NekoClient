@@ -49,7 +49,7 @@ public class Speed709 extends Module {
 	public void onUpdate() {
 		if (this.mode.equals(SpeedEnum.Air)) {
 			if (mc.thePlayer.onGround) {
-				mc.thePlayer.motionY=0.00000000000000000000000000000000000000000000000000000000000000000000000000000000000001D;
+				mc.thePlayer.motionY=0.000000001D;
 				mc.thePlayer.speedInAir=(float) spe;			
 			}
 		} else if (this.mode.equals(SpeedEnum.Ground)) {

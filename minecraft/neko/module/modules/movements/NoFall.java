@@ -4,6 +4,7 @@ import org.lwjgl.input.Keyboard;
 
 import neko.module.Category;
 import neko.module.Module;
+import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.C03PacketPlayer;
 

@@ -305,7 +305,7 @@ public class InGameGui {
 				  f="§a";
 			  else
 				  f="§7";
-			  if (c<=10) {
+			  if (c<=20) {
 				  	if (!Radar.fr && Friends.isFriend(en.getName())) {} else {
 				  		String var3 = f+en.getDisplayName().getUnformattedText()+" §8["+color+Math.round(en.getDistanceToEntity(mc.thePlayer))+"m§8]";
 				  		var.NekoFont.drawStringWithShadow(var3, ((GuiScreen.width-5)-(var.NekoFont).getStringWidth(var3)), yPos, 0);

@@ -1,12 +1,5 @@
 package net.minecraft.world;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-
-import neko.Client;
-import neko.utils.Utils;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -16,6 +9,14 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Callable;
+
+import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+
+import neko.module.modules.special.Near;
+import neko.module.other.enums.Chat;
+import neko.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHopper;
 import net.minecraft.block.BlockLiquid;
@@ -30,6 +31,7 @@ import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -1168,10 +1170,25 @@ public abstract class World implements IBlockAccess
                 EntityPlayer var5 = (EntityPlayer)p_72838_1_;
                 BlockPos bp = var5.getPosition();
                 EntityPlayer entity = var5;
-                if (Utils.near)
-                	Utils.addChat("==================\n"+Utils.getNeko()+"§d"+entity.getName()+"§8:§6 "+bp.getX()+", "+bp.getY()+", "+bp.getZ()+" §8(§2"+Math.round(entity.getDistanceToEntity(Minecraft.getMinecraft().thePlayer))+"m§8)\n"+Utils.getNeko()+"§6==================");
-                if (Utils.near_say)
-                	Minecraft.getMinecraft().thePlayer.sendChatMessage(entity.getName()+" s'est téléporté/est arrivé en "+bp.getX()+", "+bp.getY()+", "+bp.getZ()+" avec une vie de "+Math.round(entity.getHealth())+"/"+Math.round(entity.getMaxHealth()));                
+                EntityWitch en = new EntityWitch(Minecraft.getMinecraft().theWorld);
+                en.setPosition(Near.spawn.getX(), Near.spawn.getY(), Near.spawn.getZ());
+                
+                if (Utils.isToggle("Near")) {
+                	if (en.getDistanceToEntity(entity)>=Near.radius) {
+                		Utils.addChat("===============");
+                		Utils.addChat2("§d"+entity.getName()+"§8:§6 "+bp.getX()+", "+bp.getY()+", "+bp.getZ()+" §8(§2"+Math.round(entity.getDistanceToEntity(Minecraft.getMinecraft().thePlayer))+"m§8)",
+                					"near copy "+entity.getName(),
+                					"",
+                					false,
+                					Chat.Summon
+                					);
+                		Utils.addChat("===============");
+                	}
+                }
+                if (Near.say) {
+                	if (en.getDistanceToEntity(entity)>=Near.radius)
+                		Minecraft.getMinecraft().thePlayer.sendChatMessage(entity.getName()+" s'est téléporté/est arrivé en "+bp.getX()+", "+bp.getY()+", "+bp.getZ()+" avec une vie de "+Math.round(entity.getHealth())+"/"+Math.round(entity.getMaxHealth()));                
+                }
                 this.playerEntities.add(var5);
                 this.updateAllPlayersSleepingFlag();
             }

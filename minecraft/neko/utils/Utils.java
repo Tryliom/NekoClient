@@ -121,6 +121,7 @@ import neko.module.modules.special.FireTrail;
 import neko.module.modules.special.Likaotique;
 import neko.module.modules.special.Magnet;
 import neko.module.modules.special.Nausicaah;
+import neko.module.modules.special.Near;
 import neko.module.modules.special.PunKeel;
 import neko.module.modules.special.Pyro;
 import neko.module.modules.special.Reflect;
@@ -200,8 +201,6 @@ public class Utils {
 	public static boolean xp=false;
 	public static boolean deathoff=false;
 	public static boolean mod=true;
-	public static boolean near=false;
-	public static boolean near_say=false;
 	public static int timeInGameMs=0;
 	public static int timeInGameSec=0;
 	public static int timeInGameMin=0;
@@ -2892,7 +2891,7 @@ public class Utils {
         if (fi.length>0) {
     		Utils.nc.saveSave("values", s, fi);
     	}
-        s+="§,"+Likaotique.getLik().isSafe()+"§,"+AutoCmd.cmd+"§,"+AutoCmd.sec;
+        s+="§,"+Likaotique.getLik().isSafe()+"§,"+AutoCmd.cmd+"§,"+AutoCmd.sec+"§,"+Near.spawn.toLong()+"§,"+Near.radius;
         Utils.nc.saveSave("values", s);
 	}
 	
@@ -3507,6 +3506,12 @@ public class Utils {
             	}
             	if (i==182) {
             		AutoCmd.sec = Integer.parseInt(ligne);
+            	}
+            	if (i==183) {
+            		Near.spawn = BlockPos.fromLong(Long.parseLong(ligne));
+            	}
+            	if (i==184) {
+            		Near.radius = Integer.parseInt(ligne);
             	}
             	
         	} catch (Exception e) {

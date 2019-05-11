@@ -108,6 +108,7 @@ import neko.module.modules.special.FireTrail;
 import neko.module.modules.special.Likaotique;
 import neko.module.modules.special.Magnet;
 import neko.module.modules.special.Nausicaah;
+import neko.module.modules.special.Near;
 import neko.module.modules.special.NoAnim;
 import neko.module.modules.special.NoLook;
 import neko.module.modules.special.PunKeel;
@@ -252,6 +253,7 @@ public class ModuleManager {
 		this.ActiveModule.add(new Knockback()); // Key NONE
 		this.ActiveModule.add(new ReplyNyah()); // Key NONE
 		this.ActiveModule.add(new Nameprotect()); // Key NONE
+		this.ActiveModule.add(new Near()); // Key NONE
 		
 		this.link.put(Utils.getModule("KillAura"), "ka");
 		this.link.put(Utils.getModule("FastBow"), "fb");
