@@ -54,6 +54,10 @@ import neko.gui.GuiBindManager;
 import neko.gui.GuiMusicManager;
 import neko.gui.GuiWikiMenu;
 import neko.gui.InGameGui;
+import neko.guicheat.clickgui.ClickGUI;
+import neko.guicheat.clickgui.Panel;
+import neko.guicheat.clickgui.elements.ModuleButton;
+import neko.guicheat.clickgui.settings.Setting;
 import neko.lock.Lock;
 import neko.manager.GuiManager;
 import neko.manager.ModuleManager;
@@ -96,6 +100,7 @@ import neko.module.modules.movements.NoClip;
 import neko.module.modules.movements.Speed709;
 import neko.module.modules.movements.Step;
 import neko.module.modules.params.Gui;
+import neko.module.modules.params.HUD;
 import neko.module.modules.player.Autoarmor;
 import neko.module.modules.player.Build;
 import neko.module.modules.player.Cheststealer;
@@ -104,7 +109,6 @@ import neko.module.modules.player.Fire;
 import neko.module.modules.player.Nuker;
 import neko.module.modules.player.PushUp;
 import neko.module.modules.player.Velocity;
-import neko.module.modules.render.HUD;
 import neko.module.modules.render.ItemESP;
 import neko.module.modules.render.NekoChat;
 import neko.module.modules.render.Paint;
@@ -1382,6 +1386,7 @@ public class Utils {
 		saveCmd();
 		saveCloudAlt();
 		saveStat();
+		saveSettings();
 	}
 	
 	public static Block getBlockRelativeToEntity(Entity en, double d) {
@@ -2412,18 +2417,19 @@ public class Utils {
 	}
 	
 	public static void saveFrame(String...fi) {
-		if (verif!=null || var.gui==null)
+		if (verif!=null || var.clickGui==null)
 			return;
 		String s="";
 		String name ="";
-    	for(Frame f : var.gui.getFrames()) {
-    		name = f.getTitle();
-    		int x = f.getX();
-    		int y = f.getY();
-    		s+=name+" "+x+" "+y+" "+f.isMinimized()+"§";
+    	for(Panel f : ClickGUI.panels) {
+    		name = f.title;
+    		int x = (int)f.x;
+    		int y = (int)f.y;
+    		s+=name+" "+x+" "+y+" "+f.extended+"§";
     	}
     	nc.saveSave("frame", s);
 	}
+	
 	
 	public static void loadFrame(String...fi) {
 		File dir = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"frame.neko");
@@ -2452,8 +2458,8 @@ public class Utils {
 		
 		}
 	}
-	
-	public static void loadCloudFrame() {
+	//Ancien ClickGui Load
+	/*public static void loadCloudFrame() {
 	    String list[] = nc.getSave("frame").split("§");
 	    if (var.gui==null) {
 	    	var.gui = new GuiManager();
@@ -2471,7 +2477,33 @@ public class Utils {
 	    		}
 	    	}
 	    }
+	}*/
+	public static void loadCloudFrame() {
+	    String list[] = nc.getSave("frame").split("§");
+	    if (var.clickGui==null) {
+	    	var.clickGui = new ClickGUI();
+	    }
+	    for (String ligne : list)
+	    {           
+	    	String s[] = ligne.split(" ");
+	    	for(Panel f : ClickGUI.panels) {
+	    		if (f.title.equalsIgnoreCase(s[0])) {
+	    			f.x = (Integer.parseInt(s[1]));
+	    			f.y = (Integer.parseInt(s[2]));
+	    			f.extended = (Boolean.parseBoolean(s[3]));
+	    		}
+	    	}
+	    }
 	}
+	
+	/*public static void loadcloudFrame() {
+		for(Category c : Category.values()) {
+			if(c != Category.HIDE) {
+				String title = Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+			    int x, y, z;
+			}
+		}
+	}*/
 	
 	public static void saveFont() {
 		if (verif!=null)
@@ -4429,6 +4461,19 @@ public class Utils {
     	nc.saveSave("bind", s);
 	}
 	
+	public static void saveSettings(String...fi) {
+		if(verif!=null)
+			return;
+		String s = "";
+		for(final Setting set : Client.Neko.settingsManager.getSettings()) {
+			s+=(String.valueOf(set.getName())+":"+set.getValBoolean()+":"+set.getValDouble()+":"+set.getValString()+"§");
+		}
+    	if (fi.length>0) {
+    		nc.saveSave("settings", s, fi);
+    	}
+    	nc.saveSave("settings", s);
+	}
+	
 	public static void loadSaveCloud() {
 		if (var.rang==null)
 			for (Rank r : ModuleManager.rang) {
@@ -4453,6 +4498,7 @@ public class Utils {
 			loadCloudFont();
 			loadCloudShit();
 			loadCloudFrame();
+			loadCloudSettings();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -4492,6 +4538,23 @@ public class Utils {
 		  Utils.importAllAccountToCloud();
 		  Utils.importMod();
 		  Utils.saveAll();
+	}
+	
+	public static void loadCloudSettings(String...fi) {
+
+		String list[] = fi.length>0 ? nc.getSave("settings", fi).split("§") : nc.getSave("settings").split("§");
+		for(String args : list) {
+			String s[] = args.split(":");
+			if(s.length == 4) {
+				final Setting set = Client.Neko.settingsManager.getSettingByName(s[0]);
+				if(set == null) {
+					continue;
+				}
+				set.setValBoolean(Boolean.parseBoolean(s[1]));
+				set.setValDouble(Double.parseDouble(s[2]));
+				set.setValString(s[3]);
+			}
+		}
 	}
 	
 	

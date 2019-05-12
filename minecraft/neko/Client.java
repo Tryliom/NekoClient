@@ -82,11 +82,11 @@ public class Client {
 
 	public void startClient() {
 
-		settingsManager = new SettingsManager();
+		/*settingsManager = new SettingsManager();
 		eventManager = new EventManager();
 		eventManager.register(this);
 		moduleManager = new ModuleManager();
-		clickGui = new ClickGUI();
+		clickGui = new ClickGUI();*/
 		
 		time.start();
 		try {

@@ -23,9 +23,12 @@ import com.google.common.collect.Lists;
 
 import neko.Client;
 import neko.api.NekoCloud;
+import neko.event.EventManager;
 import neko.gui.GuiAltManager;
 import neko.gui.GuiConnect;
 import neko.gui.GuiMenuNeko;
+import neko.guicheat.clickgui.ClickGUI;
+import neko.guicheat.clickgui.settings.SettingsManager;
 import neko.manager.GuiManager;
 import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
@@ -256,7 +259,11 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         
         if (!nc.isLogin() && Utils.haveInternet()) {
         	Client var = Client.getNeko();
+        	var.settingsManager = new SettingsManager();
+        	var.eventManager = new EventManager();
+        	var.eventManager.register(var);
     		var.moduleManager = new ModuleManager();
+    		var.clickGui = new ClickGUI();
     		var.onlyrpg = OnlyRpgManager.getRpg();
     		if (var.gui==null) {
     			var.gui = new GuiManager();

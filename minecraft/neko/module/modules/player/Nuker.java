@@ -2,6 +2,8 @@ package neko.module.modules.player;
 
 import java.util.ArrayList;
 
+import neko.Client;
+import neko.guicheat.clickgui.settings.Setting;
 import neko.module.Category;
 import neko.module.Module;
 import neko.utils.RenderUtils;
@@ -34,6 +36,13 @@ public class Nuker extends Module {
 
 	public Nuker() {
 		super("Nuker", -1, Category.PLAYER);
+	}
+	
+	@Override
+	public void setup() {
+			/*Client.getNeko().settingsManager.rSetting(new Setting("OneHit", this, this.onehit));
+			Client.getNeko().settingsManager.rSetting(new Setting("Safe", this, this.safe));
+			Client.getNeko().settingsManager.rSetting(new Setting("Range", this, this.nukerRadius, 0, 8, true));*/
 	}
 
 	public void onEnabled() {
