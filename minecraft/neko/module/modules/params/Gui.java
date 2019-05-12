@@ -38,16 +38,16 @@ public class Gui extends Module {
 	}
 	
 	public void onDisabled() {
-		//Utils.saveFrame();
+		Utils.saveFrame();
 		mc.displayGuiScreen(null);
 		super.onDisabled();
 	}
 	
 	public void onToggle() {
-		/*if(!(mc.currentScreen instanceof GuiManagerDisplayScreen)) {
-			mc.displayGuiScreen(new GuiManagerDisplayScreen(var.gui));
-			new UIRender().renderAndUpdateFrames();
-		}*/
+		if(!(mc.currentScreen instanceof ClickGUI)) {
+			mc.displayGuiScreen(var.clickGui);
+			//new UIRender().renderAndUpdateFrames();
+		}
 	}
 
 }
