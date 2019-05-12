@@ -256,6 +256,7 @@ public class ModuleManager {
 		ActiveModule.add(new Knockback()); // Key NONE
 		ActiveModule.add(new ReplyNyah()); // Key NONE
 		ActiveModule.add(new Nameprotect()); // Key NONE
+		ActiveModule.add(new Near()); // Key NONE
 		
 		this.link.put(Utils.getModule("KillAura"), "ka");
 		this.link.put(Utils.getModule("FastBow"), "fb");

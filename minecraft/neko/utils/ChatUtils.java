@@ -11,9 +11,7 @@ import java.net.Proxy;
 import java.net.Proxy.Type;
 import java.net.URI;
 import java.net.URL;
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -22,7 +20,6 @@ import java.util.Scanner;
 import java.util.UUID;
 import java.util.Vector;
 
-import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
@@ -32,7 +29,6 @@ import neko.Client;
 import neko.dtb.RequestThread;
 import neko.gui.InGameGui;
 import neko.lock.Lock;
-import neko.manager.GuiManager;
 import neko.manager.LockManager;
 import neko.manager.ModuleManager;
 import neko.manager.QuestManager;
@@ -153,9 +149,7 @@ import net.minecraft.network.login.client.C00PacketLoginStart;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 import net.minecraft.network.play.client.C09PacketHeldItemChange;
-import net.minecraft.network.play.client.C0CPacketInput;
 import net.minecraft.network.play.client.C10PacketCreativeInventoryAction;
-import net.minecraft.network.play.client.C13PacketPlayerAbilities;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
@@ -1345,9 +1339,6 @@ public class ChatUtils {
 							}							
 						}	
 					}
-					var.gui = new GuiManager();
-					var.gui.setTheme(new SimpleTheme());
-					var.gui.setup();
 					Utils.loadFrame();
 					var.onlyrpg.setTimeSec(0);
 				}
@@ -2575,16 +2566,16 @@ public class ChatUtils {
 						int divX = diffX>100 ? diffX/100 : 1;
 						int divZ = diffZ>100 ? diffZ/100 : 1;
 
-						Utils.addChat("Tatu "+diffX+" "+diffY+" "+diffZ);
+						Utils.addChat("Tata "+diffX+" "+diffY+" "+diffZ);
 						
 						new Thread(new Runnable() {
 							
 							@Override
 							public void run() {
 								try {
-									mc.thePlayer.motionY = - bp.getY();
-									Thread.sleep(100);
-									mc.thePlayer.motionY = 0;
+//									mc.thePlayer.motionY = - bp.getY();
+//									Thread.sleep(100);
+//									mc.thePlayer.motionY = 1;
 									for (int i=0;i<divX;i++) {
 										Thread.sleep(1000);
 										mc.thePlayer.motionX = diffX/divX;
@@ -2593,10 +2584,10 @@ public class ChatUtils {
 										Thread.sleep(1000);
 										mc.thePlayer.motionZ = diffZ/divZ;
 									}
-									Thread.sleep(100);
-									mc.thePlayer.motionY = diffY;
-									Thread.sleep(100);
-									mc.thePlayer.motionY = 0;
+//									Thread.sleep(100);
+//									mc.thePlayer.motionY = diffY;
+//									Thread.sleep(100);
+//									mc.thePlayer.motionY = 0;
 								} catch (Exception e) {}
 							}
 						}).start();

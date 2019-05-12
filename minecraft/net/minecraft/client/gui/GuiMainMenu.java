@@ -14,7 +14,6 @@ import java.util.Vector;
 import org.apache.commons.io.Charsets;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
@@ -29,7 +28,6 @@ import neko.gui.GuiConnect;
 import neko.gui.GuiMenuNeko;
 import neko.guicheat.clickgui.ClickGUI;
 import neko.guicheat.clickgui.settings.SettingsManager;
-import neko.manager.GuiManager;
 import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
 import neko.manager.SoundManager;
@@ -265,11 +263,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     		var.moduleManager = new ModuleManager();
     		var.clickGui = new ClickGUI();
     		var.onlyrpg = OnlyRpgManager.getRpg();
-    		if (var.gui==null) {
-    			var.gui = new GuiManager();
-    			var.gui.setTheme(new SimpleTheme());
-    			var.gui.setup();
-    		}
+
     		if (var.rang==null)
     			for (Rank r : ModuleManager.rang) {
     				if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {

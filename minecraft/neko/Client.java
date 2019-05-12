@@ -17,7 +17,6 @@ import neko.event.EventManager;
 import neko.gui.RequestManager;
 import neko.guicheat.clickgui.ClickGUI;
 import neko.guicheat.clickgui.settings.SettingsManager;
-import neko.manager.GuiManager;
 import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
 import neko.manager.QuestManager;
@@ -48,7 +47,6 @@ public class Client {
 	public final String CLIENT_AUTHOR = "Tryliom";
 
 	
-	public GuiManager gui;
 	public final String CLIENT_VERSION = "2.8.3";
 	public String mode = "Player";
 	public Rank rang;

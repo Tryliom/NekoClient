@@ -34,7 +34,6 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.HttpsURLConnection;
 
 import org.apache.commons.codec.binary.Base64;
-import org.darkstorm.minecraft.gui.component.Frame;
 import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.input.Keyboard;
 
@@ -56,10 +55,8 @@ import neko.gui.GuiWikiMenu;
 import neko.gui.InGameGui;
 import neko.guicheat.clickgui.ClickGUI;
 import neko.guicheat.clickgui.Panel;
-import neko.guicheat.clickgui.elements.ModuleButton;
 import neko.guicheat.clickgui.settings.Setting;
 import neko.lock.Lock;
-import neko.manager.GuiManager;
 import neko.manager.ModuleManager;
 import neko.manager.QuestManager;
 import neko.manager.SoundManager;
@@ -2431,33 +2428,7 @@ public class Utils {
 	}
 	
 	
-	public static void loadFrame(String...fi) {
-		File dir = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"frame.neko");
-		if (dir.exists()) {
-		try { 
-            InputStream ips = new FileInputStream(dir); 
-            InputStreamReader ipsr = new InputStreamReader(ips); 
-            try (BufferedReader br = new BufferedReader(ipsr)) {
-                String ligne;
-                Integer i=0;
-                while ((ligne = br.readLine()) != null)
-                {           
-                	i++;
-                	String s[] = ligne.split(" ");
-                	for(Frame f : var.gui.getFrames()) {
-                		if (f.getTitle().equalsIgnoreCase(s[0])) {
-                			f.setX(Integer.parseInt(s[1]));
-                			f.setY(Integer.parseInt(s[2]));
-                			f.setMinimized(Boolean.parseBoolean(s[3]));
-                		}
-                	}
-                }
-            
-		} catch (IOException | NumberFormatException e) {}		
-		} catch (IOException | NumberFormatException e) {}
-		
-		}
-	}
+	public static void loadFrame(String...fi) {}
 	//Ancien ClickGui Load
 	/*public static void loadCloudFrame() {
 	    String list[] = nc.getSave("frame").split("§");

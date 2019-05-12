@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import org.lwjgl.input.Keyboard;
 
 import neko.Client;
-import neko.guicheat.UIRender;
 import neko.guicheat.clickgui.ClickGUI;
-import neko.guicheat.clickgui.Panel;
 import neko.guicheat.clickgui.settings.Setting;
 import neko.module.Category;
 import neko.module.Module;
@@ -24,11 +22,11 @@ public class Gui extends Module {
 		ArrayList<String> options = new ArrayList<>();
 		options.add("New");
 		options.add("JellyLike");
-			Client.Neko.settingsManager.rSetting(new Setting("Design", this, "New", options));
-			Client.getNeko().settingsManager.rSetting(new Setting("Sound", this, false));
-			Client.getNeko().settingsManager.rSetting(new Setting("GuiRed", this, 255, 0, 255, true));
-			Client.getNeko().settingsManager.rSetting(new Setting("GuiGreen", this, 26, 0, 255, true));
-			Client.getNeko().settingsManager.rSetting(new Setting("GuiBlue", this, 42, 0, 255, true));
+		Client.Neko.settingsManager.rSetting(new Setting("Design", this, "New", options));
+		Client.getNeko().settingsManager.rSetting(new Setting("Sound", this, false));
+		Client.getNeko().settingsManager.rSetting(new Setting("GuiRed", this, 255, 0, 255, true));
+		Client.getNeko().settingsManager.rSetting(new Setting("GuiGreen", this, 26, 0, 255, true));
+		Client.getNeko().settingsManager.rSetting(new Setting("GuiBlue", this, 42, 0, 255, true));
 	}
 	
 	@Override
@@ -46,7 +44,6 @@ public class Gui extends Module {
 	public void onToggle() {
 		if(!(mc.currentScreen instanceof ClickGUI)) {
 			mc.displayGuiScreen(var.clickGui);
-			//new UIRender().renderAndUpdateFrames();
 		}
 	}
 

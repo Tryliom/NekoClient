@@ -74,7 +74,7 @@ public class ClickGUI extends GuiScreen {
 								@Override
 								public void setup() {
 									for (Module m : Client.Neko.moduleManager.getModules()) {
-										if(m.getCategory()!=Category.HIDE && !m.isCmd() && !Utils.isLock(m.getName())) {
+										if(m.getCategory()!=Category.HIDE && !m.isCmd()) {
 											if (!m.getCategory().equals(c))continue;
 											this.Elements.add(new ModuleButton(m, this));
 										}
