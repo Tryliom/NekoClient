@@ -39,6 +39,9 @@ public class ClickGUI extends GuiScreen {
 	private ModuleButton mb = null;
 	public SettingsManager setmgr;
 	
+	//public double px;
+	//public double py;
+	
 	/*
 	 * Konstrukor sollte nur einmal aufgerufen werden => in der MainMethode des eigenen Codes
 	 * hier Client.startClient()
@@ -59,6 +62,7 @@ public class ClickGUI extends GuiScreen {
 		double px = 10;
 		double py = 10;
 		double pyplus = pheight + 10;
+		double pxplus = pwidth + 10;
 		
 		/*
 		 * Zum Sortieren der Panels einfach die Reihenfolge im Enum ändern ;)
@@ -77,7 +81,8 @@ public class ClickGUI extends GuiScreen {
 								}
 							}
 				});
-				py += pyplus;
+				//py += pyplus;
+				px += pxplus;
 			}
 		}
 		

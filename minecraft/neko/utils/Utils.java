@@ -54,6 +54,8 @@ import neko.gui.GuiBindManager;
 import neko.gui.GuiMusicManager;
 import neko.gui.GuiWikiMenu;
 import neko.gui.InGameGui;
+import neko.guicheat.clickgui.ClickGUI;
+import neko.guicheat.clickgui.settings.Setting;
 import neko.lock.Lock;
 import neko.manager.GuiManager;
 import neko.manager.ModuleManager;
@@ -1383,6 +1385,7 @@ public class Utils {
 		saveCmd();
 		saveCloudAlt();
 		saveStat();
+		saveSettings();
 	}
 	
 	public static Block getBlockRelativeToEntity(Entity en, double d) {
@@ -2425,6 +2428,7 @@ public class Utils {
     	}
     	nc.saveSave("frame", s);
 	}
+	
 	
 	public static void loadFrame(String...fi) {
 		File dir = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"frame.neko");
@@ -4424,6 +4428,19 @@ public class Utils {
     	nc.saveSave("bind", s);
 	}
 	
+	public static void saveSettings(String...fi) {
+		if(verif!=null)
+			return;
+		String s = "";
+		for(final Setting set : Client.Neko.settingsManager.getSettings()) {
+			s+=(String.valueOf(set.getName())+":"+set.getValBoolean()+":"+set.getValDouble()+":"+set.getValString()+"§");
+		}
+    	if (fi.length>0) {
+    		nc.saveSave("settings", s, fi);
+    	}
+    	nc.saveSave("settings", s);
+	}
+	
 	public static void loadSaveCloud() {
 		if (var.rang==null)
 			for (Rank r : ModuleManager.rang) {
@@ -4448,6 +4465,7 @@ public class Utils {
 			loadCloudFont();
 			loadCloudShit();
 			loadCloudFrame();
+			loadCloudSettings();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -4487,6 +4505,23 @@ public class Utils {
 		  Utils.importAllAccountToCloud();
 		  Utils.importMod();
 		  Utils.saveAll();
+	}
+	
+	public static void loadCloudSettings(String...fi) {
+
+		String list[] = fi.length>0 ? nc.getSave("settings", fi).split("§") : nc.getSave("settings").split("§");
+		for(String args : list) {
+			String s[] = args.split(":");
+			if(s.length == 4) {
+				final Setting set = Client.Neko.settingsManager.getSettingByName(s[0]);
+				if(set == null) {
+					continue;
+				}
+				set.setValBoolean(Boolean.parseBoolean(s[1]));
+				set.setValDouble(Double.parseDouble(s[2]));
+				set.setValString(s[3]);
+			}
+		}
 	}
 	
 	
