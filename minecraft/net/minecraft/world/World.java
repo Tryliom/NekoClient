@@ -41,6 +41,10 @@ import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.gui.IUpdatePlayerListBox;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.tileentity.TileEntityDispenser;
+import net.minecraft.tileentity.TileEntityDropper;
+import net.minecraft.tileentity.TileEntityEnderChest;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
@@ -1856,7 +1860,7 @@ public abstract class World implements IBlockAccess
     public boolean addTileEntity(TileEntity tile)
     {
         boolean var2 = this.loadedTileEntityList.add(tile);
-
+        
         if (var2 && tile instanceof IUpdatePlayerListBox)
         {
             this.tickableTileEntities.add(tile);
@@ -1878,6 +1882,7 @@ public abstract class World implements IBlockAccess
             while (var2.hasNext())
             {
                 TileEntity var3 = (TileEntity)var2.next();
+                
                 this.loadedTileEntityList.add(var3);
 
                 if (var3 instanceof IUpdatePlayerListBox)

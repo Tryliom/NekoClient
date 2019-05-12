@@ -163,6 +163,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityPigZombie;
+import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.passive.EntityOcelot;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.event.ClickEvent;
@@ -623,6 +624,13 @@ public class Utils {
 	
 	public static double getZ(Entity entity) {
 		return (entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * mc.timer.renderPartialTicks) - mc.getRenderManager().renderPosZ;
+	}
+	
+	public static float getDistanceToBlock(BlockPos b) {
+		EntityWitch en = new EntityWitch(mc.theWorld);
+		en.setPosition(b.getX(), b.getY(), b.getZ());
+		
+		return mc.thePlayer.getDistanceToEntity(en);
 	}
 	
 	public static String setColor(String phrase, String color) {
@@ -2429,26 +2437,7 @@ public class Utils {
 	
 	
 	public static void loadFrame(String...fi) {}
-	//Ancien ClickGui Load
-	/*public static void loadCloudFrame() {
-	    String list[] = nc.getSave("frame").split("§");
-	    if (var.gui==null) {
-	    	var.gui = new GuiManager();
-			var.gui.setTheme(new SimpleTheme());
-			var.gui.setup();
-	    }
-	    for (String ligne : list)
-	    {           
-	    	String s[] = ligne.split(" ");
-	    	for(Frame f : var.gui.getFrames()) {
-	    		if (f.getTitle().equalsIgnoreCase(s[0])) {
-	    			f.setX(Integer.parseInt(s[1]));
-	    			f.setY(Integer.parseInt(s[2]));
-	    			f.setMinimized(Boolean.parseBoolean(s[3]));
-	    		}
-	    	}
-	    }
-	}*/
+
 	public static void loadCloudFrame() {
 	    String list[] = nc.getSave("frame").split("§");
 	    if (var.clickGui==null) {

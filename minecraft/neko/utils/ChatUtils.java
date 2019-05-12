@@ -2585,7 +2585,6 @@ public class ChatUtils {
 					if (!Utils.isToggle("NoClip")) {
 						Utils.toggleModule("NoClip");
 						nc = true;
-//						mc.thePlayer.noClip = true;
 					}
 					BlockPos bp = mc.thePlayer.getPosition();
 					int pX = bp.getX();

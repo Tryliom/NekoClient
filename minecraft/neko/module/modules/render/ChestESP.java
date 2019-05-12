@@ -3,12 +3,12 @@ package neko.module.modules.render;
 import neko.module.Category;
 import neko.module.Module;
 import neko.utils.RenderUtils;
+import neko.utils.Utils;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.tileentity.TileEntityDispenser;
 import net.minecraft.tileentity.TileEntityDropper;
 import net.minecraft.tileentity.TileEntityEnderChest;
-import net.minecraft.tileentity.TileEntityMobSpawner;
 
 public class ChestESP extends Module {
 	public static float cR=0.4F;
@@ -40,11 +40,20 @@ public class ChestESP extends Module {
 		for (Object o : mc.theWorld.loadedTileEntityList) {
 			if (o instanceof TileEntityChest || o instanceof TileEntityEnderChest) {
 				TileEntity chest = (TileEntity) o;     
-				
-    			RenderUtils.drawBlockESP(chest.getPos().getX()-mc.getRenderManager().renderPosX, chest.getPos().getY()-mc.getRenderManager().renderPosY, chest.getPos().getZ()-mc.getRenderManager().renderPosZ, cR, cG, cR, 0.11F, clR, clG, clB, 0.11F, width);
+
+				if (Utils.getDistanceToBlock(chest.getPos())>5) {
+					RenderUtils.drawTracerLine(chest.getPos().getX()-mc.getRenderManager().renderPosX+ 0.5, chest.getPos().getY() + 1 - mc.getRenderManager().renderPosY, 
+							chest.getPos().getZ() - mc.getRenderManager().renderPosZ + 0.5, cR, cG, cB, 0.5F, width);
+	    			RenderUtils.drawBlockESP(chest.getPos().getX()-mc.getRenderManager().renderPosX, chest.getPos().getY()-mc.getRenderManager().renderPosY, chest.getPos().getZ()-mc.getRenderManager().renderPosZ, cR, cG, cR, 0.11F, clR, clG, clB, 0.11F, width);
+				}
 			} else if (o instanceof TileEntityDispenser || o instanceof TileEntityDropper) {
 				TileEntity chest = (TileEntity) o; 
-				RenderUtils.drawBlockESP(chest.getPos().getX()-mc.getRenderManager().renderPosX, chest.getPos().getY()-mc.getRenderManager().renderPosY, chest.getPos().getZ()-mc.getRenderManager().renderPosZ, Math.round(cR*0.9), Math.round(cG*0.9), Math.round(cR*0.9), 0.11F, Math.round(clR*0.9), Math.round(clG*0.9), Math.round(clB*0.9), 0.11F, width);
+
+				if (Utils.getDistanceToBlock(chest.getPos())>5) {
+					RenderUtils.drawTracerLine(chest.getPos().getX()-mc.getRenderManager().renderPosX+ 0.5, chest.getPos().getY() + 1 - mc.getRenderManager().renderPosY, 
+							chest.getPos().getZ() - mc.getRenderManager().renderPosZ + 0.5, Math.round(cR*0.9), Math.round(cG*0.9), Math.round(cR*0.9), 0.5F, width);
+					RenderUtils.drawBlockESP(chest.getPos().getX()-mc.getRenderManager().renderPosX, chest.getPos().getY()-mc.getRenderManager().renderPosY, chest.getPos().getZ()-mc.getRenderManager().renderPosZ, Math.round(cR*0.9), Math.round(cG*0.9), Math.round(cR*0.9), 0.11F, Math.round(clR*0.9), Math.round(clG*0.9), Math.round(clB*0.9), 0.11F, width);
+				}
 			}
         }
 	}
