@@ -1,19 +1,12 @@
 package neko.gui;
 
-import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.util.Properties;
 
-import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.input.Keyboard;
 
 import neko.Client;
 import neko.api.NekoCloud;
-import neko.manager.GuiManager;
-import neko.manager.ModuleManager;
-import neko.manager.OnlyRpgManager;
 import neko.module.other.Irc;
-import neko.module.other.Rank;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -72,7 +65,7 @@ public class GuiConnect extends GuiScreen {
 
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		
-		ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+		ScaledResolution sr = new ScaledResolution(mc);
 		this.mc.getTextureManager().bindTexture(this.background);
 		
 		Gui.drawScaledCustomSizeModalRect(0, 0, 0.0F, 0.0F, sr.getScaledWidth(), sr.getScaledHeight(),

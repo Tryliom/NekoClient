@@ -2,22 +2,21 @@ package neko;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.net.InetAddress;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Vector;
 
-import javax.lang.model.element.VariableElement;
 import javax.swing.Timer;
 
-import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.opengl.Display;
 
-import neko.api.NekoCloud;
 import neko.dtb.RequestThread;
+import neko.event.EventManager;
 import neko.gui.RequestManager;
+import neko.guicheat.clickgui.ClickGUI;
+import neko.guicheat.clickgui.settings.SettingsManager;
 import neko.manager.GuiManager;
 import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
@@ -37,13 +36,20 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.ResourceLocation;
 
 public class Client {
-	Minecraft mc = Minecraft.getMinecraft();
-	public final String CLIENT_NAME = "Neko";
-	public final String CLIENT_AUTHOR = "Tryliom";
+	public static Client Neko = new Client();
+
+	public SettingsManager settingsManager;
+	public EventManager eventManager;
 	public ModuleManager moduleManager;
+	public ClickGUI clickGui;
+	
+	Minecraft mc = Minecraft.getMinecraft();
+	public final static String CLIENT_NAME = "Neko";
+	public final String CLIENT_AUTHOR = "Tryliom";
+
+	
 	public GuiManager gui;
 	public final String CLIENT_VERSION = "2.8.3";
-	private static final Client Neko = new Client();
 	public String mode = "Player";
 	public Rank rang;
 	public Necklace necklace;
@@ -75,6 +81,13 @@ public class Client {
 	public String strCreator = "§eCréé par §f§lTryliom§e et §f§lMarie";
 
 	public void startClient() {
+
+		settingsManager = new SettingsManager();
+		eventManager = new EventManager();
+		eventManager.register(this);
+		moduleManager = new ModuleManager();
+		clickGui = new ClickGUI();
+		
 		time.start();
 		try {
 			URL url = new URL("http://nekohc.fr/ver.html");
@@ -98,6 +111,7 @@ public class Client {
 		} catch (Exception e) {
 			System.out.println("Adresse inatteignable :c");
 		}
+		
 		NekoFont = new FontRenderer(mc.gameSettings, new ResourceLocation("neko/font/ascii.png"), mc.renderEngine,
 				false);
 		if (mc.gameSettings.language != null) {
@@ -163,10 +177,15 @@ public class Client {
 			}
 		}
 		name = CLIENT_NAME + "/vanilla";
+		
 	}
 
 	public static final Client getNeko() {
 		return Neko;
+	}
+	
+	public void stopClient() {
+		eventManager.unregister(this);
 	}
 
 }

@@ -37,7 +37,7 @@ public class Phase extends Module {
 			mc.getNetHandler().addToSendQueue(new C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY-p, mc.thePlayer.posZ, false));
 			mc.thePlayer.setPosition(mc.thePlayer.posX, mc.thePlayer.posY-p, mc.thePlayer.posZ);
 		} else if (mc.thePlayer.isCollidedHorizontally && mc.thePlayer.isMovingXZ()) {
-			Entity var2 = this.mc.func_175606_aa();
+			Entity var2 = this.mc.getRenderViewEntity();
 	        EnumFacing face = var2.func_174811_aO();				        
 	        switch (face.getIndex()) {
 	        case 4:

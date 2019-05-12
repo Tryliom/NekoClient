@@ -554,7 +554,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
 
             if (this.theWorld != null)
             {
-                Entity var2 = this.mc.func_175606_aa();
+                Entity var2 = this.mc.getRenderViewEntity();
 
                 if (var2 != null)
                 {
@@ -605,7 +605,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
 
             if (this.theWorld != null)
             {
-                Entity var2 = this.mc.func_175606_aa();
+                Entity var2 = this.mc.getRenderViewEntity();
 
                 if (var2 != null)
                 {
@@ -653,8 +653,8 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
             double var6 = p_180446_1_.prevPosY + (p_180446_1_.posY - p_180446_1_.prevPosY) * (double)partialTicks;
             double var8 = p_180446_1_.prevPosZ + (p_180446_1_.posZ - p_180446_1_.prevPosZ) * (double)partialTicks;
             this.theWorld.theProfiler.startSection("prepare");
-            TileEntityRendererDispatcher.instance.func_178470_a(this.theWorld, this.mc.getTextureManager(), this.mc.fontRendererObj, this.mc.func_175606_aa(), partialTicks);
-            this.field_175010_j.func_180597_a(this.theWorld, this.mc.fontRendererObj, this.mc.func_175606_aa(), this.mc.pointedEntity, this.mc.gameSettings, partialTicks);
+            TileEntityRendererDispatcher.instance.func_178470_a(this.theWorld, this.mc.getTextureManager(), this.mc.fontRendererObj, this.mc.getRenderViewEntity(), partialTicks);
+            this.field_175010_j.func_180597_a(this.theWorld, this.mc.fontRendererObj, this.mc.getRenderViewEntity(), this.mc.pointedEntity, this.mc.gameSettings, partialTicks);
 
             if (pass == 0)
             {
@@ -663,7 +663,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                 this.countEntitiesHidden = 0;
             }
 
-            Entity var10 = this.mc.func_175606_aa();
+            Entity var10 = this.mc.getRenderViewEntity();
             double var11 = var10.lastTickPosX + (var10.posX - var10.lastTickPosX) * (double)partialTicks;
             double var13 = var10.lastTickPosY + (var10.posY - var10.lastTickPosY) * (double)partialTicks;
             double var15 = var10.lastTickPosZ + (var10.posZ - var10.lastTickPosZ) * (double)partialTicks;
@@ -721,10 +721,10 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
 
                     if (!forgeEntityPass || Reflector.callBoolean(var19, Reflector.ForgeEntity_shouldRenderInPass, new Object[] {Integer.valueOf(pass)}))
                     {
-                        boolean var25 = this.mc.func_175606_aa() instanceof EntityLivingBase && ((EntityLivingBase)this.mc.func_175606_aa()).isPlayerSleeping();
+                        boolean var25 = this.mc.getRenderViewEntity() instanceof EntityLivingBase && ((EntityLivingBase)this.mc.getRenderViewEntity()).isPlayerSleeping();
                         boolean var26 = var19.isInRangeToRender3d(var4, var6, var8) && (var19.ignoreFrustumCheck || p_180446_2_.isBoundingBoxInFrustum(var19.getEntityBoundingBox()) || var19.riddenByEntity == this.mc.thePlayer) && var19 instanceof EntityPlayer;
 
-                        if ((var19 != this.mc.func_175606_aa() || this.mc.gameSettings.thirdPersonView != 0 || var25) && var26)
+                        if ((var19 != this.mc.getRenderViewEntity() || this.mc.gameSettings.thirdPersonView != 0 || var25) && var26)
                         {
                             this.field_175010_j.renderEntitySimple(var19, partialTicks);
                         }
@@ -765,9 +765,9 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
 
                         if (var30)
                         {
-                            boolean var34 = this.mc.func_175606_aa() instanceof EntityLivingBase ? ((EntityLivingBase)this.mc.func_175606_aa()).isPlayerSleeping() : false;
+                            boolean var34 = this.mc.getRenderViewEntity() instanceof EntityLivingBase ? ((EntityLivingBase)this.mc.getRenderViewEntity()).isPlayerSleeping() : false;
 
-                            if (var27 == this.mc.func_175606_aa() && this.mc.gameSettings.thirdPersonView == 0 && !var34 || var27.posY >= 0.0D && var27.posY < 256.0D && !this.theWorld.isBlockLoaded(new BlockPos(var27)))
+                            if (var27 == this.mc.getRenderViewEntity() && this.mc.gameSettings.thirdPersonView == 0 && !var34 || var27.posY >= 0.0D && var27.posY < 256.0D && !this.theWorld.isBlockLoaded(new BlockPos(var27)))
                             {
                                 continue;
                             }
@@ -1464,8 +1464,8 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
         else if (this.mc.theWorld.provider.isSurfaceWorld())
         {
             GlStateManager.func_179090_x();
-            Vec3 var221 = this.theWorld.getSkyColor(this.mc.func_175606_aa(), partialTicks);
-            var221 = CustomColorizer.getSkyColor(var221, this.mc.theWorld, this.mc.func_175606_aa().posX, this.mc.func_175606_aa().posY + 1.0D, this.mc.func_175606_aa().posZ);
+            Vec3 var221 = this.theWorld.getSkyColor(this.mc.getRenderViewEntity(), partialTicks);
+            var221 = CustomColorizer.getSkyColor(var221, this.mc.theWorld, this.mc.getRenderViewEntity().posX, this.mc.getRenderViewEntity().posY + 1.0D, this.mc.getRenderViewEntity().posZ);
             float var231 = (float)var221.xCoord;
             float var5 = (float)var221.yCoord;
             float var6 = (float)var221.zCoord;
@@ -1754,7 +1754,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                     this.cloudRenderer.prepareToRender(false, this.cloudTickCounter, p_180447_1_);
                     p_180447_1_ = 0.0F;
                     GlStateManager.disableCull();
-                    float var31 = (float)(this.mc.func_175606_aa().lastTickPosY + (this.mc.func_175606_aa().posY - this.mc.func_175606_aa().lastTickPosY) * (double)p_180447_1_);
+                    float var31 = (float)(this.mc.getRenderViewEntity().lastTickPosY + (this.mc.getRenderViewEntity().posY - this.mc.getRenderViewEntity().lastTickPosY) * (double)p_180447_1_);
                     boolean var4 = true;
                     boolean var5 = true;
                     Tessellator var6 = Tessellator.getInstance();
@@ -1784,8 +1784,8 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
 
                         var12 = 4.8828125E-4F;
                         double var261 = (double)((float)this.cloudTickCounter + p_180447_1_);
-                        double var15 = this.mc.func_175606_aa().prevPosX + (this.mc.func_175606_aa().posX - this.mc.func_175606_aa().prevPosX) * (double)p_180447_1_ + var261 * 0.029999999329447746D;
-                        double var17 = this.mc.func_175606_aa().prevPosZ + (this.mc.func_175606_aa().posZ - this.mc.func_175606_aa().prevPosZ) * (double)p_180447_1_;
+                        double var15 = this.mc.getRenderViewEntity().prevPosX + (this.mc.getRenderViewEntity().posX - this.mc.getRenderViewEntity().prevPosX) * (double)p_180447_1_ + var261 * 0.029999999329447746D;
+                        double var17 = this.mc.getRenderViewEntity().prevPosZ + (this.mc.getRenderViewEntity().posZ - this.mc.getRenderViewEntity().prevPosZ) * (double)p_180447_1_;
                         int var19 = MathHelper.floor_double(var15 / 2048.0D);
                         int var20 = MathHelper.floor_double(var17 / 2048.0D);
                         var15 -= (double)(var19 * 2048);
@@ -1834,14 +1834,14 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
         this.cloudRenderer.prepareToRender(true, this.cloudTickCounter, p_180445_1_);
         p_180445_1_ = 0.0F;
         GlStateManager.disableCull();
-        float var3 = (float)(this.mc.func_175606_aa().lastTickPosY + (this.mc.func_175606_aa().posY - this.mc.func_175606_aa().lastTickPosY) * (double)p_180445_1_);
+        float var3 = (float)(this.mc.getRenderViewEntity().lastTickPosY + (this.mc.getRenderViewEntity().posY - this.mc.getRenderViewEntity().lastTickPosY) * (double)p_180445_1_);
         Tessellator var4 = Tessellator.getInstance();
         WorldRenderer var5 = var4.getWorldRenderer();
         float var6 = 12.0F;
         float var7 = 4.0F;
         double var8 = (double)((float)this.cloudTickCounter + p_180445_1_);
-        double var10 = (this.mc.func_175606_aa().prevPosX + (this.mc.func_175606_aa().posX - this.mc.func_175606_aa().prevPosX) * (double)p_180445_1_ + var8 * 0.029999999329447746D) / 12.0D;
-        double var12 = (this.mc.func_175606_aa().prevPosZ + (this.mc.func_175606_aa().posZ - this.mc.func_175606_aa().prevPosZ) * (double)p_180445_1_) / 12.0D + 0.33000001311302185D;
+        double var10 = (this.mc.getRenderViewEntity().prevPosX + (this.mc.getRenderViewEntity().posX - this.mc.getRenderViewEntity().prevPosX) * (double)p_180445_1_ + var8 * 0.029999999329447746D) / 12.0D;
+        double var12 = (this.mc.getRenderViewEntity().prevPosZ + (this.mc.getRenderViewEntity().posZ - this.mc.getRenderViewEntity().prevPosZ) * (double)p_180445_1_) / 12.0D + 0.33000001311302185D;
         float var14 = this.theWorld.provider.getCloudHeight() - var3 + 0.33F;
         var14 += this.mc.gameSettings.ofCloudsHeight * 128.0F;
         int var15 = MathHelper.floor_double(var10 / 2048.0D);
@@ -2498,7 +2498,7 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
 
     private EntityFX func_174974_b(int p_174974_1_, boolean p_174974_2_, double p_174974_3_, double p_174974_5_, double p_174974_7_, double p_174974_9_, double p_174974_11_, double p_174974_13_, int ... p_174974_15_)
     {
-        if (this.mc != null && this.mc.func_175606_aa() != null && this.mc.effectRenderer != null)
+        if (this.mc != null && this.mc.getRenderViewEntity() != null && this.mc.effectRenderer != null)
         {
             int var16 = this.mc.gameSettings.particleSetting;
 
@@ -2507,9 +2507,9 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
                 var16 = 2;
             }
 
-            double var17 = this.mc.func_175606_aa().posX - p_174974_3_;
-            double var19 = this.mc.func_175606_aa().posY - p_174974_5_;
-            double var21 = this.mc.func_175606_aa().posZ - p_174974_7_;
+            double var17 = this.mc.getRenderViewEntity().posX - p_174974_3_;
+            double var19 = this.mc.getRenderViewEntity().posY - p_174974_5_;
+            double var21 = this.mc.getRenderViewEntity().posZ - p_174974_7_;
 
             if (p_174974_1_ == EnumParticleTypes.EXPLOSION_HUGE.func_179348_c() && !Config.isAnimatedExplosion())
             {
@@ -2675,15 +2675,15 @@ public class RenderGlobal implements IWorldAccess, IResourceManagerReloadListene
         {
             case 1013:
             case 1018:
-                if (this.mc.func_175606_aa() != null)
+                if (this.mc.getRenderViewEntity() != null)
                 {
-                    double var4 = (double)p_180440_2_.getX() - this.mc.func_175606_aa().posX;
-                    double var6 = (double)p_180440_2_.getY() - this.mc.func_175606_aa().posY;
-                    double var8 = (double)p_180440_2_.getZ() - this.mc.func_175606_aa().posZ;
+                    double var4 = (double)p_180440_2_.getX() - this.mc.getRenderViewEntity().posX;
+                    double var6 = (double)p_180440_2_.getY() - this.mc.getRenderViewEntity().posY;
+                    double var8 = (double)p_180440_2_.getZ() - this.mc.getRenderViewEntity().posZ;
                     double var10 = Math.sqrt(var4 * var4 + var6 * var6 + var8 * var8);
-                    double var12 = this.mc.func_175606_aa().posX;
-                    double var14 = this.mc.func_175606_aa().posY;
-                    double var16 = this.mc.func_175606_aa().posZ;
+                    double var12 = this.mc.getRenderViewEntity().posX;
+                    double var14 = this.mc.getRenderViewEntity().posY;
+                    double var16 = this.mc.getRenderViewEntity().posZ;
 
                     if (var10 > 0.0D)
                     {

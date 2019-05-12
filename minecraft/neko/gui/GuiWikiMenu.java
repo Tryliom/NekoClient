@@ -90,7 +90,7 @@ public class GuiWikiMenu extends GuiScreen {
 	}
 
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+		ScaledResolution sr = new ScaledResolution(mc);
 		drawDefaultBackground();
 
 		drawCenteredString(var.NekoFont, "§eWiki Neko pour les cheats", this.width / 2, 34, 16777215);

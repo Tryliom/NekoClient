@@ -83,7 +83,7 @@ public class GuiOtherSettingsOF extends GuiScreen implements GuiYesNoCallback
 
             if (guibutton.id != GameSettings.Options.CLOUD_HEIGHT.ordinal())
             {
-                ScaledResolution scaledresolution1 = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
+                ScaledResolution scaledresolution1 = new ScaledResolution(this.mc);
                 int i = scaledresolution1.getScaledWidth();
                 int j = scaledresolution1.getScaledHeight();
                 this.setWorldAndResolution(this.mc, i, j);

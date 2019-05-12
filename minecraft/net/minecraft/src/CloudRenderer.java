@@ -49,7 +49,7 @@ public class CloudRenderer
         }
         else
         {
-            Entity rve = this.mc.func_175606_aa();
+            Entity rve = this.mc.getRenderViewEntity();
             boolean belowCloudsPrev = this.cloudPlayerY + (double)rve.getEyeHeight() < 128.0D + (double)(this.mc.gameSettings.ofCloudsHeight * 128.0F);
             boolean belowClouds = rve.prevPosY + (double)rve.getEyeHeight() < 128.0D + (double)(this.mc.gameSettings.ofCloudsHeight * 128.0F);
             return belowClouds != belowCloudsPrev;
@@ -65,16 +65,16 @@ public class CloudRenderer
     {
         GL11.glEndList();
         this.cloudTickCounterUpdate = this.cloudTickCounter;
-        this.cloudPlayerX = this.mc.func_175606_aa().prevPosX;
-        this.cloudPlayerY = this.mc.func_175606_aa().prevPosY;
-        this.cloudPlayerZ = this.mc.func_175606_aa().prevPosZ;
+        this.cloudPlayerX = this.mc.getRenderViewEntity().prevPosX;
+        this.cloudPlayerY = this.mc.getRenderViewEntity().prevPosY;
+        this.cloudPlayerZ = this.mc.getRenderViewEntity().prevPosZ;
         this.updated = true;
         GlStateManager.func_179117_G();
     }
 
     public void renderGlList()
     {
-        Entity entityliving = this.mc.func_175606_aa();
+        Entity entityliving = this.mc.getRenderViewEntity();
         double exactPlayerX = entityliving.prevPosX + (entityliving.posX - entityliving.prevPosX) * (double)this.partialTicks;
         double exactPlayerY = entityliving.prevPosY + (entityliving.posY - entityliving.prevPosY) * (double)this.partialTicks;
         double exactPlayerZ = entityliving.prevPosZ + (entityliving.posZ - entityliving.prevPosZ) * (double)this.partialTicks;

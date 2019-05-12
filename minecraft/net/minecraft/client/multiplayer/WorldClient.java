@@ -434,7 +434,7 @@ public class WorldClient extends World
      */
     public void playSound(double x, double y, double z, String soundName, float volume, float pitch, boolean distanceDelay)
     {
-        double var11 = this.mc.func_175606_aa().getDistanceSq(x, y, z);
+        double var11 = this.mc.getRenderViewEntity().getDistanceSq(x, y, z);
         PositionedSoundRecord var13 = new PositionedSoundRecord(new ResourceLocation(soundName), volume, pitch, (float)x, (float)y, (float)z);
 
         if (distanceDelay && var11 > 100.0D)

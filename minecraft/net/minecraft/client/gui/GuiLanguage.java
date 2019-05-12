@@ -67,7 +67,7 @@ public class GuiLanguage extends GuiScreen
                     {
                         this.game_settings_3.setOptionValue(((GuiOptionButton)button).returnEnumOptions(), 1);
                         button.displayString = this.game_settings_3.getKeyBinding(GameSettings.Options.FORCE_UNICODE_FONT);
-                        ScaledResolution var2 = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
+                        ScaledResolution var2 = new ScaledResolution(this.mc);
                         int var3 = var2.getScaledWidth();
                         int var4 = var2.getScaledHeight();
                         this.setWorldAndResolution(this.mc, var3, var4);

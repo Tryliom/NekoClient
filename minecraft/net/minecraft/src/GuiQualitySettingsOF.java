@@ -73,7 +73,7 @@ public class GuiQualitySettingsOF extends GuiScreen
 
             if (guibutton.id != GameSettings.Options.CLOUD_HEIGHT.ordinal())
             {
-                ScaledResolution scaledresolution = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
+                ScaledResolution scaledresolution = new ScaledResolution(this.mc);
                 int i = scaledresolution.getScaledWidth();
                 int j = scaledresolution.getScaledHeight();
                 this.setWorldAndResolution(this.mc, i, j);

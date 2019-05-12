@@ -49,7 +49,7 @@ public class RenderPlayer extends RendererLivingEntity
 
     public void func_180596_a(AbstractClientPlayer p_180596_1_, double p_180596_2_, double p_180596_4_, double p_180596_6_, float p_180596_8_, float p_180596_9_)
     {
-        if (!p_180596_1_.func_175144_cb() || this.renderManager.livingPlayer == p_180596_1_)
+        if (!p_180596_1_.isUser() || this.renderManager.livingPlayer == p_180596_1_)
         {
             double var10 = p_180596_4_;
 

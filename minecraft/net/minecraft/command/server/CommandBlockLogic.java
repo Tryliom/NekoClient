@@ -249,7 +249,7 @@ public abstract class CommandBlockLogic implements ICommandSender
         {
             if (p_175574_1_.getEntityWorld().isRemote)
             {
-                p_175574_1_.func_146095_a(this);
+                p_175574_1_.openEditCommandBlock(this);
             }
 
             return true;

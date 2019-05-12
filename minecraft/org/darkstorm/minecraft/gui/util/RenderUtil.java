@@ -17,7 +17,7 @@ public class RenderUtil {
 	public static void scissorBox(int x, int y, int xend, int yend) {
 		int width = xend - x;
 		int height = yend - y;
-		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft(), Minecraft.getMinecraft().displayWidth, Minecraft.getMinecraft().displayHeight);
+		ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
 		int factor = sr.getScaleFactor();
 		int bottomY = Minecraft.getMinecraft().currentScreen.height - yend;
 		glScissor(x * factor, bottomY * factor, width * factor, height * factor);

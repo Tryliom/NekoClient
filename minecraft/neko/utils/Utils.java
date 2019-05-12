@@ -75,7 +75,6 @@ import neko.module.modules.combat.SmoothAim;
 import neko.module.modules.combat.Trigger;
 import neko.module.modules.hide.Friends;
 import neko.module.modules.hide.God;
-import neko.module.modules.hide.Gui;
 import neko.module.modules.hide.Lot;
 import neko.module.modules.hide.Plugins;
 import neko.module.modules.misc.Antiafk;
@@ -96,6 +95,7 @@ import neko.module.modules.movements.Longjump;
 import neko.module.modules.movements.NoClip;
 import neko.module.modules.movements.Speed709;
 import neko.module.modules.movements.Step;
+import neko.module.modules.params.Gui;
 import neko.module.modules.player.Autoarmor;
 import neko.module.modules.player.Build;
 import neko.module.modules.player.Cheststealer;
@@ -842,10 +842,10 @@ public class Utils {
 	}
 	
 	/**
-	 * Sert � v�rifier si une ip mc est pr�sente dans une liste d'ip mc mais qu'ils ont une adresse diff�rente mais qui m�ne au m�me endroit.
+	 * Sert à vérifier si une ip mc est présente dans une liste d'ip mc mais qu'ils ont une adresse différente mais qui mène au même endroit.
 	 * @param list	Vector de String, liste d'ip mc
-	 * @param s		IP mc � v�rifier
-	 * @return		True si l'ip est d�j� pr�sente dans la liste et False si elle n'y est pas
+	 * @param s		IP mc à vérifier
+	 * @return		True si l'ip est déjà présente dans la liste et False si elle n'y est pas
 	 */
 	public static Boolean isSameServerIP(Vector<String> list, String s) {
 		InetAddress ia = null;
@@ -1600,7 +1600,7 @@ public class Utils {
 		for (Lock lock : ModuleManager.Lock) {
 			if (lock.getUnit().equalsIgnoreCase("Lvl") && lock.getCout()<=var.niveau && lock.isLock()) {
 				Utils.unlock(lock.getName());
-				Utils.addChat("§d"+lock.getType()+" "+lock.getName().replaceAll("--", var.prefixCmd)+" débloqué"+(lock.getType().equalsIgnoreCase("Commande") ? "e" : "" )+" !");
+				//Utils.addChat("§d"+lock.getType()+" "+lock.getName().replaceAll("--", var.prefixCmd)+" débloqué"+(lock.getType().equalsIgnoreCase("Commande") ? "e" : "" )+" !");
 			}
 		}
 		
