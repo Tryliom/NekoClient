@@ -6,6 +6,8 @@ import org.lwjgl.input.Keyboard;
 
 import neko.Client;
 import neko.guicheat.UIRender;
+import neko.guicheat.clickgui.ClickGUI;
+import neko.guicheat.clickgui.Panel;
 import neko.guicheat.clickgui.settings.Setting;
 import neko.module.Category;
 import neko.module.Module;

@@ -1,4 +1,4 @@
-package neko.module.modules.render;
+package neko.module.modules.params;
 
 import neko.gui.InGameGui;
 import neko.manager.ModuleManager;
@@ -24,7 +24,7 @@ public class HUD extends Module {
 	public static float width=2F;
 
 	public HUD() {
-		super("HUD", -1, Category.RENDER);
+		super("HUD", -1, Category.PARAMS);
 	}
 	
 	public void onEnabled() {		

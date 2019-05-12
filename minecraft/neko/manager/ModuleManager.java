@@ -61,6 +61,7 @@ import neko.module.modules.movements.Speed709;
 import neko.module.modules.movements.Sprint;
 import neko.module.modules.movements.Step;
 import neko.module.modules.params.Gui;
+import neko.module.modules.params.HUD;
 import neko.module.modules.player.AntiFire;
 import neko.module.modules.player.AutoTool;
 import neko.module.modules.player.Autoarmor;
@@ -84,7 +85,6 @@ import neko.module.modules.player.Velocity;
 import neko.module.modules.render.ArmorHUD;
 import neko.module.modules.render.ChestESP;
 import neko.module.modules.render.Fullbright;
-import neko.module.modules.render.HUD;
 import neko.module.modules.render.ItemESP;
 import neko.module.modules.render.Nametag;
 import neko.module.modules.render.NekoChat;
@@ -193,7 +193,7 @@ public class ModuleManager {
 		ActiveModule.add(new Unicode()); // Key NONE
 		ActiveModule.add(new Autonyah()); // Key NONE
 		ActiveModule.add(new Plugins()); // Key NONE
-		ActiveModule.add(new neko.module.modules.render.ArrayList()); // Key NONE
+		ActiveModule.add(new neko.module.modules.params.ArrayList()); // Key NONE
 		ActiveModule.add(new HUD()); // Key NONE
 		ActiveModule.add(new Radar()); // Key NONE
 		ActiveModule.add(new Sneak()); // Key NONE

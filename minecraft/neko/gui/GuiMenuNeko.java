@@ -110,7 +110,7 @@ public class GuiMenuNeko extends GuiScreen {
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         this.drawDefaultBackground();
-        this.drawCenteredString(Client.getNeko().NekoFont, "ยง9Panel de Neko", this.width / 2, 40, 16777215);
+        this.drawCenteredString(Client.getNeko().NekoFont, "ง9Panel de Neko", this.width / 2, 40, 16777215);
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 }

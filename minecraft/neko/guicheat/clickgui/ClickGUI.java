@@ -67,24 +67,24 @@ public class ClickGUI extends GuiScreen {
 		/*
 		 * Zum Sortieren der Panels einfach die Reihenfolge im Enum ändern ;)
 		 */
-		for (Category c : Category.values()) {
-			if(c != Category.HIDE) {
-				String title = Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
-				ClickGUI.panels.add(new Panel(title, px, py, pwidth, pheight, false, this) {
-							@Override
-							public void setup() {
-								for (Module m : Client.Neko.moduleManager.getModules()) {
-									if(m.getCategory()!=Category.HIDE && !m.isCmd() && !Utils.isLock(m.getName())) {
-										if (!m.getCategory().equals(c))continue;
-										this.Elements.add(new ModuleButton(m, this));
+			for (Category c : Category.values()) {
+				if(c != Category.HIDE) {
+					String title = Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+					ClickGUI.panels.add(new Panel(title, px, py, pwidth, pheight, false, this) {
+								@Override
+								public void setup() {
+									for (Module m : Client.Neko.moduleManager.getModules()) {
+										if(m.getCategory()!=Category.HIDE && !m.isCmd() && !Utils.isLock(m.getName())) {
+											if (!m.getCategory().equals(c))continue;
+											this.Elements.add(new ModuleButton(m, this));
+										}
 									}
 								}
-							}
-				});
-				//py += pyplus;
-				px += pxplus;
+					});
+					//py += pyplus;
+					px += pxplus;
+				}
 			}
-		}
 		
 		/*
 		 * Wieso nicht einfach

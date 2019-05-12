@@ -10,13 +10,14 @@ import org.darkstorm.minecraft.gui.util.GuiManagerDisplayScreen;
 import org.lwjgl.opengl.GL11;
 
 import neko.Client;
+import neko.guicheat.clickgui.ClickGUI;
 import neko.manager.ModuleManager;
 import neko.module.Category;
 import neko.module.Module;
 import neko.module.modules.combat.Regen;
 import neko.module.modules.hide.Friends;
 import neko.module.modules.movements.Blink;
-import neko.module.modules.render.HUD;
+import neko.module.modules.params.HUD;
 import neko.module.modules.render.Radar;
 import neko.module.other.Active;
 import neko.module.other.enums.Rate;
@@ -134,7 +135,7 @@ public class InGameGui {
 	}	
 	
 	public static void renderHUD() {
-		if (Minecraft.getMinecraft().currentScreen instanceof GuiManagerDisplayScreen)
+		if (Minecraft.getMinecraft().currentScreen instanceof ClickGUI)
 			return;
 		  yP=20;
 		  String var3="";
@@ -246,7 +247,7 @@ public class InGameGui {
 				  yP+=11;
 			  }
 		  }
-		  var.NekoFont.drawStringWithShadow("§8[§9Neko§8]§6 §6v"+var.CLIENT_VERSION+" Â", 2, 10, 0);
+		  var.NekoFont.drawStringWithShadow("§8[§9Neko§8]§6 §6v"+var.CLIENT_VERSION+" ", 2, 10, 0);
 	}
 	
 	public static void renderRadar() {
