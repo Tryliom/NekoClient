@@ -73,8 +73,8 @@ public class ClickGUI extends GuiScreen {
 					ClickGUI.panels.add(new Panel(title, px, py, pwidth, pheight, false, this) {
 								@Override
 								public void setup() {
-									for (Module m : Client.Neko.moduleManager.getModules()) {
-										if(m.getCategory()!=Category.HIDE && !m.isCmd() && !Utils.isLock(m.getName())) {
+									for (Module m : Client.Neko.moduleManager.ActiveModule) {
+										if(m.getCategory()!=Category.HIDE /*&& !m.isCmd() && !Utils.isLock(m.getName())*/) {
 											if (!m.getCategory().equals(c))continue;
 											this.Elements.add(new ModuleButton(m, this));
 										}
