@@ -2547,58 +2547,6 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"ph2")) {
-				Utils.addChat("pupu");
-				if (args.length<=3) {
-					Utils.addChat(error);
-				} else if (Utils.isInteger(args[1]) && Utils.isInteger(args[2]) && Utils.isInteger(args[3])) {
-					try {						
-						int x = Integer.parseInt(args[1]);
-						int y = Integer.parseInt(args[2]);
-						int z = Integer.parseInt(args[3]);
-						
-						BlockPos bp = mc.thePlayer.getPosition();
-						
-						int diffX = x - bp.getX();
-						int diffY = y - bp.getY();
-						int diffZ = z - bp.getZ();
-						
-						int divX = diffX>100 ? diffX/100 : 1;
-						int divZ = diffZ>100 ? diffZ/100 : 1;
-
-						Utils.addChat("Tata "+diffX+" "+diffY+" "+diffZ);
-						
-						new Thread(new Runnable() {
-							
-							@Override
-							public void run() {
-								try {
-//									mc.thePlayer.motionY = - bp.getY();
-//									Thread.sleep(100);
-//									mc.thePlayer.motionY = 1;
-									for (int i=0;i<divX;i++) {
-										Thread.sleep(1000);
-										mc.thePlayer.motionX = diffX/divX;
-									}
-									for (int i=0;i<divZ;i++) {
-										Thread.sleep(1000);
-										mc.thePlayer.motionZ = diffZ/divZ;
-									}
-//									Thread.sleep(100);
-//									mc.thePlayer.motionY = diffY;
-//									Thread.sleep(100);
-//									mc.thePlayer.motionY = 0;
-								} catch (Exception e) {}
-							}
-						}).start();
-
-					} catch (Exception e) {
-                        Utils.addChat(err);
-                    }
-				}
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"phantom") || args[0].equalsIgnoreCase(var.prefixCmd+"ph")) {
 				int posY = 0;
 				int x = 0;
