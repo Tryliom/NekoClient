@@ -1177,8 +1177,9 @@ public abstract class World implements IBlockAccess
                 	if (en.getDistanceToEntity(entity)>=Near.radius) {
                 		Utils.addChat("===============");
                 		Utils.addChat2("§d"+entity.getName()+"§8:§6 "+bp.getX()+", "+bp.getY()+", "+bp.getZ()+" §8(§2"+Math.round(entity.getDistanceToEntity(Minecraft.getMinecraft().thePlayer))+"m§8)",
-                					"near copy "+entity.getName(),
-                					"",
+                					"..near copy "+entity.getName(),
+                					"§7Vie: §c"+Math.round(entity.getHealth())+"\n"
+                					+"§7Nom: "+entity.getDisplayName().getFormattedText(),
                 					false,
                 					Chat.Summon
                 					);
