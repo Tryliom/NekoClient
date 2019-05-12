@@ -28,6 +28,7 @@ import com.mojang.authlib.GameProfile;
 import neko.Client;
 import neko.dtb.RequestThread;
 import neko.gui.InGameGui;
+import neko.guicheat.clickgui.util.SettingsUtil;
 import neko.lock.Lock;
 import neko.manager.LockManager;
 import neko.manager.ModuleManager;
@@ -1961,7 +1962,12 @@ public class ChatUtils {
 				Utils.saveNuker();	
 			} else if (args[1].equalsIgnoreCase("range")) {
 				try {
+					if(Integer.parseInt(args[2]) > 6) {
+						Utils.addChat("§cLa range doit être entre 1 et 6.");
+						return;
+					}
 					Nuker.nukerRadius=Integer.parseInt(args[2]);
+					SettingsUtil.setNukerRadius(Double.parseDouble(args[2]));
 					Utils.addChat("§aLa range du Nuker a été changée à "+args[2]+" !");
 				} catch (Exception e) {
 					Utils.addChat(err);
@@ -1980,6 +1986,7 @@ public class ChatUtils {
 					Utils.addChat("§aNuker safe activé !");
 				}
 				Nuker.safe=!Nuker.safe;
+				SettingsUtil.setNukerSafe(Nuker.safe);
 			} else if (args[1].equalsIgnoreCase("oneHit")) {
 				if (Nuker.onehit) {
 					Utils.addChat("§cNuker OneHit désactivé !");
@@ -1987,6 +1994,7 @@ public class ChatUtils {
 					Utils.addChat("§aNuker OneHit Activé !");
 				}
 				Nuker.onehit=!Nuker.onehit;
+				SettingsUtil.setNukerOneHit(Nuker.onehit);
 			} else if (args[1].equalsIgnoreCase("list")) {
 				try {
 					if (Nuker.nuke.size()==0) {

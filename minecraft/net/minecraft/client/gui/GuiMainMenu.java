@@ -261,9 +261,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         	var.eventManager = new EventManager();
         	var.eventManager.register(var);
     		var.moduleManager = new ModuleManager();
-    		var.clickGui = new ClickGUI();
     		var.onlyrpg = OnlyRpgManager.getRpg();
-
     		if (var.rang==null)
     			for (Rank r : ModuleManager.rang) {
     				if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {
@@ -278,8 +276,9 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     	    	// Load save
     	    	Utils.loadSaveCloud();
     	    	nc.setLogin(true);
-    	    } else
+    	    } else {
     	    	mc.displayGuiScreen(new GuiConnect(this, 1));
+    	    }
         }
     }
 

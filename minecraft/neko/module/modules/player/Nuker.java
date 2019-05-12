@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import neko.Client;
 import neko.guicheat.clickgui.settings.Setting;
+import neko.guicheat.clickgui.util.SettingsUtil;
 import neko.module.Category;
 import neko.module.Module;
 import neko.utils.RenderUtils;
@@ -30,7 +31,7 @@ public class Nuker extends Module {
 	public float nukerG = 0.2F;
 	public float nukerB = 0.15F;
 	public static ArrayList<Integer> nuke = new ArrayList<Integer>();
-	public static boolean safe = true;
+	public static boolean safe = false;
 	public static boolean onehit = false;
 	private int delayNuker = 0;
 
@@ -40,9 +41,9 @@ public class Nuker extends Module {
 	
 	@Override
 	public void setup() {
-			/*Client.getNeko().settingsManager.rSetting(new Setting("OneHit", this, this.onehit));
+			Client.getNeko().settingsManager.rSetting(new Setting("OneHit", this, this.onehit));
 			Client.getNeko().settingsManager.rSetting(new Setting("Safe", this, this.safe));
-			Client.getNeko().settingsManager.rSetting(new Setting("Range", this, this.nukerRadius, 0, 8, true));*/
+			Client.getNeko().settingsManager.rSetting(new Setting("Radius", this, this.nukerRadius, 0, 6, true));
 	}
 
 	public void onEnabled() {
@@ -58,6 +59,9 @@ public class Nuker extends Module {
 	}
 
 	public void onUpdate() {
+		this.nukerRadius = (int)SettingsUtil.getNukerRadius();
+		this.onehit = SettingsUtil.getNukerOneHit();
+		this.safe = SettingsUtil.getNukerSafe();
 
 		if (mc.gameSettings.keyBindPickBlock.getIsKeyPressed() && delay > 20
 				&& mc.objectMouseOver.func_178782_a() != null && !(mc.currentScreen instanceof GuiChat)
