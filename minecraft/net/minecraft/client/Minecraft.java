@@ -58,6 +58,7 @@ import com.mojang.authlib.properties.PropertyMap;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
 import neko.Client;
+import neko.event.events.EventKey;
 import neko.gui.GuiAltManager;
 import neko.gui.GuiTuto;
 import neko.manager.SoundManager;
@@ -910,7 +911,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
     private void func_180510_a(TextureManager p_180510_1_)
     {
-        ScaledResolution var2 = new ScaledResolution(this, this.displayWidth, this.displayHeight);
+        ScaledResolution var2 = new ScaledResolution(this);
         int var3 = var2.getScaleFactor();
         Framebuffer var4 = new Framebuffer(var2.getScaledWidth() * var3, var2.getScaledHeight() * var3, true);
         var4.bindFramebuffer(false);
@@ -1021,7 +1022,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         if (guiScreenIn != null)
         {
             this.setIngameNotInFocus();
-            ScaledResolution var2 = new ScaledResolution(this, this.displayWidth, this.displayHeight);
+            ScaledResolution var2 = new ScaledResolution(this);
             int var3 = var2.getScaledWidth();
             int var4 = var2.getScaledHeight();
             ((GuiScreen)guiScreenIn).setWorldAndResolution(this, var3, var4);
@@ -1061,6 +1062,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     {
         try
         {
+        	
+        	Client.getNeko().stopClient();
+        	
             this.stream.shutdownStream();
             logger.info("Stopping!");
 
@@ -1763,7 +1767,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
         if (this.currentScreen != null)
         {
-            ScaledResolution var3 = new ScaledResolution(this, width, height);
+            ScaledResolution var3 = new ScaledResolution(this);
             this.currentScreen.func_175273_b(this, var3.getScaledWidth(), var3.getScaledHeight());
         }
 
@@ -1994,6 +1998,9 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                     }
                     else
                     {
+                    	EventKey eventKey = new EventKey(var1);
+                    	eventKey.call();
+                    	
                     	//TODO: Client 
                         if (Utils.mod) {
                         	if (Utils.display) {
@@ -2112,7 +2119,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
                             if (this.gameSettings.thirdPersonView == 0)
                             {
-                                this.entityRenderer.func_175066_a(this.func_175606_aa());
+                                this.entityRenderer.func_175066_a(this.getRenderViewEntity());
                             }
                             else if (this.gameSettings.thirdPersonView == 1)
                             {
@@ -2165,7 +2172,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             {
                 if (this.playerController.isRidingHorse())
                 {
-                    this.thePlayer.func_175163_u();
+                    this.thePlayer.sendHorseInventory();
                 }
                 else
                 {
@@ -2528,7 +2535,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         this.thePlayer.dimension = dimension;
         this.field_175622_Z = this.thePlayer;
         this.thePlayer.preparePlayerToSpawn();
-        this.thePlayer.func_175158_f(var3);
+        this.thePlayer.setClientBrand(var3);
         this.theWorld.spawnEntityInWorld(this.thePlayer);
         this.playerController.flipPlayer(this.thePlayer);
         this.thePlayer.movementInput = new MovementInputFromOptions(this.gameSettings);
@@ -3222,7 +3229,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         return this.skinManager;
     }
 
-    public Entity func_175606_aa()
+    public Entity getRenderViewEntity()
     {
         return this.field_175622_Z;
     }

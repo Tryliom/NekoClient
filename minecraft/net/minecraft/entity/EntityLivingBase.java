@@ -226,6 +226,7 @@ public abstract class EntityLivingBase extends Entity
 
     protected void func_180433_a(double p_180433_1_, boolean p_180433_3_, Block p_180433_4_, BlockPos p_180433_5_)
     {
+    	
         if (!this.isInWater())
         {
             this.handleWaterMovement();
@@ -1616,7 +1617,7 @@ public abstract class EntityLivingBase extends Entity
         {
             float var5;
             float var6;
-
+            
             if (this.isInWater() && (!(this instanceof EntityPlayer) || !((EntityPlayer)this).capabilities.isFlying))
             {
                 var8 = this.posY;

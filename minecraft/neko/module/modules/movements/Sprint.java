@@ -17,6 +17,7 @@ public class Sprint extends Module {
 	}
 	
 	public void onDisabled() {
+		mc.thePlayer.setSprinting(false);
 		super.onDisabled();
 	}
 	

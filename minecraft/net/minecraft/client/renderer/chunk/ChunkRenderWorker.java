@@ -77,7 +77,7 @@ public class ChunkRenderWorker implements Runnable
 
             return;
         }
-        Entity var2 = Minecraft.getMinecraft().func_175606_aa();
+        Entity var2 = Minecraft.getMinecraft().getRenderViewEntity();
 
         if (var2 == null)
         {

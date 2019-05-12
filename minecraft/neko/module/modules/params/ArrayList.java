@@ -1,4 +1,4 @@
-package neko.module.modules.render;
+package neko.module.modules.params;
 
 import neko.gui.InGameGui;
 import neko.module.Category;
@@ -8,7 +8,7 @@ import net.minecraft.client.Minecraft;
 public class ArrayList extends Module {
 	
 	public ArrayList() {
-		super("ArrayList", -1, Category.RENDER);
+		super("ArrayList", -1, Category.PARAMS);
 	}
 	
 	public void onEnabled() {		

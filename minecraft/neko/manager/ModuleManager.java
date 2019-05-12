@@ -24,7 +24,6 @@ import neko.module.modules.combat.TpKill;
 import neko.module.modules.combat.Trigger;
 import neko.module.modules.hide.Friends;
 import neko.module.modules.hide.God;
-import neko.module.modules.hide.Gui;
 import neko.module.modules.hide.Lot;
 import neko.module.modules.hide.Plugins;
 import neko.module.modules.hide.Test;
@@ -61,6 +60,8 @@ import neko.module.modules.movements.Safewalk;
 import neko.module.modules.movements.Speed709;
 import neko.module.modules.movements.Sprint;
 import neko.module.modules.movements.Step;
+import neko.module.modules.params.Gui;
+import neko.module.modules.params.HUD;
 import neko.module.modules.player.AntiFire;
 import neko.module.modules.player.AutoTool;
 import neko.module.modules.player.Autoarmor;
@@ -84,7 +85,6 @@ import neko.module.modules.player.Velocity;
 import neko.module.modules.render.ArmorHUD;
 import neko.module.modules.render.ChestESP;
 import neko.module.modules.render.Fullbright;
-import neko.module.modules.render.HUD;
 import neko.module.modules.render.ItemESP;
 import neko.module.modules.render.Nametag;
 import neko.module.modules.render.NekoChat;
@@ -108,6 +108,7 @@ import neko.module.modules.special.FireTrail;
 import neko.module.modules.special.Likaotique;
 import neko.module.modules.special.Magnet;
 import neko.module.modules.special.Nausicaah;
+import neko.module.modules.special.Near;
 import neko.module.modules.special.NoAnim;
 import neko.module.modules.special.NoLook;
 import neko.module.modules.special.PunKeel;
@@ -133,125 +134,129 @@ public class ModuleManager {
 	public Xray xrayModule;
 
 	public ModuleManager() {	
-		this.ActiveModule.clear();
+
+		ActiveModule.clear();
 		this.Lock.clear();
 		this.rang.clear();
 		this.values.clear();
+
+		Combat(); Render(); Player(); Movement(); Misc(); Hide(); Special();
 		
 		// Ajouter les modules
-		this.ActiveModule.add(new Sprint()); // Key K
-		this.ActiveModule.add(new KillAura()); // Key V
-		this.ActiveModule.add(new Fullbright()); // Key B
-		this.ActiveModule.add(new Step()); // Key I
-		this.ActiveModule.add(new FastPlace()); // Key U
-		this.ActiveModule.add(this.xrayModule = new Xray()); // Key X
-		this.ActiveModule.add(new NoFall()); // Key RSHIFT
-		this.ActiveModule.add(new Speed709()); // Key M
-		this.ActiveModule.add(new NoClip()); // Key N
-		this.ActiveModule.add(new Regen()); // Key G
-		this.ActiveModule.add(new Flight()); // Key R
-		this.ActiveModule.add(new Autoarmor()); // Key NONE
-		this.ActiveModule.add(new Automine()); //Key NONE
-		this.ActiveModule.add(new AutoCmd()); //Key NONE
-		this.ActiveModule.add(new Dolphin()); // Key J
-		this.ActiveModule.add(new VanillaTp()); // Key TAB
-		this.ActiveModule.add(new Timer()); // Key Y
-		this.ActiveModule.add(new Friends()); // Key NONE | Btn 3 pour add et remove
-		this.ActiveModule.add(new TpKill()); // Key F
-		this.ActiveModule.add(new Velocity()); // Key P
-		this.ActiveModule.add(new Nametag()); // Key NONE
-		this.ActiveModule.add(new Noslow()); // Key NONE
-		this.ActiveModule.add(new Safewalk()); // Key NONE
-		this.ActiveModule.add(new AutoWalk()); // Key NONE
-		this.ActiveModule.add(new Phase()); // Key NONE
-		this.ActiveModule.add(new God()); // Key NONE HIDE
-		this.ActiveModule.add(new Reach()); // Key NONE
-		this.ActiveModule.add(new Trigger()); // Key NONE
-		this.ActiveModule.add(new Fire()); // Key NONE
-		this.ActiveModule.add(new Water()); // Key NONE
-		this.ActiveModule.add(new Power()); // Key NONE
-		this.ActiveModule.add(new ClickAim()); // Key NONE
-		this.ActiveModule.add(new Cheststealer()); // Key NONE
-		this.ActiveModule.add(new Fasteat()); // Key NONE
-		this.ActiveModule.add(new Autoeat()); // Key NONE
-		this.ActiveModule.add(new InventoryMove()); // Key NONE
-		this.ActiveModule.add(new Autorespawn()); // Key NONE
-		this.ActiveModule.add(new Crit()); // Key NONE
-		this.ActiveModule.add(new Autosoup()); // Key NONE
-		this.ActiveModule.add(new SmoothAim()); // Key NONE
-		this.ActiveModule.add(new NoBlind()); // Key NONE
-		this.ActiveModule.add(new Longjump()); // Key NONE
-		this.ActiveModule.add(new Freecam()); // Key L
-		this.ActiveModule.add(new Blink()); // Key NONE
-		this.ActiveModule.add(new Nuker()); // Key NONE
-		this.ActiveModule.add(new Fastladder()); // Key NONE
-		this.ActiveModule.add(new Fastbow()); // Key NONE
-		this.ActiveModule.add(new AutoClic()); // Key NONE
-		this.ActiveModule.add(new Unicode()); // Key NONE
-		this.ActiveModule.add(new Autonyah()); // Key NONE
-		this.ActiveModule.add(new Plugins()); // Key NONE
-		this.ActiveModule.add(new neko.module.modules.render.ArrayList()); // Key NONE
-		this.ActiveModule.add(new HUD()); // Key NONE
-		this.ActiveModule.add(new Radar()); // Key NONE
-		this.ActiveModule.add(new Sneak()); // Key NONE
-		this.ActiveModule.add(new Jetpack()); // Key NONE
-		this.ActiveModule.add(new AntiFire()); // Key NONE
-		this.ActiveModule.add(new WorldTime()); // Key NONE
-		this.ActiveModule.add(new Tracers()); // Key NONE
-		this.ActiveModule.add(new Wallhack()); // Key NONE
-		this.ActiveModule.add(new Render()); // Key NONE
-		this.ActiveModule.add(new Trail()); // Key NONE
-		this.ActiveModule.add(new Autoblock()); // Key NONE
-		this.ActiveModule.add(new ChestESP()); // Key NONE
-		this.ActiveModule.add(new Lot()); // Key NONE
-		this.ActiveModule.add(new Paint()); // Key NONE
-		this.ActiveModule.add(new FastDura()); // Key NONE
-		this.ActiveModule.add(new Conditions()); // Key NONE
-		this.ActiveModule.add(new AutoPot()); // Key NONE
-		this.ActiveModule.add(new Pyro()); // Key NONE
-		this.ActiveModule.add(new AutoSword()); // Key NONE
-		this.ActiveModule.add(new Antiafk()); // Key NONE
-		this.ActiveModule.add(new ItemESP()); // Key NONE
-		this.ActiveModule.add(new TpBack()); // Key NONE
-		this.ActiveModule.add(new Glide()); // Key NONE
-		this.ActiveModule.add(new Gui()); // Key NONE
-		this.ActiveModule.add(new Scaffold()); // Key NONE
-		this.ActiveModule.add(new FireTrail()); // Key NONE
-		this.ActiveModule.add(new AutoMLG()); // Key NONE
-		this.ActiveModule.add(new Jesus()); // Key NONE
-		this.ActiveModule.add(new HeadRoll()); // Key NONE
-		this.ActiveModule.add(new AirWalk()); // Key NONE
-		this.ActiveModule.add(new Build()); // Key NONE
-		this.ActiveModule.add(new Switch()); // Key NONE
-		this.ActiveModule.add(new DropShit()); // Key NONE
-		this.ActiveModule.add(new PushUp()); // Key NONE
-		this.ActiveModule.add(new NoLook()); // Key NONE
-		this.ActiveModule.add(new Exploit()); // Key NONE
-		this.ActiveModule.add(new Eagle()); // Key NONE
-		this.ActiveModule.add(new Ping()); // Key NONE
-		this.ActiveModule.add(new Reflect()); // Key NONE
-		this.ActiveModule.add(new Fastbreak()); // Key NONE
-		this.ActiveModule.add(new Test()); // Key NONE
-		this.ActiveModule.add(new NekoChat()); // Key NONE
-		this.ActiveModule.add(new Premonition()); // Key NONE
-		this.ActiveModule.add(new Highjump()); // Key NONE
-		this.ActiveModule.add(new NoAnim()); // Key NONE
-		this.ActiveModule.add(new CallCmd()); // Key NONE
-		this.ActiveModule.add(new Register()); // Key NONE
-		this.ActiveModule.add(new Flash()); // Key NONE
-		this.ActiveModule.add(new PunKeel()); // Key NONE
-		this.ActiveModule.add(new Crasher()); // Key NONE
-		this.ActiveModule.add(new BowAimbot()); // Key NONE
-		this.ActiveModule.add(new AutoTool()); // Key NONE
-		this.ActiveModule.add(new Nausicaah()); // Key NONE
-		this.ActiveModule.add(new Magnet()); // Key NONE
-		this.ActiveModule.add(new Search()); // Key NONE
-		this.ActiveModule.add(new Likaotique()); // Key NONE
-		this.ActiveModule.add(new PotionEffect()); // Key NONE
-		this.ActiveModule.add(new ArmorHUD()); // Key NONE
-		this.ActiveModule.add(new Knockback()); // Key NONE
-		this.ActiveModule.add(new ReplyNyah()); // Key NONE
-		this.ActiveModule.add(new Nameprotect()); // Key NONE
+		ActiveModule.add(new Sprint()); // Key K
+		ActiveModule.add(new KillAura()); // Key V
+		ActiveModule.add(new Fullbright()); // Key B
+		ActiveModule.add(new Step()); // Key I
+		ActiveModule.add(new FastPlace()); // Key U
+		ActiveModule.add(this.xrayModule = new Xray()); // Key X
+		ActiveModule.add(new NoFall()); // Key RSHIFT
+		ActiveModule.add(new Speed709()); // Key M
+		ActiveModule.add(new NoClip()); // Key N
+		ActiveModule.add(new Regen()); // Key G
+		ActiveModule.add(new Flight()); // Key R
+		ActiveModule.add(new Autoarmor()); // Key NONE
+		ActiveModule.add(new Automine()); //Key NONE
+		ActiveModule.add(new AutoCmd()); //Key NONE
+		ActiveModule.add(new Dolphin()); // Key J
+		ActiveModule.add(new VanillaTp()); // Key TAB
+		ActiveModule.add(new Timer()); // Key Y
+		ActiveModule.add(new Friends()); // Key NONE | Btn 3 pour add et remove
+		ActiveModule.add(new TpKill()); // Key F
+		ActiveModule.add(new Velocity()); // Key P
+		ActiveModule.add(new Nametag()); // Key NONE
+		ActiveModule.add(new Noslow()); // Key NONE
+		ActiveModule.add(new Safewalk()); // Key NONE
+		ActiveModule.add(new AutoWalk()); // Key NONE
+		ActiveModule.add(new Phase()); // Key NONE
+		ActiveModule.add(new God()); // Key NONE HIDE
+		ActiveModule.add(new Reach()); // Key NONE
+		ActiveModule.add(new Trigger()); // Key NONE
+		ActiveModule.add(new Fire()); // Key NONE
+		ActiveModule.add(new Water()); // Key NONE
+		ActiveModule.add(new Power()); // Key NONE
+		ActiveModule.add(new ClickAim()); // Key NONE
+		ActiveModule.add(new Cheststealer()); // Key NONE
+		ActiveModule.add(new Fasteat()); // Key NONE
+		ActiveModule.add(new Autoeat()); // Key NONE
+		ActiveModule.add(new InventoryMove()); // Key NONE
+		ActiveModule.add(new Autorespawn()); // Key NONE
+		ActiveModule.add(new Crit()); // Key NONE
+		ActiveModule.add(new Autosoup()); // Key NONE
+		ActiveModule.add(new SmoothAim()); // Key NONE
+		ActiveModule.add(new NoBlind()); // Key NONE
+		ActiveModule.add(new Longjump()); // Key NONE
+		ActiveModule.add(new Freecam()); // Key L
+		ActiveModule.add(new Blink()); // Key NONE
+		ActiveModule.add(new Nuker()); // Key NONE
+		ActiveModule.add(new Fastladder()); // Key NONE
+		ActiveModule.add(new Fastbow()); // Key NONE
+		ActiveModule.add(new AutoClic()); // Key NONE
+		ActiveModule.add(new Unicode()); // Key NONE
+		ActiveModule.add(new Autonyah()); // Key NONE
+		ActiveModule.add(new Plugins()); // Key NONE
+		ActiveModule.add(new neko.module.modules.params.ArrayList()); // Key NONE
+		ActiveModule.add(new HUD()); // Key NONE
+		ActiveModule.add(new Radar()); // Key NONE
+		ActiveModule.add(new Sneak()); // Key NONE
+		ActiveModule.add(new Jetpack()); // Key NONE
+		ActiveModule.add(new AntiFire()); // Key NONE
+		ActiveModule.add(new WorldTime()); // Key NONE
+		ActiveModule.add(new Tracers()); // Key NONE
+		ActiveModule.add(new Wallhack()); // Key NONE
+		ActiveModule.add(new Render()); // Key NONE
+		ActiveModule.add(new Trail()); // Key NONE
+		ActiveModule.add(new Autoblock()); // Key NONE
+		ActiveModule.add(new ChestESP()); // Key NONE
+		ActiveModule.add(new Lot()); // Key NONE
+		ActiveModule.add(new Paint()); // Key NONE
+		ActiveModule.add(new FastDura()); // Key NONE
+		ActiveModule.add(new Conditions()); // Key NONE
+		ActiveModule.add(new AutoPot()); // Key NONE
+		ActiveModule.add(new Pyro()); // Key NONE
+		ActiveModule.add(new AutoSword()); // Key NONE
+		ActiveModule.add(new Antiafk()); // Key NONE
+		ActiveModule.add(new ItemESP()); // Key NONE
+		ActiveModule.add(new TpBack()); // Key NONE
+		ActiveModule.add(new Glide()); // Key NONE
+		ActiveModule.add(new Gui()); // Key NONE
+		ActiveModule.add(new Scaffold()); // Key NONE
+		ActiveModule.add(new FireTrail()); // Key NONE
+		ActiveModule.add(new AutoMLG()); // Key NONE
+		ActiveModule.add(new Jesus()); // Key NONE
+		ActiveModule.add(new HeadRoll()); // Key NONE
+		ActiveModule.add(new AirWalk()); // Key NONE
+		ActiveModule.add(new Build()); // Key NONE
+		ActiveModule.add(new Switch()); // Key NONE
+		ActiveModule.add(new DropShit()); // Key NONE
+		ActiveModule.add(new PushUp()); // Key NONE
+		ActiveModule.add(new NoLook()); // Key NONE
+		ActiveModule.add(new Exploit()); // Key NONE
+		ActiveModule.add(new Eagle()); // Key NONE
+		ActiveModule.add(new Ping()); // Key NONE
+		ActiveModule.add(new Reflect()); // Key NONE
+		ActiveModule.add(new Fastbreak()); // Key NONE
+		ActiveModule.add(new Test()); // Key NONE
+		ActiveModule.add(new NekoChat()); // Key NONE
+		ActiveModule.add(new Premonition()); // Key NONE
+		ActiveModule.add(new Highjump()); // Key NONE
+		ActiveModule.add(new NoAnim()); // Key NONE
+		ActiveModule.add(new CallCmd()); // Key NONE
+		ActiveModule.add(new Register()); // Key NONE
+		ActiveModule.add(new Flash()); // Key NONE
+		ActiveModule.add(new PunKeel()); // Key NONE
+		ActiveModule.add(new Crasher()); // Key NONE
+		ActiveModule.add(new BowAimbot()); // Key NONE
+		ActiveModule.add(new AutoTool()); // Key NONE
+		ActiveModule.add(new Nausicaah()); // Key NONE
+		ActiveModule.add(new Magnet()); // Key NONE
+		ActiveModule.add(new Search()); // Key NONE
+		ActiveModule.add(new Likaotique()); // Key NONE
+		ActiveModule.add(new PotionEffect()); // Key NONE
+		ActiveModule.add(new ArmorHUD()); // Key NONE
+		ActiveModule.add(new Knockback()); // Key NONE
+		ActiveModule.add(new ReplyNyah()); // Key NONE
+		ActiveModule.add(new Nameprotect()); // Key NONE
+		ActiveModule.add(new Near()); // Key NONE
 		
 		this.link.put(Utils.getModule("KillAura"), "ka");
 		this.link.put(Utils.getModule("FastBow"), "fb");
@@ -993,4 +998,31 @@ public class ModuleManager {
 		rang.add(new Rank("Homme de lettres", 1300, Rate.Neko, "§5", true, 0));
 		Utils.getRank("Homme de lettres").setDesc("Homme étudiant toute sorte de magie, connais de puissants sorts et créature comme le Légendaire Pyroman, pour l'invoquer il faut s'entourer de flammes pendant un orage la nuit et lui dire : \"Pyroman des abîmes, je t'invoque en t'offrant mon sang comme présent\"");
 	}
+
+	public void Combat() {
+		
+	}
+	public void Render() {
+		
+	}
+	public void Player() {
+		
+	}
+	public void Movement() {
+		
+	}
+	public void Misc() {
+		
+	}
+	public void Hide() {
+		
+	}
+	public void Special() {
+		
+	}
+	
+	
+	public ArrayList<Module> getModules(){ return ActiveModule; }
+	
+	public Module getModuleByName(String name) { return ActiveModule.stream().filter(ActiveModule -> ActiveModule.getName().equalsIgnoreCase(name)).findFirst().orElse(null); }
 }

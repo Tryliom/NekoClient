@@ -34,7 +34,7 @@ public class ClearWater
 
             if (var25 != null)
             {
-                Entity rve = Config.getMinecraft().func_175606_aa();
+                Entity rve = Config.getMinecraft().getRenderViewEntity();
 
                 if (rve != null)
                 {

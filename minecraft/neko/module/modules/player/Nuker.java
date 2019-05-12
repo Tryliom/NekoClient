@@ -2,6 +2,9 @@ package neko.module.modules.player;
 
 import java.util.ArrayList;
 
+import neko.Client;
+import neko.guicheat.clickgui.settings.Setting;
+import neko.guicheat.clickgui.util.SettingsUtil;
 import neko.module.Category;
 import neko.module.Module;
 import neko.utils.RenderUtils;
@@ -28,12 +31,19 @@ public class Nuker extends Module {
 	public float nukerG = 0.2F;
 	public float nukerB = 0.15F;
 	public static ArrayList<Integer> nuke = new ArrayList<Integer>();
-	public static boolean safe = true;
+	public static boolean safe = false;
 	public static boolean onehit = false;
 	private int delayNuker = 0;
 
 	public Nuker() {
 		super("Nuker", -1, Category.PLAYER);
+	}
+	
+	@Override
+	public void setup() {
+			Client.getNeko().settingsManager.rSetting(new Setting("OneHit", this, this.onehit));
+			Client.getNeko().settingsManager.rSetting(new Setting("Safe", this, this.safe));
+			Client.getNeko().settingsManager.rSetting(new Setting("Radius", this, this.nukerRadius, 0, 6, true));
 	}
 
 	public void onEnabled() {
@@ -45,10 +55,13 @@ public class Nuker extends Module {
 	}
 
 	public void setValues() {
-		this.values = "Â§6Range:Â§7 " + nukerRadius + "\n" + "Â§6Safe:Â§7 " + Utils.displayBool(safe);
+		this.values = "§6Range:§7 " + nukerRadius + "\n" + "§6Safe:§7 " + Utils.displayBool(safe);
 	}
 
 	public void onUpdate() {
+		this.nukerRadius = (int)SettingsUtil.getNukerRadius();
+		this.onehit = SettingsUtil.getNukerOneHit();
+		this.safe = SettingsUtil.getNukerSafe();
 
 		if (mc.gameSettings.keyBindPickBlock.getIsKeyPressed() && delay > 20
 				&& mc.objectMouseOver.func_178782_a() != null && !(mc.currentScreen instanceof GuiChat)
@@ -61,10 +74,10 @@ public class Nuker extends Module {
 						nuke.remove(i);
 					}
 				}
-				Utils.addChat("Â§cLe bloc " + Block.getBlockById(id).getLocalizedName() + " a Ã©tÃ© supprimÃ© !");
+				Utils.addChat("§cLe bloc " + Block.getBlockById(id).getLocalizedName() + " a été supprimé !");
 			} else {
 				nuke.add(id);
-				Utils.addChat("Â§aLe bloc " + Block.getBlockById(id).getLocalizedName() + " a Ã©tÃ© ajoutÃ© !");
+				Utils.addChat("§aLe bloc " + Block.getBlockById(id).getLocalizedName() + " a été ajouté !");
 			}
 
 			delay = 0;

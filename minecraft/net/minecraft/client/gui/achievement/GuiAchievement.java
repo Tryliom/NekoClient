@@ -56,7 +56,7 @@ public class GuiAchievement extends Gui
         GlStateManager.loadIdentity();
         this.width = this.mc.displayWidth;
         this.height = this.mc.displayHeight;
-        ScaledResolution var1 = new ScaledResolution(this.mc, this.mc.displayWidth, this.mc.displayHeight);
+        ScaledResolution var1 = new ScaledResolution(this.mc);
         this.width = var1.getScaledWidth();
         this.height = var1.getScaledHeight();
         GlStateManager.clear(256);

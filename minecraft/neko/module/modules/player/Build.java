@@ -95,7 +95,7 @@ public class Build extends Module {
 			sendPacket(a, b+5, c-1);
 		}
 		
-		Entity var2 = this.mc.func_175606_aa();
+		Entity var2 = this.mc.getRenderViewEntity();
         EnumFacing face = var2.func_174811_aO();
         if ((wall && sneak && mc.thePlayer.isSneaking()) || (wall && !sneak))
 		    switch (face.getIndex()) {

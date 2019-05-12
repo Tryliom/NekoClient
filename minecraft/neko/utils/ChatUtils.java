@@ -12,7 +12,6 @@ import java.net.Proxy.Type;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -21,7 +20,6 @@ import java.util.Scanner;
 import java.util.UUID;
 import java.util.Vector;
 
-import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
@@ -30,8 +28,8 @@ import com.mojang.authlib.GameProfile;
 import neko.Client;
 import neko.dtb.RequestThread;
 import neko.gui.InGameGui;
+import neko.guicheat.clickgui.util.SettingsUtil;
 import neko.lock.Lock;
-import neko.manager.GuiManager;
 import neko.manager.LockManager;
 import neko.manager.ModuleManager;
 import neko.manager.QuestManager;
@@ -69,6 +67,7 @@ import neko.module.modules.movements.Longjump;
 import neko.module.modules.movements.NoClip;
 import neko.module.modules.movements.Speed709;
 import neko.module.modules.movements.Step;
+import neko.module.modules.params.HUD;
 import neko.module.modules.player.Autoarmor;
 import neko.module.modules.player.Build;
 import neko.module.modules.player.Cheststealer;
@@ -77,7 +76,6 @@ import neko.module.modules.player.Fire;
 import neko.module.modules.player.Nuker;
 import neko.module.modules.player.PushUp;
 import neko.module.modules.player.Velocity;
-import neko.module.modules.render.HUD;
 import neko.module.modules.render.ItemESP;
 import neko.module.modules.render.NekoChat;
 import neko.module.modules.render.Paint;
@@ -92,6 +90,7 @@ import neko.module.modules.special.DropShit;
 import neko.module.modules.special.FireTrail;
 import neko.module.modules.special.Likaotique;
 import neko.module.modules.special.Magnet;
+import neko.module.modules.special.Near;
 import neko.module.modules.special.PunKeel;
 import neko.module.modules.special.Pyro;
 import neko.module.modules.special.Reflect;
@@ -151,9 +150,7 @@ import net.minecraft.network.login.client.C00PacketLoginStart;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 import net.minecraft.network.play.client.C09PacketHeldItemChange;
-import net.minecraft.network.play.client.C0CPacketInput;
 import net.minecraft.network.play.client.C10PacketCreativeInventoryAction;
-import net.minecraft.network.play.client.C13PacketPlayerAbilities;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
@@ -761,13 +758,14 @@ public class ChatUtils {
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("near")) {
 					Utils.addChat(Utils.sep);
-					Utils.addChat2("§6"+var.prefixCmd+"Near", var.prefixCmd+"near", "§7Affiche les joueurs avec leurs coordonnées et distance de vous dernièrement enregistrés", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Near <Int>", var.prefixCmd+"near ", "§7Affiche les joueurs avec leurs coordonnées et distance de vous dernièrement enregistrés uniquement si à une distance plus grande que celle spécifiée", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Near active", var.prefixCmd+"near active", "§7Affiche les joueurs avec leurs coordonnées et distance de vous peu à peu quand les données arrievent", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Near copy", var.prefixCmd+"near copy", "§7Copie la liste des joueurs du "+var.prefixCmd+"near avec leurs coordonnées", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Near copy <player>", var.prefixCmd+"near copy ", "§7Copie les coordonnées du joueur spécifié du "+var.prefixCmd+"near", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Near say", var.prefixCmd+"near say", "§7Comme le "+var.prefixCmd+"near active, mais en disant dans le chat public", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Near say <player>", var.prefixCmd+"near say ", "§7Comme le "+var.prefixCmd+"near active, mais en disant dans le chat public avec le joueur spécifié", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Near list", var.prefixCmd+"near list", "§7Affiche les joueurs avec leurs coordonnées et distance de vous dernièrement enregistrés", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Near list <Int>", var.prefixCmd+"near list ", "§7Affiche les joueurs avec leurs coordonnées et distance de vous dernièrement enregistrés uniquement si à une distance plus grande que celle spécifiée", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Near copy", var.prefixCmd+"near copy", "§7Copie la liste des joueurs du Near avec leurs coordonnées", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Near icopy", var.prefixCmd+"near icopy", "§7Copie la liste des joueurs du Near avec leurs coordonnées en respectant la règle du ignore", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Near copy <player>", var.prefixCmd+"near copy ", "§7Copie les coordonnées du joueur spécifié du Near", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Near say", var.prefixCmd+"near say", "§7Dis dans le chat avec une phrase la position de x joueur et sa vie", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Near say <player>", var.prefixCmd+"near say ", "§7Dis dans le chat avec une phrase la position du joueur spécifié", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Near ignore <Point de départ [X,Y,Z]> <Radius>", var.prefixCmd+"near ignore ", "§7Paramètres pour le near qui permet d'ignorer les messages de coordonnées de joueurs qui sont détecté autour d'une certaine position, comme le spawn. Exemple de commande: Near ignore [0,70,0] 300", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("callcmd")) {
@@ -1342,9 +1340,6 @@ public class ChatUtils {
 							}							
 						}	
 					}
-					var.gui = new GuiManager();
-					var.gui.setTheme(new SimpleTheme());
-					var.gui.setup();
 					Utils.loadFrame();
 					var.onlyrpg.setTimeSec(0);
 				}
@@ -1627,33 +1622,33 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"near")) {
 				int blocs = 0;
-				boolean cont = true;
-				if (args.length==2 && Utils.isInteger(args[1])) {
-					blocs = Integer.parseInt(args[1]);
-				} 
-				if (args.length==2 && args[1].equalsIgnoreCase("active")) {
-					if (Utils.near) {
-						Utils.addChat("§cNear désactivé en continu");
-					} else {
-						Utils.addChat("§aNear activé en continu");
-					}
-					Utils.near = !Utils.near;					
-					cont = false;
+				if (args.length==3 && args[1].equalsIgnoreCase("list") && Utils.isInteger(args[2])) {
+					blocs = Integer.parseInt(args[2]);
 				}
+				
+				if (args.length==4 && args[1].equalsIgnoreCase("ignore") && args[2].startsWith("[") && args[2].endsWith("]") && Utils.isInteger(args[3])) {
+					String[] l = args[2].replaceAll("\\[", "").replaceAll("\\]", "").split(",");
+					int x = Integer.parseInt(l[0]);
+					int y = Integer.parseInt(l[1]);
+					int z = Integer.parseInt(l[2]);
+					Near.spawn = new BlockPos(x, y, z);
+					Near.radius = Integer.parseInt(args[3]);
+					Utils.addChat("§aLes coordonnées reçues autour de "+args[2]+" jusqu'à "+Near.radius+" blocs seront ignorées !");
+				}
+				
 				if (args.length>=2 && args[1].equalsIgnoreCase("say")) {
 					if (args.length==3) {
 						EntityPlayer entity = Utils.getPlayer(args[2]);
 						BlockPos bp = entity.getPosition();
 						mc.thePlayer.sendChatMessage(entity.getName()+" a été aperçu en "+bp.getX()+", "+bp.getY()+", "+bp.getZ()+" un jour de grand soleil");
 					} else {
-						if (Utils.near_say) {
+						if (Near.say) {
 							Utils.addChat("§aNear désactivé en continu pour envoyer les messages de tp dans le chat");
 						} else {
 							Utils.addChat("§aNear activé en continu pour envoyer les messages de tp dans le chat");
 						}
-						Utils.near_say = !Utils.near_say;
+						Near.say = !Near.say;
 					}
-					cont = false;
 				}
 				if (args.length>=2 && args[1].equalsIgnoreCase("copy")) {
 					ArrayList<EntityPlayer> en = Utils.getAllPlayer();
@@ -1672,9 +1667,27 @@ public class ChatUtils {
 					Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 					clipboard.setContents(new StringSelection(list), null);
 					Utils.addChat("§aListe des joueurs copiées !");
-					cont = false;
 				}
-				if (cont) {
+				
+				if (args.length>=2 && args[1].equalsIgnoreCase("icopy")) {
+					ArrayList<EntityPlayer> en = Utils.getAllPlayer();
+					String list = "";
+					for (EntityPlayer entity : en) {
+						BlockPos bp = entity.getPosition();
+						EntityWitch ignore = new EntityWitch(mc.theWorld);
+						ignore.setPosition(Near.spawn.getX(), Near.spawn.getY(), Near.spawn.getZ());
+						if (entity.getDistanceToEntity(ignore)>=Near.radius)
+							if (list.isEmpty())
+								list=entity.getName()+"=["+bp.getX()+","+bp.getY()+","+bp.getZ()+"]";
+							else
+								list+=", "+entity.getName()+"=["+bp.getX()+","+bp.getY()+","+bp.getZ()+"]";
+					}
+					Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+					clipboard.setContents(new StringSelection(list), null);
+					Utils.addChat("§aListe des joueurs copiées !");
+				}
+				
+				if (args.length==2 && args[1].equalsIgnoreCase("list")) {
 					ArrayList<EntityPlayer> en = Utils.getAllPlayer();
 					Utils.addChat("Joueurs proches:");
 					for (EntityPlayer entity : en) {
@@ -1949,7 +1962,12 @@ public class ChatUtils {
 				Utils.saveNuker();	
 			} else if (args[1].equalsIgnoreCase("range")) {
 				try {
+					if(Integer.parseInt(args[2]) > 6) {
+						Utils.addChat("§cLa range doit être entre 1 et 6.");
+						return;
+					}
 					Nuker.nukerRadius=Integer.parseInt(args[2]);
+					SettingsUtil.setNukerRadius(Double.parseDouble(args[2]));
 					Utils.addChat("§aLa range du Nuker a été changée à "+args[2]+" !");
 				} catch (Exception e) {
 					Utils.addChat(err);
@@ -1968,6 +1986,7 @@ public class ChatUtils {
 					Utils.addChat("§aNuker safe activé !");
 				}
 				Nuker.safe=!Nuker.safe;
+				SettingsUtil.setNukerSafe(Nuker.safe);
 			} else if (args[1].equalsIgnoreCase("oneHit")) {
 				if (Nuker.onehit) {
 					Utils.addChat("§cNuker OneHit désactivé !");
@@ -1975,6 +1994,7 @@ public class ChatUtils {
 					Utils.addChat("§aNuker OneHit Activé !");
 				}
 				Nuker.onehit=!Nuker.onehit;
+				SettingsUtil.setNukerOneHit(Nuker.onehit);
 			} else if (args[1].equalsIgnoreCase("list")) {
 				try {
 					if (Nuker.nuke.size()==0) {
@@ -2535,8 +2555,8 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"phantom")) {
-				int posY = 1;
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"phantom") || args[0].equalsIgnoreCase(var.prefixCmd+"ph")) {
+				int posY = 0;
 				int x = 0;
 				int y = 0;
 				int z = 0;
@@ -5208,7 +5228,7 @@ public class ChatUtils {
 					if (args.length==1 || !Utils.isDouble(args[1])) {
 						Utils.addChat(err);
 					} else {
-						Entity var2 = this.mc.func_175606_aa();
+						Entity var2 = this.mc.getRenderViewEntity();
 				        EnumFacing face = var2.func_174811_aO();				        
 				        switch (face.getIndex()) {
 				        case 4:

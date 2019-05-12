@@ -41,7 +41,7 @@ public class GuiTuto extends GuiScreen {
 	}
 	
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+		ScaledResolution sr = new ScaledResolution(mc);
 		drawRect(10, 10, this.width - 10, this.height - 10, Integer.MIN_VALUE);	    
         // this.port.drawTextBox();
 		String s[] = this.part.split("\n");

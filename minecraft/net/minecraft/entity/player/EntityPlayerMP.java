@@ -754,7 +754,7 @@ public class EntityPlayerMP extends EntityPlayer implements ICrafting
         super.func_180433_a(p_71122_1_, p_71122_3_, var8, var7);
     }
 
-    public void func_175141_a(TileEntitySign p_175141_1_)
+    public void openEditSign(TileEntitySign p_175141_1_)
     {
         p_175141_1_.func_145912_a(this);
         this.playerNetServerHandler.sendPacket(new S36PacketSignEditorOpen(p_175141_1_.getPos()));

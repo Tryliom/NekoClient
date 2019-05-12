@@ -51,7 +51,7 @@ public class GuiMusicManager extends GuiScreen {
 
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		
-		ScaledResolution sr = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+		ScaledResolution sr = new ScaledResolution(mc);
 		this.mc.getTextureManager().bindTexture(this.background);
 		
 		Gui.drawScaledCustomSizeModalRect(0, 0, 0.0F, 0.0F, sr.getScaledWidth(), sr.getScaledHeight(),
@@ -60,12 +60,12 @@ public class GuiMusicManager extends GuiScreen {
 		this.buttonList.clear();
 		if (SoundManager.getSM().canStart) {
 			if (this.list.selectedSlot!=-1)
-				this.buttonList.add(new GuiButton(1, this.width / 2 - 50, this.height - 52, 100, 20, "§aJouer"));
-			this.buttonList.add(new GuiButton(2, this.width / 2 - 154, this.height - 52, 100, 20, "Mode: §a"+SoundManager.getSM().mm.name()));
+				this.buttonList.add(new GuiButton(1, this.width / 2 - 50, this.height - 52, 100, 20, "�aJouer"));
+			this.buttonList.add(new GuiButton(2, this.width / 2 - 154, this.height - 52, 100, 20, "Mode: �a"+SoundManager.getSM().mm.name()));
 		}
 		this.buttonList.add(new GuiButton(0, this.width / 2 + 4 + 50, this.height - 52, 100, 20, "Retour"));
 		if (SoundManager.getSM().canStart || Utils.haveInternet())
-			this.buttonList.add(new GuiButton(665, this.width-110, 10, 100, 20, SoundManager.getSM().isActive() ? "♫ Stop ♫" : "♪ Start Music ♪"));
+			this.buttonList.add(new GuiButton(665, this.width-110, 10, 100, 20, SoundManager.getSM().isActive() ? "�� Stop ♫" : "♪ Start Music ♪"));
 		else
 			this.buttonList.add(new GuiButton(665, this.width-110, 10, 100, 20, "Music loading..."));
 		//drawDefaultBackground();
@@ -159,7 +159,7 @@ public class GuiMusicManager extends GuiScreen {
 
 		protected void drawSlot(int id, int x, int y, int var4, int var5, int var6) {
 			try {
-				var.NekoFont.drawString("§c" + SoundManager.getSM().getList().get(id).getName(), x + 31, y + 3, 10526880);
+				var.NekoFont.drawString("�c" + SoundManager.getSM().getList().get(id).getName(), x + 31, y + 3, 10526880);
 			} catch (Exception e) {
 			}
 		}

@@ -1,6 +1,8 @@
 package net.minecraft.world;
 
 import java.util.Iterator;
+
+import neko.utils.Utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;

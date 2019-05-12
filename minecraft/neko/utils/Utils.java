@@ -34,7 +34,6 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.HttpsURLConnection;
 
 import org.apache.commons.codec.binary.Base64;
-import org.darkstorm.minecraft.gui.component.Frame;
 import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.input.Keyboard;
 
@@ -54,8 +53,10 @@ import neko.gui.GuiBindManager;
 import neko.gui.GuiMusicManager;
 import neko.gui.GuiWikiMenu;
 import neko.gui.InGameGui;
+import neko.guicheat.clickgui.ClickGUI;
+import neko.guicheat.clickgui.Panel;
+import neko.guicheat.clickgui.settings.Setting;
 import neko.lock.Lock;
-import neko.manager.GuiManager;
 import neko.manager.ModuleManager;
 import neko.manager.QuestManager;
 import neko.manager.SoundManager;
@@ -75,7 +76,6 @@ import neko.module.modules.combat.SmoothAim;
 import neko.module.modules.combat.Trigger;
 import neko.module.modules.hide.Friends;
 import neko.module.modules.hide.God;
-import neko.module.modules.hide.Gui;
 import neko.module.modules.hide.Lot;
 import neko.module.modules.hide.Plugins;
 import neko.module.modules.misc.Antiafk;
@@ -96,6 +96,8 @@ import neko.module.modules.movements.Longjump;
 import neko.module.modules.movements.NoClip;
 import neko.module.modules.movements.Speed709;
 import neko.module.modules.movements.Step;
+import neko.module.modules.params.Gui;
+import neko.module.modules.params.HUD;
 import neko.module.modules.player.Autoarmor;
 import neko.module.modules.player.Build;
 import neko.module.modules.player.Cheststealer;
@@ -104,7 +106,6 @@ import neko.module.modules.player.Fire;
 import neko.module.modules.player.Nuker;
 import neko.module.modules.player.PushUp;
 import neko.module.modules.player.Velocity;
-import neko.module.modules.render.HUD;
 import neko.module.modules.render.ItemESP;
 import neko.module.modules.render.NekoChat;
 import neko.module.modules.render.Paint;
@@ -121,6 +122,7 @@ import neko.module.modules.special.FireTrail;
 import neko.module.modules.special.Likaotique;
 import neko.module.modules.special.Magnet;
 import neko.module.modules.special.Nausicaah;
+import neko.module.modules.special.Near;
 import neko.module.modules.special.PunKeel;
 import neko.module.modules.special.Pyro;
 import neko.module.modules.special.Reflect;
@@ -200,8 +202,6 @@ public class Utils {
 	public static boolean xp=false;
 	public static boolean deathoff=false;
 	public static boolean mod=true;
-	public static boolean near=false;
-	public static boolean near_say=false;
 	public static int timeInGameMs=0;
 	public static int timeInGameSec=0;
 	public static int timeInGameMin=0;
@@ -843,10 +843,10 @@ public class Utils {
 	}
 	
 	/**
-	 * Sert � v�rifier si une ip mc est pr�sente dans une liste d'ip mc mais qu'ils ont une adresse diff�rente mais qui m�ne au m�me endroit.
+	 * Sert à vérifier si une ip mc est présente dans une liste d'ip mc mais qu'ils ont une adresse différente mais qui mène au même endroit.
 	 * @param list	Vector de String, liste d'ip mc
-	 * @param s		IP mc � v�rifier
-	 * @return		True si l'ip est d�j� pr�sente dans la liste et False si elle n'y est pas
+	 * @param s		IP mc à vérifier
+	 * @return		True si l'ip est déjà présente dans la liste et False si elle n'y est pas
 	 */
 	public static Boolean isSameServerIP(Vector<String> list, String s) {
 		InetAddress ia = null;
@@ -1383,6 +1383,7 @@ public class Utils {
 		saveCmd();
 		saveCloudAlt();
 		saveStat();
+		saveSettings();
 	}
 	
 	public static Block getBlockRelativeToEntity(Entity en, double d) {
@@ -1601,7 +1602,7 @@ public class Utils {
 		for (Lock lock : ModuleManager.Lock) {
 			if (lock.getUnit().equalsIgnoreCase("Lvl") && lock.getCout()<=var.niveau && lock.isLock()) {
 				Utils.unlock(lock.getName());
-				Utils.addChat("§d"+lock.getType()+" "+lock.getName().replaceAll("--", var.prefixCmd)+" débloqué"+(lock.getType().equalsIgnoreCase("Commande") ? "e" : "" )+" !");
+				//Utils.addChat("§d"+lock.getType()+" "+lock.getName().replaceAll("--", var.prefixCmd)+" débloqué"+(lock.getType().equalsIgnoreCase("Commande") ? "e" : "" )+" !");
 			}
 		}
 		
@@ -2413,48 +2414,23 @@ public class Utils {
 	}
 	
 	public static void saveFrame(String...fi) {
-		if (verif!=null || var.gui==null)
+		if (verif!=null || var.clickGui==null)
 			return;
 		String s="";
 		String name ="";
-    	for(Frame f : var.gui.getFrames()) {
-    		name = f.getTitle();
-    		int x = f.getX();
-    		int y = f.getY();
-    		s+=name+" "+x+" "+y+" "+f.isMinimized()+"§";
+    	for(Panel f : ClickGUI.panels) {
+    		name = f.title;
+    		int x = (int)f.x;
+    		int y = (int)f.y;
+    		s+=name+" "+x+" "+y+" "+f.extended+"§";
     	}
     	nc.saveSave("frame", s);
 	}
 	
-	public static void loadFrame(String...fi) {
-		File dir = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"frame.neko");
-		if (dir.exists()) {
-		try { 
-            InputStream ips = new FileInputStream(dir); 
-            InputStreamReader ipsr = new InputStreamReader(ips); 
-            try (BufferedReader br = new BufferedReader(ipsr)) {
-                String ligne;
-                Integer i=0;
-                while ((ligne = br.readLine()) != null)
-                {           
-                	i++;
-                	String s[] = ligne.split(" ");
-                	for(Frame f : var.gui.getFrames()) {
-                		if (f.getTitle().equalsIgnoreCase(s[0])) {
-                			f.setX(Integer.parseInt(s[1]));
-                			f.setY(Integer.parseInt(s[2]));
-                			f.setMinimized(Boolean.parseBoolean(s[3]));
-                		}
-                	}
-                }
-            
-		} catch (IOException | NumberFormatException e) {}		
-		} catch (IOException | NumberFormatException e) {}
-		
-		}
-	}
 	
-	public static void loadCloudFrame() {
+	public static void loadFrame(String...fi) {}
+	//Ancien ClickGui Load
+	/*public static void loadCloudFrame() {
 	    String list[] = nc.getSave("frame").split("§");
 	    if (var.gui==null) {
 	    	var.gui = new GuiManager();
@@ -2472,7 +2448,33 @@ public class Utils {
 	    		}
 	    	}
 	    }
+	}*/
+	public static void loadCloudFrame() {
+	    String list[] = nc.getSave("frame").split("§");
+	    if (var.clickGui==null) {
+	    	var.clickGui = new ClickGUI();
+	    }
+	    for (String ligne : list)
+	    {           
+	    	String s[] = ligne.split(" ");
+	    	for(Panel f : ClickGUI.panels) {
+	    		if (f.title.equalsIgnoreCase(s[0])) {
+	    			f.x = (Integer.parseInt(s[1]));
+	    			f.y = (Integer.parseInt(s[2]));
+	    			f.extended = (Boolean.parseBoolean(s[3]));
+	    		}
+	    	}
+	    }
 	}
+	
+	/*public static void loadcloudFrame() {
+		for(Category c : Category.values()) {
+			if(c != Category.HIDE) {
+				String title = Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+			    int x, y, z;
+			}
+		}
+	}*/
 	
 	public static void saveFont() {
 		if (verif!=null)
@@ -2892,7 +2894,7 @@ public class Utils {
         if (fi.length>0) {
     		Utils.nc.saveSave("values", s, fi);
     	}
-        s+="§,"+Likaotique.getLik().isSafe()+"§,"+AutoCmd.cmd+"§,"+AutoCmd.sec;
+        s+="§,"+Likaotique.getLik().isSafe()+"§,"+AutoCmd.cmd+"§,"+AutoCmd.sec+"§,"+Near.spawn.toLong()+"§,"+Near.radius;
         Utils.nc.saveSave("values", s);
 	}
 	
@@ -3507,6 +3509,12 @@ public class Utils {
             	}
             	if (i==182) {
             		AutoCmd.sec = Integer.parseInt(ligne);
+            	}
+            	if (i==183) {
+            		Near.spawn = BlockPos.fromLong(Long.parseLong(ligne));
+            	}
+            	if (i==184) {
+            		Near.radius = Integer.parseInt(ligne);
             	}
             	
         	} catch (Exception e) {
@@ -4424,6 +4432,19 @@ public class Utils {
     	nc.saveSave("bind", s);
 	}
 	
+	public static void saveSettings(String...fi) {
+		if(verif!=null)
+			return;
+		String s = "";
+		for(final Setting set : Client.Neko.settingsManager.getSettings()) {
+			s+=(String.valueOf(set.getName())+":"+set.getValBoolean()+":"+set.getValDouble()+":"+set.getValString()+"§");
+		}
+    	if (fi.length>0) {
+    		nc.saveSave("settings", s, fi);
+    	}
+    	nc.saveSave("settings", s);
+	}
+	
 	public static void loadSaveCloud() {
 		if (var.rang==null)
 			for (Rank r : ModuleManager.rang) {
@@ -4448,6 +4469,7 @@ public class Utils {
 			loadCloudFont();
 			loadCloudShit();
 			loadCloudFrame();
+			loadCloudSettings();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -4487,6 +4509,23 @@ public class Utils {
 		  Utils.importAllAccountToCloud();
 		  Utils.importMod();
 		  Utils.saveAll();
+	}
+	
+	public static void loadCloudSettings(String...fi) {
+
+		String list[] = fi.length>0 ? nc.getSave("settings", fi).split("§") : nc.getSave("settings").split("§");
+		for(String args : list) {
+			String s[] = args.split(":");
+			if(s.length == 4) {
+				final Setting set = Client.Neko.settingsManager.getSettingByName(s[0]);
+				if(set == null) {
+					continue;
+				}
+				set.setValBoolean(Boolean.parseBoolean(s[1]));
+				set.setValDouble(Double.parseDouble(s[2]));
+				set.setValString(s[3]);
+			}
+		}
 	}
 	
 	

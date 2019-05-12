@@ -1,5 +1,6 @@
 package net.minecraft.entity;
 
+import neko.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;

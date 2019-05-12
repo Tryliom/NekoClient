@@ -70,7 +70,7 @@ public class ItemSign extends Item
 
                 if (var10 instanceof TileEntitySign && !ItemBlock.setTileEntityNBT(worldIn, pos, stack))
                 {
-                    playerIn.func_175141_a((TileEntitySign)var10);
+                    playerIn.openEditSign((TileEntitySign)var10);
                 }
 
                 return true;
