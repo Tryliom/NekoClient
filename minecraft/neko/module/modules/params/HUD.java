@@ -1,6 +1,8 @@
 package neko.module.modules.params;
 
+import neko.Client;
 import neko.gui.InGameGui;
+import neko.guicheat.clickgui.settings.Setting;
 import neko.manager.ModuleManager;
 import neko.module.Category;
 import neko.module.Module;
@@ -18,9 +20,9 @@ public class HUD extends Module {
 	public static boolean time=true;
 	public static boolean select=false;
 	public static boolean stuff=false;
-	public static float cR=0.99F;
-	public static float cG=0.33F;
-	public static float cB=0.33F;
+	public static double cR=99;
+	public static double cG=33;
+	public static double cB=33;
 	public static float width=2F;
 
 	public HUD() {
@@ -48,15 +50,32 @@ public class HUD extends Module {
 		+ "§6Epaisseur bord:§7 "+HUD.width;
 	}
 	
+	@Override
+	public void setup() {
+			Client.getNeko().settingsManager.rSetting(new Setting("HUDCoord", this, this.coord));
+			Client.getNeko().settingsManager.rSetting(new Setting("HUDFPS", this, this.fps));
+			Client.getNeko().settingsManager.rSetting(new Setting("HUDXP", this, this.fall));
+			Client.getNeko().settingsManager.rSetting(new Setting("HUDMS", this, this.item));
+			Client.getNeko().settingsManager.rSetting(new Setting("HUDTime", this, this.time));
+			Client.getNeko().settingsManager.rSetting(new Setting("HUDPacket", this, this.packet));
+			Client.getNeko().settingsManager.rSetting(new Setting("HUDStuff", this, this.stuff));
+			Client.getNeko().settingsManager.rSetting(new Setting("HUDSelect", this, this.select));
+			Client.getNeko().settingsManager.rSetting(new Setting("HUDRed", this, this.cR, 0, 100, true));
+			Client.getNeko().settingsManager.rSetting(new Setting("HUDGreen", this, this.cG, 0, 100, true));
+			Client.getNeko().settingsManager.rSetting(new Setting("HUDBlue", this, this.cB, 0, 100, true));
+	}
+	
 	public void onRender3D() {		
 		if (select && !u.isLock("--HUD select")) {
 			try {
 				BlockPos bp = mc.objectMouseOver.func_178782_a();
 				if (bp!=null && !(mc.theWorld.getBlockState(bp).getBlock().getMaterial() == Material.air)) {
-					RenderUtils.drawBlockESP(bp.getX() - mc.getRenderManager().renderPosX, bp.getY() - mc.getRenderManager().renderPosY, bp.getZ() - mc.getRenderManager().renderPosZ, cR, cG, cB, 0.12F, cR, cG, cB, 0.12F, width);
+					RenderUtils.drawBlockESP(bp.getX() - mc.getRenderManager().renderPosX, bp.getY() - mc.getRenderManager().renderPosY,
+							bp.getZ() - mc.getRenderManager().renderPosZ, this.cR, this.cG, this.cB, 12, this.cR, this.cG, this.cB, 12, width);
 				} else if (bp==null && mc.pointedEntity!=null) {
 					Entity entity = mc.pointedEntity;
-					RenderUtils.drawEntityESP(u.getX(entity), u.getY(entity), u.getZ(entity), entity.width/2, entity.height+0.22F, cR, cG, cR, 0.11F, cR, cG, cB, 0.11F, width);
+					RenderUtils.drawEntityESP(u.getX(entity), u.getY(entity), u.getZ(entity), entity.width/2, entity.height+0.22F,
+							this.cR, this.cG, this.cR, 11, this.cR, this.cG, this.cB, 11, width);
 				}
 			} catch (Exception e) {}
 		}

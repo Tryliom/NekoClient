@@ -27,6 +27,7 @@ public class Setting {
 	private double max;
 	private boolean onlyint = false;
 	
+	
 
 	public Setting(String name, Module parent, String sval, ArrayList<String> options){
 		this.name = name;

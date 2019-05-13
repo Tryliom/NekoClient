@@ -242,6 +242,29 @@ public class RenderUtils {
 		GL11.glPopMatrix();
 	}
 	
+	public static void drawBlockESP(double x, double y, double z, double red, double green, double blue, double alpha, double lineRed, double lineGreen, double lineBlue, double lineAlpha, float lineWidth) {
+		GL11.glPushMatrix();
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(770, 771);
+		// GL11.glDisable(GL11.GL_LIGHTING);
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
+		GL11.glEnable(GL11.GL_LINE_SMOOTH);
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
+		GL11.glDepthMask(false);
+		GL11.glColor4d(red, green, blue, alpha);
+		drawBoundingBox(new AxisAlignedBB(x, y, z, x + 1D, y + 1D, z + 1D));
+		GL11.glLineWidth(lineWidth);
+		GL11.glColor4d(lineRed, lineGreen, lineBlue, lineAlpha);
+		drawOutlinedBoundingBox(new AxisAlignedBB(x, y, z, x + 1D, y + 1D, z + 1D));
+		GL11.glDisable(GL11.GL_LINE_SMOOTH);
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		// GL11.glEnable(GL11.GL_LIGHTING);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glDepthMask(true);
+		GL11.glDisable(GL11.GL_BLEND);
+		GL11.glPopMatrix();
+	}
+	
 	public static void drawBlockESPZone(double x, double y, double z, float red, float green, float blue, float alpha,
 			float lineRed, float lineGreen, float lineBlue, float lineAlpha, float lineWidth) {
 		GL11.glPushMatrix();
@@ -337,6 +360,29 @@ public class RenderUtils {
 		drawBoundingBox(new AxisAlignedBB(x - width, y, z - width, x + width , y + height, z + width));
 		GL11.glLineWidth(lineWdith);
 		GL11.glColor4f(lineRed, lineGreen, lineBlue, lineAlpha);
+		drawOutlinedBoundingBox(new AxisAlignedBB(x - width, y, z - width, x + width , y + height, z + width));
+		GL11.glDisable(GL11.GL_LINE_SMOOTH);
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		// GL11.glEnable(GL11.GL_LIGHTING);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glDepthMask(true);
+		GL11.glDisable(GL11.GL_BLEND);
+		GL11.glPopMatrix();
+	}
+	
+	public static void drawEntityESP(double x, double y, double z, double width, double height, double red, double green, double blue, double alpha, double lineRed, double lineGreen, double lineBlue, double lineAlpha, float lineWdith) {
+		GL11.glPushMatrix();
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(770, 771);
+		// GL11.glDisable(GL11.GL_LIGHTING);
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
+		GL11.glEnable(GL11.GL_LINE_SMOOTH);
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
+		GL11.glDepthMask(false);
+		GL11.glColor4d(red, green, blue, alpha);
+		drawBoundingBox(new AxisAlignedBB(x - width, y, z - width, x + width , y + height, z + width));
+		GL11.glLineWidth(lineWdith);
+		GL11.glColor4d(lineRed, lineGreen, lineBlue, lineAlpha);
 		drawOutlinedBoundingBox(new AxisAlignedBB(x - width, y, z - width, x + width , y + height, z + width));
 		GL11.glDisable(GL11.GL_LINE_SMOOTH);
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
