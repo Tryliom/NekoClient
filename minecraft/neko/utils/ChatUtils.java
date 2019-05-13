@@ -4875,26 +4875,33 @@ public class ChatUtils {
 				} else if (args[1].equalsIgnoreCase("fps")) {
 					if (HUD.fps) {
 						HUD.fps=false;
+						SettingsUtil.setHUDFPS(false);
 						Utils.addChat("§cHUD: Fps cachés");
 					} else {
 						HUD.fps=true;
+						SettingsUtil.setHUDFPS(true);
 						Utils.addChat("§aHUD: Fps affichés");
 					}
 					
 				} else if (args[1].equalsIgnoreCase("stuff")) {
 					if (HUD.stuff) {
 						HUD.stuff=false;
+						SettingsUtil.setHUDStuff(false);
 						Utils.addChat("§cHUD: Stuff cachés");
 					} else {
 						HUD.stuff=true;
+						SettingsUtil.setHUDStuff(true);
 						Utils.addChat("§aHUD: Stuff affichés");
 					}
 					
 				} else if (args[1].equalsIgnoreCase("color") || args[1].equalsIgnoreCase("c")) {
 					try {
-						HUD.cR=Float.parseFloat(args[2])/100;
-						HUD.cG=Float.parseFloat(args[3])/100;
-						HUD.cB=Float.parseFloat(args[4])/100;
+						HUD.cR=Double.parseDouble(args[2]);
+						HUD.cG=Double.parseDouble(args[3]);
+						HUD.cB=Double.parseDouble(args[4]);
+						SettingsUtil.setHUDRed(HUD.cR);
+						SettingsUtil.setHUDGreen(HUD.cG);
+						SettingsUtil.setHUDBlue(HUD.cB);
 						Utils.addChat("Couleurs du Select à "+args[2]+"r, "+args[3]+"g et "+args[4]+"b !");
 					} catch (Exception e) {
 						Utils.addChat(Utils.setColor("§cErreur: Faire "+var.prefixCmd+"help hud pour la syntax correcte", "§c"));
@@ -4906,54 +4913,66 @@ public class ChatUtils {
 					} else
 					if (HUD.select) {
 						HUD.select=false;
+						SettingsUtil.setHUDSelect(false);
 						Utils.addChat("§cHUD: Selections personnalisée de blocs désactivés");
 					} else {
 						HUD.select=true;
+						SettingsUtil.setHUDSelect(true);
 						Utils.addChat("§aHUD: Selections personnalisée de blocs activés");
 					}
 					
 				} else if (args[1].equalsIgnoreCase("packet")) {
 					if (HUD.packet) {
 						HUD.packet=false;
+						SettingsUtil.setHUDPacket(false);
 						Utils.addChat("§cHUD: Packets cachés");
 					} else {
 						HUD.packet=true;
+						SettingsUtil.setHUDPacket(true);
 						Utils.addChat("§aHUD: Packets affichés");
 					}
 					
 				} else if (args[1].equalsIgnoreCase("coord") || args[1].equalsIgnoreCase("pos")) {
 					if (HUD.coord) {
 						HUD.coord=false;
+						SettingsUtil.setHUDCoord(false);
 						Utils.addChat("§cHUD: Coordonnées cachées");
 					} else {
 						HUD.coord=true;
+						SettingsUtil.setHUDCoord(true);
 						Utils.addChat("§aHUD: Coordonnées affichées");
 					}
 					
 				} else if (args[1].equalsIgnoreCase("xp")) {
 					if (HUD.fall) {
 						HUD.fall=false;
+						SettingsUtil.setHUDXP(false);
 						Utils.addChat("§cHUD: Expérience cachée");
 					} else {
 						HUD.fall=true;
+						SettingsUtil.setHUDXP(true);
 						Utils.addChat("§aHUD: Expérience affichée");
 					}
 					
 				} else if (args[1].equalsIgnoreCase("time")) {
 					if (HUD.time) {
 						HUD.time=false;
+						SettingsUtil.setHUDTime(false);
 						Utils.addChat("§cHUD: Temps de jeu caché");
 					} else {
 						HUD.time=true;
+						SettingsUtil.setHUDTime(true);
 						Utils.addChat("§aHUD: Temps de jeu affiché");
 					}
 					
 				} else if (args[1].equalsIgnoreCase("ms")) {
 					if (HUD.item) {
 						HUD.item=false;
+						SettingsUtil.setHUDMs(false);
 						Utils.addChat("§cHUD: Ms caché");
 					} else {
 						HUD.item=true;
+						SettingsUtil.setHUDMs(true);
 						Utils.addChat("§aHUD: Ms affiché");
 					}
 					

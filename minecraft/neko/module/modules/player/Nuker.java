@@ -55,13 +55,10 @@ public class Nuker extends Module {
 	}
 
 	public void setValues() {
-		this.values = "§6Range:§7 " + nukerRadius + "\n" + "§6Safe:§7 " + Utils.displayBool(safe);
+		this.values = "6Range:7 " + nukerRadius + "\n" + "6Safe:7 " + Utils.displayBool(safe);
 	}
 
 	public void onUpdate() {
-		this.nukerRadius = (int)SettingsUtil.getNukerRadius();
-		this.onehit = SettingsUtil.getNukerOneHit();
-		this.safe = SettingsUtil.getNukerSafe();
 
 		if (mc.gameSettings.keyBindPickBlock.getIsKeyPressed() && delay > 20
 				&& mc.objectMouseOver.func_178782_a() != null && !(mc.currentScreen instanceof GuiChat)

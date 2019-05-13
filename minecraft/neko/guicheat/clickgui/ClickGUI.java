@@ -13,6 +13,7 @@ import neko.guicheat.clickgui.elements.ModuleButton;
 import neko.guicheat.clickgui.elements.menu.ElementSlider;
 import neko.guicheat.clickgui.util.ColorUtil;
 import neko.guicheat.clickgui.util.FontUtil;
+import neko.guicheat.clickgui.util.SettingsUtil;
 import neko.guicheat.clickgui.settings.SettingsManager;
 import neko.Client;
 import neko.module.Category;
@@ -311,6 +312,7 @@ public class ClickGUI extends GuiScreen {
 		if(mc.currentScreen == Client.Neko.clickGui) {
 			if(keyCode == Client.Neko.moduleManager.getModuleByName("Gui").getBind() || keyCode == Keyboard.KEY_ESCAPE) {
 				Client.Neko.moduleManager.getModuleByName("Gui").toggleModule();
+				SettingsUtil.SaveGuiSettings();
 			}
 		}
 
