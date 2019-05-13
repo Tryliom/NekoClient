@@ -76,6 +76,7 @@ import neko.module.modules.player.Fire;
 import neko.module.modules.player.Nuker;
 import neko.module.modules.player.PushUp;
 import neko.module.modules.player.Velocity;
+import neko.module.modules.render.ChestESP;
 import neko.module.modules.render.ItemESP;
 import neko.module.modules.render.NekoChat;
 import neko.module.modules.render.Paint;
@@ -754,6 +755,12 @@ public class ChatUtils {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"AutoCmd delay <secondes>", var.prefixCmd+"autocmd delay ", "§7Défini le nombre de seconde entre chaque commandes", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"AutoCmd cmd <Commande>", var.prefixCmd+"autocmd cmd ", "§7Défini la commande à executer toutes les x secondes", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("chest") || args[1].equalsIgnoreCase("chestesp")) {
+					Utils.addChat(Utils.sep);
+					Utils.addChat2("§6"+var.prefixCmd+"Chest dispenser", var.prefixCmd+"chest dispenser", "§7Affiche les dispensers et dropper avec le ChestESP", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Chest tracers", var.prefixCmd+"chest tracers", "§7Affiche un tracers jusqu'aux container du ChestESP", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("near")) {
@@ -2577,6 +2584,15 @@ public class ChatUtils {
 					valid = true;
 				}
 				mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(x, mc.thePlayer.getPosition().getY(), z, true));
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"packet")) {
+				if (args.length==2 && Utils.isInteger(args[1])) {
+					int nb = Integer.parseInt(args[1]);
+					for (int i=0;i<nb;i++)
+						mc.thePlayer.sendQueue.addToSendQueue(new C04PacketPlayerPosition());
+				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
@@ -4525,6 +4541,30 @@ public class ChatUtils {
 					Utils.addChat(err);
 				} else {
 					Utils.version=args[1];
+				}
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"chest")) {
+				if (args.length==2) {
+					if (args[1].equalsIgnoreCase("dispenser")) {
+						if (ChestESP.dispenser) {
+							Utils.addChat("§aAffichagee des dispensers et dropper dans le ChestESP activé");
+						} else {
+							Utils.addChat("§aAffichagee des dispensers et dropper dans le ChestESP désactivé");
+						}
+						
+						ChestESP.dispenser = !ChestESP.dispenser;
+					}
+					if (args[1].equalsIgnoreCase("tracers")) {
+						if (ChestESP.tracers) {
+							Utils.addChat("§aAffichage du tracers pour le ChestESP activé");
+						} else {
+							Utils.addChat("§aAffichage du tracers pour le ChestESP désactivé");
+						}
+						
+						ChestESP.tracers = !ChestESP.tracers;
+					}
 				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
