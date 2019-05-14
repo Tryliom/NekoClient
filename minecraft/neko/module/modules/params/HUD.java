@@ -75,7 +75,7 @@ public class HUD extends Module {
 				} else if (bp==null && mc.pointedEntity!=null) {
 					Entity entity = mc.pointedEntity;
 					RenderUtils.drawEntityESP(u.getX(entity), u.getY(entity), u.getZ(entity), entity.width/2, entity.height+0.22F,
-							this.cR/100, this.cG/100, this.cR/100, 11, this.cR/100, this.cG/100, this.cB/100, 11, width);
+							this.cR/100, this.cG/100, this.cR/100, 0.2, this.cR/100, this.cG/100, this.cB/100, 0.2, width);
 				}
 			} catch (Exception e) {}
 		}
