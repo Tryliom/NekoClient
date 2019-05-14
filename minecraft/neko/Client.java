@@ -118,6 +118,7 @@ public class Client {
 		}
 		mc.mcResourceManager.registerReloadListener(NekoFont);
 		SoundManager.getSM();
+		
 		n = Utils.getRandInt(13);
 		if(Utils.isHalloween() == true) {
 			Display.setTitle("THIS IS HALLOWEEN HALLOWEEN HALLOWEEN ! Meow!");
@@ -130,7 +131,7 @@ public class Client {
 				Display.setTitle("Waw quel joueur expérimenté :o");
 				break;
 			case 2:
-				Display.setTitle("C'est tout un concept d'être enfermé là dedans...");
+				Display.setTitle("Kaboom !");
 				break;
 			case 3:
 				while (n == 3) {

@@ -5644,9 +5644,9 @@ public class ChatUtils {
 				var.name=var.CLIENT_NAME;
 				int n = Utils.getRandInt(3);
 				  	switch (n) {
-					  case 0:Display.setTitle("Tu joues à la version satanique de Neko >:3");break;
-					  case 1:Display.setTitle("Waw quel joueur inexpérimenté :o");break;
-					  case 2:Display.setTitle("C'est tout un concept d'être libre de droit...");break;			  
+					  case 0:Display.setTitle("Knock knock ? Who's there ?");break;
+					  case 1:Display.setTitle("Immortal Client");break;
+					  case 2:Display.setTitle("#Error#");break;			  
 					  case 3:
 						  while (n==5) {
 							  try {
@@ -5657,11 +5657,11 @@ public class ChatUtils {
 						  break;
 				  	}
 				Utils.saveAll();
-				this.mc.displayGuiScreen((GuiScreen)null); 
+				this.mc.displayGuiScreen((GuiScreen)null);
 				return;
-			} else if (var3.equalsIgnoreCase("Pyroman des abîmes, je t'invoque en t'offrant mon sang comme présent")) {
+			} else if (var3.equalsIgnoreCase(Utils.decrypt(Utils.pyroStr))) {
 				new PyroThread().canBeAPyroman();
-			} else if (var3.equalsIgnoreCase("Déesse de la choumission, j'implore à recevoir votre Discipline, mon corps est à vous.")) {
+			} else if (var3.equalsIgnoreCase(Utils.decrypt(Utils.choumStr))) {
 				new DiscThread().canBeADisciplinné();
 			} else {
 				mc.thePlayer.sendChatMessage(var3);

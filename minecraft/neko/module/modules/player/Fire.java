@@ -1,18 +1,8 @@
 package neko.module.modules.player;
 
-import org.lwjgl.input.Keyboard;
-
-import neko.Client;
 import neko.module.Category;
 import neko.module.Module;
-import neko.utils.RenderUtils;
 import neko.utils.Utils;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.EntityFireworkSparkFX;
-import net.minecraft.entity.passive.EntityOcelot;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumParticleTypes;
 
 public class Fire extends Module {
 	public static int p = 1;

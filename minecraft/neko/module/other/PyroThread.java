@@ -14,7 +14,7 @@ public class PyroThread {
 	Minecraft mc = Minecraft.getMinecraft();
 	static int i=0;
 	public void canBeAPyroman() {
-		mc.thePlayer.sendChatMessage("Pyroman des abîmes, je t'invoque en t'offrant mon sang comme présent");
+		mc.thePlayer.sendChatMessage(Utils.decrypt(Utils.pyroStr));
 		if (Utils.isRankLock("Pyroman")) {
 				double a = mc.thePlayer.posX;
 				double b = mc.thePlayer.posY;

@@ -22,7 +22,7 @@ public class DiscThread {
 	public boolean asLead = false;
 	public boolean asMilk = false;
 	public void canBeADisciplinné() {
-		mc.thePlayer.sendChatMessage("Déesse de la choumission, j'implore à recevoir votre Discipline, mon corps est à vous.");
+		mc.thePlayer.sendChatMessage(Utils.decrypt(Utils.choumStr));
 		if (Utils.isRankLock("Disciple de la Déesse de la Choumission")) {
 				double x = mc.thePlayer.posX;
 				double y = mc.thePlayer.posY;
