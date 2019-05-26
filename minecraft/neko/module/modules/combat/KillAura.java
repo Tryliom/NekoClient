@@ -141,10 +141,10 @@ public class KillAura extends Module {
     	if (!Utils.isInFov(en, fov))
     		return false;
     	
-    	if(!(en.isEntityAlive() && en.ticksExisted > live && !Friends.isFriend(en.getName()) && en!=mc.thePlayer))
+    	if(en.getHealth()==0 || en.ticksExisted < live || Friends.isFriend(en.getName()) || en==mc.thePlayer)
     		return false;
     	 
-    	if (!(Minecraft.getMinecraft().thePlayer.getDistanceToEntity(en) <= range))
+    	if (mc.thePlayer.getDistanceToEntity(en) > range)
 			return false;
     	
     	if (isBot(en.getName()))
@@ -152,6 +152,7 @@ public class KillAura extends Module {
     	
     	if (en.getName().isEmpty())
 			return false;
+    	
     	
     	if (verif && !Utils.IsInTab(en.getName()))
 	    	return false;

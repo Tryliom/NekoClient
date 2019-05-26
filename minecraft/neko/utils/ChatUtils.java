@@ -759,7 +759,7 @@ public class ChatUtils {
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("chest") || args[1].equalsIgnoreCase("chestesp")) {
 					Utils.addChat(Utils.sep);
-					Utils.addChat2("§6"+var.prefixCmd+"Chest dispenser", var.prefixCmd+"chest dispenser", "§7Affiche les dispensers et dropper avec le ChestESP", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Chest dispenser", var.prefixCmd+"chest dispenser", "§7Affiche les dispensers et dropper avec le ChestESP", false, Chat.Summon);					
 					Utils.addChat2("§6"+var.prefixCmd+"Chest tracers", var.prefixCmd+"chest tracers", "§7Affiche un tracers jusqu'aux container du ChestESP", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
@@ -1640,7 +1640,7 @@ public class ChatUtils {
 					int z = Integer.parseInt(l[2]);
 					Near.spawn = new BlockPos(x, y, z);
 					Near.radius = Integer.parseInt(args[3]);
-					Utils.addChat("§aLes coordonnées reçues autour de "+args[2]+" jusqu'à "+Near.radius+" blocs seront ignorées !");
+					Utils.addChat(Utils.setColor("§aLes coordonnées reçues autour de "+args[2]+" jusqu'à "+Near.radius+" blocs seront ignorées !", "§a"));
 				}
 				
 				if (args.length>=2 && args[1].equalsIgnoreCase("say")) {
@@ -1650,9 +1650,9 @@ public class ChatUtils {
 						mc.thePlayer.sendChatMessage(entity.getName()+" a été aperçu en "+bp.getX()+", "+bp.getY()+", "+bp.getZ()+" un jour de grand soleil");
 					} else {
 						if (Near.say) {
-							Utils.addChat("§aNear désactivé en continu pour envoyer les messages de tp dans le chat");
+							Utils.addChat(Utils.setColor("Near désactivé en continu pour envoyer les messages de tp dans le chat", "§c"));
 						} else {
-							Utils.addChat("§aNear activé en continu pour envoyer les messages de tp dans le chat");
+							Utils.addChat(Utils.setColor("§aNear activé en continu pour envoyer les messages de tp dans le chat", "1a"));
 						}
 						Near.say = !Near.say;
 					}
@@ -1760,7 +1760,7 @@ public class ChatUtils {
 				if (!mc.isSingleplayer()) {
 					Utils.addChat("§aVous êtes connecté sur "+mc.getCurrentServerData().serverIP);
 					try {
-						Utils.addChat("("+InetAddress.getByName(mc.getCurrentServerData().serverIP).getHostAddress()+")");
+						Utils.addChat("§7(§a"+InetAddress.getByName(mc.getCurrentServerData().serverIP).getHostAddress()+"§7)");
 					} catch (Exception e) {}
 				} else 
 					Utils.addChat("§aVous êtes connecté sur un monde solo");
@@ -2597,7 +2597,7 @@ public class ChatUtils {
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"phantom") || args[0].equalsIgnoreCase(var.prefixCmd+"ph")) {
-				int posY = 0;
+				int posY = 1;
 				int x = 0;
 				int y = 0;
 				int z = 0;
@@ -2924,23 +2924,6 @@ public class ChatUtils {
 					} catch (Exception e) {
 						Utils.addChat(err);
 					}
-				}
-				Utils.checkXp(xp);
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"checkec")) {
-				if (args.length==1) {
-					String user ="";
-					if (MCLeaks.isAltActive()) {
-						user = MCLeaks.getMCName();
-					} else {
-						user = mc.session.getUsername();
-					}
-					Utils.checkEC(user);
-				} else {
-					for (int i=1;i<args.length;i++)
-					Utils.checkEC(args[i]);
 				}
 				Utils.checkXp(xp);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
@@ -4549,18 +4532,18 @@ public class ChatUtils {
 				if (args.length==2) {
 					if (args[1].equalsIgnoreCase("dispenser")) {
 						if (ChestESP.dispenser) {
-							Utils.addChat("§aAffichagee des dispensers et dropper dans le ChestESP activé");
+							Utils.addChat("§cAffichage des dispensers et dropper dans le ChestESP désactivé");
 						} else {
-							Utils.addChat("§aAffichagee des dispensers et dropper dans le ChestESP désactivé");
+							Utils.addChat("§aAffichage des dispensers et dropper dans le ChestESP activé");
 						}
 						
 						ChestESP.dispenser = !ChestESP.dispenser;
 					}
 					if (args[1].equalsIgnoreCase("tracers")) {
 						if (ChestESP.tracers) {
-							Utils.addChat("§aAffichage du tracers pour le ChestESP activé");
+							Utils.addChat("§cAffichage du tracers pour le ChestESP désactivé");
 						} else {
-							Utils.addChat("§aAffichage du tracers pour le ChestESP désactivé");
+							Utils.addChat("§aAffichage du tracers pour le ChestESP activé");
 						}
 						
 						ChestESP.tracers = !ChestESP.tracers;

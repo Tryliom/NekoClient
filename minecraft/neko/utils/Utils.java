@@ -1256,7 +1256,6 @@ public class Utils {
 			addChat2("§6"+var.prefixCmd+"Reset", var.prefixCmd+"reset", "§7Remet tous les réglages à leurs bases", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"List", var.prefixCmd+"list", "§7Dresse une liste de tous les cheats de Neko, en vert ceux actifs", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Vclip <Double>", var.prefixCmd+"vclip ", "§7Vous téléporte au dessus ou en dessous de vous", false, Chat.Summon);
-			addChat2("§6"+var.prefixCmd+"CheckEC", var.prefixCmd+"checkec", "§7Affiche la page de stats d'épicube pour savoir si vous êtes bannis ou non", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Damage", var.prefixCmd+"damage", "§7Vous vous infligez 0.5 à 1 coeur de dégât", false, Chat.Summon);
 			break;
 						
@@ -1285,8 +1284,7 @@ public class Utils {
 			addChat2("§6"+var.prefixCmd+"ListServ", var.prefixCmd+"listserv", "§7Affiche la liste des serveurs utilisé par les Neko", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Cmd", var.prefixCmd+"cmd ", "§7Permet d'assigner des commandes à des touches\n§7Cmd <Nom> <Touche> <Commande>", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"UnBindAll", var.prefixCmd+"unbindall", "§7Met tous les cheats sur la touche 'None'", false, Chat.Summon);
-			addChat2("§6"+var.prefixCmd+"Saveall", var.prefixCmd+"saveall", "§7Save vos données manuellement", false, Chat.Summon);
-			addChat2("§6"+var.prefixCmd+"Backup", var.prefixCmd+"backup", "§7Crée une backup", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"Phantom", var.prefixCmd+"phantom", "§7Permet de vous téléporter en passant par le sol", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"ListPing", var.prefixCmd+"listping", "§7Affiche le ping de tous les joueurs autour de vous", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"LvlUp", var.prefixCmd+"lvlup", "§7Active/désactive l'animation quand on augmente de lvl", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Classement", var.prefixCmd+"Classement", "§7Affiche le top 10 des joueurs de Neko en terme de lvl", false, Chat.Summon);

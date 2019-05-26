@@ -55,7 +55,7 @@ public class Nuker extends Module {
 	}
 
 	public void setValues() {
-		this.values = "6Range:7 " + nukerRadius + "\n" + "6Safe:7 " + Utils.displayBool(safe);
+		this.values = "§6Range:§7 " + nukerRadius + "\n" + "§6Safe:§7 " + Utils.displayBool(safe)+"\n"+"§6Onehit:§7 "+Utils.displayBool(onehit);
 	}
 
 	public void onUpdate() {

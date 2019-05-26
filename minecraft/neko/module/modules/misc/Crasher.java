@@ -8,7 +8,7 @@ import net.minecraft.network.play.client.C0APacketAnimation;
 
 public class Crasher extends Module {
 	
-	int loop;
+	int loop = 0;
 	public static boolean active;
 	
 	public Crasher() {
@@ -16,13 +16,10 @@ public class Crasher extends Module {
 	}
 	
 	public void onEnabled() {		
-		this.active = true;
-		Utils.addChat("§6Veuillez patienter... Nous essayons le crash.");
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		this.active = false;
 		super.onDisabled();
 	}	
 
@@ -30,10 +27,7 @@ public class Crasher extends Module {
 		this.values = "";
 	}
 	
-	@Override
 	public void onUpdate() {
-		if (this.active)
-			return;
 		++this.loop;
 		if (this.loop > 6) {
 			int spam = 0;

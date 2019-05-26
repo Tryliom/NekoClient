@@ -540,7 +540,8 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
 
         if (var2 != null)
         {
-            var2.setVelocity((double)packetIn.func_149411_d() / 8000.0D, (double)packetIn.func_149410_e() / 8000.0D, (double)packetIn.func_149409_f() / 8000.0D);
+        	if (!Utils.isToggle("NoClip"))
+        		var2.setVelocity((double)packetIn.func_149411_d() / 8000.0D, (double)packetIn.func_149410_e() / 8000.0D, (double)packetIn.func_149409_f() / 8000.0D);
         }
     }
 
@@ -813,8 +814,9 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
      */
     public void handleBlockChange(S23PacketBlockChange packetIn)
     {
-        PacketThreadUtil.func_180031_a(packetIn, this, this.getGameController());
-        this.clientWorldController.func_180503_b(packetIn.func_179827_b(), packetIn.func_180728_a());
+        
+    	PacketThreadUtil.func_180031_a(packetIn, this, this.getGameController());
+    	this.clientWorldController.func_180503_b(packetIn.func_179827_b(), packetIn.func_180728_a());
     }
 
     /**
@@ -822,7 +824,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
      */
     public void handleDisconnect(S40PacketDisconnect packetIn)
     {
-        this.netManager.closeChannel(packetIn.func_149165_c());
+    	this.netManager.closeChannel(packetIn.func_149165_c());
     }
 
     /**
@@ -919,7 +921,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     {
         PacketThreadUtil.func_180031_a(packetIn, this, this.getGameController());
         Entity var2 = this.clientWorldController.getEntityByID(packetIn.func_149354_c());
-        Object var3 = (EntityLivingBase)this.clientWorldController.getEntityByID(packetIn.func_149353_d());
+        Object var3 = (EntityLivingBase)this.clientWorldController.getEntityByID(packetIn.func_149353_d());        
 
         if (var3 == null)
         {
@@ -1685,7 +1687,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         PacketThreadUtil.func_180031_a(p_175098_1_, this, this.getGameController());
         Entity var2 = this.clientWorldController.getEntityByID(p_175098_1_.field_179775_c);
         EntityLivingBase var3 = var2 instanceof EntityLivingBase ? (EntityLivingBase)var2 : null;
-
+        
         if (p_175098_1_.field_179776_a == S42PacketCombatEvent.Event.END_COMBAT)
         {
             long var4 = (long)(1000 * p_175098_1_.field_179772_d / 20);

@@ -47,7 +47,7 @@ public class Client {
 	public final String CLIENT_AUTHOR = "Tryliom";
 
 	
-	public final String CLIENT_VERSION = "2.8.3";
+	public final String CLIENT_VERSION = "2.8.4";
 	public String mode = "Player";
 	public Rank rang;
 	public Necklace necklace;

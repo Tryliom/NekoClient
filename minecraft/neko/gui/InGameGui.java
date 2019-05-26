@@ -259,42 +259,14 @@ public class InGameGui {
 		  else
 			  yPos+=5;
 		  String color="§c";		
-		  // Trier par dist
-		  ArrayList<EntityPlayer> fin = new ArrayList<>();
 		  if (s.size()==0) {
-			  fin.clear();
+			  return;
 		  }
-		  while (s.size()!=0) {
-			  if (s.size()==1) {
-				  fin.add(s.get(0));
-				  s.clear();
-				  break;
-			  }
-			  double d=200;
-			  EntityPlayer actualEn=null;
-			  int num=0;
-			  int o=0;
-			  for (int k=0;k<s.size();k++) {
-				  EntityPlayer en = s.get(k);
-				  if (en.getDistanceToEntity(mc.thePlayer)<d) {
-					  d=en.getDistanceToEntity(mc.thePlayer);
-					  actualEn=en;	
-					  num=o;
-				  } else {
-					  s.remove(o);
-				  }
-				  o++;
-			  }
-			  if (actualEn!=null) {
-				  fin.add(actualEn);
-				  s.remove(num);	
-			  }
-			  
-		  }
+		  double d=200;
 		  String f = "§d";
 		  int c=0;
-		  for (EntityPlayer en : fin) {
-			  if (en.getDistanceToEntity(mc.thePlayer)>200)
+		  for (EntityPlayer en : s) {
+			  if (en.getDistanceToEntity(mc.thePlayer)>d)
 				  continue;
 			  if (en.getDistanceToEntity(mc.thePlayer)>20) {
 				  color="§a";

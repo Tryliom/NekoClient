@@ -1206,7 +1206,7 @@ public abstract class World implements IBlockAccess
     }
 
     protected void onEntityAdded(Entity p_72923_1_)
-    {
+    {	
         for (int var2 = 0; var2 < this.worldAccesses.size(); ++var2)
         {
             ((IWorldAccess)this.worldAccesses.get(var2)).onEntityAdded(p_72923_1_);
