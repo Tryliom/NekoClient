@@ -141,7 +141,7 @@ public class KillAura extends Module {
     	if (!Utils.isInFov(en, fov))
     		return false;
     	
-    	if(en.getHealth()==0 || en.ticksExisted < live || Friends.isFriend(en.getName()) || en==mc.thePlayer)
+    	if(en.getHealth()<0 || en.ticksExisted < live || Friends.isFriend(en.getName()) || en==mc.thePlayer)
     		return false;
     	 
     	if (mc.thePlayer.getDistanceToEntity(en) > range)
