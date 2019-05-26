@@ -229,23 +229,13 @@ class ch implements ActionListener {
 					}
 				} catch (Exception e) {
 				}
-				int k = 0;
-				if (!cl.equalsIgnoreCase(neko.rec))
 					for (int i = 0; i < s.size(); i++) {
 						if (s.get(i).startsWith("..")) {
 							ChatUtils c = new ChatUtils();
-							c.doCommand(s.get(i).replaceFirst("..", neko.prefixCmd));
+							if (!cl.equalsIgnoreCase(neko.rec))
+								c.doCommand(s.get(i).replaceFirst("..", neko.prefixCmd));
 						} else if (s.get(i).startsWith("if")) {
 							String sr[] = s.get(i).split(" ");
-							if (s.get(i).startsWith("if $serv ") && sr[3].equalsIgnoreCase("bonus")
-									&& (mc.isSingleplayer() || InetAddress.getByName(mc.getCurrentServerData().serverIP)
-											.getHostAddress() != InetAddress.getByName(sr[2]).getHostAddress())) {
-								String serv = sr[2];
-								int sec = Integer.parseInt(sr[5]);
-								double bon = Double.parseDouble(sr[4]);
-								Conditions c = Conditions.getInstance();
-								c.newActif(serv, sec, bon);
-							}
 							try {
 								if (sr[1].equalsIgnoreCase("$player")) {
 									String user;
@@ -280,7 +270,8 @@ class ch implements ActionListener {
 										} else {
 											r = r.replaceAll("!!ver", neko.CLIENT_VERSION);
 											r = r.replaceAll("!!player", user);
-											Utils.addChat(r);
+											if (!cl.equalsIgnoreCase(neko.rec))
+												Utils.addChat(r);
 										}
 									}
 								} else if (sr[1].equalsIgnoreCase("!$player")) {
@@ -316,7 +307,8 @@ class ch implements ActionListener {
 										} else {
 											r = r.replaceAll("!!ver", neko.CLIENT_VERSION);
 											r = r.replaceAll("!!player", user);
-											Utils.addChat(r);
+											if (!cl.equalsIgnoreCase(neko.rec))
+												Utils.addChat(r);
 										}
 									}
 								} else if (sr[1].equalsIgnoreCase("$serv")) {
@@ -340,12 +332,12 @@ class ch implements ActionListener {
 											r = r.replaceFirst("..", neko.prefixCmd);
 											r = r.replaceAll("!!ver", neko.CLIENT_VERSION);
 											c.doCommand(r.replaceAll("!!player", user));
-										} else if (r.startsWith("bonus")) {
+										} else if (r.startsWith("bonus") && neko.tempBonus==0) {
 											String var[] = r.replaceFirst("bonus ", "").split(" ");
 											int sec = Integer.parseInt(var[1]);
 											double bon = Double.parseDouble(var[0]);
 											neko.tempBonus = bon;
-											TempBon t = new TempBon(sec);
+											new TempBon(sec);
 											if (bon > 0)
 												Utils.addChat(
 														"§aBonus cadeau de §d" + Math.round(bon) + "% §aajouté :3 !");
@@ -355,7 +347,8 @@ class ch implements ActionListener {
 										} else {
 											r = r.replaceAll("!!ver", neko.CLIENT_VERSION);
 											r = r.replaceAll("!!player", user);
-											Utils.addChat(r);
+											if (!cl.equalsIgnoreCase(neko.rec))
+												Utils.addChat(r);
 										}
 									}
 								} else if (sr[1].equalsIgnoreCase("!$serv")) {
@@ -394,7 +387,8 @@ class ch implements ActionListener {
 										} else {
 											r = r.replaceAll("!!ver", neko.CLIENT_VERSION);
 											r = r.replaceAll("!!player", user);
-											Utils.addChat(r);
+											if (!cl.equalsIgnoreCase(neko.rec))
+												Utils.addChat(r);
 										}
 									}
 								} else if (sr[1].equalsIgnoreCase("$ver")) {
@@ -429,7 +423,8 @@ class ch implements ActionListener {
 										} else {
 											r = r.replaceAll("!!ver", neko.CLIENT_VERSION);
 											r = r.replaceAll("!!player", user);
-											Utils.addChat(r);
+											if (!cl.equalsIgnoreCase(neko.rec))
+												Utils.addChat(r);
 										}
 									}
 								} else if (sr[1].equalsIgnoreCase("!$ver")) {
@@ -464,7 +459,8 @@ class ch implements ActionListener {
 										} else {
 											r = r.replaceAll("!!ver", neko.CLIENT_VERSION);
 											r = r.replaceAll("!!player", user);
-											Utils.addChat(r);
+											if (!cl.equalsIgnoreCase(neko.rec))
+												Utils.addChat(r);
 										}
 									}
 								} else {
@@ -491,7 +487,8 @@ class ch implements ActionListener {
 							String sr = s.get(i);
 							sr = sr.replaceAll("!!player", user);
 							sr = sr.replaceAll("!!ver", neko.CLIENT_VERSION);
-							Utils.addChat(sr);
+							if (!cl.equalsIgnoreCase(neko.rec))
+								Utils.addChat(sr);
 						}
 						neko.rec = cl;
 					}

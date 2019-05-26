@@ -1673,7 +1673,10 @@ public class ChatUtils {
 					}
 					Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 					clipboard.setContents(new StringSelection(list), null);
-					Utils.addChat("§aListe des joueurs copiées !");
+					if (player.isEmpty())
+						Utils.addChat("§aListe des joueurs copiées !");
+					else
+						Utils.addChat("§aJoueur copié !");
 				}
 				
 				if (args.length>=2 && args[1].equalsIgnoreCase("icopy")) {

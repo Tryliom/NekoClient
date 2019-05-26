@@ -228,7 +228,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         	int h = 0;
         	for (int i=1;i<s.length+1;i++) {
         		if (s[i-1].startsWith("§d") && s[i-1].contains("%")) {
-        			h = this.height/2 + -70 + 15 * i;
+        			h = this.height/2 + -60 + 15 * i;
             		this.buttonList.add(new GuiButton(771, 5, h, 170, 11, "§6"+s[i-1]));
         		}
         	}
@@ -704,7 +704,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         	String s[] = this.Bc.split("\n");
         	for (int i=1;i<s.length+1;i++) {
     			if (!s[i-1].startsWith("§d") && !s[i-1].contains("%")) {
-    				this.drawString(Client.getNeko().NekoFont, "§6"+s[i-1], 5, this.height/2 - 60, -1);
+    				this.drawString(Client.getNeko().NekoFont, "§6"+s[i-1], 5, this.height/2 - 60 + i*15, -1);
     			}      		
         	}
         	
