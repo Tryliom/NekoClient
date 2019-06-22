@@ -26,7 +26,7 @@ public class Nuker extends Module {
 	public int xPos = -1;
 	public int yPos = -1;
 	public int zPos = -1;
-	public static int nukerRadius = 5;
+	public static double nukerRadius = 5;
 	public float nukerR = 1.75F;
 	public float nukerG = 0.2F;
 	public float nukerB = 0.15F;
@@ -43,7 +43,7 @@ public class Nuker extends Module {
 	public void setup() {
 			Client.getNeko().settingsManager.rSetting(new Setting("OneHit", this, this.onehit));
 			Client.getNeko().settingsManager.rSetting(new Setting("Safe", this, this.safe));
-			Client.getNeko().settingsManager.rSetting(new Setting("Radius", this, this.nukerRadius, 0, 6, true));
+			Client.getNeko().settingsManager.rSetting(new Setting("Radius", this, this.nukerRadius, 0, 6, false));
 	}
 
 	public void onEnabled() {
@@ -112,9 +112,9 @@ public class Nuker extends Module {
 		} else if (!mc.playerController.isSpectatorMode()) {
 			// Survival Nuker
 			if(onehit == false) {
-				for (int y = (int) this.nukerRadius; y >= (int) -this.nukerRadius; y--) {
-					for (int z = (int) -this.nukerRadius; z <= this.nukerRadius; z++) {
-						for (int x = (int) -this.nukerRadius; x <= this.nukerRadius; x++) {
+				for (double y = this.nukerRadius; y > -(this.nukerRadius>3 ? 3 : this.nukerRadius); y--) {
+					for (double z = -this.nukerRadius; z <= this.nukerRadius; z++) {
+						for (double x = -this.nukerRadius; x <= this.nukerRadius; x++) {
 							if (safe && x >= -1 && x <= 1 && y == -1 && z >= -1 && z <= 1)
 								continue;
 							this.xPos = ((int) Math.round(this.mc.thePlayer.posX + x));
@@ -123,7 +123,7 @@ public class Nuker extends Module {
 							BlockPos b = new BlockPos(this.xPos, this.yPos, this.zPos);
 							Chunk var2 = mc.theWorld.getChunkFromBlockCoords(b);
 							Block blockId = var2.getBlock(this.xPos, this.yPos, this.zPos);
-							Block bl = mc.theWorld.getBlockState(b).getBlock();
+
 							if ((blockId != Blocks.air)) {
 								if (Utils.verifBlock(blockId)) {
 									mc.thePlayer.sendQueue.addToSendQueue(
@@ -137,36 +137,35 @@ public class Nuker extends Module {
 					}
 				}
 			} else {
-				for (int x = -this.nukerRadius; x < this.nukerRadius; x++) {
-					for (int y = this.nukerRadius + 1; y > -this.nukerRadius + 1; y--) {
-						for (int z = -this.nukerRadius; z < this.nukerRadius; z++) {
-
-							double xBlock = (mc.thePlayer.posX + x);
-							double yBlock = (mc.thePlayer.posY + y);
-							double zBlock = (mc.thePlayer.posZ + z);
+				for (double y = this.nukerRadius; y > -(this.nukerRadius>4 ? 4 : this.nukerRadius); y--) {
+					for (double x = -this.nukerRadius; x < this.nukerRadius; x++) {
+						for (double z = -this.nukerRadius; z < this.nukerRadius; z++) {
+							double xBlock = Math.round(mc.thePlayer.posX + x);
+							double yBlock = Math.round(mc.thePlayer.posY + y);
+							double zBlock = Math.round(mc.thePlayer.posZ + z);
 
 							BlockPos blockPos = new BlockPos(xBlock, yBlock, zBlock);
 							Block block = mc.theWorld.getBlockState(blockPos).getBlock();
 							
-							if(Utils.verifBlock(block)) {
+							if (Utils.verifBlock(block)) {
 
 								if (block.getMaterial() == Material.air) {
 									continue;
 								}
-								if (block.getPlayerRelativeBlockHardness(mc.thePlayer, mc.theWorld, blockPos) < 1) {
-									continue;
+								if (Utils.limite ? Utils.nbPack<Utils.limit : true) {
+									mc.thePlayer.sendQueue.addToSendQueue(
+											new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, blockPos, EnumFacing.NORTH));
+									if (block.getPlayerRelativeBlockHardness(mc.thePlayer, mc.theWorld, blockPos) < 1) {
+										mc.thePlayer.sendQueue.addToSendQueue(
+											new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, blockPos, EnumFacing.NORTH));
+									}
 								}
-	
-								mc.thePlayer.sendQueue.addToSendQueue(
-										new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, blockPos, EnumFacing.NORTH));
-								mc.thePlayer.sendQueue.addToSendQueue(
-										new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, blockPos, EnumFacing.NORTH));
 							}
 						}
 					}
 				}
 			}
-			//this.delayNuker = 4;
+
 			super.onUpdate();
 		}
 	}
@@ -205,9 +204,9 @@ public class Nuker extends Module {
 		} else if (!mc.playerController.isSpectatorMode()) {
 			// Survival Nuker
 			if(onehit == false) {
-				for (int y = (int) this.nukerRadius; y >= (int) -this.nukerRadius; y--) {
-					for (int z = (int) -this.nukerRadius; z <= this.nukerRadius; z++) {
-						for (int x = (int) -this.nukerRadius; x <= this.nukerRadius; x++) {
+				for (double y = this.nukerRadius; y > -(this.nukerRadius>3 ? 3 : this.nukerRadius); y--) {
+					for (double z = -this.nukerRadius; z <= this.nukerRadius; z++) {
+						for (double x = -this.nukerRadius; x <= this.nukerRadius; x++) {
 							this.xPos = ((int) Math.round(this.mc.thePlayer.posX + x));
 							this.yPos = ((int) Math.round(this.mc.thePlayer.posY + y));
 							this.zPos = ((int) Math.round(this.mc.thePlayer.posZ + z));
@@ -215,14 +214,14 @@ public class Nuker extends Module {
 							BlockPos b = new BlockPos(this.xPos, this.yPos, this.zPos);
 							Chunk var2 = mc.theWorld.getChunkFromBlockCoords(b);
 							Block blockId = var2.getBlock(this.xPos, this.yPos, this.zPos);
-							Block bl = mc.theWorld.getBlockState(b).getBlock();
+
 							if ((blockId != Blocks.air) && (blockId != Blocks.bedrock) && (blockId != Blocks.flowing_water)
 									&& (blockId != Blocks.water) && (blockId != Blocks.flowing_lava)
 									&& (blockId != Blocks.lava)) {
 								if (u.verifBlock(blockId)) {
 									RenderUtils.drawOutlinedBlockESP(b.getX() - mc.getRenderManager().renderPosX,
 											b.getY() - mc.getRenderManager().renderPosY,
-											b.getZ() - mc.getRenderManager().renderPosZ, 0.99F, 0.33F, 0.33F, 0.2F, 5F, 1D,
+											b.getZ() - mc.getRenderManager().renderPosZ, 0.99F, 0.33F, 0.33F, 0.11F, 5F, 1D,
 											1D, 1D);
 								}
 							}
@@ -230,27 +229,25 @@ public class Nuker extends Module {
 					}
 				}
 			} else {
-				for (int x = -this.nukerRadius - 1; x < this.nukerRadius - 1; x++) {
-					for (int y = this.nukerRadius + 1; y > -this.nukerRadius + 1; y--) {
-						for (int z = -this.nukerRadius; z < this.nukerRadius; z++) {
-							double xBlock = (((int) mc.thePlayer.posX) + x);
-							double yBlock = ((int) mc.thePlayer.posY + y);
-							double zBlock = ((int) mc.thePlayer.posZ + z);
+				for (double y = this.nukerRadius; y > -(this.nukerRadius>3 ? 3 : this.nukerRadius); y--) {
+					for (double x = -this.nukerRadius; x < this.nukerRadius; x++) {
+						for (double z = -this.nukerRadius; z < this.nukerRadius; z++) {
+							
+							double xBlock = Math.round(mc.thePlayer.posX + x);
+							double yBlock = Math.round(mc.thePlayer.posY + y);
+							double zBlock = Math.round(mc.thePlayer.posZ + z);
+
 							BlockPos blockPos = new BlockPos(xBlock, yBlock, zBlock);
-							Block block = mc.theWorld.getBlockState(blockPos).getBlock();
-							if (block.getMaterial() == Material.air) {
-								continue;
-							}
-							if (block.getPlayerRelativeBlockHardness(mc.thePlayer, mc.theWorld, blockPos) < 1) {
-								continue;
-							}
+							Block block = mc.theWorld.getBlockState(blockPos).getBlock();							
+							
 							double xRender = xBlock - mc.getRenderManager().renderPosX;
 							double yRender = yBlock - mc.getRenderManager().renderPosY;
 							double zRender = zBlock - mc.getRenderManager().renderPosZ;
-
-							RenderUtils.drawOutlinedBlockESPZone(xRender, yRender, zRender, 1f, 1f, 1f, 0.5f, 1.5f);
-							RenderUtils.drawSolidBlockESP(xRender, yRender, zRender, 1f, 0.5f, 0.5f, 0.15f);
 							
+							if ((block != Blocks.air) && Utils.verifBlock(block)) {
+								RenderUtils.drawOutlinedBlockESPZone(xRender, yRender, zRender, 1f, 1f, 1f, 0.5f, 1.5f);
+								RenderUtils.drawSolidBlockESP(xRender, yRender, zRender, 1f, 0.5f, 0.5f, 0.15f);
+							}							
 						}
 					}
 				}

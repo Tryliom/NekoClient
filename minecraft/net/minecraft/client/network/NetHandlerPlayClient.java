@@ -24,6 +24,8 @@ import io.netty.buffer.Unpooled;
 import joptsimple.internal.Strings;
 import neko.Client;
 import neko.module.modules.movements.Blink;
+import neko.module.modules.player.Velocity;
+import neko.module.modules.special.ForceTP;
 import neko.module.modules.special.PunKeel;
 import neko.module.modules.combat.BowAimbot;
 import neko.module.modules.combat.KillAura;
@@ -1249,9 +1251,16 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         PacketThreadUtil.func_180031_a(packetIn, this, this.getGameController());
         Explosion var2 = new Explosion(this.getGameController().theWorld, (Entity)null, packetIn.func_149148_f(), packetIn.func_149143_g(), packetIn.func_149145_h(), packetIn.func_149146_i(), packetIn.func_149150_j());
         var2.doExplosionB(true);
-        this.getGameController().thePlayer.motionX += (double)packetIn.func_149149_c();
-        this.getGameController().thePlayer.motionY += (double)packetIn.func_149144_d();
-        this.getGameController().thePlayer.motionZ += (double)packetIn.func_149147_e();
+        if (Utils.isToggle("Velocity")) {
+        	Velocity v = Velocity.getVelocity();
+        	this.getGameController().thePlayer.motionX += (double)packetIn.func_149149_c() * v.getHcoeff();
+	        this.getGameController().thePlayer.motionY += (double)packetIn.func_149144_d() * v.getVcoeff();
+	        this.getGameController().thePlayer.motionZ += (double)packetIn.func_149147_e() * v.getHcoeff();
+        } else {
+	        this.getGameController().thePlayer.motionX += (double)packetIn.func_149149_c();
+	        this.getGameController().thePlayer.motionY += (double)packetIn.func_149144_d();
+	        this.getGameController().thePlayer.motionZ += (double)packetIn.func_149147_e();
+        }
     }
 
     /**

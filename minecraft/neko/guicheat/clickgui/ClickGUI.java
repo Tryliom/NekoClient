@@ -187,7 +187,7 @@ public class ClickGUI extends GuiScreen {
 			FontUtil.drawTotalCenteredStringWithShadow("["+mb.mod.getName()+"] (Touche:"+(mb.mod.getBind() > -1 ? Keyboard.getKeyName(mb.mod.getBind())+")": "Aucune)"), 0, -10, 0xffffffff);
 			GL11.glScalef(0.5F, 0.5F, 0F);
 			FontUtil.drawTotalCenteredStringWithShadow("Appuyez sur une touche pour modifier", 0, 0, 0xffffffff);
-			FontUtil.drawTotalCenteredStringWithShadow("Appuyez sur une Echap pour supprimer", 0, 20, 0xffffffff);
+			FontUtil.drawTotalCenteredStringWithShadow("Appuyez sur Echap pour supprimer", 0, 20, 0xffffffff);
 			GL11.glScalef(0.45F, 0.45F, 0F);
 			FontUtil.drawTotalCenteredStringWithShadow("OU", 0, 20, 0xffffffff);
 			GL11.glPopMatrix();

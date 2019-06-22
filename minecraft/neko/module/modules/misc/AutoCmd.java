@@ -23,7 +23,7 @@ public class AutoCmd extends Module {
 	
 	public void onUpdate() {
 		count++;
-		if (count==sec*20) {
+		if (count>=sec*20) {
 			mc.thePlayer.sendChatMessage(cmd);
 			count = 0;
 		}

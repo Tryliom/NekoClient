@@ -1,5 +1,6 @@
 package net.minecraft.client.renderer.entity;
 
+import neko.module.modules.render.Nametag;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.model.ModelBase;
@@ -55,9 +56,9 @@ public class RenderPlayer extends RendererLivingEntity
 
             if (p_180596_1_.isSneaking() && !(p_180596_1_ instanceof EntityPlayerSP))
             {
-                var10 = p_180596_4_ - 0.125D;
+            	var10 = p_180596_4_ - 0.125D;
             }
-
+            
             this.func_177137_d(p_180596_1_);
             super.doRender((EntityLivingBase)p_180596_1_, p_180596_2_, var10, p_180596_6_, p_180596_8_, p_180596_9_);
         }

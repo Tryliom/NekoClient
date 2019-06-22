@@ -105,6 +105,7 @@ import neko.module.modules.render.Xray;
 import neko.module.modules.special.DropShit;
 import neko.module.modules.special.FastDura;
 import neko.module.modules.special.FireTrail;
+import neko.module.modules.special.ForceTP;
 import neko.module.modules.special.Likaotique;
 import neko.module.modules.special.Magnet;
 import neko.module.modules.special.Nausicaah;
@@ -257,6 +258,7 @@ public class ModuleManager {
 		ActiveModule.add(new ReplyNyah()); // Key NONE
 		ActiveModule.add(new Nameprotect()); // Key NONE
 		ActiveModule.add(new Near()); // Key NONE
+		ActiveModule.add(new ForceTP()); // Key NONE
 		
 		this.link.put(Utils.getModule("KillAura"), "ka");
 		this.link.put(Utils.getModule("FastBow"), "fb");

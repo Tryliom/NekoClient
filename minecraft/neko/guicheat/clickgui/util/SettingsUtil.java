@@ -10,7 +10,7 @@ public class SettingsUtil {
 		//HUD
 		HUD.coord = getHUDCoord(); HUD.fps = getHUDFPS(); HUD.fall = getHUDXP(); HUD.item = getHUDMs(); HUD.time = getHUDTime(); HUD.packet = getHUDPacket(); HUD.stuff = getHUDStuff(); HUD.select = getHUDSelect(); HUD.cG = getHUDGreen(); HUD.cR = getHUDRed(); HUD.cB = getHUDBlue();
 		//Nuker
-		Nuker.nukerRadius = (int)getNukerRadius(); Nuker.onehit = getNukerOneHit(); Nuker.safe = getNukerSafe();
+		Nuker.nukerRadius = getNukerRadius(); Nuker.onehit = getNukerOneHit(); Nuker.safe = getNukerSafe();
 		//Other
 	}
 	//TODO: HUD
@@ -97,7 +97,7 @@ public class SettingsUtil {
 	//TODO: Nuker
 	//Radius
 	public static void setNukerRadius(double radius) {
-		Nuker.nukerRadius = (int)radius;
+		Nuker.nukerRadius = radius;
 		Client.Neko.settingsManager.getSettingByName("Radius").setValDouble(radius);
 	}
 	public static double getNukerRadius() {

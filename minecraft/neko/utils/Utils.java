@@ -119,6 +119,7 @@ import neko.module.modules.render.WorldTime;
 import neko.module.modules.special.DropShit;
 import neko.module.modules.special.FastDura;
 import neko.module.modules.special.FireTrail;
+import neko.module.modules.special.ForceTP;
 import neko.module.modules.special.Likaotique;
 import neko.module.modules.special.Magnet;
 import neko.module.modules.special.Nausicaah;
@@ -1004,9 +1005,13 @@ public class Utils {
 		                  short lvl = NBTenchList.getCompoundTagAt(o).getShort("lvl");
 		                
 		                  if (enchs.isEmpty()) {
-		                	  enchs=Enchantment.func_180306_c(id).getTranslatedName(lvl);
+		                	  try {
+		                		  enchs=Enchantment.func_180306_c(id).getTranslatedName(lvl);
+		                	  } catch (Exception e) {}
 		                  } else {
-		                	  enchs+=", "+Enchantment.func_180306_c(id).getTranslatedName(lvl);
+		                	  try {
+		                		  enchs+=", "+Enchantment.func_180306_c(id).getTranslatedName(lvl);
+		                	  } catch (Exception e) {}
 		                  }		                                  
 		              }
 		              if (!enchs.isEmpty())
@@ -1052,11 +1057,14 @@ public class Utils {
               short id = NBTenchList.getCompoundTagAt(o).getShort("id");
               short lvl = NBTenchList.getCompoundTagAt(o).getShort("lvl");
               
-              
             if (enchs.isEmpty()) {
-            	enchs=Enchantment.func_180306_c(id).getTranslatedName(lvl);
+            	try {
+            		enchs=Enchantment.func_180306_c(id).getTranslatedName(lvl);
+            	} catch (Exception e) {}
             } else {
-            	enchs+=", "+Enchantment.func_180306_c(id).getTranslatedName(lvl);
+            	try {
+            		enchs+=", "+Enchantment.func_180306_c(id).getTranslatedName(lvl);
+            	} catch (Exception e) {}
             }
                               
             }
@@ -1958,9 +1966,9 @@ public class Utils {
                 EntityLivingBase entity = (EntityLivingBase) theObject;
                
                 if(entity instanceof EntityPlayerSP) continue;
-                if(Minecraft.getMinecraft().thePlayer.getDistanceToEntity(entity) <= 100.0) {
+                if(Minecraft.getMinecraft().thePlayer.getDistanceToEntity(entity) <= 200.0) {
                     if(entity.isEntityAlive() && !entity.isDead) {
-                    	if (p_147906_1_.getName().equals(entity.getName())) {
+                    	if (p_147906_1_.getName().endsWith(entity.getName())) {
                     		return true;
                     	}
                         continue;
@@ -2885,6 +2893,7 @@ public class Utils {
     		Utils.nc.saveSave("values", s, fi);
     	}
         s+="§,"+Likaotique.getLik().isSafe()+"§,"+AutoCmd.cmd+"§,"+AutoCmd.sec+"§,"+Near.spawn.toLong()+"§,"+Near.radius;
+        s+="§,"+Near.noname+"§,"+ForceTP.getForceTP().getPoint().toLong()+"§,"+ForceTP.getForceTP().isYMax();
         Utils.nc.saveSave("values", s);
 	}
 	
@@ -3505,6 +3514,16 @@ public class Utils {
             	}
             	if (i==184) {
             		Near.radius = Integer.parseInt(ligne);
+            	}
+            	if (i==185) {
+            		Near.noname = Boolean.parseBoolean(ligne);
+            	}
+            	ForceTP FTP = ForceTP.getForceTP();
+            	if (i==186) {
+            		FTP.setPoint(BlockPos.fromLong(Long.parseLong(ligne)));
+            	}
+            	if (i==187) {
+            		FTP.setYMax(Boolean.parseBoolean(ligne));
             	}
             	
         	} catch (Exception e) {
@@ -5762,7 +5781,7 @@ public class Utils {
 			case 821:nyah="Regarde bien, c'est la derrnière fois que tu la vois ;3";break;
 			case 822:nyah="Arrête de poigner ici ! >-<";break;
 			case 823:nyah="Une petite fessée pour twa ? :3";break;
-			case 824:nyah=getRandPlayer()+" suce pour pas cher ;3";break;
+			case 824:nyah=getRandPlayer()+" absorbe pour pas cher ;3";break;
 			case 825:nyah="><";break;
 			case 826:nyah="Qu'as tu fais jeune Padawan2Neko :o C'est tout blanc partout :c";break;
 			case 827:nyah="SorryNoName code, mais ne dev pas :D";break;
@@ -5771,14 +5790,14 @@ public class Utils {
 			case 830:nyah="Arrête de tenir ces choses >w<";break;
 			case 831:nyah="KaZu__ stop ! Les Furry's ont une anatomie différente... C'est pas par là !";break;
 			case 832:int i= Utils.getRandInt(1000);nyah="Download complete: "+i+"/"+i+" objects";break;
-			case 833:nyah="";break;
-			case 834:nyah="";break;
-			case 835:nyah="";break;
-			case 836:nyah="";break;
-			case 837:nyah="";break;
-			case 838:nyah="";break;
-			case 839:nyah="";break;
-			case 840:nyah="";break;
+			case 833:nyah="ça vaaaaa...c'est pas si maaaaal...";break;
+			case 834:nyah="T'as encore scié ma branche !";break;
+			case 835:nyah="Arrête de scier ma branche !";break;
+			case 836:nyah="Qu'est ce que je vais bien pouvoir te mettre...";break;
+			case 837:nyah="Mais oui je t'aime aussi mon petit !";break;
+			case 838:nyah="Le triangle des animaux maudits a encore frappé !";break;
+			case 839:nyah="Mon tatoo...je t'adore..";break;
+			case 840:nyah="Je l'ai rasée et c'est tout beau maintenant !";break;
 			case 841:nyah="";break;
 			case 842:nyah="";break;
 			case 843:nyah="";break;

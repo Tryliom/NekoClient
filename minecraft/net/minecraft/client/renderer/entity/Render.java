@@ -174,7 +174,7 @@ public abstract class Render
         World var10 = this.getWorldFromRenderManager();
         GlStateManager.depthMask(false);
         float var11 = this.shadowSize;
-
+        
         if (p_76975_1_ instanceof EntityLiving)
         {
             EntityLiving var12 = (EntityLiving)p_76975_1_;
@@ -321,7 +321,7 @@ public abstract class Render
 
                 if (var12 > 0.0F)
                 {
-                    this.renderShadow(p_76979_1_, p_76979_2_, p_76979_4_, p_76979_6_, var12, p_76979_9_);
+                	this.renderShadow(p_76979_1_, p_76979_2_, p_76979_4_, p_76979_6_, var12, p_76979_9_);
                 }
             }
 
@@ -349,7 +349,7 @@ public abstract class Render
     {	
     	//TODO: Nametag
     	Entity entity = p_147906_1_;
-    	if (var.renderOn) { 
+    	if (var.renderOn) {
 	    	if (Friends.isFriend(entity.getName())) {
 	    		p_147906_2_ = "§a" + entity.getName() + "§f";
 	    	}
@@ -409,9 +409,6 @@ public abstract class Render
             var12.drawString(p_147906_2_, -var12.getStringWidth(p_147906_2_) / 2, var17, -1);
             GlStateManager.enableLighting();
             GlStateManager.disableBlend();
-            if (Nametag.isOn && Utils.isPlayer(entity)) {
-            	GlStateManager.enableDepth();
-            }
             GlStateManager.enableDepth();
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             GlStateManager.popMatrix();

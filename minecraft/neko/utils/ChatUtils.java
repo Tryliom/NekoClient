@@ -89,6 +89,7 @@ import neko.module.modules.render.Water;
 import neko.module.modules.render.WorldTime;
 import neko.module.modules.special.DropShit;
 import neko.module.modules.special.FireTrail;
+import neko.module.modules.special.ForceTP;
 import neko.module.modules.special.Likaotique;
 import neko.module.modules.special.Magnet;
 import neko.module.modules.special.Near;
@@ -766,13 +767,30 @@ public class ChatUtils {
 				} else if (args[1].equalsIgnoreCase("near")) {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Near list", var.prefixCmd+"near list", "§7Affiche les joueurs avec leurs coordonnées et distance de vous dernièrement enregistrés", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Near list <Int>", var.prefixCmd+"near list ", "§7Affiche les joueurs avec leurs coordonnées et distance de vous dernièrement enregistrés uniquement si à une distance plus grande que celle spécifiée", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Near list <Int>", var.prefixCmd+"near list ", "§7Affiche les joueurs avec leurs coordonnées et distance de vous dernièrement \n§7enregistrés uniquement si à une distance plus grande que celle spécifiée", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Near copy", var.prefixCmd+"near copy", "§7Copie la liste des joueurs du Near avec leurs coordonnées", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Near icopy", var.prefixCmd+"near icopy", "§7Copie la liste des joueurs du Near avec leurs coordonnées en respectant la règle du ignore", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Near copy <player>", var.prefixCmd+"near copy ", "§7Copie les coordonnées du joueur spécifié du Near", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Near say", var.prefixCmd+"near say", "§7Dis dans le chat avec une phrase la position de x joueur et sa vie", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Near say <player>", var.prefixCmd+"near say ", "§7Dis dans le chat avec une phrase la position du joueur spécifié", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Near ignore <Point de départ [X,Y,Z]> <Radius>", var.prefixCmd+"near ignore ", "§7Paramètres pour le near qui permet d'ignorer les messages de coordonnées de joueurs qui sont détecté autour d'une certaine position, comme le spawn. Exemple de commande: Near ignore [0,70,0] 300", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Near ignore <Point de départ [X,Y,Z]> <Radius>", var.prefixCmd+"near ignore ", "§7Paramètres pour le near qui permet\n§7 d'ignorer les messages de coordonnées de joueurs qui sont détecté autour d'une certaine position, comme le spawn.\n§7Exemple de commande: Near ignore [0,70,0] 300", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Near noname", var.prefixCmd+"near noname", "§7Si activé, quand on utilise le near copy, ça ne copie pas le nom du joueur", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("forcetp") || args[1].equalsIgnoreCase("ftp")) {
+					Utils.addChat(Utils.sep);
+					Utils.addChat2("§6"+var.prefixCmd+"ForceTP <[X,Y,Z]>", var.prefixCmd+"ftp ", "§7Défini la cible à laquelle se TP", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"ForceTP YMax", var.prefixCmd+"ftp ymax", "§7Force la hauteur en Y à être à 255 qu'importe la hauteur Y \n§7spécifié dans la target", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("nametag")) {
+					Utils.addChat(Utils.sep);
+					Utils.addChat2("§6"+var.prefixCmd+"Nametag <Taille>", var.prefixCmd+"nametag ", "§7Défini la taille des nametags en nombre entier", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("highjump")) {
+					Utils.addChat(Utils.sep);
+					Utils.addChat2("§6"+var.prefixCmd+"HighJump <Hauteur>", var.prefixCmd+"highjump ", "§7Défini la hauteur du HighJump", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("callcmd")) {
@@ -1657,6 +1675,16 @@ public class ChatUtils {
 						Near.say = !Near.say;
 					}
 				}
+				
+				if (args.length>=2 && args[1].equalsIgnoreCase("noname")) {
+					if (Near.noname) {
+						Utils.addChat(Utils.setColor("§aLa copie des coordonnées donnent aussi le pseudo", "§a"));
+					} else {
+						Utils.addChat(Utils.setColor("§aLa copie des coordonnées exclus le nom du joueur", "§a"));
+					}
+					Near.noname = !Near.noname;
+				}
+				
 				if (args.length>=2 && args[1].equalsIgnoreCase("copy")) {
 					ArrayList<EntityPlayer> en = Utils.getAllPlayer();
 					String list = "";
@@ -1667,9 +1695,9 @@ public class ChatUtils {
 						BlockPos bp = entity.getPosition();
 						if (player.isEmpty() ? true : entity.getName().equalsIgnoreCase(player))
 							if (list.isEmpty())
-								list=entity.getName()+"=["+bp.getX()+","+bp.getY()+","+bp.getZ()+"]";
+								list=(!Near.noname ? entity.getName()+"=" : "")+"["+bp.getX()+","+bp.getY()+","+bp.getZ()+"]";
 							else
-								list+=", "+entity.getName()+"=["+bp.getX()+","+bp.getY()+","+bp.getZ()+"]";
+								list+=", "+(!Near.noname ? entity.getName()+"=" : "")+"["+bp.getX()+","+bp.getY()+","+bp.getZ()+"]";
 					}
 					Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 					clipboard.setContents(new StringSelection(list), null);
@@ -1688,9 +1716,9 @@ public class ChatUtils {
 						ignore.setPosition(Near.spawn.getX(), Near.spawn.getY(), Near.spawn.getZ());
 						if (entity.getDistanceToEntity(ignore)>=Near.radius)
 							if (list.isEmpty())
-								list=entity.getName()+"=["+bp.getX()+","+bp.getY()+","+bp.getZ()+"]";
+								list=(!Near.noname ? entity.getName()+"=" : "")+"["+bp.getX()+","+bp.getY()+","+bp.getZ()+"]";
 							else
-								list+=", "+entity.getName()+"=["+bp.getX()+","+bp.getY()+","+bp.getZ()+"]";
+								list+=", "+(!Near.noname ? entity.getName()+"=" : "")+"["+bp.getX()+","+bp.getY()+","+bp.getZ()+"]";
 					}
 					Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 					clipboard.setContents(new StringSelection(list), null);
@@ -1707,6 +1735,30 @@ public class ChatUtils {
 						}
 					}
 				}
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"forcetp") || args[0].equalsIgnoreCase(var.prefixCmd+"ftp")) {
+				
+				if (args.length==2 && args[1].startsWith("[") && args[1].endsWith("]")) {
+					String[] l = args[1].replaceAll("\\[", "").replaceAll("\\]", "").split(",");
+					int x = Integer.parseInt(l[0]);
+					int y = Integer.parseInt(l[1]);
+					int z = Integer.parseInt(l[2]);
+					ForceTP.getForceTP().setPoint(new BlockPos(x, y, z));
+					Utils.addChat(Utils.setColor("§aLes coordonnées "+args[1]+" sont enregistrés comme cible du TP !", "§a"));
+				}
+				
+				if (args.length==2 && args[1].equalsIgnoreCase("ymax")) {
+					ForceTP f = ForceTP.getForceTP();
+					if (f.isYMax()) {
+						Utils.addChat(Utils.setColor("Hauteur maximal de Y désactivée pour les TP (ça prendra la valeur Y de la target)", "§c"));
+					} else {
+						Utils.addChat(Utils.setColor("Hauteur maximal de Y activée pour les TP (255)", "§a"));
+					}
+					f.setYMax(!f.isYMax());
+				}
+				
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
@@ -1972,11 +2024,11 @@ public class ChatUtils {
 				Utils.saveNuker();	
 			} else if (args[1].equalsIgnoreCase("range")) {
 				try {
-					if(Integer.parseInt(args[2]) > 6) {
+					if(Double.parseDouble(args[2]) > 6) {
 						Utils.addChat("§cLa range doit être entre 1 et 6.");
 						return;
 					}
-					Nuker.nukerRadius=Integer.parseInt(args[2]);
+					Nuker.nukerRadius=Double.parseDouble(args[2]);
 					SettingsUtil.setNukerRadius(Double.parseDouble(args[2]));
 					Utils.addChat("§aLa range du Nuker a été changée à "+args[2]+" !");
 				} catch (Exception e) {
@@ -2230,7 +2282,6 @@ public class ChatUtils {
                         Utils.addChat(err);
                     }
 				}
-				Utils.checkXp(xp);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
@@ -2342,10 +2393,10 @@ public class ChatUtils {
 		public void doCommand2() {
 			if (var3.startsWith(var.prefixCmd) && Utils.verif==null) {
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"highjump")) {
-				if (args[1].equalsIgnoreCase("height")) {
+				if (Utils.isFloat(args[1])) {
 					try {
-						Highjump.getJump().setHeight(Float.parseFloat(args[2]));
-						Utils.addChat("§aLe height du Highjump a été mise à "+args[2]+" !");
+						Highjump.getJump().setHeight(Float.parseFloat(args[1]));
+						Utils.addChat("§aLe height du Highjump a été mise à "+args[1]+" !");
 					} catch (Exception e) {
                         Utils.addChat(err);
                     }
@@ -4010,10 +4061,10 @@ public class ChatUtils {
 				} else {
 					try {
 						Float f = Float.parseFloat(args[1]);
-						if (f>1000000)
-							f = 1000000f; 
+						if (f>1000)
+							f = 1000f; 
 						Reach.dist=f;
-						Utils.addChat("§aReach augmentée à "+args[1]+" !");
+						Utils.addChat("§aReach augmentée à "+f+" !");
 					} catch (Exception e) {
                         Utils.addChat(err);
                     }

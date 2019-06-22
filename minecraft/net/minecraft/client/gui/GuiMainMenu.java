@@ -302,7 +302,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         
         int wid = 5;
         //TODO ACTIVE BUTTON
-        if (Utils.verif==null && !OnlyRpgManager.getRpg().isActive()) {
+        if (Utils.verif==null) {
         	this.buttonList.add(this.field_175372_K = new GuiButton(666, this.width/2 - 100, this.height - 52, 100, 20, (!tm.isDone() ? "§k" : "§3")+"Neko..."));
         } else
         	this.buttonList.add(this.field_175372_K = new GuiButton(14, OnlyRpgManager.getRpg().isActive() ? wid : this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 2, I18n.format("menu.online", new Object[0])));

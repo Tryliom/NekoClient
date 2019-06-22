@@ -44,10 +44,10 @@ public class Client {
 	
 	Minecraft mc = Minecraft.getMinecraft();
 	public final static String CLIENT_NAME = "Neko";
-	public final String CLIENT_AUTHOR = "Tryliom";
+	public final String CLIENT_AUTHOR = "Tryliom et Marie";
 
 	
-	public final String CLIENT_VERSION = "2.8.4";
+	public final String CLIENT_VERSION = "2.8.6";
 	public String mode = "Player";
 	public Rank rang;
 	public Necklace necklace;
@@ -79,12 +79,6 @@ public class Client {
 	public String strCreator = "§eCréé par §f§lTryliom§e et §f§lMarie";
 
 	public void startClient() {
-
-		/*settingsManager = new SettingsManager();
-		eventManager = new EventManager();
-		eventManager.register(this);
-		moduleManager = new ModuleManager();
-		clickGui = new ClickGUI();*/
 		
 		time.start();
 		try {

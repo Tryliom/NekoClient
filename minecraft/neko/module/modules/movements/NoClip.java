@@ -43,21 +43,21 @@ public class NoClip extends Module {
 
 		mc.thePlayer.jumpMovementFactor = speed;
 		if (mc.gameSettings.keyBindJump.pressed) {
-			mc.thePlayer.motionY += 1.0D;
+			mc.thePlayer.motionY += speed;
 		}
 		if (mc.gameSettings.keyBindSneak.pressed) {
-			mc.thePlayer.motionY -= 1.0D;
+			mc.thePlayer.motionY -= speed;
 		}
 
 		if (mc.gameSettings.keyBindForward.pressed) {
 			float var1 = mc.thePlayer.rotationYaw * 0.01745329F;
-			mc.thePlayer.motionX -= MathHelper.sin(var1) * 0.5F;
-			mc.thePlayer.motionZ += MathHelper.cos(var1) * 0.5F;
+			mc.thePlayer.motionX -= MathHelper.sin(var1) * speed;
+			mc.thePlayer.motionZ += MathHelper.cos(var1) * speed;
 		}
 		if (mc.gameSettings.keyBindBack.pressed) {
 			float var1 = mc.thePlayer.rotationYaw * 0.01745329F;
-			mc.thePlayer.motionX -= MathHelper.sin(var1) * -0.5F;
-			mc.thePlayer.motionZ += MathHelper.cos(var1) * -0.5F;
+			mc.thePlayer.motionX -= MathHelper.sin(var1) * -speed;
+			mc.thePlayer.motionZ += MathHelper.cos(var1) * -speed;
 		}
 
 	}

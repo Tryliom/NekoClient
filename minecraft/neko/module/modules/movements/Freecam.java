@@ -42,7 +42,7 @@ public class Freecam extends Module {
 	}
 	
 	public void setValues() {
-		this.values = "ï¿½6Speed:ï¿½7 "+speed;
+		this.values = "§6Speed:§7 "+speed;
 	}
 	
 	public void onUpdate() {		
@@ -67,14 +67,14 @@ public class Freecam extends Module {
 	    if (mc.gameSettings.keyBindForward.pressed)
 	    {
 	      float var1 = mc.thePlayer.rotationYaw * 0.01745329F;
-	      mc.thePlayer.motionX -= MathHelper.sin(var1) * 0.5F;
-	      mc.thePlayer.motionZ += MathHelper.cos(var1) * 0.5F;
+	      mc.thePlayer.motionX -= MathHelper.sin(var1) * speed;
+	      mc.thePlayer.motionZ += MathHelper.cos(var1) * speed;
 	    }
 	    if (mc.gameSettings.keyBindBack.pressed)
 	    {
 	      float var1 = mc.thePlayer.rotationYaw * 0.01745329F;
-	      mc.thePlayer.motionX -= MathHelper.sin(var1) * -0.5F;
-	      mc.thePlayer.motionZ += MathHelper.cos(var1) * -0.5F;
+	      mc.thePlayer.motionX -= MathHelper.sin(var1) * -speed;
+	      mc.thePlayer.motionZ += MathHelper.cos(var1) * -speed;
 	    }
 	}
 }
