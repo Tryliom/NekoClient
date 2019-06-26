@@ -12,6 +12,7 @@ import neko.module.Module;
 import neko.utils.Utils;
 
 public class Gui extends Module {
+	
 
 	public Gui() {
 		super("Gui", Keyboard.KEY_RCONTROL, Category.PARAMS);
@@ -24,6 +25,7 @@ public class Gui extends Module {
 		options.add("JellyLike");
 		Client.Neko.settingsManager.rSetting(new Setting("Design", this, "New", options));
 		Client.getNeko().settingsManager.rSetting(new Setting("Sound", this, false));
+		Client.getNeko().settingsManager.rSetting(new Setting("Gui Rainbow", this, false));
 		Client.getNeko().settingsManager.rSetting(new Setting("GuiRed", this, 255, 0, 255, true));
 		Client.getNeko().settingsManager.rSetting(new Setting("GuiGreen", this, 26, 0, 255, true));
 		Client.getNeko().settingsManager.rSetting(new Setting("GuiBlue", this, 42, 0, 255, true));

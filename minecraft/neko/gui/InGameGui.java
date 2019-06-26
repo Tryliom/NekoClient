@@ -3,7 +3,10 @@ package neko.gui;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 
 import org.darkstorm.minecraft.gui.util.GuiManagerDisplayScreen;
@@ -38,6 +41,7 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.CombatEntry;
 import net.minecraft.util.ResourceLocation;
 
 public class InGameGui {
@@ -50,29 +54,92 @@ public class InGameGui {
 	static Client var = Client.getNeko();
 	public static int hudWid;
 	
+	public static boolean ArrayListV1 = false;
+	
 	public static void render() {
 		  Minecraft mc = Minecraft.getMinecraft();
 		  ScaledResolution scaled = new ScaledResolution(mc);
 		  yPos = 10;
 		  multi=0;
+		  
+		  ArrayList<String> combatModule = new ArrayList<String>(),
+				  renderModule = new ArrayList<String>(),playerModule = new ArrayList<String>(),
+				  movementModule = new ArrayList<String>(),paramsModule = new ArrayList<String>(),
+				  miscModule = new ArrayList<String>(),specialModule = new ArrayList<String>();
 		  for(Module module : ModuleManager.ActiveModule) {
 			    if(module.getToggled() && module.getCategory() != Category.HIDE && !module.getName().equalsIgnoreCase("VanillaTp")) {
 			    	multi++;
+			    	if(module.getCategory() == Category.COMBAT) {  combatModule.add(module.getName()); } //Regen
+			    	if(module.getCategory() == Category.RENDER) {  renderModule.add(module.getName());}
+			    	if(module.getCategory() == Category.PLAYER) {  playerModule.add(module.getName());}
+			    	if(module.getCategory() == Category.MOVEMENT) {  movementModule.add(module.getName());} //Blink
+			    	if(module.getCategory() == Category.PARAMS) {  paramsModule.add(module.getName());}
+			    	if(module.getCategory() == Category.MISC) {  miscModule.add(module.getName());}
+			    	if(module.getCategory() == Category.Special) {  specialModule.add(module.getName());}
 			    }
 		  }
+		  Collections.sort(combatModule); Collections.sort(renderModule); Collections.sort(playerModule); Collections.sort(movementModule);
+		  Collections.sort(paramsModule); Collections.sort(miscModule); Collections.sort(specialModule);
+		  
+		  /*Collections.sort(combatModule, new StringLength());
+		  Collections.sort(renderModule, new StringLength());
+		  Collections.sort(playerModule, new StringLength());
+		  Collections.sort(movementModule, new StringLength());
+		  Collections.sort(paramsModule, new StringLength());
+		  Collections.sort(miscModule, new StringLength());
+		  Collections.sort(specialModule, new StringLength());*/
+		  
+		  //COMBAT, RENDER, PLAYER, MOVEMENT, PARAMS, MISC, HIDE, Special;
 		  RenderUtils.drawRect(((GuiScreen.width-var.NekoFont.getStringWidth(color)-90)), yPos-2, ((GuiScreen.width)), yPos+multi*(var.NekoFont.FONT_HEIGHT + 1) - 1, c);
-		  for(Module module : ModuleManager.ActiveModule) {
-		    if(module.getToggled() && module.getCategory() != Category.HIDE && !module.getName().equalsIgnoreCase("VanillaTp")) {
-		    	String s = color+module.getName();
-		    	if (module.getName().equalsIgnoreCase("blink"))
-		    		s+=" ("+Blink.packet.size()+")";
-		    	if (module.getName().equalsIgnoreCase("regen"))
-		    		s+=" ("+Regen.regen+")";
-		    	var.NekoFont.drawStringWithShadow(s, ((GuiScreen.width-5)-(var.NekoFont).getStringWidth(s)), yPos, 0);
-		    	yPos += var.NekoFont.FONT_HEIGHT + 1;
-		    }
+		  for(String mod : combatModule) {
+			  String s = "§c"+mod;
+			  if(mod.equalsIgnoreCase("regen")) {
+				  s+=" ("+Regen.regen+")";
+			  }DrawArray(s, yPos);
+		  }
+		  for(String mod : renderModule) {
+			  String s = "§e"+mod;
+			  DrawArray(s, yPos);
+		  }
+		  for(String mod : playerModule) {
+			  String s = "§3"+mod;
+			  DrawArray(s, yPos);
+		  }
+		  for(String mod : movementModule) {
+			  String s = "§2"+mod;
+			  if(mod.equalsIgnoreCase("blind")) {
+				  s+=" ("+Blink.packet.size()+")";
+			  }
+			  DrawArray(s, yPos);
+		  }
+		  for(String mod : miscModule) {
+			  String s = "§7"+mod;
+			  DrawArray(s, yPos);
+		  }
+		  for(String mod : specialModule) {
+			  String s = "§6"+mod;
+			  DrawArray(s, yPos);
+		  }
+		  for(String mod : paramsModule) {
+			  String s = "§f"+mod;
+			  DrawArray(s, yPos);
 		  }
 		}
+	
+	public static void DrawArray(String moduleName, int ypos) {
+		
+		
+		//DrawRectangle(moduleName, ypos);
+		
+		
+		var.NekoFont.drawStringWithShadow(moduleName, ((GuiScreen.width-5)-(var.NekoFont).getStringWidth(moduleName)), ypos, 0);
+	      yPos += var.NekoFont.FONT_HEIGHT + 1;
+	}
+	
+	public static void DrawRectangle(String moduleName, int ypos) {
+		RenderUtils.drawRect((((GuiScreen.width-7)-(var.NekoFont).getStringWidth(moduleName))),
+				ypos-2, ((GuiScreen.width)-2), ypos+(var.NekoFont.FONT_HEIGHT + 1) - 1, c);
+	}
 	
 	public static void renderEffect() {
 		Minecraft mc = Minecraft.getMinecraft();
@@ -290,3 +357,16 @@ public class InGameGui {
 	
 	
 }
+
+class StringLength implements Comparator<String> {
+	  public int compare(String o1, String o2) {
+	    if (o1.length() < o2.length()) {
+	      return 1;
+	    } else if (o1.length() > o2.length()) {
+	      return -1;
+	    } else {
+	      return 0;
+	    }
+	  }
+	}
+	 

@@ -14,6 +14,7 @@ import neko.guicheat.clickgui.elements.menu.ElementSlider;
 import neko.guicheat.clickgui.util.ColorUtil;
 import neko.guicheat.clickgui.util.FontUtil;
 import neko.guicheat.clickgui.util.SettingsUtil;
+import neko.manager.ModuleManager;
 import neko.guicheat.clickgui.settings.SettingsManager;
 import neko.Client;
 import neko.module.Category;
@@ -68,17 +69,88 @@ public class ClickGUI extends GuiScreen {
 		/*
 		 * Zum Sortieren der Panels einfach die Reihenfolge im Enum ändern ;)
 		 */
+		
+		ArrayList<String> combatModule = new ArrayList<String>(),
+				  renderModule = new ArrayList<String>(),playerModule = new ArrayList<String>(),
+				  movementModule = new ArrayList<String>(),paramsModule = new ArrayList<String>(),
+				  miscModule = new ArrayList<String>(),specialModule = new ArrayList<String>();
+		
+		for(Module module : Client.Neko.moduleManager.getModules()) {
+		    if(module.getCategory() != Category.HIDE && !module.isCmd()) {
+		    	if(module.getCategory() == Category.COMBAT) {  combatModule.add(module.getName()); } //Regen
+		    	if(module.getCategory() == Category.RENDER) {  renderModule.add(module.getName());}
+		    	if(module.getCategory() == Category.PLAYER) {  playerModule.add(module.getName());}
+		    	if(module.getCategory() == Category.MOVEMENT) {  movementModule.add(module.getName());} //Blink
+		    	if(module.getCategory() == Category.PARAMS) {  paramsModule.add(module.getName());}
+		    	if(module.getCategory() == Category.MISC) {  miscModule.add(module.getName());}
+		    	if(module.getCategory() == Category.Special) {  specialModule.add(module.getName());}
+		    }
+	  }
+		  Collections.sort(combatModule); Collections.sort(renderModule); Collections.sort(playerModule); Collections.sort(movementModule);
+		  Collections.sort(paramsModule); Collections.sort(miscModule); Collections.sort(specialModule);
+		
 			for (Category c : Category.values()) {
 				if(c != Category.HIDE) {
-					String title = Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+					String title = "";//Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+					if(c.name().equalsIgnoreCase("Combat")) {
+						title = "§c"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+					}
+					if(c.name().equalsIgnoreCase("Render")) {
+						title = "§e"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+					}
+					if(c.name().equalsIgnoreCase("Player")) {
+						title = "§3"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+					}
+					if(c.name().equalsIgnoreCase("Movement")) {
+						title = "§2"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+					}
+					if(c.name().equalsIgnoreCase("Misc")) {
+						title = "§7"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+					}
+					if(c.name().equalsIgnoreCase("Special")) {
+						title = "§6"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+					}
+					if(c.name().equalsIgnoreCase("Params")) {
+						title = "§f"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+					}
+					//title = Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
 					ClickGUI.panels.add(new Panel(title, px, py, pwidth, pheight, false, this) {
 								@Override
 								public void setup() {
-									for (Module m : Client.Neko.moduleManager.getModules()) {
-										if(m.getCategory()!=Category.HIDE && !m.isCmd()) {
-											if (!m.getCategory().equals(c))continue;
-											this.Elements.add(new ModuleButton(m, this));
-										}
+									for(String s : combatModule) {
+										Module m = Utils.getModule(s);
+										if (!m.getCategory().equals(c))continue;
+										this.Elements.add(new ModuleButton(m, this));
+									}
+									for(String s : renderModule) {
+										Module m = Utils.getModule(s);
+										if (!m.getCategory().equals(c))continue;
+										this.Elements.add(new ModuleButton(m, this));
+									}
+									for(String s : playerModule) {
+										Module m = Utils.getModule(s);
+										if (!m.getCategory().equals(c))continue;
+										this.Elements.add(new ModuleButton(m, this));
+									}
+									for(String s : movementModule) {
+										Module m = Utils.getModule(s);
+										if (!m.getCategory().equals(c))continue;
+										this.Elements.add(new ModuleButton(m, this));
+									}
+									for(String s : paramsModule) {
+										Module m = Utils.getModule(s);
+										if (!m.getCategory().equals(c))continue;
+										this.Elements.add(new ModuleButton(m, this));
+									}
+									for(String s : miscModule) {
+										Module m = Utils.getModule(s);
+										if (!m.getCategory().equals(c))continue;
+										this.Elements.add(new ModuleButton(m, this));
+									}
+									for(String s : specialModule) {
+										Module m = Utils.getModule(s);
+										if (!m.getCategory().equals(c))continue;
+										this.Elements.add(new ModuleButton(m, this));
 									}
 								}
 					});
@@ -123,7 +195,7 @@ public class ClickGUI extends GuiScreen {
 		/*															*/ ScaledResolution s = new ScaledResolution(mc);
   		/* DO NOT REMOVE											*/ GL11.glPushMatrix();
 		/* copyright HeroCode 2017									*/ GL11.glTranslated(s.getScaledWidth(), s.getScaledHeight(), 0);GL11.glScaled(0.5, 0.5, 0.5);
-		/* https://www.youtube.com/channel/UCJum3PIbnYvIfIEu05GL_yQ	*/ FontUtil.drawStringWithShadow("b"+"y"+ "H"+"e"+"r"+"o"+"C"+"o"+"d"+"e", -Minecraft.getMinecraft().fontRendererObj.getStringWidth("b"+"y"+ "H"+"e"+"r"+"o"+"C"+"o"+"d"+"e"), -Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT, 0xff11F86B);
+		/* https://www.youtube.com/channel/UCJum3PIbnYvIfIEu05GL_yQ	*/ //FontUtil.drawStringWithShadow("b"+"y"+ "H"+"e"+"r"+"o"+"C"+"o"+"d"+"e", -Minecraft.getMinecraft().fontRendererObj.getStringWidth("b"+"y"+ "H"+"e"+"r"+"o"+"C"+"o"+"d"+"e"), -Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT, 0xff11F86B);
 		/*															*/ GL11.glPopMatrix();
 		
 		mb = null;
@@ -155,8 +227,20 @@ public class ClickGUI extends GuiScreen {
 				for (ModuleButton b : panel.Elements) {
 					if (b.extended && b.menuelements != null && !b.menuelements.isEmpty()) {
 						double off = 0;
-						Color temp = ColorUtil.getClickGUIColor().darker();
-						int outlineColor = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 170).getRGB();
+						Color temp;
+						int outlineColor;
+						
+						if(SettingsUtil.getRainbowGui()) {
+
+							temp = ColorUtil.rainbowEffekt(1L, 1.0f);
+							outlineColor = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 170).getRGB();
+							
+						} else {
+
+							temp = ColorUtil.getClickGUIColor();
+							outlineColor = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 170).getRGB();
+							
+						}
 						//Color red = new Color(255,0,255); Color green = new Color(26,0,255); Color blue = new Color(42,0,255);
 						//int outlineColor = new Color(255, 26, 42, 170).getRGB();
 						

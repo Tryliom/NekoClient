@@ -8,6 +8,7 @@ import neko.guicheat.clickgui.elements.Element;
 import neko.guicheat.clickgui.elements.ModuleButton;
 import neko.guicheat.clickgui.util.ColorUtil;
 import neko.guicheat.clickgui.util.FontUtil;
+import neko.guicheat.clickgui.util.SettingsUtil;
 import neko.guicheat.clickgui.settings.Setting;
 
 /**
@@ -37,7 +38,12 @@ public class ElementSlider extends Element {
 		String displayval = "" + Math.round(set.getValDouble() * 100D)/ 100D;
 		boolean hoveredORdragged = isSliderHovered(mouseX, mouseY) || dragging;
 		
-		Color temp = ColorUtil.getClickGUIColor();
+		Color temp = null;
+		if(SettingsUtil.getRainbowGui()) {
+			temp = ColorUtil.rainbowEffekt(1L, 1.0F);
+		} else {
+			temp = ColorUtil.getClickGUIColor();
+		}
 		int color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), hoveredORdragged ? 250 : 200).getRGB();
 		int color2 = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), hoveredORdragged ? 255 : 230).getRGB();
 		

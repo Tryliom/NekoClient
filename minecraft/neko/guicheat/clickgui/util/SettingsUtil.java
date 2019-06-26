@@ -1,6 +1,7 @@
 package neko.guicheat.clickgui.util;
 
 import neko.Client;
+import neko.module.modules.params.Gui;
 import neko.module.modules.params.HUD;
 import neko.module.modules.player.Nuker;
 
@@ -116,6 +117,12 @@ public class SettingsUtil {
 	public static void setNukerSafe(boolean safe) {
 		Nuker.onehit = safe;
 		Client.Neko.settingsManager.getSettingByName("Safe").setValBoolean(safe);
+	}
+	
+	//TODO: GUI
+	//Rainbow
+	public static boolean getRainbowGui() {
+		return Client.Neko.settingsManager.getSettingByName("Gui Rainbow").getValBoolean();
 	}
 	
 
