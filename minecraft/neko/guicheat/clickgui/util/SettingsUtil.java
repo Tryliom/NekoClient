@@ -125,5 +125,43 @@ public class SettingsUtil {
 		return Client.Neko.settingsManager.getSettingByName("Gui Rainbow").getValBoolean();
 	}
 	
+	//TODO: ArrayList
+	public static boolean getArrayAlphabetique() {
+		return Client.Neko.settingsManager.getSettingByName("Ordre").getValString().equalsIgnoreCase("Alphabétique");
+	}
+	public static boolean getArrayNameLength() {
+		return Client.Neko.settingsManager.getSettingByName("Ordre").getValString().equalsIgnoreCase("Taille");
+	}
+	public static boolean getArrayModuleBasic() {
+		return Client.Neko.settingsManager.getSettingByName("Rangement").getValString().equalsIgnoreCase("Module");
+	}
+	public static boolean getArrayModuleRandom() {
+		return Client.Neko.settingsManager.getSettingByName("Rangement").getValString().equalsIgnoreCase("Mélanger");
+	}
+	public static boolean getArrayInvert() {
+		return Client.Neko.settingsManager.getSettingByName("Inverser").getValString().equalsIgnoreCase("Oui");
+	}
+	public static boolean getArrayNoInvert() {
+		return Client.Neko.settingsManager.getSettingByName("Inverser").getValString().equalsIgnoreCase("Non");
+	}
+	public static boolean getArrayDrawNekoBox() {
+		return Client.Neko.settingsManager.getSettingByName("Shadow Box").getValString().equalsIgnoreCase("Neko Box");
+	}
+	public static boolean getArrayDrawNameBox() {
+		return Client.Neko.settingsManager.getSettingByName("Shadow Box").getValString().equalsIgnoreCase("Name Box");
+	}
+	public static boolean getArrayNoDrawBox() {
+		return Client.Neko.settingsManager.getSettingByName("Shadow Box").getValString().equalsIgnoreCase("Sans Box");
+	}
+	public static boolean getRainbowArray() {
+		return Client.Neko.settingsManager.getSettingByName("Array Color").getValString().equalsIgnoreCase("Rainbow");
+	}
+	public static boolean getUniColorArray() {
+		return Client.Neko.settingsManager.getSettingByName("Array Color").getValString().equalsIgnoreCase("UniColor");
+	}
+	public static boolean getBasicColorsArray() {
+		return Client.Neko.settingsManager.getSettingByName("Array Color").getValString().equalsIgnoreCase("Basique");
+	}
+	
 
 }

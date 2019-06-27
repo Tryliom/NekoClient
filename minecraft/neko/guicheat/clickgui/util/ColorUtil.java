@@ -25,4 +25,10 @@ public class ColorUtil {
         Color c = new Color((int)color);
         return new Color((float)c.getRed() / 255.0f * fade, (float)c.getGreen() / 255.0f * fade, (float)c.getBlue() / 255.0f * fade, (float)c.getAlpha() / 255.0f);
     }
+	
+	public static Color getArrayUniqueColor(){
+		return new Color((int) Client.Neko.settingsManager.getSettingByName("Array Red").getValDouble(),
+				(int) Client.Neko.settingsManager.getSettingByName("Array Green").getValDouble(),
+				  (int) Client.Neko.settingsManager.getSettingByName("Array Blue").getValDouble());
+	}
 }

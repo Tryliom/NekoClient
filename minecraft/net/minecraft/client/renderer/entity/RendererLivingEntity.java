@@ -512,7 +512,7 @@ public abstract class RendererLivingEntity extends Render
                 float var12 = 0.02666667F;
                 GlStateManager.alphaFunc(516, 0.1F);
 
-                if (p_77033_1_.isSneaking())
+               if (p_77033_1_.isSneaking())
                 {
                     FontRenderer var13 = this.getFontRendererFromRenderManager();
                     GlStateManager.pushMatrix();
