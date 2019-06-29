@@ -93,25 +93,25 @@ public class ClickGUI extends GuiScreen {
 				if(c != Category.HIDE) {
 					String title = "";//Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
 					if(c.name().equalsIgnoreCase("Combat")) {
-						title = "c"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+						title = "§c"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
 					}
 					if(c.name().equalsIgnoreCase("Render")) {
-						title = "e"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+						title = "§e"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
 					}
 					if(c.name().equalsIgnoreCase("Player")) {
-						title = "3"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+						title = "§3"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
 					}
 					if(c.name().equalsIgnoreCase("Movement")) {
-						title = "2"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+						title = "§2"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
 					}
 					if(c.name().equalsIgnoreCase("Misc")) {
-						title = "7"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+						title = "§7"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
 					}
 					if(c.name().equalsIgnoreCase("Special")) {
-						title = "6"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+						title = "§6"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
 					}
 					if(c.name().equalsIgnoreCase("Params")) {
-						title = "f"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+						title = "§f"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
 					}
 					//title = Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
 					ClickGUI.panels.add(new Panel(title, px, py, pwidth, pheight, false, this) {

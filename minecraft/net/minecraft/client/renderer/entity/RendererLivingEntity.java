@@ -1,9 +1,16 @@
 package net.minecraft.client.renderer.entity;
 
-import com.google.common.collect.Lists;
 import java.nio.FloatBuffer;
 import java.util.Iterator;
 import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.lwjgl.opengl.GL11;
+
+import com.google.common.collect.Lists;
+
+import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.FontRenderer;
@@ -23,9 +30,6 @@ import net.minecraft.scoreboard.ScorePlayerTeam;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.lwjgl.opengl.GL11;
 
 public abstract class RendererLivingEntity extends Render
 {
@@ -504,7 +508,7 @@ public abstract class RendererLivingEntity extends Render
         if (this.canRenderName(p_77033_1_))
         {
             double var8 = p_77033_1_.getDistanceSqToEntity(this.renderManager.livingPlayer);
-            float var10 = p_77033_1_.isSneaking() ? 32.0F : 64.0F;
+            float var10 = (p_77033_1_.isSneaking() && !Utils.isToggle("Nametag")) ? 32.0F : 64.0F;
 
             if (var8 < (double)(var10 * var10))
             {
@@ -512,7 +516,7 @@ public abstract class RendererLivingEntity extends Render
                 float var12 = 0.02666667F;
                 GlStateManager.alphaFunc(516, 0.1F);
 
-               if (p_77033_1_.isSneaking())
+               if (p_77033_1_.isSneaking() && !Utils.isToggle("Nametag"))
                 {
                     FontRenderer var13 = this.getFontRendererFromRenderManager();
                     GlStateManager.pushMatrix();
