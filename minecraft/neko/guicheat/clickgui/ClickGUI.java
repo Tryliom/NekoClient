@@ -243,7 +243,10 @@ public class ClickGUI extends GuiScreen {
 						}
 						//Color red = new Color(255,0,255); Color green = new Color(26,0,255); Color blue = new Color(42,0,255);
 						//int outlineColor = new Color(255, 26, 42, 170).getRGB();
-						
+						if(Client.Neko.settingsManager.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
+							Gui.drawRect(b.x, b.y, b.x + b.width, b.y + b.height, outlineColor);
+							//Left, top, right, bot
+						}
 						for (Element e : b.menuelements) {
 							e.offset = off;
 							e.update();

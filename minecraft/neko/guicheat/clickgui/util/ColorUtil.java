@@ -31,4 +31,10 @@ public class ColorUtil {
 				(int) Client.Neko.settingsManager.getSettingByName("Array Green").getValDouble(),
 				  (int) Client.Neko.settingsManager.getSettingByName("Array Blue").getValDouble());
 	}
+	
+	public static Color getHUDColor(){
+		return new Color((int) Client.Neko.settingsManager.getSettingByName("HUDRed").getValDouble(),
+				(int) Client.Neko.settingsManager.getSettingByName("HUDGreen").getValDouble(),
+				  (int) Client.Neko.settingsManager.getSettingByName("HUDBlue").getValDouble());
+	}
 }

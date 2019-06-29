@@ -132,17 +132,26 @@ public class SettingsUtil {
 	public static boolean getArrayNameLength() {
 		return Client.Neko.settingsManager.getSettingByName("Ordre").getValString().equalsIgnoreCase("Taille");
 	}
+	public static void setArrayOrdre(String ordre) {
+		Client.Neko.settingsManager.getSettingByName("Ordre").setValString(ordre);
+	}
 	public static boolean getArrayModuleBasic() {
 		return Client.Neko.settingsManager.getSettingByName("Rangement").getValString().equalsIgnoreCase("Module");
 	}
 	public static boolean getArrayModuleRandom() {
 		return Client.Neko.settingsManager.getSettingByName("Rangement").getValString().equalsIgnoreCase("Mélanger");
 	}
+	public static void setArrayRangement(String rangement) {
+		Client.Neko.settingsManager.getSettingByName("Rangement").setValString(rangement);
+	}
 	public static boolean getArrayInvert() {
 		return Client.Neko.settingsManager.getSettingByName("Inverser").getValString().equalsIgnoreCase("Oui");
 	}
 	public static boolean getArrayNoInvert() {
 		return Client.Neko.settingsManager.getSettingByName("Inverser").getValString().equalsIgnoreCase("Non");
+	}
+	public static void setArrayInvsersé(String invert) {
+		Client.Neko.settingsManager.getSettingByName("Inverser").setValString(invert);
 	}
 	public static boolean getArrayDrawNekoBox() {
 		return Client.Neko.settingsManager.getSettingByName("Shadow Box").getValString().equalsIgnoreCase("Neko Box");
@@ -153,6 +162,9 @@ public class SettingsUtil {
 	public static boolean getArrayNoDrawBox() {
 		return Client.Neko.settingsManager.getSettingByName("Shadow Box").getValString().equalsIgnoreCase("Sans Box");
 	}
+	public static void setArrayShadowBox(String box) {
+		Client.Neko.settingsManager.getSettingByName("Shadow Box").setValString(box);
+	}
 	public static boolean getRainbowArray() {
 		return Client.Neko.settingsManager.getSettingByName("Array Color").getValString().equalsIgnoreCase("Rainbow");
 	}
@@ -161,6 +173,18 @@ public class SettingsUtil {
 	}
 	public static boolean getBasicColorsArray() {
 		return Client.Neko.settingsManager.getSettingByName("Array Color").getValString().equalsIgnoreCase("Basique");
+	}
+	public static void setColorArray(String type) {
+		Client.Neko.settingsManager.getSettingByName("Array Color").setValString(type);
+	}
+	public static void setArrayRed(double red) {
+		Client.Neko.settingsManager.getSettingByName("Array Red").setValDouble(red);
+	}
+	public static void setArrayGreen(double green) {
+		Client.Neko.settingsManager.getSettingByName("Array Green").setValDouble(green);
+	}
+	public static void setArrayBlue(double blue) {
+		Client.Neko.settingsManager.getSettingByName("Array Blue").setValDouble(blue);
 	}
 	
 

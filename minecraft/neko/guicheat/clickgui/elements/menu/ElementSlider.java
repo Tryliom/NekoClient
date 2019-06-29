@@ -4,6 +4,8 @@ import java.awt.Color;
 
 import net.minecraft.client.gui.Gui;
 import net.minecraft.util.MathHelper;
+import neko.Client;
+import neko.guicheat.clickgui.Panel;
 import neko.guicheat.clickgui.elements.Element;
 import neko.guicheat.clickgui.elements.ModuleButton;
 import neko.guicheat.clickgui.util.ColorUtil;
@@ -39,10 +41,18 @@ public class ElementSlider extends Element {
 		boolean hoveredORdragged = isSliderHovered(mouseX, mouseY) || dragging;
 		
 		Color temp = null;
-		if(SettingsUtil.getRainbowGui()) {
-			temp = ColorUtil.rainbowEffekt(1L, 1.0F);
-		} else {
+		if(parent.mod.getName().equalsIgnoreCase("ArrayList")) {
+			temp = ColorUtil.getArrayUniqueColor();
+		} else if (parent.mod.getName().equalsIgnoreCase("Gui")) {
 			temp = ColorUtil.getClickGUIColor();
+		} else if (parent.mod.getName().equalsIgnoreCase("HUD")) {
+			temp = ColorUtil.getHUDColor();
+		} else {
+			if(SettingsUtil.getRainbowGui()) {
+				temp = ColorUtil.rainbowEffekt(1L, 1.0F);
+			} else {
+				temp = ColorUtil.getClickGUIColor();
+			}
 		}
 		int color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), hoveredORdragged ? 250 : 200).getRGB();
 		int color2 = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), hoveredORdragged ? 255 : 230).getRGB();
