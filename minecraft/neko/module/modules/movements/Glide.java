@@ -9,7 +9,7 @@ public class Glide extends Module {
 	private static Glide instance;		
 	
 	public Glide() {
-		super("Glide", -1, Category.MOVEMENT);
+		super("Glide", -1, Category.MOVEMENT, false);
 		instance=this;
 	}
 	

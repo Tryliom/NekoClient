@@ -8,7 +8,7 @@ public class Power extends Module {
 	public static int p=1;
 
 	public Power() {
-		super("Power", -1, Category.RENDER);
+		super("Power", -1, Category.RENDER, false);
 	}
 	
 	public void onEnabled() {

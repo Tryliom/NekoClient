@@ -8,7 +8,7 @@ import net.minecraft.client.gui.GuiNewChat;
 public class NekoUI extends Module {
 	
 	public NekoUI() {
-		super("NekoUI", -1, Category.RENDER);
+		super("NekoUI", -1, Category.RENDER, false);
 	}
 	
 	public void onEnabled() {		

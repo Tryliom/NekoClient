@@ -21,7 +21,7 @@ import net.minecraft.util.Vec3;
 public class Automine extends Module {
 
 	public Automine() {
-		super("Automine", -1, Category.PLAYER);
+		super("Automine", -1, Category.PLAYER, false);
 	}
 	
 	private EnumFacing facing = EnumFacing.EAST;

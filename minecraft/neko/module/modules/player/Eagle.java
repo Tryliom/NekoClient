@@ -11,7 +11,7 @@ public class Eagle extends Module {
 	private static Eagle instance;
 	
 	public Eagle() {
-		super("Eagle", -1, Category.PLAYER);
+		super("Eagle", -1, Category.PLAYER, false);
 		instance=this;
 	}
 	

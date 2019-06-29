@@ -7,7 +7,7 @@ public class Fastbreak extends Module {
 	private static Fastbreak instance;
 	
 	public Fastbreak() {
-		super("Fastbreak", -1, Category.PLAYER);
+		super("Fastbreak", -1, Category.PLAYER, false);
 		this.instance=this;
 	}
 	

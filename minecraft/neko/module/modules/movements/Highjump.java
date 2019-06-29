@@ -8,7 +8,7 @@ public class Highjump extends Module {
 	private float height=2;
 	
 	public Highjump() {
-		super("Highjump", -1, Category.MOVEMENT);
+		super("Highjump", -1, Category.MOVEMENT, false);
 		this.instance=this;
 	}
 	

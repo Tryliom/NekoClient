@@ -21,7 +21,7 @@ public class Wallhack extends Module {
 	Client var = Client.getNeko();
 	
 	public Wallhack() {
-		super("Wallhack", -1, Category.RENDER);
+		super("Wallhack", -1, Category.RENDER, false);
 	}	
 	
 	public void onEnabled() {		

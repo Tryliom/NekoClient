@@ -8,7 +8,7 @@ public class Radar extends Module {
 	public static boolean fr=true;
 	
 	public Radar() {
-		super("Radar", -1, Category.RENDER);
+		super("Radar", -1, Category.RENDER, false);
 	}
 	
 	public void onEnabled() {		

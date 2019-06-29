@@ -16,7 +16,7 @@ public class FireTrail extends Module {
 	private static FireTrail instance;
 	
 	public FireTrail() {
-		super("FireTrail", -1, Category.Special);
+		super("FireTrail", -1, Category.Special, false);
 		instance=this;
 	}
 	

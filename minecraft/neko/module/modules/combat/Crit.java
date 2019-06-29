@@ -8,7 +8,7 @@ import neko.module.Module;
 public class Crit extends Module {
 	
 	public Crit() {
-		super("Crit", -1, Category.COMBAT);
+		super("Crit", -1, Category.COMBAT, false);
 	}
 	
 	public void onEnabled() {		

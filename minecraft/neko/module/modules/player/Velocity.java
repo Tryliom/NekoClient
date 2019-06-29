@@ -11,7 +11,7 @@ public class Velocity extends Module {
 	private static Velocity instance;
 	
 	public Velocity() {
-		super("Velocity", Keyboard.KEY_P, Category.PLAYER);
+		super("Velocity", Keyboard.KEY_P, Category.PLAYER, false);
 		instance=this;
 	}
 	

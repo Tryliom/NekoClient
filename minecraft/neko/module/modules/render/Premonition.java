@@ -23,7 +23,7 @@ public class Premonition extends Module {
 	private static Premonition instance=null;
 	
 	public Premonition() {
-		super("Premonition", -1, Category.RENDER);
+		super("Premonition", -1, Category.RENDER, false);
 		instance=this;
 	}
 	

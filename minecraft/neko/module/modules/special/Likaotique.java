@@ -37,7 +37,7 @@ public class Likaotique extends Module {
 	private static Likaotique instance;
 	
 	public Likaotique() {
-		super("Likaotique", -1, Category.Special);
+		super("Likaotique", -1, Category.Special, false);
 		instance=this;
 	}
 	

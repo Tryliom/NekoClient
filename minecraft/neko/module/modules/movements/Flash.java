@@ -15,7 +15,7 @@ public class Flash extends Module {
 	private static Flash instance=null;
 	
 	public Flash() {
-		super("Flash", -1, Category.MOVEMENT);
+		super("Flash", -1, Category.MOVEMENT, false);
 		this.instance = this;
 	}
 	

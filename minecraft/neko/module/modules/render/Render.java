@@ -30,7 +30,7 @@ public class Render extends Module {
 	Client var = Client.getNeko();
 	
 	public Render() {
-		super("Render", -1, Category.HIDE);
+		super("Render", -1, Category.HIDE, false);
 	}	
 	
 	public void setValues() {

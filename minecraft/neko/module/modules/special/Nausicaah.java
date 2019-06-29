@@ -17,7 +17,7 @@ public class Nausicaah extends Module {
 	private static Nausicaah instance;
 	
 	public Nausicaah() {
-		super("Nausicaah", -1, Category.Special);
+		super("Nausicaah", -1, Category.Special, false);
 		this.instance=this;
 	}
 	

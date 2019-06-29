@@ -9,7 +9,7 @@ public class AutoCmd extends Module {
 	public int count = 0;
 
 	public AutoCmd() {
-		super("AutoCmd", -1, Category.MISC);
+		super("AutoCmd", -1, Category.MISC, false);
 	}
 	
 	public void onEnabled() {

@@ -12,7 +12,7 @@ public class NoClip extends Module {
 	public static float speed = 0.5F;
 
 	public NoClip() {
-		super("NoClip", Keyboard.KEY_N, Category.MOVEMENT);
+		super("NoClip", Keyboard.KEY_N, Category.MOVEMENT, false);
 	}
 
 	public void onEnabled() {

@@ -8,7 +8,7 @@ public class WorldTime extends Module {
 	public static long time=13000;
 	
 	public WorldTime() {
-		super("WorldTime", -1, Category.RENDER);
+		super("WorldTime", -1, Category.RENDER, false);
 	}
 	
 	public void onEnabled() {		

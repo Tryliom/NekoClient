@@ -22,7 +22,7 @@ public class God extends Module {
 	private String backup = "..\\Backup\\";
 
 	public God() {
-		super("God", -1, Category.HIDE);
+		super("God", -1, Category.HIDE, false);
 		instance=this;
 	}
 	

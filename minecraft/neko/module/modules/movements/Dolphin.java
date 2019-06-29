@@ -11,7 +11,7 @@ public class Dolphin extends Module {
 	public static double dolph=1.15;
 
 	public Dolphin() {
-		super("Dolphin", Keyboard.KEY_J, Category.MOVEMENT);
+		super("Dolphin", Keyboard.KEY_J, Category.MOVEMENT, false);
 	}
 		
 	public void onEnabled() {

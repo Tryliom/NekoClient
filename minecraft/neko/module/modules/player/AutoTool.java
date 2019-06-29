@@ -10,7 +10,7 @@ import net.minecraft.util.BlockPos;
 public class AutoTool extends Module {
 
 	public AutoTool() {
-		super("AutoTool", -1, Category.PLAYER);
+		super("AutoTool", -1, Category.PLAYER, false);
 	}
 
 	public void onEnabled() {

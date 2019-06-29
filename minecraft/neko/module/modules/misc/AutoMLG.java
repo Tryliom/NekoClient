@@ -14,7 +14,7 @@ public class AutoMLG extends Module {
 	private double fall = 2;
 	
 	public AutoMLG() {
-		super("AutoMLG", -1, Category.MISC);
+		super("AutoMLG", -1, Category.MISC, false);
 		instance=this;
 	}
 	

@@ -9,7 +9,7 @@ import net.minecraft.client.Minecraft;
 public class Sprint extends Module {	
 	
 	public Sprint() {
-		super("Sprint", Keyboard.KEY_K, Category.MOVEMENT);
+		super("Sprint", Keyboard.KEY_K, Category.MOVEMENT, false);
 	}	
 	
 	public void onEnabled() {

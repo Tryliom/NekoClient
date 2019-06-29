@@ -25,7 +25,7 @@ public class Lot extends Module {
 	Client var = Client.getNeko();
 	
 	public Lot() {
-		super("Lot", -1, Category.HIDE);
+		super("Lot", -1, Category.HIDE, true);
 	}	
 	
 	public static void init(ArrayList<Bloc> l) {

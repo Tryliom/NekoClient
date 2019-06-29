@@ -19,7 +19,7 @@ public class FastDura extends Module {
 	public static Minecraft mc = Minecraft.getMinecraft();
 	public static ArrayList<Integer> list = new ArrayList<>();
 	public FastDura() {
-		super("FastDura", -1, Category.Special);
+		super("FastDura", -1, Category.Special, false);
 	}
 	
 	public void onEnabled() {	

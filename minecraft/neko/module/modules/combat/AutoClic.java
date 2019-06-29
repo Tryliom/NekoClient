@@ -9,7 +9,7 @@ public class AutoClic extends Module {
 	public static int cps=20;
 	
 	public AutoClic() {
-		super("AutoClic", -1, Category.COMBAT);
+		super("AutoClic", -1, Category.COMBAT, false);
 	}
 	
 	public void onEnabled() {		

@@ -13,7 +13,7 @@ public class ClickAim extends Module {
 	
 	
 	public ClickAim() {
-		super("ClickAim", -1, Category.COMBAT);
+		super("ClickAim", -1, Category.COMBAT, false);
 	}
 	
 	public void onEnabled() {

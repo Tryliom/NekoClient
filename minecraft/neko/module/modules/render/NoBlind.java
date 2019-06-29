@@ -10,7 +10,7 @@ import net.minecraft.potion.PotionEffect;
 public class NoBlind extends Module {
 	
 	public NoBlind() {
-		super("NoBlind", -1, Category.RENDER);
+		super("NoBlind", -1, Category.RENDER, false);
 	}
 	
 	public void onEnabled() {

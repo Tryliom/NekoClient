@@ -9,7 +9,7 @@ import net.minecraft.client.Minecraft;
 public class FastPlace extends Module {
 	
 	public FastPlace() {
-		super("FastPlace", Keyboard.KEY_U, Category.PLAYER);
+		super("FastPlace", Keyboard.KEY_U, Category.PLAYER, false);
 	}
 	
 	public void onEnabled() {

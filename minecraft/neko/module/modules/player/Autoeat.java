@@ -13,7 +13,7 @@ import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 public class Autoeat extends Module {
 	
 	public Autoeat() {
-		super("Autoeat", -1, Category.PLAYER);
+		super("Autoeat", -1, Category.PLAYER, false);
 	}
 	
 	public void onEnabled() {		

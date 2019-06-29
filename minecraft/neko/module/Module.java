@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import neko.Client;
 import neko.event.UpdateEvent;
 import neko.gui.InGameGui;
+import neko.guicheat.clickgui.ClickGUI;
 import neko.manager.ModuleManager;
 import neko.utils.ChatUtils;
 import neko.utils.Utils;
@@ -19,6 +20,7 @@ public class Module {
 	protected Client var = Client.getNeko();
 	protected InGameGui g;
 	private String moduleName;
+	protected boolean isCommands;
 	private int moduleBind;
 	private Category moduleCategory;
 	protected boolean isToggled;
@@ -28,10 +30,11 @@ public class Module {
 	protected int time;
 	public int toggleTime = 0;
 
-	public Module(String moduleName, int moduleBind, Category moduleCategory) {
+	public Module(String moduleName, int moduleBind, Category moduleCategory, boolean isCommand) {
 		this.moduleName = moduleName;
 		this.moduleBind = moduleBind;
 		this.moduleCategory = moduleCategory;
+		this.isCommands = isCommand;
 		setup();
 	}
 	
@@ -43,6 +46,9 @@ public class Module {
 	
 	public void setName(String modulename) {
 		this.moduleName = modulename;
+	}
+	
+	public void CommandAction() {
 	}
 
 	public int getBind() {
@@ -67,6 +73,10 @@ public class Module {
 		} else {
 			this.setToggled(true);
 		}
+	}
+	
+	public boolean isCommand() {
+		return this.isCommands;
 	}
 
 	public void incrementTime() {

@@ -11,7 +11,7 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 public class NoFall extends Module {
 
 	public NoFall() {
-		super("NoFall", Keyboard.KEY_RSHIFT, Category.MOVEMENT);
+		super("NoFall", Keyboard.KEY_RSHIFT, Category.MOVEMENT, false);
 	}
 	
 	public void onEnabled() {

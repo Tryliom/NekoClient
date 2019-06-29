@@ -14,7 +14,7 @@ public class Fasteat extends Module {
 	private static Fasteat instance=null;
 	
 	public Fasteat() {
-		super("Fasteat", -1, Category.PLAYER);
+		super("Fasteat", -1, Category.PLAYER, false);
 		instance=this;
 	}
 	

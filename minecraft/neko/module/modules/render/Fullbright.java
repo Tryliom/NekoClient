@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 public class Fullbright extends Module {
 
 	public Fullbright() {
-		super("Fullbright", Keyboard.KEY_B, Category.RENDER);
+		super("Fullbright", Keyboard.KEY_B, Category.RENDER, false);
 
 	}
 

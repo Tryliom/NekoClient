@@ -17,7 +17,7 @@ public class Friends extends Module {
 	public static ArrayList<String> friend = new ArrayList<String>();
 	
 	public Friends() {
-		super("Friends", -1, Category.HIDE);
+		super("Friends", -1, Category.HIDE, false);
 	}
 	
 	public void onAction() {

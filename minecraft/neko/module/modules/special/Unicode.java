@@ -7,7 +7,7 @@ import net.minecraft.client.Minecraft;
 public class Unicode extends Module {
 	
 	public Unicode() {
-		super("Unicode", -1, Category.Special);
+		super("Unicode", -1, Category.Special, false);
 	}
 	
 	public void onEnabled() {	

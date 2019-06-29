@@ -26,7 +26,7 @@ public class HUD extends Module {
 	public static float width=2F;
 
 	public HUD() {
-		super("HUD", -1, Category.PARAMS);
+		super("HUD", -1, Category.PARAMS, false);
 	}
 	
 	public void onEnabled() {		

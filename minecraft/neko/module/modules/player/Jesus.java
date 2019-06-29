@@ -5,7 +5,7 @@ import neko.module.Module;
 
 public class Jesus extends Module {
 	public Jesus() {
-		super("Jesus", -1, Category.PLAYER);
+		super("Jesus", -1, Category.PLAYER, false);
 	}
 	
 	public void onEnabled() {		

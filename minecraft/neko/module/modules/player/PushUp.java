@@ -10,7 +10,7 @@ public class PushUp extends Module {
 	private static PushUp instance;
 	
 	public PushUp() {
-		super("PushUp", -1, Category.PLAYER);
+		super("PushUp", -1, Category.PLAYER, false);
 		instance=this;
 	}
 	

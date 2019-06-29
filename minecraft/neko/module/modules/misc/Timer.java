@@ -9,7 +9,7 @@ public class Timer extends Module {
 	public static float time = 2.0F;
 	
 	public Timer () {
-		super("Timer", Keyboard.KEY_Y, Category.MISC);
+		super("Timer", Keyboard.KEY_Y, Category.MISC, false);
 	}
 	
 	public void onEnabled() {

@@ -13,7 +13,7 @@ public class NoLook extends Module {
 	}
 	
 	public NoLook() {
-		super("NoLook", -1, Category.Special);
+		super("NoLook", -1, Category.Special, false);
 		instance = this;
 	}
 	

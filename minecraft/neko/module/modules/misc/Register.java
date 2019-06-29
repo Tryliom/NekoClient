@@ -7,9 +7,10 @@ import neko.utils.ChatUtils;
 public class Register extends Module {
 	private static Register instance;
 	private String mdp = "neko123";
+	private boolean isCommands = true;
 	
 	public Register() {
-		super("Register", -1, Category.MISC);
+		super("Register", -1, Category.MISC, true);
 		this.instance=this;
 	}
 	
@@ -21,11 +22,10 @@ public class Register extends Module {
 		this.values = "§6Mot de passe:§7 "+mdp;
 	}
 	
-	public void onToggle() {		
+	public void CommandAction() {
 		ChatUtils c = new ChatUtils();
 		c.doCommand("/register "+mdp+" "+mdp);
 		c.doCommand("/login "+mdp);
-		this.isToggled = false;
 	}
 
 	public String getMdp() {

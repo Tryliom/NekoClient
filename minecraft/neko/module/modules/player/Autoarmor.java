@@ -25,7 +25,7 @@ public class Autoarmor extends Module {
 	private final int[] leggings = { 312, 308, 316, 304, 300 };
 	
 	public Autoarmor() {
-		super("Autoarmor", -1, Category.PLAYER);
+		super("Autoarmor", -1, Category.PLAYER, false);
 	}
 	
 	public void onEnabled() {

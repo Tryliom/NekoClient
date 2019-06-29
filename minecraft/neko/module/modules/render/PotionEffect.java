@@ -12,7 +12,7 @@ import net.minecraft.util.BlockPos;
 public class PotionEffect extends Module {
 
 	public PotionEffect() {
-		super("PotionEffect", -1, Category.RENDER);
+		super("PotionEffect", -1, Category.RENDER, false);
 	}
 	
 	public void onEnabled() {		

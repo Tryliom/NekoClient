@@ -58,7 +58,7 @@ public class Reach extends Module {
 	int k;
 
 	public Reach() {
-		super("Reach", -1, Category.COMBAT);
+		super("Reach", -1, Category.COMBAT, false);
 	}
 	
 	public void onEnabled() {

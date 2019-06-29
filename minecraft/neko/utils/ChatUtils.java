@@ -5302,7 +5302,7 @@ public class ChatUtils {
 								return;
 							}
 						}
-						Module m = new Module(args[1], Keyboard.getKeyIndex(args[2].toUpperCase()), Category.HIDE);
+						Module m = new Module(args[1], Keyboard.getKeyIndex(args[2].toUpperCase()), Category.HIDE, false);
 						String l ="";
 						for (int i=3;i<args.length;i++) {
 							l+=args[i]+" ";

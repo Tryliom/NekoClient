@@ -8,7 +8,7 @@ public class Test extends Module {
 	private static Test instance;
 	
 	public Test() {
-		super("Test", -1, Category.HIDE);
+		super("Test", -1, Category.HIDE, false);
 		this.instance=this;
 	}
 	

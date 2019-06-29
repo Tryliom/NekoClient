@@ -19,7 +19,7 @@ public class Scaffold extends Module {
 	private static Scaffold instance;
 	
 	public Scaffold() {
-		super("Scaffold", -1, Category.PLAYER);
+		super("Scaffold", -1, Category.PLAYER, false);
 		instance=this;
 	}
 	

@@ -25,7 +25,7 @@ public class Pyro extends Module {
 	int k;
 
 	public Pyro() {
-		super("Pyro", -1, Category.Special);
+		super("Pyro", -1, Category.Special, false);
 	}
 	
 	public void onEnabled() {

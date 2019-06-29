@@ -17,7 +17,7 @@ public class Cheststealer extends Module {
 	public static int waitTime = 3;
 
 	public Cheststealer() {
-		super("Cheststealer", -1, Category.PLAYER);
+		super("Cheststealer", -1, Category.PLAYER, false);
 	}
 
 	public void onEnabled() {

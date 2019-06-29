@@ -23,7 +23,7 @@ public class AutoPot extends Module {
 	private TimerUtils time = new TimerUtils();
 	
 	public AutoPot() {
-		super("AutoPot", -1, Category.COMBAT);
+		super("AutoPot", -1, Category.COMBAT, false);
 	}
 	
 	public void onEnabled() {		

@@ -6,7 +6,7 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 
 public class AntiFire extends Module {
 	public AntiFire() {
-		super("AntiFire", -1, Category.PLAYER);
+		super("AntiFire", -1, Category.PLAYER, false);
 	}
 	
 	public void onEnabled() {		

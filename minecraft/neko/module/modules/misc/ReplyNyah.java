@@ -6,7 +6,7 @@ import neko.module.Module;
 public class ReplyNyah extends Module {
 
 	public ReplyNyah() {
-		super("ReplyNyah", -1, Category.MISC);
+		super("ReplyNyah", -1, Category.MISC, false);
 	}
 	
 	public void onEnabled() {		

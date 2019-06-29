@@ -17,7 +17,7 @@ public class ItemESP extends Module {
 	Client var = Client.getNeko();
 	
 	public ItemESP() {
-		super("ItemESP", -1, Category.RENDER);
+		super("ItemESP", -1, Category.RENDER, false);
 	}	
 	
 	public void onEnabled() {		

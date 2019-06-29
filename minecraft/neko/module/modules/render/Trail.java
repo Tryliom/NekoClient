@@ -14,7 +14,7 @@ public class Trail extends Module {
 	public static ArrayList<BlockPos> list = new ArrayList<>();
 	
 	public Trail() {
-		super("Trail", -1, Category.RENDER);
+		super("Trail", -1, Category.RENDER, false);
 	}
 	
 	public void onEnabled() {	

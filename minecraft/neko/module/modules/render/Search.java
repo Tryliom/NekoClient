@@ -21,7 +21,7 @@ public class Search extends Module {
 	private static Search instance = null;
 
 	public Search() {
-		super("Search", -1, Category.RENDER);
+		super("Search", -1, Category.RENDER, false);
 		instance = this;
 	}
 

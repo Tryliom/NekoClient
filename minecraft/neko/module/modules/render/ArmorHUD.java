@@ -12,7 +12,7 @@ import net.minecraft.util.BlockPos;
 public class ArmorHUD extends Module {
 
 	public ArmorHUD() {
-		super("ArmorHUD", -1, Category.RENDER);
+		super("ArmorHUD", -1, Category.RENDER, false);
 	}
 	
 	public void onEnabled() {		

@@ -7,7 +7,7 @@ public class AirWalk extends Module {
 	private static AirWalk instance;
 	
 	public AirWalk() {
-		super("AirWalk", -1, Category.MOVEMENT);
+		super("AirWalk", -1, Category.MOVEMENT, false);
 		this.instance=this;
 	}
 	

@@ -11,7 +11,7 @@ public class Phase extends Module {
 	private static Phase instance;
 	
 	public Phase () {
-		super("Phase", -1, Category.MISC);
+		super("Phase", -1, Category.MISC, false);
 		instance=this;
 	}
 	

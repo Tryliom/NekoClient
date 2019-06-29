@@ -10,7 +10,7 @@ import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
 public class Autoblock extends Module {
 	
 	public Autoblock() {
-		super("Autoblock", -1, Category.COMBAT);
+		super("Autoblock", -1, Category.COMBAT, false);
 	}
 	
 	public void onEnabled() {		

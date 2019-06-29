@@ -36,7 +36,7 @@ public class Nuker extends Module {
 	private int delayNuker = 0;
 
 	public Nuker() {
-		super("Nuker", -1, Category.PLAYER);
+		super("Nuker", -1, Category.PLAYER, false);
 	}
 	
 	@Override

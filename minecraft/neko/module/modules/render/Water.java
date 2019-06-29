@@ -15,7 +15,7 @@ public class Water extends Module {
 	public static int p=1;
 
 	public Water() {
-		super("Water", -1, Category.RENDER);
+		super("Water", -1, Category.RENDER, false);
 	}
 	
 	public void onEnabled() {

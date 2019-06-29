@@ -14,7 +14,7 @@ public class CallCmd extends Module {
 	private static CallCmd instance;
 	
 	public CallCmd() {
-		super("CallCmd", -1, Category.MISC);
+		super("CallCmd", -1, Category.MISC, false);
 		this.instance=this;
 	}
 	

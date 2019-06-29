@@ -15,7 +15,7 @@ public class Flight extends Module {
 	boolean v;
 	
 	public Flight() {
-		super("Flight", Keyboard.KEY_R, Category.MOVEMENT);
+		super("Flight", Keyboard.KEY_R, Category.MOVEMENT, false);
 	}
 	
 	public void onEnabled() {

@@ -4037,6 +4037,12 @@ public class Utils {
 		}
 	}
 	
+	public static void UnToggleGUI() {
+		if((!(mc.currentScreen instanceof ClickGUI)) && (Utils.getModule("Gui").getToggled())) {
+			Utils.getModule("Gui").setToggled(false);
+		}
+	}
+	
 	public static Module getModule(String module) {
 		for (Module m : var.moduleManager.ActiveModule) {
 			if (m.getName().equalsIgnoreCase(module))
@@ -4140,7 +4146,7 @@ public class Utils {
 		for (String l : list) {
 			String s[] = l.split(" ");
 	    	if (s.length>=2) {
-	        	Module m = new Module(s[0], Keyboard.getKeyIndex(s[1].toUpperCase()), Category.HIDE);
+	        	Module m = new Module(s[0], Keyboard.getKeyIndex(s[1].toUpperCase()), Category.HIDE, false);
 	        	String r="";
 	        	for (int i=2;i<s.length;i++) {
 	        		r+=s[i]+" ";
@@ -4175,7 +4181,7 @@ public class Utils {
                 {
                 	String s[] = l.split(" ");
                 	if (s.length>=2) {
-	                	Module m = new Module(s[0], Keyboard.getKeyIndex(s[1].toUpperCase()), Category.HIDE);
+	                	Module m = new Module(s[0], Keyboard.getKeyIndex(s[1].toUpperCase()), Category.HIDE, false);
 	                	String r="";
 	                	for (int i=2;i<s.length;i++) {
 	                		r+=s[i]+" ";

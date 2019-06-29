@@ -16,6 +16,7 @@ import neko.guicheat.clickgui.util.SettingsUtil;
 import neko.guicheat.clickgui.settings.Setting;
 import neko.Client;
 import neko.module.Module;
+import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 
@@ -120,7 +121,12 @@ public class ModuleButton {
 		 * Rechtsklick, wenn ja dann Module togglen, 
 		 */
 		if (mouseButton == 0) {
-			mod.toggleModule();
+			if(mod.isCommand()) {
+				mod.CommandAction();
+				Utils.UnToggleGUI();
+			} else {
+				mod.toggleModule();
+			}
 			
 			if(Client.Neko.settingsManager.getSettingByName("Sound").getValBoolean())
 			Minecraft.getMinecraft().thePlayer.playSound("random.click", 0.5f, 0.5f);

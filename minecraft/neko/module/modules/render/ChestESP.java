@@ -23,7 +23,7 @@ public class ChestESP extends Module {
 	
 	
 	public ChestESP() {
-		super("ChestESP", -1, Category.RENDER);
+		super("ChestESP", -1, Category.RENDER, false);
 	}	
 	
 	public void onEnabled() {				

@@ -9,7 +9,7 @@ public class Longjump extends Module {
 	public static float speed=4F;
 	
 	public Longjump() {
-		super("Longjump", -1, Category.MOVEMENT);
+		super("Longjump", -1, Category.MOVEMENT, false);
 	}
 	
 	public void onEnabled() {		

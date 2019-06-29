@@ -9,7 +9,7 @@ public class Antiafk extends Module {
 	private int sec=20;
 	
 	public Antiafk() {
-		super("Antiafk", -1, Category.MISC);
+		super("Antiafk", -1, Category.MISC, false);
 		instance=this;
 	}
 	

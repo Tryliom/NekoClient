@@ -13,7 +13,7 @@ public class Near extends Module {
 	public static boolean noname=false;
 	
 	public Near() {
-		super("Near", -1, Category.Special);
+		super("Near", -1, Category.Special, false);
 	}
 	
 	public void onEnabled() {	

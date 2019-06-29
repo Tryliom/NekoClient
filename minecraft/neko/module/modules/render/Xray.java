@@ -12,7 +12,7 @@ public final class Xray extends Module {
 	private boolean active;
 	
 	public Xray() {
-		super("Xray", Keyboard.KEY_X, Category.RENDER);
+		super("Xray", Keyboard.KEY_X, Category.RENDER, false);
 	}
 
 	public void onEnabled() {

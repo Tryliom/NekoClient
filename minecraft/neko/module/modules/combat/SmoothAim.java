@@ -22,7 +22,7 @@ public class SmoothAim extends Module {
 	private EntityLivingBase target;
 	
 	public SmoothAim() {
-		super("SmoothAim", -1, Category.COMBAT);
+		super("SmoothAim", -1, Category.COMBAT, false);
 	}
 	
 	public void onEnabled() {

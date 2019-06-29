@@ -9,7 +9,7 @@ public class Noslow extends Module {
 	public static boolean isOn=false;
 
 	public Noslow() {
-		super("Noslow", -1, Category.PLAYER);
+		super("Noslow", -1, Category.PLAYER, false);
 	}
 	
 	public void onEnabled() {

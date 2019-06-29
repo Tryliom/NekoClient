@@ -7,7 +7,7 @@ import net.minecraft.client.Minecraft;
 public class Jetpack extends Module {
 
 	public Jetpack() {
-		super("Jetpack", -1, Category.MOVEMENT);
+		super("Jetpack", -1, Category.MOVEMENT, false);
 	}
 	
 	public void onEnabled() {		

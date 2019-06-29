@@ -10,7 +10,7 @@ public class Nameprotect extends Module {
 	private Vector<String> list = new Vector<String>();
 	
 	public Nameprotect() {
-		super("Nameprotect", -1, Category.MISC);
+		super("Nameprotect", -1, Category.MISC, false);
 		this.nm = this;
 	}
 	

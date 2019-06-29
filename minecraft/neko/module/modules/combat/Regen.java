@@ -13,7 +13,7 @@ public class Regen extends Module {
 	private int delay=0;
 	
 	public Regen() {
-		super("Regen", Keyboard.KEY_G, Category.COMBAT);
+		super("Regen", Keyboard.KEY_G, Category.COMBAT, false);
 	}
 		
 	public void onEnabled() {

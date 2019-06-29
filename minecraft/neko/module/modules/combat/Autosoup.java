@@ -19,7 +19,7 @@ public class Autosoup extends Module {
 	private TimerUtils time = new TimerUtils();
 	
 	public Autosoup() {
-		super("Autosoup", -1, Category.COMBAT);
+		super("Autosoup", -1, Category.COMBAT, false);
 	}
 	
 	public void onEnabled() {		

@@ -10,7 +10,7 @@ import net.minecraft.potion.Potion;
 public class Knockback extends Module {
 	
 	public Knockback() {
-		super("Knockback", -1, Category.COMBAT);
+		super("Knockback", -1, Category.COMBAT, false);
 	}
 		
 	public void onEnabled() {

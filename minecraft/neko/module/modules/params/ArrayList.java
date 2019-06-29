@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 public class ArrayList extends Module {
 	
 	public ArrayList() {
-		super("ArrayList", -1, Category.PARAMS);
+		super("ArrayList", -1, Category.PARAMS, false);
 	}
 	
 	public void onEnabled() {		

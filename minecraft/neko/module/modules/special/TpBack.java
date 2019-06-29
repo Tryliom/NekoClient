@@ -20,7 +20,7 @@ public class TpBack extends Module {
 	private static TpBack instance;
 	
 	public TpBack() {
-		super("TpBack", -1, Category.Special);
+		super("TpBack", -1, Category.Special, false);
 		instance=this;
 	}
 	

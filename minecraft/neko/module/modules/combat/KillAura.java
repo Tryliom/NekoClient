@@ -54,7 +54,7 @@ public class KillAura extends Module {
 	
 	
 	public KillAura() {
-		super("KillAura", Keyboard.KEY_V, Category.COMBAT);
+		super("KillAura", Keyboard.KEY_V, Category.COMBAT, false);
 	}
 	
 	public void onEnabled() {

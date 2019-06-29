@@ -10,7 +10,7 @@ import net.minecraft.network.play.client.C09PacketHeldItemChange;
 
 public class Switch extends Module {
 	public Switch() {
-		super("Switch", -1, Category.MISC);
+		super("Switch", -1, Category.MISC, false);
 	}
 	
 	public void onEnabled() {		

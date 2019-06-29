@@ -17,7 +17,7 @@ public class Paint extends Module {
 	public static float alpha=0.5F;
 	
 	public Paint() {
-		super("Paint", -1, Category.RENDER);
+		super("Paint", -1, Category.RENDER, false);
 	}	
 	
 	public void onEnabled() {

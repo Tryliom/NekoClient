@@ -8,7 +8,7 @@ public class Fire extends Module {
 	public static int p = 1;
 
 	public Fire() {
-		super("Fire", -1, Category.RENDER);
+		super("Fire", -1, Category.RENDER, false);
 	}
 
 	public void onEnabled() {

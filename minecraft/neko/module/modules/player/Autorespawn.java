@@ -6,7 +6,7 @@ import neko.module.Module;
 public class Autorespawn extends Module {
 	
 	public Autorespawn() {
-		super("Autorespawn", -1, Category.PLAYER);
+		super("Autorespawn", -1, Category.PLAYER, false);
 	}
 	
 	public void onEnabled() {		

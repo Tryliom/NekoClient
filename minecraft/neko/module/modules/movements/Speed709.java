@@ -20,7 +20,7 @@ public class Speed709 extends Module {
 	private static Speed709 instance;
 	
 	public Speed709() {
-		super("Speed", Keyboard.KEY_M, Category.MOVEMENT);
+		super("Speed", Keyboard.KEY_M, Category.MOVEMENT, false);
 		instance=this;
 	}
 	

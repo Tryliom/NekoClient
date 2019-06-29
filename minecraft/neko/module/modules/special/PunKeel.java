@@ -18,7 +18,7 @@ public class PunKeel extends Module {
 	public static boolean attack = false;
 	
 	public PunKeel() {
-		super("PunKeel", -1, Category.Special);
+		super("PunKeel", -1, Category.Special, false);
 	}
 	
 	public void onEnabled() {	

@@ -6,7 +6,7 @@ import net.minecraft.network.play.client.C03PacketPlayer;
 
 public class HeadRoll extends Module {
 	public HeadRoll() {
-		super("HeadRoll", -1, Category.MISC);
+		super("HeadRoll", -1, Category.MISC, false);
 	}
 	
 	public void onEnabled() {		

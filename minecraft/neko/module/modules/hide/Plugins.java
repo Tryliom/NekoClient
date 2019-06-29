@@ -10,7 +10,7 @@ public class Plugins extends Module {
 	public static int count=0;
 	
 	public Plugins() {
-		super("Plugins", -1, Category.HIDE);
+		super("Plugins", -1, Category.HIDE, true);
 	}
 	
 	public void onEnabled() {		

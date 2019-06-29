@@ -10,7 +10,7 @@ public class Reflect extends Module {
 	private float enColl;
 	
 	public Reflect() {
-		super("Reflect", -1, Category.Special);
+		super("Reflect", -1, Category.Special, false);
 		this.instance=this;
 	}
 	

@@ -18,7 +18,7 @@ public class Freecam extends Module {
 	  private double oldZ;
 	
 	public Freecam() {
-		super("Freecam", Keyboard.KEY_L, Category.MOVEMENT);
+		super("Freecam", Keyboard.KEY_L, Category.MOVEMENT, false);
 	}
 	
 	public void onEnabled() {		

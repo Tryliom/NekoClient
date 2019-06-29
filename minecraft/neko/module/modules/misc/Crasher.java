@@ -13,7 +13,7 @@ public class Crasher extends Module {
 	public static boolean active;
 	
 	public Crasher() {
-		super("Crasher", -1, Category.MISC);
+		super("Crasher", -1, Category.MISC, false);
 	}
 	
 	public void onEnabled() {		

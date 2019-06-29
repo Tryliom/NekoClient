@@ -15,7 +15,7 @@ public class DropShit extends Module {
 	private static DropShit instance;
 	
 	public DropShit() {
-		super("DropShit", -1, Category.Special);
+		super("DropShit", -1, Category.Special, false);
 		instance=this;
 	}
 	

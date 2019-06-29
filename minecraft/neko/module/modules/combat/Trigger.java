@@ -26,7 +26,7 @@ public class Trigger extends Module {
 	public static javax.swing.Timer timer = new javax.swing.Timer(1000/cps, new attack());
 
 	public Trigger() {
-		super("Trigger", -1, Category.COMBAT);
+		super("Trigger", -1, Category.COMBAT, false);
 	}
 	
 	public void onEnabled() {

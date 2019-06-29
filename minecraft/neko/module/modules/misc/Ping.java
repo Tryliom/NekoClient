@@ -16,7 +16,7 @@ public class Ping extends Module {
 	}
 	
 	public Ping() {
-		super("Ping", -1, Category.MISC);
+		super("Ping", -1, Category.MISC, false);
 		instance=this;
 	}
 	

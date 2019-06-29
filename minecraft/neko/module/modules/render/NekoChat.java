@@ -12,7 +12,7 @@ public class NekoChat extends Module {
 	private static NekoChat instance;		
 	
 	public NekoChat() {
-		super("NekoChat", -1, Category.RENDER);
+		super("NekoChat", -1, Category.RENDER, false);
 	}
 	
 	public static NekoChat getChat() {

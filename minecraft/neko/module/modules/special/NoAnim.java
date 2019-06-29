@@ -7,7 +7,7 @@ public class NoAnim extends Module {
 	private static NoAnim instance;
 	
 	public NoAnim() {
-		super("NoAnim", -1, Category.Special);
+		super("NoAnim", -1, Category.Special, false);
 		this.instance=this;
 	}
 	

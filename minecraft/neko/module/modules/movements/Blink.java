@@ -22,7 +22,7 @@ public class Blink extends Module {
 	public static boolean onGround;
 	
 	public Blink() {
-		super("Blink", -1, Category.MOVEMENT);
+		super("Blink", -1, Category.MOVEMENT, false);
 	}
 	
 	public void onEnabled() {		

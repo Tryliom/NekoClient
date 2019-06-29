@@ -22,7 +22,7 @@ public class BowAimbot extends Module {
 	
 	
 	public BowAimbot() {
-		super("BowAimbot", -1, Category.COMBAT);
+		super("BowAimbot", -1, Category.COMBAT, false);
 		this.instance=this;
 	}
 	

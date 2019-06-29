@@ -12,7 +12,7 @@ public class ForceTP extends Module {
 	private boolean YMax = true;
 	
 	public ForceTP() {
-		super("ForceTP", -1, Category.Special);
+		super("ForceTP", -1, Category.Special, false);
 		this.instance=this;
 	}
 	

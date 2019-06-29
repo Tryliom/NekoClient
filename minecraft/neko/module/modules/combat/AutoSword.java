@@ -20,7 +20,7 @@ public class AutoSword extends Module {
 	}
 	
 	public AutoSword() {
-		super("AutoSword", -1, Category.COMBAT);
+		super("AutoSword", -1, Category.COMBAT, false);
 		instance = this;
 	}
 	

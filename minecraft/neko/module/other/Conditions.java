@@ -16,7 +16,7 @@ public class Conditions extends Module {
 	Client var = Client.getNeko();
 	
 	public Conditions() {
-		super("Conditions", -1, Category.HIDE);
+		super("Conditions", -1, Category.HIDE, false);
 		if (instance==null) 
 			instance=this;
 	}

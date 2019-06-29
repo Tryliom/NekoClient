@@ -14,7 +14,7 @@ public class Step extends Module {
 	private static Step instance=null;
 	
 	public Step() {
-		super("Step", Keyboard.KEY_I, Category.MOVEMENT);
+		super("Step", Keyboard.KEY_I, Category.MOVEMENT, false);
 		instance = this;
 	}
 	

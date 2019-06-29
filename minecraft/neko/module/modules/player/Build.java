@@ -23,7 +23,7 @@ public class Build extends Module {
 	private static Build instance;
 	
 	public Build() {
-		super("Build", -1, Category.PLAYER);
+		super("Build", -1, Category.PLAYER, false);
 		instance=this;
 	}
 	

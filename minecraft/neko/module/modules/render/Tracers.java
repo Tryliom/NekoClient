@@ -17,7 +17,7 @@ public class Tracers extends Module {
 	Client var = Client.getNeko();
 	
 	public Tracers() {
-		super("Tracers", -1, Category.RENDER);
+		super("Tracers", -1, Category.RENDER, false);
 	}
 	
 	public void onEnabled() {		

@@ -32,7 +32,7 @@ public class Magnet extends Module {
 	private static Magnet instance;
 	
 	public Magnet() {
-		super("Magnet", -1, Category.Special);
+		super("Magnet", -1, Category.Special, false);
 		instance=this;
 	}
 	

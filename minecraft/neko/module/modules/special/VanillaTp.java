@@ -24,7 +24,7 @@ public class VanillaTp extends Module {
 	Client var = Client.getNeko();
 	
 	public VanillaTp() {
-		super("VanillaTp", Keyboard.KEY_TAB, Category.Special);
+		super("VanillaTp", Keyboard.KEY_TAB, Category.Special, false);
 	}
 	
 	public void setValues() {

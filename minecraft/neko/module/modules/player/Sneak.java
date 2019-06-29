@@ -10,7 +10,7 @@ import net.minecraft.network.play.client.C0BPacketEntityAction;
 public class Sneak extends Module {
 
 	public Sneak() {
-		super("Sneak", -1, Category.PLAYER);
+		super("Sneak", -1, Category.PLAYER, false);
 	}
 	
 	public void onEnabled() {

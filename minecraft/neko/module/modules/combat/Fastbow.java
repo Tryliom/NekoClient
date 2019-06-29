@@ -22,7 +22,7 @@ public class Fastbow extends Module {
 	private static Fastbow instance = null;
 
 	public Fastbow() {
-		super("Fastbow", -1, Category.COMBAT);
+		super("Fastbow", -1, Category.COMBAT, false);
 		instance=this;
 	}
 	

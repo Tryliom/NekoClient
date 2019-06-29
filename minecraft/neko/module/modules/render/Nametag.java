@@ -8,7 +8,7 @@ public class Nametag extends Module {
 	public static boolean isOn=false;
 	
 	public Nametag() {
-		super("Nametag", -1, Category.RENDER);
+		super("Nametag", -1, Category.RENDER, false);
 	}
 	
 	public void onEnabled() {
