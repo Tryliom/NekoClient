@@ -6,6 +6,7 @@ import neko.guicheat.clickgui.elements.Element;
 import neko.guicheat.clickgui.elements.ModuleButton;
 import neko.guicheat.clickgui.util.ColorUtil;
 import neko.guicheat.clickgui.util.FontUtil;
+import neko.guicheat.clickgui.util.SettingsUtil;
 import neko.guicheat.clickgui.settings.Setting;
 import net.minecraft.client.gui.Gui;
 
@@ -30,8 +31,20 @@ public class ElementCheckBox extends Element {
 	 * Rendern des Elements 
 	 */
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		Color temp = ColorUtil.getClickGUIColor();
-		int color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 200).getRGB();
+		Color temp;
+		int color;
+		
+		if(SettingsUtil.getRainbowGui()) {
+
+			temp = ColorUtil.rainbowEffekt(1L, 1.0f);
+			color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 200).getRGB();
+			
+		} else {
+
+			temp = ColorUtil.getClickGUIColor();
+			color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 200).getRGB();
+			
+		}
 		
 		/*
 		 * Die Box und Umrandung rendern

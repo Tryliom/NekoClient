@@ -2436,7 +2436,7 @@ public class Utils {
 		String s="";
 		String name ="";
     	for(Panel f : ClickGUI.panels) {
-    		name = f.title;
+    		name = f.title.replaceAll("§", "&");
     		int x = (int)f.x;
     		int y = (int)f.y;
     		s+=name+" "+x+" "+y+" "+f.extended+"§";
@@ -2456,7 +2456,7 @@ public class Utils {
 	    {           
 	    	String s[] = ligne.split(" ");
 	    	for(Panel f : ClickGUI.panels) {
-	    		if (f.title.equalsIgnoreCase(s[0])) {
+	    		if (f.title.equalsIgnoreCase(s[0].replaceAll("&", "§"))) {
 	    			f.x = (Integer.parseInt(s[1]));
 	    			f.y = (Integer.parseInt(s[2]));
 	    			f.extended = (Boolean.parseBoolean(s[3]));

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import neko.guicheat.clickgui.elements.ModuleButton;
 import neko.guicheat.clickgui.util.ColorUtil;
 import neko.guicheat.clickgui.util.FontUtil;
+import neko.guicheat.clickgui.util.SettingsUtil;
 import neko.Client;
 import net.minecraft.client.gui.Gui;
 
@@ -63,8 +64,20 @@ public class Panel {
 			y = y2 + mouseY;
 		}
 		
-		Color temp = ColorUtil.getClickGUIColor().darker();
-		int outlineColor = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 170).getRGB();
+		Color temp;
+		int outlineColor;
+		
+		if(SettingsUtil.getRainbowGui()) {
+
+			temp = ColorUtil.rainbowEffekt(1L, 1.0f).darker();
+			outlineColor = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 200).getRGB();
+			
+		} else {
+
+			temp = ColorUtil.getClickGUIColor().darker();
+			outlineColor = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 200).getRGB();
+			
+		}
 		
 		Gui.drawRect(x, y, x + width, y + height, 0xff121212);
 		if(Client.Neko.settingsManager.getSettingByName("Design").getValString().equalsIgnoreCase("New")){

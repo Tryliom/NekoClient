@@ -14,6 +14,7 @@ import neko.guicheat.clickgui.elements.menu.ElementSlider;
 import neko.guicheat.clickgui.util.ColorUtil;
 import neko.guicheat.clickgui.util.FontUtil;
 import neko.guicheat.clickgui.util.SettingsUtil;
+import neko.manager.ModuleManager;
 import neko.guicheat.clickgui.settings.SettingsManager;
 import neko.Client;
 import neko.module.Category;
@@ -46,11 +47,11 @@ public class ClickGUI extends GuiScreen {
 	/*
 	 * Konstrukor sollte nur einmal aufgerufen werden => in der MainMethode des eigenen Codes
 	 * hier Client.startClient()
-	 * das GUI wird dann so geöffnet: 
+	 * das GUI wird dann so geffnet: 
 	 * 		mc.displayGuiScreen(Client.clickgui);
 	 * 		this.setToggled(false);
 	 * das Module wird sofort wieder beendet damit
-	 * nächstes mal nicht 2mal der z.B. 'RSHIFT' Knopf gedrückt
+	 * nchstes mal nicht 2mal der z.B. 'RSHIFT' Knopf gedrckt
 	 * werden muss
 	 */
 	public ClickGUI() {
@@ -66,19 +67,90 @@ public class ClickGUI extends GuiScreen {
 		double pxplus = pwidth + 10;
 		
 		/*
-		 * Zum Sortieren der Panels einfach die Reihenfolge im Enum ändern ;)
+		 * Zum Sortieren der Panels einfach die Reihenfolge im Enum ndern ;)
 		 */
+		
+		ArrayList<String> combatModule = new ArrayList<String>(),
+				  renderModule = new ArrayList<String>(),playerModule = new ArrayList<String>(),
+				  movementModule = new ArrayList<String>(),paramsModule = new ArrayList<String>(),
+				  miscModule = new ArrayList<String>(),specialModule = new ArrayList<String>();
+		
+		for(Module module : Client.Neko.moduleManager.getModules()) {
+		    if(module.getCategory() != Category.HIDE && !module.isCmd()) {
+		    	if(module.getCategory() == Category.COMBAT) {  combatModule.add(module.getName()); } //Regen
+		    	if(module.getCategory() == Category.RENDER) {  renderModule.add(module.getName());}
+		    	if(module.getCategory() == Category.PLAYER) {  playerModule.add(module.getName());}
+		    	if(module.getCategory() == Category.MOVEMENT) {  movementModule.add(module.getName());} //Blink
+		    	if(module.getCategory() == Category.PARAMS) {  paramsModule.add(module.getName());}
+		    	if(module.getCategory() == Category.MISC) {  miscModule.add(module.getName());}
+		    	if(module.getCategory() == Category.Special) {  specialModule.add(module.getName());}
+		    }
+	  }
+		  Collections.sort(combatModule); Collections.sort(renderModule); Collections.sort(playerModule); Collections.sort(movementModule);
+		  Collections.sort(paramsModule); Collections.sort(miscModule); Collections.sort(specialModule);
+		
 			for (Category c : Category.values()) {
 				if(c != Category.HIDE) {
-					String title = Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+					String title = "";//Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+					if(c.name().equalsIgnoreCase("Combat")) {
+						title = "c"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+					}
+					if(c.name().equalsIgnoreCase("Render")) {
+						title = "e"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+					}
+					if(c.name().equalsIgnoreCase("Player")) {
+						title = "3"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+					}
+					if(c.name().equalsIgnoreCase("Movement")) {
+						title = "2"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+					}
+					if(c.name().equalsIgnoreCase("Misc")) {
+						title = "7"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+					}
+					if(c.name().equalsIgnoreCase("Special")) {
+						title = "6"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+					}
+					if(c.name().equalsIgnoreCase("Params")) {
+						title = "f"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+					}
+					//title = Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
 					ClickGUI.panels.add(new Panel(title, px, py, pwidth, pheight, false, this) {
 								@Override
 								public void setup() {
-									for (Module m : Client.Neko.moduleManager.getModules()) {
-										if(m.getCategory()!=Category.HIDE && !m.isCmd()) {
-											if (!m.getCategory().equals(c))continue;
-											this.Elements.add(new ModuleButton(m, this));
-										}
+									for(String s : combatModule) {
+										Module m = Utils.getModule(s);
+										if (!m.getCategory().equals(c))continue;
+										this.Elements.add(new ModuleButton(m, this));
+									}
+									for(String s : renderModule) {
+										Module m = Utils.getModule(s);
+										if (!m.getCategory().equals(c))continue;
+										this.Elements.add(new ModuleButton(m, this));
+									}
+									for(String s : playerModule) {
+										Module m = Utils.getModule(s);
+										if (!m.getCategory().equals(c))continue;
+										this.Elements.add(new ModuleButton(m, this));
+									}
+									for(String s : movementModule) {
+										Module m = Utils.getModule(s);
+										if (!m.getCategory().equals(c))continue;
+										this.Elements.add(new ModuleButton(m, this));
+									}
+									for(String s : paramsModule) {
+										Module m = Utils.getModule(s);
+										if (!m.getCategory().equals(c))continue;
+										this.Elements.add(new ModuleButton(m, this));
+									}
+									for(String s : miscModule) {
+										Module m = Utils.getModule(s);
+										if (!m.getCategory().equals(c))continue;
+										this.Elements.add(new ModuleButton(m, this));
+									}
+									for(String s : specialModule) {
+										Module m = Utils.getModule(s);
+										if (!m.getCategory().equals(c))continue;
+										this.Elements.add(new ModuleButton(m, this));
 									}
 								}
 					});
@@ -94,7 +166,7 @@ public class ClickGUI extends GuiScreen {
 		 * Ganz eifach:
 		 * 		durch diese Zuweisung wird rpanels einfach nur eine Weiterleitung
 		 * 		zu panels, was mit 'Collections.reverse(rpanels);' nicht ganz 
-		 * 		funktionieren würde. Und da die Elemente nur 'rüberkopiert' werden
+		 * 		funktionieren wrde. Und da die Elemente nur 'rberkopiert' werden
 		 * 		gibt es keine Probleme ;)
 		 */
 		rpanels = new ArrayList<Panel>();
@@ -111,7 +183,7 @@ public class ClickGUI extends GuiScreen {
 		 * Panels und damit auch Buttons rendern.
 		 * panels wird NUR hier im Code verwendet, da das
 		 * zuletzt gerenderte Panel ganz oben ist 
-		 * Auch wenn es manchmal egal wäre ob panels/rpanels
+		 * Auch wenn es manchmal egal wre ob panels/rpanels
 		 * benutzt wird habe ich mich einfach mal dazu entschieden,
 		 * einfach weil es einfacher ist nur einmal panels zu benutzen
 		 */
@@ -123,12 +195,12 @@ public class ClickGUI extends GuiScreen {
 		/*															*/ ScaledResolution s = new ScaledResolution(mc);
   		/* DO NOT REMOVE											*/ GL11.glPushMatrix();
 		/* copyright HeroCode 2017									*/ GL11.glTranslated(s.getScaledWidth(), s.getScaledHeight(), 0);GL11.glScaled(0.5, 0.5, 0.5);
-		/* https://www.youtube.com/channel/UCJum3PIbnYvIfIEu05GL_yQ	*/ FontUtil.drawStringWithShadow("b"+"y"+ "H"+"e"+"r"+"o"+"C"+"o"+"d"+"e", -Minecraft.getMinecraft().fontRendererObj.getStringWidth("b"+"y"+ "H"+"e"+"r"+"o"+"C"+"o"+"d"+"e"), -Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT, 0xff11F86B);
+		/* https://www.youtube.com/channel/UCJum3PIbnYvIfIEu05GL_yQ	*/ //FontUtil.drawStringWithShadow("b"+"y"+ "H"+"e"+"r"+"o"+"C"+"o"+"d"+"e", -Minecraft.getMinecraft().fontRendererObj.getStringWidth("b"+"y"+ "H"+"e"+"r"+"o"+"C"+"o"+"d"+"e"), -Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT, 0xff11F86B);
 		/*															*/ GL11.glPopMatrix();
 		
 		mb = null;
 		/*
-		 * Überprüfen ob ein Button listening == true hat, wenn
+		 * berprfen ob ein Button listening == true hat, wenn
 		 * ja, dann soll nicht mehr gesucht werden, nicht dass 
 		 * 1+ auf listening steht...
 		 */
@@ -146,7 +218,7 @@ public class ClickGUI extends GuiScreen {
 		}
 		
 		/*
-		 * Settings rendern. Da Settings über alles gerendert werden soll,
+		 * Settings rendern. Da Settings ber alles gerendert werden soll,
 		 * abgesehen vom ListeningOverlay werden die Elements von hier aus
 		 * fast am Schluss gerendert
 		 */
@@ -155,11 +227,22 @@ public class ClickGUI extends GuiScreen {
 				for (ModuleButton b : panel.Elements) {
 					if (b.extended && b.menuelements != null && !b.menuelements.isEmpty()) {
 						double off = 0;
-						Color temp = ColorUtil.getClickGUIColor().darker();
-						int outlineColor = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 170).getRGB();
+						Color temp;
+						int outlineColor;
+						
+						if(SettingsUtil.getRainbowGui()) {
+
+							temp = ColorUtil.rainbowEffekt(1L, 1.0f);
+							outlineColor = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 170).getRGB();
+							
+						} else {
+
+							temp = ColorUtil.getClickGUIColor();
+							outlineColor = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 170).getRGB();
+							
+						}
 						//Color red = new Color(255,0,255); Color green = new Color(26,0,255); Color blue = new Color(42,0,255);
 						//int outlineColor = new Color(255, 26, 42, 170).getRGB();
-						
 						for (Element e : b.menuelements) {
 							e.offset = off;
 							e.update();
@@ -194,8 +277,8 @@ public class ClickGUI extends GuiScreen {
 		}
 		
 		/*
-		 * Nicht benötigt, aber es ist so einfach sauberer ;)
-		 * Und ohne diesen call können keine GUIButtons/andere Elemente
+		 * Nicht bentigt, aber es ist so einfach sauberer ;)
+		 * Und ohne diesen call knnen keine GUIButtons/andere Elemente
 		 * gerendert werden
 		 */
 		super.drawScreen(mouseX, mouseY, partialTicks);
@@ -210,9 +293,9 @@ public class ClickGUI extends GuiScreen {
 		if(mb != null)return;
 		
 		/*
-		 * Benötigt damit auch mit Elements interagiert werden kann
+		 * Bentigt damit auch mit Elements interagiert werden kann
 		 * besonders zu beachten ist dabei, dass zum einen rpanels aufgerufen
-		 * wird welche eine Eigenständige Kopie von panels ist, genauer oben erklärt
+		 * wird welche eine Eigenstndige Kopie von panels ist, genauer oben erklrt
 		 * Also rpanels damit zuerst das panel 'untersucht' wird, dass als letztes
 		 * gerendert wurde => Ganz oben ist!
 		 * sodass der Nutzer nicht mit dem Unteren interagiern kann, weil er es wohl
@@ -235,8 +318,8 @@ public class ClickGUI extends GuiScreen {
 		}
 
 		/*
-		 * Benötigt damit mit ModuleButtons interagiert werden kann
-		 * und Panels 'gegriffen' werden können
+		 * Bentigt damit mit ModuleButtons interagiert werden kann
+		 * und Panels 'gegriffen' werden knnen
 		 */
 		for (Panel p : rpanels) {
 			if (p.mouseClicked(mouseX, mouseY, mouseButton))
@@ -244,7 +327,7 @@ public class ClickGUI extends GuiScreen {
 		}
 		
 		/*
-		 * Nicht benötigt, aber es ist so einfach sauberer ;)
+		 * Nicht bentigt, aber es ist so einfach sauberer ;)
 		 */
 		try {
 			super.mouseClicked(mouseX, mouseY, mouseButton);
@@ -262,8 +345,8 @@ public class ClickGUI extends GuiScreen {
 		if(mb != null)return;
 		
 		/*
-		 * Eigentlich nur für die Slider benötigt, aber
-		 * durch diesen Call erfährt jedes Element, wenn
+		 * Eigentlich nur fr die Slider bentigt, aber
+		 * durch diesen Call erfhrt jedes Element, wenn
 		 * z.B. Rechtsklick losgelassen wurde
 		 */
 		for (Panel panel : rpanels) {
@@ -279,7 +362,7 @@ public class ClickGUI extends GuiScreen {
 		}
 		
 		/*
-		 * Benötigt damit Slider auch losgelassen werden können und nicht
+		 * Bentigt damit Slider auch losgelassen werden knnen und nicht
 		 * immer an der Maus 'festkleben' :>
 		 */
 		for (Panel p : rpanels) {
@@ -287,7 +370,7 @@ public class ClickGUI extends GuiScreen {
 		}
 		
 		/*
-		 * Nicht benötigt, aber es ist so einfach sauberer ;)
+		 * Nicht bentigt, aber es ist so einfach sauberer ;)
 		 */
 		super.mouseReleased(mouseX, mouseY, state);
 	}
@@ -295,7 +378,7 @@ public class ClickGUI extends GuiScreen {
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) {
 		/*
-		 * Benötigt für die Keybindfunktion
+		 * Bentigt fr die Keybindfunktion
 		 */
 		for (Panel p : rpanels) {
 			if (p != null && p.visible && p.extended && p.Elements != null && p.Elements.size() > 0) {

@@ -616,9 +616,16 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Magnet Mode <Single:Multi>", var.prefixCmd+"magnet mode ", "§7Choisis entre:\n§7Prendre les items un à un (Envoie moins de paquets)\n§7Prend tous les items en même temps (Envoie plus de paquets)", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-				} else if (args[1].equalsIgnoreCase("autosellall")) {
+				} else if (args[1].equalsIgnoreCase("arraylist")) {
 					Utils.addChat(Utils.sep);
-					Utils.addChat2("§6"+var.prefixCmd+"AutoSellAll", var.prefixCmd+"autosellall", "$7Active le /sellall automatique sur un serveur prison.", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"ArrayList UniColor <Red> <Green> <Blue> (0-255)", var.prefixCmd+"arraylist unicolor 100 100 100", "§7Modifie la couleur du mode UniColor de l'ArrayList", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"ArrayList Ordre <Alphabétique:Taille>", var.prefixCmd+"ArrayList ordre Alphabétique", "§7Modifie l'ordre de l'ArrayList (Alphabétique ou Taille de noms)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"ArrayList Rangement <Module:Mélanger>", var.prefixCmd+"ArrayList rangement Mélanger", "§7Modifie le type de rangement de l'ArrayList (Par modules ou mélanger)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"ArrayList Inverser <Oui:Non>", var.prefixCmd+"ArrayList Inverser non", "§7Inverse l'ArrayList ou non (Punkeel-HUD-Autonyah) deviendrait (Autonyah-HUD-Punkeel)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"ArrayList Box <Neko:Name:Sans>", var.prefixCmd+"ArrayList box name", "§7Affiche ou non des Shadow Box derrière les noms de Modules. (Neko=Grande box, Name=Box par modules, sans=sans box)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"ArrayList color <Rainbow:UniColor:Basique>", var.prefixCmd+"ArrayList color Basique", "§7Modifie la couleur utilisée dans l'arraylist (Rainbow, UniColor ou Basique)", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("clickaim")) {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"ClickAim multiaura", var.prefixCmd+"clickaim ", "§7Change le mode multiaura au singleaura et inversement", false, Chat.Summon);
@@ -2321,14 +2328,75 @@ public class ChatUtils {
 					Utils.toggleModule("ArrayList");
 				} else {
 					try {
-						if (args[1].contains("&")) {
-							InGameGui.color=args[1].replaceAll("&", "§");
-							Utils.addChat(InGameGui.color+"Couleur de l'ArrayList changée");
-						} else if (Utils.isInteger(args[1])) {
-							InGameGui.color="§"+args[1];
-							Utils.addChat(InGameGui.color+"Couleur de l'ArrayList changée");
+						if(args[1].equalsIgnoreCase("unicolor")) {
+							if(args.length == 5) {
+							int r = Integer.parseInt(args[2]),g = Integer.parseInt(args[3]),b=Integer.parseInt(args[4]);
+							if((r > 255) || (r<0) || (g > 255) || (g<0) || (r > 255) || (r<0)) {
+								Utils.addChat("§cLes nombres du ..araylist unicolor doivent être situés entre 0 et 255.");
+								return;
+							}
+							java.awt.Color c = new java.awt.Color(Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]));
+							SettingsUtil.setArrayRed(c.getRed());
+							SettingsUtil.setArrayGreen(c.getGreen());
+							SettingsUtil.setArrayBlue(c.getBlue());
+							Utils.addChat("§aCouleur de l'UniColor de l'ArrayList modifiée en R:"+c.getRed()+" G:"+c.getGreen()+" B:"+c.getBlue());
+							} else {
+								Utils.addChat("§cUtilisation de la commande : §6..arraylist UniColor Red Green Blue §c(0-255)");
+							}
+						}
+						else if(args[1].equalsIgnoreCase("ordre")) {
+							if((args.length == 3) && ((args[2].equalsIgnoreCase("Alphabétique") || (args[2].equalsIgnoreCase("Taille"))))) {
+								SettingsUtil.setArrayOrdre(args[2].equalsIgnoreCase("Alphabétique")?"Alphabétique":"Taille");
+							} else {
+								Utils.addChat("§cUtilisation de la commande : §6..arraylist ordre Alphabétique/Taille");
+							}
+						}
+						else if(args[1].equalsIgnoreCase("rangement")) {
+							if((args.length == 3) && ((args[2].equalsIgnoreCase("Module") || (args[2].equalsIgnoreCase("Mélanger"))))) {
+								SettingsUtil.setArrayRangement(args[2].equalsIgnoreCase("Module")?"Module":"Mélanger");
+							} else {
+								Utils.addChat("§cUtilisation de la commande : §6..arraylist rangement Module/Mélanger");
+							}
+						}
+						else if(args[1].equalsIgnoreCase("inverser")) {
+							if((args.length == 3) && ((args[2].equalsIgnoreCase("Oui") || (args[2].equalsIgnoreCase("Non"))))) {
+								SettingsUtil.setArrayInvsersé(args[2].equalsIgnoreCase("Oui")?"Oui":"Non");
+							} else {
+								Utils.addChat("§cUtilisation de la commande : §6..arraylist inverser Oui/Non");
+							}
+						}
+						else if(args[1].equalsIgnoreCase("box")) {
+							if((args.length == 3) && ((args[2].equalsIgnoreCase("Neko") || (args[2].equalsIgnoreCase("Name") || (args[2].equalsIgnoreCase("Sans")))))) {
+								if(args[2].equalsIgnoreCase("Neko")) {
+									SettingsUtil.setArrayShadowBox("Neko Box");
+								} else {
+									SettingsUtil.setArrayShadowBox(args[2].equalsIgnoreCase("Name")?"Name Box":"Sans Box");
+								}
+							} else {
+								Utils.addChat("§cUtilisation de la commande : §6..arraylist box Neko/Name/Sans");
+							}
+						}
+						else if(args[1].equalsIgnoreCase("color")) {
+							if((args.length == 3) && ((args[2].equalsIgnoreCase("rainbow") || (args[2].equalsIgnoreCase("unicolor") || (args[2].equalsIgnoreCase("basique")))))) {
+								if(args[2].equalsIgnoreCase("Rainbow")) {
+									SettingsUtil.setColorArray("Rainbow");
+								} else {
+									SettingsUtil.setColorArray(args[2].equalsIgnoreCase("unicolor")?"UniColor":"Basique");
+								}
+							} else {
+								Utils.addChat("§cUtilisation de la commande : §6..arraylist color Rainbow/UniColor/Basique");
+							}
 						} else {
-							Utils.addChat(err);
+							Utils.addChat("§cLa commande: §6..arraylist "+args[1]+ "§c n'existe pas. Voici les commandes disponibles.");
+							Utils.addChat(Utils.sep);
+							Utils.addChat2("§6"+var.prefixCmd+"ArrayList UniColor <Red> <Green> <Blue> (0-255)", var.prefixCmd+"arraylist unicolor 100 100 100", "§7Modifie la couleur du mode UniColor de l'ArrayList", false, Chat.Summon);
+							Utils.addChat2("§6"+var.prefixCmd+"ArrayList Ordre <Alphabétique:Taille>", var.prefixCmd+"ArrayList ordre Alphabétique", "§7Modifie l'ordre de l'ArrayList (Alphabétique ou Taille de noms)", false, Chat.Summon);
+							Utils.addChat2("§6"+var.prefixCmd+"ArrayList Rangement <Module:Mélanger>", var.prefixCmd+"ArrayList rangement Mélanger", "§7Modifie le type de rangement de l'ArrayList (Par modules ou mélanger)", false, Chat.Summon);
+							Utils.addChat2("§6"+var.prefixCmd+"ArrayList Inverser <Oui:Non>", var.prefixCmd+"ArrayList Inverser non", "§7Inverse l'ArrayList ou non (Punkeel-HUD-Autonyah) deviendrait (Autonyah-HUD-Punkeel)", false, Chat.Summon);
+							Utils.addChat2("§6"+var.prefixCmd+"ArrayList Box <Neko:Name:Sans>", var.prefixCmd+"ArrayList box name", "§7Affiche ou non des Shadow Box derrière les noms de Modules. (Neko=Grande box, Name=Box par modules, sans=sans box)", false, Chat.Summon);
+							Utils.addChat2("§6"+var.prefixCmd+"ArrayList color <Rainbow:UniColor:Basique>", var.prefixCmd+"ArrayList color Basique", "§7Modifie la couleur utilisée dans l'arraylist (Rainbow, UniColor ou Basique)", false, Chat.Summon);
+							Utils.checkXp(xp);
+							mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 						}
 					} catch (Exception e) {
                         Utils.addChat(err);

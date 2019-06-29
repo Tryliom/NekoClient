@@ -12,6 +12,7 @@ import neko.guicheat.clickgui.elements.menu.ElementComboBox;
 import neko.guicheat.clickgui.elements.menu.ElementSlider;
 import neko.guicheat.clickgui.util.ColorUtil;
 import neko.guicheat.clickgui.util.FontUtil;
+import neko.guicheat.clickgui.util.SettingsUtil;
 import neko.guicheat.clickgui.settings.Setting;
 import neko.Client;
 import neko.module.Module;
@@ -69,9 +70,20 @@ public class ModuleButton {
 	 * Rendern des Elements 
 	 */
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		Color temp = ColorUtil.getClickGUIColor();
-		int color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 150).getRGB();
+		Color temp;
+		int color;
 		
+		if(SettingsUtil.getRainbowGui()) {
+
+			temp = ColorUtil.rainbowEffekt(1L, 1.0f);
+			color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 150).getRGB();
+			
+		} else {
+
+			temp = ColorUtil.getClickGUIColor();
+			color = new Color(temp.getRed(), temp.getGreen(), temp.getBlue(), 150).getRGB();
+			
+		}
 		/*
 		 * Ist das Module an, wenn ja dann soll
 		 *  #ein neues Rechteck in Größe des Buttons den Knopf als Toggled kennzeichnen
