@@ -33,9 +33,9 @@ public class VanillaTp extends Module {
 				+ "§6Top: "+Utils.displayBool(top);
 	}
 	
-    public void onToggle() {	
-    	this.isToggled=false;
+    public void onToggle() {
         if (mc.thePlayer.isSneaking()) {
+        	super.onToggle();
         	return;        	
         }        
         
@@ -111,7 +111,6 @@ public class VanillaTp extends Module {
             		TpUtils tp = new TpUtils();
             		tp.doTpAller(en1, entityPosX, entityPosY, entityPosZ, classic, k);
             		// Puis on re set notre position finale exact
-            		BlockPos actualPos = new BlockPos(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ);
             		mc.thePlayer.setPosition(mc.thePlayer.posX+0.5, mc.thePlayer.posY+0.01*Math.random(), mc.thePlayer.posZ+0.5);
                 	mc.thePlayer.playSound("mob.endermen.portal", 1.0F, 1.0F);
                 	if (Math.random()<0.2)
@@ -121,7 +120,7 @@ public class VanillaTp extends Module {
         if (!u.isToggle("Reach")) {
         	u.addChat("§cRappel: La reach doit être active pour se tp plus loin\n§cExemple: "+var.prefixCmd+"reach 100 ou "+var.prefixCmd+"toggle reach");
         }
-        
+        super.onToggle();
     }
     	
 }

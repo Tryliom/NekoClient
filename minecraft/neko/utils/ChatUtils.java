@@ -979,6 +979,13 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Freecam <Speed>", var.prefixCmd+"freecam ", "§7Modifie la vitesse du freecam (De base à 1)", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("vclip")) {
+					Utils.addChat(Utils.sep);
+					Utils.addChat2("§6"+var.prefixCmd+"VClip <Int>", var.prefixCmd+"vclip ", "§7Vous tp en vertical selon le nombre donné, jusqu'à 10 blocs", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"VClip -", var.prefixCmd+"vclip +", "§7Vous tp en vertical en hauteur en calculant\n§7la position où aller suivant l'espace de libre", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"VClip +", var.prefixCmd+"vclip -", "§7Vous tp en vertical en descente en calculant\n§7la position où aller suivant l'espace de libre", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("search")) {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Search add <ID du bloc>", var.prefixCmd+"search add ", "§7Ajoute le bloc et le cherche", false, Chat.Summon);
