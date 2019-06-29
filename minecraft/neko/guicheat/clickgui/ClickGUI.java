@@ -47,11 +47,11 @@ public class ClickGUI extends GuiScreen {
 	/*
 	 * Konstrukor sollte nur einmal aufgerufen werden => in der MainMethode des eigenen Codes
 	 * hier Client.startClient()
-	 * das GUI wird dann so geöffnet: 
+	 * das GUI wird dann so geffnet: 
 	 * 		mc.displayGuiScreen(Client.clickgui);
 	 * 		this.setToggled(false);
 	 * das Module wird sofort wieder beendet damit
-	 * nächstes mal nicht 2mal der z.B. 'RSHIFT' Knopf gedrückt
+	 * nchstes mal nicht 2mal der z.B. 'RSHIFT' Knopf gedrckt
 	 * werden muss
 	 */
 	public ClickGUI() {
@@ -67,7 +67,7 @@ public class ClickGUI extends GuiScreen {
 		double pxplus = pwidth + 10;
 		
 		/*
-		 * Zum Sortieren der Panels einfach die Reihenfolge im Enum ändern ;)
+		 * Zum Sortieren der Panels einfach die Reihenfolge im Enum ndern ;)
 		 */
 		
 		ArrayList<String> combatModule = new ArrayList<String>(),
@@ -93,25 +93,25 @@ public class ClickGUI extends GuiScreen {
 				if(c != Category.HIDE) {
 					String title = "";//Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
 					if(c.name().equalsIgnoreCase("Combat")) {
-						title = "§c"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+						title = "c"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
 					}
 					if(c.name().equalsIgnoreCase("Render")) {
-						title = "§e"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+						title = "e"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
 					}
 					if(c.name().equalsIgnoreCase("Player")) {
-						title = "§3"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+						title = "3"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
 					}
 					if(c.name().equalsIgnoreCase("Movement")) {
-						title = "§2"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+						title = "2"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
 					}
 					if(c.name().equalsIgnoreCase("Misc")) {
-						title = "§7"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+						title = "7"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
 					}
 					if(c.name().equalsIgnoreCase("Special")) {
-						title = "§6"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+						title = "6"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
 					}
 					if(c.name().equalsIgnoreCase("Params")) {
-						title = "§f"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
+						title = "f"+Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
 					}
 					//title = Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
 					ClickGUI.panels.add(new Panel(title, px, py, pwidth, pheight, false, this) {
@@ -166,7 +166,7 @@ public class ClickGUI extends GuiScreen {
 		 * Ganz eifach:
 		 * 		durch diese Zuweisung wird rpanels einfach nur eine Weiterleitung
 		 * 		zu panels, was mit 'Collections.reverse(rpanels);' nicht ganz 
-		 * 		funktionieren würde. Und da die Elemente nur 'rüberkopiert' werden
+		 * 		funktionieren wrde. Und da die Elemente nur 'rberkopiert' werden
 		 * 		gibt es keine Probleme ;)
 		 */
 		rpanels = new ArrayList<Panel>();
@@ -183,7 +183,7 @@ public class ClickGUI extends GuiScreen {
 		 * Panels und damit auch Buttons rendern.
 		 * panels wird NUR hier im Code verwendet, da das
 		 * zuletzt gerenderte Panel ganz oben ist 
-		 * Auch wenn es manchmal egal wäre ob panels/rpanels
+		 * Auch wenn es manchmal egal wre ob panels/rpanels
 		 * benutzt wird habe ich mich einfach mal dazu entschieden,
 		 * einfach weil es einfacher ist nur einmal panels zu benutzen
 		 */
@@ -200,7 +200,7 @@ public class ClickGUI extends GuiScreen {
 		
 		mb = null;
 		/*
-		 * Überprüfen ob ein Button listening == true hat, wenn
+		 * berprfen ob ein Button listening == true hat, wenn
 		 * ja, dann soll nicht mehr gesucht werden, nicht dass 
 		 * 1+ auf listening steht...
 		 */
@@ -218,7 +218,7 @@ public class ClickGUI extends GuiScreen {
 		}
 		
 		/*
-		 * Settings rendern. Da Settings über alles gerendert werden soll,
+		 * Settings rendern. Da Settings ber alles gerendert werden soll,
 		 * abgesehen vom ListeningOverlay werden die Elements von hier aus
 		 * fast am Schluss gerendert
 		 */
@@ -243,10 +243,6 @@ public class ClickGUI extends GuiScreen {
 						}
 						//Color red = new Color(255,0,255); Color green = new Color(26,0,255); Color blue = new Color(42,0,255);
 						//int outlineColor = new Color(255, 26, 42, 170).getRGB();
-						if(Client.Neko.settingsManager.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
-							Gui.drawRect(b.x, b.y, b.x + b.width, b.y + b.height, outlineColor);
-							//Left, top, right, bot
-						}
 						for (Element e : b.menuelements) {
 							e.offset = off;
 							e.update();
@@ -281,8 +277,8 @@ public class ClickGUI extends GuiScreen {
 		}
 		
 		/*
-		 * Nicht benötigt, aber es ist so einfach sauberer ;)
-		 * Und ohne diesen call können keine GUIButtons/andere Elemente
+		 * Nicht bentigt, aber es ist so einfach sauberer ;)
+		 * Und ohne diesen call knnen keine GUIButtons/andere Elemente
 		 * gerendert werden
 		 */
 		super.drawScreen(mouseX, mouseY, partialTicks);
@@ -297,9 +293,9 @@ public class ClickGUI extends GuiScreen {
 		if(mb != null)return;
 		
 		/*
-		 * Benötigt damit auch mit Elements interagiert werden kann
+		 * Bentigt damit auch mit Elements interagiert werden kann
 		 * besonders zu beachten ist dabei, dass zum einen rpanels aufgerufen
-		 * wird welche eine Eigenständige Kopie von panels ist, genauer oben erklärt
+		 * wird welche eine Eigenstndige Kopie von panels ist, genauer oben erklrt
 		 * Also rpanels damit zuerst das panel 'untersucht' wird, dass als letztes
 		 * gerendert wurde => Ganz oben ist!
 		 * sodass der Nutzer nicht mit dem Unteren interagiern kann, weil er es wohl
@@ -322,8 +318,8 @@ public class ClickGUI extends GuiScreen {
 		}
 
 		/*
-		 * Benötigt damit mit ModuleButtons interagiert werden kann
-		 * und Panels 'gegriffen' werden können
+		 * Bentigt damit mit ModuleButtons interagiert werden kann
+		 * und Panels 'gegriffen' werden knnen
 		 */
 		for (Panel p : rpanels) {
 			if (p.mouseClicked(mouseX, mouseY, mouseButton))
@@ -331,7 +327,7 @@ public class ClickGUI extends GuiScreen {
 		}
 		
 		/*
-		 * Nicht benötigt, aber es ist so einfach sauberer ;)
+		 * Nicht bentigt, aber es ist so einfach sauberer ;)
 		 */
 		try {
 			super.mouseClicked(mouseX, mouseY, mouseButton);
@@ -349,8 +345,8 @@ public class ClickGUI extends GuiScreen {
 		if(mb != null)return;
 		
 		/*
-		 * Eigentlich nur für die Slider benötigt, aber
-		 * durch diesen Call erfährt jedes Element, wenn
+		 * Eigentlich nur fr die Slider bentigt, aber
+		 * durch diesen Call erfhrt jedes Element, wenn
 		 * z.B. Rechtsklick losgelassen wurde
 		 */
 		for (Panel panel : rpanels) {
@@ -366,7 +362,7 @@ public class ClickGUI extends GuiScreen {
 		}
 		
 		/*
-		 * Benötigt damit Slider auch losgelassen werden können und nicht
+		 * Bentigt damit Slider auch losgelassen werden knnen und nicht
 		 * immer an der Maus 'festkleben' :>
 		 */
 		for (Panel p : rpanels) {
@@ -374,7 +370,7 @@ public class ClickGUI extends GuiScreen {
 		}
 		
 		/*
-		 * Nicht benötigt, aber es ist so einfach sauberer ;)
+		 * Nicht bentigt, aber es ist so einfach sauberer ;)
 		 */
 		super.mouseReleased(mouseX, mouseY, state);
 	}
@@ -382,7 +378,7 @@ public class ClickGUI extends GuiScreen {
 	@Override
 	protected void keyTyped(char typedChar, int keyCode) {
 		/*
-		 * Benötigt für die Keybindfunktion
+		 * Bentigt fr die Keybindfunktion
 		 */
 		for (Panel p : rpanels) {
 			if (p != null && p.visible && p.extended && p.Elements != null && p.Elements.size() > 0) {
