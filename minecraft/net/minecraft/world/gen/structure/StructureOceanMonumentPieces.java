@@ -1657,7 +1657,7 @@ public class StructureOceanMonumentPieces
                 var9.func_175467_a(true);
                 var9.heal(var9.getMaxHealth());
                 var9.setLocationAndAngles((double)var6 + 0.5D, (double)var7, (double)var8 + 0.5D, 0.0F, 0.0F);
-                var9.func_180482_a(worldIn.getDifficultyForLocation(new BlockPos(var9)), (IEntityLivingData)null);
+                var9.onInitialSpawn(worldIn.getDifficultyForLocation(new BlockPos(var9)), (IEntityLivingData)null);
                 worldIn.spawnEntityInWorld(var9);
                 return true;
             }

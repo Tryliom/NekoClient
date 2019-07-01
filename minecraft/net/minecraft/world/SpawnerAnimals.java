@@ -160,7 +160,7 @@ public final class SpawnerAnimals
 
                                                         if (var33.getCanSpawnHere() && var33.handleLavaMovement())
                                                         {
-                                                            var28 = var33.func_180482_a(p_77192_1_.getDifficultyForLocation(new BlockPos(var33)), var28);
+                                                            var28 = var33.onInitialSpawn(p_77192_1_.getDifficultyForLocation(new BlockPos(var33)), var28);
 
                                                             if (var33.handleLavaMovement())
                                                             {
@@ -282,7 +282,7 @@ public final class SpawnerAnimals
 
                             var19.setLocationAndAngles((double)((float)var11 + 0.5F), (double)var18.getY(), (double)((float)var12 + 0.5F), p_77191_6_.nextFloat() * 360.0F, 0.0F);
                             worldIn.spawnEntityInWorld(var19);
-                            var10 = var19.func_180482_a(worldIn.getDifficultyForLocation(new BlockPos(var19)), var10);
+                            var10 = var19.onInitialSpawn(worldIn.getDifficultyForLocation(new BlockPos(var19)), var10);
                             var16 = true;
                         }
 

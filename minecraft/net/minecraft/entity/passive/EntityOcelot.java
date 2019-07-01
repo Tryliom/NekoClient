@@ -44,7 +44,7 @@ public class EntityOcelot extends EntityTameable
     {
         super(worldIn);
         this.setSize(0.6F, 0.7F);
-        ((PathNavigateGround)this.getNavigator()).func_179690_a(true);
+        ((PathNavigateGround)this.getNavigator()).setAvoidsWater(true);
         this.tasks.addTask(1, new EntityAISwimming(this));
         this.tasks.addTask(2, this.aiSit);
         this.tasks.addTask(3, this.aiTempt = new EntityAITempt(this, 0.6D, Items.fish, true));
@@ -369,9 +369,9 @@ public class EntityOcelot extends EntityTameable
         }
     }
 
-    public IEntityLivingData func_180482_a(DifficultyInstance p_180482_1_, IEntityLivingData p_180482_2_)
+    public IEntityLivingData onInitialSpawn(DifficultyInstance p_180482_1_, IEntityLivingData p_180482_2_)
     {
-        p_180482_2_ = super.func_180482_a(p_180482_1_, p_180482_2_);
+        p_180482_2_ = super.onInitialSpawn(p_180482_1_, p_180482_2_);
 
         if (this.worldObj.rand.nextInt(7) == 0)
         {

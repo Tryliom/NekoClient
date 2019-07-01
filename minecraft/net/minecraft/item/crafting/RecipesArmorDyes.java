@@ -107,7 +107,7 @@ public class RecipesArmorDyes implements IRecipe
                         return null;
                     }
 
-                    float[] var14 = EntitySheep.func_175513_a(EnumDyeColor.func_176766_a(var8.getMetadata()));
+                    float[] var14 = EntitySheep.func_175513_a(EnumDyeColor.byDyeDamage(var8.getMetadata()));
                     int var15 = (int)(var14[0] * 255.0F);
                     int var16 = (int)(var14[1] * 255.0F);
                     var17 = (int)(var14[2] * 255.0F);

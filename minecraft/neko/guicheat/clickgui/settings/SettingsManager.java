@@ -31,7 +31,7 @@ public class SettingsManager {
 	public ArrayList<Setting> getSettingsByMod(Module mod){
 		ArrayList<Setting> out = new ArrayList<>();
 		for(Setting s : getSettings()){
-			System.out.println(s + "/" + mod);
+			//System.out.println(s + "/" + mod);
 			if(s.getParentMod().equals(mod)){
 				out.add(s);
 			}

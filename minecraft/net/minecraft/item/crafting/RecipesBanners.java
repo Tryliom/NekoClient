@@ -21,7 +21,7 @@ public class RecipesBanners
         for (int var4 = 0; var4 < var3; ++var4)
         {
             EnumDyeColor var5 = var2[var4];
-            p_179534_1_.addRecipe(new ItemStack(Items.banner, 1, var5.getDyeColorDamage()), new Object[] {"###", "###", " | ", '#', new ItemStack(Blocks.wool, 1, var5.func_176765_a()), '|', Items.stick});
+            p_179534_1_.addRecipe(new ItemStack(Items.banner, 1, var5.getDyeColorDamage()), new Object[] {"###", "###", " | ", '#', new ItemStack(Blocks.wool, 1, var5.getMetadata()), '|', Items.stick});
         }
 
         p_179534_1_.func_180302_a(new RecipesBanners.RecipeDuplicatePattern(null));

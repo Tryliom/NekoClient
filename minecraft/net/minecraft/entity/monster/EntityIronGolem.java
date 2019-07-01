@@ -46,7 +46,7 @@ public class EntityIronGolem extends EntityGolem
     {
         super(worldIn);
         this.setSize(1.4F, 2.9F);
-        ((PathNavigateGround)this.getNavigator()).func_179690_a(true);
+        ((PathNavigateGround)this.getNavigator()).setAvoidsWater(true);
         this.tasks.addTask(1, new EntityAIAttackOnCollide(this, 1.0D, true));
         this.tasks.addTask(2, new EntityAIMoveTowardsTarget(this, 0.9D, 32.0F));
         this.tasks.addTask(3, new EntityAIMoveThroughVillage(this, 0.6D, true));
@@ -236,7 +236,7 @@ public class EntityIronGolem extends EntityGolem
         return "mob.irongolem.death";
     }
 
-    protected void func_180429_a(BlockPos p_180429_1_, Block p_180429_2_)
+    protected void playStepSound(BlockPos p_180429_1_, Block p_180429_2_)
     {
         this.playSound("mob.irongolem.walk", 1.0F, 1.0F);
     }

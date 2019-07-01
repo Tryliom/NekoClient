@@ -133,7 +133,7 @@ public class ItemFireworkCharge extends Item
                     if (var9 == ItemDye.dyeColors[var11])
                     {
                         var10 = true;
-                        var5 = var5 + StatCollector.translateToLocal("item.fireworksCharge." + EnumDyeColor.func_176766_a(var11).func_176762_d());
+                        var5 = var5 + StatCollector.translateToLocal("item.fireworksCharge." + EnumDyeColor.byDyeDamage(var11).func_176762_d());
                         break;
                     }
                 }
@@ -174,7 +174,7 @@ public class ItemFireworkCharge extends Item
                     if (var18 == ItemDye.dyeColors[var12])
                     {
                         var19 = true;
-                        var15 = var15 + StatCollector.translateToLocal("item.fireworksCharge." + EnumDyeColor.func_176766_a(var12).func_176762_d());
+                        var15 = var15 + StatCollector.translateToLocal("item.fireworksCharge." + EnumDyeColor.byDyeDamage(var12).func_176762_d());
                         break;
                     }
                 }

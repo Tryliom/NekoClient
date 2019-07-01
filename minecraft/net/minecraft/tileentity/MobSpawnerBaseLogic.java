@@ -218,7 +218,7 @@ public abstract class MobSpawnerBaseLogic
         }
         else if (p_180613_1_ instanceof EntityLivingBase && p_180613_1_.worldObj != null && p_180613_2_)
         {
-            ((EntityLiving)p_180613_1_).func_180482_a(p_180613_1_.worldObj.getDifficultyForLocation(new BlockPos(p_180613_1_)), (IEntityLivingData)null);
+            ((EntityLiving)p_180613_1_).onInitialSpawn(p_180613_1_.worldObj.getDifficultyForLocation(new BlockPos(p_180613_1_)), (IEntityLivingData)null);
             p_180613_1_.worldObj.spawnEntityInWorld(p_180613_1_);
         }
 

@@ -695,7 +695,7 @@ public class ComponentScatteredFeaturePieces
                         this.hasWitch = true;
                         EntityWitch var11 = new EntityWitch(worldIn);
                         var11.setLocationAndAngles((double)var8 + 0.5D, (double)var9, (double)var10 + 0.5D, 0.0F, 0.0F);
-                        var11.func_180482_a(worldIn.getDifficultyForLocation(new BlockPos(var8, var9, var10)), (IEntityLivingData)null);
+                        var11.onInitialSpawn(worldIn.getDifficultyForLocation(new BlockPos(var8, var9, var10)), (IEntityLivingData)null);
                         worldIn.spawnEntityInWorld(var11);
                     }
                 }

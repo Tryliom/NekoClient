@@ -27,6 +27,6 @@ public class ItemCloth extends ItemBlock
      */
     public String getUnlocalizedName(ItemStack stack)
     {
-        return super.getUnlocalizedName() + "." + EnumDyeColor.func_176764_b(stack.getMetadata()).func_176762_d();
+        return super.getUnlocalizedName() + "." + EnumDyeColor.byMetadata(stack.getMetadata()).func_176762_d();
     }
 }

@@ -33,7 +33,7 @@ public class EntityPig extends EntityAnimal
     {
         super(worldIn);
         this.setSize(0.9F, 0.9F);
-        ((PathNavigateGround)this.getNavigator()).func_179690_a(true);
+        ((PathNavigateGround)this.getNavigator()).setAvoidsWater(true);
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityAIPanic(this, 1.25D));
         this.tasks.addTask(2, this.aiControlledByPlayer = new EntityAIControlledByPlayer(this, 0.3F));
@@ -111,7 +111,7 @@ public class EntityPig extends EntityAnimal
         return "mob.pig.death";
     }
 
-    protected void func_180429_a(BlockPos p_180429_1_, Block p_180429_2_)
+    protected void playStepSound(BlockPos p_180429_1_, Block p_180429_2_)
     {
         this.playSound("mob.pig.step", 0.15F, 1.0F);
     }

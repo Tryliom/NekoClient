@@ -26,7 +26,7 @@ public class EntityCow extends EntityAnimal
     {
         super(worldIn);
         this.setSize(0.9F, 1.3F);
-        ((PathNavigateGround)this.getNavigator()).func_179690_a(true);
+        ((PathNavigateGround)this.getNavigator()).setAvoidsWater(true);
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityAIPanic(this, 2.0D));
         this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
@@ -68,7 +68,7 @@ public class EntityCow extends EntityAnimal
         return "mob.cow.hurt";
     }
 
-    protected void func_180429_a(BlockPos p_180429_1_, Block p_180429_2_)
+    protected void playStepSound(BlockPos p_180429_1_, Block p_180429_2_)
     {
         this.playSound("mob.cow.step", 0.15F, 1.0F);
     }

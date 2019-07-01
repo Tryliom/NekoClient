@@ -117,7 +117,7 @@ public abstract class EntityCreature extends EntityLiving
 
                 if (this.getNavigator() instanceof PathNavigateGround)
                 {
-                    ((PathNavigateGround)this.getNavigator()).func_179690_a(false);
+                    ((PathNavigateGround)this.getNavigator()).setAvoidsWater(false);
                 }
 
                 this.field_110180_bt = true;
@@ -152,7 +152,7 @@ public abstract class EntityCreature extends EntityLiving
 
             if (this.getNavigator() instanceof PathNavigateGround)
             {
-                ((PathNavigateGround)this.getNavigator()).func_179690_a(true);
+                ((PathNavigateGround)this.getNavigator()).setAvoidsWater(true);
             }
 
             this.detachHome();

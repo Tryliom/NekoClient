@@ -97,7 +97,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
         this.setSize(1.4F, 1.6F);
         this.isImmuneToFire = false;
         this.setChested(false);
-        ((PathNavigateGround)this.getNavigator()).func_179690_a(true);
+        ((PathNavigateGround)this.getNavigator()).setAvoidsWater(true);
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityAIPanic(this, 1.2D));
         this.tasks.addTask(1, new EntityAIRunAroundLikeCrazy(this, 1.2D));
@@ -613,7 +613,7 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
         return var1 != 3 && var1 != 4 ? (var1 != 1 && var1 != 2 ? "mob.horse.angry" : "mob.horse.donkey.angry") : null;
     }
 
-    protected void func_180429_a(BlockPos p_180429_1_, Block p_180429_2_)
+    protected void playStepSound(BlockPos p_180429_1_, Block p_180429_2_)
     {
         Block.SoundType var3 = p_180429_2_.stepSound;
 
@@ -1609,9 +1609,9 @@ public class EntityHorse extends EntityAnimal implements IInvBasic
         return var3;
     }
 
-    public IEntityLivingData func_180482_a(DifficultyInstance p_180482_1_, IEntityLivingData p_180482_2_)
+    public IEntityLivingData onInitialSpawn(DifficultyInstance p_180482_1_, IEntityLivingData p_180482_2_)
     {
-        Object p_180482_2_1 = super.func_180482_a(p_180482_1_, p_180482_2_);
+        Object p_180482_2_1 = super.onInitialSpawn(p_180482_1_, p_180482_2_);
         boolean var3 = false;
         int var4 = 0;
         int var8;

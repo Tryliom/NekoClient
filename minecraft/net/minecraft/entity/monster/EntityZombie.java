@@ -289,7 +289,7 @@ public class EntityZombie extends EntityMob
                         {
                             this.worldObj.spawnEntityInWorld(var7);
                             var7.setAttackTarget(var3);
-                            var7.func_180482_a(this.worldObj.getDifficultyForLocation(new BlockPos(var7)), (IEntityLivingData)null);
+                            var7.onInitialSpawn(this.worldObj.getDifficultyForLocation(new BlockPos(var7)), (IEntityLivingData)null);
                             this.getEntityAttribute(field_110186_bp).applyModifier(new AttributeModifier("Zombie reinforcement caller charge", -0.05000000074505806D, 0));
                             var7.getEntityAttribute(field_110186_bp).applyModifier(new AttributeModifier("Zombie reinforcement callee charge", -0.05000000074505806D, 0));
                             break;
@@ -366,7 +366,7 @@ public class EntityZombie extends EntityMob
         return "mob.zombie.death";
     }
 
-    protected void func_180429_a(BlockPos p_180429_1_, Block p_180429_2_)
+    protected void playStepSound(BlockPos p_180429_1_, Block p_180429_2_)
     {
         this.playSound("mob.zombie.step", 0.15F, 1.0F);
     }
@@ -506,7 +506,7 @@ public class EntityZombie extends EntityMob
                 EntityZombie var2 = new EntityZombie(this.worldObj);
                 var2.copyLocationAndAnglesFrom(entityLivingIn);
                 this.worldObj.removeEntity(entityLivingIn);
-                var2.func_180482_a(this.worldObj.getDifficultyForLocation(new BlockPos(var2)), (IEntityLivingData)null);
+                var2.onInitialSpawn(this.worldObj.getDifficultyForLocation(new BlockPos(var2)), (IEntityLivingData)null);
                 var2.setVillager(true);
 
                 if (entityLivingIn.isChild())
@@ -531,7 +531,7 @@ public class EntityZombie extends EntityMob
                 EntityZombie var2 = new EntityZombie(this.worldObj);
                 var2.copyLocationAndAnglesFrom(entityLivingIn);
                 this.worldObj.removeEntity(entityLivingIn);
-                var2.func_180482_a(this.worldObj.getDifficultyForLocation(new BlockPos(var2)), (IEntityLivingData)null);
+                var2.onInitialSpawn(this.worldObj.getDifficultyForLocation(new BlockPos(var2)), (IEntityLivingData)null);
                 var2.setVillager(true);
 
                 if (entityLivingIn.isChild())
@@ -562,9 +562,9 @@ public class EntityZombie extends EntityMob
         return p_175448_1_.getItem() == Items.egg && this.isChild() && this.isRiding() ? false : super.func_175448_a(p_175448_1_);
     }
 
-    public IEntityLivingData func_180482_a(DifficultyInstance p_180482_1_, IEntityLivingData p_180482_2_)
+    public IEntityLivingData onInitialSpawn(DifficultyInstance p_180482_1_, IEntityLivingData p_180482_2_)
     {
-        Object p_180482_2_1 = super.func_180482_a(p_180482_1_, p_180482_2_);
+        Object p_180482_2_1 = super.onInitialSpawn(p_180482_1_, p_180482_2_);
         float var3 = p_180482_1_.func_180170_c();
         this.setCanPickUpLoot(this.rand.nextFloat() < 0.55F * var3);
 
@@ -601,7 +601,7 @@ public class EntityZombie extends EntityMob
                 {
                     EntityChicken var10 = new EntityChicken(this.worldObj);
                     var10.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F);
-                    var10.func_180482_a(p_180482_1_, (IEntityLivingData)null);
+                    var10.onInitialSpawn(p_180482_1_, (IEntityLivingData)null);
                     var10.func_152117_i(true);
                     this.worldObj.spawnEntityInWorld(var10);
                     this.mountEntity(var10);
@@ -731,7 +731,7 @@ public class EntityZombie extends EntityMob
     {
         EntityVillager var1 = new EntityVillager(this.worldObj);
         var1.copyLocationAndAnglesFrom(this);
-        var1.func_180482_a(this.worldObj.getDifficultyForLocation(new BlockPos(var1)), (IEntityLivingData)null);
+        var1.onInitialSpawn(this.worldObj.getDifficultyForLocation(new BlockPos(var1)), (IEntityLivingData)null);
         var1.setLookingForHome();
 
         if (this.isChild())

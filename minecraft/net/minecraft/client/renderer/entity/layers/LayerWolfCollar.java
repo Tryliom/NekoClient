@@ -23,7 +23,7 @@ public class LayerWolfCollar implements LayerRenderer
         if (p_177145_1_.isTamed() && !p_177145_1_.isInvisible())
         {
             this.field_177146_b.bindTexture(field_177147_a);
-            EnumDyeColor var9 = EnumDyeColor.func_176764_b(p_177145_1_.func_175546_cu().func_176765_a());
+            EnumDyeColor var9 = EnumDyeColor.byMetadata(p_177145_1_.func_175546_cu().getMetadata());
             float[] var10 = EntitySheep.func_175513_a(var9);
             GlStateManager.color(var10[0], var10[1], var10[2]);
             this.field_177146_b.getMainModel().render(p_177145_1_, p_177145_2_, p_177145_3_, p_177145_5_, p_177145_6_, p_177145_7_, p_177145_8_);

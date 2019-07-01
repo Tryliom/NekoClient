@@ -77,7 +77,7 @@ public class EntityAIFollowOwner extends EntityAIBase
     {
         this.field_75343_h = 0;
         this.field_75344_i = ((PathNavigateGround)this.thePet.getNavigator()).func_179689_e();
-        ((PathNavigateGround)this.thePet.getNavigator()).func_179690_a(false);
+        ((PathNavigateGround)this.thePet.getNavigator()).setAvoidsWater(false);
     }
 
     /**
@@ -87,7 +87,7 @@ public class EntityAIFollowOwner extends EntityAIBase
     {
         this.theOwner = null;
         this.petPathfinder.clearPathEntity();
-        ((PathNavigateGround)this.thePet.getNavigator()).func_179690_a(true);
+        ((PathNavigateGround)this.thePet.getNavigator()).setAvoidsWater(true);
     }
 
     /**

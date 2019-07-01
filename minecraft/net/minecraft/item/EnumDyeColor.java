@@ -43,7 +43,7 @@ public enum EnumDyeColor implements IStringSerializable
         this.field_176793_x = p_i45786_8_;
     }
 
-    public int func_176765_a()
+    public int getMetadata()
     {
         return this.field_176788_s;
     }
@@ -63,7 +63,7 @@ public enum EnumDyeColor implements IStringSerializable
         return this.field_176784_w;
     }
 
-    public static EnumDyeColor func_176766_a(int p_176766_0_)
+    public static EnumDyeColor byDyeDamage(int p_176766_0_)
     {
         if (p_176766_0_ < 0 || p_176766_0_ >= field_176789_r.length)
         {
@@ -73,7 +73,7 @@ public enum EnumDyeColor implements IStringSerializable
         return field_176789_r[p_176766_0_];
     }
 
-    public static EnumDyeColor func_176764_b(int p_176764_0_)
+    public static EnumDyeColor byMetadata(int p_176764_0_)
     {
         if (p_176764_0_ < 0 || p_176764_0_ >= field_176790_q.length)
         {
@@ -100,7 +100,7 @@ public enum EnumDyeColor implements IStringSerializable
         for (int var2 = 0; var2 < var1; ++var2)
         {
             EnumDyeColor var3 = var0[var2];
-            field_176790_q[var3.func_176765_a()] = var3;
+            field_176790_q[var3.getMetadata()] = var3;
             field_176789_r[var3.getDyeColorDamage()] = var3;
         }
     }

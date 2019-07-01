@@ -59,7 +59,7 @@ public class EntityRabbit extends EntityAnimal
         this.setSize(0.6F, 0.7F);
         this.jumpHelper = new EntityRabbit.RabbitJumpHelper(this);
         this.moveHelper = new EntityRabbit.RabbitMoveHelper();
-        ((PathNavigateGround)this.getNavigator()).func_179690_a(true);
+        ((PathNavigateGround)this.getNavigator()).setAvoidsWater(true);
         this.navigator.func_179678_a(2.5F);
         this.tasks.addTask(1, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityRabbit.AIPanic(1.33D));
@@ -439,9 +439,9 @@ public class EntityRabbit extends EntityAnimal
         this.dataWatcher.updateObject(18, Byte.valueOf((byte)p_175529_1_));
     }
 
-    public IEntityLivingData func_180482_a(DifficultyInstance p_180482_1_, IEntityLivingData p_180482_2_)
+    public IEntityLivingData onInitialSpawn(DifficultyInstance p_180482_1_, IEntityLivingData p_180482_2_)
     {
-        Object p_180482_2_1 = super.func_180482_a(p_180482_1_, p_180482_2_);
+        Object p_180482_2_1 = super.onInitialSpawn(p_180482_1_, p_180482_2_);
         int var3 = this.rand.nextInt(6);
         boolean var4 = false;
 

@@ -110,7 +110,7 @@ public class ItemBanner extends ItemBlock
             for (int var7 = 0; var7 < var6.tagCount() && var7 < 6; ++var7)
             {
                 NBTTagCompound var8 = var6.getCompoundTagAt(var7);
-                EnumDyeColor var9 = EnumDyeColor.func_176766_a(var8.getInteger("Color"));
+                EnumDyeColor var9 = EnumDyeColor.byDyeDamage(var8.getInteger("Color"));
                 TileEntityBanner.EnumBannerPattern var10 = TileEntityBanner.EnumBannerPattern.func_177268_a(var8.getString("Pattern"));
 
                 if (var10 != null)
@@ -166,11 +166,11 @@ public class ItemBanner extends ItemBlock
 
         if (var2 != null && var2.hasKey("Base"))
         {
-            var3 = EnumDyeColor.func_176766_a(var2.getInteger("Base"));
+            var3 = EnumDyeColor.byDyeDamage(var2.getInteger("Base"));
         }
         else
         {
-            var3 = EnumDyeColor.func_176766_a(p_179225_1_.getMetadata());
+            var3 = EnumDyeColor.byDyeDamage(p_179225_1_.getMetadata());
         }
 
         return var3;

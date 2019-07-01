@@ -108,6 +108,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
         {
             ((GuiLabel)this.labelList.get(var4)).drawLabel(this.mc, mouseX, mouseY);
         }
+        
     }
 
     /**

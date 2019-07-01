@@ -27,6 +27,7 @@ import neko.module.other.Necklace;
 import neko.module.other.Rank;
 import neko.module.other.TempBon;
 import neko.module.other.enums.Chat;
+import neko.updater.Updater;
 import neko.utils.ChatUtils;
 import neko.utils.Utils;
 import net.mcleaks.MCLeaks;
@@ -47,7 +48,7 @@ public class Client {
 	public final String CLIENT_AUTHOR = "Tryliom et Marie";
 
 	
-	public final String CLIENT_VERSION = "2.8.7";
+	public static final String CLIENT_VERSION = "2.8.7";
 	public String mode = "Player";
 	public Rank rang;
 	public Necklace necklace;
@@ -77,7 +78,8 @@ public class Client {
 	public boolean firstServDisplay = true;
 	public String strNeko = "§bNeko v" + CLIENT_VERSION;
 	public String strCreator = "§eCréé par §f§lTryliom§e et §f§lMarie";
-
+	private static String currentFolder = Minecraft.class.getProtectionDomain().getCodeSource().getLocation().getPath().replace("/"+new java.io.File(Minecraft.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getName(), "");
+	
 	public void startClient() {
 		
 		time.start();
@@ -96,6 +98,18 @@ public class Client {
 			if (!s.get(0).equals(CLIENT_VERSION)) {
 				ver = s.get(0);
 				changelog = s.get(1);
+				//On met à jour
+				/*
+				 * 
+				 *
+				 */
+				/*System.out.println("*****");
+				System.out.println("ProtectDomain: (w url) :" + Minecraft.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+				System.out.println("Last: (wo url) :" + Minecraft.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+				
+				System.out.println("OwO ======");
+				System.out.println(currentFolder);*/
+				//Updater.update(ver);
 			} else {
 				System.out.println("Version à jour !");
 			}

@@ -26,6 +26,7 @@ import neko.event.EventManager;
 import neko.gui.GuiAltManager;
 import neko.gui.GuiConnect;
 import neko.gui.GuiMenuNeko;
+import neko.gui.GuiUpdate;
 import neko.guicheat.clickgui.ClickGUI;
 import neko.guicheat.clickgui.settings.SettingsManager;
 import neko.manager.ModuleManager;
@@ -714,8 +715,13 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         	this.drawString(fontRendererObj, "§eConnecté en tant que: §b" + Minecraft.getMinecraft().getSession().getUsername(), 10, 40, -1);
         	
         	if (!Client.getNeko().ver.isEmpty()) {
+        		
+        		//TODO: Update
+        		
 
-        		this.drawCenteredString(Client.getNeko().NekoFont, "§3§nUne nouvelle version est disponible !", this.width - 110, this.height/2 - this.height/12, -1);
+    	    	mc.displayGuiScreen(new GuiUpdate(this, 1, Client.getNeko().ver));
+
+        		/*this.drawCenteredString(Client.getNeko().NekoFont, "§3§nUne nouvelle version est disponible !", this.width - 110, this.height/2 - this.height/12, -1);
         		this.drawCenteredString(Client.getNeko().NekoFont, "§eVersion supérieure: §b"+Client.getNeko().ver, this.width - 110, this.height/2 - this.height/60, -1);
         		this.drawCenteredString(Client.getNeko().NekoFont, "§eAjout principal: §b"+Client.getNeko().changelog, this.width - 110, this.height/2 + this.height/30, -1);
         		
@@ -725,9 +731,9 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         				if (((GuiButton) gb).id==770)
         					b = false;
         			}
-        		}
-        		if (b)
-        			this.buttonList.add(new GuiButton(770, this.width - 155, this.height/2 + 25, 90, 20, "§f§lMettre à jour"));
+        		}*/
+        		//if (b)
+        			//this.buttonList.add(new GuiButton(770, this.width - 155, this.height/2 + 25, 90, 20, "§f§lMettre à jour"));
         	}
         	var11=Client.getNeko().strCreator;
         }

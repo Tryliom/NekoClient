@@ -103,7 +103,7 @@ public class EntityVillager extends EntityAgeable implements INpc, IMerchant
         this.setProfession(p_i1748_2_);
         this.setSize(0.6F, 1.8F);
         ((PathNavigateGround)this.getNavigator()).func_179688_b(true);
-        ((PathNavigateGround)this.getNavigator()).func_179690_a(true);
+        ((PathNavigateGround)this.getNavigator()).setAvoidsWater(true);
         this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(1, new EntityAIAvoidEntity(this, new Predicate()
         {
@@ -740,9 +740,9 @@ public class EntityVillager extends EntityAgeable implements INpc, IMerchant
         }
     }
 
-    public IEntityLivingData func_180482_a(DifficultyInstance p_180482_1_, IEntityLivingData p_180482_2_)
+    public IEntityLivingData onInitialSpawn(DifficultyInstance p_180482_1_, IEntityLivingData p_180482_2_)
     {
-        p_180482_2_ = super.func_180482_a(p_180482_1_, p_180482_2_);
+        p_180482_2_ = super.onInitialSpawn(p_180482_1_, p_180482_2_);
         this.setProfession(this.worldObj.rand.nextInt(5));
         this.func_175552_ct();
         return p_180482_2_;
@@ -756,7 +756,7 @@ public class EntityVillager extends EntityAgeable implements INpc, IMerchant
     public EntityVillager func_180488_b(EntityAgeable p_180488_1_)
     {
         EntityVillager var2 = new EntityVillager(this.worldObj);
-        var2.func_180482_a(this.worldObj.getDifficultyForLocation(new BlockPos(var2)), (IEntityLivingData)null);
+        var2.onInitialSpawn(this.worldObj.getDifficultyForLocation(new BlockPos(var2)), (IEntityLivingData)null);
         return var2;
     }
 
@@ -774,7 +774,7 @@ public class EntityVillager extends EntityAgeable implements INpc, IMerchant
         {
             EntityWitch var2 = new EntityWitch(this.worldObj);
             var2.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
-            var2.func_180482_a(this.worldObj.getDifficultyForLocation(new BlockPos(var2)), (IEntityLivingData)null);
+            var2.onInitialSpawn(this.worldObj.getDifficultyForLocation(new BlockPos(var2)), (IEntityLivingData)null);
             this.worldObj.spawnEntityInWorld(var2);
             this.setDead();
         }

@@ -28,7 +28,7 @@ public class EntitySnowman extends EntityGolem implements IRangedAttackMob
     {
         super(worldIn);
         this.setSize(0.7F, 1.9F);
-        ((PathNavigateGround)this.getNavigator()).func_179690_a(true);
+        ((PathNavigateGround)this.getNavigator()).setAvoidsWater(true);
         this.tasks.addTask(1, new EntityAIArrowAttack(this, 1.25D, 20, 10.0F));
         this.tasks.addTask(2, new EntityAIWander(this, 1.0D));
         this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));

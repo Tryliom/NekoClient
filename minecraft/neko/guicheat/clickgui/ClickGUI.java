@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javax.swing.JScrollBar;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 

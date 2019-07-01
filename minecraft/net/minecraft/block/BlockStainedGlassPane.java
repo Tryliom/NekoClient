@@ -30,7 +30,7 @@ public class BlockStainedGlassPane extends BlockPane
      */
     public int damageDropped(IBlockState state)
     {
-        return ((EnumDyeColor)state.getValue(field_176245_a)).func_176765_a();
+        return ((EnumDyeColor)state.getValue(field_176245_a)).getMetadata();
     }
 
     /**
@@ -54,7 +54,7 @@ public class BlockStainedGlassPane extends BlockPane
      */
     public IBlockState getStateFromMeta(int meta)
     {
-        return this.getDefaultState().withProperty(field_176245_a, EnumDyeColor.func_176764_b(meta));
+        return this.getDefaultState().withProperty(field_176245_a, EnumDyeColor.byMetadata(meta));
     }
 
     /**
@@ -62,7 +62,7 @@ public class BlockStainedGlassPane extends BlockPane
      */
     public int getMetaFromState(IBlockState state)
     {
-        return ((EnumDyeColor)state.getValue(field_176245_a)).func_176765_a();
+        return ((EnumDyeColor)state.getValue(field_176245_a)).getMetadata();
     }
 
     protected BlockState createBlockState()

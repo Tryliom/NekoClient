@@ -125,7 +125,7 @@ public class EntityAITempt extends EntityAIBase
         this.targetZ = this.temptingPlayer.posZ;
         this.isRunning = true;
         this.field_75286_m = ((PathNavigateGround)this.temptedEntity.getNavigator()).func_179689_e();
-        ((PathNavigateGround)this.temptedEntity.getNavigator()).func_179690_a(false);
+        ((PathNavigateGround)this.temptedEntity.getNavigator()).setAvoidsWater(false);
     }
 
     /**
@@ -137,7 +137,7 @@ public class EntityAITempt extends EntityAIBase
         this.temptedEntity.getNavigator().clearPathEntity();
         this.delayTemptCounter = 100;
         this.isRunning = false;
-        ((PathNavigateGround)this.temptedEntity.getNavigator()).func_179690_a(this.field_75286_m);
+        ((PathNavigateGround)this.temptedEntity.getNavigator()).setAvoidsWater(this.field_75286_m);
     }
 
     /**

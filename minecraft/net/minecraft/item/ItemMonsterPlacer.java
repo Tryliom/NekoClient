@@ -202,7 +202,7 @@ public class ItemMonsterPlacer extends Item
                     var8.setLocationAndAngles(p_77840_2_, p_77840_4_, p_77840_6_, MathHelper.wrapAngleTo180_float(worldIn.rand.nextFloat() * 360.0F), 0.0F);
                     var10.rotationYawHead = var10.rotationYaw;
                     var10.renderYawOffset = var10.rotationYaw;
-                    var10.func_180482_a(worldIn.getDifficultyForLocation(new BlockPos(var10)), (IEntityLivingData)null);
+                    var10.onInitialSpawn(worldIn.getDifficultyForLocation(new BlockPos(var10)), (IEntityLivingData)null);
                     worldIn.spawnEntityInWorld(var8);
                     var10.playLivingSound();
                 }

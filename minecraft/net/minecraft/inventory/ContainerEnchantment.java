@@ -68,7 +68,7 @@ public class ContainerEnchantment extends Container
         {
             public boolean isItemValid(ItemStack stack)
             {
-                return stack.getItem() == Items.dye && EnumDyeColor.func_176766_a(stack.getMetadata()) == EnumDyeColor.BLUE;
+                return stack.getItem() == Items.dye && EnumDyeColor.byDyeDamage(stack.getMetadata()) == EnumDyeColor.BLUE;
             }
         });
         int var4;
@@ -378,7 +378,7 @@ public class ContainerEnchantment extends Container
                     return null;
                 }
             }
-            else if (var5.getItem() == Items.dye && EnumDyeColor.func_176766_a(var5.getMetadata()) == EnumDyeColor.BLUE)
+            else if (var5.getItem() == Items.dye && EnumDyeColor.byDyeDamage(var5.getMetadata()) == EnumDyeColor.BLUE)
             {
                 if (!this.mergeItemStack(var5, 1, 2, true))
                 {

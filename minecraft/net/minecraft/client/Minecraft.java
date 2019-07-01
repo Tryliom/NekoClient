@@ -2015,7 +2015,11 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                         Client var = Client.getNeko();
                     	for(Module eventModule : var.moduleManager.ActiveModule) {
                     		if(Keyboard.getEventKey() == eventModule.getBind() && Utils.verif==null && !Utils.isLock(eventModule.getName())) {
-                    			eventModule.toggleModule();
+                    			if(eventModule.isCommand()) {
+                    				eventModule.CommandAction();
+                    			} else {
+                        			eventModule.toggleModule();
+                    			}
                     		} else if (Keyboard.getEventKey() == eventModule.getBind() && Utils.verif==null && Utils.isLock(eventModule.getName())) {
                     			Utils.addWarn(eventModule.getName());
                     		}

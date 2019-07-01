@@ -56,7 +56,7 @@ public class EntityCaveSpider extends EntitySpider
         }
     }
 
-    public IEntityLivingData func_180482_a(DifficultyInstance p_180482_1_, IEntityLivingData p_180482_2_)
+    public IEntityLivingData onInitialSpawn(DifficultyInstance p_180482_1_, IEntityLivingData p_180482_2_)
     {
         return p_180482_2_;
     }

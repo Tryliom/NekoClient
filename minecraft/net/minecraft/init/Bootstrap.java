@@ -338,7 +338,7 @@ public class Bootstrap
             private boolean field_150838_b = true;
             protected ItemStack dispenseStack(IBlockSource source, ItemStack stack)
             {
-                if (EnumDyeColor.WHITE == EnumDyeColor.func_176766_a(stack.getMetadata()))
+                if (EnumDyeColor.WHITE == EnumDyeColor.byDyeDamage(stack.getMetadata()))
                 {
                     World var3 = source.getWorld();
                     BlockPos var4 = source.getBlockPos().offset(BlockDispenser.getFacing(source.getBlockMetadata()));

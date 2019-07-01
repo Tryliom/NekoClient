@@ -60,7 +60,7 @@ public class EntityWolf extends EntityTameable
     {
         super(worldIn);
         this.setSize(0.6F, 0.8F);
-        ((PathNavigateGround)this.getNavigator()).func_179690_a(true);
+        ((PathNavigateGround)this.getNavigator()).setAvoidsWater(true);
         this.tasks.addTask(1, new EntityAISwimming(this));
         this.tasks.addTask(2, this.aiSit);
         this.tasks.addTask(3, new EntityAILeapAtTarget(this, 0.4F));
@@ -134,10 +134,10 @@ public class EntityWolf extends EntityTameable
         super.entityInit();
         this.dataWatcher.addObject(18, new Float(this.getHealth()));
         this.dataWatcher.addObject(19, new Byte((byte)0));
-        this.dataWatcher.addObject(20, new Byte((byte)EnumDyeColor.RED.func_176765_a()));
+        this.dataWatcher.addObject(20, new Byte((byte)EnumDyeColor.RED.getMetadata()));
     }
 
-    protected void func_180429_a(BlockPos p_180429_1_, Block p_180429_2_)
+    protected void playStepSound(BlockPos p_180429_1_, Block p_180429_2_)
     {
         this.playSound("mob.wolf.step", 0.15F, 1.0F);
     }
@@ -162,7 +162,7 @@ public class EntityWolf extends EntityTameable
 
         if (tagCompund.hasKey("CollarColor", 99))
         {
-            this.func_175547_a(EnumDyeColor.func_176766_a(tagCompund.getByte("CollarColor")));
+            this.func_175547_a(EnumDyeColor.byDyeDamage(tagCompund.getByte("CollarColor")));
         }
     }
 
@@ -418,7 +418,7 @@ public class EntityWolf extends EntityTameable
                 }
                 else if (var2.getItem() == Items.dye)
                 {
-                    EnumDyeColor var4 = EnumDyeColor.func_176766_a(var2.getMetadata());
+                    EnumDyeColor var4 = EnumDyeColor.byDyeDamage(var2.getMetadata());
 
                     if (var4 != this.func_175546_cu())
                     {
@@ -543,7 +543,7 @@ public class EntityWolf extends EntityTameable
 
     public EnumDyeColor func_175546_cu()
     {
-        return EnumDyeColor.func_176766_a(this.dataWatcher.getWatchableObjectByte(20) & 15);
+        return EnumDyeColor.byDyeDamage(this.dataWatcher.getWatchableObjectByte(20) & 15);
     }
 
     public void func_175547_a(EnumDyeColor p_175547_1_)

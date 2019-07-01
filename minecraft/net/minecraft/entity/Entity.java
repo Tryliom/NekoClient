@@ -898,7 +898,7 @@ public abstract class Entity implements ICommandSender
                         this.playSound(this.getSwimSound(), var34, 1.0F + (this.rand.nextFloat() - this.rand.nextFloat()) * 0.4F);
                     }
 
-                    this.func_180429_a(var26, var60);
+                    this.playStepSound(var26, var60);
                 }
             }
 
@@ -990,7 +990,7 @@ public abstract class Entity implements ICommandSender
         }
     }
 
-    protected void func_180429_a(BlockPos p_180429_1_, Block p_180429_2_)
+    protected void playStepSound(BlockPos p_180429_1_, Block p_180429_2_)
     {
         Block.SoundType var3 = p_180429_2_.stepSound;
 

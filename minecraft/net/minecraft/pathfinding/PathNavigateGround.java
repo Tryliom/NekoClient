@@ -251,7 +251,7 @@ public class PathNavigateGround extends PathNavigate
         return true;
     }
 
-    public void func_179690_a(boolean p_179690_1_)
+    public void setAvoidsWater(boolean p_179690_1_)
     {
         this.field_179695_a.func_176176_c(p_179690_1_);
     }

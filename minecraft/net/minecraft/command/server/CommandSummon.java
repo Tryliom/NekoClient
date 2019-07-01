@@ -115,7 +115,7 @@ public class CommandSummon extends CommandBase
 
                     if (!var14 && var21 instanceof EntityLiving)
                     {
-                        ((EntityLiving)var21).func_180482_a(var12.getDifficultyForLocation(new BlockPos(var21)), (IEntityLivingData)null);
+                        ((EntityLiving)var21).onInitialSpawn(var12.getDifficultyForLocation(new BlockPos(var21)), (IEntityLivingData)null);
                     }
 
                     var12.spawnEntityInWorld(var21);

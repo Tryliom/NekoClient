@@ -181,7 +181,7 @@ public class VillageSiege
             try
             {
                 var2 = new EntityZombie(this.worldObj);
-                var2.func_180482_a(this.worldObj.getDifficultyForLocation(new BlockPos(var2)), (IEntityLivingData)null);
+                var2.onInitialSpawn(this.worldObj.getDifficultyForLocation(new BlockPos(var2)), (IEntityLivingData)null);
                 var2.setVillager(false);
             }
             catch (Exception var4)

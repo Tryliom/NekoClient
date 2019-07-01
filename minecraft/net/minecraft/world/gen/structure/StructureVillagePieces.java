@@ -1659,7 +1659,7 @@ public class StructureVillagePieces
                     ++this.villagersSpawned;
                     EntityVillager var11 = new EntityVillager(worldIn);
                     var11.setLocationAndAngles((double)var8 + 0.5D, (double)var9, (double)var10 + 0.5D, 0.0F, 0.0F);
-                    var11.func_180482_a(worldIn.getDifficultyForLocation(new BlockPos(var11)), (IEntityLivingData)null);
+                    var11.onInitialSpawn(worldIn.getDifficultyForLocation(new BlockPos(var11)), (IEntityLivingData)null);
                     var11.setProfession(this.func_180779_c(var7, var11.getProfession()));
                     worldIn.spawnEntityInWorld(var11);
                 }

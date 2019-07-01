@@ -32,7 +32,7 @@ public class BlockStainedGlass extends BlockBreakable
      */
     public int damageDropped(IBlockState state)
     {
-        return ((EnumDyeColor)state.getValue(field_176547_a)).func_176765_a();
+        return ((EnumDyeColor)state.getValue(field_176547_a)).getMetadata();
     }
 
     /**
@@ -46,7 +46,7 @@ public class BlockStainedGlass extends BlockBreakable
         for (int var6 = 0; var6 < var5; ++var6)
         {
             EnumDyeColor var7 = var4[var6];
-            list.add(new ItemStack(itemIn, 1, var7.func_176765_a()));
+            list.add(new ItemStack(itemIn, 1, var7.getMetadata()));
         }
     }
 
@@ -86,7 +86,7 @@ public class BlockStainedGlass extends BlockBreakable
      */
     public IBlockState getStateFromMeta(int meta)
     {
-        return this.getDefaultState().withProperty(field_176547_a, EnumDyeColor.func_176764_b(meta));
+        return this.getDefaultState().withProperty(field_176547_a, EnumDyeColor.byMetadata(meta));
     }
 
     public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
@@ -110,7 +110,7 @@ public class BlockStainedGlass extends BlockBreakable
      */
     public int getMetaFromState(IBlockState state)
     {
-        return ((EnumDyeColor)state.getValue(field_176547_a)).func_176765_a();
+        return ((EnumDyeColor)state.getValue(field_176547_a)).getMetadata();
     }
 
     protected BlockState createBlockState()

@@ -134,7 +134,7 @@ public class TileEntityBanner extends TileEntity
                 this.field_175122_h = Lists.newArrayList();
                 this.field_175123_i = Lists.newArrayList();
                 this.field_175122_h.add(TileEntityBanner.EnumBannerPattern.BASE);
-                this.field_175123_i.add(EnumDyeColor.func_176766_a(this.baseColor));
+                this.field_175123_i.add(EnumDyeColor.byDyeDamage(this.baseColor));
                 this.field_175121_j = "b" + this.baseColor;
 
                 if (this.field_175118_f != null)
@@ -148,7 +148,7 @@ public class TileEntityBanner extends TileEntity
                         {
                             this.field_175122_h.add(var3);
                             int var4 = var2.getInteger("Color");
-                            this.field_175123_i.add(EnumDyeColor.func_176766_a(var4));
+                            this.field_175123_i.add(EnumDyeColor.byDyeDamage(var4));
                             this.field_175121_j = this.field_175121_j + var3.func_177273_b() + var4;
                         }
                     }

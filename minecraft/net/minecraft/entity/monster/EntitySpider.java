@@ -101,7 +101,7 @@ public class EntitySpider extends EntityMob
         return "mob.spider.death";
     }
 
-    protected void func_180429_a(BlockPos p_180429_1_, Block p_180429_2_)
+    protected void playStepSound(BlockPos p_180429_1_, Block p_180429_2_)
     {
         this.playSound("mob.spider.step", 0.15F, 1.0F);
     }
@@ -179,15 +179,15 @@ public class EntitySpider extends EntityMob
         this.dataWatcher.updateObject(16, Byte.valueOf(var2));
     }
 
-    public IEntityLivingData func_180482_a(DifficultyInstance p_180482_1_, IEntityLivingData p_180482_2_)
+    public IEntityLivingData onInitialSpawn(DifficultyInstance p_180482_1_, IEntityLivingData p_180482_2_)
     {
-        Object p_180482_2_1 = super.func_180482_a(p_180482_1_, p_180482_2_);
+        Object p_180482_2_1 = super.onInitialSpawn(p_180482_1_, p_180482_2_);
 
         if (this.worldObj.rand.nextInt(100) == 0)
         {
             EntitySkeleton var3 = new EntitySkeleton(this.worldObj);
             var3.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F);
-            var3.func_180482_a(p_180482_1_, (IEntityLivingData)null);
+            var3.onInitialSpawn(p_180482_1_, (IEntityLivingData)null);
             this.worldObj.spawnEntityInWorld(var3);
             var3.mountEntity(this);
         }

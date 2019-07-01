@@ -103,7 +103,7 @@ public class BlockCarpet extends Block
      */
     public int damageDropped(IBlockState state)
     {
-        return ((EnumDyeColor)state.getValue(field_176330_a)).func_176765_a();
+        return ((EnumDyeColor)state.getValue(field_176330_a)).getMetadata();
     }
 
     /**
@@ -122,7 +122,7 @@ public class BlockCarpet extends Block
      */
     public IBlockState getStateFromMeta(int meta)
     {
-        return this.getDefaultState().withProperty(field_176330_a, EnumDyeColor.func_176764_b(meta));
+        return this.getDefaultState().withProperty(field_176330_a, EnumDyeColor.byMetadata(meta));
     }
 
     /**
@@ -130,7 +130,7 @@ public class BlockCarpet extends Block
      */
     public int getMetaFromState(IBlockState state)
     {
-        return ((EnumDyeColor)state.getValue(field_176330_a)).func_176765_a();
+        return ((EnumDyeColor)state.getValue(field_176330_a)).getMetadata();
     }
 
     protected BlockState createBlockState()

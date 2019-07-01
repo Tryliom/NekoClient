@@ -379,7 +379,7 @@ public class EntitySlime extends EntityLiving implements IMob
         this.isAirBorne = true;
     }
 
-    public IEntityLivingData func_180482_a(DifficultyInstance p_180482_1_, IEntityLivingData p_180482_2_)
+    public IEntityLivingData onInitialSpawn(DifficultyInstance p_180482_1_, IEntityLivingData p_180482_2_)
     {
         int var3 = this.rand.nextInt(3);
 
@@ -390,7 +390,7 @@ public class EntitySlime extends EntityLiving implements IMob
 
         int var4 = 1 << var3;
         this.setSlimeSize(var4);
-        return super.func_180482_a(p_180482_1_, p_180482_2_);
+        return super.onInitialSpawn(p_180482_1_, p_180482_2_);
     }
 
     class AISlimeAttack extends EntityAIBase

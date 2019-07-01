@@ -112,7 +112,7 @@ public class EntitySkeleton extends EntityMob implements IRangedAttackMob
         return "mob.skeleton.death";
     }
 
-    protected void func_180429_a(BlockPos p_180429_1_, Block p_180429_2_)
+    protected void playStepSound(BlockPos p_180429_1_, Block p_180429_2_)
     {
         this.playSound("mob.skeleton.step", 0.15F, 1.0F);
     }
@@ -285,9 +285,9 @@ public class EntitySkeleton extends EntityMob implements IRangedAttackMob
         this.setCurrentItemOrArmor(0, new ItemStack(Items.bow));
     }
 
-    public IEntityLivingData func_180482_a(DifficultyInstance p_180482_1_, IEntityLivingData p_180482_2_)
+    public IEntityLivingData onInitialSpawn(DifficultyInstance p_180482_1_, IEntityLivingData p_180482_2_)
     {
-        p_180482_2_ = super.func_180482_a(p_180482_1_, p_180482_2_);
+        p_180482_2_ = super.onInitialSpawn(p_180482_1_, p_180482_2_);
 
         if (this.worldObj.provider instanceof WorldProviderHell && this.getRNG().nextInt(5) > 0)
         {

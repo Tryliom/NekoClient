@@ -34,7 +34,7 @@ public class ItemDye extends Item
     public String getUnlocalizedName(ItemStack stack)
     {
         int var2 = stack.getMetadata();
-        return super.getUnlocalizedName() + "." + EnumDyeColor.func_176766_a(var2).func_176762_d();
+        return super.getUnlocalizedName() + "." + EnumDyeColor.byDyeDamage(var2).func_176762_d();
     }
 
     /**
@@ -51,7 +51,7 @@ public class ItemDye extends Item
         }
         else
         {
-            EnumDyeColor var9 = EnumDyeColor.func_176766_a(stack.getMetadata());
+            EnumDyeColor var9 = EnumDyeColor.byDyeDamage(stack.getMetadata());
 
             if (var9 == EnumDyeColor.WHITE)
             {
@@ -161,11 +161,11 @@ public class ItemDye extends Item
         if (target instanceof EntitySheep)
         {
             EntitySheep var4 = (EntitySheep)target;
-            EnumDyeColor var5 = EnumDyeColor.func_176766_a(stack.getMetadata());
+            EnumDyeColor var5 = EnumDyeColor.byDyeDamage(stack.getMetadata());
 
-            if (!var4.getSheared() && var4.func_175509_cj() != var5)
+            if (!var4.getSheared() && var4.getFleeceColor() != var5)
             {
-                var4.func_175512_b(var5);
+                var4.setFleeceColor(var5);
                 --stack.stackSize;
             }
 

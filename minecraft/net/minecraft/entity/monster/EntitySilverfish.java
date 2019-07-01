@@ -103,7 +103,7 @@ public class EntitySilverfish extends EntityMob
         }
     }
 
-    protected void func_180429_a(BlockPos p_180429_1_, Block p_180429_2_)
+    protected void playStepSound(BlockPos p_180429_1_, Block p_180429_2_)
     {
         this.playSound("mob.silverfish.step", 0.15F, 1.0F);
     }

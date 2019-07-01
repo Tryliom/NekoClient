@@ -267,9 +267,9 @@ public class EntityPigZombie extends EntityZombie
         this.setCurrentItemOrArmor(0, new ItemStack(Items.golden_sword));
     }
 
-    public IEntityLivingData func_180482_a(DifficultyInstance p_180482_1_, IEntityLivingData p_180482_2_)
+    public IEntityLivingData onInitialSpawn(DifficultyInstance p_180482_1_, IEntityLivingData p_180482_2_)
     {
-        super.func_180482_a(p_180482_1_, p_180482_2_);
+        super.onInitialSpawn(p_180482_1_, p_180482_2_);
         this.setVillager(false);
         return p_180482_2_;
     }
