@@ -78,6 +78,7 @@ import neko.module.modules.player.Fire;
 import neko.module.modules.player.Jesus;
 import neko.module.modules.player.Noslow;
 import neko.module.modules.player.Nuker;
+import neko.module.modules.player.PotionSaver;
 import neko.module.modules.player.PushUp;
 import neko.module.modules.player.Scaffold;
 import neko.module.modules.player.Sneak;
@@ -259,6 +260,7 @@ public class ModuleManager {
 		ActiveModule.add(new Nameprotect()); // Key NONE
 		ActiveModule.add(new Near()); // Key NONE
 		ActiveModule.add(new ForceTP()); // Key NONE
+		ActiveModule.add(new PotionSaver()); // Key NONE
 		
 		this.link.put(Utils.getModule("KillAura"), "ka");
 		this.link.put(Utils.getModule("FastBow"), "fb");

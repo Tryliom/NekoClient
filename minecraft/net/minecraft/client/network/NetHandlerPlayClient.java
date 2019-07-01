@@ -915,6 +915,11 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     		}
     	}
     	
+    	if (Utils.isToggle("PotionSaver") && p_147297_1_ instanceof C03PacketPlayer && mc.thePlayer.getActivePotionEffects().size() > 0 && !mc.thePlayer.isMovingXZ() && mc.thePlayer.isCollidedVertically
+    			&& (Utils.isToggle("NoAnim") ? true : !mc.thePlayer.isSwingInProgress) && !mc.thePlayer.isUsingItem()) {
+    		return;
+    	}
+    	
     	Utils.nbPack++;
         this.netManager.sendPacket(p_147297_1_);
     }
