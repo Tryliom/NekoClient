@@ -1,10 +1,12 @@
 package neko.updater;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -25,6 +27,7 @@ import org.jdom2.input.SAXBuilder;
 
 import neko.Client;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiMainMenu;
 
 
 /**
@@ -33,11 +36,14 @@ import net.minecraft.client.Minecraft;
  *
  */
 public class Updater {
+	
+	public static boolean ReadyToUpdate = false;
+	
 	//Chemin vers le lanceur
 	private static String lanceurPath = "Chemin vers lanceur";
 	
 	//Chemin vers le fichier xml 
-	private static String xmlPath = "http://rhymed-adherence.000webhostapp.com/NekoUpdate.xml";
+	private static String xmlPath = "http://nekohc.fr/controler/Neko/Update.xml";
 	
 	//Version actuelle
 	private static String version = Client.CLIENT_VERSION;
@@ -95,34 +101,90 @@ public class Updater {
 								Element file = (Element)iteratorFiles.next();
 								
 								//On télécharge le fichier
-								downloadFile(file.getChildText("url"),currentFolder + 
-										File.separator + file.getChildText("destination"));
+								
+								//get url : file.getChildText("url")
+								//Destination : currentFolder + File.separator + file.getChildText("destination")
+								
+								//TODO: On get le NekoUpdater
+								if(GuiMainMenu.owo == 0) {
+									GuiMainMenu.owo++;
+				        		new Thread(new Runnable() {
+				        			@Override
+				        			public void run() {
+				        				try {
+				                			File updater = new File(GuiMainMenu.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+				                			if(!updater.isDirectory()) {
+				                				updater = updater.getParentFile();
+				                				updater = new File(updater, "NekoUpdater.jar");
+				                				updater = new File(updater.getAbsolutePath().replace("%20", " "));
+				                				InputStream input = getClass().getClassLoader().getResourceAsStream("assets/neko/NekoUpdater.jar");
+				                				FileOutputStream output = new FileOutputStream(updater);
+				                				byte[] buffer = new byte[8192];
+				            					for(int length; (length = input.read(buffer)) != -1;)
+				            						output.write(buffer, 0, length);
+				            					input.close();
+				            					output.close();
+				            					
+				            					System.out.println("Mariiiiiiie !!!!");
+				            					System.out.println("cmd.exe "+" /c "+" java "+" -jar "+ updater.getAbsolutePath()+
+				            							" updater "+ file.getChildText("url") + " ; " + updater.getParentFile().getAbsolutePath().replace(" ","%20"));
+				            					ProcessBuilder pb = new ProcessBuilder("cmd.exe","/c","java","-jar",updater.getAbsolutePath(), "updater", 
+				            							  (updater.getParentFile().getAbsolutePath()).replace(" ","%20"),
+				            							"http://nekohc.fr/controler/Neko/NekoInstaller.jar");
+				            					pb.redirectErrorStream(true);
+				            					Process p = pb.start();
+				            					BufferedReader pInput = new BufferedReader(
+				            							new InputStreamReader(p.getInputStream()));
+				            						for(String message; (message = pInput.readLine()) != null;)
+				            							System.out.println(message);
+				            						pInput.close();
+				                			}
+				                		} catch (Exception e) {
+				                			System.out.println("Could not update!" + e);
+				                		}
+				        			}
+				        		}).start();
+								}
+								
+								//Old
+								/*onExitCode(file.getChildText("url"),currentFolder + 
+										File.separator + file.getChildText("destination"));*/
 							}
 							
 							break;
 						}
 					}
 					
-					JOptionPane.showMessageDialog(null,"La nouvelle version de Neko ("+versionString+") a été téléchargée, "  + 
+					/*JOptionPane.showMessageDialog(null,"La nouvelle version de Neko ("+versionString+") a été téléchargée, "  + 
 						"Redémarrez Minecraft pour qu'elle prenne effet.");
 					
-					File lanceur = new File(lanceurPath);
+					File lanceur = new File(lanceurPath);*/
 					
 					//try {
 						//On lance le lanceur
 						//Desktop.open(lanceur);
 						
 						//On quitte le programme				
-						System.exit(0);
+						//System.exit(0);
 					/*} catch (DesktopException e) {
 						JOptionPane.showMessageDialog(null,"Impossible de relancer Minecraft Neko.");
 					}*/
 				}
 			}
 			else{
-				JOptionPane.showMessageDialog(null,"Pas de nouvelles version disponible pour le moment");
+				//JOptionPane.showMessageDialog(null,"Pas de nouvelles version disponible pour le moment");
 			}
 		}
+	}
+	
+	public static void onExitCode(String filepath, String destination) {
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			public void run() {
+				downloadFile(filepath, destination);
+			}
+		});
+		Updater.ReadyToUpdate = true;
+		Minecraft.getMinecraft().displayGuiScreen(new GuiMainMenu());
 	}
 
 	/**

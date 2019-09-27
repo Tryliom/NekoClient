@@ -99,6 +99,7 @@ import neko.module.modules.render.Render;
 import neko.module.modules.render.Search;
 import neko.module.modules.render.Tracers;
 import neko.module.modules.render.Trail;
+import neko.module.modules.render.UnclaimFinder;
 import neko.module.modules.render.Wallhack;
 import neko.module.modules.render.Water;
 import neko.module.modules.render.WorldTime;
@@ -156,6 +157,7 @@ public class ModuleManager {
 		ActiveModule.add(new NoClip()); // Key N
 		ActiveModule.add(new Regen()); // Key G
 		ActiveModule.add(new Flight()); // Key R
+		ActiveModule.add(new UnclaimFinder());
 		ActiveModule.add(new Autoarmor()); // Key NONE
 		ActiveModule.add(new Automine()); //Key NONE
 		ActiveModule.add(new AutoCmd()); //Key NONE
