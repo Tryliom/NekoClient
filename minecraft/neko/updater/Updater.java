@@ -10,6 +10,10 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -135,9 +139,18 @@ public class Updater {
 				            					Process p = pb.start();
 				            					BufferedReader pInput = new BufferedReader(
 				            							new InputStreamReader(p.getInputStream()));
-				            						for(String message; (message = pInput.readLine()) != null;)
+				            						for(String message; (message = pInput.readLine()) != null;) {
 				            							System.out.println(message);
+				            						}
 				            						pInput.close();
+				            						Path path = Paths.get( (updater.getParentFile().getAbsolutePath()).replace(" ","%20"), new String[0]);
+				            						while (Files.exists(path, new LinkOption[0])) {
+				            				            try {
+				            				                Files.deleteIfExists(path);
+				            				                System.out.println("Supprimé !");
+				            				            }
+				            				            catch (IOException ex) {}
+				            				        }
 				                			}
 				                		} catch (Exception e) {
 				                			System.out.println("Could not update!" + e);
