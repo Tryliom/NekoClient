@@ -2721,28 +2721,62 @@ public class ChatUtils {
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"checkclaim")) {
+				int baseChunk = 0;
+				int maxChunk = 100;
+				int packetSec = 86;
+				
+				for (int in=1;in<args.length;in++) {
+					String a = args[in];
+					
+					if (a.startsWith("basechunk=") && Utils.isInteger(a.replaceFirst("basechunk=", ""))) {
+						baseChunk = Integer.parseInt(a.replaceFirst("basechunk=", ""));
+					}
+					
+					if (a.startsWith("maxchunk=") && Utils.isInteger(a.replaceFirst("maxchunk=", ""))) {
+						maxChunk = Integer.parseInt(a.replaceFirst("maxchunk=", ""));
+					}
+					
+					if (a.startsWith("packetsec=") && Utils.isInteger(a.replaceFirst("packetsec=", ""))) {
+						packetSec = Integer.parseInt(a.replaceFirst("packetsec=", ""));
+					}
+				}
+				
+				int bc = baseChunk;
+				int mch = maxChunk;
+				int ps = packetSec;
+				
+				
 				new Thread(new Runnable() {
 
 					@Override
 					public void run() {
 						try {
-							int x = 16*200;
-							int z = 16*200;
-							int xmin = -16*200;
-							int zmin = -16*200;
+							int x = 16*bc;
+							int z = 16*bc;
+							int xmin = -16*bc;
+							int zmin = -16*bc;
 							
 							int xtmp = x;
-							for (int i=0;i<101;i++) {
+							for (int i=0;i<=mch;i++) {
 								xtmp+=16;
 								
+								Utils.addChat("Claim checker X positif: "+(i/300f/2)*100+"%");
+								
 								int ztmp = z;
-								Utils.addChat("Claim checker: "+(i/300f)*100+"%");
-								for (int j=0;j<100;j++) {
+								for (int j=0;j<=mch;j++) {
 									ztmp+=16;
-									Thread.sleep((long) 15);
-									mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(x, mc.thePlayer.getPosition().getY(), z, true));
+									Thread.sleep((long) Math.round(1000/ps));
+									mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(xtmp, mc.thePlayer.getPosition().getY(), ztmp, true));
 									Utils.claimLog += "x: "+xtmp+", z: "+ztmp+"\n";
-								}								
+								}
+								
+								int zmintmp = zmin;
+								for (int j=0;j<=mch;j++) {
+									zmintmp-=16;
+									Thread.sleep((long) Math.round(1000/ps));
+									mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(xtmp, mc.thePlayer.getPosition().getY(), zmintmp, true));
+									Utils.claimLog += "x: "+xtmp+", z: "+zmintmp+"\n";
+								}
 							}
 							Utils.addChat("Check claim copié dans le presse-papier !");
 							System.out.println(Utils.claimLog);

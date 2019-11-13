@@ -16,8 +16,8 @@ import java.util.List;
 import javax.management.RuntimeOperationsException;
 import javax.swing.JOptionPane;
 
-import org.jdesktop.jdic.desktop.Desktop;
-import org.jdesktop.jdic.desktop.DesktopException;
+//import org.jdesktop.jdic.desktop.Desktop;
+//import org.jdesktop.jdic.desktop.DesktopException;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
