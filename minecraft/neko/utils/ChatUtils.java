@@ -20,14 +20,8 @@ import java.util.Scanner;
 import java.util.UUID;
 import java.util.Vector;
 
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.Display;
-
-import com.mojang.authlib.GameProfile;
-
 import neko.Client;
 import neko.dtb.RequestThread;
-import neko.gui.InGameGui;
 import neko.guicheat.clickgui.util.SettingsUtil;
 import neko.lock.Lock;
 import neko.manager.LockManager;
@@ -149,19 +143,20 @@ import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.network.login.client.C00PacketLoginStart;
-import net.minecraft.network.play.client.C00PacketKeepAlive;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 import net.minecraft.network.play.client.C09PacketHeldItemChange;
 import net.minecraft.network.play.client.C10PacketCreativeInventoryAction;
-import net.minecraft.src.ChunkUtils;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Session;
-import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.WorldSettings.GameType;
-import net.minecraft.world.chunk.Chunk;
+
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.Display;
+
+import com.mojang.authlib.GameProfile;
 
 public class ChatUtils {
 	Minecraft mc = Minecraft.getMinecraft();
@@ -2724,6 +2719,7 @@ public class ChatUtils {
 				int baseChunk = 0;
 				int maxChunk = 100;
 				int packetSec = 86;
+				String ignore = "";
 				
 				for (int in=1;in<args.length;in++) {
 					String a = args[in];
@@ -2739,11 +2735,16 @@ public class ChatUtils {
 					if (a.startsWith("packetsec=") && Utils.isInteger(a.replaceFirst("packetsec=", ""))) {
 						packetSec = Integer.parseInt(a.replaceFirst("packetsec=", ""));
 					}
+					
+					if (a.startsWith("ignore=")) {
+						ignore = a.replaceFirst("ignore=", "");
+					}
 				}
 				
 				int bc = baseChunk;
 				int mch = maxChunk;
 				int ps = packetSec;
+				String ignoreStr = ignore;
 				
 				
 				new Thread(new Runnable() {
@@ -2767,7 +2768,7 @@ public class ChatUtils {
 									ztmp+=16;
 									Thread.sleep((long) Math.round(1000/ps));
 									mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(xtmp, mc.thePlayer.getPosition().getY(), ztmp, true));
-									Utils.claimLog += "x: "+xtmp+", z: "+ztmp+"\n";
+									Utils.claimLog += "["+xtmp+", "+ztmp+"]\n";
 								}
 								
 								int zmintmp = zmin;
@@ -2775,11 +2776,51 @@ public class ChatUtils {
 									zmintmp-=16;
 									Thread.sleep((long) Math.round(1000/ps));
 									mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(xtmp, mc.thePlayer.getPosition().getY(), zmintmp, true));
-									Utils.claimLog += "x: "+xtmp+", z: "+zmintmp+"\n";
+									Utils.claimLog += "["+xtmp+", "+zmintmp+"]\n";
 								}
 							}
+							
+							int xmintmp = xmin;
+							for (int i=0;i<=mch;i++) {
+								xmintmp-=16;
+								
+								Utils.addChat("Claim checker X négatif: "+(i/300f/2)*100+"%");
+								
+								int ztmp = z;
+								for (int j=0;j<=mch;j++) {
+									ztmp+=16;
+									Thread.sleep((long) Math.round(1000/ps));
+									mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(xmintmp, mc.thePlayer.getPosition().getY(), ztmp, true));
+									Utils.claimLog += "["+xmintmp+","+ztmp+"]\n";
+								}
+								
+								int zmintmp = zmin;
+								for (int j=0;j<=mch;j++) {
+									zmintmp-=16;
+									Thread.sleep((long) Math.round(1000/ps));
+									mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(xmintmp, mc.thePlayer.getPosition().getY(), zmintmp, true));
+									Utils.claimLog += "["+xmintmp+", "+zmintmp+"]\n";
+								}
+							}
+							
+							String [] scratch = Utils.claimLog.split("\n");
+							//String [] filter;
+							
+							for (int i=0;i<scratch.length;i++) {
+								String line = scratch[i];								
+								
+								if (line.startsWith("faction:") && !line.contains(ignoreStr)) {
+									String tot = line+": ";
+									for (int j=5;j<10;j++) {
+										if (i-j>=0 && !scratch[i-j].contains(ignoreStr)) {
+											tot+=scratch[i-j]+" ";
+										}
+									}
+									System.out.println(tot);
+								}
+							}							
+							
 							Utils.addChat("Check claim copié dans le presse-papier !");
-							System.out.println(Utils.claimLog);
 							Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(Utils.claimLog), null);
 							Utils.claimLog = "";
 							

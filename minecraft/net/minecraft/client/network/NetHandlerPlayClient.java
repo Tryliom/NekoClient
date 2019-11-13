@@ -1758,7 +1758,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         {
             case 1:
                 var3 = var5;
-                Utils.claimLog += "Faction found: "+var5+"\n";
+                Utils.claimLog += "faction: "+var5+"\n";
                 break;
 
             case 2:
