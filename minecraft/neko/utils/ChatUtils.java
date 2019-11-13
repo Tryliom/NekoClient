@@ -149,15 +149,19 @@ import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.network.login.client.C00PacketLoginStart;
+import net.minecraft.network.play.client.C00PacketKeepAlive;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 import net.minecraft.network.play.client.C09PacketHeldItemChange;
 import net.minecraft.network.play.client.C10PacketCreativeInventoryAction;
+import net.minecraft.src.ChunkUtils;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Session;
+import net.minecraft.world.ChunkCoordIntPair;
 import net.minecraft.world.WorldSettings.GameType;
+import net.minecraft.world.chunk.Chunk;
 
 public class ChatUtils {
 	Minecraft mc = Minecraft.getMinecraft();
@@ -2716,6 +2720,43 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"checkclaim")) {
+				new Thread(new Runnable() {
+
+					@Override
+					public void run() {
+						try {
+							int x = 16*200;
+							int z = 16*200;
+							int xmin = -16*200;
+							int zmin = -16*200;
+							
+							int xtmp = x;
+							for (int i=0;i<101;i++) {
+								xtmp+=16;
+								
+								int ztmp = z;
+								Utils.addChat("Claim checker: "+(i/300f)*100+"%");
+								for (int j=0;j<100;j++) {
+									ztmp+=16;
+									Thread.sleep((long) 15);
+									mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(x, mc.thePlayer.getPosition().getY(), z, true));
+									Utils.claimLog += "x: "+xtmp+", z: "+ztmp+"\n";
+								}								
+							}
+							Utils.addChat("Check claim copié dans le presse-papier !");
+							System.out.println(Utils.claimLog);
+							Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(Utils.claimLog), null);
+							Utils.claimLog = "";
+							
+						} catch (Exception e) {}
+					}
+					
+				}).start();
+				
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"packet")) {
 				if (args.length==2 && Utils.isInteger(args[1])) {
 					int nb = Integer.parseInt(args[1]);
@@ -2801,7 +2842,7 @@ public class ChatUtils {
 				}
 				Utils.checkXp(xp);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
+			}			
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"freecam")) {
 				if (args.length==1) {

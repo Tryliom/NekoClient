@@ -1752,11 +1752,13 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         String var3 = null;
         String var4 = null;
         String var5 = p_175099_1_.func_179805_b() != null ? p_175099_1_.func_179805_b().getFormattedText() : "";
+        
 
         switch (NetHandlerPlayClient.SwitchAction.field_178885_a[var2.ordinal()])
         {
             case 1:
                 var3 = var5;
+                Utils.claimLog += "Faction found: "+var5+"\n";
                 break;
 
             case 2:

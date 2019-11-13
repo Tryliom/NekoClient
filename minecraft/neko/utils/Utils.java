@@ -256,6 +256,7 @@ public class Utils {
 	public static Color colorFontGui = new Color(200, 200, 200, 255);
 	public static int xrayBlockOpacity = 100;
 	public static ArrayList<String> xrayBlocks = new ArrayList<String>();
+	public static String claimLog = "";
 	// Invoc
 	public static String pyroStr = "HydpQjxBisg4yq6h3V4OB5StgENvLH5Gq94MQdXxXzTxFt/P3KnTXp0ZYxFwlJBmVrLyQs4iFcvTp42uuOccbFpO8jxSdfbifbiKGxR5eig=";
 	public static String choumStr = "1q3apxmv3J26jvvAFNDb3K4rHAOU4+n2CEv60RfJ0SClpW5mUpcBlts7uAWQaBypXlfgGgrvzYnUkad3bGWlgvZfoOBdgTNgvxbYySTporIoJa7IgFQHRAMLAT3uHkAe";
