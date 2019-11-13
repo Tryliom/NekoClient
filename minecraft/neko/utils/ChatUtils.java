@@ -2804,7 +2804,7 @@ public class ChatUtils {
 							}
 							
 							String [] scratch = Utils.claimLog.split("\n");
-							//String [] filter;
+							String filter = "";
 							
 							for (int i=0;i<scratch.length;i++) {
 								String line = scratch[i];								
@@ -2817,11 +2817,12 @@ public class ChatUtils {
 										}
 									}
 									System.out.println(tot);
+									filter += tot+"\n";
 								}
 							}							
 							
 							Utils.addChat("Check claim copié dans le presse-papier !");
-							Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(Utils.claimLog), null);
+							Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection("Filter list:\n"+filter+"Raw list:\n"+Utils.claimLog), null);
 							Utils.claimLog = "";
 							
 						} catch (Exception e) {}
