@@ -262,7 +262,7 @@ public class GuiChat extends GuiScreen {
 		}
 		case 9: {
 			// Active une fois le Register
-			Register.getReg().toggleModule();
+			Register.getReg().CommandAction();
 			mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
 			break;
 		}

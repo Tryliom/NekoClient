@@ -1019,8 +1019,10 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         s = packetIn.getChatComponent().getUnformattedTextForChat();
         if (s.contains(Utils.getCurrentName()) && Utils.isToggle("Nameprotect")) {
         	packetIn.setChatComponent(new ChatComponentText(Nameprotect.getNP().changeName(s)));
-        }
+        }       
         
+        if (Utils.chatCC && packetIn.getChatComponent().getUnformattedText().startsWith(Utils.chatRegex))
+        	Utils.claimLog += "faction: "+packetIn.getChatComponent().getUnformattedText()+"\n";
         
         if (Irc.getInstance().getMode()==IrcMode.Only)
         	return;
@@ -1758,7 +1760,8 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         {
             case 1:
                 var3 = var5;
-                Utils.claimLog += "faction: "+var5+"\n";
+                if (Utils.chatCC && Utils.ignoreFaction.isEmpty() ? true : !var5.contains(Utils.ignoreFaction))
+                	Utils.claimLog += "faction: "+var5+"\n";
                 break;
 
             case 2:

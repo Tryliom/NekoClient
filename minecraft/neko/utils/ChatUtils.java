@@ -2717,9 +2717,12 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"checkclaim")) {
 				int baseChunk = 0;
-				int maxChunk = 100;
-				int packetSec = 86;
-				String ignore = "";
+				float maxChunk = 100f;
+				int packetSec = 60;
+				Utils.ignoreFaction = "";
+				Utils.claimLog = "";
+				Utils.chatRegex = "";
+				Utils.chatCC = false;
 				
 				for (int in=1;in<args.length;in++) {
 					String a = args[in];
@@ -2737,14 +2740,19 @@ public class ChatUtils {
 					}
 					
 					if (a.startsWith("ignore=")) {
-						ignore = a.replaceFirst("ignore=", "");
+						Utils.ignoreFaction = a.replaceFirst("ignore=", "");
+					}
+					
+					if (a.startsWith("chat=")) {
+						Utils.chatCC = true;
+						Utils.chatRegex = a.replaceFirst("chat=", "").replaceAll("_", " ");
 					}
 				}
 				
 				int bc = baseChunk;
-				int mch = maxChunk;
+				float mch = maxChunk;
 				int ps = packetSec;
-				String ignoreStr = ignore;
+				String ignoreStr = Utils.ignoreFaction;
 				
 				
 				new Thread(new Runnable() {
@@ -2761,45 +2769,65 @@ public class ChatUtils {
 							for (int i=0;i<=mch;i++) {
 								xtmp+=16;
 								
-								Utils.addChat("Claim checker X positif: "+(i/300f/2)*100+"%");
 								
-								int ztmp = z;
-								for (int j=0;j<=mch;j++) {
+								Utils.addChat("Claim checker X Positif: "+Math.round((i/((float) (mch))*100))+"%");
+								
+								int ztmp = Math.round(-16*(mch+bc/2));
+								for (int j=0;j<=(mch*2+bc);j++) {
 									ztmp+=16;
 									Thread.sleep((long) Math.round(1000/ps));
 									mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(xtmp, mc.thePlayer.getPosition().getY(), ztmp, true));
-									Utils.claimLog += "["+xtmp+", "+ztmp+"]\n";
-								}
-								
-								int zmintmp = zmin;
-								for (int j=0;j<=mch;j++) {
-									zmintmp-=16;
-									Thread.sleep((long) Math.round(1000/ps));
-									mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(xtmp, mc.thePlayer.getPosition().getY(), zmintmp, true));
-									Utils.claimLog += "["+xtmp+", "+zmintmp+"]\n";
+									Utils.claimLog += "["+xtmp+","+ztmp+"]\n";
 								}
 							}
 							
-							int xmintmp = xmin;
+							int xtmp2 = xmin;
 							for (int i=0;i<=mch;i++) {
-								xmintmp-=16;
+								xtmp2-=16;
 								
-								Utils.addChat("Claim checker X négatif: "+(i/300f/2)*100+"%");
 								
-								int ztmp = z;
-								for (int j=0;j<=mch;j++) {
+								Utils.addChat("Claim checker X Négatif: "+Math.round((i/((float) (mch))*100))+"%");
+								
+								int ztmp = Math.round(-16*(mch+bc/2));
+								for (int j=0;j<=(mch*2+bc);j++) {
 									ztmp+=16;
 									Thread.sleep((long) Math.round(1000/ps));
-									mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(xmintmp, mc.thePlayer.getPosition().getY(), ztmp, true));
-									Utils.claimLog += "["+xmintmp+","+ztmp+"]\n";
+									mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(xtmp2, mc.thePlayer.getPosition().getY(), ztmp, true));
+									Utils.claimLog += "["+xtmp2+","+ztmp+"]\n";
 								}
+							}							
+							
+							int ztmp = z;
+							for (int i=0;i<=mch;i++) {
+								ztmp+=16;
 								
-								int zmintmp = zmin;
-								for (int j=0;j<=mch;j++) {
-									zmintmp-=16;
+								
+								Utils.addChat("Claim checker Z Positif: "+Math.round((i/((float) (mch))*100))+"%");
+								
+								int xtmp3 = -16*(bc/2);
+								for (int j=0;j<=bc;j++) {
+									xtmp3+=16;
+									
 									Thread.sleep((long) Math.round(1000/ps));
-									mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(xmintmp, mc.thePlayer.getPosition().getY(), zmintmp, true));
-									Utils.claimLog += "["+xmintmp+", "+zmintmp+"]\n";
+									mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(xtmp3, mc.thePlayer.getPosition().getY(), ztmp, true));
+									Utils.claimLog += "["+xtmp3+","+ztmp+"]\n";
+								}
+							}
+							
+							ztmp = zmin;
+							for (int i=0;i<=mch;i++) {
+								ztmp-=16;
+								
+								
+								Utils.addChat("Claim checker Z Négatif: "+Math.round((i/((float) (mch))*100))+"%");
+								
+								int xtmp4 = -16*(bc/2);
+								for (int j=0;j<=bc;j++) {
+									xtmp4+=16;
+									
+									Thread.sleep((long) Math.round(1000/ps));
+									mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(xtmp4, mc.thePlayer.getPosition().getY(), ztmp, true));
+									Utils.claimLog += "["+xtmp4+","+ztmp+"]\n";
 								}
 							}
 							
@@ -2809,10 +2837,10 @@ public class ChatUtils {
 							for (int i=0;i<scratch.length;i++) {
 								String line = scratch[i];								
 								
-								if (line.startsWith("faction:") && !line.contains(ignoreStr)) {
+								if (line.startsWith("faction:")) {
 									String tot = line+": ";
-									for (int j=5;j<10;j++) {
-										if (i-j>=0 && !scratch[i-j].contains(ignoreStr)) {
+									for (int j=6;j<9;j++) {
+										if (i-j>=0) {
 											tot+=scratch[i-j]+" ";
 										}
 									}
