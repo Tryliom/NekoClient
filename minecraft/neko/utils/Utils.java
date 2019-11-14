@@ -260,6 +260,7 @@ public class Utils {
 	public static String ignoreFaction = "";
 	public static String chatRegex = "";
 	public static boolean chatCC = false;
+	public static Thread currentClaimFinder = null;
 	
 	// Invoc
 	public static String pyroStr = "HydpQjxBisg4yq6h3V4OB5StgENvLH5Gq94MQdXxXzTxFt/P3KnTXp0ZYxFwlJBmVrLyQs4iFcvTp42uuOccbFpO8jxSdfbifbiKGxR5eig=";
@@ -1314,7 +1315,7 @@ public class Utils {
 					+ "§7Exemple simple, rendre incassable un item: "+var.prefixCmd+"nbt Unbreakable true", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Give <ID ou Name>", var.prefixCmd+"give ", "§7Juste en créatif, vous donne l'item que vous avez spécifié avec l'ID ou son nom (minecraft:stone ou 1 fonctionnent)", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Stat <rien ou Global>", var.prefixCmd+"stat", "§7Affiche les stats du joueur qui utilise plus tel cheat", false, Chat.Summon);
-//			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
+			addChat2("§6"+var.prefixCmd+"findclaim <options> (Voir "+var.prefixCmd+"help findclaim)", var.prefixCmd+"findclaim ", "§7", false, Chat.Summon);
 //			addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"", "§7", false, Chat.Summon);
 			break;
 			

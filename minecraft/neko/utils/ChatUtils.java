@@ -1016,6 +1016,25 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Step bypass", var.prefixCmd+"step bypass", "§7Met le step en mode bypass", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+					
+					
+				} else if (args[1].equalsIgnoreCase("findclaim")) {
+					Utils.addChat(Utils.sep);
+					Utils.addChat2("§6"+var.prefixCmd+"FindClaim", var.prefixCmd+"findclaim ", "§7Cherche les coordonnées de claim dans une zone de chunk donnée", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"FindClaim stop", var.prefixCmd+"findclaim stop", "§7Arrête le claim finder", false, Chat.Summon);
+					Utils.addChat("Ces options sont différentes que celles des autres commandes de Neko.\n§6Elles doivent être mise sur la même ligne de commande pour être active:\n"
+							+ "§6"+var.prefixCmd+"findclaim basechunk=50 maxchunk=100 packetsec=60 ignore=wilderness par exemple.");
+					Utils.addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"findclaim ", "§7", false, Chat.Summon);
+					Utils.addChat2("§6basechunk=<Chunks>", "", "§7Définit les chunks de base à ignorer, de base à 0.", true, Chat.Summon);
+					Utils.addChat2("§6maxchunk=<Chunks>", "", "§7Définit la zone de chunks à analyser, de base à 100.", true, Chat.Summon);
+					Utils.addChat2("§6packetsec=<Nombre de paquets>", "", "§7Définit le nombre de paquet à utiliser par secondes, de base à 60. Plus on en met, plus ça va vite.", true, Chat.Summon);
+					Utils.addChat2("§6ignore=<Texte>", "", "§7Définit le nom de faction de base à ignorer dans les résultats, comme wilderness. "
+							+ "Cela concerne uniquement les messages d'entrée de faction qui sont affichées par des titre qui viennent sur l'écran.", true, Chat.Summon);
+					Utils.addChat2("§6chat=<Texte>", "", "§7Active la détection d'entrée de faction par le chat et "
+							+ "le texte définit le début du message d'entrée dans la faction pour détecter tout en remplaçant les espaces par des _"
+							+ "les messages. Par exemple: chat=Vous_venez_de_quitter", true, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("speed")) {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Speed <Double>", var.prefixCmd+"speed ", "§7Change la vitesse du Speed", false, Chat.Summon);
@@ -2715,7 +2734,7 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"checkclaim")) {
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"findclaim")) {
 				int baseChunk = 0;
 				float maxChunk = 100f;
 				int packetSec = 60;
@@ -2726,6 +2745,13 @@ public class ChatUtils {
 				
 				for (int in=1;in<args.length;in++) {
 					String a = args[in];
+					
+					if (Utils.currentClaimFinder!=null && a.equalsIgnoreCase("stop")) {
+						Utils.currentClaimFinder.interrupt();
+						Utils.addChat("§aClaim finder stoppé !");
+						mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+						return;
+					}
 					
 					if (a.startsWith("basechunk=") && Utils.isInteger(a.replaceFirst("basechunk=", ""))) {
 						baseChunk = Integer.parseInt(a.replaceFirst("basechunk=", ""));
@@ -2752,10 +2778,9 @@ public class ChatUtils {
 				int bc = baseChunk;
 				float mch = maxChunk;
 				int ps = packetSec;
-				String ignoreStr = Utils.ignoreFaction;
 				
 				
-				new Thread(new Runnable() {
+				Utils.currentClaimFinder = new Thread(new Runnable() {
 
 					@Override
 					public void run() {
@@ -2856,7 +2881,9 @@ public class ChatUtils {
 						} catch (Exception e) {}
 					}
 					
-				}).start();
+				});
+				
+				Utils.currentClaimFinder.start();
 				
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
