@@ -182,10 +182,10 @@ public class InGameGui {
 		
 		if(moduleName.toLowerCase().contains("regen")) {
 			moduleName+=" ("+Regen.regen+")";
-		  }
-		  if(moduleName.toLowerCase().contains("blink")) {
-			  moduleName+=" ("+Blink.packet.size()+")";
-		  }
+		}
+		if (moduleName.toLowerCase().contains("blink")) {
+		  moduleName+=" ("+Blink.packet.size()+")";
+		}
 		
 		if(toggle) {
 			//Dessine un rectangle pour chaque modules
@@ -299,6 +299,10 @@ public class InGameGui {
 				  pos+=11;
 			  if (HUD.time)
 				  pos+=11;
+			  
+			  if (!Utils.claimFinderBar.isEmpty())
+				  pos+=11;
+			  
 			  if (HUD.stuff && mc.pointedEntity!=null)
 				  if (mc.pointedEntity instanceof EntityPlayer)
 					  pos+=55;
@@ -358,6 +362,11 @@ public class InGameGui {
 			  else
 				  var3 = "§6Temps de bonus restant:§7 "+(Active.time/3600==0 ? Active.time/60==0 ? Active.time%60+"s" : Active.time/60+"min "+Active.time%60+"s" : Active.time/3600+"h "+Active.time%3600/60+"min "+Active.time%60+"s");
 			  var.NekoFont.drawStringWithShadow(var3, 2, yP, 0);		
+			  yP+=11;
+		  }
+		  
+		  if (!Utils.claimFinderBar.isEmpty()) {
+			  var.NekoFont.drawStringWithShadow(Utils.claimFinderBar, 2, yP, 0);		
 			  yP+=11;
 		  }
 		  

@@ -1033,6 +1033,8 @@ public class ChatUtils {
 					Utils.addChat2("§6chat=<Texte>", "", "§7Active la détection d'entrée de faction par le chat et "
 							+ "le texte définit le début du message d'entrée dans la faction pour détecter tout en remplaçant les espaces par des _"
 							+ "les messages. Par exemple: chat=Vous_venez_de_quitter", true, Chat.Summon);
+					Utils.addChat2("§startchunk=<Chunks X,Chunks Z>", "", "§7Définit les chunks du point de départ du scan, de base à X:0 et Z:0.\n"
+							+ "Exemple: startchunk=50,-100", true, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("speed")) {
@@ -2742,6 +2744,8 @@ public class ChatUtils {
 				Utils.claimLog = "";
 				Utils.chatRegex = "";
 				Utils.chatCC = false;
+				int startpointX = 0;
+				int startpointZ = 0;
 				
 				for (int in=1;in<args.length;in++) {
 					String a = args[in];
@@ -2750,6 +2754,8 @@ public class ChatUtils {
 						Utils.currentClaimFinder.interrupt();
 						Utils.addChat("§aClaim finder stoppé !");
 						mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+						Utils.claimLog = "";
+						Utils.claimFinderBar = "";						
 						return;
 					}
 					
@@ -2773,31 +2779,42 @@ public class ChatUtils {
 						Utils.chatCC = true;
 						Utils.chatRegex = a.replaceFirst("chat=", "").replaceAll("_", " ");
 					}
+					
+					if (a.startsWith("startchunk=")) {
+						try {
+						String [] str2 = a.replaceFirst("startchunk=", "").split(",");
+						startpointX = Integer.parseInt(str2[0])*16;
+						startpointZ = Integer.parseInt(str2[1])*16;
+						} catch (Exception e) {
+							Utils.addError("Erreur, le format doit être: startchunk=Chunk X, Chunk Z");
+						}
+					}
 				}
 				
 				int bc = baseChunk;
 				float mch = maxChunk;
 				int ps = packetSec;
-				
+				int spX = startpointX;
+				int spZ = startpointZ;
 				
 				Utils.currentClaimFinder = new Thread(new Runnable() {
 
 					@Override
 					public void run() {
 						try {
-							int x = 16*bc;
-							int z = 16*bc;
-							int xmin = -16*bc;
-							int zmin = -16*bc;
+							int x = 16*bc+spX;
+							int z = 16*bc+spZ;
+							int xmin = -16*bc+spX;
+							int zmin = -16*bc+spZ;
 							
 							int xtmp = x;
 							for (int i=0;i<=mch;i++) {
 								xtmp+=16;
 								
 								
-								Utils.addChat("Claim checker X Positif: "+Math.round((i/((float) (mch))*100))+"%");
+								Utils.claimFinderBar = "§6Scan 1/"+(bc==0 ? "2" : "4")+": §a"+Math.round((i/((float) (mch))*100))+"%";
 								
-								int ztmp = Math.round(-16*(mch+bc/2));
+								int ztmp = spZ+Math.round(-16*(mch+bc/2));
 								for (int j=0;j<=(mch*2+bc);j++) {
 									ztmp+=16;
 									Thread.sleep((long) Math.round(1000/ps));
@@ -2811,48 +2828,51 @@ public class ChatUtils {
 								xtmp2-=16;
 								
 								
-								Utils.addChat("Claim checker X Négatif: "+Math.round((i/((float) (mch))*100))+"%");
+								Utils.claimFinderBar = "§6Scan 2/"+(bc==0 ? "2" : "4")+": §a"+Math.round((i/((float) (mch))*100))+"%";
 								
-								int ztmp = Math.round(-16*(mch+bc/2));
+								int ztmp = spZ+Math.round(-16*(mch+bc/2));
 								for (int j=0;j<=(mch*2+bc);j++) {
 									ztmp+=16;
 									Thread.sleep((long) Math.round(1000/ps));
 									mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(xtmp2, mc.thePlayer.getPosition().getY(), ztmp, true));
 									Utils.claimLog += "["+xtmp2+","+ztmp+"]\n";
 								}
-							}							
+							}		
 							
-							int ztmp = z;
-							for (int i=0;i<=mch;i++) {
-								ztmp+=16;
-								
-								
-								Utils.addChat("Claim checker Z Positif: "+Math.round((i/((float) (mch))*100))+"%");
-								
-								int xtmp3 = -16*(bc/2);
-								for (int j=0;j<=bc;j++) {
-									xtmp3+=16;
+							if (bc>0) {
+							
+								int ztmp = z;
+								for (int i=0;i<=mch;i++) {
+									ztmp+=16;
 									
-									Thread.sleep((long) Math.round(1000/ps));
-									mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(xtmp3, mc.thePlayer.getPosition().getY(), ztmp, true));
-									Utils.claimLog += "["+xtmp3+","+ztmp+"]\n";
+									
+									Utils.claimFinderBar = "§6Scan 3/4: §a"+Math.round((i/((float) (mch))*100))+"%";
+									
+									int xtmp3 = spX-16*(bc/2);
+									for (int j=0;j<=bc;j++) {
+										xtmp3+=16;
+										
+										Thread.sleep((long) Math.round(1000/ps));
+										mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(xtmp3, mc.thePlayer.getPosition().getY(), ztmp, true));
+										Utils.claimLog += "["+xtmp3+","+ztmp+"]\n";
+									}
 								}
-							}
-							
-							ztmp = zmin;
-							for (int i=0;i<=mch;i++) {
-								ztmp-=16;
 								
-								
-								Utils.addChat("Claim checker Z Négatif: "+Math.round((i/((float) (mch))*100))+"%");
-								
-								int xtmp4 = -16*(bc/2);
-								for (int j=0;j<=bc;j++) {
-									xtmp4+=16;
+								ztmp = zmin;
+								for (int i=0;i<=mch;i++) {
+									ztmp-=16;
 									
-									Thread.sleep((long) Math.round(1000/ps));
-									mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(xtmp4, mc.thePlayer.getPosition().getY(), ztmp, true));
-									Utils.claimLog += "["+xtmp4+","+ztmp+"]\n";
+									
+									Utils.claimFinderBar = "§6Scan 4/4: §a"+Math.round((i/((float) (mch))*100))+"%";
+									
+									int xtmp4 = spX-16*(bc/2);
+									for (int j=0;j<=bc;j++) {
+										xtmp4+=16;
+										
+										Thread.sleep((long) Math.round(1000/ps));
+										mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(xtmp4, mc.thePlayer.getPosition().getY(), ztmp, true));
+										Utils.claimLog += "["+xtmp4+","+ztmp+"]\n";
+									}
 								}
 							}
 							
@@ -2877,6 +2897,7 @@ public class ChatUtils {
 							Utils.addChat("Check claim copié dans le presse-papier !");
 							Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection("Filter list:\n"+filter+"Raw list:\n"+Utils.claimLog), null);
 							Utils.claimLog = "";
+							Utils.claimFinderBar = "";
 							
 						} catch (Exception e) {}
 					}

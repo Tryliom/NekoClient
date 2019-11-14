@@ -261,6 +261,7 @@ public class Utils {
 	public static String chatRegex = "";
 	public static boolean chatCC = false;
 	public static Thread currentClaimFinder = null;
+	public static String claimFinderBar = "";
 	
 	// Invoc
 	public static String pyroStr = "HydpQjxBisg4yq6h3V4OB5StgENvLH5Gq94MQdXxXzTxFt/P3KnTXp0ZYxFwlJBmVrLyQs4iFcvTp42uuOccbFpO8jxSdfbifbiKGxR5eig=";
