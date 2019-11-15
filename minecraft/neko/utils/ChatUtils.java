@@ -1026,7 +1026,8 @@ public class ChatUtils {
 							+ "§6"+var.prefixCmd+"findclaim basechunk=50 maxchunk=100 packetsec=60 ignore=wilderness par exemple.");
 					Utils.addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"findclaim ", "§7", false, Chat.Summon);
 					Utils.addChat2("§6basechunk=<Chunks>", "", "§7Définit les chunks de base à ignorer, de base à 0.", true, Chat.Summon);
-					Utils.addChat2("§6maxchunk=<Chunks>", "", "§7Définit la zone de chunks à analyser, de base à 100.", true, Chat.Summon);
+					Utils.addChat2("§6maxchunk=<Chunks> ou maxchunk=<Chunks X,Chunks Z>", "", "§7Définit la zone de chunks à analyser, de base à 100. "
+							+ "Vous pouvez définir aussi la valeur de X et Z séparemment, pour par exemple scanner de -20k à +20k en z mais sur une largeur de 1 en x.", true, Chat.Summon);
 					Utils.addChat2("§6packetsec=<Nombre de paquets>", "", "§7Définit le nombre de paquet à utiliser par secondes, de base à 60. Plus on en met, plus ça va vite.", true, Chat.Summon);
 					Utils.addChat2("§6ignore=<Texte>", "", "§7Définit le nom de faction de base à ignorer dans les résultats, comme wilderness. "
 							+ "Cela concerne uniquement les messages d'entrée de faction qui sont affichées par des titre qui viennent sur l'écran.", true, Chat.Summon);
@@ -2738,7 +2739,8 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"findclaim")) {
 				int baseChunk = 0;
-				float maxChunk = 100f;
+				int maxChunkX = 100;
+				int maxChunkZ = 100;
 				int packetSec = 60;
 				Utils.ignoreFaction = "";
 				Utils.claimLog = "";
@@ -2763,8 +2765,16 @@ public class ChatUtils {
 						baseChunk = Integer.parseInt(a.replaceFirst("basechunk=", ""));
 					}
 					
-					if (a.startsWith("maxchunk=") && Utils.isInteger(a.replaceFirst("maxchunk=", ""))) {
-						maxChunk = Integer.parseInt(a.replaceFirst("maxchunk=", ""));
+					if (a.startsWith("maxchunk=")) {
+						if (Utils.isInteger(a.replaceFirst("maxchunk=", ""))) {
+							maxChunkX = Integer.parseInt(a.replaceFirst("maxchunk=", ""));
+							maxChunkZ = Integer.parseInt(a.replaceFirst("maxchunk=", ""));
+						}
+						if (a.replaceFirst("maxchunk=", "").contains(",")) {
+							String [] str2 = a.replaceFirst("maxchunk=", "").split(",");
+							maxChunkX = Integer.parseInt(str2[0]);
+							maxChunkZ = Integer.parseInt(str2[1]);
+						}
 					}
 					
 					if (a.startsWith("packetsec=") && Utils.isInteger(a.replaceFirst("packetsec=", ""))) {
@@ -2792,7 +2802,8 @@ public class ChatUtils {
 				}
 				
 				int bc = baseChunk;
-				float mch = maxChunk;
+				int mchX = maxChunkX;
+				int mchZ = maxChunkZ;
 				int ps = packetSec;
 				int spX = startpointX;
 				int spZ = startpointZ;
@@ -2808,14 +2819,14 @@ public class ChatUtils {
 							int zmin = -16*bc+spZ;
 							
 							int xtmp = x;
-							for (int i=0;i<=mch;i++) {
+							for (int i=0;i<=mchX;i++) {
 								xtmp+=16;
 								
 								
-								Utils.claimFinderBar = "§6Scan 1/"+(bc==0 ? "2" : "4")+": §a"+Math.round((i/((float) (mch))*100))+"%";
+								Utils.claimFinderBar = "§6Scan 1/"+(bc==0 ? "2" : "4")+": §a"+Math.round((i/((float) (mchX))*100))+"%";
 								
-								int ztmp = spZ+Math.round(-16*(mch+bc/2));
-								for (int j=0;j<=(mch*2+bc);j++) {
+								int ztmp = spZ+Math.round(-16*(mchZ+bc/2));
+								for (int j=0;j<=(mchZ*2+bc);j++) {
 									ztmp+=16;
 									Thread.sleep((long) Math.round(1000/ps));
 									mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(xtmp, mc.thePlayer.getPosition().getY(), ztmp, true));
@@ -2824,14 +2835,14 @@ public class ChatUtils {
 							}
 							
 							int xtmp2 = xmin;
-							for (int i=0;i<=mch;i++) {
+							for (int i=0;i<=mchX;i++) {
 								xtmp2-=16;
 								
 								
-								Utils.claimFinderBar = "§6Scan 2/"+(bc==0 ? "2" : "4")+": §a"+Math.round((i/((float) (mch))*100))+"%";
+								Utils.claimFinderBar = "§6Scan 2/"+(bc==0 ? "2" : "4")+": §a"+Math.round((i/((float) (mchX))*100))+"%";
 								
-								int ztmp = spZ+Math.round(-16*(mch+bc/2));
-								for (int j=0;j<=(mch*2+bc);j++) {
+								int ztmp = spZ+Math.round(-16*(mchZ+bc/2));
+								for (int j=0;j<=(mchZ*2+bc);j++) {
 									ztmp+=16;
 									Thread.sleep((long) Math.round(1000/ps));
 									mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(xtmp2, mc.thePlayer.getPosition().getY(), ztmp, true));
@@ -2842,11 +2853,11 @@ public class ChatUtils {
 							if (bc>0) {
 							
 								int ztmp = z;
-								for (int i=0;i<=mch;i++) {
+								for (int i=0;i<=mchZ;i++) {
 									ztmp+=16;
 									
 									
-									Utils.claimFinderBar = "§6Scan 3/4: §a"+Math.round((i/((float) (mch))*100))+"%";
+									Utils.claimFinderBar = "§6Scan 3/4: §a"+Math.round((i/((float) (mchZ))*100))+"%";
 									
 									int xtmp3 = spX-16*(bc/2);
 									for (int j=0;j<=bc;j++) {
@@ -2859,11 +2870,11 @@ public class ChatUtils {
 								}
 								
 								ztmp = zmin;
-								for (int i=0;i<=mch;i++) {
+								for (int i=0;i<=mchZ;i++) {
 									ztmp-=16;
 									
 									
-									Utils.claimFinderBar = "§6Scan 4/4: §a"+Math.round((i/((float) (mch))*100))+"%";
+									Utils.claimFinderBar = "§6Scan 4/4: §a"+Math.round((i/((float) (mchZ))*100))+"%";
 									
 									int xtmp4 = spX-16*(bc/2);
 									for (int j=0;j<=bc;j++) {
