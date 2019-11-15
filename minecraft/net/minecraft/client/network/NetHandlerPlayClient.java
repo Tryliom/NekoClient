@@ -1019,7 +1019,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         s = packetIn.getChatComponent().getUnformattedTextForChat();
         if (s.contains(Utils.getCurrentName()) && Utils.isToggle("Nameprotect")) {
         	packetIn.setChatComponent(new ChatComponentText(Nameprotect.getNP().changeName(s)));
-        }       
+        }               
         
         if (Utils.chatCC && packetIn.getChatComponent().getUnformattedText().startsWith(Utils.chatRegex))
         	Utils.claimLog += "faction: "+packetIn.getChatComponent().getUnformattedText()+"\n";
@@ -1754,14 +1754,15 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         String var3 = null;
         String var4 = null;
         String var5 = p_175099_1_.func_179805_b() != null ? p_175099_1_.func_179805_b().getFormattedText() : "";
+        String cl = p_175099_1_.func_179805_b() != null ? p_175099_1_.func_179805_b().getUnformattedText() : "";
         
 
         switch (NetHandlerPlayClient.SwitchAction.field_178885_a[var2.ordinal()])
         {
             case 1:
                 var3 = var5;
-                if (Utils.chatCC && Utils.ignoreFaction.isEmpty() ? true : !var5.contains(Utils.ignoreFaction))
-                	Utils.claimLog += "faction: "+var5+"\n";
+                if (!Utils.chatCC && Utils.ignoreFaction.isEmpty() ? true : !cl.contains(Utils.ignoreFaction))
+                	Utils.claimLog += "faction: "+cl+"\n";
                 break;
 
             case 2:
