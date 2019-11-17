@@ -4,7 +4,6 @@ import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
 
 import neko.Client;
 import neko.api.NekoCloud;
@@ -21,6 +20,10 @@ public class GuiNekoAccount extends GuiScreen {
 	private GuiScreen prevGui;
 	private Minecraft mc = Minecraft.getMinecraft();
 	private Client var = Client.getNeko();
+	
+	private int scrollingTextPosX;
+    private String scrollingText = "§eCeci est votre page de profil Neko, §f"+NekoCloud.getName()+"§e, appuyez sur §cEchap §epour revenir au menu principal.";
+
 	
 	public GuiNekoAccount(GuiScreen gui) {
 		this.prevGui=gui;
@@ -82,17 +85,28 @@ public class GuiNekoAccount extends GuiScreen {
 	    drawHorizontalLine(rectPosXLeft+5, rectPosXRight-5, rectPosYTop+100, LineColor);
 	    
 	    //int rangs unlock, souls, time playing
-	    drawString(Client.getNeko().NekoFont, "§9§lSouls    §f§l"+String.valueOf(var.ame), maxNekoLvlOwo, rectPosYTop+110, -1);
-	    drawString(Client.getNeko().NekoFont, "§9§lTemps de jeu    §f§l"+String.valueOf((Utils.timeInGameHour!=0 ? Utils.timeInGameHour+"h "+Utils.timeInGameMin+"min "+Utils.timeInGameSec : Utils.timeInGameMin!=0 ? Utils.timeInGameMin+"min "+Utils.timeInGameSec : Utils.timeInGameSec)+"s"), maxNekoLvlOwo, rectPosYTop+130, -1);
-	    drawString(Client.getNeko().NekoFont, "§9§lRangs    §f§l"+String.valueOf(Utils.getNbRankUnlock()+"§8§l/§f§l"+ModuleManager.rang.size()), maxNekoLvlOwo, rectPosYTop+150, -1);
+	    drawString(Client.getNeko().NekoFont, "§9§lSouls", maxNekoLvlOwo, rectPosYTop+110, -1);
+	    drawString(Client.getNeko().NekoFont, "§f§l"+String.valueOf(var.ame), maxNekoLvlOwo, rectPosYTop+120, -1);
+	    drawString(Client.getNeko().NekoFont, "§9§lTemps de jeu", maxNekoLvlOwo, rectPosYTop+140, -1);
+	    drawString(Client.getNeko().NekoFont, "§f§l"+String.valueOf((Utils.timeInGameHour!=0 ? Utils.timeInGameHour+"h "+Utils.timeInGameMin+"min "+Utils.timeInGameSec : Utils.timeInGameMin!=0 ? Utils.timeInGameMin+"min "+Utils.timeInGameSec : Utils.timeInGameSec)+"s"), maxNekoLvlOwo, rectPosYTop+150, -1);
+	    drawString(Client.getNeko().NekoFont, "§9§lRangs", maxNekoLvlOwo, rectPosYTop+170, -1);
+	    drawString(Client.getNeko().NekoFont, "§f§l"+String.valueOf(Utils.getNbRankUnlock()+"§8§l/§f§l"+ModuleManager.rang.size()), maxNekoLvlOwo, rectPosYTop+180, -1);
 	    //var.time
 	    
-	
+	    this.scrollingTextPosX--;
+        if(this.scrollingTextPosX < -Client.getNeko().NekoFont.getStringWidth(this.scrollingText)) {
+        	this.scrollingTextPosX = this.width;
+        }
+        this.drawRect(0, 0, this.width, 12, 0x33FFFFFF);
+        this.drawString(Client.getNeko().NekoFont, this.scrollingText, this.scrollingTextPosX, 2, -1);
+        
 	
 	}
 	
 	protected void actionPerformed(GuiButton button) throws IOException {
-		
+		if(button.id == 9863) {
+			this.mc.displayGuiScreen(this.prevGui);
+		}
 	}
 	
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
