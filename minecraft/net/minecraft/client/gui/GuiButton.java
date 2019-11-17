@@ -108,7 +108,7 @@ public class GuiButton extends Gui
             }
             else if (this.hovered)
             {
-                var6 = 16777120;
+                    var6 = 16777120;
             }
 
             this.drawCenteredString(var4, this.displayString, this.xPosition + this.width / 2, this.yPosition + (this.height - 8) / 2, var6);
