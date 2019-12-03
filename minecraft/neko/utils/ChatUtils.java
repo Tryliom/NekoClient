@@ -1022,20 +1022,19 @@ public class ChatUtils {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"FindClaim", var.prefixCmd+"findclaim ", "§7Cherche les coordonnées de claim dans une zone de chunk donnée", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"FindClaim stop", var.prefixCmd+"findclaim stop", "§7Arrête le claim finder", false, Chat.Summon);
-					Utils.addChat("Ces options sont différentes que celles des autres commandes de Neko.\n§6Elles doivent être mise sur la même ligne de commande pour être active:\n"
+					Utils.addChat("Ces options sont différentes par rapport à celles des autres commandes de Neko.\n§6Elles doivent être mise sur la même ligne de commande pour être active:\n§6"
 							+ "§6"+var.prefixCmd+"findclaim basechunk=50 maxchunk=100 packetsec=60 ignore=wilderness par exemple.");
-					Utils.addChat2("§6"+var.prefixCmd+"", var.prefixCmd+"findclaim ", "§7", false, Chat.Summon);
 					Utils.addChat2("§6basechunk=<Chunks>", "", "§7Définit les chunks de base à ignorer, de base à 0.", true, Chat.Summon);
-					Utils.addChat2("§6maxchunk=<Chunks> ou maxchunk=<Chunks X,Chunks Z>", "", "§7Définit la zone de chunks à analyser, de base à 100. "
+					Utils.addChat2("§6maxchunk=<Chunks> ou maxchunk=<Chunks X,Chunks Z>", "", "§7Définit la zone de chunks à analyser, de base à 100.\n§7"
 							+ "Vous pouvez définir aussi la valeur de X et Z séparemment, pour par exemple scanner de -20k à +20k en z mais sur une largeur de 1 en x.", true, Chat.Summon);
 					Utils.addChat2("§6packetsec=<Nombre de paquets>", "", "§7Définit le nombre de paquet à utiliser par secondes, de base à 60. Plus on en met, plus ça va vite.", true, Chat.Summon);
-					Utils.addChat2("§6ignore=<Texte>", "", "§7Définit le nom de faction de base à ignorer dans les résultats, comme wilderness. "
+					Utils.addChat2("§6ignore=<Texte>", "", "§7Définit le nom de faction de base à ignorer dans les résultats, comme wilderness.\n§7"
 							+ "Cela concerne uniquement les messages d'entrée de faction qui sont affichées par des titre qui viennent sur l'écran.", true, Chat.Summon);
-					Utils.addChat2("§6chat=<Texte>", "", "§7Active la détection d'entrée de faction par le chat et "
-							+ "le texte définit le début du message d'entrée dans la faction pour détecter tout en remplaçant les espaces par des _"
+					Utils.addChat2("§6chat=<Texte>", "", "§7Active la détection d'entrée de faction par le chat et \n§7"
+							+ "le texte définit le début du message d'entrée dans la faction pour détecter tout en remplaçant les espaces par des _\n§7"
 							+ "les messages. Par exemple: chat=Vous_venez_de_quitter", true, Chat.Summon);
-					Utils.addChat2("§startchunk=<Chunks X,Chunks Z>", "", "§7Définit les chunks du point de départ du scan, de base à X:0 et Z:0.\n"
-							+ "Exemple: startchunk=50,-100", true, Chat.Summon);
+					Utils.addChat2("§6startchunk=<Chunks X,Chunks Z>", "", "§7Définit les chunks du point de départ du scan, de base à X:0 et Z:0.\n"
+							+ "§7Exemple: startchunk=50,-100", true, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("speed")) {
