@@ -179,7 +179,7 @@ public interface IChatComponent extends Iterable
                         ((IChatComponent)var5).appendSibling(this.deserialize(var14.get(var16), p_deserialize_2_, p_deserialize_3_));
                     }
                 }
-
+                
                 ((IChatComponent)var5).setChatStyle((ChatStyle)p_deserialize_3_.deserialize(p_deserialize_1_, ChatStyle.class));
                 return (IChatComponent)var5;
             }

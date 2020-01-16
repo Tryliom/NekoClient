@@ -1031,7 +1031,6 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         
         if (packetIn.func_179841_c() == 2)
         {
-        	System.out.println("HIDE MESSAGE FROM CHAT: "+packetIn.getChatComponent().getUnformattedText());
             this.getGameController().ingameGUI.func_175188_a(packetIn.getChatComponent(), false);
         }
         else
