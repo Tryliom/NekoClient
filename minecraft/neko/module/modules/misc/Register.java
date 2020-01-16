@@ -30,8 +30,8 @@ public class Register extends Module {
 	public void CommandAction() {
 		ChatUtils c = new ChatUtils();
 		// Check server, if ip of rinaorc, add rinaorcVerifNumber
-
-		if (Utils.currentIP.equalsIgnoreCase("149.202.88.202") && !Utils.rinaorcVerifNumber.isEmpty()) {
+		
+		if (Utils.currentIP.startsWith("149.202.88") && !Utils.rinaorcVerifNumber.isEmpty()) {
 			c.doCommand("/register "+mdp+" "+Utils.rinaorcVerifNumber);
 			c.doCommand("/login "+mdp+" "+Utils.rinaorcVerifNumber);
 		} else {

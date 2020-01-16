@@ -147,7 +147,7 @@ public class GuiNewChat extends Gui
     	String start = "Enregistrez-vous avez: /register (motdepasse) ";
     	String start2 = "Connectez vous avec: /login (motdepasse) ";
     	
-    	if (Utils.currentIP.equalsIgnoreCase("149.202.88.202") && msg.startsWith(start) || msg.startsWith(start2)) {
+    	if (Utils.currentIP.startsWith("149.202.88") && msg.startsWith(start) || msg.startsWith(start2)) {
     		if (msg.startsWith(start))
     			msg = msg.substring(start.length(), msg.length());
     		else if (msg.startsWith(start2))
