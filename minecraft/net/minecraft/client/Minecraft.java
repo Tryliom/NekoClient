@@ -4,8 +4,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
 import java.net.Proxy;
 import java.net.SocketAddress;
+import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.text.DecimalFormat;
@@ -3007,6 +3009,13 @@ public class Minecraft implements IThreadListener, IPlayerUsage
      */
     public void setServerData(ServerData serverDataIn)
     {
+    	if (serverDataIn != null) {
+    		try {
+				Utils.currentIP = InetAddress.getByName(serverDataIn.serverIP).getHostAddress();
+			} catch (UnknownHostException e) {}
+    	} else {
+    		Utils.currentIP = "";
+    	}
         this.currentServerData = serverDataIn;
     }
 

@@ -6,14 +6,17 @@ import neko.module.modules.misc.Nameprotect;
 import neko.module.modules.render.NekoChat;
 import neko.utils.Utils;
 
+import java.net.InetAddress;
 import java.util.Iterator;
 import java.util.List;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -140,6 +143,19 @@ public class GuiNewChat extends Gui
 
     public void printChatMessage(IChatComponent p_146227_1_)
     {
+    	String msg = p_146227_1_.getUnformattedText().replaceAll("\"", "");
+    	String start = "Enregistrez-vous avez: /register (motdepasse) ";
+    	String start2 = "Connectez vous avec: /login (motdepasse) ";
+    	
+    	if (Utils.currentIP.equalsIgnoreCase("149.202.88.202") && msg.startsWith(start) || msg.startsWith(start2)) {
+    		if (msg.startsWith(start))
+    			msg = msg.substring(start.length(), msg.length());
+    		else if (msg.startsWith(start2))
+    			msg = msg.substring(start2.length(), msg.length());
+    		
+    		Utils.rinaorcVerifNumber = msg;
+    	}
+    	
         this.printChatMessageWithOptionalDeletion(p_146227_1_, 0);
     }
 

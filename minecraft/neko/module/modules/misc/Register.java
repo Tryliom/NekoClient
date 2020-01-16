@@ -1,8 +1,13 @@
 package neko.module.modules.misc;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import neko.module.Category;
 import neko.module.Module;
 import neko.utils.ChatUtils;
+import neko.utils.Utils;
+import net.minecraft.client.Minecraft;
 
 public class Register extends Module {
 	private static Register instance;
@@ -24,8 +29,15 @@ public class Register extends Module {
 	
 	public void CommandAction() {
 		ChatUtils c = new ChatUtils();
-		c.doCommand("/register "+mdp+" "+mdp);
-		c.doCommand("/login "+mdp);
+		// Check server, if ip of rinaorc, add rinaorcVerifNumber
+
+		if (Utils.currentIP.equalsIgnoreCase("149.202.88.202") && !Utils.rinaorcVerifNumber.isEmpty()) {
+			c.doCommand("/register "+mdp+" "+Utils.rinaorcVerifNumber);
+			c.doCommand("/login "+mdp+" "+Utils.rinaorcVerifNumber);
+		} else {
+			c.doCommand("/register "+mdp+" "+mdp);
+			c.doCommand("/login "+mdp);
+		}
 		this.setToggled(false);
 	}
 

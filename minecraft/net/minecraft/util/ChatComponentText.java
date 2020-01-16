@@ -1,6 +1,10 @@
 package net.minecraft.util;
 
+import java.net.InetAddress;
 import java.util.Iterator;
+
+import neko.utils.Utils;
+import net.minecraft.client.Minecraft;
 
 public class ChatComponentText extends ChatComponentStyle
 {

@@ -2,6 +2,7 @@ package net.minecraft.client.network;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -960,6 +961,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     	Minecraft mc = Minecraft.getMinecraft();
     	//TODO: Kill
         PacketThreadUtil.func_180031_a(packetIn, this, this.getGameController());  
+        
         ArrayList<String> list = new ArrayList<>();
         list.add("was slain by ");
         list.add("was destroyed by ");
@@ -1019,7 +1021,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         s = packetIn.getChatComponent().getUnformattedTextForChat();
         if (s.contains(Utils.getCurrentName()) && Utils.isToggle("Nameprotect")) {
         	packetIn.setChatComponent(new ChatComponentText(Nameprotect.getNP().changeName(s)));
-        }               
+        }  
         
         if (Utils.chatCC && packetIn.getChatComponent().getUnformattedText().startsWith(Utils.chatRegex))
         	Utils.claimLog += "faction: "+packetIn.getChatComponent().getUnformattedText()+"\n";
@@ -1029,6 +1031,7 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         
         if (packetIn.func_179841_c() == 2)
         {
+        	System.out.println("HIDE MESSAGE FROM CHAT: "+packetIn.getChatComponent().getUnformattedText());
             this.getGameController().ingameGUI.func_175188_a(packetIn.getChatComponent(), false);
         }
         else

@@ -94,7 +94,7 @@ public class GuiShareToLan extends GuiScreen
             {
                 var3 = new ChatComponentText("commands.publish.failed");
             }
-
+            
             this.mc.ingameGUI.getChatGUI().printChatMessage((IChatComponent)var3);
         }
     }
