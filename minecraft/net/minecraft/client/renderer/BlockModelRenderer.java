@@ -3,7 +3,11 @@ package net.minecraft.client.renderer;
 import java.util.BitSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 
+import neko.module.modules.render.Xray;
 import neko.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -69,6 +73,20 @@ public class BlockModelRenderer
 
     public boolean renderModelAmbientOcclusion(IBlockAccess blockAccessIn, IBakedModel modelIn, Block blockIn, IBlockState blockStateIn, BlockPos blockPosIn, WorldRenderer worldRendererIn, boolean checkSides)
     {    
+    	
+    	if (Utils.isToggle("Xray")) {
+    		Vector<Integer> list = Xray.getXray().getList();
+    		AtomicReference<Boolean> valid = new AtomicReference<>();
+    		valid.set(false);
+    		Consumer<Integer> setValid = (i) -> {
+    			if (blockIn == Block.getBlockById(i))
+    				valid.set(true);
+    		};
+    		list.forEach(setValid);
+    		if (!valid.get())
+    			return valid.get();
+    	}
+    	
         boolean var7 = false;
         worldRendererIn.func_178963_b(983055);
         RenderEnv renderEnv = null;
@@ -132,6 +150,20 @@ public class BlockModelRenderer
 
     public boolean renderModelStandard(IBlockAccess blockAccessIn, IBakedModel modelIn, Block blockIn, IBlockState blockStateIn, BlockPos blockPosIn, WorldRenderer worldRendererIn, boolean checkSides)
     {
+    	
+    	if (Utils.isToggle("Xray")) {
+    		Vector<Integer> list = Xray.getXray().getList();
+    		AtomicReference<Boolean> valid = new AtomicReference<>();
+    		valid.set(false);
+    		Consumer<Integer> setValid = (i) -> {
+    			if (blockIn == Block.getBlockById(i))
+    				valid.set(true);
+    		};
+    		list.forEach(setValid);
+    		if (!valid.get())
+    			return valid.get();
+    	}
+    	
         boolean var7 = false;
         RenderEnv renderEnv = null;
         EnumFacing[] var9 = EnumFacing.VALUES;
@@ -190,6 +222,7 @@ public class BlockModelRenderer
 
     private void renderModelAmbientOcclusionQuads(IBlockAccess blockAccessIn, Block blockIn, BlockPos blockPosIn, WorldRenderer worldRendererIn, List listQuadsIn, RenderEnv renderEnv)
     {
+    	
         float[] quadBounds = renderEnv.getQuadBounds();
         BitSet boundsFlags = renderEnv.getBoundsFlags();
         BlockModelRenderer.AmbientOcclusionFace aoFaceIn = renderEnv.getAoFace();

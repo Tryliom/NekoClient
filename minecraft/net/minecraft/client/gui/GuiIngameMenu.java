@@ -2,17 +2,13 @@ package net.minecraft.client.gui;
 
 import java.io.IOException;
 
-import neko.gui.GuiAltManager;
 import neko.gui.GuiMenuNeko;
-import neko.manager.OnlyRpgManager;
-import neko.manager.SoundManager;
 import neko.utils.Utils;
 import net.minecraft.client.gui.achievement.GuiAchievements;
 import net.minecraft.client.gui.achievement.GuiStats;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.util.ChatComponentText;
 
 public class GuiIngameMenu extends GuiScreen
 {
@@ -49,10 +45,6 @@ public class GuiIngameMenu extends GuiScreen
         this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + var1, 98, 20, I18n.format("menu.options", new Object[0])));
         if (Utils.verif==null) {
         	this.buttonList.add(new GuiButton(9, this.width / 2 - 100, this.height / 4 + 72 + var1, "§9Neko..."));
-        	if (SoundManager.getSM().canStart)
-    			this.buttonList.add(new GuiButton(665, this.width / 2 -100, 10, SoundManager.getSM().isActive() ? "♫ Stop ♫" : "♪ Restart ♪"));
-    		else
-    			this.buttonList.add(new GuiButton(665, this.width / 2 -100, 10, "Music loading..."));
         }
         GuiButton var3;
         this.buttonList.add(var3 = new GuiButton(7, this.width / 2 + 2, this.height / 4 + 96 + var1, 98, 20, I18n.format("menu.shareToLan", new Object[0])));
@@ -65,15 +57,6 @@ public class GuiIngameMenu extends GuiScreen
     {
         switch (button.id)
         {
-        	case 665:
-        		if (SoundManager.getSM().isActive() && !button.displayString.equals("Music loading..."))
-        			SoundManager.getSM().stopMusic();
-        		else if (!button.displayString.equals("Music loading...")) {
-        			SoundManager.getSM().restartMusic();
-        		} else
-        			button.displayString = SoundManager.getSM().isActive() ? "♫ Stop ♫" : "♪ Restart ♪";
-        		mc.displayGuiScreen(new GuiIngameMenu());
-        		break;
             case 0:
                 this.mc.displayGuiScreen(new GuiOptions(this, this.mc.gameSettings));
                 break;

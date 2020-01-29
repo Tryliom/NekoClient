@@ -3,9 +3,6 @@ package net.minecraft.block;
 import java.util.List;
 import java.util.Random;
 
-import neko.Client;
-import neko.module.modules.render.Xray;
-import neko.utils.Utils;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;

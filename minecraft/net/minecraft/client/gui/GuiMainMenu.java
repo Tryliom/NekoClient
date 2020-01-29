@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
-import java.util.Vector;
 
 import org.apache.commons.io.Charsets;
 import org.apache.logging.log4j.LogManager;
@@ -27,11 +26,9 @@ import neko.gui.GuiAltManager;
 import neko.gui.GuiConnect;
 import neko.gui.GuiMenuNeko;
 import neko.gui.GuiUpdate;
-import neko.guicheat.clickgui.ClickGUI;
 import neko.guicheat.clickgui.settings.SettingsManager;
 import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
-import neko.manager.SoundManager;
 import neko.manager.TutoManager;
 import neko.module.other.Rank;
 import neko.utils.Utils;
@@ -234,11 +231,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         		}
         	}
     		this.buttonList.add(new GuiButton(769, this.width/2 - 50, 40, 100, 20, tm.isDone() ? "§7Activer le tuto" : "§7Passer le tuto"));
-			int widdthtt = this.width - 100;
-    		if (SoundManager.getSM().canStart || Utils.haveInternet())
-    			this.buttonList.add(new GuiButton(665, widdthtt, 8, 90, 20, SoundManager.getSM().isActive() ? "♫ Stop ♫" : "♪ Start Music ♪"));
-    		else
-    			this.buttonList.add(new GuiButton(665, widdthtt, 8, 90, 20, "Music loading..."));
         } else
         	this.buttonList.add(new GuiButtonLanguage(5, Utils.verif==null ? 100 : this.width / 2 - 124, Utils.verif==null ? var3+104+12 : var3 + 72 + 12));
 
@@ -311,24 +303,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
 
     protected void actionPerformed(GuiButton button) throws IOException
     {	
-    	if (button.id == 665)
-        {
-    		if ((button.displayString.equals("♪ Start Music ♪")) && !button.displayString.equals("Music loading...")) {
-    			if(SoundManager.getSM().getList().size() != 0) {
-    				SoundManager.getSM().currPath = SoundManager.getSM().getList().get(0).getPath();
-    				SoundManager.getSM().startNewMusic();
-
-        			button.displayString =  "♫ Stop ♫";
-        			return;
-    			}
-    		}
-    		if (SoundManager.getSM().isActive() && !button.displayString.equals("Music loading..."))
-    			SoundManager.getSM().stopMusic();
-    		else if (!button.displayString.equals("Music loading...")) {
-    			SoundManager.getSM().restartMusic();
-    		} else
-    			button.displayString = SoundManager.getSM().isActive() ? "♫ Stop ♫" : "♪ Restart ♪";
-        }
     	if (button.id == 666 && tm.isDone())
         {
     		this.mc.displayGuiScreen(new GuiMenuNeko(this));
@@ -679,25 +653,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         if (this.mc.isDemo())
         {
             var10 = var10 + " Demo";
-        }
-        
-        for (Object o : this.buttonList) {
-        	if (o instanceof GuiButton) {
-	        	GuiButton gb = (GuiButton) o;
-	        	if (SoundManager.getSM().canStart && gb.id==665)
-	    			gb.displayString = SoundManager.getSM().isActive() ? "♫ Stop ♫" : "♪ Restart ♪";
-	        	if (gb.id==666 && Math.random()<0.005) {
-	        		Vector<String> list = new Vector<String>();
-	        		list.add("Neko...");
-	        		list.add("Bind Manager");
-	        		list.add("Music Manager");
-	        		list.add("Alt Manager");
-	        		list.add("Wiki Neko");
-	        		list.add("Mon compte Neko");
-	        		int i = Utils.getRandInt(list.size()-1);
-	        		gb.displayString = "§3"+list.get(i);
-	        	}
-        	}
         }
         this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, var10, 2, this.height - 10, -1);
         String var11 = "Copyright Mojang AB. Do not distribute!";

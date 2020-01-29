@@ -20,14 +20,11 @@ import neko.guicheat.clickgui.settings.SettingsManager;
 import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
 import neko.manager.QuestManager;
-import neko.manager.SoundManager;
-import neko.module.other.Conditions;
 import neko.module.other.Irc;
 import neko.module.other.Necklace;
 import neko.module.other.Rank;
 import neko.module.other.TempBon;
 import neko.module.other.enums.Chat;
-import neko.updater.Updater;
 import neko.utils.ChatUtils;
 import neko.utils.Utils;
 import net.mcleaks.MCLeaks;
@@ -78,7 +75,7 @@ public class Client {
 	public boolean firstServDisplay = true;
 	public String strNeko = "§bNeko v" + CLIENT_VERSION;
 	public String strCreator = "§eCréé par §f§lTryliom§e et §f§lMarie";
-	private static String currentFolder = Minecraft.class.getProtectionDomain().getCodeSource().getLocation().getPath().replace("/"+new java.io.File(Minecraft.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getName(), "");
+	//private static String currentFolder = Minecraft.class.getProtectionDomain().getCodeSource().getLocation().getPath().replace("/"+new java.io.File(Minecraft.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getName(), "");
 	
 	public void startClient() {
 		
@@ -125,7 +122,6 @@ public class Client {
 			mc.fontRendererObj.setBidiFlag(mc.mcLanguageManager.isCurrentLanguageBidirectional());
 		}
 		mc.mcResourceManager.registerReloadListener(NekoFont);
-		SoundManager.getSM();
 		
 		n = Utils.getRandInt(13);
 		if(Utils.isHalloween() == true) {

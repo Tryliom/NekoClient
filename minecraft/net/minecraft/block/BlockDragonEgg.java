@@ -2,9 +2,6 @@ package net.minecraft.block;
 
 import java.util.Random;
 
-import neko.Client;
-import neko.module.modules.render.Xray;
-import neko.utils.Utils;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityFallingBlock;
@@ -137,10 +134,6 @@ public class BlockDragonEgg extends Block
 
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
     {
-    	if (Utils.isToggle("Xray")) {
-    		return false;
-    	}
-		
         return true;
     }
 

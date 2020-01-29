@@ -145,7 +145,7 @@ public class GuiConnect extends GuiScreen {
 			this.mc.displayGuiScreen(new GuiMainMenu());
 			break;
 		case 5:
-			this.mc.displayGuiScreen(new GuiMusicManager(this));
+			this.mc.displayGuiScreen(new GuiXrayManager(this));
 			break;
 		}
 	}

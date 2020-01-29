@@ -50,8 +50,8 @@ import neko.Client;
 import neko.api.NekoCloud;
 import neko.gui.GuiAltManager;
 import neko.gui.GuiBindManager;
-import neko.gui.GuiMusicManager;
 import neko.gui.GuiWikiMenu;
+import neko.gui.GuiXrayManager;
 import neko.gui.InGameGui;
 import neko.guicheat.clickgui.ClickGUI;
 import neko.guicheat.clickgui.Panel;
@@ -59,7 +59,6 @@ import neko.guicheat.clickgui.settings.Setting;
 import neko.lock.Lock;
 import neko.manager.ModuleManager;
 import neko.manager.QuestManager;
-import neko.manager.SoundManager;
 import neko.manager.TutoManager;
 import neko.module.Category;
 import neko.module.Module;
@@ -116,6 +115,7 @@ import neko.module.modules.render.Tracers;
 import neko.module.modules.render.Wallhack;
 import neko.module.modules.render.Water;
 import neko.module.modules.render.WorldTime;
+import neko.module.modules.render.Xray;
 import neko.module.modules.special.DropShit;
 import neko.module.modules.special.FastDura;
 import neko.module.modules.special.FireTrail;
@@ -150,6 +150,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SoundManager;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiMultiplayer;
@@ -522,7 +523,7 @@ public class Utils {
 		if (actual instanceof GuiWikiMenu.GuiWikiPart) {
 			return false;
 		}		
-		if (actual instanceof GuiMusicManager) {
+		if (actual instanceof GuiXrayManager) {
 			return false;
 		}
 		return true;
@@ -1358,16 +1359,6 @@ public class Utils {
 		return true;
 	}
 	
-	public static int getIdMusicByPath(String path) {
-		Vector<Music> list = (Vector<Music>) SoundManager.getSM().getList().clone();
-		for (int i = 0; i < list.size();i++) {
-			if (list.get(i).getPath().equalsIgnoreCase(path)) {
-				return i;
-			}
-		}
-		return -1;
-	}
-	
 	public static int getTotRankRate(Rate r) {
 		int i=0;
 		for (Rank rk : ModuleManager.rang) {
@@ -1410,6 +1401,7 @@ public class Utils {
 		saveCloudAlt();
 		saveStat();
 		saveSettings();
+		saveXray();
 	}
 	
 	public static Block getBlockRelativeToEntity(Entity en, double d) {
@@ -2268,8 +2260,48 @@ public class Utils {
 				var.ame+=1;
 			}
 		}	
-			new Xp(xp);
-		}	
+		new Xp(xp);
+	}
+    
+	public static void loadXray(String...fi) {
+		File dir = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"xray.neko");
+		if (dir.exists()) {
+		try { 
+            InputStream ips = new FileInputStream(dir); 
+            InputStreamReader ipsr = new InputStreamReader(ips); 
+            try (BufferedReader br = new BufferedReader(ipsr)) {
+                String ligne;
+                Xray xray = Xray.getXray();
+                xray.setList(new Vector<Integer>());
+                while ((ligne = br.readLine()) != null)
+                {                	
+                	xray.getList().add(Integer.parseInt(ligne));
+                }
+            
+            } catch (IOException | NumberFormatException e) {}		
+		} catch (IOException | NumberFormatException e) {}
+		
+		}
+	}
+	
+	public static void saveXray(String...fi) {	
+		if (verif!=null)
+			return;
+		String save = "";
+		for (Integer id : Xray.getXray().getList())
+			save += id+"§,";
+		nc.saveSave("xray", save.substring(0, save.length()-2));
+	}
+	
+	public static void loadCloudXray() {
+		String list[] = nc.getSave("xray").split("§,");
+		for (String ligne : list) {
+        	Xray xray = Xray.getXray();
+            xray.setList(new Vector<Integer>());
+            System.out.println(ligne);
+            xray.getList().add(Integer.parseInt(ligne));
+		}
+	}
 	
 	public static void loadCloudRank() {
 		String list[] = nc.getSave("rank").split("§,");
@@ -2891,7 +2923,7 @@ public class Utils {
         s+=TutoManager.getTuto().isDone()+"§,"+Nuker.safe+"§,"+KillAura.speed+"§,"+PunKeel.attack+"§,"+PunKeel.delay+"§,"+Fastbow.getFast().getPacket()+"§,";
         s+=Step.getStep().isBypass()+"§,"+BowAimbot.getAim().getFov()+"§,"+BowAimbot.getAim().getLife()+"§,"+BowAimbot.getAim().getArmor()+"§,";
         s+=Reach.multiaura+"§,"+PunKeel.random+"§,"+(PunKeel.random ? PunKeel.rDelay.firstElement()+"§,"+PunKeel.rDelay.lastElement() : "0.5§,1.0")+"§,";
-        s+=m.getMode()+"§,"+m.isClassic()+"§,"+Block.getIdFromBlock(Search.getSearch().getSearchBlock())+"§,"+SoundManager.mm.name()+"§,"+Reach.knock+"§,";
+        s+=m.getMode()+"§,"+m.isClassic()+"§,"+Block.getIdFromBlock(Search.getSearch().getSearchBlock())+"§,§,"+Reach.knock+"§,";
         s+=Utils.colorGui.getRed()+"§,"+Utils.colorGui.getGreen()+"§,"+Utils.colorGui.getBlue()+"§,"+Utils.colorGui.getAlpha()+"§,";
         s+=Utils.colorFontGui.getRed()+"§,"+Utils.colorFontGui.getGreen()+"§,"+Utils.colorFontGui.getBlue()+"§,"+Utils.colorFontGui.getAlpha()+"§,";
         for (String n : Nameprotect.getNP().getList()) {
@@ -3481,9 +3513,8 @@ public class Utils {
             		m.setClassic(Boolean.parseBoolean(ligne));
             	if (i==167)
             		Search.getSearch().setSearchBlock(Block.getBlockById(Integer.parseInt(ligne)));
-            	if (i==168) {
-            		SoundManager.getSM().mm = MusicMode.valueOf(ligne);
-            	}
+            	if (i==168)
+            		;
             	if (i==169)
             		Reach.knock=Boolean.parseBoolean(ligne);
             	if (i==170)
@@ -3957,7 +3988,7 @@ public class Utils {
 	                	if (i==167)
 	                		Search.getSearch().setSearchBlock(Block.getBlockById(Integer.parseInt(ligne)));
 	                	if (i==168) {
-	                		SoundManager.getSM().mm = MusicMode.valueOf(ligne);
+	                		;
 	                	}
                 	} catch (Exception e) {
                 		System.out.println("dsf");
@@ -4494,6 +4525,7 @@ public class Utils {
 			loadCloudShit();
 			loadCloudFrame();
 			loadCloudSettings();
+			loadCloudXray();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

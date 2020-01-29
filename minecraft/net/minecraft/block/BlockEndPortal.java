@@ -3,9 +3,6 @@ package net.minecraft.block;
 import java.util.List;
 import java.util.Random;
 
-import neko.Client;
-import neko.module.modules.render.Xray;
-import neko.utils.Utils;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -45,10 +42,6 @@ public class BlockEndPortal extends BlockContainer
 
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side)
     {
-    	if (Utils.isToggle("Xray")) {
-    		return false;
-    	}
-		
         return side == EnumFacing.DOWN ? super.shouldSideBeRendered(worldIn, pos, side) : false;
     }
 

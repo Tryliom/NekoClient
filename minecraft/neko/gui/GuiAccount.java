@@ -57,7 +57,7 @@ public class GuiAccount extends GuiScreen {
 			this.mc.displayGuiScreen(new GuiConnect(new GuiMainMenu(), 1));
 			break;
 		case 5:
-			this.mc.displayGuiScreen(new GuiMusicManager(this));
+			this.mc.displayGuiScreen(new GuiXrayManager(this));
 			break;
 		}
 	}

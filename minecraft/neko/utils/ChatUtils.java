@@ -20,6 +20,11 @@ import java.util.Scanner;
 import java.util.UUID;
 import java.util.Vector;
 
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.Display;
+
+import com.mojang.authlib.GameProfile;
+
 import neko.Client;
 import neko.dtb.RequestThread;
 import neko.guicheat.clickgui.util.SettingsUtil;
@@ -27,7 +32,6 @@ import neko.lock.Lock;
 import neko.manager.LockManager;
 import neko.manager.ModuleManager;
 import neko.manager.QuestManager;
-import neko.manager.SoundManager;
 import neko.module.Category;
 import neko.module.Module;
 import neko.module.modules.combat.AutoClic;
@@ -116,6 +120,7 @@ import net.mcleaks.RedeemResponse;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SoundManager;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiMainMenu;
@@ -152,11 +157,6 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Session;
 import net.minecraft.world.WorldSettings.GameType;
-
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.Display;
-
-import com.mojang.authlib.GameProfile;
 
 public class ChatUtils {
 	Minecraft mc = Minecraft.getMinecraft();
@@ -4559,7 +4559,6 @@ public class ChatUtils {
 					Utils.panic();
 					Display.setTitle("Minecraft 1.8");
 					var.name=Utils.version.equalsIgnoreCase("Neko") ? "1.8/vanilla" : Utils.version+"/vanilla";
-					SoundManager.getSM().stopMusic();
 					mc.ingameGUI.getChatGUI().clearChatMessages();	
 					mc.displayGuiScreen((GuiScreen)null);
 					return;			

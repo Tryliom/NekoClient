@@ -3,9 +3,13 @@ package net.minecraft.block;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.Vector;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 
 import org.apache.commons.io.filefilter.AndFileFilter;
 
+import neko.module.modules.render.Xray;
 import neko.utils.BlocksUtils;
 import neko.utils.Utils;
 import net.minecraft.block.material.MapColor;
@@ -216,6 +220,8 @@ public class Block {
 	}
 
 	public int getLightValue() {
+		if (Utils.isToggle("Xray"))
+			return 1;
 		return this.lightValue;
 	}
 
@@ -412,6 +418,18 @@ public class Block {
 	}
 
 	public int getMixedBrightnessForBlock(IBlockAccess worldIn, BlockPos pos) {
+		if (Utils.isToggle("Xray")) {
+    		Vector<Integer> list = Xray.getXray().getList();
+    		AtomicReference<Boolean> valid = new AtomicReference<>();
+    		valid.set(false);
+    		Consumer<Integer> setValid = (i) -> {
+    			if (this == Block.getBlockById(i))
+    				valid.set(true);
+    		};
+    		list.forEach(setValid);
+    		if (!valid.get())
+    			return 1000000;
+    	}
 		Block var3 = worldIn.getBlockState(pos).getBlock();
 		int var4 = worldIn.getCombinedLight(pos, var3.getLightValue());
 
@@ -425,13 +443,16 @@ public class Block {
 	}
 
 	public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
-		// TODO: Xray
 		if (Utils.isToggle("Xray")) {
-			if(this instanceof BlockOre || this instanceof BlockRedstoneOre || this instanceof BlockLiquid || this instanceof
-					BlockDynamicLiquid || this instanceof BlockStaticLiquid ) {
-				return true;
-			}
-    		return false;
+    		Vector<Integer> list = Xray.getXray().getList();
+    		AtomicReference<Boolean> valid = new AtomicReference<>();
+    		valid.set(false);
+    		Consumer<Integer> setValid = (i) -> {
+    			if (this == Block.getBlockById(i))
+    				valid.set(true);
+    		};
+    		list.forEach(setValid);
+    		return valid.get();
     	}
 		return side == EnumFacing.DOWN && this.minY > 0.0D ? true
 				: (side == EnumFacing.UP && this.maxY < 1.0D ? true
@@ -1238,16 +1259,16 @@ public class Block {
 				.setStepSound(soundTypeGravel).setUnlocalizedName("gravel"));
 		registerBlock(14, "gold_ore", (new BlockOre()).setHardness(3.0F)
 				.setResistance(5.0F).setStepSound(soundTypePiston)
-				.setUnlocalizedName("oreGold").setLightOpacity(Utils.xrayBlockOpacity).setLightLevel(0.1F));
+				.setUnlocalizedName("oreGold"));
 		registerBlock(15, "iron_ore", (new BlockOre()).setHardness(3.0F)
 				.setResistance(5.0F).setStepSound(soundTypePiston)
-				.setUnlocalizedName("oreIron").setLightOpacity(Utils.xrayBlockOpacity).setLightLevel(0.1F));
+				.setUnlocalizedName("oreIron"));
 		registerBlock(16, "coal_ore", (new BlockOre()).setHardness(3.0F)
 				.setResistance(5.0F).setStepSound(soundTypePiston)
-				.setUnlocalizedName("oreCoal").setLightOpacity(Utils.xrayBlockOpacity).setLightLevel(0.1F));
+				.setUnlocalizedName("oreCoal"));
 		registerBlock(17, "log", (new BlockOldLog()).setUnlocalizedName("log"));
 		registerBlock(18, "leaves",(new BlockOldLeaf()).setHardness(1.0F)
-				.setResistance(1.0F).setStepSound(soundTypePiston).setUnlocalizedName("leaves").setLightOpacity(Utils.xrayBlockOpacity));
+				.setResistance(1.0F).setStepSound(soundTypePiston));
 		registerBlock(19, "sponge", (new BlockSponge()).setHardness(0.6F)
 				.setStepSound(soundTypeGrass).setUnlocalizedName("sponge"));
 		registerBlock(20, "glass", (new BlockGlass(Material.glass, false))
@@ -1255,7 +1276,7 @@ public class Block {
 				.setUnlocalizedName("glass"));
 		registerBlock(21, "lapis_ore", (new BlockOre()).setHardness(3.0F)
 				.setResistance(5.0F).setStepSound(soundTypePiston)
-				.setUnlocalizedName("oreLapis").setLightOpacity(Utils.xrayBlockOpacity).setLightLevel(0.1F));
+				.setUnlocalizedName("oreLapis"));
 		registerBlock(22, "lapis_block", (new BlockCompressed(
 				MapColor.lapisColor)).setHardness(3.0F).setResistance(5.0F)
 				.setStepSound(soundTypePiston).setUnlocalizedName("blockLapis")
@@ -1371,7 +1392,7 @@ public class Block {
 				.setUnlocalizedName("redstoneDust").disableStats());
 		registerBlock(56, "diamond_ore", (new BlockOre()).setHardness(3.0F)
 				.setResistance(5.0F).setStepSound(soundTypePiston)
-				.setUnlocalizedName("oreDiamond").setLightOpacity(Utils.xrayBlockOpacity).setLightLevel(0.1F));
+				.setUnlocalizedName("oreDiamond"));
 		registerBlock(57, "diamond_block", (new BlockCompressed(
 				MapColor.diamondColor)).setHardness(5.0F).setResistance(10.0F)
 				.setStepSound(soundTypeMetal)
@@ -1439,7 +1460,7 @@ public class Block {
 		registerBlock(74, "lit_redstone_ore", (new BlockRedstoneOre(true))
 				.setLightLevel(0.625F).setHardness(3.0F).setResistance(5.0F)
 				.setStepSound(soundTypePiston)
-				.setUnlocalizedName("oreRedstone").setLightOpacity(Utils.xrayBlockOpacity).setLightLevel(0.1F));
+				.setUnlocalizedName("oreRedstone"));
 		registerBlock(
 				75,
 				"unlit_redstone_torch",
@@ -1662,7 +1683,7 @@ public class Block {
 						.setUnlocalizedName("stairsSandStone"));
 		registerBlock(129, "emerald_ore", (new BlockOre()).setHardness(3.0F)
 				.setResistance(5.0F).setStepSound(soundTypePiston)
-				.setUnlocalizedName("oreEmerald").setLightOpacity(Utils.xrayBlockOpacity).setLightLevel(0.1F));
+				.setUnlocalizedName("oreEmerald"));
 		registerBlock(
 				130,
 				"ender_chest",
@@ -1760,7 +1781,7 @@ public class Block {
 						.setUnlocalizedName("blockRedstone"));
 		registerBlock(153, "quartz_ore", (new BlockOre()).setHardness(3.0F)
 				.setResistance(5.0F).setStepSound(soundTypePiston)
-				.setUnlocalizedName("netherquartz").setLightOpacity(Utils.xrayBlockOpacity).setLightLevel(0.1F));
+				.setUnlocalizedName("netherquartz"));
 		registerBlock(154, "hopper", (new BlockHopper()).setHardness(3.0F)
 				.setResistance(8.0F).setStepSound(soundTypeMetal)
 				.setUnlocalizedName("hopper"));
@@ -1965,7 +1986,6 @@ public class Block {
 				if (var16 || var17 || var18 || var19 || var20) {
 					var15 = true;
 				}
-
 				var14.useNeighborBrightness = var15;
 			}
 		}
