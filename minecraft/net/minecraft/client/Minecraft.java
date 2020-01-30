@@ -991,6 +991,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
      */
     public void displayGuiScreen(GuiScreen guiScreenIn)
     {
+    	GL11.glEnable(GL11.GL_BLEND);
         if (this.currentScreen != null)
         {
             this.currentScreen.onGuiClosed();
@@ -1030,6 +1031,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             this.mcSoundHandler.resumeSounds();
             this.setIngameFocus();
         }
+        GL11.glDisable(GL11.GL_BLEND);
     }
 
     /**

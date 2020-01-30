@@ -602,7 +602,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
      */
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
-    	
         GlStateManager.disableAlpha();
         this.renderSkybox(mouseX, mouseY, partialTicks);
         GlStateManager.enableAlpha();
@@ -668,28 +667,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         	drawRect(0, 0, this.width, 35, Integer.MIN_VALUE);
         	
         	this.drawString(fontRendererObj, "§eConnecté en tant que: §b" + Minecraft.getMinecraft().getSession().getUsername(), 10, 40, -1);
-        	
-        	if (!Client.getNeko().ver.isEmpty()) {
-        		
-        		//TODO: Update
-        		
-
-    	    	mc.displayGuiScreen(new GuiUpdate(this, 1, Client.getNeko().ver));
-
-        		/*this.drawCenteredString(Client.getNeko().NekoFont, "§3§nUne nouvelle version est disponible !", this.width - 110, this.height/2 - this.height/12, -1);
-        		this.drawCenteredString(Client.getNeko().NekoFont, "§eVersion supérieure: §b"+Client.getNeko().ver, this.width - 110, this.height/2 - this.height/60, -1);
-        		this.drawCenteredString(Client.getNeko().NekoFont, "§eAjout principal: §b"+Client.getNeko().changelog, this.width - 110, this.height/2 + this.height/30, -1);
-        		
-        		boolean b = true;
-        		for (Object gb : this.buttonList) {
-        			if (gb instanceof GuiButton) {
-        				if (((GuiButton) gb).id==770)
-        					b = false;
-        			}
-        		}*/
-        		//if (b)
-        			//this.buttonList.add(new GuiButton(770, this.width - 155, this.height/2 + 25, 90, 20, "§f§lMettre à jour"));
-        	}
         	var11=Client.getNeko().strCreator;
         }
         this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, var11, this.width - (Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj).getStringWidth(var11) - 2, this.height - 10, -1);
@@ -700,7 +677,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
             this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, this.field_92025_p, this.field_92022_t, this.field_92021_u, -1);
             this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, this.field_146972_A, (this.width - this.field_92024_r) / 2, ((GuiButton)this.buttonList.get(0)).yPosition - 12, -1);
         }
-
+        
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
