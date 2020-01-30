@@ -99,6 +99,18 @@ public class GuiXrayManager extends GuiScreen {
 			Collections.sort(this.lb, new SortByBlockType());
 			
 			for(int i = 0; i<this.lb.size(); i++) {
+				ItemStack ia = new ItemStack(this.lb.get(i).block);
+				Boolean CanEnchanted = false;
+				try {
+					ia.hasEffect();
+					CanEnchanted = true;
+				} catch (Exception e){
+					CanEnchanted = false;
+				}
+				
+				if(!CanEnchanted) {
+					continue;
+				}
 				this.list.add(this.lb.get(i).block);
 			}
 			
@@ -137,25 +149,17 @@ public class GuiXrayManager extends GuiScreen {
 
 		protected void drawBackground() {}
 
+		int realslot = 0;
+		
 		protected void drawSlot(int i, int x, int y, int var4, int var5, int var6) {
 			try {
 				Block block = this.list.get(i);
 				boolean selected = Xray.getXray().getList().contains(Block.getIdFromBlock(block));
+
+				ItemStack ia = new ItemStack(block);
 				
 				var.NekoFont.drawString((selected ? "§a" : "§c") + block.getLocalizedName(), x + 31, y + 3, 10526880);
-				
-				ItemStack ia = new ItemStack(block);
-				Boolean CanEnchanted = false;
-				try {
-					ia.hasEffect();
-					CanEnchanted = true;
-				} catch (Exception e){
-					CanEnchanted = false;
-				}
-				
-				if(!CanEnchanted) return;
-				
-				
+
 				RenderHelper.enableGUIStandardItemLighting();
 				mc.getRenderItem().renderItemIntoGUI(ia, x, y + 3);
 			} catch (Exception e) {
