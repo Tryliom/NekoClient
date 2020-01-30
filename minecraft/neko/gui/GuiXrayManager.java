@@ -7,11 +7,14 @@ import java.util.Comparator;
 import java.util.Vector;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
 
 import neko.Client;
 import neko.module.modules.render.Xray;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBeacon;
+import net.minecraft.block.BlockFarmland;
+import net.minecraft.block.BlockFurnace;
 import net.minecraft.block.BlockMobSpawner;
 import net.minecraft.block.BlockOre;
 import net.minecraft.block.BlockStaticLiquid;
@@ -198,7 +201,7 @@ public class GuiXrayManager extends GuiScreen {
 			super(Minecraft.getMinecraft(), prevGui.width, prevGui.height, 40, prevGui.height - 56, 30);
 			for (Object o : Block.blockRegistry.getKeys()) {
 				Block block = (Block) Block.blockRegistry.getObject(o);
-				if (!block.getLocalizedName().startsWith("tile.") && (block instanceof Block) || (block instanceof BlockOre || block instanceof BlockMobSpawner || block instanceof BlockBeacon))
+				if (!block.getLocalizedName().startsWith("tile.") && !(block instanceof BlockFarmland))
 					this.lb.add(new Listblockks(block));
 			}
 			Collections.sort(this.lb, new SortByBlockType());
@@ -263,12 +266,12 @@ public class GuiXrayManager extends GuiScreen {
 
 				ItemStack ia = new ItemStack(block);
 				
-				var.NekoFont.drawString((selected ? "§a" : "§c") + block.getLocalizedName(), x + 31, y + 3, 10526880);
-
+				var.NekoFont.drawString((selected ? "§a" : "§c") + block.getLocalizedName(), x + 31, y + 9, 10526880);
 				RenderHelper.enableGUIStandardItemLighting();
-				mc.getRenderItem().renderItemIntoGUI(ia, x, y + 3);
+				mc.getRenderItem().renderItemIntoGUI(ia, x + 5, y + 5);
+				GL11.glDisable(3042);
 			} catch (Exception e) {
-				//System.out.println(e.getLocalizedMessage());
+				
 			}
 		}
 	}
@@ -284,16 +287,12 @@ class Listblockks {
 		this.block = b;
 		this.id = Block.getIdFromBlock(block);
 		if(block instanceof BlockOre) {
-			//System.out.println("BlockOre : " + block.getLocalizedName());
 			this.BlockType = "aa";
 		} else if(block instanceof BlockMobSpawner) {
-			//System.out.println("BlockMobSpawner : " + block.getLocalizedName());
 			this.BlockType = "bb";
 		} else if(block instanceof BlockBeacon) {
-			//System.out.println("BlockBeacon : " + block.getLocalizedName());
 			this.BlockType = "cc";
 		} else if(block.getLocalizedName().startsWith("tile.")) {
-			//System.out.println("BlockTile : " + block.getLocalizedName());
 			this.BlockType = "dd";
 		} else {
 			this.BlockType = "ee";

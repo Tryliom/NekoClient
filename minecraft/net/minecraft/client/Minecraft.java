@@ -991,6 +991,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
      */
     public void displayGuiScreen(GuiScreen guiScreenIn)
     {
+    	GL11.glEnable(GL11.GL_BLEND);
         if (this.currentScreen != null)
         {
             this.currentScreen.onGuiClosed();

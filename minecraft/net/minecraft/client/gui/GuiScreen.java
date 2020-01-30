@@ -20,6 +20,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
@@ -98,7 +99,6 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         int var4;
-
         for (var4 = 0; var4 < this.buttonList.size(); ++var4)
         {
             ((GuiButton)this.buttonList.get(var4)).drawButton(this.mc, mouseX, mouseY);
@@ -108,7 +108,6 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
         {
             ((GuiLabel)this.labelList.get(var4)).drawLabel(this.mc, mouseX, mouseY);
         }
-        
     }
 
     /**
@@ -659,7 +658,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
         GlStateManager.disableFog();
         Tessellator var2 = Tessellator.getInstance();
         WorldRenderer var3 = var2.getWorldRenderer();
-        //this.mc.getTextureManager().bindTexture(optionsBackground);
+        this.mc.getTextureManager().bindTexture(optionsBackground);
         this.mc.getTextureManager().bindTexture(Gui.getOptionsBackground());
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         float var4 = 32.0F;
