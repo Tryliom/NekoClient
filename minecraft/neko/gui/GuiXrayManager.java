@@ -4,25 +4,20 @@ import java.io.IOException;
 import java.util.Vector;
 
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
 
 import neko.Client;
-import neko.module.modules.movements.AirWalk;
 import neko.module.modules.render.Xray;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialLiquid;
+import net.minecraft.block.BlockBeacon;
+import net.minecraft.block.BlockMobSpawner;
+import net.minecraft.block.BlockOre;
+import net.minecraft.block.BlockStaticLiquid;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiSlot;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 
 public class GuiXrayManager extends GuiScreen {
 	private GuiScreen prevGui;
@@ -91,7 +86,7 @@ public class GuiXrayManager extends GuiScreen {
 			super(Minecraft.getMinecraft(), prevGui.width, prevGui.height, 40, prevGui.height - 56, 30);
 			for (Object o : Block.blockRegistry.getKeys()) {
 				Block block = (Block) Block.blockRegistry.getObject(o);
-				if (!block.getLocalizedName().startsWith("tile.") && block.isFullBlock())
+				if (!block.getLocalizedName().startsWith("tile.") && (block instanceof BlockOre || block instanceof BlockMobSpawner || block instanceof BlockBeacon))
 					this.list.add(block);
 			}
 		}
@@ -127,9 +122,7 @@ public class GuiXrayManager extends GuiScreen {
 			}
 		}
 
-		protected void drawBackground() {
-			drawDefaultBackground();
-		}
+		protected void drawBackground() {}
 
 		protected void drawSlot(int i, int x, int y, int var4, int var5, int var6) {
 			try {
