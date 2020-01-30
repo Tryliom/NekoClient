@@ -1,5 +1,12 @@
 package net.minecraft.client.renderer;
 
+import java.util.Vector;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
+
+import neko.module.modules.render.Xray;
+import neko.utils.Utils;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -34,6 +41,19 @@ public class BlockFluidRenderer
 
     public boolean func_178270_a(IBlockAccess p_178270_1_, IBlockState p_178270_2_, BlockPos p_178270_3_, WorldRenderer p_178270_4_)
     {    
+    	if (Utils.isToggle("Xray")) {
+    		Vector<Integer> list = Xray.getXray().getList();
+    		AtomicReference<Boolean> valid = new AtomicReference<>();
+    		valid.set(false);
+    		Consumer<Integer> setValid = (i) -> {
+    			if (p_178270_2_.getBlock() == Block.getBlockById(i))
+    				valid.set(true);
+    		};
+    		list.forEach(setValid);
+    		if (!valid.get())
+    			return valid.get();
+    	}
+    	
         BlockLiquid var5 = (BlockLiquid)p_178270_2_.getBlock();
         var5.setBlockBoundsBasedOnState(p_178270_1_, p_178270_3_);
         TextureAtlasSprite[] var6 = var5.getMaterial() == Material.lava ? this.field_178272_a : this.field_178271_b;

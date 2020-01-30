@@ -222,7 +222,6 @@ public class BlockModelRenderer
 
     private void renderModelAmbientOcclusionQuads(IBlockAccess blockAccessIn, Block blockIn, BlockPos blockPosIn, WorldRenderer worldRendererIn, List listQuadsIn, RenderEnv renderEnv)
     {
-    	
         float[] quadBounds = renderEnv.getQuadBounds();
         BitSet boundsFlags = renderEnv.getBoundsFlags();
         BlockModelRenderer.AmbientOcclusionFace aoFaceIn = renderEnv.getAoFace();
