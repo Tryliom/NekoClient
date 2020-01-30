@@ -325,7 +325,6 @@ public class InGameGui {
 				  }
 			  }
 			  hudWid=var5;
-              boolean var6 = true;
               RenderUtils.drawRect(1, 10 - 1, 2 + var5 + 1, pos - 1, c);
 		  }
 		  

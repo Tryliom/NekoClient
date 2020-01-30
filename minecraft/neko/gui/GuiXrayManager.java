@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Vector;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
 
 import neko.Client;
 import neko.module.modules.movements.AirWalk;
@@ -14,18 +15,20 @@ import net.minecraft.block.material.MaterialLiquid;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiXrayManager extends GuiScreen {
 	private GuiScreen prevGui;
 	private Minecraft mc = Minecraft.getMinecraft();
-	private ResourceLocation background = new ResourceLocation("textures/gui/GuiAccount/background.png");
-	private GuiList list;
+	private GuiList guiList;
 	private Client var = Client.getNeko();
-	private int lastIndex = -1;
 
 	public GuiXrayManager(GuiScreen gui) {
 		this.prevGui = gui;
@@ -33,21 +36,16 @@ public class GuiXrayManager extends GuiScreen {
 
 	public void initGui() {
 
-		this.list = new GuiList(this);
-		this.list.registerScrollButtons(7, 8);
+		this.guiList = new GuiList(this);
+		this.guiList.registerScrollButtons(7, 8);
 	}
 
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		
-		ScaledResolution sr = new ScaledResolution(mc);
-		this.mc.getTextureManager().bindTexture(this.background);
-		
-		Gui.drawScaledCustomSizeModalRect(0, 0, 0.0F, 0.0F, sr.getScaledWidth(), sr.getScaledHeight(),
-				sr.getScaledWidth(), sr.getScaledHeight(), sr.getScaledWidth(), sr.getScaledHeight());
-		
+		drawDefaultBackground();
 		this.buttonList.clear();
 		this.buttonList.add(new GuiButton(0, this.width / 2 + 4 + 50, this.height - 52, 100, 20, "Retour"));
-		this.list.drawScreen(mouseX, mouseY, partialTicks);
+		this.buttonList.add(new GuiButton(1, this.width / 4 + 4 + 50, this.height - 52, 100, 20, "Toggle"));
+		this.guiList.drawScreen(mouseX, mouseY, partialTicks);
 		drawCenteredString(var.NekoFont, "Xray Manager", this.width / 2, 10, 16777215);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
@@ -59,10 +57,16 @@ public class GuiXrayManager extends GuiScreen {
 			mc.displayGuiScreen(this.prevGui);
 			break;
 		case 1:
-			
-			break;
-		case 2:
-
+			Integer i = this.guiList.getSelectedSlot();
+			Xray xray = Xray.getXray();
+			Vector<Integer> list = xray.getList();
+			Block block = this.guiList.list.get(i);
+			Integer id = Block.getIdFromBlock(block);
+			if (list.contains(id)) {
+				list.removeElement(id);
+			} else {
+				list.add(id);
+			}
 			break;
 		}
 	}
@@ -76,7 +80,7 @@ public class GuiXrayManager extends GuiScreen {
 
 	public void handleMouseInput() throws IOException {
 		super.handleMouseInput();
-		this.list.handleMouseInput();
+		this.guiList.handleMouseInput();
 	}
 
 	private class GuiList extends GuiSlot {
@@ -87,7 +91,7 @@ public class GuiXrayManager extends GuiScreen {
 			super(Minecraft.getMinecraft(), prevGui.width, prevGui.height, 40, prevGui.height - 56, 30);
 			for (Object o : Block.blockRegistry.getKeys()) {
 				Block block = (Block) Block.blockRegistry.getObject(o);
-				if (!block.getLocalizedName().startsWith("tile."))
+				if (!block.getLocalizedName().startsWith("tile.") && block.isFullBlock())
 					this.list.add(block);
 			}
 		}
@@ -123,7 +127,9 @@ public class GuiXrayManager extends GuiScreen {
 			}
 		}
 
-		protected void drawBackground() {}
+		protected void drawBackground() {
+			drawDefaultBackground();
+		}
 
 		protected void drawSlot(int i, int x, int y, int var4, int var5, int var6) {
 			try {
@@ -131,6 +137,9 @@ public class GuiXrayManager extends GuiScreen {
 				boolean selected = Xray.getXray().getList().contains(Block.getIdFromBlock(block));
 				var.NekoFont.drawString((selected ? "§a" : "§c") + block.getLocalizedName(), x + 31, y + 3, 10526880);
 				
+				ItemStack ia = new ItemStack(block);
+				RenderHelper.enableGUIStandardItemLighting();
+				mc.getRenderItem().func_175042_a(ia, x, y + 3);
 			} catch (Exception e) {
 			}
 		}

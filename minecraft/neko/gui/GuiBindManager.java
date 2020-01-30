@@ -1,29 +1,18 @@
 package neko.gui;
 
-import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import org.lwjgl.input.Keyboard;
 
 import neko.Client;
-import neko.module.Category;
 import neko.module.Module;
-import neko.module.modules.hide.Friends;
-import neko.module.other.Account;
-import neko.utils.RenderUtils;
 import neko.utils.Utils;
-import net.mcleaks.Callback;
-import net.mcleaks.MCLeaks;
-import net.mcleaks.ModApi;
-import net.mcleaks.RedeemResponse;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiSlot;
-import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.ResourceLocation;
 
@@ -34,7 +23,6 @@ public class GuiBindManager extends GuiScreen {
 			GuiMainMenu.viewportTexture);
 	private GuiList list;
 	private Client var = Client.getNeko();
-	private int lastIndex = -1;
 	private boolean waitKey = false;
 
 	public GuiBindManager(GuiScreen gui) {

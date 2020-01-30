@@ -1,10 +1,7 @@
 package neko.gui;
 
-import java.awt.Desktop;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -40,7 +37,6 @@ public class GuiAltManager extends GuiScreen {
 	private static String displaytext = "";
 	private Client var = Client.getNeko();
 	private Thread currentThread;
-	private int lastIndex = -1;
 	public static boolean check = false;
 
 	public GuiAltManager(GuiScreen gui) {
@@ -53,7 +49,6 @@ public class GuiAltManager extends GuiScreen {
 		this.list.registerScrollButtons(7, 8);
 		this.list.elementClicked(Utils.lastAccount, false, 0, 0);
 
-		int j = 28;
 		this.buttonList.add(new GuiButton(1, this.width / 2 + 4 + 50, this.height - 52, 100, 20, "Ajouter"));
 		this.buttonList.add(new GuiButton(2, this.width / 2 - 50, this.height - 28, 100, 20, "Supprimer"));
 		this.buttonList.add(new GuiButton(3, this.width / 2 - 154, this.height - 52, 100, 20, "Login"));
@@ -341,7 +336,6 @@ public class GuiAltManager extends GuiScreen {
 						String pass = "";
 						if (s.length > 1)
 							pass = s[1];
-						String accountasstring = s[0] + " " + pass;
 						boolean isList = false;
 						for (Account account : GuiAltManager.this.accounts) {
 							if (account.getEmail().equalsIgnoreCase(name)) {
