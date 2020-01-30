@@ -67,7 +67,7 @@ public class RenderItem implements IResourceManagerReloadListener
     /** Defines the zLevel of rendering of item on GUI. */
     public float zLevel;
     private final ItemModelMesher itemModelMesher;
-    private final TextureManager field_175057_n;
+    private final TextureManager textureManager;
     public static float field_175055_b = 0.0F;
     public static float field_175056_c = 0.0F;
     public static float field_175053_d = 0.0F;
@@ -80,7 +80,7 @@ public class RenderItem implements IResourceManagerReloadListener
 
     public RenderItem(TextureManager p_i46165_1_, ModelManager p_i46165_2_)
     {
-        this.field_175057_n = p_i46165_1_;
+        this.textureManager = p_i46165_1_;
         this.itemModelMesher = new ItemModelMesher(p_i46165_2_);
         this.registerItems();
     }
@@ -177,7 +177,7 @@ public class RenderItem implements IResourceManagerReloadListener
         GlStateManager.depthFunc(514);
         GlStateManager.disableLighting();
         GlStateManager.blendFunc(768, 1);
-        this.field_175057_n.bindTexture(RES_ITEM_GLINT);
+        this.textureManager.bindTexture(RES_ITEM_GLINT);
         GlStateManager.matrixMode(5890);
         GlStateManager.pushMatrix();
         GlStateManager.scale(8.0F, 8.0F, 8.0F);
@@ -198,7 +198,7 @@ public class RenderItem implements IResourceManagerReloadListener
         GlStateManager.enableLighting();
         GlStateManager.depthFunc(515);
         GlStateManager.depthMask(true);
-        this.field_175057_n.bindTexture(TextureMap.locationBlocksTexture);
+        this.textureManager.bindTexture(TextureMap.locationBlocksTexture);
     }
 
     private void func_175038_a(WorldRenderer p_175038_1_, BakedQuad p_175038_2_)
@@ -324,8 +324,8 @@ public class RenderItem implements IResourceManagerReloadListener
 
     protected void func_175040_a(ItemStack p_175040_1_, IBakedModel p_175040_2_, ItemCameraTransforms.TransformType p_175040_3_)
     {
-        this.field_175057_n.bindTexture(TextureMap.locationBlocksTexture);
-        this.field_175057_n.getTexture(TextureMap.locationBlocksTexture).func_174936_b(false, false);
+        this.textureManager.bindTexture(TextureMap.locationBlocksTexture);
+        this.textureManager.getTexture(TextureMap.locationBlocksTexture).func_174936_b(false, false);
         this.func_175046_c(p_175040_1_);
         GlStateManager.enableRescaleNormal();
         GlStateManager.alphaFunc(516, 0.1F);
@@ -359,31 +359,31 @@ public class RenderItem implements IResourceManagerReloadListener
         GlStateManager.popMatrix();
         GlStateManager.disableRescaleNormal();
         GlStateManager.disableBlend();
-        this.field_175057_n.bindTexture(TextureMap.locationBlocksTexture);
-        this.field_175057_n.getTexture(TextureMap.locationBlocksTexture).func_174935_a();
+        this.textureManager.bindTexture(TextureMap.locationBlocksTexture);
+        this.textureManager.getTexture(TextureMap.locationBlocksTexture).func_174935_a();
     }
 
-    public void func_175042_a(ItemStack p_175042_1_, int p_175042_2_, int p_175042_3_)
+    public void renderItemIntoGUI(ItemStack stack, int x, int y)
     {
-        IBakedModel var4 = this.itemModelMesher.getItemModel(p_175042_1_);
+        IBakedModel var4 = this.itemModelMesher.getItemModel(stack);
         GlStateManager.pushMatrix();
-        this.field_175057_n.bindTexture(TextureMap.locationBlocksTexture);
-        this.field_175057_n.getTexture(TextureMap.locationBlocksTexture).func_174936_b(false, false);
+        this.textureManager.bindTexture(TextureMap.locationBlocksTexture);
+        this.textureManager.getTexture(TextureMap.locationBlocksTexture).func_174936_b(false, false);
         GlStateManager.enableRescaleNormal();
         GlStateManager.enableAlpha();
         GlStateManager.alphaFunc(516, 0.1F);
         GlStateManager.enableBlend();
         GlStateManager.blendFunc(770, 771);
         GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        this.func_180452_a(p_175042_2_, p_175042_3_, var4.isAmbientOcclusionEnabled());
+        this.func_180452_a(x, y, var4.isAmbientOcclusionEnabled());
         this.func_175034_a(var4.getItemCameraTransforms().field_178354_e);
-        this.func_180454_a(p_175042_1_, var4);
+        this.func_180454_a(stack, var4);
         GlStateManager.disableAlpha();
         GlStateManager.disableRescaleNormal();
         GlStateManager.disableLighting();
         GlStateManager.popMatrix();
-        this.field_175057_n.bindTexture(TextureMap.locationBlocksTexture);
-        this.field_175057_n.getTexture(TextureMap.locationBlocksTexture).func_174935_a();
+        this.textureManager.bindTexture(TextureMap.locationBlocksTexture);
+        this.textureManager.getTexture(TextureMap.locationBlocksTexture).func_174935_a();
     }
 
     private void func_180452_a(int p_180452_1_, int p_180452_2_, boolean p_180452_3_)
@@ -416,7 +416,7 @@ public class RenderItem implements IResourceManagerReloadListener
 
             try
             {
-                this.func_175042_a(p_180450_1_, p_180450_2_, p_180450_3_);
+                this.renderItemIntoGUI(p_180450_1_, p_180450_2_, p_180450_3_);
             }
             catch (Throwable var7)
             {

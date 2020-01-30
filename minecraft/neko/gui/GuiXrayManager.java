@@ -1,6 +1,9 @@
 package neko.gui;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Vector;
 
 import org.lwjgl.input.Keyboard;
@@ -16,7 +19,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiSlot;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.resources.model.ModelManager;
+import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 
 public class GuiXrayManager extends GuiScreen {
@@ -81,14 +87,21 @@ public class GuiXrayManager extends GuiScreen {
 	private class GuiList extends GuiSlot {
 		private int selectedSlot;
 		private Vector<Block> list = new Vector<Block>();
+		ArrayList<Listblockks> lb = new ArrayList<Listblockks>();
 
 		public GuiList(GuiScreen prevGui) {
 			super(Minecraft.getMinecraft(), prevGui.width, prevGui.height, 40, prevGui.height - 56, 30);
 			for (Object o : Block.blockRegistry.getKeys()) {
 				Block block = (Block) Block.blockRegistry.getObject(o);
-				if (!block.getLocalizedName().startsWith("tile.") && (block instanceof BlockOre || block instanceof BlockMobSpawner || block instanceof BlockBeacon))
-					this.list.add(block);
+				if (!block.getLocalizedName().startsWith("tile.") && (block instanceof Block) || (block instanceof BlockOre || block instanceof BlockMobSpawner || block instanceof BlockBeacon))
+					this.lb.add(new Listblockks(block));
 			}
+			Collections.sort(this.lb, new SortByBlockType());
+			
+			for(int i = 0; i<this.lb.size(); i++) {
+				this.list.add(this.lb.get(i).block);
+			}
+			
 		}
 
 		public void handleMouseInput() {
@@ -128,13 +141,69 @@ public class GuiXrayManager extends GuiScreen {
 			try {
 				Block block = this.list.get(i);
 				boolean selected = Xray.getXray().getList().contains(Block.getIdFromBlock(block));
+				
 				var.NekoFont.drawString((selected ? "§a" : "§c") + block.getLocalizedName(), x + 31, y + 3, 10526880);
 				
 				ItemStack ia = new ItemStack(block);
+				Boolean CanEnchanted = false;
+				try {
+					ia.hasEffect();
+					CanEnchanted = true;
+				} catch (Exception e){
+					CanEnchanted = false;
+				}
+				
+				if(!CanEnchanted) return;
+				
+				
 				RenderHelper.enableGUIStandardItemLighting();
-				mc.getRenderItem().func_175042_a(ia, x, y + 3);
+				mc.getRenderItem().renderItemIntoGUI(ia, x, y + 3);
 			} catch (Exception e) {
+				//System.out.println(e.getLocalizedMessage());
 			}
 		}
 	}
+}
+
+class Listblockks {
+	
+	Block block;
+	String BlockType = "";
+	int id = 0;
+	
+	public Listblockks(Block b) {
+		this.block = b;
+		this.id = Block.getIdFromBlock(block);
+		if(block instanceof BlockOre) {
+			//System.out.println("BlockOre : " + block.getLocalizedName());
+			this.BlockType = "aa";
+		} else if(block instanceof BlockMobSpawner) {
+			//System.out.println("BlockMobSpawner : " + block.getLocalizedName());
+			this.BlockType = "bb";
+		} else if(block instanceof BlockBeacon) {
+			//System.out.println("BlockBeacon : " + block.getLocalizedName());
+			this.BlockType = "cc";
+		} else if(block.getLocalizedName().startsWith("tile.")) {
+			//System.out.println("BlockTile : " + block.getLocalizedName());
+			this.BlockType = "dd";
+		} else {
+			this.BlockType = "ee";
+		}
+	}
+	
+	public String BlockType() {
+		return this.BlockType;
+	}
+	
+}
+
+class SortByBlockType implements Comparator<Listblockks> {
+	
+	public int compare(Listblockks a, Listblockks b) {
+		if(a.BlockType.equalsIgnoreCase(b.BlockType)) {
+			return a.id - b.id;
+		}
+		return a.BlockType.compareTo(b.BlockType);
+	}
+	
 }

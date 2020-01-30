@@ -249,7 +249,7 @@ public class InGameGui {
             GlStateManager.disableAlpha();
             RenderHelper.enableStandardItemLighting();
             mc.getRenderItem().zLevel = -100;
-            mc.getRenderItem().func_175042_a(ia, itemX, scaled.getScaledHeight() - 55);
+            mc.getRenderItem().renderItemIntoGUI(ia, itemX, scaled.getScaledHeight() - 55);
             mc.getRenderItem().func_175030_a(mc.fontRendererObj, ia, itemX, scaled.getScaledHeight() - 55);
             mc.getRenderItem().zLevel = oldZ;
             RenderHelper.disableStandardItemLighting();

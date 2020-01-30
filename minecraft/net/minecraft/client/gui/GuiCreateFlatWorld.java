@@ -145,7 +145,7 @@ public class GuiCreateFlatWorld extends GuiScreen
             if (p_148225_3_ != null && p_148225_3_.getItem() != null)
             {
                 RenderHelper.enableGUIStandardItemLighting();
-                GuiCreateFlatWorld.this.itemRender.func_175042_a(p_148225_3_, p_148225_1_ + 2, p_148225_2_ + 2);
+                GuiCreateFlatWorld.this.itemRender.renderItemIntoGUI(p_148225_3_, p_148225_1_ + 2, p_148225_2_ + 2);
                 RenderHelper.disableStandardItemLighting();
             }
 
