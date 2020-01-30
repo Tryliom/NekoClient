@@ -3,6 +3,8 @@ package net.minecraft.client.renderer.chunk;
 import java.nio.FloatBuffer;
 import java.util.Iterator;
 import java.util.concurrent.locks.ReentrantLock;
+
+import neko.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;

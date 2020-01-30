@@ -7,6 +7,8 @@ import java.util.Vector;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
+import org.lwjgl.opengl.GL11;
+
 import neko.module.modules.render.Xray;
 import neko.utils.Utils;
 import net.minecraft.block.Block;
@@ -150,7 +152,6 @@ public class BlockModelRenderer
 
     public boolean renderModelStandard(IBlockAccess blockAccessIn, IBakedModel modelIn, Block blockIn, IBlockState blockStateIn, BlockPos blockPosIn, WorldRenderer worldRendererIn, boolean checkSides)
     {
-    	
     	if (Utils.isToggle("Xray")) {
     		Vector<Integer> list = Xray.getXray().getList();
     		AtomicReference<Boolean> valid = new AtomicReference<>();
