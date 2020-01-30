@@ -249,7 +249,6 @@ public abstract class GuiSlot
             GlStateManager.disableFog();
             Tessellator var6 = Tessellator.getInstance();
             WorldRenderer var7 = var6.getWorldRenderer();
-            //this.mc.getTextureManager().bindTexture(Gui.optionsBackground);
             this.mc.getTextureManager().bindTexture(Gui.getOptionsBackground());
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             float var8 = 32.0F;
@@ -335,6 +334,7 @@ public abstract class GuiSlot
             GlStateManager.shadeModel(7424);
             GlStateManager.enableAlpha();
             GlStateManager.disableBlend();
+            GL11.glDisable(3042);
         }
     }
 
@@ -492,6 +492,7 @@ public abstract class GuiSlot
             }
 
             this.drawSlot(var8, p_148120_1_, var9, var10, p_148120_3_, p_148120_4_);
+            GL11.glDisable(3042);
         }
     }
 

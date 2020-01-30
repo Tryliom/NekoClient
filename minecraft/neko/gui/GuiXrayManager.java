@@ -162,7 +162,6 @@ public class GuiXrayManager extends GuiScreen {
 				ItemStack ia = new ItemStack(block);
 				
 				var.NekoFont.drawString((selected ? "§a" : "§c") + block.getLocalizedName(), x + 31, y + 9, 10526880);
-				GL11.glEnable(3042);
 				RenderHelper.enableGUIStandardItemLighting();
 				mc.getRenderItem().renderItemIntoGUI(ia, x + 5, y + 5);
 				GL11.glDisable(3042);

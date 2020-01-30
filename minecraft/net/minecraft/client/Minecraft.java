@@ -1031,7 +1031,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             this.mcSoundHandler.resumeSounds();
             this.setIngameFocus();
         }
-        GL11.glDisable(GL11.GL_BLEND);
     }
 
     /**
