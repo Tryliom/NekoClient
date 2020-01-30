@@ -2298,7 +2298,6 @@ public class Utils {
 		for (String ligne : list) {
         	Xray xray = Xray.getXray();
             xray.setList(new Vector<Integer>());
-            System.out.println(ligne);
             xray.getList().add(Integer.parseInt(ligne));
 		}
 	}
