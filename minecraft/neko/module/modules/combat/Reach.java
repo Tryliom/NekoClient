@@ -72,6 +72,13 @@ public class Reach extends Module {
 		super.onDisabled();
 	}
 	
+	@Override
+	public void setup() {
+		
+		//Distance dist, pvp, bloc, tp classic classic, aimbot, fov, tnt, multiaura, knockback
+		
+	}
+	
 	public void setValues() {
 		this.values = "§6Distance:§7 "+Reach.dist+"\n"
 		+ "§6Pvp:§7 "+(Reach.pvp ? "§aActivée" : "§cDésactivée")+"\n"

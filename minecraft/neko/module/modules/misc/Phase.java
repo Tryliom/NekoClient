@@ -1,5 +1,8 @@
 package neko.module.modules.misc;
 
+import neko.Client;
+import neko.guicheat.clickgui.settings.Setting;
+import neko.guicheat.clickgui.util.SettingsUtil;
 import neko.module.Category;
 import neko.module.Module;
 import net.minecraft.entity.Entity;
@@ -7,7 +10,7 @@ import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.util.EnumFacing;
 
 public class Phase extends Module {
-	private boolean vphase=false;
+	public static boolean vphase=false;
 	private static Phase instance;
 	
 	public Phase () {
@@ -65,6 +68,11 @@ public class Phase extends Module {
         
 		
 	}
+	
+	@Override
+	public void setup() {
+		Client.Neko.settingsManager.rSetting(new Setting("PHASEVertical", this, this.vphase));
+	}
 
 	public boolean isVphase() {
 		return vphase;
@@ -72,6 +80,7 @@ public class Phase extends Module {
 
 	public void setVphase(boolean vphase) {
 		this.vphase = vphase;
+		SettingsUtil.setPhaseVertical(this.vphase);
 	}
 	
 }

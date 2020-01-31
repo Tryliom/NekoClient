@@ -1,9 +1,12 @@
 package neko.guicheat.clickgui.util;
 
 import neko.Client;
+import neko.module.modules.misc.Phase;
+import neko.module.modules.movements.Longjump;
 import neko.module.modules.params.Gui;
 import neko.module.modules.params.HUD;
 import neko.module.modules.player.Nuker;
+import neko.module.modules.player.Velocity;
 import neko.module.modules.special.Likaotique;
 import neko.module.modules.special.Magnet;
 import neko.module.other.enums.MagnetWay;
@@ -20,6 +23,12 @@ public class SettingsUtil {
 		Likaotique.getLik().getTimer().setDelay((int) getLikDelay()*1000);
 		//Magnet
 		Magnet.classic = getMagnetClassic(); Magnet.mode = getMagnetModeSingle() ? MagnetWay.Single : MagnetWay.Multi;
+		//Velocity
+		Velocity.hcoeff = getVelocityHorizontal(); Velocity.vcoeff = getVelocityVertical();
+		//LongJump
+		Longjump.speed = (float) getLongJumpSpeed();
+		//Phase
+		Phase.vphase = getPhaseVertical();
 		//Other
 	}
 	//TODO: HUD
@@ -160,6 +169,35 @@ public class SettingsUtil {
 	public static void setMagnetMode(String mode) {
 		Client.Neko.settingsManager.getSettingByName("MAGNETMode").setValString(mode);
 	}
+	
+	//TODO: Velocity
+	public static double getVelocityHorizontal() {
+		return Client.Neko.settingsManager.getSettingByName("VelocityHorizontal").getValDouble();
+	}
+	public static void setVelocityHorizontal(double radius) {
+		Client.Neko.settingsManager.getSettingByName("VelocityHorizontal").setValDouble(radius);
+	}
+	public static double getVelocityVertical() {
+		return Client.Neko.settingsManager.getSettingByName("VelocityVertical").getValDouble();
+	}
+	public static void setVelocityVertical(double delay) {
+		Client.Neko.settingsManager.getSettingByName("VelocityVertical").setValDouble(delay);
+	}
+	//TODO: LongJump
+	public static double getLongJumpSpeed() {
+		return Client.Neko.settingsManager.getSettingByName("LongJumpSpeed").getValDouble();
+	}
+	public static void setLongJumpSpeed(double radius) {
+		Client.Neko.settingsManager.getSettingByName("LongJumpSpeed").setValDouble(radius);
+	}
+	//TODO: Phase
+	public static boolean getPhaseVertical() {
+		return Client.Neko.settingsManager.getSettingByName("PHASEVertical").getValBoolean();
+	}
+	public static void setPhaseVertical(boolean phase) {
+		Client.Neko.settingsManager.getSettingByName("PHASEVertical").setValBoolean(phase);
+	}
+	
 	
 	//TODO: GUI
 	//Rainbow
