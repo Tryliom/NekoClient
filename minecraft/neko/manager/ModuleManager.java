@@ -96,6 +96,7 @@ import neko.module.modules.render.Power;
 import neko.module.modules.render.Premonition;
 import neko.module.modules.render.Radar;
 import neko.module.modules.render.Render;
+import neko.module.modules.render.Rotator;
 import neko.module.modules.render.Search;
 import neko.module.modules.render.Tracers;
 import neko.module.modules.render.Trail;
@@ -261,6 +262,7 @@ public class ModuleManager {
 		ActiveModule.add(new Near()); // Key NONE
 		ActiveModule.add(new ForceTP()); // Key NONE
 		ActiveModule.add(new PotionSaver()); // Key NONE
+		ActiveModule.add(new Rotator());
 		
 		this.link.put(Utils.getModule("KillAura"), "ka");
 		this.link.put(Utils.getModule("FastBow"), "fb");
