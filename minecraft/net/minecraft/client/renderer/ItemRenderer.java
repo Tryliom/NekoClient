@@ -25,6 +25,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.MapData;
 import org.lwjgl.opengl.GL11;
 
+import neko.module.modules.render.Rotator;
+import neko.utils.Utils;
+
 public class ItemRenderer
 {
     private static final ResourceLocation RES_MAP_BACKGROUND = new ResourceLocation("textures/map/map_background.png");
@@ -71,10 +74,14 @@ public class ItemRenderer
             Item var4 = p_178099_2_.getItem();
             Block var5 = Block.getBlockFromItem(var4);
             GlStateManager.pushMatrix();
+            int r = Rotator.getRotator().getRotate();
+            if (Utils.isToggle("Rotator")) {
+            	GlStateManager.rotate(r, 0, 1, 0);
+            }
 
             if (this.itemRenderer.func_175050_a(p_178099_2_))
             {
-                GlStateManager.scale(2.0F, 2.0F, 2.0F);
+            	GlStateManager.scale(2.0F, 2.0F, 2.0F);
 
                 if (this.func_178107_a(var5))
                 {
