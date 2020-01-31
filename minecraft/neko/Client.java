@@ -75,45 +75,10 @@ public class Client {
 	public boolean firstServDisplay = true;
 	public String strNeko = "§bNeko v" + CLIENT_VERSION;
 	public String strCreator = "§eCréé par §f§lTryliom§e et §f§lMarie";
-	//private static String currentFolder = Minecraft.class.getProtectionDomain().getCodeSource().getLocation().getPath().replace("/"+new java.io.File(Minecraft.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getName(), "");
 	
 	public void startClient() {
 		
 		time.start();
-		try {
-			URL url = new URL("http://nekohc.fr/ver.html");
-			Scanner sc = new Scanner(url.openStream(), "UTF-8");
-			ArrayList<String> s = new ArrayList<>();
-			String l;
-			try {
-				while ((l = sc.nextLine()) != null) {
-					s.add(l);
-				}
-			} catch (Exception e) {
-			}
-
-			if (!s.get(0).equals(CLIENT_VERSION)) {
-				ver = s.get(0);
-				changelog = s.get(1);
-				//On met à jour
-				/*
-				 * 
-				 *
-				 */
-				/*System.out.println("*****");
-				System.out.println("ProtectDomain: (w url) :" + Minecraft.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
-				System.out.println("Last: (wo url) :" + Minecraft.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-				
-				System.out.println("OwO ======");
-				System.out.println(currentFolder);*/
-				//Updater.update(ver);
-			} else {
-				System.out.println("Version à jour !");
-			}
-			sc.close();
-		} catch (Exception e) {
-			System.out.println("Adresse inatteignable :c");
-		}
 		
 		NekoFont = new FontRenderer(mc.gameSettings, new ResourceLocation("neko/font/ascii.png"), mc.renderEngine,
 				false);
@@ -528,9 +493,7 @@ class ch implements ActionListener {
 					} catch (Exception e) {
 					}
 					sc.close();
-				} catch (Exception e) {
-					System.out.println("Erreur BDD: Get BestServ");
-				}
+				} catch (Exception e) {}
 				// Lister les serveurs
 				if (list.isEmpty() || (list.size() - 1) < (2 / 2 - 1) * 10) {
 					Utils.addChat("§cPas de serveurs disponibles...");

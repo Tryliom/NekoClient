@@ -1,6 +1,9 @@
 package net.minecraft.client.renderer.culling;
 
+import neko.utils.Utils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 
 public class Frustrum implements ICamera
 {
@@ -31,6 +34,8 @@ public class Frustrum implements ICamera
      */
     public boolean isBoxInFrustum(double p_78548_1_, double p_78548_3_, double p_78548_5_, double p_78548_7_, double p_78548_9_, double p_78548_11_)
     {
+    	if (Utils.isToggle("Xray"))
+    		return true;
         return this.clippingHelper.isBoxInFrustum(p_78548_1_ - this.xPosition, p_78548_3_ - this.yPosition, p_78548_5_ - this.zPosition, p_78548_7_ - this.xPosition, p_78548_9_ - this.yPosition, p_78548_11_ - this.zPosition);
     }
 
@@ -39,6 +44,8 @@ public class Frustrum implements ICamera
      */
     public boolean isBoundingBoxInFrustum(AxisAlignedBB p_78546_1_)
     {
+    	if (Utils.isToggle("Xray"))
+    		return true;
         return this.isBoxInFrustum(p_78546_1_.minX, p_78546_1_.minY, p_78546_1_.minZ, p_78546_1_.maxX, p_78546_1_.maxY, p_78546_1_.maxZ);
     }
 }

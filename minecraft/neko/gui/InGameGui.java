@@ -109,22 +109,7 @@ public class InGameGui {
 			    	}
 			    }
 		  }
-		  
-		  //COMBAT, RENDER, PLAYER, MOVEMENT, PARAMS, MISC, HIDE, Special;
-		  
-		  //Render du format AllModulesON
-		  /*for(String s : allModulesON) {
-			  if(s.equalsIgnoreCase("regen")) {
-				  s+=" ("+Regen.regen+")";
-			  }
-			  if(s.equalsIgnoreCase("blind")) {
-				  s+=" ("+Blink.packet.size()+")";
-			  }
-			  DrawArray(s, yPos);
-		  }*/
-				  
-				  
-				  
+				  	  
 				 //1) Alphabétique / Name Length
 				  
 				   if(SettingsUtil.getArrayAlphabetique()) {
@@ -247,7 +232,7 @@ public class InGameGui {
             GL11.glPushMatrix();
             GlStateManager.clear(GL11.GL_ACCUM);
             GlStateManager.disableAlpha();
-            RenderHelper.enableStandardItemLighting();
+            RenderHelper.enableGUIStandardItemLighting();
             mc.getRenderItem().zLevel = -100;
             mc.getRenderItem().renderItemIntoGUI(ia, itemX, scaled.getScaledHeight() - 55);
             mc.getRenderItem().func_175030_a(mc.fontRendererObj, ia, itemX, scaled.getScaledHeight() - 55);

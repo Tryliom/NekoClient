@@ -68,9 +68,7 @@ public class GuiWikiMenu extends GuiScreen {
 			Vector<HashMap<String, Vector<String>>> l1 = new Vector<HashMap<String, Vector<String>>>();
 			try {
 				l1 = GuiWikiMenu.listWiki.get(c.name());
-			} catch (Exception e) {
-				System.out.println("Salut je crash");
-			}
+			} catch (Exception e) {}
 			if (l1 != null)
 				for (HashMap<String, Vector<String>> hm : l1) {
 					for (Module m : var.moduleManager.ActiveModule) {

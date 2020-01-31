@@ -32,7 +32,6 @@ public class Nameprotect extends Module {
 			if (this.list.size()>0) {
 				s = "";
 				for (String n : this.list) {
-					System.out.println(n);
 					String m[] = n.split("=");
 					s+="§6"+m[0]+" > "+m[1]+"\n";
 				}

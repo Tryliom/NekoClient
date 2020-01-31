@@ -90,7 +90,6 @@ public class ModApi {
             }
             reader.close();
             JsonElement jsonElement = (JsonElement)gson.fromJson(result.toString(), (Class)JsonElement.class);
-            System.out.println(result.toString());
             if (!jsonElement.isJsonObject() || !jsonElement.getAsJsonObject().has("success")) {
                 return "An error occured! [G1]";
             }

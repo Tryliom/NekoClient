@@ -1,5 +1,9 @@
 package net.minecraft.client.renderer.culling;
 
+import neko.utils.Utils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.BlockPos;
+
 public class ClippingHelper
 {
     public float[][] frustum = new float[6][4];
@@ -17,6 +21,8 @@ public class ClippingHelper
      */
     public boolean isBoxInFrustum(double p_78553_1_, double p_78553_3_, double p_78553_5_, double p_78553_7_, double p_78553_9_, double p_78553_11_)
     {
+    	if (Utils.isToggle("Xray"))
+    		return true;
         float minXf = (float)p_78553_1_;
         float minYf = (float)p_78553_3_;
         float minZf = (float)p_78553_5_;
