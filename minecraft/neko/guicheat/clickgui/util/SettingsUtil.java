@@ -4,6 +4,9 @@ import neko.Client;
 import neko.module.modules.params.Gui;
 import neko.module.modules.params.HUD;
 import neko.module.modules.player.Nuker;
+import neko.module.modules.special.Likaotique;
+import neko.module.modules.special.Magnet;
+import neko.module.other.enums.MagnetWay;
 
 public class SettingsUtil {
 	
@@ -12,6 +15,11 @@ public class SettingsUtil {
 		HUD.coord = getHUDCoord(); HUD.fps = getHUDFPS(); HUD.fall = getHUDXP(); HUD.item = getHUDMs(); HUD.time = getHUDTime(); HUD.packet = getHUDPacket(); HUD.stuff = getHUDStuff(); HUD.select = getHUDSelect(); HUD.cG = getHUDGreen(); HUD.cR = getHUDRed(); HUD.cB = getHUDBlue();
 		//Nuker
 		Nuker.nukerRadius = getNukerRadius(); Nuker.onehit = getNukerOneHit(); Nuker.safe = getNukerSafe();
+		//Likaotique
+		Likaotique.delay = (int) getLikDelay(); Likaotique.radius = (int) getLikRadius(); Likaotique.safe = getLikSafe();
+		Likaotique.getLik().getTimer().setDelay((int) getLikDelay()*1000);
+		//Magnet
+		Magnet.classic = getMagnetClassic(); Magnet.mode = getMagnetModeSingle() ? MagnetWay.Single : MagnetWay.Multi;
 		//Other
 	}
 	//TODO: HUD
@@ -117,6 +125,40 @@ public class SettingsUtil {
 	public static void setNukerSafe(boolean safe) {
 		Nuker.onehit = safe;
 		Client.Neko.settingsManager.getSettingByName("Safe").setValBoolean(safe);
+	}
+	
+	//TODO: Likaotique
+	public static boolean getLikSafe() {
+		return Client.Neko.settingsManager.getSettingByName("LIKSafe").getValBoolean();
+	}
+	public static void setLikSafe(boolean safe) {
+		Client.Neko.settingsManager.getSettingByName("LIKSafe").setValBoolean(safe);
+	}
+	public static double getLikRadius() {
+		return Client.Neko.settingsManager.getSettingByName("LIKRadius").getValDouble();
+	}
+	public static void setLikRadius(int radius) {
+		Client.Neko.settingsManager.getSettingByName("LIKRadius").setValDouble(radius);
+	}
+	public static double getLikDelay() {
+		return Client.Neko.settingsManager.getSettingByName("LIKDelay").getValDouble();
+	}
+	public static void setLikDelay(int delay) {
+		Client.Neko.settingsManager.getSettingByName("LIKDelay").setValDouble(delay);
+	}
+	
+	//TODO: Magnet
+	public static boolean getMagnetClassic() {
+		return Client.Neko.settingsManager.getSettingByName("MAGNETClassic").getValBoolean();
+	}
+	public static void setMagnetClassic(boolean classic) {
+		Client.Neko.settingsManager.getSettingByName("MAGNETClassic").setValBoolean(classic);
+	}
+	public static boolean getMagnetModeSingle() {
+		return Client.Neko.settingsManager.getSettingByName("MAGNETMode").getValString().equalsIgnoreCase("Single");
+	}
+	public static void setMagnetMode(String mode) {
+		Client.Neko.settingsManager.getSettingByName("MAGNETMode").setValString(mode);
 	}
 	
 	//TODO: GUI

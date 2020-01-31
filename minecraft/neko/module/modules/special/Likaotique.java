@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import neko.Client;
+import neko.guicheat.clickgui.settings.Setting;
+import neko.guicheat.clickgui.util.SettingsUtil;
 import neko.manager.ModuleManager;
 import neko.module.Category;
 import neko.module.Module;
@@ -29,12 +31,12 @@ import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition
 import net.minecraft.util.BlockPos;
 
 public class Likaotique extends Module {
-	private int delay = 300;
-	private javax.swing.Timer timer = new javax.swing.Timer(delay, new tptimer());
-	private BlockPos currPos = null;
-	private int radius = 5;
-	private boolean safe = false;
-	private static Likaotique instance;
+	public static int delay = 300;
+	public static javax.swing.Timer timer = new javax.swing.Timer(delay, new tptimer());
+	public static BlockPos currPos = null;
+	public static int radius = 5;
+	public static boolean safe = false;
+	public static Likaotique instance;
 	
 	public Likaotique() {
 		super("Likaotique", -1, Category.Special, false);
@@ -72,9 +74,20 @@ public class Likaotique extends Module {
 	public int getRadius() {
 		return radius;
 	}
+	
+	@Override
+	public void setup() {
+
+		Client.getNeko().settingsManager.rSetting(new Setting("LIKSafe", this, this.safe));
+		Client.getNeko().settingsManager.rSetting(new Setting("LIKDelay", this, this.delay, 0, 1000, true));
+		Client.getNeko().settingsManager.rSetting(new Setting("LIKRadius", this, this.radius, 0, 10, true));
+		
+		super.setup();
+	}
 
 	public void setRadius(int radius) {
 		this.radius = radius;
+		SettingsUtil.setLikRadius(this.radius);
 	}
 
 	public boolean isSafe() {
@@ -83,6 +96,7 @@ public class Likaotique extends Module {
 
 	public void setSafe(boolean safe) {
 		this.safe = safe;
+		SettingsUtil.setLikSafe(this.safe);
 	}
 
 	public Boolean isPositionValid(BlockPos bp) {
@@ -138,6 +152,7 @@ public class Likaotique extends Module {
 
 	public void setDelay(int delay) {
 		this.delay = delay;
+		SettingsUtil.setLikDelay(this.delay);
 	}
 	
 	public void onUpdate() {

@@ -5107,7 +5107,7 @@ public class ChatUtils {
 					} else if (args[2].equalsIgnoreCase("Single")) {
 						mode = "Single";
 					}
-					m.setMode(MagnetWay.valueOf(mode));
+					Magnet.getMagnet().setMode(mode);
 					Utils.addChat("§aMode changé en "+mode+" !");
 				} else {
 					Utils.addError(error);

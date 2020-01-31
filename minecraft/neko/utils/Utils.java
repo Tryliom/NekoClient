@@ -3508,7 +3508,7 @@ public class Utils {
             		PunKeel.rDelay.addElement(Double.parseDouble(ligne));
             	Magnet m = Magnet.getMagnet();
             	if (i==165)
-            		m.setMode(MagnetWay.valueOf(ligne));
+            		m.setMode(ligne);
             	if (i==166)
             		m.setClassic(Boolean.parseBoolean(ligne));
             	if (i==167)
@@ -3982,7 +3982,7 @@ public class Utils {
 	                		PunKeel.rDelay.addElement(Double.parseDouble(ligne));
 	                	Magnet m = Magnet.getMagnet();
 	                	if (i==165)
-	                		m.setMode(MagnetWay.valueOf(ligne));
+	                		m.setMode(ligne);
 	                	if (i==166)
 	                		m.setClassic(Boolean.parseBoolean(ligne));
 	                	if (i==167)
