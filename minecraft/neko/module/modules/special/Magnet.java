@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import neko.Client;
+import neko.guicheat.clickgui.settings.Setting;
+import neko.guicheat.clickgui.util.SettingsUtil;
 import neko.manager.ModuleManager;
 import neko.module.Category;
 import neko.module.Module;
@@ -26,8 +28,8 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.util.BlockPos;
 
 public class Magnet extends Module {
-	private boolean classic = false;
-	private MagnetWay mode = MagnetWay.Single;
+	public static boolean classic = false;
+	public static MagnetWay mode = MagnetWay.Single;
 	private static javax.swing.Timer timer = new javax.swing.Timer(500, new check());
 	private static Magnet instance;
 	
@@ -43,6 +45,17 @@ public class Magnet extends Module {
 	public void onEnabled() {
 		timer.start();
 		super.onEnabled();
+	}
+	
+	@Override
+	public void setup() {
+
+
+		java.util.ArrayList<String> ordre = new java.util.ArrayList<>();
+		ordre.add("Single"); ordre.add("Multi");
+		Client.Neko.settingsManager.rSetting(new Setting("MAGNETClassic", this, this.classic));
+		Client.Neko.settingsManager.rSetting(new Setting("MAGNETMode", this, this.getMode().name(), ordre));
+		
 	}
 	
 	public void onDisabled() {
@@ -61,15 +74,19 @@ public class Magnet extends Module {
 
 	public void setClassic(boolean classic) {
 		this.classic = classic;
+		SettingsUtil.setMagnetClassic(this.classic);
 	}
 
 	public MagnetWay getMode() {
 		return mode;
 	}
 
-	public void setMode(MagnetWay mode) {
-		this.mode = mode;
+	public void setMode(String mode) {
+		MagnetWay mw = MagnetWay.valueOf(mode);
+		this.mode = mw;
+		SettingsUtil.setMagnetMode(mode);
 	}
+
 }
 
 class check implements ActionListener {
