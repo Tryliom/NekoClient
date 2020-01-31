@@ -2022,7 +2022,6 @@ public class Utils {
 			} catch (Exception e) {}
 			sc.close();
 		} catch (Exception e) {
-			System.out.println("Adresse inateignable :c");
 		}
 		
 		return true;
@@ -2295,9 +2294,9 @@ public class Utils {
 	
 	public static void loadCloudXray() {
 		String list[] = nc.getSave("xray").split("§,");
+		Xray xray = Xray.getXray();
+        xray.setList(new Vector<Integer>());
 		for (String ligne : list) {
-        	Xray xray = Xray.getXray();
-            xray.setList(new Vector<Integer>());
             xray.getList().add(Integer.parseInt(ligne));
 		}
 	}
@@ -2368,7 +2367,6 @@ public class Utils {
             	}
             }
         	if (l!=str) {
-        		System.out.println("Fichier modifié détécté: Reset du Rpg !");
         		resetRpg();
         	}
         
@@ -2459,7 +2457,6 @@ public class Utils {
                 	}
                 }
             	if (j!=str) {
-            		System.out.println("Fichier modifié détécté: Reset du Rpg !");
             		resetRpg();
             	}
                 
@@ -2714,7 +2711,6 @@ public class Utils {
                 	}
                 }
             	if (j!=str) {
-            		System.out.println("Fichier modifié détécté: Reset de l'Irc !");
             		irc.setPrefix("$");
             		irc.setIdPlayer(0);
             	}
@@ -2768,7 +2764,6 @@ public class Utils {
             return result.toString();
         }
         catch (Exception e) {
-        	System.out.println("preparePost: "+e.getMessage());
             return null;
         }
     }
@@ -2803,7 +2798,6 @@ public class Utils {
 	        }	        
 	        return names;
 		} catch (Exception e) {
-			System.out.println(""+e.getMessage());
 			return "";
 		}
 	}
@@ -2826,7 +2820,6 @@ public class Utils {
             return result.toString();
         }
         catch (Exception e) {
-        	System.out.println(e.getMessage());
             return null;
         }
 	}
@@ -3566,7 +3559,6 @@ public class Utils {
             	}
             	
         	} catch (Exception e) {
-        		System.out.println(e.getMessage());
         	}                	
         	i++;
         }
@@ -3990,7 +3982,6 @@ public class Utils {
 	                		;
 	                	}
                 	} catch (Exception e) {
-                		System.out.println("dsf");
                 	}                	
                 	i++;
                 }
@@ -4018,7 +4009,6 @@ public class Utils {
 			try {
 				DropShit.getShit().getList().add(Integer.parseInt(ligne));
 			} catch (Exception e) {
-				System.out.println("Erreur dropshit");
 			}
 		}
 	}
@@ -4051,7 +4041,6 @@ public class Utils {
 			try {
 				Nuker.nuke.add(Integer.parseInt(ligne));
 			} catch (Exception e) {
-				System.out.println("Erreur nuker");
 			}
 		}
 	}
@@ -4144,7 +4133,6 @@ public class Utils {
 	            }
 	            return listTotal;
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
 			}	
 		return null;
 	}
@@ -4286,7 +4274,6 @@ public class Utils {
 				}
 			}
 			String res = NekoCloud.getNekoAPI().getGlobalStat(totModule);
-			System.out.println(res);
 			addChat("§a[Stat de temps global]");
 			String cheat[] = res.split("§");
 			for (String b : cheat) {
@@ -4339,7 +4326,6 @@ public class Utils {
 	
 	public static void loadCloudMod(String...fi) {
 		String list[] = fi.length>0 ? nc.getSave("mod", fi).split("§") : nc.getSave("mod").split("§");
-		System.out.println(list.length);
 		for (String ligne : list) {
 			if (!isLock(ligne) && !ligne.equalsIgnoreCase("VanillaTp") && !ligne.equalsIgnoreCase("Gui") && !ligne.equalsIgnoreCase("Register"))
 	    		toggleModule(ligne);
@@ -4794,13 +4780,11 @@ public class Utils {
                 
                 if (before16) {
 	                if ((somme-323924)/382!=var.niveau) {
-	                	System.out.println("Fichier modifié détécté <1.6: Reset du Rpg !");
 	                	resetRpg();
 	                	return false;
 	                }
                 } else {
                 	if (sum!=somme) {
-	                	System.out.println("Fichier modifié détécté >1.6: Reset du Rpg !");
 	                	resetRpg();
 	                	return false;
                 	}

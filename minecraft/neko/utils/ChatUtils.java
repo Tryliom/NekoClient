@@ -2899,7 +2899,6 @@ public class ChatUtils {
 											tot+=scratch[i-j]+" ";
 										}
 									}
-									System.out.println(tot);
 									filter += tot+"\n";
 								}
 							}							
@@ -4845,7 +4844,6 @@ public class ChatUtils {
 						} 
 					
 					} catch (Exception e) {
-						System.out.println("§cErreur");
 					}														
 				}
 			}
@@ -5085,7 +5083,6 @@ public class ChatUtils {
 							Utils.addChat("§cErreur, faux mot de passe !");
 						} 						
 					} catch (Exception e) {
-						System.out.println("§cErreur");
 					}														
 				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);

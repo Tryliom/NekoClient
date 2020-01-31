@@ -57,9 +57,7 @@ public class RequestThread extends Thread {
 				} catch (Exception e) {}
 				
 				sc.close();
-			} catch (Exception e) {
-				System.out.println("Erreur BDD: NOW()");
-			}
+			} catch (Exception e) {}
 			try {
 				irc.setCurrServer((mc.isSingleplayer() ? "Solitaire" : mc.getCurrentServerData().serverIP.toLowerCase()));
 			} catch (Exception e) {}
@@ -83,9 +81,7 @@ public class RequestThread extends Thread {
 					} catch (Exception e) {}
 					
 					sc.close();
-				} catch (Exception e) {
-					System.out.println("Erreur BDD: MajPlayer getLastId");
-				}
+				} catch (Exception e) {}
 				irc.setIdPlayer(id);
 			} else {
 				try {
@@ -111,7 +107,6 @@ public class RequestThread extends Thread {
 									
 									sc.close();
 								} catch (Exception e) {
-									System.out.println("Erreur BDD: MajPlayer getLastId");
 								}
 								irc.setIdPlayer(id);
 							}
@@ -119,9 +114,7 @@ public class RequestThread extends Thread {
 					} catch (Exception e) {}
 					
 					sc.close();
-				} catch (Exception e) {
-					System.out.println("Erreur BDD: MajPlayer getLastId");
-				}
+				} catch (Exception e) {}
 				try {
 					String s = "";
 					if (Irc.getInstance().isOn())
@@ -131,9 +124,7 @@ public class RequestThread extends Thread {
 					URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=bbfee1f4f27b1be7fd757963452fb84e&args="+URLEncoder.encode(s, "UTF-8")+"&playerInc");
 					Scanner sc = new Scanner(url.openStream());		
 					sc.close();
-				} catch (Exception e) {
-					System.out.println("Erreur BDD: MajPlayer Insert");
-				}
+				} catch (Exception e) {}
 			}
 			
 			new RequestThread("insertRank", null).start();
@@ -210,13 +201,9 @@ public class RequestThread extends Thread {
 					} catch (Exception e) {}
 					sc.close();
 					
-				} catch (Exception e) {
-					System.out.println("Erreur BDD: DisplayGl2");
-				}		
+				} catch (Exception e) {}		
 
-			} catch (Exception e) {
-				System.out.println("Erreur BDD: DisplayGl");
-			}		
+			} catch (Exception e) {}		
 		}
 		
 		if (why.equalsIgnoreCase("getServer")) {
@@ -244,9 +231,7 @@ public class RequestThread extends Thread {
 					}
 				} catch (Exception e) {}
 				sc.close();
-			} catch (Exception e) {
-				System.out.println("Erreur BDD: Get BestServ");
-			}			
+			} catch (Exception e) {}			
 			// Lister les serveurs
 			if (list.isEmpty() || (list.size()-1)<(Integer.parseInt(args.get(0))/2-1)*10) {
 				Utils.addChat("§cPas de serveurs disponibles...");
@@ -273,7 +258,6 @@ public class RequestThread extends Thread {
 			try {
 				String s = "\""+args.get(0)+"\"";					
 				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=381d315388f23cb8d6de57378b22987d&args="+URLEncoder.encode(s, "UTF-8"));
-				System.out.println(url.toString());
 				Scanner sc = new Scanner(url.openStream(), "UTF-8");		
 				String l;
 				try {
@@ -286,9 +270,7 @@ public class RequestThread extends Thread {
 					}
 				} catch (Exception e) {}
 				sc.close();
-			} catch (Exception e) {
-				System.out.println("Erreur BDD: Get NbVote");
-			}
+			} catch (Exception e) {}
 			if (vote==1) {
 				try {
 					String s = "\""+args.get(0)+"\",\""+vote+"\"";					
@@ -296,7 +278,6 @@ public class RequestThread extends Thread {
 					Scanner sc = new Scanner(url.openStream(), "UTF-8");		
 					sc.close();
 				} catch (Exception e) {
-					System.out.println("Erreur BDD: Insert ServerIP & NbVote");
 				}
 			} else {
 				try {
@@ -304,9 +285,7 @@ public class RequestThread extends Thread {
 					URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=dcd725110b9866d2292b1389f04bb5e6&args="+URLEncoder.encode(s, "UTF-8"));
 					Scanner sc = new Scanner(url.openStream(), "UTF-8");		
 					sc.close();
-				} catch (Exception e) {
-					System.out.println("Erreur BDD: Update NbVote");
-				}
+				} catch (Exception e) {}
 			}
 			ArrayList<String> list = new ArrayList<>();
 			list.add(Utils.setColor("§a"+Irc.getInstance().getNamePlayer()+" a voté pour le serveur §c"+Utils.setColor(args.get(0), "§c")+" !", "§a"));
@@ -319,9 +298,7 @@ public class RequestThread extends Thread {
 				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=9c49ef4c5819643a1806314dec166237&args="+URLEncoder.encode(s, "UTF-8"));
 				Scanner sc = new Scanner(url.openStream());		
 				sc.close();
-			} catch (Exception e) {
-				System.out.println("Erreur BDD: Start Event");
-			}
+			} catch (Exception e) {}
 		}
 		
 		if (why.equalsIgnoreCase("listServer")) {
@@ -349,9 +326,7 @@ public class RequestThread extends Thread {
 					}
 				} catch (Exception e) {}
 				sc.close();
-			} catch (Exception e) {
-				System.out.println("Erreur BDD: List Server");
-			}
+			} catch (Exception e) {}
 			int page = -1;
 			if (args!=null) {
 				page = Integer.parseInt(args.get(0))<=0 ? 1 : Integer.parseInt(args.get(0));
@@ -384,7 +359,6 @@ public class RequestThread extends Thread {
 				Scanner sc = new Scanner(url.openStream());		
 				sc.close();
 			} catch (Exception e) {
-				System.out.println("Erreur BDD: Stop Event");
 			}
 		}
 		
@@ -405,7 +379,6 @@ public class RequestThread extends Thread {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				sdf.setTimeZone(TimeZone.getTimeZone("Europe/Paris"));	
 				String s = "\""+sdf.format(new Date().getTime()-10000)+"\",\""+sdf.format(new Date().getTime())+"\"";
-				System.out.println(s);
 				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=b0ac0857d55ccb7f52303bc7e440b02e&args="+URLEncoder.encode(s, "UTF-8"));
 				Scanner sc = new Scanner(url.openStream(), "UTF-8");		
 				String l;
@@ -473,14 +446,9 @@ public class RequestThread extends Thread {
 							}
 						}
 					}
-				} catch (Exception e) {
-					
-				}
-				
+				} catch (Exception e) {}
 				sc.close();
-			} catch (Exception e) {
-				System.out.println("Erreur BDD: DisplayList");
-			}
+			} catch (Exception e) {}
 			Utils.addChat("§7--------------------");
 			
 		}
@@ -491,9 +459,7 @@ public class RequestThread extends Thread {
 				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=9243428aa1d9cea7c2e0eceb9d64853f&args=\""+URLEncoder.encode(Irc.getInstance().getNamePlayer(), "UTF-8")+"\"&messageInc");
 				Scanner sc = new Scanner(url.openStream());		
 				sc.close();
-			} catch (Exception e) {
-				System.out.println("Erreur BDD: MsgJoin");
-			}
+			} catch (Exception e) {}
 			
 		}
 		
@@ -503,9 +469,7 @@ public class RequestThread extends Thread {
 				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=48fb95e6bdc35e7390ad3e1e6e4fe5d1&args=\""+URLEncoder.encode(Irc.getInstance().getNamePlayer(), "UTF-8")+"\"&messageInc");
 				Scanner sc = new Scanner(url.openStream());		
 				sc.close();
-			} catch (Exception e) {
-				System.out.println("Erreur BDD: MsgLeft");				
-			}
+			} catch (Exception e) {}
 			
 		}
 		
@@ -562,9 +526,7 @@ public class RequestThread extends Thread {
 					}
 				} catch (Exception ex) {}
 				sc.close();
-			} catch (Exception ex) {
-				System.out.println("Erreur BDD: setLastEventId");
-			}
+			} catch (Exception ex) {}
 			if (Event.lastEventId<=0) {
 				Event.lastEventId=lastEventID;
 				return;
@@ -602,10 +564,7 @@ public class RequestThread extends Thread {
 					}
 				} catch (Exception ex) {}
 				sc.close();
-			} catch (Exception ex) {
-				System.out.println("Erreur BDD: get Event\n"+ex.getMessage());
-				return;
-			}			
+			} catch (Exception ex) {}			
 			if (Event.lastEventId<lastEventID) {
 				Event.lastEventId=lastEventID;
 			}
@@ -735,9 +694,7 @@ public class RequestThread extends Thread {
 						}
 					} catch (Exception e) {}
 					sc.close();
-				} catch (Exception e) {
-					System.out.println("Erreur BDD: setLastMsgId");
-				}
+				} catch (Exception e) {}
 			}
 			ArrayList<String> list = new ArrayList<>();
 			int playerId=0;
@@ -773,7 +730,6 @@ public class RequestThread extends Thread {
 				} catch (Exception e) {}
 				sc.close();
 			} catch (Exception e) {
-				System.out.println("Erreur BDD: get Msg & PlayerId\n"+e.getMessage());
 				return;
 			}
 			
@@ -809,7 +765,6 @@ public class RequestThread extends Thread {
 					} catch (Exception e) {}
 					sc.close();
 				} catch (Exception e) {
-					System.out.println("Erreur BDD: Is Muted\n"+e.getMessage());
 					return;
 				}
 				
@@ -884,7 +839,6 @@ public class RequestThread extends Thread {
 						} catch (Exception e) {}
 						sc.close();
 					} catch (Exception e) {
-						System.out.println("Erreur BDD: Display msg");
 					}
 			        Locale loc = new Locale("FR", "CH");
 			        String first="";

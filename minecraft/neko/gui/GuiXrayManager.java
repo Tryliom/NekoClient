@@ -46,18 +46,20 @@ public class GuiXrayManager extends GuiScreen {
 		Keyboard.enableRepeatEvents(true);
 		this.guiList = new GuiList(this);
 		this.guiList.registerScrollButtons(7, 8);
-		this.search = new GuiTextField(2, this.fontRendererObj, this.width - 120, 10, 100, 20);
+		this.search = new GuiTextField(2, this.fontRendererObj, (this.width*3 / 4) - 50, 10, 100, 20);
 		this.search.setText("");
 	}
 
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		drawDefaultBackground();
 		this.buttonList.clear();
-		this.buttonList.add(new GuiButton(0, this.width / 2 + 4 + 50, this.height - 52, 100, 20, "Retour"));
-		this.buttonList.add(new GuiButton(1, this.width / 4 + 4 + 50, this.height - 52, 100, 20, "Toggle"));
-		this.search.drawRGBATextBox(-13882323, -14737633);
+		this.buttonList.add(new GuiButton(0, this.width*3 / 4, this.height - 52, 100, 20, "Retour"));
+		this.buttonList.add(new GuiButton(1, this.width / 2 - 50, this.height - 52, 100, 20, "Toggle"));
 		this.guiList.drawScreen(mouseX, mouseY, partialTicks);
+		this.search.drawRGBATextBox(-13882323, -14737633);
 		drawCenteredString(var.NekoFont, "Xray Manager", this.width / 2, 10, 16777215);
+		if (this.search.getText().isEmpty())
+			drawCenteredString(var.NekoFont, "Rechercher...", (this.width*3 / 4) -14, 16, 16777215);
 		super.drawScreen(mouseX, mouseY, partialTicks);
 	}
 	
@@ -84,7 +86,6 @@ public class GuiXrayManager extends GuiScreen {
 		Collections.sort(block, new SortByBlockType());
 		this.guiList.list.clear();
 		for(Listblockks bb : block) {
-			System.out.println("5");
 			this.guiList.list.add(bb.block);
 		}
 	}
@@ -122,52 +123,41 @@ public class GuiXrayManager extends GuiScreen {
 			break;
 		}
 	}
+	
+	public boolean isKeyValid(int keyCode) {
+		return (keyCode >= 16 && keyCode <= 50) || (keyCode == Keyboard.KEY_RETURN) || (keyCode == 14) || (keyCode == Keyboard.KEY_SPACE) || (keyCode == 57) || (keyCode >= 71 && keyCode <= 73) || (keyCode >= 75 && keyCode <= 77) || (keyCode == 79) || (keyCode >= 80 && keyCode <= 82) || (keyCode == 91) || (keyCode >= 2 && keyCode <= 11);
+	}
+	
+	public boolean isSearchSuccessful(String text, Block b) {
+		text = text.toLowerCase();
+		String localizedName = b.getLocalizedName().toLowerCase();
+		String unlocalizedName = b.getUnlocalizedName().toLowerCase();
+		String blockID = String.valueOf(Block.getIdFromBlock(b));
+		return text.equalsIgnoreCase("") || localizedName.contains(text) || unlocalizedName.contains(text) || text.contains(blockID);
+	}
 
 	protected void keyTyped(char typedChar, int keyCode) throws IOException {
-		
 		
 		if (keyCode == Keyboard.KEY_ESCAPE)
 			this.mc.displayGuiScreen(this.prevGui);
 		
-		
-		if((keyCode >= 16 && keyCode <= 50) || (keyCode == Keyboard.KEY_RETURN) || (keyCode == 14) || (keyCode == Keyboard.KEY_SPACE) || (keyCode == 57) || (keyCode >= 71 && keyCode <= 73) || (keyCode >= 75 && keyCode <= 77) || (keyCode == 79) || (keyCode >= 80 && keyCode <= 82) || (keyCode == 91) || (keyCode >= 2 && keyCode <= 11)) {
+		if (this.isKeyValid(keyCode)) {
 			this.search.setFocused(true);
-			String txt = this.search.getText();
-			
 			this.search.textboxKeyTyped(typedChar, keyCode);
-			if(this.search.getText() == "") {
-				this.guiList.list.clear();
-				for(Block b : this.guiList.basicList) {
-					this.guiList.list.add(b);
-				}
-			}
-			
-			String text = this.search.getText();
 			ArrayList<Listblockks> block = new ArrayList<Listblockks>();
+			String text = this.search.getText();
 			
-			for(Block b : this.guiList.basicList) {
-				if(text.equalsIgnoreCase("") || text.equalsIgnoreCase("")) {
-					this.guiList.list.clear();
-					this.guiList.list.addAll(this.guiList.basicList);
-					continue;
-				} else if(b.getLocalizedName().contains(text)) {
+			for (Block b : this.guiList.basicList) {
+				if (this.isSearchSuccessful(text, b)) {
 					block.add(new Listblockks(b));
-					continue;
-				} else if(b.getUnlocalizedName().contains(text)) {
-					block.add(new Listblockks(b));
-					continue;
-				} else if(text.contains(String.valueOf(Block.getIdFromBlock(b)))){
-					block.add(new Listblockks(b));
-					continue;
 				}
 			}
+			
 			Collections.sort(block, new SortByBlockType());
 			this.guiList.list.clear();
-			for(Listblockks bb : block) {
-				System.out.println("5");
+			for (Listblockks bb : block) {
 				this.guiList.list.add(bb.block);
-			}
-			
+			}	
 		}
 			
 		super.keyTyped(typedChar, keyCode);
@@ -260,19 +250,15 @@ public class GuiXrayManager extends GuiScreen {
 
 		
 		protected void drawSlot(int i, int x, int y, int var4, int var5, int var6) {
-			try {
-				Block block = this.list.get(i);
-				boolean selected = Xray.getXray().getList().contains(Block.getIdFromBlock(block));
+			Block block = this.list.get(i);
+			boolean selected = Xray.getXray().getList().contains(Block.getIdFromBlock(block));
 
-				ItemStack ia = new ItemStack(block);
-				
-				var.NekoFont.drawString((selected ? "§a" : "§c") + block.getLocalizedName(), x + 31, y + 9, 10526880);
-				RenderHelper.enableGUIStandardItemLighting();
-				mc.getRenderItem().renderItemIntoGUI(ia, x + 5, y + 5);
-				GL11.glDisable(3042);
-			} catch (Exception e) {
-				
-			}
+			ItemStack ia = new ItemStack(block);
+			
+			var.NekoFont.drawString((selected ? "§a" : "§c") + block.getLocalizedName(), x + 31, y + 9, 10526880);
+			RenderHelper.enableGUIStandardItemLighting();
+			mc.getRenderItem().renderItemIntoGUI(ia, x + 5, y + 5);
+			GL11.glDisable(3042);
 		}
 	}
 }

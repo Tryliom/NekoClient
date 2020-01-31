@@ -57,7 +57,6 @@ public class NekoCloud {
 		if (check.equalsIgnoreCase("success")) {
 			Utils.admin = true;
 		}
-		System.out.println(check);
 		return s.replaceAll("\"", "");
 	}
 	
@@ -77,7 +76,6 @@ public class NekoCloud {
 			hm.put("config", config[0]);
 		}
 		String s = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/save/get/"+name, parseHashMapToJson(hm));
-//		System.out.println(s);
 		return s.replaceAll("\"", "");
 	}
 	
@@ -85,7 +83,6 @@ public class NekoCloud {
 		HashMap<String, String> hm = this.getBaseBody();
 		hm.put("list_module", listModule);
 		String s = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/other/stat", parseHashMapToJson(hm));
-//		System.out.println(s);
 		return s.replaceAll("\"", "");
 	}
 	
@@ -104,7 +101,6 @@ public class NekoCloud {
 			
 			@Override
 			public void run() {
-//				System.out.println(content);
 				Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/save/update/"+name, NekoCloud.getNekoAPI().parseHashMapToJson(hm));
 			}
 		}).start();
