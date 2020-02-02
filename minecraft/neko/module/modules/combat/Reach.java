@@ -1,6 +1,7 @@
 package neko.module.modules.combat;
 
 import neko.Client;
+import neko.guicheat.clickgui.settings.Setting;
 import neko.manager.ModuleManager;
 import neko.module.Category;
 import neko.module.Module;
@@ -76,6 +77,18 @@ public class Reach extends Module {
 	public void setup() {
 		
 		//Distance dist, pvp, bloc, tp classic classic, aimbot, fov, tnt, multiaura, knockback
+		Client.getNeko().settingsManager.rSetting(new Setting("REACHDistance", this, this.dist, 1, 500, true));
+		Client.getNeko().settingsManager.rSetting(new Setting("REACHAimbot", this, this.aimbot));
+		Client.getNeko().settingsManager.rSetting(new Setting("REACHPvp", this, this.pvp));
+		Client.getNeko().settingsManager.rSetting(new Setting("REACHBloc", this, this.bloc));
+		Client.getNeko().settingsManager.rSetting(new Setting("REACHTpClassic", this, this.classic));
+		Client.getNeko().settingsManager.rSetting(new Setting("REACHFov", this, this.fov, 0, 360, true));
+		Client.getNeko().settingsManager.rSetting(new Setting("REACHTnt", this, this.tnt));
+		Client.getNeko().settingsManager.rSetting(new Setting("REACHMultiaura", this, this.multiaura));
+		Client.getNeko().settingsManager.rSetting(new Setting("REACHKnockback", this, this.knock));
+		java.util.ArrayList<String> ordre = new java.util.ArrayList<>();
+		ordre.add("Normal"); ordre.add("Cage");
+		Client.Neko.settingsManager.rSetting(new Setting("REACHMode", this, this.mode.name(), ordre));
 		
 	}
 	

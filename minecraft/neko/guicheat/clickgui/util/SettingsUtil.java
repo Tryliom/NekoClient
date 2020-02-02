@@ -1,6 +1,7 @@
 package neko.guicheat.clickgui.util;
 
 import neko.Client;
+import neko.module.modules.combat.Reach;
 import neko.module.modules.misc.Phase;
 import neko.module.modules.movements.Longjump;
 import neko.module.modules.params.Gui;
@@ -29,6 +30,11 @@ public class SettingsUtil {
 		Longjump.speed = (float) getLongJumpSpeed();
 		//Phase
 		Phase.vphase = getPhaseVertical();
+		//Reach
+		Reach.dist = (float) getReachDistance(); Reach.aimbot = getReachAimbot(); Reach.bloc = getReachBloc();
+		Reach.classic = getReachTPClassic(); Reach.fov = getReachFOV(); Reach.tnt = getReachTnT();
+		Reach.multiaura = getReachMA(); Reach.knock = getReachKB(); Reach.mode = getReachModeNormal() ? Reach.mode.Normal : Reach.mode.Cage;
+		Reach.pvp = getReachPvp();
 		//Other
 	}
 	//TODO: HUD
@@ -198,6 +204,67 @@ public class SettingsUtil {
 		Client.Neko.settingsManager.getSettingByName("PHASEVertical").setValBoolean(phase);
 	}
 	
+	//TODO: Reach
+	public static double getReachDistance() {
+		return Client.Neko.settingsManager.getSettingByName("REACHDistance").getValDouble();
+	}
+	public static void setReachDistance(double distance) {
+		Client.Neko.settingsManager.getSettingByName("REACHDistance").setValDouble(distance);
+	}
+	public static boolean getReachAimbot() {
+		return Client.Neko.settingsManager.getSettingByName("REACHAimbot").getValBoolean();
+	}
+	public static void setReachAimbot(boolean aimbot) {
+		Client.Neko.settingsManager.getSettingByName("REACHAimbot").setValBoolean(aimbot);
+	}
+	public static boolean getReachPvp() {
+		return Client.Neko.settingsManager.getSettingByName("REACHPvp").getValBoolean();
+	}
+	public static void setReachPvp(boolean pvp) {
+		Client.Neko.settingsManager.getSettingByName("REACHPvp").setValBoolean(pvp);
+	}
+	public static boolean getReachBloc() {
+		return Client.Neko.settingsManager.getSettingByName("REACHBloc").getValBoolean();
+	}
+	public static void setReachBloc(boolean bloc) {
+		Client.Neko.settingsManager.getSettingByName("REACHBloc").setValBoolean(bloc);
+	}
+	public static boolean getReachTPClassic() {
+		return Client.Neko.settingsManager.getSettingByName("REACHTpClassic").getValBoolean();
+	}
+	public static void setReachTPCLassic(boolean tpclassic) {
+		Client.Neko.settingsManager.getSettingByName("REACHTpClassic").setValBoolean(tpclassic);
+	}
+	public static double getReachFOV() {
+		return Client.Neko.settingsManager.getSettingByName("REACHFov").getValDouble();
+	}
+	public static void setReachFOV(double fov) {
+		Client.Neko.settingsManager.getSettingByName("REACHFov").setValDouble(fov);
+	}
+	public static boolean getReachTnT() {
+		return Client.Neko.settingsManager.getSettingByName("REACHTnt").getValBoolean();
+	}
+	public static void setReachTnT(boolean tnt) {
+		Client.Neko.settingsManager.getSettingByName("REACHTnt").setValBoolean(tnt);
+	}
+	public static boolean getReachMA() {
+		return Client.Neko.settingsManager.getSettingByName("REACHMultiaura").getValBoolean();
+	}
+	public static void setReachMA(boolean multiaura) {
+		Client.Neko.settingsManager.getSettingByName("REACHMultiaura").setValBoolean(multiaura);
+	}
+	public static boolean getReachKB() {
+		return Client.Neko.settingsManager.getSettingByName("REACHKnockback").getValBoolean();
+	}
+	public static void setReachKB(boolean kb) {
+		Client.Neko.settingsManager.getSettingByName("REACHKnockback").setValBoolean(kb);
+	}
+	public static boolean getReachModeNormal() {
+		return Client.Neko.settingsManager.getSettingByName("REACHMode").getValString().equalsIgnoreCase("Normal");
+	}
+	public static void setReachMode(String mode) {
+		Client.Neko.settingsManager.getSettingByName("REACHMode").setValString(mode);
+	}
 	
 	//TODO: GUI
 	//Rainbow

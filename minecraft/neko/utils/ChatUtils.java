@@ -4246,6 +4246,7 @@ public class ChatUtils {
 							Utils.addChat("§aReach pvp activée !");
 						}
 						Reach.pvp=!Reach.pvp;
+						SettingsUtil.setReachPvp(Reach.pvp);
 					} else
 						Utils.addWarn("reach pvp");
 				} else if (args[1].equalsIgnoreCase("knockback") || args[1].equalsIgnoreCase("knock") || args[1].equalsIgnoreCase("kb")) {
@@ -4256,6 +4257,7 @@ public class ChatUtils {
 							Utils.addChat("§aReach knockback activée !");
 						}
 						Reach.knock=!Reach.knock;
+						SettingsUtil.setReachKB(Reach.knock);
 					} else
 						Utils.addWarn("reach pvp");
 				} else if (args[1].equalsIgnoreCase("multi") || args[1].equalsIgnoreCase("ma") || args[1].equalsIgnoreCase("multiaura")) {
@@ -4266,6 +4268,7 @@ public class ChatUtils {
 							Utils.addChat("§aReach multiaura activée !");
 						}
 						Reach.multiaura=!Reach.multiaura;
+						SettingsUtil.setReachMA(Reach.multiaura);
 					} else
 						Utils.addWarn("reach pvp");
 				} else if (args[1].equalsIgnoreCase("tnt")) {
@@ -4277,6 +4280,7 @@ public class ChatUtils {
 								Utils.addChat("§aReach tnt activée !");
 							}
 							Reach.tnt=!Reach.tnt;
+							SettingsUtil.setReachTnT(Reach.tnt);
 						} else if (args[2].equalsIgnoreCase("list")) {
 							Utils.addChat("Modes disponibles: §aNormal§7, §aCage");
 						} else {
@@ -4284,6 +4288,7 @@ public class ChatUtils {
 								String mode = args[2].toLowerCase();
 								mode = mode.replaceFirst(".", (mode.charAt(0)+"").toUpperCase());
 								Reach.mode=Form.valueOf(mode);
+								SettingsUtil.setReachMode(mode);
 								Utils.addChat("§aMode de la reach tnt mise sur "+args[2]);
 							} catch (Exception e) {
 								Utils.addChat("§cErreur, ce mode n'existe pas");
@@ -4299,6 +4304,7 @@ public class ChatUtils {
 							Utils.addChat("§aReach aimbot activée !");
 						}
 						Reach.aimbot=!Reach.aimbot;
+						SettingsUtil.setReachAimbot(Reach.aimbot);
 					} else
 						Utils.addWarn("reach pvp");
 				} else if (args[1].equalsIgnoreCase("fov")) {
@@ -4308,6 +4314,7 @@ public class ChatUtils {
 						} else {
 							try {
 								Reach.fov=Double.parseDouble(args[2]);
+								SettingsUtil.setReachFOV(Reach.fov);
 								Utils.addChat("§aFov de la reach changé à "+args[2]+" !");
 							} catch (Exception e) {
 								Utils.addChat(err);
@@ -4323,6 +4330,7 @@ public class ChatUtils {
 							Utils.addChat("§aReach classic activée !");
 						}
 						Reach.classic=!Reach.classic;
+						SettingsUtil.setReachTPCLassic(Reach.classic);
 					} else
 						Utils.addWarn("reach pvp");
 				} else if (args[1].equalsIgnoreCase("bloc") || args[1].equalsIgnoreCase("block")) {
@@ -4333,6 +4341,7 @@ public class ChatUtils {
 							Utils.addChat("§aReach sur bloc activée !");
 						}
 						Reach.bloc=!Reach.bloc;
+						SettingsUtil.setReachBloc(Reach.bloc);
 					} else
 						Utils.addWarn("reach pvp");
 				} else {
@@ -4341,6 +4350,7 @@ public class ChatUtils {
 						if (f>1000)
 							f = 1000f; 
 						Reach.dist=f;
+						SettingsUtil.setReachDistance(f);
 						Utils.addChat("§aReach augmentée à "+f+" !");
 					} catch (Exception e) {
                         Utils.addChat(err);
