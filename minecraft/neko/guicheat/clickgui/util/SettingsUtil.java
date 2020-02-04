@@ -265,6 +265,7 @@ public class SettingsUtil {
 	public static void setReachMode(String mode) {
 		Client.Neko.settingsManager.getSettingByName("REACHMode").setValString(mode);
 	}
+	//TODO: KillAura
 	
 	//TODO: GUI
 	//Rainbow

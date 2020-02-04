@@ -122,36 +122,43 @@ public class ClickGUI extends GuiScreen {
 									for(String s : combatModule) {
 										Module m = Utils.getModule(s);
 										if (!m.getCategory().equals(c))continue;
+										if(Utils.isLock(m.getName())) continue;
 										this.Elements.add(new ModuleButton(m, this));
 									}
 									for(String s : renderModule) {
 										Module m = Utils.getModule(s);
 										if (!m.getCategory().equals(c))continue;
+										if(Utils.isLock(m.getName())) continue;
 										this.Elements.add(new ModuleButton(m, this));
 									}
 									for(String s : playerModule) {
 										Module m = Utils.getModule(s);
 										if (!m.getCategory().equals(c))continue;
+										if(Utils.isLock(m.getName())) continue;
 										this.Elements.add(new ModuleButton(m, this));
 									}
 									for(String s : movementModule) {
 										Module m = Utils.getModule(s);
 										if (!m.getCategory().equals(c))continue;
+										if(Utils.isLock(m.getName())) continue;
 										this.Elements.add(new ModuleButton(m, this));
 									}
 									for(String s : paramsModule) {
 										Module m = Utils.getModule(s);
 										if (!m.getCategory().equals(c))continue;
+										if(Utils.isLock(m.getName())) continue;
 										this.Elements.add(new ModuleButton(m, this));
 									}
 									for(String s : miscModule) {
 										Module m = Utils.getModule(s);
 										if (!m.getCategory().equals(c))continue;
+										if(Utils.isLock(m.getName())) continue;
 										this.Elements.add(new ModuleButton(m, this));
 									}
 									for(String s : specialModule) {
 										Module m = Utils.getModule(s);
 										if (!m.getCategory().equals(c))continue;
+										if(Utils.isLock(m.getName())) continue;
 										this.Elements.add(new ModuleButton(m, this));
 									}
 								}
