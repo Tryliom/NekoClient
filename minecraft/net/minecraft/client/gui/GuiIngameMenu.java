@@ -20,20 +20,10 @@ public class GuiIngameMenu extends GuiScreen
      */
     public void initGui()
     {
-    	Utils.saveRpg();
-		Utils.saveFriends();
-		Utils.saveBind();
-		Utils.saveValues();
-		Utils.saveNuker();
-		Utils.saveLock();
-		Utils.saveRank();
-		Utils.saveShit();
-		Utils.saveCmd();
-		Utils.saveStat();
+    	Utils.saveAll();
         this.field_146445_a = 0;
         this.buttonList.clear();
         byte var1 = -16;
-        boolean var2 = true;
         this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 120 + var1, I18n.format("menu.returnToMenu", new Object[0])));
 
         if (!this.mc.isIntegratedServerRunning())

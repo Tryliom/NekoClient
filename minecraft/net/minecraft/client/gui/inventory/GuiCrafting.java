@@ -1,9 +1,21 @@
 package net.minecraft.client.gui.inventory;
 
+import java.io.IOException;
+
+import neko.utils.Utils;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockPlanks;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ContainerWorkbench;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
+import net.minecraft.item.crafting.RecipesArmor;
+import net.minecraft.item.crafting.RecipesWeapons;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -29,6 +41,29 @@ public class GuiCrafting extends GuiContainer
     {
         this.fontRendererObj.drawString(I18n.format("container.crafting", new Object[0]), 28, 6, 4210752);
         this.fontRendererObj.drawString(I18n.format("container.inventory", new Object[0]), 8, this.ySize - 96 + 2, 4210752);
+        if (Utils.isToggle("AutoCraft")) {
+        	this.buttonList.clear();
+    		this.buttonList.add(new GuiButton(0, this.width / 2 - 50, 60, 100, 20, "Autocraft sword"));
+    	}
+    }
+    
+    protected void actionPerformed(GuiButton button) throws IOException
+    {
+        switch (button.id)
+        {
+            case 0:
+            	try {
+	            	int plank = 0;
+	            	boolean stick = false;
+	                for (int i = 0;i<36;i++) {
+	                	Slot s = (Slot) this.inventorySlots.getSlot(i);
+	                	if (s.getHasStack()) {
+	                		
+	                	}
+	                }
+            	} catch (Exception e) {}
+                break;
+        }
     }
 
     /**
