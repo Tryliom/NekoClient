@@ -727,6 +727,7 @@ public class Utils {
 	public static boolean isLock(String name) {
 		for (Lock lock : ModuleManager.Lock) {
 			if (lock.getName().equalsIgnoreCase(name)) {
+				System.out.println(lock.getName() + " ; " + name);
 				return lock.isLock(); 
 			}
 		}
@@ -2486,6 +2487,14 @@ public class Utils {
 
 	public static void loadCloudFrame() {
 	    String list[] = nc.getSave("frame").split("§");
+	    int ss = 0;
+	    if(list.length == 0) {
+	    	System.out.println("== 0.");
+	    }
+	    for(String s : list) {
+	    	System.out.println(ss + " : " + s);
+	    	ss++;
+	    }
 	    if (var.clickGui==null) {
 	    	var.clickGui = new ClickGUI();
 	    }

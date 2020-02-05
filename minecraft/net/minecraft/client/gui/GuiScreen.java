@@ -69,7 +69,7 @@ public abstract class GuiScreen extends Gui implements GuiYesNoCallback
     public static int width;
 
     /** The height of the screen object. */
-    public int height;
+    public static int height;
 
     /** A list of all the buttons in this container. */
     protected List buttonList = Lists.newArrayList();

@@ -2,7 +2,10 @@ package net.minecraft.client.gui;
 
 import java.awt.Desktop;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.ArrayList;
@@ -25,12 +28,12 @@ import neko.event.EventManager;
 import neko.gui.GuiAltManager;
 import neko.gui.GuiConnect;
 import neko.gui.GuiMenuNeko;
-import neko.gui.GuiUpdate;
 import neko.guicheat.clickgui.settings.SettingsManager;
 import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
 import neko.manager.TutoManager;
 import neko.module.other.Rank;
+import neko.updater.Updater;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.GuiConnecting;
@@ -53,6 +56,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
 {	
     private static final Logger logger = LogManager.getLogger();
     private static final Random field_175374_h = new Random();
+    public static int owo = 0;
 
     /** Counts the number of screen updates. */
     private float updateCounter;
@@ -667,6 +671,40 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         	drawRect(0, 0, this.width, 35, Integer.MIN_VALUE);
         	
         	this.drawString(fontRendererObj, "§eConnecté en tant que: §b" + Minecraft.getMinecraft().getSession().getUsername(), 10, 40, -1);
+        	
+        	if (!Client.getNeko().ver.isEmpty()) {
+        		
+        		//TODO: Update
+        		
+        		///
+        		Updater.update(Client.getNeko().ver);
+        		
+        		///
+
+    	    	//mc.displayGuiScreen(new GuiUpdate(this, 1, Client.getNeko().ver));
+
+        		/*this.drawCenteredString(Client.getNeko().NekoFont, "§3§nUne nouvelle version est disponible !", this.width - 110, this.height/2 - this.height/12, -1);
+        		this.drawCenteredString(Client.getNeko().NekoFont, "§eVersion supérieure: §b"+Client.getNeko().ver, this.width - 110, this.height/2 - this.height/60, -1);
+        		this.drawCenteredString(Client.getNeko().NekoFont, "§eAjout principal: §b"+Client.getNeko().changelog, this.width - 110, this.height/2 + this.height/30, -1);
+        		
+        		boolean b = true;
+        		for (Object gb : this.buttonList) {
+        			if (gb instanceof GuiButton) {
+        				if (((GuiButton) gb).id==770)
+        					b = false;
+        			}
+        		}*/
+        		//if (b)
+        			//this.buttonList.add(new GuiButton(770, this.width - 155, this.height/2 + 25, 90, 20, "§f§lMettre à jour"));
+        	}
+        	
+        	if(Updater.ReadyToUpdate) {
+        		this.drawCenteredString(Client.getNeko().NekoFont, "§3§nLa nouvelle version de Neko est prête !", this.width - 110, this.height/2 - this.height/12, -1);
+        		this.drawCenteredString(Client.getNeko().NekoFont, "§cRedémarrez votre jeu pour", this.width - 110, this.height/2 + this.height/6, -1);
+        		this.drawCenteredString(Client.getNeko().NekoFont, "§cfinaliser le téléchargement.", this.width - 110, this.height/2 + this.height/5, -1);
+        		this.drawCenteredString(Client.getNeko().NekoFont, "§eVersion supérieure: §b"+Client.getNeko().ver, this.width - 110, this.height/2 - this.height/60, -1);
+        		this.drawCenteredString(Client.getNeko().NekoFont, "§eAjout principal: §b"+Client.getNeko().changelog, this.width - 110, this.height/2 + this.height/30, -1);
+        	}
         	var11=Client.getNeko().strCreator;
         }
         this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, var11, this.width - (Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj).getStringWidth(var11) - 2, this.height - 10, -1);

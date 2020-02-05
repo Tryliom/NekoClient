@@ -10,6 +10,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import javax.tools.DocumentationTool.Location;
+
 import org.darkstorm.minecraft.gui.util.GuiManagerDisplayScreen;
 import org.lwjgl.opengl.GL11;
 
@@ -27,9 +29,13 @@ import neko.module.modules.params.HUD;
 import neko.module.modules.render.Radar;
 import neko.module.other.Active;
 import neko.module.other.enums.Rate;
+import neko.utils.ChatUtils;
 import neko.utils.RenderUtils;
 import neko.utils.Utils;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -44,8 +50,14 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.CombatEntry;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.ChunkCoordIntPair;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.IChunkProvider;
 
 public class InGameGui {
 	public static String color="§3";
@@ -375,6 +387,32 @@ public class InGameGui {
 			  }
 		  }
 		  var.NekoFont.drawStringWithShadow("§8[§9Neko§8]§6 §6v"+var.CLIENT_VERSION+" ", 2, 10, 0);
+	}
+	
+	public static void renderUnclaimFinder() {
+		  Minecraft mc = Minecraft.getMinecraft();
+		  ScaledResolution scaled = new ScaledResolution(mc);
+		  int scX = GuiScreen.width; int scY = GuiScreen.height;
+		  List <TileEntity> tiles = mc.theWorld.loadedTileEntityList;
+		  ArrayList <String> tilesNear = new ArrayList<String>();
+		  EntityPlayerSP p = mc.thePlayer;
+		  Chunk chunk = mc.theWorld.getChunkFromChunkCoords(mc.thePlayer.chunkCoordX, mc.thePlayer.chunkCoordZ);
+		  for(TileEntity tile : tiles) {
+			  BlockPos b = new BlockPos(tile.getPos().getX(), tile.getPos().getY(), tile.getPos().getZ());
+			  ChunkCoordIntPair ct = mc.theWorld.getChunkFromBlockCoords(b).getChunkCoordIntPair();
+			  //Utils.addChat(ct.chunkXPos + ";" + ct.chunkZPos);
+			  int cx = chunk.xPosition; int cz = chunk.zPosition;
+			  int tx = ct.chunkXPos; int tz = ct.chunkZPos;
+			  //Utils.addChat(cx + ";" + cz + " - " + tx + ";" + tz);
+			  int seeDistance = 2;
+			  if((cx >= tx-seeDistance) && (cx <= tx+seeDistance) 
+					  && (cz >= tz-seeDistance) && (cz <= tz+seeDistance)) {
+				  tilesNear.add(tile+";"+b.getX()+"-"+b.getY()+"-"+b.getZ());
+			  }
+		  }
+		  int percentage = tilesNear.size();
+		  int sizeNear = percentage;
+		  var.NekoFont.drawString("§6"+Integer.toString(sizeNear)+"%", (scX-scX/2)-(var.NekoFont).getStringWidth("§6"+Integer.toString(sizeNear)+"%"), scY/2-170, 0);
 	}
 	
 	public static void renderRadar() {

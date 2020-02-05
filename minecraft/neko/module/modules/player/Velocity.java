@@ -2,12 +2,15 @@ package neko.module.modules.player;
 
 import org.lwjgl.input.Keyboard;
 
+import neko.Client;
+import neko.guicheat.clickgui.settings.Setting;
+import neko.guicheat.clickgui.util.SettingsUtil;
 import neko.module.Category;
 import neko.module.Module;
 
 public class Velocity extends Module {
-	private double hcoeff = 1;
-	private double vcoeff = 1;
+	public static double hcoeff = 1;
+	public static double vcoeff = 1;
 	private static Velocity instance;
 	
 	public Velocity() {
@@ -33,12 +36,21 @@ public class Velocity extends Module {
 				+ "§6Coeff. moyen:§7 "+((vcoeff+hcoeff)/2)*100+"%";
 	}
 	
+	@Override
+	public void setup() {
+		
+		Client.getNeko().settingsManager.rSetting(new Setting("VelocityHorizontal", this, this.hcoeff, 1, 100, false));
+		Client.getNeko().settingsManager.rSetting(new Setting("VelocityVertical", this, this.vcoeff, 1, 100, false));
+		
+	}
+	
 	public double getHcoeff() {
 		return hcoeff;
 	}
 
 	public void setHcoeff(double hcoeff) {
 		this.hcoeff = hcoeff;
+		SettingsUtil.setVelocityHorizontal(this.hcoeff);
 	}
 
 	public double getVcoeff() {
@@ -47,6 +59,7 @@ public class Velocity extends Module {
 
 	public void setVcoeff(double vcoeff) {
 		this.vcoeff = vcoeff;
+		SettingsUtil.setVelocityVertical(this.vcoeff);
 	}
 	
 }
