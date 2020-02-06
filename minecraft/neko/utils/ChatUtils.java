@@ -51,6 +51,7 @@ import neko.module.modules.misc.Antiafk;
 import neko.module.modules.misc.AutoCmd;
 import neko.module.modules.misc.AutoMLG;
 import neko.module.modules.misc.CallCmd;
+import neko.module.modules.misc.Crasher;
 import neko.module.modules.misc.Nameprotect;
 import neko.module.modules.misc.Phase;
 import neko.module.modules.misc.Ping;
@@ -1781,6 +1782,29 @@ public class ChatUtils {
 					int z = Integer.parseInt(l[2]);
 					ForceTP.getForceTP().setPoint(new BlockPos(x, y, z));
 					Utils.addChat(Utils.setColor("§aLes coordonnées "+args[1]+" sont enregistrés comme cible du TP !", "§a"));
+				}
+				
+				if (args.length==2 && args[1].equalsIgnoreCase("ymax")) {
+					ForceTP f = ForceTP.getForceTP();
+					if (f.isYMax()) {
+						Utils.addChat(Utils.setColor("Hauteur maximal de Y désactivée pour les TP (ça prendra la valeur Y de la target)", "§c"));
+					} else {
+						Utils.addChat(Utils.setColor("Hauteur maximal de Y activée pour les TP (255)", "§a"));
+					}
+					f.setYMax(!f.isYMax());
+				}
+				
+				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"crasher")) {
+				
+				if (args.length==2 && args[1].equalsIgnoreCase("wave")) {
+					Crasher.wave = !Crasher.wave;
+					if (Crasher.wave)
+						Utils.addChat(Utils.setColor("Mode wave du crasher activé !", "§a"));
+					else
+						Utils.addChat(Utils.setColor("Mode wave du crasher désactivé !", "§c"));
 				}
 				
 				if (args.length==2 && args[1].equalsIgnoreCase("ymax")) {

