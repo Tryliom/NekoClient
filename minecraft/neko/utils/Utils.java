@@ -727,7 +727,6 @@ public class Utils {
 	public static boolean isLock(String name) {
 		for (Lock lock : ModuleManager.Lock) {
 			if (lock.getName().equalsIgnoreCase(name)) {
-				System.out.println(lock.getName() + " ; " + name);
 				return lock.isLock(); 
 			}
 		}
@@ -2290,7 +2289,7 @@ public class Utils {
 		String save = "";
 		for (Integer id : Xray.getXray().getList())
 			save += id+"§,";
-		nc.saveSave("xray", save.substring(0, save.length()-2));
+		nc.saveSave("xray", save.isEmpty() ? save : save.substring(0, save.length()-2));
 	}
 	
 	public static void loadCloudXray() {
@@ -2487,14 +2486,6 @@ public class Utils {
 
 	public static void loadCloudFrame() {
 	    String list[] = nc.getSave("frame").split("§");
-	    int ss = 0;
-	    if(list.length == 0) {
-	    	System.out.println("== 0.");
-	    }
-	    for(String s : list) {
-	    	System.out.println(ss + " : " + s);
-	    	ss++;
-	    }
 	    if (var.clickGui==null) {
 	    	var.clickGui = new ClickGUI();
 	    }
@@ -2510,15 +2501,6 @@ public class Utils {
 	    	}
 	    }
 	}
-	
-	/*public static void loadcloudFrame() {
-		for(Category c : Category.values()) {
-			if(c != Category.HIDE) {
-				String title = Character.toUpperCase(c.name().toLowerCase().charAt(0)) + c.name().toLowerCase().substring(1);
-			    int x, y, z;
-			}
-		}
-	}*/
 	
 	public static void saveFont() {
 		if (verif!=null)

