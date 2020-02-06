@@ -1,6 +1,7 @@
 package net.minecraft.client.gui;
 
 import java.awt.Desktop;
+import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,6 +22,7 @@ import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
 
 import com.google.common.collect.Lists;
+import com.ibm.icu.impl.ZoneMeta;
 
 import neko.Client;
 import neko.api.NekoCloud;
@@ -28,6 +30,10 @@ import neko.event.EventManager;
 import neko.gui.GuiAltManager;
 import neko.gui.GuiConnect;
 import neko.gui.GuiMenuNeko;
+import neko.gui.GuiNekoAccount;
+import neko.gui.GuiUpdate;
+import neko.gui.button.ButtonDiscord;
+import neko.guicheat.clickgui.ClickGUI;
 import neko.guicheat.clickgui.settings.SettingsManager;
 import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
@@ -36,14 +42,20 @@ import neko.module.other.Rank;
 import neko.updater.Updater;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.realms.RealmsBridge;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
@@ -58,6 +70,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     private static final Random field_175374_h = new Random();
     public static int owo = 0;
 
+    ResourceLocation resourceLocation = AbstractClientPlayer.getLocationSkin("Steve");
+    
     /** Counts the number of screen updates. */
     private float updateCounter;
 
@@ -92,6 +106,9 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     private ResourceLocation field_110351_G;
     private GuiButton field_175372_K;
     private TutoManager tm = TutoManager.getTuto();
+    
+    private int scrollingTextPosX;
+    private String scrollingText = Client.SCROLLING_TEXT;
 
     public GuiMainMenu()
     {
@@ -174,7 +191,11 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
      * Fired when a key is typed (except F11 who toggle full screen). This is the equivalent of
      * KeyListener.keyTyped(KeyEvent e). Args : character (character on the key), keyCode (lwjgl Keyboard key code)
      */
-    protected void keyTyped(char typedChar, int keyCode) throws IOException {}
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    	if (keyCode == KeyEvent.VK_ESCAPE) {
+		}
+		super.keyTyped(typedChar, keyCode);
+    }
 
     /**
      * Adds the buttons (and other controls) to the screen in question.
@@ -223,7 +244,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         		Utils.verif==null ? this.height - 27 : var3 + 72 + 12,
         				Utils.verif==null ? 200 : 98, 20, Utils.verif==null ? "§c§lQuitter Neko" : I18n.format("menu.quit", new Object[0])));
         if (Utils.verif==null) {
-        	this.buttonList.add(new GuiButton(668, this.width/2, this.height - 52, 50, 20, "§5Discord"));
+        	//this.buttonList.add(new GuiButton(668, this.width/2, this.height - 52, 50, 20, "§5Discord"));
+        	this.buttonList.add(new ButtonDiscord(668, this.width/2, this.height - 52, 50, 20));
         	this.buttonList.add(new GuiButton(669, this.width/2 + 50, this.height - 52, 50, 20, "§5Site Web"));
         	this.buttonList.add(new GuiButton(670, 10, 55, 130, 15, "Modifier > Alt Manager"));
         	String s[] = this.Bc.split("\n");
@@ -234,6 +256,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
             		this.buttonList.add(new GuiButton(771, 5, h, 170, 11, "§6"+s[i-1]));
         		}
         	}
+        	
     		this.buttonList.add(new GuiButton(769, this.width/2 - 50, 40, 100, 20, tm.isDone() ? "§7Activer le tuto" : "§7Passer le tuto"));
         } else
         	this.buttonList.add(new GuiButtonLanguage(5, Utils.verif==null ? 100 : this.width / 2 - 124, Utils.verif==null ? var3+104+12 : var3 + 72 + 12));
@@ -306,109 +329,114 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     }
 
     protected void actionPerformed(GuiButton button) throws IOException
-    {	
-    	if (button.id == 666 && tm.isDone())
-        {
-    		this.mc.displayGuiScreen(new GuiMenuNeko(this));
-        }
-    	
-    	if (button.id == 668)
-        {
-    		try {
-    			URI url = URI.create("https://discord.gg/Dt4npbR");
-    			Desktop.getDesktop().browse(url);
-    		} catch (Exception e) {}	
-        }
-    	
-    	if (button.id == 669)
-        {
-    		try {
-    			URI url = URI.create("https://neko.nekohc.fr/#/login");
-    			Desktop.getDesktop().browse(url);
-    		} catch (Exception e) {}	
-        }
-    	
-    	if (button.id == 670)
-    	{
-    		mc.displayGuiScreen(new GuiAltManager(this));
-    	}
-    	if (button.id == 769)
-        {
-    		if (!tm.isDone()) {
-        		tm.setDone(true);
-        		tm.setPart(1);
-        		this.mc.displayGuiScreen(new GuiMainMenu());
-        	} else {
-	    		tm.setDone(false);    		
-	            this.mc.displayGuiScreen(new GuiMainMenu());
-        	}
-        }
-    	
-    	if (button.id == 770) {
-			try {
-				URI url = URI.create("https://nekohc.fr");
-				Desktop.getDesktop().browse(url);
-			} catch (Exception e) {}	
-		}
-    	
-    	if (button.id == 771) {
-			String s[] = button.displayString.split(" ");
-			if (s.length>=2) {
-				String ip = s[1].replaceAll("§e", "");
-				mc.displayGuiScreen(new GuiConnecting(this, mc, new ServerData(ip, ip)));
-			}
-		}
-    	
-        if (button.id == 0)
-        {
-            this.mc.displayGuiScreen(new GuiOptions(this, this.mc.gameSettings));
-        }
-
-        if (button.id == 5)
-        {
-            this.mc.displayGuiScreen(new GuiLanguage(this, this.mc.gameSettings, this.mc.getLanguageManager()));
-        }
-
-        if (button.id == 1)
-        {
-            this.mc.displayGuiScreen(new GuiSelectWorld(this));
-        }
-
-        if (button.id == 2)
-        {
-        	if (tm.isDone())
-        		this.mc.displayGuiScreen(new GuiMultiplayer(this));
-        }
-
-        if (button.id == 14 && this.field_175372_K.visible)
-        {
-        	if (!OnlyRpgManager.getRpg().isActive())
-        		this.switchToRealms();
-        	else
-        		mc.displayGuiScreen(new GuiMainMenu());
-        }
-
-        if (button.id == 4)
-        {
-            this.mc.shutdown();
-        }
-
-        if (button.id == 11)
-        {
-            this.mc.launchIntegratedServer("Demo_World", "Demo_World", DemoWorldServer.demoWorldSettings);
-        }
-
-        if (button.id == 12)
-        {
-            ISaveFormat var2 = this.mc.getSaveLoader();
-            WorldInfo var3 = var2.getWorldInfo("Demo_World");
-
-            if (var3 != null)
+    {
+        	if (button.id == 666 && tm.isDone())
             {
-                GuiYesNo var4 = GuiSelectWorld.func_152129_a(this, var3.getWorldName(), 12);
-                this.mc.displayGuiScreen(var4);
+        		this.mc.displayGuiScreen(new GuiMenuNeko(this));
             }
-        }
+        	
+        	if (button.id == 668)
+            {
+        		try {
+        			URI url = URI.create("https://discord.gg/Z4ddHEj");
+        			Desktop.getDesktop().browse(url);
+        		} catch (Exception e) {}	
+            }
+        	
+        	if (button.id == 669)
+            {
+        		try {
+        			URI url = URI.create("https://neko.nekohc.fr/#/login");
+        			Desktop.getDesktop().browse(url);
+        		} catch (Exception e) {}	
+            }
+        	
+        	if (button.id == 670)
+        	{
+        		mc.displayGuiScreen(new GuiAltManager(this));
+        	}
+        	if (button.id == 769)
+            {
+        		if (!tm.isDone()) {
+            		tm.setDone(true);
+            		tm.setPart(1);
+            		this.mc.displayGuiScreen(new GuiMainMenu());
+            	} else {
+    	    		tm.setDone(false);    		
+    	            this.mc.displayGuiScreen(new GuiMainMenu());
+            	}
+            }
+        	
+        	if (button.id == 770) {
+    			try {
+    				URI url = URI.create("https://nekohc.fr");
+    				Desktop.getDesktop().browse(url);
+    			} catch (Exception e) {}	
+    		}
+        	
+        	if (button.id == 771) {
+    			String s[] = button.displayString.split(" ");
+    			if (s.length>=2) {
+    				String ip = s[1].replaceAll("§e", "");
+    				mc.displayGuiScreen(new GuiConnecting(this, mc, new ServerData(ip, ip)));
+    			}
+    		}
+        	
+            if (button.id == 0)
+            {
+                this.mc.displayGuiScreen(new GuiOptions(this, this.mc.gameSettings));
+            }
+
+            if (button.id == 5)
+            {
+                this.mc.displayGuiScreen(new GuiLanguage(this, this.mc.gameSettings, this.mc.getLanguageManager()));
+            }
+
+            if (button.id == 1)
+            {
+                this.mc.displayGuiScreen(new GuiSelectWorld(this));
+            }
+
+            if (button.id == 2)
+            {
+            	if (tm.isDone())
+            		this.mc.displayGuiScreen(new GuiMultiplayer(this));
+            }
+
+            if (button.id == 14 && this.field_175372_K.visible)
+            {
+            	if (!OnlyRpgManager.getRpg().isActive())
+            		this.switchToRealms();
+            	else
+            		mc.displayGuiScreen(new GuiMainMenu());
+            }
+
+            if (button.id == 4)
+            {
+                this.mc.shutdown();
+            }
+
+            if (button.id == 11)
+            {
+                this.mc.launchIntegratedServer("Demo_World", "Demo_World", DemoWorldServer.demoWorldSettings);
+            }
+
+            if (button.id == 12)
+            {
+                ISaveFormat var2 = this.mc.getSaveLoader();
+                WorldInfo var3 = var2.getWorldInfo("Demo_World");
+
+                if (var3 != null)
+                {
+                    GuiYesNo var4 = GuiSelectWorld.func_152129_a(this, var3.getWorldName(), 12);
+                    this.mc.displayGuiScreen(var4);
+                }
+            }
+    	if (button.id == 359)
+    	{
+    		mc.displayGuiScreen(new GuiNekoAccount(this));
+    	}
+    	
     }
 
     private void switchToRealms()
@@ -649,7 +677,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         	GlStateManager.popMatrix();
         String var10="";
         if (Utils.verif==null)
-        	var10 = Client.getNeko().strNeko;
+        	var10 = "";
         else
         	var10 = "Minecraft 1.8";
 
@@ -657,6 +685,16 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         {
             var10 = var10 + " Demo";
         }
+        
+        for (Object o : this.buttonList) {
+        	if (o instanceof GuiButton) {
+	        	GuiButton gb = (GuiButton) o;
+	        	if(gb.id==359) {
+	        		gb.displayString = NekoCloud.getName() == null ? "§b§lNeko" : "§b§l" + NekoCloud.getName();
+	        	}
+        	}
+        }
+
         this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, var10, 2, this.height - 10, -1);
         String var11 = "Copyright Mojang AB. Do not distribute!";
         if (Utils.verif==null) {
@@ -706,18 +744,30 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         		this.drawCenteredString(Client.getNeko().NekoFont, "§eAjout principal: §b"+Client.getNeko().changelog, this.width - 110, this.height/2 + this.height/30, -1);
         	}
         	var11=Client.getNeko().strCreator;
+            
+            this.scrollingTextPosX--;
+            if(this.scrollingTextPosX < -Client.getNeko().NekoFont.getStringWidth(this.scrollingText)) {
+            	this.scrollingTextPosX = this.width;
+            }
+            this.drawRect(0, this.height-12, this.width, this.height, 0x77FFFFFF);
+            this.drawString(Client.getNeko().NekoFont, this.scrollingText, this.scrollingTextPosX, this.height-10, -1);
+            
+            if (this.field_92025_p != null && this.field_92025_p.length() > 0)
+            {
+                drawRect(this.field_92022_t - 2, this.field_92021_u - 2, this.field_92020_v + 2, this.field_92019_w - 1, 1428160512);
+                this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, this.field_92025_p, this.field_92022_t, this.field_92021_u, -1);
+                this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, this.field_146972_A, (this.width - this.field_92024_r) / 2, ((GuiButton)this.buttonList.get(0)).yPosition - 12, -1);
+            }
         }
-        this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, var11, this.width - (Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj).getStringWidth(var11) - 2, this.height - 10, -1);
         
-        if (this.field_92025_p != null && this.field_92025_p.length() > 0)
-        {
-            drawRect(this.field_92022_t - 2, this.field_92021_u - 2, this.field_92020_v + 2, this.field_92019_w - 1, 1428160512);
-            this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, this.field_92025_p, this.field_92022_t, this.field_92021_u, -1);
-            this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, this.field_146972_A, (this.width - this.field_92024_r) / 2, ((GuiButton)this.buttonList.get(0)).yPosition - 12, -1);
-        }
+        //this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, var11,
+        //this.width - (Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj).getStringWidth(var11) - 2,
+        //this.height - 10, -1);
+        //drawEntityOnScreen(this.width/2 + 15, this.height/2 - 15, 30, mouseX, mouseY, );
         
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
+    
 
     /**
      * Called when the mouse is clicked. Args : mouseX, mouseY, clickedButton

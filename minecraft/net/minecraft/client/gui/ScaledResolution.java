@@ -1,6 +1,7 @@
 package net.minecraft.client.gui;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.MathHelper;
 
 public class ScaledResolution
@@ -40,7 +41,7 @@ public class ScaledResolution
         this.scaledHeight = MathHelper.ceiling_double_int(this.scaledHeightD);
     }
 
-    public int getScaledWidth()
+	public int getScaledWidth()
     {
         return this.scaledWidth;
     }

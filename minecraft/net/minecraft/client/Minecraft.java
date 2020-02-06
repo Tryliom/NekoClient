@@ -2496,7 +2496,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
             if (this.thePlayer == null)
             {
-                this.thePlayer = this.playerController.func_178892_a(worldClientIn, new StatFileWriter());
+                this.thePlayer = this.playerController.createClientPlayer(worldClientIn, new StatFileWriter());
                 this.playerController.flipPlayer(this.thePlayer);
             }
 
@@ -2532,7 +2532,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
         this.field_175622_Z = null;
         EntityPlayerSP var4 = this.thePlayer;
-        this.thePlayer = this.playerController.func_178892_a(this.theWorld, this.thePlayer == null ? new StatFileWriter() : this.thePlayer.getStatFileWriter());
+        this.thePlayer = this.playerController.createClientPlayer(this.theWorld, this.thePlayer == null ? new StatFileWriter() : this.thePlayer.getStatFileWriter());
         this.thePlayer.getDataWatcher().updateWatchedObjectsFromList(var4.getDataWatcher().getAllWatched());
         this.thePlayer.dimension = dimension;
         this.field_175622_Z = this.thePlayer;
