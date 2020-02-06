@@ -128,7 +128,9 @@ public class GuiIngameMenu extends GuiScreen
         this.oldMouseX = (float)mouseX;
         this.oldMouseY = (float)mouseY;
         super.drawScreen(mouseX, mouseY, partialTicks);
-        dEOS();
+        if(Utils.verif == null) {
+            dEOS();
+        }
     }
     
     public void dEOS() {
