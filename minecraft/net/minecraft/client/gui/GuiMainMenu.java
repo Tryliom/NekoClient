@@ -241,12 +241,12 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         		Utils.verif==null ? 8 : var3 + 72 + 12,
         				Utils.verif==null ? 40 : 98, 20, Utils.verif==null ? "Options" : I18n.format("menu.options", new Object[0])));
         this.buttonList.add(new GuiButton(4, Utils.verif==null ? this.width/2 - 100 : this.width / 2 + 2,
-        		Utils.verif==null ? this.height - 27 : var3 + 72 + 12,
+        		Utils.verif==null ? this.height - 37 : var3 + 72 + 12,
         				Utils.verif==null ? 200 : 98, 20, Utils.verif==null ? "§c§lQuitter Neko" : I18n.format("menu.quit", new Object[0])));
         if (Utils.verif==null) {
         	//this.buttonList.add(new GuiButton(668, this.width/2, this.height - 52, 50, 20, "§5Discord"));
-        	this.buttonList.add(new ButtonDiscord(668, this.width/2, this.height - 52, 50, 20));
-        	this.buttonList.add(new GuiButton(669, this.width/2 + 50, this.height - 52, 50, 20, "§5Site Web"));
+        	this.buttonList.add(new ButtonDiscord(668, this.width/2, this.height - 62, 50, 20));
+        	this.buttonList.add(new GuiButton(669, this.width/2 + 50, this.height - 62, 50, 20, "§5Site Web"));
         	this.buttonList.add(new GuiButton(670, 10, 55, 130, 15, "Modifier > Alt Manager"));
         	String s[] = this.Bc.split("\n");
         	int h = 0;
@@ -323,7 +323,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         int wid = 5;
         //TODO ACTIVE BUTTON
         if (Utils.verif==null) {
-        	this.buttonList.add(this.field_175372_K = new GuiButton(666, this.width/2 - 100, this.height - 52, 100, 20, (!tm.isDone() ? "§k" : "§3")+"Neko..."));
+        	this.buttonList.add(this.field_175372_K = new GuiButton(666, this.width/2 - 100, this.height - 62, 100, 20, (!tm.isDone() ? "§k" : "§3")+"Neko..."));
         } else
         	this.buttonList.add(this.field_175372_K = new GuiButton(14, OnlyRpgManager.getRpg().isActive() ? wid : this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 2, I18n.format("menu.online", new Object[0])));
     }
