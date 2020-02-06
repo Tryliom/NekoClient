@@ -14,6 +14,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.RecipesArmor;
 import net.minecraft.item.crafting.RecipesWeapons;
 import net.minecraft.util.BlockPos;
@@ -53,14 +54,7 @@ public class GuiCrafting extends GuiContainer
         {
             case 0:
             	try {
-	            	int plank = 0;
-	            	boolean stick = false;
-	                for (int i = 0;i<36;i++) {
-	                	Slot s = (Slot) this.inventorySlots.getSlot(i);
-	                	if (s.getHasStack()) {
-	                		
-	                	}
-	                }
+	            	CraftingManager cm = CraftingManager.getInstance();
             	} catch (Exception e) {}
                 break;
         }
