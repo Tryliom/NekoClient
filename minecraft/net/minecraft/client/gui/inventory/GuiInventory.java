@@ -5,6 +5,7 @@ import java.io.IOException;
 import neko.manager.OnlyRpgManager;
 import neko.module.modules.special.DropShit;
 import neko.utils.Utils;
+import net.minecraft.block.BlockAir;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.achievement.GuiAchievements;
@@ -17,6 +18,8 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
+import net.minecraft.network.play.client.C0EPacketClickWindow;
 
 public class GuiInventory extends InventoryEffectRenderer
 {
@@ -151,8 +154,7 @@ public class GuiInventory extends InventoryEffectRenderer
         {
             this.mc.displayGuiScreen(new GuiStats(this, this.mc.thePlayer.getStatFileWriter()));
         }
-        if (button.id == 2)
-        {
+        if (button.id == 2) {
             DropShit.getShit().drop();
         }
     }

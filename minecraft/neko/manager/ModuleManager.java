@@ -63,6 +63,7 @@ import neko.module.modules.movements.Step;
 import neko.module.modules.params.Gui;
 import neko.module.modules.params.HUD;
 import neko.module.modules.player.AntiFire;
+import neko.module.modules.player.AutoCraft;
 import neko.module.modules.player.AutoTool;
 import neko.module.modules.player.Autoarmor;
 import neko.module.modules.player.Autoeat;
@@ -265,6 +266,7 @@ public class ModuleManager {
 		ActiveModule.add(new ForceTP()); // Key NONE
 		ActiveModule.add(new PotionSaver()); // Key NONE
 		ActiveModule.add(new Rotator());
+		ActiveModule.add(new AutoCraft());
 		
 		this.link.put(Utils.getModule("KillAura"), "ka");
 		this.link.put(Utils.getModule("FastBow"), "fb");
@@ -277,6 +279,7 @@ public class ModuleManager {
 		this.link.put(Utils.getModule("BowAimbot"), "bowaim");
 		this.link.put(Utils.getModule("Wallhack"), "wh");
 		this.link.put(Utils.getModule("Nameprotect"), "np");
+		this.link.put(Utils.getModule("AutoCraft"), "ac");
 		
 		LockManager lm = LockManager.getManager();
 		// Ajouter les locks | -- = ..;
