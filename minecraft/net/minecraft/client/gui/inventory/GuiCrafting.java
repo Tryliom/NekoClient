@@ -55,6 +55,7 @@ public class GuiCrafting extends GuiContainer
             case 0:
             	try {
 	            	CraftingManager cm = CraftingManager.getInstance();
+	            	
             	} catch (Exception e) {}
                 break;
         }
