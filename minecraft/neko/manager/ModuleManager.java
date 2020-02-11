@@ -265,7 +265,7 @@ public class ModuleManager {
 		ActiveModule.add(new Near()); // Key NONE
 		ActiveModule.add(new ForceTP()); // Key NONE
 		ActiveModule.add(new PotionSaver()); // Key NONE
-		ActiveModule.add(new Rotator());
+		ActiveModule.add(Rotator.getRotator());
 		ActiveModule.add(new AutoCraft());
 		
 		this.link.put(Utils.getModule("KillAura"), "ka");

@@ -35,7 +35,6 @@ public class Module {
 		this.moduleBind = moduleBind;
 		this.moduleCategory = moduleCategory;
 		this.isCommands = isCommand;
-		setup();
 	}
 	
 	public void setup() {}

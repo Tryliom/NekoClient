@@ -8,6 +8,7 @@ import neko.module.modules.params.Gui;
 import neko.module.modules.params.HUD;
 import neko.module.modules.player.Nuker;
 import neko.module.modules.player.Velocity;
+import neko.module.modules.render.Rotator;
 import neko.module.modules.special.Likaotique;
 import neko.module.modules.special.Magnet;
 import neko.module.other.enums.MagnetWay;
@@ -35,9 +36,18 @@ public class SettingsUtil {
 		Reach.classic = getReachTPClassic(); Reach.fov = getReachFOV(); Reach.tnt = getReachTnT();
 		Reach.multiaura = getReachMA(); Reach.knock = getReachKB(); Reach.mode = getReachModeNormal() ? Reach.mode.Normal : Reach.mode.Cage;
 		Reach.pvp = getReachPvp();
-		//Other
+		
+		Rotator rt = Rotator.getRotator();
+		rt.setSpeed(getRotatorSpeed());
 	}
-	//TODO: HUD
+	public static Double getRotatorSpeed() {
+		return Client.Neko.settingsManager.getSettingByName("RotatorSpeed").getValDouble();
+	}
+	
+	public static void setRotatorSpeed(Double speed) {
+		Client.Neko.settingsManager.getSettingByName("RotatorSpeed").setValDouble(speed);
+	}
+	
 	//Coord
 	public static void setHUDCoord(boolean coord) {
 		HUD.coord = coord;

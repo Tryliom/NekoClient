@@ -74,9 +74,9 @@ public class ItemRenderer
             Item var4 = p_178099_2_.getItem();
             Block var5 = Block.getBlockFromItem(var4);
             GlStateManager.pushMatrix();
-            int r = Rotator.getRotator().getRotate();
+            Double r = Rotator.getRotator().getRotate();
             if (Utils.isToggle("Rotator")) {
-            	GlStateManager.rotate(r, 0, 1, 0);
+            	GlStateManager.rotate((float) Math.floor(r), 0, 1, 0);
             }
 
             if (this.itemRenderer.func_175050_a(p_178099_2_))
