@@ -3,6 +3,7 @@ package neko.module.modules.combat;
 import neko.module.Category;
 import neko.module.Module;
 import neko.module.modules.combat.KillAura;
+import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiChat;
@@ -88,34 +89,30 @@ public class SmoothAim extends Module {
 	    return MathHelper.wrapAngleTo180_float(-(mc.thePlayer.rotationYaw - (float)yawToEntity));
 	  }
 	  
-	  public boolean isEntityValid(Entity entity)
-	  {
+	  public boolean isEntityValid(Entity entity) {
 		  
-		  if (mc.currentScreen instanceof GuiInventory || mc.currentScreen instanceof GuiChat || mc.currentScreen instanceof GuiContainer)
-			  return false;
+		  	if (Utils.isInGui())
+		  		return false;
 		  
-	    if ((entity instanceof EntityLivingBase))
-	    {
-	      EntityLivingBase entityLiving = (EntityLivingBase)entity;
-	      if ((mc.thePlayer.isEntityAlive()) && (entityLiving.isEntityAlive()))
-	      {
-	    	  if (!mc.thePlayer.canEntityBeSeen(entityLiving))
-	    		  return false;
-	    		  	
-	    	  if (mc.thePlayer.getDistanceToEntity(entity) > this.range)
-	    		  return false;	    	         
-	        
-	      if (!u.isEntityInFov(entity, this.degrees))
-	    	  return false;
-	      if ((entityLiving instanceof EntityPlayer) && entityLiving!=mc.thePlayer && entityLiving.getName()!=mc.session.getUsername())
-	      {
-	        EntityPlayer entityPlayer = (EntityPlayer)entityLiving;
-	        return KillAura.isViable(entityLiving);
-	      }
-	    }
-	    }	    
-	    return false;
-	    }	  
+			if ((entity instanceof EntityLivingBase)) {
+				EntityLivingBase entityLiving = (EntityLivingBase)entity;
+				if (mc.thePlayer.isEntityAlive() && entityLiving.isEntityAlive()) {
+					  if (!mc.thePlayer.canEntityBeSeen(entityLiving))
+						  return false;
+						  	
+					  if (mc.thePlayer.getDistanceToEntity(entity) > this.range)
+						  return false;	    	         
+				    
+				      if (!u.isEntityInFov(entity, this.degrees))
+				    	  return false;
+				      if ((entityLiving instanceof EntityPlayer) && entityLiving!=mc.thePlayer && entityLiving.getName()!=mc.session.getUsername()) {
+				    	  EntityPlayer entityPlayer = (EntityPlayer)entityLiving;
+				    	  return KillAura.isViable(entityLiving);
+				      }
+				}		
+			}
+			return false;
+		}	  
 	  
 	
 }
