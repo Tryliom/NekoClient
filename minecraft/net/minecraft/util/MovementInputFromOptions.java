@@ -1,5 +1,10 @@
 package net.minecraft.util;
 
+import neko.utils.Utils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiChat;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.settings.GameSettings;
 
 public class MovementInputFromOptions extends MovementInput
@@ -15,8 +20,9 @@ public class MovementInputFromOptions extends MovementInput
     {
         this.moveStrafe = 0.0F;
         this.moveForward = 0.0F;
+        Minecraft mc = Minecraft.getMinecraft();
 
-        if (this.gameSettings.keyBindForward.getIsKeyPressed())
+        if (this.gameSettings.keyBindForward.getIsKeyPressed() || (Utils.isToggle("AutoWalk") && !Utils.isInGui()))
         {
             ++this.moveForward;
         }
@@ -39,7 +45,7 @@ public class MovementInputFromOptions extends MovementInput
         this.jump = this.gameSettings.keyBindJump.getIsKeyPressed();
         this.sneak = this.gameSettings.keyBindSneak.getIsKeyPressed();
 
-        if (this.sneak)
+        if (this.sneak && !Utils.isToggle("NoSlow"))
         {
             this.moveStrafe = (float)((double)this.moveStrafe * 0.3D);
             this.moveForward = (float)((double)this.moveForward * 0.3D);
