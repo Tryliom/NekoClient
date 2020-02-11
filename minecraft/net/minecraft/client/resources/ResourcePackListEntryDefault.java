@@ -20,7 +20,7 @@ public class ResourcePackListEntryDefault extends ResourcePackListEntry
     public ResourcePackListEntryDefault(GuiScreenResourcePacks p_i45052_1_)
     {
         super(p_i45052_1_);
-        this.field_148320_d = this.field_148317_a.getResourcePackRepository().rprDefaultResourcePack;
+        this.field_148320_d = this.mc.getResourcePackRepository().rprDefaultResourcePack;
         DynamicTexture var2;
 
         try
@@ -32,14 +32,14 @@ public class ResourcePackListEntryDefault extends ResourcePackListEntry
             var2 = TextureUtil.missingTexture;
         }
 
-        this.field_148321_e = this.field_148317_a.getTextureManager().getDynamicTextureLocation("texturepackicon", var2);
+        this.field_148321_e = this.mc.getTextureManager().getDynamicTextureLocation("texturepackicon", var2);
     }
 
-    protected String func_148311_a()
+    protected String TexturePackDescription()
     {
         try
         {
-            PackMetadataSection var1 = (PackMetadataSection)this.field_148320_d.getPackMetadata(this.field_148317_a.getResourcePackRepository().rprMetadataSerializer, "pack");
+            PackMetadataSection var1 = (PackMetadataSection)this.field_148320_d.getPackMetadata(this.mc.getResourcePackRepository().rprMetadataSerializer, "pack");
 
             if (var1 != null)
             {
@@ -78,14 +78,14 @@ public class ResourcePackListEntryDefault extends ResourcePackListEntry
         return false;
     }
 
-    protected String func_148312_b()
+    protected String TexturePackName()
     {
         return "Default";
     }
 
-    protected void func_148313_c()
+    protected void BindIcon()
     {
-        this.field_148317_a.getTextureManager().bindTexture(this.field_148321_e);
+        this.mc.getTextureManager().bindTexture(this.field_148321_e);
     }
 
     protected boolean func_148310_d()

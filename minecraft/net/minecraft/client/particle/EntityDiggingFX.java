@@ -17,7 +17,7 @@ public class EntityDiggingFX extends EntityFX
     {
         super(worldIn, p_i46280_2_, p_i46280_4_, p_i46280_6_, p_i46280_8_, p_i46280_10_, p_i46280_12_);
         this.field_174847_a = p_i46280_14_;
-        this.func_180435_a(Minecraft.getMinecraft().getBlockRendererDispatcher().func_175023_a().func_178122_a(p_i46280_14_));
+        this.func_180435_a(Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().getTexture(p_i46280_14_));
         this.particleGravity = p_i46280_14_.getBlock().blockParticleGravity;
         this.particleRed = this.particleGreen = this.particleBlue = 0.6F;
         this.particleScale /= 2.0F;

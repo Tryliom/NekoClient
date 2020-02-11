@@ -45,7 +45,7 @@ public class LayerHeldItemWitch implements LayerRenderer
             Minecraft var11 = Minecraft.getMinecraft();
             float var12;
 
-            if (var13 instanceof ItemBlock && var11.getBlockRendererDispatcher().func_175021_a(Block.getBlockFromItem(var13), var9.getMetadata()))
+            if (var13 instanceof ItemBlock && var11.getBlockRendererDispatcher().isRenderTypeChest(Block.getBlockFromItem(var13), var9.getMetadata()))
             {
                 GlStateManager.translate(0.0F, 0.1875F, -0.3125F);
                 GlStateManager.rotate(20.0F, 1.0F, 0.0F, 0.0F);

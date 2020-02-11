@@ -823,7 +823,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             logger.info("Caught error stitching, removing all assigned resourcepacks", var4);
             var1.clear();
             var1.addAll(this.defaultResourcePacks);
-            this.mcResourcePackRepository.func_148527_a(Collections.emptyList());
+            this.mcResourcePackRepository.setRepositories(Collections.emptyList());
             this.mcResourceManager.reloadResources(var1);
             this.gameSettings.resourcePacks.clear();
             this.gameSettings.saveOptions();

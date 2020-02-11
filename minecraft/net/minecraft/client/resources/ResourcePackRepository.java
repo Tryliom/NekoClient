@@ -153,7 +153,7 @@ public class ResourcePackRepository
         return ImmutableList.copyOf(this.repositoryEntries);
     }
 
-    public void func_148527_a(List p_148527_1_)
+    public void setRepositories(List p_148527_1_)
     {
         this.repositoryEntries.clear();
         this.repositoryEntries.addAll(p_148527_1_);

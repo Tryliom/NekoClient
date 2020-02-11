@@ -75,7 +75,7 @@ public class BlockModelShapes
         return this.blockStateMapper;
     }
 
-    public TextureAtlasSprite func_178122_a(IBlockState p_178122_1_)
+    public TextureAtlasSprite getTexture(IBlockState p_178122_1_)
     {
         Block var2 = p_178122_1_.getBlock();
         IBakedModel var3 = this.func_178125_b(p_178122_1_);

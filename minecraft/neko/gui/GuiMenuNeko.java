@@ -3,10 +3,12 @@ package neko.gui;
 import java.io.IOException;
 
 import neko.Client;
+import neko.gui.xraymanager.GuiScreenXrayManager;
 import neko.manager.OnlyRpgManager;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiScreenResourcePacks;
 
 public class GuiMenuNeko extends GuiScreen {
 	private GuiScreen prevGui;
@@ -57,7 +59,8 @@ public class GuiMenuNeko extends GuiScreen {
             	this.mc.displayGuiScreen(new GuiWikiMenu(this));
                 break;
             case 5:
-            	this.mc.displayGuiScreen(new GuiXrayManager(this));
+            	//this.mc.displayGuiScreen(new GuiXrayManager(this));
+            	this.mc.displayGuiScreen(new GuiScreenXrayManager(this));
                 break;
             case 8:
                 this.mc.displayGuiScreen(new GuiAltManager(this));

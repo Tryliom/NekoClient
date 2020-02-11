@@ -41,7 +41,7 @@ public class LayerHeldBlock implements LayerRenderer
             OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)var13 / 1.0F, (float)var14 / 1.0F);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.field_177174_a.bindTexture(TextureMap.locationBlocksTexture);
-            var10.func_175016_a(var9, 1.0F);
+            var10.renderBlockBrightness(var9, 1.0F);
             GlStateManager.popMatrix();
             GlStateManager.disableRescaleNormal();
         }

@@ -410,7 +410,7 @@ public class ItemRenderer
 
             if (var2.getBlock().getRenderType() != -1)
             {
-                this.func_178108_a(p_78447_1_, this.mc.getBlockRendererDispatcher().func_175023_a().func_178122_a(var2));
+                this.func_178108_a(p_78447_1_, this.mc.getBlockRendererDispatcher().getBlockModelShapes().getTexture(var2));
             }
         }
 

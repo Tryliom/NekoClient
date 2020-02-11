@@ -32,13 +32,13 @@ public class LayerMooshroomMushroom implements LayerRenderer
             GlStateManager.rotate(42.0F, 0.0F, 1.0F, 0.0F);
             GlStateManager.pushMatrix();
             GlStateManager.translate(-0.5F, -0.5F, 0.5F);
-            var9.func_175016_a(Blocks.red_mushroom.getDefaultState(), 1.0F);
+            var9.renderBlockBrightness(Blocks.red_mushroom.getDefaultState(), 1.0F);
             GlStateManager.popMatrix();
             GlStateManager.pushMatrix();
             GlStateManager.translate(0.1F, 0.0F, -0.6F);
             GlStateManager.rotate(42.0F, 0.0F, 1.0F, 0.0F);
             GlStateManager.translate(-0.5F, -0.5F, 0.5F);
-            var9.func_175016_a(Blocks.red_mushroom.getDefaultState(), 1.0F);
+            var9.renderBlockBrightness(Blocks.red_mushroom.getDefaultState(), 1.0F);
             GlStateManager.popMatrix();
             GlStateManager.popMatrix();
             GlStateManager.pushMatrix();
@@ -47,7 +47,7 @@ public class LayerMooshroomMushroom implements LayerRenderer
             GlStateManager.translate(0.0F, 0.7F, -0.2F);
             GlStateManager.rotate(12.0F, 0.0F, 1.0F, 0.0F);
             GlStateManager.translate(-0.5F, -0.5F, 0.5F);
-            var9.func_175016_a(Blocks.red_mushroom.getDefaultState(), 1.0F);
+            var9.renderBlockBrightness(Blocks.red_mushroom.getDefaultState(), 1.0F);
             GlStateManager.popMatrix();
             GlStateManager.disableCull();
         }
