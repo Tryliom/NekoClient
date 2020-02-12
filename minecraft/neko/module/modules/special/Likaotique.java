@@ -217,6 +217,7 @@ class tptimer implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		if (Likaotique.getLik().isSafe())
 			return;
+		
 		try {
 			boolean find = false;
 			BlockPos b = null;

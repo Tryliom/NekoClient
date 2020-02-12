@@ -123,9 +123,6 @@ public class KillAura extends Module {
     }
     
     public static Boolean isViable(EntityLivingBase en) {
-    	if (!Utils.getPlayerGameType(en.getName()).isSurvivalOrAdventure())
-	    	return false;
-    	
     	if (KillAura.invi) 
     		if (en.isInvisible())
     			return false;
@@ -152,7 +149,6 @@ public class KillAura extends Module {
     	
     	if (en.getName().isEmpty())
 			return false;
-    	
     	
     	if (verif && !Utils.IsInTab(en.getName()))
 	    	return false;
@@ -221,7 +217,7 @@ class cps implements ActionListener {
 				try {
 					for (Object theObject : mc.theWorld.playerEntities) {
 		                EntityLivingBase entity = (EntityLivingBase) theObject;
-		                if(KillAura.isViable(entity)) {              	                	                   
+		                if(KillAura.isViable(entity)) {   
 		                	if (KillAura.lockView)
 		                		KillAura.faceEntity(entity);
 		                	
