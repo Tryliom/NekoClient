@@ -37,11 +37,8 @@ public class Module {
 		this.moduleBind = moduleBind;
 		this.moduleCategory = moduleCategory;
 		this.isCommands = isCommand;
-<<<<<<< HEAD
 		this.defaultBind = moduleBind;
 		setup();
-=======
->>>>>>> 67fee769e0ae1f95265bdd336a5ee727316fcb6a
 	}
 	
 	public void setup() {}

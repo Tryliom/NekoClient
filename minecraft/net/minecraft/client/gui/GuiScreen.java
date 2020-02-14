@@ -26,7 +26,6 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
-import neko.gui.GuiBindManager;
 import neko.gui.GuiMenuNeko;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
