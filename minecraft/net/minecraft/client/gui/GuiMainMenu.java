@@ -3,16 +3,14 @@ package net.minecraft.client.gui;
 import java.awt.Desktop;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
+import java.util.function.Consumer;
 
 import org.apache.commons.io.Charsets;
 import org.apache.logging.log4j.LogManager;
@@ -22,7 +20,6 @@ import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.Project;
 
 import com.google.common.collect.Lists;
-import com.ibm.icu.impl.ZoneMeta;
 
 import neko.Client;
 import neko.api.NekoCloud;
@@ -31,13 +28,12 @@ import neko.gui.GuiAltManager;
 import neko.gui.GuiConnect;
 import neko.gui.GuiMenuNeko;
 import neko.gui.GuiNekoAccount;
-import neko.gui.GuiUpdate;
 import neko.gui.button.ButtonDiscord;
-import neko.guicheat.clickgui.ClickGUI;
 import neko.guicheat.clickgui.settings.SettingsManager;
 import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
 import neko.manager.TutoManager;
+import neko.module.Module;
 import neko.module.other.Rank;
 import neko.updater.Updater;
 import neko.utils.Utils;
@@ -47,15 +43,10 @@ import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.realms.RealmsBridge;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.MathHelper;
@@ -290,6 +281,8 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     					r.setLock(false);
     				}
     			}
+    		Consumer<Module> setupModule = m -> {m.setup();};
+    		var.moduleManager.getModules().forEach(setupModule);
         	Utils.loadCredentials();
     	    String res = nc.loginAccount();
     	    if (res.equalsIgnoreCase("success")) {

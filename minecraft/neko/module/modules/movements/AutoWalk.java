@@ -13,12 +13,7 @@ public class AutoWalk extends Module {
 		super.onEnabled();
 	}
 	
-	public void onUpdate() {
-		mc.gameSettings.keyBindForward.pressed = true;
-	}
-	
 	public void onDisabled() {
-		mc.gameSettings.keyBindForward.pressed = false;
 		super.onDisabled();
 	}
 	
