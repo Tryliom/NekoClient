@@ -20,8 +20,11 @@ import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
@@ -147,6 +150,9 @@ import neko.module.other.enums.Rate;
 import neko.module.other.enums.SpeedEnum;
 import net.mcleaks.MCLeaks;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBeacon;
+import net.minecraft.block.BlockMobSpawner;
+import net.minecraft.block.BlockOre;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -2283,6 +2289,34 @@ public class Utils {
 		}
 	}
 	
+	public static Module getModuleById(int id) {
+		String[] abc = getAllKeybindsWithModule();
+		String select = abc[id];
+		String[] s = select.split(";"); //Name ; Bind ; Category
+		return Utils.getModule(s[0]);
+	}
+	
+	public static String[] getAllKeybindsWithModule() {
+		List<String> kb = new ArrayList<String>();
+		List<listbind> listBind = new ArrayList<listbind>();
+		for (Module m : ModuleManager.ActiveModule) {
+			if (m.getCategory() != Category.HIDE) {
+				listBind.add(new listbind(m));
+			}
+		}
+		Collections.sort(listBind, new SortByCollection());
+		int id = 0;
+		for(listbind lb : listBind) {
+			Module m = lb.m;
+			m.setId(id);
+			kb.add(m.getName()+";"+m.getBind()+";"+m.getCategory().name());
+			id++;
+		}
+		String[] kbb = new String[kb.size()];
+		kb.toArray(kbb);
+		return kbb;
+	}
+	
 	public static void saveXray(String...fi) {	
 		if (verif!=null)
 			return;
@@ -4363,9 +4397,19 @@ public class Utils {
 	public static String getBind(String mod) {
 		for (Module m : ModuleManager.ActiveModule) {
 			if (m.getName().equals(mod)) {
-				String s = Keyboard.getKeyName((m.getBind()==-1 ? 0 : m.getBind()));
-				char ch[] = s.toCharArray();
-				return s.toLowerCase().replaceFirst(".", String.valueOf(ch[0]));
+				try {
+					String s = Keyboard.getKeyName((m.getBind()==-1 ? 0 : m.getBind()));
+					char ch[] = s.toCharArray();
+					return s.toLowerCase().replaceFirst(".", String.valueOf(ch[0]));
+				} catch (Exception e) {
+					switch(m.getBind()) {
+					case -100: return "RClick";
+					case -99: return "LClick";
+					case -98: return "MClick";
+					case -1: m.setBind(-1); return "Failed to get chars";
+					}
+					return "Failed to get chars";
+				}
 			}
 		}		
 		return "None";
@@ -6291,4 +6335,49 @@ public class Utils {
 			mc.ingameGUI.getChatGUI().printChatMessage(new ChatComponentText("§8[§9Neko§8]§6 " + e));
 		}
 	}
+}
+
+//Combat ; Render ; Player ; Movement ; Misc ; Special ; Params
+
+class listbind {
+	
+	Module m;
+	String Collection;
+	String oldCollection;
+	
+	public listbind(Module m) {
+		this.m = m;
+		this.Collection = m.getCategory().name();
+		if(Collection.equalsIgnoreCase("Params")) {
+			this.oldCollection = "aa";
+		} else if(Collection.equalsIgnoreCase("Combat")) {
+			this.oldCollection = "bb";
+		} else if(Collection.equalsIgnoreCase("Render")) {
+			this.oldCollection = "cc";
+		} else if(Collection.equalsIgnoreCase("Player")) {
+			this.oldCollection = "dd";
+		} else if(Collection.equalsIgnoreCase("Movement")) {
+			this.oldCollection = "ee";
+		} else if(Collection.equalsIgnoreCase("Misc")) {
+			this.oldCollection = "ff";
+		} else if(Collection.equalsIgnoreCase("Special")) {
+			this.oldCollection = "gg";
+		}
+	}
+	
+	public String getCollection() {
+		return this.oldCollection;
+	}
+	
+}
+
+class SortByCollection implements Comparator<listbind> {
+	
+	public int compare(listbind a, listbind b) {
+		if(a.oldCollection.equalsIgnoreCase(b.oldCollection)) {
+			return a.m.getName().compareTo(b.m.getName());
+		}
+		return a.oldCollection.compareTo(b.oldCollection);
+	}
+	
 }

@@ -44,7 +44,7 @@ public class GuiMenuNeko extends GuiScreen {
         switch (button.id)
         {
             case 0:
-            	this.mc.displayGuiScreen(new GuiBindManager(this));
+            	this.mc.displayGuiScreen(new neko.gui.bindmanager.GuiBindManager(this));
                 break;
 
             case 1:

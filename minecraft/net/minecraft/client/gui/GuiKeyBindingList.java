@@ -10,15 +10,15 @@ import org.apache.commons.lang3.ArrayUtils;
 
 public class GuiKeyBindingList extends GuiListExtended
 {
-    private final GuiControls field_148191_k;
+    private final GuiControls guiControls;
     private final Minecraft mc;
     private final GuiListExtended.IGuiListEntry[] listEntries;
     private int maxListLabelWidth = 0;
 
-    public GuiKeyBindingList(GuiControls p_i45031_1_, Minecraft mcIn)
+    public GuiKeyBindingList(GuiControls guictrl, Minecraft mcIn)
     {
-        super(mcIn, p_i45031_1_.width, p_i45031_1_.height, 63, p_i45031_1_.height - 32, 20);
-        this.field_148191_k = p_i45031_1_;
+        super(mcIn, guictrl.width, guictrl.height, 63, guictrl.height - 32, 20);
+        this.guiControls = guictrl;
         this.mc = mcIn;
         KeyBinding[] var3 = (KeyBinding[])ArrayUtils.clone(mcIn.gameSettings.keyBindings);
         this.listEntries = new GuiListExtended.IGuiListEntry[var3.length + KeyBinding.getKeybinds().size()];
@@ -112,14 +112,14 @@ public class GuiKeyBindingList extends GuiListExtended
         private KeyEntry(KeyBinding p_i45029_2_)
         {
             this.field_148282_b = p_i45029_2_;
-            this.field_148283_c = I18n.format(p_i45029_2_.getKeyDescription(), new Object[0]);
+            this.field_148283_c = I18n.format(p_i45029_2_.getKeyDescription(), new Object[0]); //Text Name
             this.btnChangeKeyBinding = new GuiButton(0, 0, 0, 75, 18, I18n.format(p_i45029_2_.getKeyDescription(), new Object[0]));
             this.btnReset = new GuiButton(0, 0, 0, 50, 18, I18n.format("controls.reset", new Object[0]));
         }
 
         public void drawEntry(int slotIndex, int x, int y, int listWidth, int slotHeight, int mouseX, int mouseY, boolean isSelected)
         {
-            boolean var9 = GuiKeyBindingList.this.field_148191_k.buttonId == this.field_148282_b;
+            boolean var9 = GuiKeyBindingList.this.guiControls.buttonId == this.field_148282_b;
             GuiKeyBindingList.this.mc.fontRendererObj.drawString(this.field_148283_c, x + 90 - GuiKeyBindingList.this.maxListLabelWidth, y + slotHeight / 2 - GuiKeyBindingList.this.mc.fontRendererObj.FONT_HEIGHT / 2, 16777215);
             this.btnReset.xPosition = x + 190;
             this.btnReset.yPosition = y;
@@ -163,7 +163,7 @@ public class GuiKeyBindingList extends GuiListExtended
         {
             if (this.btnChangeKeyBinding.mousePressed(GuiKeyBindingList.this.mc, p_148278_2_, p_148278_3_))
             {
-                GuiKeyBindingList.this.field_148191_k.buttonId = this.field_148282_b;
+                GuiKeyBindingList.this.guiControls.buttonId = this.field_148282_b;
                 return true;
             }
             else if (this.btnReset.mousePressed(GuiKeyBindingList.this.mc, p_148278_2_, p_148278_3_))

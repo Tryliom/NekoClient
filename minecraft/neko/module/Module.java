@@ -29,12 +29,15 @@ public class Module {
 	protected String values;
 	protected int time;
 	public int toggleTime = 0;
+	protected int defaultBind;
+	private int id = 0;
 
 	public Module(String moduleName, int moduleBind, Category moduleCategory, boolean isCommand) {
 		this.moduleName = moduleName;
 		this.moduleBind = moduleBind;
 		this.moduleCategory = moduleCategory;
 		this.isCommands = isCommand;
+		this.defaultBind = moduleBind;
 		setup();
 	}
 	
@@ -42,6 +45,18 @@ public class Module {
 
 	public String getName() {
 		return this.moduleName;
+	}
+	
+	public void setId(int i) {
+		this.id = i;
+	}
+	
+	public int getId() {
+		return this.id;
+	}
+	
+	public int getDefaultBind() {
+		return this.defaultBind;
 	}
 	
 	public void setName(String modulename) {
@@ -53,6 +68,13 @@ public class Module {
 
 	public int getBind() {
 		return this.moduleBind;
+	}
+	
+	public boolean hasBind() {
+		if(Utils.getBind(this.moduleName).equalsIgnoreCase("None")) {
+			return false;
+		}
+		return true;
 	}
 
 	public Category getCategory() {
