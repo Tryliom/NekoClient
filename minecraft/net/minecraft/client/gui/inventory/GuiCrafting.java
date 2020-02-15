@@ -2,21 +2,22 @@ package net.minecraft.client.gui.inventory;
 
 import java.io.IOException;
 
+import org.lwjgl.opengl.GL11;
+
 import neko.utils.Utils;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockPlanks;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ContainerWorkbench;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraft.item.ItemTool;
 import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.RecipesArmor;
-import net.minecraft.item.crafting.RecipesWeapons;
+import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -44,21 +45,53 @@ public class GuiCrafting extends GuiContainer
         this.fontRendererObj.drawString(I18n.format("container.inventory", new Object[0]), 8, this.ySize - 96 + 2, 4210752);
         if (Utils.isToggle("AutoCraft")) {
         	this.buttonList.clear();
-    		this.buttonList.add(new GuiButton(0, this.width / 2 - 50, 60, 100, 20, "Autocraft sword"));
+        	try {
+            	CraftingManager cm = CraftingManager.getInstance();
+            	int y = 10;
+            	int initX = this.width / 4;
+            	int x = initX;
+            	for (Object o : cm.getRecipeList()) {
+            		if (o instanceof ShapedRecipes) {
+            			ShapedRecipes sr = (ShapedRecipes)o;
+            			if (sr.getRecipeOutput().getItem() instanceof ItemArmor
+            					|| sr.getRecipeOutput().getItem() instanceof ItemSword
+            					//|| sr.getRecipeOutput().getItem() instanceof ItemTool
+            					) {
+            				int id = sr.getRecipeOutput().hashCode();
+            				
+            	            GL11.glPushMatrix();
+            				this.mc.entityRenderer.setupOverlayRendering();
+							mc.getRenderItem().renderItemIntoGUI(sr.getRecipeOutput(), this.width - x + 2, y + 2);
+            	            GL11.glPopMatrix();
+            	            
+            	            this.buttonList.add(new GuiButton(id, this.width - x, y, 20, 20, ""));
+							if (x <= 20) {
+	            				y += 20;
+	            				x = initX;
+							} else
+								x -= 20;
+            			}
+            		}
+            	}
+        	} catch (Exception e) {}
     	}
     }
     
     protected void actionPerformed(GuiButton button) throws IOException
     {
-        switch (button.id)
-        {
-            case 0:
-            	try {
-	            	CraftingManager cm = CraftingManager.getInstance();
-	            	
-            	} catch (Exception e) {}
-                break;
-        }
+    	try {
+        	CraftingManager cm = CraftingManager.getInstance();
+        	for (Object o : cm.getRecipeList()) {
+        		if (o instanceof ShapedRecipes) {
+        			ShapedRecipes sr = (ShapedRecipes)o;
+        			if (sr.getRecipeOutput().hashCode() == button.id) {
+        				System.out.println(sr.getRecipeSize());
+            			for (ItemStack is : sr.getRecipeItems())
+        					System.out.println(is);
+        			}
+        		}
+        	}
+    	} catch (Exception e) {}
     }
 
     /**
