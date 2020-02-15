@@ -290,13 +290,17 @@ public abstract class Entity implements ICommandSender
         return this.dataWatcher;
     }
     
-    public boolean isMovingXZ()
-    {
-      if ((this.motionX == 0.0D) && (this.motionZ == 0.0D)) {
-        return false;
-      }
-      return true;
+    public boolean isMovingXZ() {
+      return (this.motionX != 0.0D) || (this.motionZ != 0.0D);
     }
+    
+    public boolean isMovingXZY() {
+    	return (this.motionX != 0.0D) || (this.motionZ != 0.0D) || (this.prevPosY != this.posY);
+    }
+    
+    public boolean isMovingCamera() {
+        return this.prevRotationPitch != this.rotationPitch || this.prevRotationYaw != this.rotationYaw;
+      }
 
     public boolean equals(Object p_equals_1_)
     {

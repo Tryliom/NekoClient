@@ -1,30 +1,23 @@
 package neko.module.modules.combat;
 
-import java.awt.AWTException;
-import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import neko.module.modules.special.FastDura;
-import neko.module.modules.special.Likaotique;
-import neko.module.modules.special.Nausicaah;
-import neko.module.modules.hide.Friends;
 import org.lwjgl.input.Keyboard;
 
 import neko.Client;
 import neko.event.UpdateEvent;
-import neko.manager.ModuleManager;
 import neko.module.Category;
 import neko.module.Module;
+import neko.module.modules.hide.Friends;
+import neko.module.modules.special.Likaotique;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSword;
-import net.minecraft.network.play.client.C02PacketUseEntity;
-import net.minecraft.network.play.client.C02PacketUseEntity.Action;
 import net.minecraft.util.MathHelper;
 
 public class KillAura extends Module {
