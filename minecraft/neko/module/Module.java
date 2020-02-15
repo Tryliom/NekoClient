@@ -38,7 +38,6 @@ public class Module {
 		this.moduleCategory = moduleCategory;
 		this.isCommands = isCommand;
 		this.defaultBind = moduleBind;
-		setup();
 	}
 	
 	public void setup() {}
