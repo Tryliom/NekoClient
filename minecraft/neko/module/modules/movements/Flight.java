@@ -1,12 +1,10 @@
 package neko.module.modules.movements;
 
-import neko.module.modules.movements.Blink;
-import neko.utils.Utils;
-
 import org.lwjgl.input.Keyboard;
 
 import neko.module.Category;
 import neko.module.Module;
+import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 
 public class Flight extends Module {	
@@ -19,17 +17,17 @@ public class Flight extends Module {
 	}
 	
 	public void onEnabled() {
-		if (blink && !Blink.isOn) {
-			Blink.isOn=true; 
+		if (blink && !Utils.isToggle("Blink")) {
+			Utils.toggleModule("Blink");
 			v=false;
-		} else if (blink && Blink.isOn)
+		} else if (blink && Utils.isToggle("Blink"))
 			v=true;
 		super.onEnabled();
 	}
 	
 	public void onDisabled() {
-		if (blink)
-			Blink.isOn=v;		
+		if (blink && !v)
+			Utils.toggleModule("Blink");
 		super.onDisabled();
 	}
 	

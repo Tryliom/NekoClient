@@ -34,7 +34,7 @@ public class Crasher extends Module {
 		}
 		int spam = 0;
 		while (spam < 1000 && (Utils.limite ? Utils.limit > Utils.nbPack : true) && (wave ? delay <= 100 : true)) {
-			mc.getNetHandler().addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition((Math.random()*1000000-500000), (Math.random()*100+10), (Math.random()*1000000-500000), true));
+			mc.getNetHandler().addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition((Math.random()*1000000-5000000), (Math.random()*100+10), (Math.random()*1000000-5000000), true));
 			++spam;
 		}
 		super.onUpdate();
