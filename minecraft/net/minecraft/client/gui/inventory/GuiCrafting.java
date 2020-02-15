@@ -1,21 +1,18 @@
 package net.minecraft.client.gui.inventory;
 
 import java.io.IOException;
+import java.util.Vector;
 
-import org.lwjgl.opengl.GL11;
-
+import neko.module.modules.player.AutoCraft;
 import neko.utils.Utils;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ContainerWorkbench;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemAxe;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
-import net.minecraft.item.ItemTool;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.util.BlockPos;
@@ -45,35 +42,13 @@ public class GuiCrafting extends GuiContainer
         this.fontRendererObj.drawString(I18n.format("container.inventory", new Object[0]), 8, this.ySize - 96 + 2, 4210752);
         if (Utils.isToggle("AutoCraft")) {
         	this.buttonList.clear();
-        	try {
-            	CraftingManager cm = CraftingManager.getInstance();
-            	int y = 10;
-            	int initX = this.width / 4;
-            	int x = initX;
-            	for (Object o : cm.getRecipeList()) {
-            		if (o instanceof ShapedRecipes) {
-            			ShapedRecipes sr = (ShapedRecipes)o;
-            			if (sr.getRecipeOutput().getItem() instanceof ItemArmor
-            					|| sr.getRecipeOutput().getItem() instanceof ItemSword
-            					//|| sr.getRecipeOutput().getItem() instanceof ItemTool
-            					) {
-            				int id = sr.getRecipeOutput().hashCode();
-            				
-            	            GL11.glPushMatrix();
-            				this.mc.entityRenderer.setupOverlayRendering();
-							mc.getRenderItem().renderItemIntoGUI(sr.getRecipeOutput(), this.width - x + 2, y + 2);
-            	            GL11.glPopMatrix();
-            	            
-            	            this.buttonList.add(new GuiButton(id, this.width - x, y, 20, 20, ""));
-							if (x <= 20) {
-	            				y += 20;
-	            				x = initX;
-							} else
-								x -= 20;
-            			}
-            		}
-            	}
-        	} catch (Exception e) {}
+        	int y = 10;
+        	int initX = this.width / 4;
+        	int x = initX;
+
+        	y = AutoCraft.getInstance().drawItems(x, initX, y, this.width, buttonList, 1) + 30;
+        	y = AutoCraft.getInstance().drawItems(x, initX, y, this.width, buttonList, 2) + 30;
+        	y = AutoCraft.getInstance().drawItems(x, initX, y, this.width, buttonList, 3) + 30;
     	}
     }
     
@@ -83,11 +58,9 @@ public class GuiCrafting extends GuiContainer
         	CraftingManager cm = CraftingManager.getInstance();
         	for (Object o : cm.getRecipeList()) {
         		if (o instanceof ShapedRecipes) {
-        			ShapedRecipes sr = (ShapedRecipes)o;
-        			if (sr.getRecipeOutput().hashCode() == button.id) {
-        				System.out.println(sr.getRecipeSize());
-            			for (ItemStack is : sr.getRecipeItems())
-        					System.out.println(is);
+        			ShapedRecipes recipe = (ShapedRecipes)o;
+        			if (recipe.getRecipeOutput().hashCode() == button.id) {
+        				AutoCraft.getInstance().craftRecipe(recipe);
         			}
         		}
         	}

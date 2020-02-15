@@ -156,8 +156,15 @@ public class ShapedRecipes implements IRecipe
      */
     public int getRecipeSize()
     {
-    	System.out.println(this.recipeWidth+" "+this.recipeHeight);
         return this.recipeWidth * this.recipeHeight;
+    }
+    
+    public int getRecipeWidth() {
+    	return this.recipeWidth;
+    }
+    
+    public int getRecipeHeight() {
+    	return this.recipeHeight;
     }
 
     public ShapedRecipes func_92100_c()
