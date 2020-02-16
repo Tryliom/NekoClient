@@ -3,6 +3,7 @@ package neko.guicheat.clickgui.util;
 import neko.Client;
 import neko.module.modules.combat.Reach;
 import neko.module.modules.misc.Phase;
+import neko.module.modules.movements.Blink;
 import neko.module.modules.movements.Longjump;
 import neko.module.modules.params.Gui;
 import neko.module.modules.params.HUD;
@@ -39,7 +40,18 @@ public class SettingsUtil {
 		
 		Rotator rt = Rotator.getRotator();
 		rt.setSpeed(getRotatorSpeed());
+		
+		Blink.full = getBlinkFull();
 	}
+	
+	public static boolean getBlinkFull() {
+		return Client.Neko.settingsManager.getSettingByName("BlinkFull").getValBoolean();
+	}
+	
+	public static void setBlinkFull(boolean full) {
+		Client.Neko.settingsManager.getSettingByName("BlinkFull").setValBoolean(full);
+	}
+	
 	public static Double getRotatorSpeed() {
 		return Client.Neko.settingsManager.getSettingByName("RotatorSpeed").getValDouble();
 	}
