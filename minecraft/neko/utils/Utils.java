@@ -44,6 +44,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.ibm.icu.util.StringTokenizer;
 import com.mojang.authlib.Agent;
 import com.mojang.authlib.UserAuthentication;
 import com.mojang.authlib.exceptions.AuthenticationException;
@@ -3583,6 +3584,68 @@ public class Utils {
         	}                	
         	i++;
         }
+	}
+	
+	public static String[] getRankDescription(String rank) {
+		String desc = "";
+		Rank r = Utils.getRank(rank);
+		Boolean lock = r.isLock();
+		if (!Utils.isLock("rankmanager rate"))
+			desc+="\n§6Rareté: "+r.getColor()+r.getRate();
+		if (!Utils.isLock("rankmanager lvl"))
+			desc+="\n§6Lvl: §b"+r.getLvl();
+		if (!Utils.isLock("rankmanager bonus")) {
+			desc+="\n§6Bonus: §d"+r.getTotBonus()+"%";
+			ArrayList<String> l = r.getAllBonus("§6", "§d");
+			for (String s : l) {
+				desc+="\n"+s;
+			}
+		}
+		if (!r.getDesc().equalsIgnoreCase("null") && !Utils.isLock("rankmanager desc") && !lock) {
+			
+			desc+="\n§6Description: ";
+			String text = Utils.setColor(r.getDesc(), r.getColor().replaceAll("§n", ""));
+			int defaultLineWidth = 75;
+			int defaultSpaceWidth=1;
+			
+			StringTokenizer st = new StringTokenizer(text);
+			int SpaceLeft = defaultLineWidth;
+			int SpaceWidth = defaultSpaceWidth;
+			while(st.hasMoreTokens()) {
+				String word=st.nextToken();
+				if((word.length()+SpaceWidth)>SpaceLeft) {
+					desc+="\n"+word+" ";
+					SpaceLeft=defaultLineWidth-word.length();
+				} else {
+					desc+=word+" ";
+					SpaceLeft-=(word.length()+SpaceWidth);
+				}
+			}
+		}
+		return desc.split("\n");
+	}
+	
+	public static String getRankColor2(String rank) {
+		String color = "§f";
+		try {
+			Rank r = Utils.getRank(rank);
+			switch(r.getRate().name().toLowerCase()) {
+			case "neko": color = "§5"; break;
+			case "supra": color = "§6"; break;
+			case "event": color = "§2"; break;
+			case "ordinaire": color = "§7"; break;
+			case "rare": color = "§e"; break;
+			case "ultrarare": color = "§b"; break;
+			case "magical": color = "§d"; break;
+			case "divin": color = "§d§o"; break;
+			case "satanique": color = "§c"; break;
+			case "légendaire": color = "§5§o"; break;
+			case "mythique": color = "§2"; break;
+			case "titan": color = "§4"; break;
+			case "crazylove": color = "§9"; break;
+			}
+		} catch (Exception e) {}
+		return color;
 	}
 	
 	public static void loadValues(String...fi) {

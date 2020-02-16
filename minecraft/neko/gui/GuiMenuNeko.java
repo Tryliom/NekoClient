@@ -66,7 +66,8 @@ public class GuiMenuNeko extends GuiScreen {
                 this.mc.displayGuiScreen(new GuiAltManager(this));
                 break;
             case 9:
-                this.mc.displayGuiScreen(new GuiMultiplayer(this));
+                //this.mc.displayGuiScreen(new GuiMultiplayer(this));
+            	this.mc.displayGuiScreen(new GuiRankManager(this));
                 break;
             case 10:
                 this.mc.displayGuiScreen(new GuiAccount(this));
