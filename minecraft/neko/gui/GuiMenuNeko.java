@@ -34,9 +34,9 @@ public class GuiMenuNeko extends GuiScreen {
         	if (!OnlyRpgManager.getRpg().isActive())
         		this.buttonList.add(new GuiButton(8, this.width / 2 + 2, this.height / 4 + 72 + var1, 98, 20, "Alt Manager"));
         	if (!OnlyRpgManager.getRpg().isActive())
-        		this.buttonList.add(new GuiButton(9, this.width / 2 - 100, this.height / 4 + 72 + var1, 98, 20, "Multiplayer"));
+        		this.buttonList.add(new GuiButton(9, this.width / 2 - 100, this.height / 4 + 72 + var1, 98, 20, "Rank Manager"));
         	else
-        		this.buttonList.add(new GuiButton(9, this.width / 2 - 100, this.height / 4 + 72 + var1, "Multiplayer"));
+        		this.buttonList.add(new GuiButton(9, this.width / 2 - 100, this.height / 4 + 72 + var1, "Rank Manager"));
     }
 
     protected void actionPerformed(GuiButton button) throws IOException
