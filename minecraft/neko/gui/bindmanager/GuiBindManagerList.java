@@ -92,7 +92,7 @@ public class GuiBindManagerList extends GuiListExtended {
 
 		@Override
 		public void drawEntry(int slotIndex, int x, int y, int listWidth, int slotHeight, int mouseX, int mouseY, boolean isSelected) {
-			GuiBindManagerList.this.mc.fontRendererObj.drawString(this.labelText, GuiBindManagerList.this.mc.currentScreen.width / 2 - this.labelWidth / 2, y + slotHeight - GuiBindManagerList.this.mc.fontRendererObj.FONT_HEIGHT - 1, 16777215);
+			GuiBindManagerList.this.mc.fontRendererObj.drawString(Utils.getModuleColor(this.labelText, false) + this.labelText, GuiBindManagerList.this.mc.currentScreen.width / 2 - this.labelWidth / 2, y + slotHeight - GuiBindManagerList.this.mc.fontRendererObj.FONT_HEIGHT - 1, 16777215);
 		}
 
 		@Override
@@ -127,7 +127,7 @@ public class GuiBindManagerList extends GuiListExtended {
 		
 		public void drawEntry(int slotIndex, int x, int y, int listWidth, int slotHeight, int mouseX, int mouseY, boolean isSelected) {
 			boolean var9 = GuiBindManagerList.this.bindManager.buttonId == this.module.getId();
-			GuiBindManagerList.this.mc.fontRendererObj.drawString(this.name, x + 90 - GuiBindManagerList.this.maxListLabelWidth, y + slotHeight / 2 - GuiBindManagerList.this.mc.fontRendererObj.FONT_HEIGHT / 2, 16777215);
+			GuiBindManagerList.this.mc.fontRendererObj.drawString(Utils.getModuleColor(this.name, true) + this.name, x + 90 - GuiBindManagerList.this.maxListLabelWidth, y + slotHeight / 2 - GuiBindManagerList.this.mc.fontRendererObj.FONT_HEIGHT / 2, 16777215);
 			this.btnReset.xPosition = x + 190;
             this.btnReset.yPosition = y;
             this.btnReset.enabled = this.module.getDefaultBind() != this.module.getBind();

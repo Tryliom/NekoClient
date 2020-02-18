@@ -3625,6 +3625,26 @@ public class Utils {
 		return desc.split("\n");
 	}
 	
+	public static String getModuleColor(String module, Boolean isModule) {
+		String text = "";
+		if(isModule) {
+			Module m = Utils.getModule(module);
+			text = m.getCategory().name();
+		} else {
+			text = module.toLowerCase();
+		}
+		switch(text.toLowerCase()) {
+		case "params": return "§f";
+		case "combat": return "§c";
+		case "render": return "§e";
+		case "player": return "§3";
+		case "movement": return "§2";
+		case "misc": return "§7";
+		case "special": return "§6";
+		}
+		return "§f";
+	}
+	
 	public static String getRankColor2(String rank) {
 		String color = "§f";
 		try {
