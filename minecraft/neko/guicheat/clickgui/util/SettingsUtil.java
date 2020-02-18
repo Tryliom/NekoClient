@@ -37,13 +37,12 @@ public class SettingsUtil {
 		Reach.classic = getReachTPClassic(); Reach.fov = getReachFOV(); Reach.tnt = getReachTnT();
 		Reach.multiaura = getReachMA(); Reach.knock = getReachKB(); Reach.mode = getReachModeNormal() ? Reach.mode.Normal : Reach.mode.Cage;
 		Reach.pvp = getReachPvp();
-		
-		Rotator rt = Rotator.getRotator();
-		rt.setSpeed(getRotatorSpeed());
-		
+		//Rotator
+		Rotator rt = Rotator.getRotator(); rt.setSpeed(getRotatorSpeed());
+		//Blick
 		Blink.full = getBlinkFull();
 	}
-	
+	//TODO : Blink
 	public static boolean getBlinkFull() {
 		return Client.Neko.settingsManager.getSettingByName("BlinkFull").getValBoolean();
 	}
@@ -51,7 +50,7 @@ public class SettingsUtil {
 	public static void setBlinkFull(boolean full) {
 		Client.Neko.settingsManager.getSettingByName("BlinkFull").setValBoolean(full);
 	}
-	
+	//TODO : Rotator
 	public static Double getRotatorSpeed() {
 		return Client.Neko.settingsManager.getSettingByName("RotatorSpeed").getValDouble();
 	}
@@ -60,7 +59,7 @@ public class SettingsUtil {
 		Client.Neko.settingsManager.getSettingByName("RotatorSpeed").setValDouble(speed);
 	}
 	
-	//Coord
+	//TODO : Coord
 	public static void setHUDCoord(boolean coord) {
 		HUD.coord = coord;
 		Client.Neko.settingsManager.getSettingByName("HUDCoord").setValBoolean(coord);

@@ -2514,24 +2514,6 @@ public class Utils {
 	
 	
 	public static void loadFrame(String...fi) {}
-
-	public static void loadCloudFrame() {
-	    String list[] = nc.getSave("frame").split("§");
-	    if (var.clickGui==null) {
-	    	var.clickGui = new ClickGUI();
-	    }
-	    for (String ligne : list)
-	    {           
-	    	String s[] = ligne.split(" ");
-	    	for(Panel f : ClickGUI.panels) {
-	    		if (f.title.equalsIgnoreCase(s[0].replaceAll("&", "§"))) {
-	    			f.x = (Integer.parseInt(s[1]));
-	    			f.y = (Integer.parseInt(s[2]));
-	    			f.extended = (Boolean.parseBoolean(s[3]));
-	    		}
-	    	}
-	    }
-	}
 	
 	public static void saveFont() {
 		if (verif!=null)
@@ -4664,6 +4646,24 @@ public class Utils {
 		  Utils.importAllAccountToCloud();
 		  Utils.importMod();
 		  Utils.saveAll();
+	}
+
+	public static void loadCloudFrame() {
+	    String list[] = nc.getSave("frame").split("§");
+	    if (var.clickGui==null) {
+	    	var.clickGui = new ClickGUI();
+	    }
+	    for (String ligne : list)
+	    {           
+	    	String s[] = ligne.split(" ");
+	    	for(Panel f : ClickGUI.panels) {
+	    		if (f.title.equalsIgnoreCase(s[0].replaceAll("&", "§"))) {
+	    			f.x = (Integer.parseInt(s[1]));
+	    			f.y = (Integer.parseInt(s[2]));
+	    			f.extended = (Boolean.parseBoolean(s[3]));
+	    		}
+	    	}
+	    }
 	}
 	
 	public static void loadCloudSettings(String...fi) {
