@@ -1,8 +1,8 @@
 package net.minecraft.client.gui.inventory;
 
 import java.io.IOException;
-import java.util.Vector;
 
+import neko.Client;
 import neko.module.modules.player.AutoCraft;
 import neko.utils.Utils;
 import net.minecraft.client.gui.GuiButton;
@@ -10,9 +10,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ContainerWorkbench;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.item.ItemSword;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraft.util.BlockPos;
@@ -45,26 +42,52 @@ public class GuiCrafting extends GuiContainer
         	int y = 10;
         	int initX = this.width / 4;
         	int x = initX;
-
-        	y = AutoCraft.getInstance().drawItems(x, initX, y, this.width, buttonList, 1) + 30;
-        	y = AutoCraft.getInstance().drawItems(x, initX, y, this.width, buttonList, 2) + 30;
-        	y = AutoCraft.getInstance().drawItems(x, initX, y, this.width, buttonList, 3) + 30;
+        	AutoCraft craft = AutoCraft.getInstance();
+        	
+        	y = craft.drawItems(x, initX, y, initX, buttonList, 1) + 30;
+        	craft.drawItems(x, initX, y, initX, buttonList, 2);
+        	y = 40;
+        	initX = (this.width / 4);
+        	x = initX;
+        	craft.drawItems(x, initX, y, this.width, buttonList, 3);
+        	this.buttonList.add(new GuiButton(0, this.width - 110, 15, 100, 20, "Mode "+(craft.isCraftable() ? "Craftable" : "All")));
+        	this.buttonList.add(new GuiButton(1, this.width - 220, 15, 100, 20, (craft.isInstant() ? "§a" : "§c")+"Flash"));
+        	if (craft.getPage()>1)
+        		this.buttonList.add(new GuiButton(2, this.width - this.width/8 - 35, this.height - 25, 30, 20, "-"));
+        	if (craft.getPage()<craft.getMaxRecipe()/craft.getMaxRecipeByPage())
+        		this.buttonList.add(new GuiButton(3, this.width - this.width/8 - 5, this.height - 25, 30, 20, "+"));
     	}
     }
     
     protected void actionPerformed(GuiButton button) throws IOException
     {
+    	AutoCraft craft = AutoCraft.getInstance();
     	try {
         	CraftingManager cm = CraftingManager.getInstance();
         	for (Object o : cm.getRecipeList()) {
         		if (o instanceof ShapedRecipes) {
         			ShapedRecipes recipe = (ShapedRecipes)o;
         			if (recipe.getRecipeOutput().hashCode() == button.id) {
-        				AutoCraft.getInstance().craftRecipe(recipe);
+        				craft.craftRecipe(recipe);
         			}
         		}
         	}
     	} catch (Exception e) {}
+    	
+    	switch (button.id) {
+    		case 0: 
+    			craft.setCraftable(!craft.isCraftable());
+    			break;
+    		case 1: 
+    			craft.setInstant(!craft.isInstant());
+    			break;
+    		case 2:
+    			craft.setPage(craft.getPage()-1);
+    			break;
+    		case 3:
+    			craft.setPage(craft.getPage()+1);
+    			break;
+    	}
     }
 
     /**
