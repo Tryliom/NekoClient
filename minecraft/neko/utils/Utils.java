@@ -44,6 +44,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.ibm.icu.util.StringTokenizer;
 import com.mojang.authlib.Agent;
 import com.mojang.authlib.UserAuthentication;
 import com.mojang.authlib.exceptions.AuthenticationException;
@@ -2513,24 +2514,6 @@ public class Utils {
 	
 	
 	public static void loadFrame(String...fi) {}
-
-	public static void loadCloudFrame() {
-	    String list[] = nc.getSave("frame").split("§");
-	    if (var.clickGui==null) {
-	    	var.clickGui = new ClickGUI();
-	    }
-	    for (String ligne : list)
-	    {           
-	    	String s[] = ligne.split(" ");
-	    	for(Panel f : ClickGUI.panels) {
-	    		if (f.title.equalsIgnoreCase(s[0].replaceAll("&", "§"))) {
-	    			f.x = (Integer.parseInt(s[1]));
-	    			f.y = (Integer.parseInt(s[2]));
-	    			f.extended = (Boolean.parseBoolean(s[3]));
-	    		}
-	    	}
-	    }
-	}
 	
 	public static void saveFont() {
 		if (verif!=null)
@@ -3585,6 +3568,88 @@ public class Utils {
         }
 	}
 	
+	public static String[] getRankDescription(String rank) {
+		String desc = "";
+		Rank r = Utils.getRank(rank);
+		Boolean lock = r.isLock();
+		if (!Utils.isLock("rankmanager rate"))
+			desc+="\n§6Rareté: "+r.getColor()+r.getRate();
+		if (!Utils.isLock("rankmanager lvl"))
+			desc+="\n§6Lvl: §b"+r.getLvl();
+		if (!Utils.isLock("rankmanager bonus")) {
+			desc+="\n§6Bonus: §d"+r.getTotBonus()+"%";
+			ArrayList<String> l = r.getAllBonus("§6", "§d");
+			for (String s : l) {
+				desc+="\n"+s;
+			}
+		}
+		if (!r.getDesc().equalsIgnoreCase("null") && !Utils.isLock("rankmanager desc") && !lock) {
+			
+			desc+="\n§6Description: ";
+			String text = Utils.setColor(r.getDesc(), r.getColor().replaceAll("§n", ""));
+			int defaultLineWidth = 75;
+			int defaultSpaceWidth=1;
+			
+			StringTokenizer st = new StringTokenizer(text);
+			int SpaceLeft = defaultLineWidth;
+			int SpaceWidth = defaultSpaceWidth;
+			while(st.hasMoreTokens()) {
+				String word=st.nextToken();
+				if((word.length()+SpaceWidth)>SpaceLeft) {
+					desc+="\n"+word+" ";
+					SpaceLeft=defaultLineWidth-word.length();
+				} else {
+					desc+=word+" ";
+					SpaceLeft-=(word.length()+SpaceWidth);
+				}
+			}
+		}
+		return desc.split("\n");
+	}
+	
+	public static String getModuleColor(String module, Boolean isModule) {
+		String text = "";
+		if(isModule) {
+			Module m = Utils.getModule(module);
+			text = m.getCategory().name();
+		} else {
+			text = module.toLowerCase();
+		}
+		switch(text.toLowerCase()) {
+		case "params": return "§f";
+		case "combat": return "§c";
+		case "render": return "§e";
+		case "player": return "§3";
+		case "movement": return "§2";
+		case "misc": return "§7";
+		case "special": return "§6";
+		}
+		return "§f";
+	}
+	
+	public static String getRankColor2(String rank) {
+		String color = "§f";
+		try {
+			Rank r = Utils.getRank(rank);
+			switch(r.getRate().name().toLowerCase()) {
+			case "neko": color = "§5"; break;
+			case "supra": color = "§6"; break;
+			case "event": color = "§2"; break;
+			case "ordinaire": color = "§7"; break;
+			case "rare": color = "§e"; break;
+			case "ultrarare": color = "§b"; break;
+			case "magical": color = "§d"; break;
+			case "divin": color = "§d§o"; break;
+			case "satanique": color = "§c"; break;
+			case "légendaire": color = "§5§o"; break;
+			case "mythique": color = "§2"; break;
+			case "titan": color = "§4"; break;
+			case "crazylove": color = "§9"; break;
+			}
+		} catch (Exception e) {}
+		return color;
+	}
+	
 	public static void loadValues(String...fi) {
 		File dir = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"values.neko");
 		if (dir.exists()) {
@@ -4581,6 +4646,24 @@ public class Utils {
 		  Utils.importAllAccountToCloud();
 		  Utils.importMod();
 		  Utils.saveAll();
+	}
+
+	public static void loadCloudFrame() {
+	    String list[] = nc.getSave("frame").split("§");
+	    if (var.clickGui==null) {
+	    	var.clickGui = new ClickGUI();
+	    }
+	    for (String ligne : list)
+	    {           
+	    	String s[] = ligne.split(" ");
+	    	for(Panel f : ClickGUI.panels) {
+	    		if (f.title.equalsIgnoreCase(s[0].replaceAll("&", "§"))) {
+	    			f.x = (Integer.parseInt(s[1]));
+	    			f.y = (Integer.parseInt(s[2]));
+	    			f.extended = (Boolean.parseBoolean(s[3]));
+	    		}
+	    	}
+	    }
 	}
 	
 	public static void loadCloudSettings(String...fi) {

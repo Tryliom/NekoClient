@@ -75,6 +75,7 @@ public class GuiScreenXrayManager extends GuiScreen {
     	for(Listblockks lbb : this.lb) {
     		var2.add(lbb.block);
 		}
+    	this.lb.clear();
     	var3 = var2.iterator();
     	while (var3.hasNext()) {
 			var4 = (Block) var3.next();
