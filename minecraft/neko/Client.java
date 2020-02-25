@@ -47,7 +47,9 @@ public class Client {
 	
 	public static final String CLIENT_VERSION = "2.8.9";
 	private static String scrollingSpacer = "                   ";
-	public static final String SCROLLING_TEXT = "§cNeko forever !"+scrollingSpacer+"§7Présenté sous §bNeko " + Client.CLIENT_VERSION +scrollingSpacer+"§eCréé par §f§lTryliom§e et §f§lMarie.";
+	public String strNeko = "§bNeko v" + CLIENT_VERSION;
+	public String strCreator = "§eCréé par §f§lTryliom§e et §f§lMarie";
+	public final String SCROLLING_TEXT = "§cNeko forever !"+scrollingSpacer+"§7Présenté sous §bNeko " + Client.CLIENT_VERSION +scrollingSpacer+strCreator;
 	public String mode = "Player";
 	public Rank rang;
 	public Necklace necklace;
@@ -75,8 +77,6 @@ public class Client {
 	public String changelog = "";
 	public RequestManager rm;
 	public boolean firstServDisplay = true;
-	public String strNeko = "§bNeko v" + CLIENT_VERSION;
-	public String strCreator = "§eCréé par §f§lTryliom§e et §f§lMarie";
 	
 	public void startClient() {
 		
