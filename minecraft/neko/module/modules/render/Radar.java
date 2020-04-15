@@ -38,9 +38,9 @@ public class Radar extends Module {
 	
 	@Override
 	public void setup() {
-		Client.getNeko().settingsManager.rSetting(new Setting("RadarFriends", this, this.fr));
-		Client.getNeko().settingsManager.rSetting(new Setting("RadarText", this, this.radarText));
-		Client.getNeko().settingsManager.rSetting(new Setting("RadarMap", this, this.radarMap));
+		Client.getNeko().settingsManager.rSetting(new Setting("Radar_Friends", this, this.fr));
+		Client.getNeko().settingsManager.rSetting(new Setting("Radar_Text", this, this.radarText));
+		Client.getNeko().settingsManager.rSetting(new Setting("Radar_Map", this, this.radarMap));
 		Client.getNeko().settingsManager.rSetting(new Setting("Radar_Enemies", this, this.BoolENEMIES));
 		Client.getNeko().settingsManager.rSetting(new Setting("Radar_Mobs", this, this.BoolMOBS));
 		Client.getNeko().settingsManager.rSetting(new Setting("Radar_Animals", this, this.BoolANIMALS));

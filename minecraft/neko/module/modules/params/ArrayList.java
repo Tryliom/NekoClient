@@ -29,14 +29,14 @@ public class ArrayList extends Module {
 		box.add("Neko Box"); box.add("Name Box"); box.add("Sans Box");
 		java.util.ArrayList<String> color = new java.util.ArrayList<>();
 		color.add("Rainbow"); color.add("UniColor"); color.add("Basique");
-		Client.Neko.settingsManager.rSetting(new Setting("Ordre", this, "Alphabétique", ordre));
-		Client.Neko.settingsManager.rSetting(new Setting("Rangement", this, "Module", rangement));
-		Client.Neko.settingsManager.rSetting(new Setting("Inverser", this, "Non", invert));
-		Client.Neko.settingsManager.rSetting(new Setting("Shadow Box", this, "Name Box", box));
-		Client.Neko.settingsManager.rSetting(new Setting("Array Color", this, "Basique", color));
-		Client.getNeko().settingsManager.rSetting(new Setting("Array Red", this, 255, 0, 255, true));
-		Client.getNeko().settingsManager.rSetting(new Setting("Array Green", this, 26, 0, 255, true));
-		Client.getNeko().settingsManager.rSetting(new Setting("Array Blue", this, 42, 0, 255, true));
+		Client.Neko.settingsManager.rSetting(new Setting("Arraylist_Ordre", this, "Alphabétique", ordre));
+		Client.Neko.settingsManager.rSetting(new Setting("Arraylist_Rangement", this, "Module", rangement));
+		Client.Neko.settingsManager.rSetting(new Setting("Arraylist_Inverser", this, "Non", invert));
+		Client.Neko.settingsManager.rSetting(new Setting("Arraylist_Shadow Box", this, "Name Box", box));
+		Client.Neko.settingsManager.rSetting(new Setting("Arraylist_Array Color", this, "Basique", color));
+		Client.getNeko().settingsManager.rSetting(new Setting("Arraylist_Array Red", this, 255, 0, 255, true));
+		Client.getNeko().settingsManager.rSetting(new Setting("Arraylist_Array Green", this, 26, 0, 255, true));
+		Client.getNeko().settingsManager.rSetting(new Setting("Arraylist_Array Blue", this, 42, 0, 255, true));
 		
 	}
 	

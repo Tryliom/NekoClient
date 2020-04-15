@@ -14,9 +14,9 @@ import neko.Client;
 public class ColorUtil {
 	
 	public static Color getClickGUIColor(){
-		return new Color((int) Client.Neko.settingsManager.getSettingByName("GuiRed").getValDouble(),
-				(int) Client.Neko.settingsManager.getSettingByName("GuiGreen").getValDouble(),
-				  (int) Client.Neko.settingsManager.getSettingByName("GuiBlue").getValDouble());
+		return new Color((int) Client.Neko.settingsManager.getSettingByName("Gui_Red").getValDouble(),
+				(int) Client.Neko.settingsManager.getSettingByName("Gui_Green").getValDouble(),
+				  (int) Client.Neko.settingsManager.getSettingByName("Gui_Blue").getValDouble());
 	}
 	
 	public static Color rainbowEffekt(long offset, float fade) {
@@ -27,14 +27,14 @@ public class ColorUtil {
     }
 	
 	public static Color getArrayUniqueColor(){
-		return new Color((int) Client.Neko.settingsManager.getSettingByName("Array Red").getValDouble(),
-				(int) Client.Neko.settingsManager.getSettingByName("Array Green").getValDouble(),
-				  (int) Client.Neko.settingsManager.getSettingByName("Array Blue").getValDouble());
+		return new Color((int) Client.Neko.settingsManager.getSettingByName("ArrayList_Array Red").getValDouble(),
+				(int) Client.Neko.settingsManager.getSettingByName("ArrayList_Array Green").getValDouble(),
+				  (int) Client.Neko.settingsManager.getSettingByName("ArrayList_Array Blue").getValDouble());
 	}
 	
 	public static Color getHUDColor(){
-		return new Color((int) Client.Neko.settingsManager.getSettingByName("HUDRed").getValDouble(),
-				(int) Client.Neko.settingsManager.getSettingByName("HUDGreen").getValDouble(),
-				  (int) Client.Neko.settingsManager.getSettingByName("HUDBlue").getValDouble());
+		return new Color((int) Client.Neko.settingsManager.getSettingByName("HUD_Red").getValDouble(),
+				(int) Client.Neko.settingsManager.getSettingByName("HUD_Green").getValDouble(),
+				  (int) Client.Neko.settingsManager.getSettingByName("HUD_Blue").getValDouble());
 	}
 }

@@ -255,7 +255,7 @@ public class ClickGUI extends GuiScreen {
 						for (Element e : b.menuelements) {
 							e.offset = off;
 							e.update();
-							if(Client.Neko.settingsManager.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
+							if(Client.Neko.settingsManager.getSettingByName("Gui_Design").getValString().equalsIgnoreCase("New")){
 								Gui.drawRect(e.x, e.y, e.x + e.width + 2, e.y + e.height, outlineColor);
 							}
 							e.drawScreen(mouseX, mouseY, partialTicks);

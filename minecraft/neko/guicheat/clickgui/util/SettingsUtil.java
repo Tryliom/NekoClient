@@ -54,46 +54,46 @@ public class SettingsUtil {
 	}
 	//TODO : Blink
 	public static boolean getBlinkFull() {
-		return Client.Neko.settingsManager.getSettingByName("BlinkFull").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("Blink_Full").getValBoolean();
 	}
 	
 	public static void setBlinkFull(boolean full) {
-		Client.Neko.settingsManager.getSettingByName("BlinkFull").setValBoolean(full);
+		Client.Neko.settingsManager.getSettingByName("Blink_Full").setValBoolean(full);
 	}
 	//TODO : Rotator
 	public static Double getRotatorSpeed() {
-		return Client.Neko.settingsManager.getSettingByName("RotatorSpeed").getValDouble();
+		return Client.Neko.settingsManager.getSettingByName("Rotator_Speed").getValDouble();
 	}
 	
 	public static void setRotatorSpeed(Double speed) {
-		Client.Neko.settingsManager.getSettingByName("RotatorSpeed").setValDouble(speed);
+		Client.Neko.settingsManager.getSettingByName("Rotator_Speed").setValDouble(speed);
 	}
 	//TODO : Radar
 	public static void setRadarFriends(boolean friends) {
 		Radar.fr = friends;
-		Client.Neko.settingsManager.getSettingByName("RadarFriends").setValBoolean(friends);
+		Client.Neko.settingsManager.getSettingByName("Radar_Friends").setValBoolean(friends);
 	}
 	
 	public static boolean getRadarFriends() {
-		return Client.Neko.settingsManager.getSettingByName("RadarFriends").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("Radar_Friends").getValBoolean();
 	}
 
 	public static void setRadarMinimap(boolean minimap) {
 		Radar.radarMap = minimap;
-		Client.Neko.settingsManager.getSettingByName("RadarMap").setValBoolean(minimap);
+		Client.Neko.settingsManager.getSettingByName("Radar_Map").setValBoolean(minimap);
 	}
 	
 	public static boolean getRadarMap() {
-		return Client.Neko.settingsManager.getSettingByName("RadarMap").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("Radar_Map").getValBoolean();
 	}
 
 	public static void setRadarText(boolean text) {
 		Radar.radarText = text;
-		Client.Neko.settingsManager.getSettingByName("RadarText").setValBoolean(text);
+		Client.Neko.settingsManager.getSettingByName("Radar_Text").setValBoolean(text);
 	}
 	
 	public static boolean getRadarText() {
-		return Client.Neko.settingsManager.getSettingByName("RadarText").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("Radar_Text").getValBoolean();
 	}
 	
 	public static void setRadar_Enemies(boolean enemies) {
@@ -208,298 +208,298 @@ public class SettingsUtil {
 	//TODO : Coord
 	public static void setHUDCoord(boolean coord) {
 		HUD.coord = coord;
-		Client.Neko.settingsManager.getSettingByName("HUDCoord").setValBoolean(coord);
+		Client.Neko.settingsManager.getSettingByName("HUD_Coord").setValBoolean(coord);
 	}
 	public static boolean getHUDCoord() {
-		return Client.Neko.settingsManager.getSettingByName("HUDCoord").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("HUD_Coord").getValBoolean();
 	}
 
 	public static void setHUDFPS(boolean fps) {
 		HUD.fps = fps;
-		Client.Neko.settingsManager.getSettingByName("HUDFPS").setValBoolean(fps);
+		Client.Neko.settingsManager.getSettingByName("HUD_FPS").setValBoolean(fps);
 	}
 	public static boolean getHUDFPS() {
-		return Client.Neko.settingsManager.getSettingByName("HUDFPS").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("HUD_FPS").getValBoolean();
 	}
 	public static void setHUDXP(boolean fall) {
 		HUD.fall = fall;
-		Client.Neko.settingsManager.getSettingByName("HUDXP").setValBoolean(fall);
+		Client.Neko.settingsManager.getSettingByName("HUD_XP").setValBoolean(fall);
 	}
 	public static boolean getHUDXP() {
-		return Client.Neko.settingsManager.getSettingByName("HUDXP").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("HUD_XP").getValBoolean();
 	}
 	public static void setHUDMs(boolean item) {
 		HUD.item = item;
-		Client.Neko.settingsManager.getSettingByName("HUDMs").setValBoolean(item);
+		Client.Neko.settingsManager.getSettingByName("HUD_Ms").setValBoolean(item);
 	}
 	public static boolean getHUDMs() {
-		return Client.Neko.settingsManager.getSettingByName("HUDMs").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("HUD_Ms").getValBoolean();
 	}
 	public static void setHUDTime(boolean time) {
 		HUD.time = time;
-		Client.Neko.settingsManager.getSettingByName("HUDTime").setValBoolean(time);
+		Client.Neko.settingsManager.getSettingByName("HUD_Time").setValBoolean(time);
 	}
 	public static boolean getHUDTime() {
-		return Client.Neko.settingsManager.getSettingByName("HUDTime").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("HUD_Time").getValBoolean();
 	}
 	public static void setHUDPacket(boolean packet) {
 		HUD.packet = packet;
-		Client.Neko.settingsManager.getSettingByName("HUDPacket").setValBoolean(packet);
+		Client.Neko.settingsManager.getSettingByName("HUD_Packet").setValBoolean(packet);
 	}
 	public static boolean getHUDPacket() {
-		return Client.Neko.settingsManager.getSettingByName("HUDPacket").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("HUD_Packet").getValBoolean();
 	}
 	public static void setHUDStuff(boolean stuff) {
 		HUD.stuff = stuff;
-		Client.Neko.settingsManager.getSettingByName("HUDStuff").setValBoolean(stuff);
+		Client.Neko.settingsManager.getSettingByName("HUD_Stuff").setValBoolean(stuff);
 	}
 	public static boolean getHUDStuff() {
-		return Client.Neko.settingsManager.getSettingByName("HUDStuff").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("HUD_Stuff").getValBoolean();
 	}
 	public static void setHUDSelect(boolean select) {
 		HUD.select = select;
-		Client.Neko.settingsManager.getSettingByName("HUDSelect").setValBoolean(select);
+		Client.Neko.settingsManager.getSettingByName("HUD_Select").setValBoolean(select);
 	}
 	public static boolean getHUDSelect() {
-		return Client.Neko.settingsManager.getSettingByName("HUDSelect").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("HUD_Select").getValBoolean();
 	}
 	public static void setHUDRed(double red) {
 		HUD.cR = red;
-		Client.Neko.settingsManager.getSettingByName("HUDRed").setValDouble(red);
+		Client.Neko.settingsManager.getSettingByName("HUD_Red").setValDouble(red);
 	}
 	public static double getHUDRed() {
-		return Client.Neko.settingsManager.getSettingByName("HUDRed").getValDouble();
+		return Client.Neko.settingsManager.getSettingByName("HUD_Red").getValDouble();
 	}
 	public static void setHUDGreen(double green) {
 		HUD.cG = green;
-		Client.Neko.settingsManager.getSettingByName("HUDGreen").setValDouble(green);
+		Client.Neko.settingsManager.getSettingByName("HUD_Green").setValDouble(green);
 	}
 	public static double getHUDGreen() {
-		return Client.Neko.settingsManager.getSettingByName("HUDGreen").getValDouble();
+		return Client.Neko.settingsManager.getSettingByName("HUD_Green").getValDouble();
 	}
 	public static void setHUDBlue(double blue) {
 		HUD.cB = blue;
-		Client.Neko.settingsManager.getSettingByName("HUDBlue").setValDouble(blue);
+		Client.Neko.settingsManager.getSettingByName("HUD_Blue").setValDouble(blue);
 	}
 	public static double getHUDBlue() {
-		return Client.Neko.settingsManager.getSettingByName("HUDBlue").getValDouble();
+		return Client.Neko.settingsManager.getSettingByName("HUD_Blue").getValDouble();
 	}
 	
 	//TODO: Nuker
 	//Radius
 	public static void setNukerRadius(double radius) {
 		Nuker.nukerRadius = radius;
-		Client.Neko.settingsManager.getSettingByName("Radius").setValDouble(radius);
+		Client.Neko.settingsManager.getSettingByName("Nuker_Radius").setValDouble(radius);
 	}
 	public static double getNukerRadius() {
-		return Client.Neko.settingsManager.getSettingByName("Radius").getValDouble();
+		return Client.Neko.settingsManager.getSettingByName("Nuker_Radius").getValDouble();
 	}//OneHit
 	public static boolean getNukerOneHit() {
-		return Client.Neko.settingsManager.getSettingByName("OneHit").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("Nuker_OneHit").getValBoolean();
 	}
 	public static void setNukerOneHit(boolean onehit) {
 		Nuker.onehit = onehit;
-		Client.Neko.settingsManager.getSettingByName("OneHit").setValBoolean(onehit);
+		Client.Neko.settingsManager.getSettingByName("Nuker_OneHit").setValBoolean(onehit);
 	}//Safe
 	public static boolean getNukerSafe() {
-		return Client.Neko.settingsManager.getSettingByName("Safe").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("Nuker_Safe").getValBoolean();
 	}
 	public static void setNukerSafe(boolean safe) {
 		Nuker.onehit = safe;
-		Client.Neko.settingsManager.getSettingByName("Safe").setValBoolean(safe);
+		Client.Neko.settingsManager.getSettingByName("Nuker_Safe").setValBoolean(safe);
 	}
 	
 	//TODO: Likaotique
 	public static boolean getLikSafe() {
-		return Client.Neko.settingsManager.getSettingByName("LIKSafe").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("LIK_Safe").getValBoolean();
 	}
 	public static void setLikSafe(boolean safe) {
-		Client.Neko.settingsManager.getSettingByName("LIKSafe").setValBoolean(safe);
+		Client.Neko.settingsManager.getSettingByName("LIK_Safe").setValBoolean(safe);
 	}
 	public static double getLikRadius() {
-		return Client.Neko.settingsManager.getSettingByName("LIKRadius").getValDouble();
+		return Client.Neko.settingsManager.getSettingByName("LIK_Radius").getValDouble();
 	}
 	public static void setLikRadius(int radius) {
-		Client.Neko.settingsManager.getSettingByName("LIKRadius").setValDouble(radius);
+		Client.Neko.settingsManager.getSettingByName("LIK_Radius").setValDouble(radius);
 	}
 	public static double getLikDelay() {
-		return Client.Neko.settingsManager.getSettingByName("LIKDelay").getValDouble();
+		return Client.Neko.settingsManager.getSettingByName("LIK_Delay").getValDouble();
 	}
 	public static void setLikDelay(int delay) {
-		Client.Neko.settingsManager.getSettingByName("LIKDelay").setValDouble(delay);
+		Client.Neko.settingsManager.getSettingByName("LIK_Delay").setValDouble(delay);
 	}
 	
 	//TODO: Magnet
 	public static boolean getMagnetClassic() {
-		return Client.Neko.settingsManager.getSettingByName("MAGNETClassic").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("MAGNET_Classic").getValBoolean();
 	}
 	public static void setMagnetClassic(boolean classic) {
-		Client.Neko.settingsManager.getSettingByName("MAGNETClassic").setValBoolean(classic);
+		Client.Neko.settingsManager.getSettingByName("MAGNET_Classic").setValBoolean(classic);
 	}
 	public static boolean getMagnetModeSingle() {
-		return Client.Neko.settingsManager.getSettingByName("MAGNETMode").getValString().equalsIgnoreCase("Single");
+		return Client.Neko.settingsManager.getSettingByName("MAGNET_Mode").getValString().equalsIgnoreCase("Single");
 	}
 	public static void setMagnetMode(String mode) {
-		Client.Neko.settingsManager.getSettingByName("MAGNETMode").setValString(mode);
+		Client.Neko.settingsManager.getSettingByName("MAGNET_Mode").setValString(mode);
 	}
 	
 	//TODO: Velocity
 	public static double getVelocityHorizontal() {
-		return Client.Neko.settingsManager.getSettingByName("VelocityHorizontal").getValDouble();
+		return Client.Neko.settingsManager.getSettingByName("Velocity_Horizontal").getValDouble();
 	}
 	public static void setVelocityHorizontal(double radius) {
-		Client.Neko.settingsManager.getSettingByName("VelocityHorizontal").setValDouble(radius);
+		Client.Neko.settingsManager.getSettingByName("Velocity_Horizontal").setValDouble(radius);
 	}
 	public static double getVelocityVertical() {
-		return Client.Neko.settingsManager.getSettingByName("VelocityVertical").getValDouble();
+		return Client.Neko.settingsManager.getSettingByName("Velocity_Vertical").getValDouble();
 	}
 	public static void setVelocityVertical(double delay) {
-		Client.Neko.settingsManager.getSettingByName("VelocityVertical").setValDouble(delay);
+		Client.Neko.settingsManager.getSettingByName("Velocity_Vertical").setValDouble(delay);
 	}
 	//TODO: LongJump
 	public static double getLongJumpSpeed() {
-		return Client.Neko.settingsManager.getSettingByName("LongJumpSpeed").getValDouble();
+		return Client.Neko.settingsManager.getSettingByName("LongJump_Speed").getValDouble();
 	}
 	public static void setLongJumpSpeed(double radius) {
 		Client.Neko.settingsManager.getSettingByName("LongJumpSpeed").setValDouble(radius);
 	}
 	//TODO: Phase
 	public static boolean getPhaseVertical() {
-		return Client.Neko.settingsManager.getSettingByName("PHASEVertical").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("PHASE_Vertical").getValBoolean();
 	}
 	public static void setPhaseVertical(boolean phase) {
-		Client.Neko.settingsManager.getSettingByName("PHASEVertical").setValBoolean(phase);
+		Client.Neko.settingsManager.getSettingByName("PHASE_Vertical").setValBoolean(phase);
 	}
 	
 	//TODO: Reach
 	public static double getReachDistance() {
-		return Client.Neko.settingsManager.getSettingByName("REACHDistance").getValDouble();
+		return Client.Neko.settingsManager.getSettingByName("REACH_Distance").getValDouble();
 	}
 	public static void setReachDistance(double distance) {
-		Client.Neko.settingsManager.getSettingByName("REACHDistance").setValDouble(distance);
+		Client.Neko.settingsManager.getSettingByName("REACH_Distance").setValDouble(distance);
 	}
 	public static boolean getReachAimbot() {
-		return Client.Neko.settingsManager.getSettingByName("REACHAimbot").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("REACH_Aimbot").getValBoolean();
 	}
 	public static void setReachAimbot(boolean aimbot) {
-		Client.Neko.settingsManager.getSettingByName("REACHAimbot").setValBoolean(aimbot);
+		Client.Neko.settingsManager.getSettingByName("REACH_Aimbot").setValBoolean(aimbot);
 	}
 	public static boolean getReachPvp() {
-		return Client.Neko.settingsManager.getSettingByName("REACHPvp").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("REACH_Pvp").getValBoolean();
 	}
 	public static void setReachPvp(boolean pvp) {
-		Client.Neko.settingsManager.getSettingByName("REACHPvp").setValBoolean(pvp);
+		Client.Neko.settingsManager.getSettingByName("REACH_Pvp").setValBoolean(pvp);
 	}
 	public static boolean getReachBloc() {
-		return Client.Neko.settingsManager.getSettingByName("REACHBloc").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("REACH_Bloc").getValBoolean();
 	}
 	public static void setReachBloc(boolean bloc) {
-		Client.Neko.settingsManager.getSettingByName("REACHBloc").setValBoolean(bloc);
+		Client.Neko.settingsManager.getSettingByName("REACH_Bloc").setValBoolean(bloc);
 	}
 	public static boolean getReachTPClassic() {
-		return Client.Neko.settingsManager.getSettingByName("REACHTpClassic").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("REACH_Tp Classic").getValBoolean();
 	}
 	public static void setReachTPCLassic(boolean tpclassic) {
-		Client.Neko.settingsManager.getSettingByName("REACHTpClassic").setValBoolean(tpclassic);
+		Client.Neko.settingsManager.getSettingByName("REACH_Tp Classic").setValBoolean(tpclassic);
 	}
 	public static double getReachFOV() {
-		return Client.Neko.settingsManager.getSettingByName("REACHFov").getValDouble();
+		return Client.Neko.settingsManager.getSettingByName("REACH_Fov").getValDouble();
 	}
 	public static void setReachFOV(double fov) {
-		Client.Neko.settingsManager.getSettingByName("REACHFov").setValDouble(fov);
+		Client.Neko.settingsManager.getSettingByName("REACH_Fov").setValDouble(fov);
 	}
 	public static boolean getReachTnT() {
-		return Client.Neko.settingsManager.getSettingByName("REACHTnt").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("REACH_Tnt").getValBoolean();
 	}
 	public static void setReachTnT(boolean tnt) {
-		Client.Neko.settingsManager.getSettingByName("REACHTnt").setValBoolean(tnt);
+		Client.Neko.settingsManager.getSettingByName("REACH_Tnt").setValBoolean(tnt);
 	}
 	public static boolean getReachMA() {
-		return Client.Neko.settingsManager.getSettingByName("REACHMultiaura").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("REACH_Multiaura").getValBoolean();
 	}
 	public static void setReachMA(boolean multiaura) {
-		Client.Neko.settingsManager.getSettingByName("REACHMultiaura").setValBoolean(multiaura);
+		Client.Neko.settingsManager.getSettingByName("REACH_Multiaura").setValBoolean(multiaura);
 	}
 	public static boolean getReachKB() {
-		return Client.Neko.settingsManager.getSettingByName("REACHKnockback").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("REACH_Knockback").getValBoolean();
 	}
 	public static void setReachKB(boolean kb) {
-		Client.Neko.settingsManager.getSettingByName("REACHKnockback").setValBoolean(kb);
+		Client.Neko.settingsManager.getSettingByName("REACH_Knockback").setValBoolean(kb);
 	}
 	public static boolean getReachModeNormal() {
-		return Client.Neko.settingsManager.getSettingByName("REACHMode").getValString().equalsIgnoreCase("Normal");
+		return Client.Neko.settingsManager.getSettingByName("REACH_Mode (For Tnt)").getValString().equalsIgnoreCase("Normal");
 	}
 	public static void setReachMode(String mode) {
-		Client.Neko.settingsManager.getSettingByName("REACHMode").setValString(mode);
+		Client.Neko.settingsManager.getSettingByName("REACH_Mode (For Tnt)").setValString(mode);
 	}
 	//TODO: KillAura
 	
 	//TODO: GUI
 	//Rainbow
 	public static boolean getRainbowGui() {
-		return Client.Neko.settingsManager.getSettingByName("Gui Rainbow").getValBoolean();
+		return Client.Neko.settingsManager.getSettingByName("Gui_Rainbow").getValBoolean();
 	}
 	
 	//TODO: ArrayList
 	public static boolean getArrayAlphabetique() {
-		return Client.Neko.settingsManager.getSettingByName("Ordre").getValString().equalsIgnoreCase("Alphabétique");
+		return Client.Neko.settingsManager.getSettingByName("Arraylist_Ordre").getValString().equalsIgnoreCase("Alphabétique");
 	}
 	public static boolean getArrayNameLength() {
-		return Client.Neko.settingsManager.getSettingByName("Ordre").getValString().equalsIgnoreCase("Taille");
+		return Client.Neko.settingsManager.getSettingByName("Arraylist_Ordre").getValString().equalsIgnoreCase("Taille");
 	}
 	public static void setArrayOrdre(String ordre) {
-		Client.Neko.settingsManager.getSettingByName("Ordre").setValString(ordre);
+		Client.Neko.settingsManager.getSettingByName("Arraylist_Ordre").setValString(ordre);
 	}
 	public static boolean getArrayModuleBasic() {
-		return Client.Neko.settingsManager.getSettingByName("Rangement").getValString().equalsIgnoreCase("Module");
+		return Client.Neko.settingsManager.getSettingByName("Arraylist_Rangement").getValString().equalsIgnoreCase("Module");
 	}
 	public static boolean getArrayModuleRandom() {
-		return Client.Neko.settingsManager.getSettingByName("Rangement").getValString().equalsIgnoreCase("Mélanger");
+		return Client.Neko.settingsManager.getSettingByName("Arraylist_Rangement").getValString().equalsIgnoreCase("Mélanger");
 	}
 	public static void setArrayRangement(String rangement) {
-		Client.Neko.settingsManager.getSettingByName("Rangement").setValString(rangement);
+		Client.Neko.settingsManager.getSettingByName("Arraylist_Rangement").setValString(rangement);
 	}
 	public static boolean getArrayInvert() {
-		return Client.Neko.settingsManager.getSettingByName("Inverser").getValString().equalsIgnoreCase("Oui");
+		return Client.Neko.settingsManager.getSettingByName("Arraylist_Inverser").getValString().equalsIgnoreCase("Oui");
 	}
 	public static boolean getArrayNoInvert() {
-		return Client.Neko.settingsManager.getSettingByName("Inverser").getValString().equalsIgnoreCase("Non");
+		return Client.Neko.settingsManager.getSettingByName("Arraylist_Inverser").getValString().equalsIgnoreCase("Non");
 	}
 	public static void setArrayInvsersé(String invert) {
-		Client.Neko.settingsManager.getSettingByName("Inverser").setValString(invert);
+		Client.Neko.settingsManager.getSettingByName("Arraylist_Inverser").setValString(invert);
 	}
 	public static boolean getArrayDrawNekoBox() {
-		return Client.Neko.settingsManager.getSettingByName("Shadow Box").getValString().equalsIgnoreCase("Neko Box");
+		return Client.Neko.settingsManager.getSettingByName("Arraylist_Shadow Box").getValString().equalsIgnoreCase("Neko Box");
 	}
 	public static boolean getArrayDrawNameBox() {
-		return Client.Neko.settingsManager.getSettingByName("Shadow Box").getValString().equalsIgnoreCase("Name Box");
+		return Client.Neko.settingsManager.getSettingByName("Arraylist_Shadow Box").getValString().equalsIgnoreCase("Name Box");
 	}
 	public static boolean getArrayNoDrawBox() {
-		return Client.Neko.settingsManager.getSettingByName("Shadow Box").getValString().equalsIgnoreCase("Sans Box");
+		return Client.Neko.settingsManager.getSettingByName("Arraylist_Shadow Box").getValString().equalsIgnoreCase("Sans Box");
 	}
 	public static void setArrayShadowBox(String box) {
-		Client.Neko.settingsManager.getSettingByName("Shadow Box").setValString(box);
+		Client.Neko.settingsManager.getSettingByName("Arraylist_Shadow Box").setValString(box);
 	}
 	public static boolean getRainbowArray() {
-		return Client.Neko.settingsManager.getSettingByName("Array Color").getValString().equalsIgnoreCase("Rainbow");
+		return Client.Neko.settingsManager.getSettingByName("Arraylist_Array Color").getValString().equalsIgnoreCase("Rainbow");
 	}
 	public static boolean getUniColorArray() {
-		return Client.Neko.settingsManager.getSettingByName("Array Color").getValString().equalsIgnoreCase("UniColor");
+		return Client.Neko.settingsManager.getSettingByName("Arraylist_Array Color").getValString().equalsIgnoreCase("UniColor");
 	}
 	public static boolean getBasicColorsArray() {
-		return Client.Neko.settingsManager.getSettingByName("Array Color").getValString().equalsIgnoreCase("Basique");
+		return Client.Neko.settingsManager.getSettingByName("Arraylist_Array Color").getValString().equalsIgnoreCase("Basique");
 	}
 	public static void setColorArray(String type) {
-		Client.Neko.settingsManager.getSettingByName("Array Color").setValString(type);
+		Client.Neko.settingsManager.getSettingByName("Arraylist_Array Color").setValString(type);
 	}
 	public static void setArrayRed(double red) {
-		Client.Neko.settingsManager.getSettingByName("Array Red").setValDouble(red);
+		Client.Neko.settingsManager.getSettingByName("Arraylist_Array Red").setValDouble(red);
 	}
 	public static void setArrayGreen(double green) {
-		Client.Neko.settingsManager.getSettingByName("Array Green").setValDouble(green);
+		Client.Neko.settingsManager.getSettingByName("Arraylist_Array Green").setValDouble(green);
 	}
 	public static void setArrayBlue(double blue) {
-		Client.Neko.settingsManager.getSettingByName("Array Blue").setValDouble(blue);
+		Client.Neko.settingsManager.getSettingByName("Arraylist_Array Blue").setValDouble(blue);
 	}
 	
 

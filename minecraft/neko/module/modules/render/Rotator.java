@@ -35,7 +35,7 @@ public class Rotator extends Module {
 	
 	@Override
 	public void setup() {
-		Client.getNeko().settingsManager.rSetting(new Setting("RotatorSpeed", this.getRotator(), this.getRotator().getSpeed(), 0, 50, true));
+		Client.getNeko().settingsManager.rSetting(new Setting("Rotator_Speed", this.getRotator(), this.getRotator().getSpeed(), 0, 50, true));
 		
 		super.setup();
 	}

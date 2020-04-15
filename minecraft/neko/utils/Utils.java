@@ -4681,6 +4681,10 @@ public class Utils {
 		for(String args : list) {
 			String s[] = args.split(":");
 			if(s.length == 4) {
+				String[] moduleSetting = s[0].split("_");
+				if(moduleSetting.length < 1) {
+					continue;
+				}
 				final Setting set = Client.Neko.settingsManager.getSettingByName(s[0]);
 				if(set == null) {
 					continue;

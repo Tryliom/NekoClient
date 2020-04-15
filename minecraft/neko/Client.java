@@ -46,10 +46,10 @@ public class Client {
 
 	
 	public static final String CLIENT_VERSION = "2.8.9";
-	private static String scrollingSpacer = "                   ";
+	private static String scrollingSpacer = "                    ";
 	public String strNeko = "§bNeko v" + CLIENT_VERSION;
 	public String strCreator = "§eCréé par §f§lTryliom§e et §f§lMarie";
-	public final String SCROLLING_TEXT = "§cNeko forever !"+scrollingSpacer+"§7Présenté sous §bNeko " + Client.CLIENT_VERSION +scrollingSpacer+strCreator;
+	public final String SCROLLING_TEXT = "§cNeko forever !"+"                    "+"§7Présenté sous §bNeko " + Client.CLIENT_VERSION +"                    "+strCreator;
 	public String mode = "Player";
 	public Rank rang;
 	public Necklace necklace;
