@@ -33,6 +33,10 @@ public class ShapedRecipes implements IRecipe
         return this.recipeOutput;
     }
 
+    public ItemStack[] getRecipeItems() {
+    	return this.recipeItems;
+    }
+    
     public ItemStack[] func_179532_b(InventoryCrafting p_179532_1_)
     {
         ItemStack[] var2 = new ItemStack[p_179532_1_.getSizeInventory()];
@@ -153,6 +157,14 @@ public class ShapedRecipes implements IRecipe
     public int getRecipeSize()
     {
         return this.recipeWidth * this.recipeHeight;
+    }
+    
+    public int getRecipeWidth() {
+    	return this.recipeWidth;
+    }
+    
+    public int getRecipeHeight() {
+    	return this.recipeHeight;
     }
 
     public ShapedRecipes func_92100_c()

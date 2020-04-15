@@ -100,7 +100,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     private TutoManager tm = TutoManager.getTuto();
     
     private int scrollingTextPosX;
-    private String scrollingText = Client.SCROLLING_TEXT;
+    private String scrollingText = Client.getNeko().SCROLLING_TEXT;
 
     public GuiMainMenu()
     {
