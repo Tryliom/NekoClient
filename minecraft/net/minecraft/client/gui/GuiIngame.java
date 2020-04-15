@@ -116,7 +116,7 @@ public class GuiIngame extends Gui
         this.field_175193_B = 20;
     }
 
-    public void func_175180_a(float p_175180_1_)
+    public void renderGameOverlay(float partialTicks)
     {
         ScaledResolution var2 = new ScaledResolution(this.mc);
         int var3 = var2.getScaledWidth();
@@ -126,7 +126,7 @@ public class GuiIngame extends Gui
 
         if (Minecraft.isFancyGraphicsEnabled())
         {
-            this.func_180480_a(this.mc.thePlayer.getBrightness(p_175180_1_), var2);
+            this.func_180480_a(this.mc.thePlayer.getBrightness(partialTicks), var2);
         }
         else
         {
@@ -142,7 +142,7 @@ public class GuiIngame extends Gui
 
         if (!this.mc.thePlayer.isPotionActive(Potion.confusion))
         {
-            float var6 = this.mc.thePlayer.prevTimeInPortal + (this.mc.thePlayer.timeInPortal - this.mc.thePlayer.prevTimeInPortal) * p_175180_1_;
+            float var6 = this.mc.thePlayer.prevTimeInPortal + (this.mc.thePlayer.timeInPortal - this.mc.thePlayer.prevTimeInPortal) * partialTicks;
 
             if (var6 > 0.0F)
             {
@@ -152,11 +152,11 @@ public class GuiIngame extends Gui
 
         if (this.mc.playerController.enableEverythingIsScrewedUpMode()) //== if (this.mc.playerController.isSpectator()) {
         {
-            this.field_175197_u.func_175264_a(var2, p_175180_1_); //==this.spectatorGui.renderTooltip(scaledresolution, partialTicks);
+            this.field_175197_u.func_175264_a(var2, partialTicks); //==this.spectatorGui.renderTooltip(scaledresolution, partialTicks);
         }
         else
         {
-            this.func_180479_a(var2, p_175180_1_); //==this.renderTooltip(scaledresolution, partialTicks);
+            this.func_180479_a(var2, partialTicks); //==this.renderTooltip(scaledresolution, partialTicks);
         }
         
         Event2D event2D = new Event2D(var2.getScaledWidth(), var2.getScaledHeight());
@@ -260,7 +260,7 @@ public class GuiIngame extends Gui
         if (this.recordPlayingUpFor > 0)
         {
             this.mc.mcProfiler.startSection("overlayMessage");
-            var7 = (float)this.recordPlayingUpFor - p_175180_1_;
+            var7 = (float)this.recordPlayingUpFor - partialTicks;
             var8 = (int)(var7 * 255.0F / 20.0F);
 
             if (var8 > 255)
@@ -292,7 +292,7 @@ public class GuiIngame extends Gui
         if (this.field_175195_w > 0)
         {
             this.mc.mcProfiler.startSection("titleAndSubtitle");
-            var7 = (float)this.field_175195_w - p_175180_1_;
+            var7 = (float)this.field_175195_w - partialTicks;
             var8 = 255;
 
             if (this.field_175195_w > this.field_175193_B + this.field_175192_A)

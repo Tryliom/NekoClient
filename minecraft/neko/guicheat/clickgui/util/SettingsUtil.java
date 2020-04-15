@@ -9,7 +9,9 @@ import neko.module.modules.params.Gui;
 import neko.module.modules.params.HUD;
 import neko.module.modules.player.Nuker;
 import neko.module.modules.player.Velocity;
+import neko.module.modules.render.Radar;
 import neko.module.modules.render.Rotator;
+import neko.module.modules.render.Tracers;
 import neko.module.modules.special.Likaotique;
 import neko.module.modules.special.Magnet;
 import neko.module.other.enums.MagnetWay;
@@ -39,8 +41,16 @@ public class SettingsUtil {
 		Reach.pvp = getReachPvp();
 		//Rotator
 		Rotator rt = Rotator.getRotator(); rt.setSpeed(getRotatorSpeed());
-		//Blick
+		//Blink
 		Blink.full = getBlinkFull();
+		//Radar
+		Radar.fr = getRadarFriends(); Radar.radarMap = getRadarMap(); Radar.radarText = getRadarText();
+		Radar.BoolENEMIES = getRadar_Enemies(); Radar.BoolMOBS = getRadar_Mobs(); Radar.BoolANIMALS = getRadar_Animals();
+		Radar.BoolGOLEM = getRadar_Golem(); Radar.boolNPC = getRadar_NPC();
+		//Tracers
+		Tracers.friend = getTracers_Friends();
+		Tracers.BoolENEMIES = getTracers_Enemies(); Tracers.BoolMOBS = getTracers_Mobs(); Tracers.BoolANIMALS = getTracers_Animals();
+		Tracers.BoolGOLEM = getTracers_Golem(); Tracers.boolNPC = getTracers_NPC(); Tracers.width = (float) getTracers_Width();
 	}
 	//TODO : Blink
 	public static boolean getBlinkFull() {
@@ -57,6 +67,142 @@ public class SettingsUtil {
 	
 	public static void setRotatorSpeed(Double speed) {
 		Client.Neko.settingsManager.getSettingByName("RotatorSpeed").setValDouble(speed);
+	}
+	//TODO : Radar
+	public static void setRadarFriends(boolean friends) {
+		Radar.fr = friends;
+		Client.Neko.settingsManager.getSettingByName("RadarFriends").setValBoolean(friends);
+	}
+	
+	public static boolean getRadarFriends() {
+		return Client.Neko.settingsManager.getSettingByName("RadarFriends").getValBoolean();
+	}
+
+	public static void setRadarMinimap(boolean minimap) {
+		Radar.radarMap = minimap;
+		Client.Neko.settingsManager.getSettingByName("RadarMap").setValBoolean(minimap);
+	}
+	
+	public static boolean getRadarMap() {
+		return Client.Neko.settingsManager.getSettingByName("RadarMap").getValBoolean();
+	}
+
+	public static void setRadarText(boolean text) {
+		Radar.radarText = text;
+		Client.Neko.settingsManager.getSettingByName("RadarText").setValBoolean(text);
+	}
+	
+	public static boolean getRadarText() {
+		return Client.Neko.settingsManager.getSettingByName("RadarText").getValBoolean();
+	}
+	
+	public static void setRadar_Enemies(boolean enemies) {
+		Radar.BoolENEMIES = enemies;
+		Client.Neko.settingsManager.getSettingByName("Radar_Enemies").setValBoolean(enemies);
+	}
+	
+	public static boolean getRadar_Enemies() {
+		return Client.Neko.settingsManager.getSettingByName("Radar_Enemies").getValBoolean();
+	}
+
+	public static void setRadar_Mobs(boolean mobs) {
+		Radar.BoolENEMIES = mobs;
+		Client.Neko.settingsManager.getSettingByName("Radar_Mobs").setValBoolean(mobs);
+	}
+	
+	public static boolean getRadar_Mobs() {
+		return Client.Neko.settingsManager.getSettingByName("Radar_Mobs").getValBoolean();
+	}
+
+	public static void setRadar_Animals(boolean Animals) {
+		Radar.BoolENEMIES = Animals;
+		Client.Neko.settingsManager.getSettingByName("Radar_Animals").setValBoolean(Animals);
+	}
+	
+	public static boolean getRadar_Animals() {
+		return Client.Neko.settingsManager.getSettingByName("Radar_Animals").getValBoolean();
+	}
+
+	public static void setRadar_Golem(boolean Golem) {
+		Radar.BoolENEMIES = Golem;
+		Client.Neko.settingsManager.getSettingByName("Radar_Golem").setValBoolean(Golem);
+	}
+	
+	public static boolean getRadar_Golem() {
+		return Client.Neko.settingsManager.getSettingByName("Radar_Golem").getValBoolean();
+	}
+
+	public static void setRadar_NPC(boolean NPC) {
+		Radar.BoolENEMIES = NPC;
+		Client.Neko.settingsManager.getSettingByName("Radar_NPC").setValBoolean(NPC);
+	}
+	
+	public static boolean getRadar_NPC() {
+		return Client.Neko.settingsManager.getSettingByName("Radar_NPC").getValBoolean();
+	}
+	
+	//TODO: Tracers
+	public static void setTracers_Friends(boolean enemies) {
+		Tracers.friend = enemies;
+		Client.Neko.settingsManager.getSettingByName("Tracers_Friends").setValBoolean(enemies);
+	}
+	
+	public static boolean getTracers_Friends() {
+		return Client.Neko.settingsManager.getSettingByName("Tracers_Friends").getValBoolean();
+	}
+	
+	public static void setTracers_Enemies(boolean enemies) {
+		Tracers.BoolENEMIES = enemies;
+		Client.Neko.settingsManager.getSettingByName("Tracers_Enemies").setValBoolean(enemies);
+	}
+	
+	public static boolean getTracers_Enemies() {
+		return Client.Neko.settingsManager.getSettingByName("Tracers_Enemies").getValBoolean();
+	}
+
+	public static void setTracers_Mobs(boolean mobs) {
+		Tracers.BoolENEMIES = mobs;
+		Client.Neko.settingsManager.getSettingByName("Tracers_Mobs").setValBoolean(mobs);
+	}
+	
+	public static boolean getTracers_Mobs() {
+		return Client.Neko.settingsManager.getSettingByName("Tracers_Mobs").getValBoolean();
+	}
+
+	public static void setTracers_Animals(boolean Animals) {
+		Tracers.BoolENEMIES = Animals;
+		Client.Neko.settingsManager.getSettingByName("Tracers_Animals").setValBoolean(Animals);
+	}
+	
+	public static boolean getTracers_Animals() {
+		return Client.Neko.settingsManager.getSettingByName("Tracers_Animals").getValBoolean();
+	}
+
+	public static void setTracers_Golem(boolean Golem) {
+		Tracers.BoolENEMIES = Golem;
+		Client.Neko.settingsManager.getSettingByName("Tracers_Golem").setValBoolean(Golem);
+	}
+	
+	public static boolean getTracers_Golem() {
+		return Client.Neko.settingsManager.getSettingByName("Tracers_Golem").getValBoolean();
+	}
+
+	public static void setTracers_NPC(boolean NPC) {
+		Tracers.BoolENEMIES = NPC;
+		Client.Neko.settingsManager.getSettingByName("Tracers_NPC").setValBoolean(NPC);
+	}
+	
+	public static boolean getTracers_NPC() {
+		return Client.Neko.settingsManager.getSettingByName("Tracers_NPC").getValBoolean();
+	}
+	
+	public static void setTracers_Width(int width) {
+		Tracers.width = width;
+		Client.Neko.settingsManager.getSettingByName("Tracers_Width").setValDouble(width);
+	}
+	
+	public static double getTracers_Width() {
+		return Client.Neko.settingsManager.getSettingByName("Tracers_Width").getValDouble();
 	}
 	
 	//TODO : Coord

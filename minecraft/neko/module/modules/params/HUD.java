@@ -85,4 +85,5 @@ public class HUD extends Module {
 		if (!mc.gameSettings.showDebugInfo)
 			g.renderHUD();
 	}
+	
 }

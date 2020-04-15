@@ -551,8 +551,8 @@ public class ChatUtils {
 					if (args.length==2) {
 						Utils.addChat(error);
 					} else {
-						for(Iterator<Object> entities = Minecraft.getMinecraft().theWorld.playerEntities.iterator(); entities.hasNext();) {
-				            Object theObject = entities.next();
+						for(Iterator<EntityPlayer> entities = Minecraft.getMinecraft().theWorld.playerEntities.iterator(); entities.hasNext();) {
+				            EntityPlayer theObject = entities.next();
 				            if(theObject instanceof EntityLivingBase) {
 				                EntityLivingBase entity = (EntityLivingBase) theObject;
 				               
@@ -614,6 +614,18 @@ public class ChatUtils {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Magnet classic", var.prefixCmd+"magnet classic", "§7Active/désactive le tp par diagonale", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Magnet Mode <Single:Multi>", var.prefixCmd+"magnet mode ", "§7Choisis entre:\n§7Prendre les items un à un (Envoie moins de paquets)\n§7Prend tous les items en même temps (Envoie plus de paquets)", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("radar")) {
+					Utils.addChat(Utils.sep);
+					Utils.addChat2("§6"+var.prefixCmd+"radar map/minimap", var.prefixCmd+"radar mp", "§7Affiche le radar sous forme de Map", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"radar text/textuel", var.prefixCmd+"radar text", "§7Affiche le radar sous forme textuel", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"radar fr/friends/friend", var.prefixCmd+"radar fr", "§7Affiche les amis dans les radars (Vert)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"radar joueurs/joueurs/player", var.prefixCmd+"radar joueurs", "§7Affiche les joueurs non ami dans le radar (Rouge)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"radar mobs/monstres", var.prefixCmd+"radar mobs", "§7Affiche les mobs actifs (monstres) dans le radar (Orange)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"radar animals/animaux", var.prefixCmd+"radar animals", "§7Affiche les mobs passifs (animaux) dans le radar (Bleu)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"radar golem", var.prefixCmd+"radar golem", "§7Affiche les Golems dans le radar (Gris)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"radar npc/pnj", var.prefixCmd+"radar npc", "§7Affiche les NPC / PNJ dans le radar (Rose)", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("arraylist")) {
@@ -976,9 +988,13 @@ public class ChatUtils {
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("tracers")) {
 					Utils.addChat(Utils.sep);
-					Utils.addChat2("§6"+var.prefixCmd+"Tracers color <R> <G> <B>", var.prefixCmd+"tracers color ", "§7Change la couleur de la ligne (Red Green Blue = taux de couleur, de 0 à 100)", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Tracers width <Double>", var.prefixCmd+"tracers width ", "§7Change l'épaisseur de la ligne", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Tracers friend", var.prefixCmd+"tracers friend", "§7Affiche ou non une ligne sur les friends", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Tracers width <nombre>", var.prefixCmd+"Tracers width 2", "§7Change la taille des traits.", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Tracers fr/friends/friend", var.prefixCmd+"Tracers fr", "§7Affiche une trace vers les amis (Vert)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Tracers joueurs/joueurs/player", var.prefixCmd+"Tracers joueurs", "§7Affiche une trace vers les joueurs non amis (Rouge)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Tracers mobs/monstres", var.prefixCmd+"Tracers mobs", "§7Affiche une trace vers les les mobs actifs (monstres) (Orange)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Tracers animals/animaux", var.prefixCmd+"Tracers animals", "§7Affiche une trace vers les mobs passifs (animaux) (Bleu)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Tracers golem", var.prefixCmd+"Tracers golem", "§7Affiche une trace vers les Golems (Gris)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Tracers npc/pnj", var.prefixCmd+"Tracers npc", "§7Affiche une trace vers les NPC / PNJ (Rose)", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("freecam")) {
@@ -2319,10 +2335,89 @@ public class ChatUtils {
 				else if (args[1].equalsIgnoreCase("fr") || args[1].equalsIgnoreCase("friend") || args[1].equalsIgnoreCase("friends")) {
 					if (Radar.fr) {
 						Radar.fr=false;
+						SettingsUtil.setRadarFriends(false);
 						Utils.addChat("§cAffichage des friends dans le radar désactivé");
 					} else {
 						Radar.fr=true;
+						SettingsUtil.setRadarFriends(true);
 						Utils.addChat("§aAffichage des friends dans le radar activé");
+					}
+				}
+				else if (args[1].equalsIgnoreCase("map") || args[1].equalsIgnoreCase("minimap")) {
+					if (Radar.radarMap) {
+						Radar.radarMap = false;
+						SettingsUtil.setRadarMinimap(false);
+						Utils.addChat("§cAffichage du Radar Map désactivé");
+					} else {
+						Radar.radarMap = true;
+						SettingsUtil.setRadarMinimap(true);
+						Utils.addChat("§cAffichage du Radar Map activé");
+					}
+				}
+				else if (args[1].equalsIgnoreCase("text") || args[1].equalsIgnoreCase("textuel")) {
+					if (Radar.radarText) {
+						Radar.radarText = false;
+						SettingsUtil.setRadarText(false);
+						Utils.addChat("§cAffichage du Radar textuel désactivé");
+					} else {
+						Radar.radarText = true;
+						SettingsUtil.setRadarText(true);
+						Utils.addChat("§cAffichage du Radar textuel activé");
+					}
+				}
+				else if (args[1].equalsIgnoreCase("joueurs") || args[1].equalsIgnoreCase("player") || args[1].equalsIgnoreCase("joueur")) {
+					if (Radar.BoolENEMIES) {
+						Radar.BoolENEMIES = false;
+						SettingsUtil.setRadar_Enemies(false);
+						Utils.addChat("§cAffichage des joueurs désactivé sur le radar");
+					} else {
+						Radar.BoolENEMIES = true;
+						SettingsUtil.setRadar_Enemies(true);
+						Utils.addChat("§cAffichage des joueurs activé sur le radar");
+					}
+				}
+				else if (args[1].equalsIgnoreCase("mobs")  || args[1].equalsIgnoreCase("monstres")) {
+					if (Radar.BoolMOBS) {
+						Radar.BoolMOBS = false;
+						SettingsUtil.setRadar_Mobs(false);
+						Utils.addChat("§cAffichage des mobs désactivé sur le radar");
+					} else {
+						Radar.BoolMOBS = true;
+						SettingsUtil.setRadar_Mobs(true);
+						Utils.addChat("§cAffichage des mobs activé sur le radar");
+					}
+				}
+				else if (args[1].equalsIgnoreCase("animals")  || args[1].equalsIgnoreCase("animaux")) {
+					if (Radar.BoolANIMALS) {
+						Radar.BoolANIMALS = false;
+						SettingsUtil.setRadar_Animals(false);
+						Utils.addChat("§cAffichage des animaux désactivé sur le radar");
+					} else {
+						Radar.BoolANIMALS = true;
+						SettingsUtil.setRadar_Animals(true);
+						Utils.addChat("§cAffichage des animaux activé sur le radar");
+					}
+				}
+				else if (args[1].equalsIgnoreCase("Inpc")  || args[1].equalsIgnoreCase("golem")) {
+					if (Radar.BoolGOLEM) {
+						Radar.BoolGOLEM = false;
+						SettingsUtil.setRadar_Golem(false);
+						Utils.addChat("§cAffichage des Inpc et Golem désactivés sur le radar");
+					} else {
+						Radar.BoolGOLEM = true;
+						SettingsUtil.setRadar_Golem(true);
+						Utils.addChat("§cAffichage des Inpc et Golem activés sur le radar");
+					}
+				}
+				else if (args[1].equalsIgnoreCase("NPC")  || args[1].equalsIgnoreCase("PNJ")) {
+					if (Radar.boolNPC) {
+						Radar.boolNPC = false;
+						SettingsUtil.setRadar_NPC(false);
+						Utils.addChat("§cAffichage des NPC désactivé sur le radar");
+					} else {
+						Radar.boolNPC = true;
+						SettingsUtil.setRadar_NPC(true);
+						Utils.addChat("§cAffichage des NPC activé sur le radar");
 					}
 				}
 				Utils.checkXp(xp);						
@@ -4448,21 +4543,74 @@ public class ChatUtils {
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"tracers")) {
 				if (args.length==1) {
 					Utils.toggleModule("tracers");
-				} else if (args[1].equalsIgnoreCase("friend") || args[1].equalsIgnoreCase("fr")) {
+				} else if (args[1].equalsIgnoreCase("fr") || args[1].equalsIgnoreCase("friend") || args[1].equalsIgnoreCase("friends")) {
 					if (Tracers.friend) {
-						Utils.addChat(Utils.setColor("Affichage des friends sur le Tracers désactivé !", "§c"));
+						Tracers.friend=false;
+						SettingsUtil.setTracers_Friends(false);
+						Utils.addChat("§cAffichage des amis sur le tracers désactivé");
 					} else {
-						Utils.addChat(Utils.setColor("Affichage des friends sur le Tracers activé !", "§a"));
+						Tracers.friend=true;
+						SettingsUtil.setTracers_Friends(true);
+						Utils.addChat("§aAffichage des amis sur le tracers activé");
 					}
-					Tracers.friend=!Tracers.friend;
-				}else if (args.length>=3) {				
+				}
+				else if (args[1].equalsIgnoreCase("joueurs") || args[1].equalsIgnoreCase("player") || args[1].equalsIgnoreCase("joueur")) {
+					if (Tracers.BoolENEMIES) {
+						Tracers.BoolENEMIES = false;
+						SettingsUtil.setTracers_Enemies(false);
+						Utils.addChat("§cAffichage des joueurs désactivé sur le tracers");
+					} else {
+						Tracers.BoolENEMIES = true;
+						SettingsUtil.setTracers_Enemies(true);
+						Utils.addChat("§cAffichage des joueurs activé sur le tracers");
+					}
+				}
+				else if (args[1].equalsIgnoreCase("mobs")  || args[1].equalsIgnoreCase("monstres")) {
+					if (Tracers.BoolMOBS) {
+						Tracers.BoolMOBS = false;
+						SettingsUtil.setTracers_Mobs(false);
+						Utils.addChat("§cAffichage des mobs désactivé sur le tracers");
+					} else {
+						Tracers.BoolMOBS = true;
+						SettingsUtil.setTracers_Mobs(true);
+						Utils.addChat("§cAffichage des mobs activé sur le tracers");
+					}
+				}
+				else if (args[1].equalsIgnoreCase("animals")  || args[1].equalsIgnoreCase("animaux")) {
+					if (Tracers.BoolANIMALS) {
+						Tracers.BoolANIMALS = false;
+						SettingsUtil.setTracers_Animals(false);
+						Utils.addChat("§cAffichage des animaux désactivé sur le tracers");
+					} else {
+						Tracers.BoolANIMALS = true;
+						SettingsUtil.setTracers_Animals(true);
+						Utils.addChat("§cAffichage des animaux activé sur le tracers");
+					}
+				}
+				else if (args[1].equalsIgnoreCase("Inpc")  || args[1].equalsIgnoreCase("golem")) {
+					if (Tracers.BoolGOLEM) {
+						Tracers.BoolGOLEM = false;
+						SettingsUtil.setTracers_Golem(false);
+						Utils.addChat("§cAffichage des Inpc et Golem désactivés sur le tracers");
+					} else {
+						Tracers.BoolGOLEM = true;
+						SettingsUtil.setTracers_Golem(true);
+						Utils.addChat("§cAffichage des Inpc et Golem activés sur le tracers");
+					}
+				}
+				else if (args[1].equalsIgnoreCase("NPC")  || args[1].equalsIgnoreCase("PNJ")) {
+					if (Tracers.boolNPC) {
+						Tracers.boolNPC = false;
+						SettingsUtil.setTracers_NPC(false);
+						Utils.addChat("§cAffichage des NPC désactivé sur le tracers");
+					} else {
+						Tracers.boolNPC = true;
+						SettingsUtil.setTracers_NPC(true);
+						Utils.addChat("§cAffichage des NPC activé sur le tracers");
+					}
+				} else if (args.length>=3) {				
 					try {
-						if (args[1].equalsIgnoreCase("color") || args[1].equalsIgnoreCase("c")) {
-							Tracers.cR=Float.parseFloat(args[2])/100;
-							Tracers.cG=Float.parseFloat(args[3])/100;
-							Tracers.cB=Float.parseFloat(args[4])/100;
-							Utils.addChat("§aCouleurs du Tracers à "+args[2]+"r, "+args[3]+"g et "+args[4]+"b !");
-						} else if (args[1].equalsIgnoreCase("width")) {
+						if (args[1].equalsIgnoreCase("width")) {
 							Tracers.width=Float.parseFloat(args[2]);
 							Utils.addChat("§aEpaisseur de la ligne mis à "+Tracers.width+" !");
 						}

@@ -1439,7 +1439,7 @@ public class Chunk
 
         if (var5 == 255)
         {
-            var6 = chunkManager.func_180300_a(pos, BiomeGenBase.plains);
+            var6 = chunkManager.getBiomeGenerator(pos, BiomeGenBase.plains);
             var5 = var6.biomeID;
             this.blockBiomeArray[var4 << 4 | var3] = (byte)(var5 & 255);
         }

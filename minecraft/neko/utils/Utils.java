@@ -39,6 +39,7 @@ import javax.net.ssl.HttpsURLConnection;
 import org.apache.commons.codec.binary.Base64;
 import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -3625,6 +3626,14 @@ public class Utils {
 		case "special": return "§6";
 		}
 		return "§f";
+	}
+	
+	public static Float[] getFloatColorFromInt(int color) {
+		float r = (float)(color >> 16 & 255) / 255.0f;
+	    float g = (float)(color >> 8 & 255) / 255.0f;
+	    float b = (float)(color & 255) / 255.0f;
+	    Float[] s = {(float)r, (float)g, (float)b};
+	    return s;
 	}
 	
 	public static String getRankColor2(String rank) {

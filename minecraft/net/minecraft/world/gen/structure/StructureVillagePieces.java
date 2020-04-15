@@ -1428,7 +1428,7 @@ public class StructureVillagePieces
             this.worldChunkMngr = p_i2104_1_;
             this.structureVillageWeightedPieceList = p_i2104_6_;
             this.terrainType = p_i2104_7_;
-            BiomeGenBase var8 = p_i2104_1_.func_180300_a(new BlockPos(p_i2104_4_, 0, p_i2104_5_), BiomeGenBase.field_180279_ad);
+            BiomeGenBase var8 = p_i2104_1_.getBiomeGenerator(new BlockPos(p_i2104_4_, 0, p_i2104_5_), BiomeGenBase.field_180279_ad);
             this.inDesert = var8 == BiomeGenBase.desert || var8 == BiomeGenBase.desertHills;
             this.func_175846_a(this.inDesert);
         }
