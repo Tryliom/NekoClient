@@ -47,7 +47,6 @@ public abstract class GuiXrayManagerList extends GuiListExtended {
 	public void resetLists() {
 		for(int zz = 0; zz<this.getSize(); zz++) {
 			XRayListEntry xle = this.getListEntry(zz);
-			System.out.println(xle.getBlock().getLocalizedName());
 			List l = xle.guiScreenXrayManager.getListContaining(xle);
 			xle.guiScreenXrayManager.getListContaining(xle).remove(xle);
 			xle.guiScreenXrayManager.markChanged();

@@ -1904,37 +1904,6 @@ public class ChatUtils {
 				
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"update")) {				
-				  try {
-						URL url = new URL("http://neko.alwaysdata.net/ver.html");
-						Scanner sc = new Scanner(url.openStream());
-						ArrayList<String> s = new ArrayList<>();
-						String l;
-						try {
-							while ((l = sc.nextLine()) != null) {
-								s.add(l);
-							}
-						} catch (Exception e) {}
-						
-						if (!s.get(0).equals(var.CLIENT_VERSION)) {
-							Client.getNeko().ver=s.get(0);
-							Client.getNeko().changelog=s.get(1);
-							try {
-								URI url1 = URI.create("https://nekohc.fr");
-								Desktop.getDesktop().browse(url1);
-								mc.displayGuiScreen(new GuiMainMenu());
-							} catch (Exception e) {}
-						} else {
-							Utils.addChat("§dVersion à jour !");
-						}
-						sc.close();
-					} catch (Exception e) {
-						Utils.addChat("§cAdresse inateignable :c");
-					}
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"end")) {
 				Utils.dim=true;
 				Utils.checkXp(xp);												
@@ -3137,7 +3106,6 @@ public class ChatUtils {
 						mc.thePlayer.setPosition(x, y, z);
 						Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(x, y, z, true));
 						mc.thePlayer.sendChatMessage("/sethome");
-						Utils.addChat("§6Téléportation....");
 					} catch (Exception e) {
                         Utils.addChat(err);
                     }
@@ -4843,43 +4811,6 @@ public class ChatUtils {
 				}
 				Utils.checkXp(xp);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"unlock")) {
-				if (args.length==1) {
-					Utils.addChat("§cErreur, vous avez besoin du mot de passe !");
-				} else {
-					boolean verif=false;
-					try {
-						ArrayList<String> s = Utils.getUrl("http://neko.alwaysdata.net/mdp.html");
-						for (String str : s) {
-							String arg[] = str.split(" ");
-							if (arg[0].equalsIgnoreCase(System.getProperty("user.name"))) {
-								if (args[1].equals(arg[1])) {
-									verif=true;
-								}
-							}
-						}					
-						if (verif) {
-							if (args.length==3) {
-								Utils.unlock(args[2]);
-							} else {
-								String str = "";
-								for (int i=2;i<args.length;i++) {
-									if (i+1!=args.length)
-										str+=args[i]+" ";
-									else
-										str+=args[i];
-								}
-								Utils.unlock(str);
-							}
-						} else {
-							Utils.addChat("§cErreur, faux mot de passe !");
-						} 
-					
-					} catch (Exception e) {
-					}														
-				}
 			}
 
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"version")) {

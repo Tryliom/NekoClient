@@ -891,7 +891,6 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     	if (Utils.isToggle("Blink")) {
     		if (Blink.isValidPacket(p_147297_1_)) {
     			if (p_147297_1_ instanceof C03PacketPlayer && !mc.thePlayer.isMovingXZY() && !mc.thePlayer.isMovingCamera()) {
-    				System.out.println(p_147297_1_);
     				return;
     			}
     			Blink.packet.add(p_147297_1_);

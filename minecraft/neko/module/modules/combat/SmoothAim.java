@@ -96,7 +96,7 @@ public class SmoothAim extends Module {
 		  
 			if ((entity instanceof EntityLivingBase)) {
 				EntityLivingBase entityLiving = (EntityLivingBase)entity;
-				if (mc.thePlayer.isEntityAlive() && entityLiving.isEntityAlive()) {
+				if (mc.thePlayer.isEntityAlive()) {
 					  if (!mc.thePlayer.canEntityBeSeen(entityLiving))
 						  return false;
 						  	

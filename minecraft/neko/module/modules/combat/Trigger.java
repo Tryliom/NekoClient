@@ -64,9 +64,8 @@ public class Trigger extends Module {
 	
 	public static Boolean isViable(Entity en) {
     	if (mc.playerController.isSpectatorMode())
-    	    return false;    	   	
-    	
-    	if(!(en.isEntityAlive() && !Friends.isFriend(en.getName()) && en!=mc.thePlayer))
+    	    return false;    	   	  	
+    	if (Friends.isFriend(en.getName()) || en==mc.thePlayer)
     		return false;
     	 
     	if (!(mc.thePlayer.getDistanceToEntity(en) <= dist))
@@ -74,7 +73,7 @@ public class Trigger extends Module {
     	
     	if (KillAura.isBot(en.getName()))
     		return false;
-    	
+
     	return true;
     }
 	

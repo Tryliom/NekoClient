@@ -182,19 +182,15 @@ public class Module {
 	}
 
 	public void onEnabled() {
-
 		if (Utils.shouldChat(this))
 			Utils.addChat("§a§o" + getName() + " activé !");
 		Client.getNeko().eventManager.register(this);
-
 	}
 
 	public void onDisabled() {
-
 		if (Utils.shouldChat(this))
 			Utils.addChat("§c§o" + getName() + " désactivé !");
 		Client.getNeko().eventManager.unregister(this);
-
 	}
 
 	public String getValues() {

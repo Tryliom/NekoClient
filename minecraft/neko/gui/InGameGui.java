@@ -357,7 +357,7 @@ public class InGameGui {
 				  var3 = "§6Temps de jeu:§7 "+(Utils.timeInGameHour!=0 ? Utils.timeInGameHour+"h "+Utils.timeInGameMin+"min "+Utils.timeInGameSec : Utils.timeInGameMin!=0 ? Utils.timeInGameMin+"min "+Utils.timeInGameSec : Utils.timeInGameSec)+"s";
 			  else
 				  var3 = "§6Temps de bonus restant:§7 "+(Active.time/3600==0 ? Active.time/60==0 ? Active.time%60+"s" : Active.time/60+"min "+Active.time%60+"s" : Active.time/3600+"h "+Active.time%3600/60+"min "+Active.time%60+"s");
-			  var.NekoFont.drawStringWithShadow(var3, 2, yP, 0);		
+			  var.NekoFont.drawStringWithShadow(var3, 2, yP, 0);
 			  yP+=11;
 		  }
 		  

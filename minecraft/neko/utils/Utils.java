@@ -1282,7 +1282,6 @@ public class Utils {
 						
 		case 5:		
 			addChat2("§6"+var.prefixCmd+"Info <Player>", var.prefixCmd+"info ", "§7Permet de voir les caractéristiques du joueur", false, Chat.Summon);
-			addChat2("§6"+var.prefixCmd+"Update", var.prefixCmd+"update", "§7Check s'il y a une mise à jour disponible", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Sword", var.prefixCmd+"sword", "§7Permet d'activer certains cheat que si le joueur a une épée dans la main", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Fov3 <Double>", var.prefixCmd+"fov3 ", "§7Change la distance à laquelle vous voyez à la 3ème personne", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Enchant", var.prefixCmd+"help enchant", "§7Voir l'help de l'enchant (Cliquez pour l'afficher)", false, Chat.Click);
@@ -1738,13 +1737,13 @@ public class Utils {
 				
 			}
 			if (r.getName().equalsIgnoreCase("CrazyLove II") && !r.isLock() && r.getLvl()>=3) {
-				Rank r2 = getRank("Crazy Frog");
+				Rank r2 = getRank("Crazymeal");
 				if (r2.isLock()) {
-					setRank("Crazy Frog");
-					displayTitle("", "§4§koooo§cRang §dCrazy Frog§c débloqué !!§4§koooo");
+					setRank("Crazymeal");
+					displayTitle("", "§4§koooo§cRang §dCrazymeal§c débloqué !!§4§koooo");
 				}
 				if (r2.getLvl()!=r.getLvl()/5) {
-					addChat("§cRang §dCrazyLove Frog§c a atteint le lvl "+r.getLvl()/5+" !");
+					addChat("§cRang §dCrazymeal§c a atteint le lvl "+r.getLvl()/5+" !");
 					r2.setLvl(r.getLvl()/5);
 				}
 				
