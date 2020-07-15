@@ -39,6 +39,7 @@ import javax.net.ssl.HttpsURLConnection;
 import org.apache.commons.codec.binary.Base64;
 import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -3626,6 +3627,14 @@ public class Utils {
 		return "§f";
 	}
 	
+	public static Float[] getFloatColorFromInt(int color) {
+		float r = (float)(color >> 16 & 255) / 255.0f;
+	    float g = (float)(color >> 8 & 255) / 255.0f;
+	    float b = (float)(color & 255) / 255.0f;
+	    Float[] s = {(float)r, (float)g, (float)b};
+	    return s;
+	}
+	
 	public static String getRankColor2(String rank) {
 		String color = "§f";
 		try {
@@ -4671,6 +4680,10 @@ public class Utils {
 		for(String args : list) {
 			String s[] = args.split(":");
 			if(s.length == 4) {
+				String[] moduleSetting = s[0].split("_");
+				if(moduleSetting.length < 1) {
+					continue;
+				}
 				final Setting set = Client.Neko.settingsManager.getSettingByName(s[0]);
 				if(set == null) {
 					continue;

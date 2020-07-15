@@ -77,18 +77,18 @@ public class Reach extends Module {
 	public void setup() {
 		
 		//Distance dist, pvp, bloc, tp classic classic, aimbot, fov, tnt, multiaura, knockback
-		Client.getNeko().settingsManager.rSetting(new Setting("REACHDistance", this, this.dist, 1, 500, true));
-			Client.getNeko().settingsManager.rSetting(new Setting("REACHAimbot", this, this.aimbot));
-			Client.getNeko().settingsManager.rSetting(new Setting("REACHPvp", this, this.pvp));
-			Client.getNeko().settingsManager.rSetting(new Setting("REACHBloc", this, this.bloc));
-			Client.getNeko().settingsManager.rSetting(new Setting("REACHTpClassic", this, this.classic));
-			Client.getNeko().settingsManager.rSetting(new Setting("REACHFov", this, this.fov, 0, 360, true));
-			Client.getNeko().settingsManager.rSetting(new Setting("REACHTnt", this, this.tnt));
-			Client.getNeko().settingsManager.rSetting(new Setting("REACHMultiaura", this, this.multiaura));
-			Client.getNeko().settingsManager.rSetting(new Setting("REACHKnockback", this, this.knock));
+		Client.getNeko().settingsManager.rSetting(new Setting("REACH_Distance", this, this.dist, 1, 500, true));
+			Client.getNeko().settingsManager.rSetting(new Setting("REACH_Aimbot", this, this.aimbot));
+			Client.getNeko().settingsManager.rSetting(new Setting("REACH_Pvp", this, this.pvp));
+			Client.getNeko().settingsManager.rSetting(new Setting("REACH_Bloc", this, this.bloc));
+			Client.getNeko().settingsManager.rSetting(new Setting("REACH_Tp Classic", this, this.classic));
+			Client.getNeko().settingsManager.rSetting(new Setting("REACH_Fov", this, this.fov, 0, 360, true));
+			Client.getNeko().settingsManager.rSetting(new Setting("REACH_Tnt", this, this.tnt));
+			Client.getNeko().settingsManager.rSetting(new Setting("REACH_Multiaura", this, this.multiaura));
+			Client.getNeko().settingsManager.rSetting(new Setting("REACH_Knockback", this, this.knock));
 			java.util.ArrayList<String> ordre = new java.util.ArrayList<>();
 			ordre.add("Normal"); ordre.add("Cage");
-			Client.Neko.settingsManager.rSetting(new Setting("REACHMode", this, this.mode.name(), ordre));
+			Client.Neko.settingsManager.rSetting(new Setting("REACH_Mode (For Tnt)", this, this.mode.name(), ordre));
 		
 	}
 	

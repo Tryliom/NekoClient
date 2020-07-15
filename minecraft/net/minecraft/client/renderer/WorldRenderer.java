@@ -46,10 +46,10 @@ public class WorldRenderer
     private TextureAtlasSprite[] quadSprites = null;
     private TextureAtlasSprite quadSprite = null;
 
-    public WorldRenderer(int p_i46275_1_)
+    public WorldRenderer(int bufferSizeIn)
     {
-        this.bufferSize = p_i46275_1_;
-        this.byteBuffer = GLAllocation.createDirectByteBuffer(p_i46275_1_ * 4);
+        this.bufferSize = bufferSizeIn;
+        this.byteBuffer = GLAllocation.createDirectByteBuffer(bufferSizeIn * 4);
         this.rawIntBuffer = this.byteBuffer.asIntBuffer();
         this.rawFloatBuffer = this.byteBuffer.asFloatBuffer();
         this.vertexFormat = new VertexFormat();

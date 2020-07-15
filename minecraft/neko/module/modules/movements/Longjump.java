@@ -24,7 +24,7 @@ public class Longjump extends Module {
 	
 	@Override
 	public void setup() {
-		Client.getNeko().settingsManager.rSetting(new Setting("LongJumpSpeed", this, this.speed, 1, 100, true));
+		Client.getNeko().settingsManager.rSetting(new Setting("LongJump_Speed", this, this.speed, 1, 100, true));
 	}
 	
 	public void setValues() {

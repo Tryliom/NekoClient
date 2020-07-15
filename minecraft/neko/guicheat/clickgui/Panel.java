@@ -80,10 +80,10 @@ public class Panel {
 		}
 		
 		Gui.drawRect(x, y, x + width, y + height, 0xff121212);
-		if(Client.Neko.settingsManager.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
+		if(Client.Neko.settingsManager.getSettingByName("Gui_Design").getValString().equalsIgnoreCase("New")){
 			Gui.drawRect(x - 2, y, x, y + height, outlineColor);
 			FontUtil.drawStringWithShadow(title, x + 2, y + height / 2 - FontUtil.getFontHeight()/2, 0xffefefef);
-		}else if(Client.Neko.settingsManager.getSettingByName("Design").getValString().equalsIgnoreCase("JellyLike")){
+		}else if(Client.Neko.settingsManager.getSettingByName("Gui_Design").getValString().equalsIgnoreCase("JellyLike")){
 			Gui.drawRect(x + 4,			y + 2, x + 4.3, 		y + height - 2, 0xffaaaaaa);
 			Gui.drawRect(x - 4 + width, y + 2, x - 4.3 + width, y + height - 2, 0xffaaaaaa);
 			FontUtil.drawTotalCenteredStringWithShadow(title, x + width / 2, y + height / 2, 0xffefefef);
@@ -91,9 +91,9 @@ public class Panel {
 		
 		if (this.extended && !Elements.isEmpty()) {
 			double startY = y + height;
-			int epanelcolor = Client.Neko.settingsManager.getSettingByName("Design").getValString().equalsIgnoreCase("New") ? 0xff232323 : Client.Neko.settingsManager.getSettingByName("Design").getValString().equalsIgnoreCase("JellyLike") ? 0xbb151515 : 0;;
+			int epanelcolor = Client.Neko.settingsManager.getSettingByName("Gui_Design").getValString().equalsIgnoreCase("New") ? 0xff232323 : Client.Neko.settingsManager.getSettingByName("Gui_Design").getValString().equalsIgnoreCase("JellyLike") ? 0xbb151515 : 0;;
 			for (ModuleButton et : Elements) {
-				if(Client.Neko.settingsManager.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
+				if(Client.Neko.settingsManager.getSettingByName("Gui_Design").getValString().equalsIgnoreCase("New")){
 					Gui.drawRect(x - 2, startY, x + width, startY + et.height + 1, outlineColor);
 				}
 				Gui.drawRect(x, 	startY, x + width, startY + et.height + 1, epanelcolor);

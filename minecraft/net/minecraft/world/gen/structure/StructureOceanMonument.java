@@ -82,7 +82,7 @@ public class StructureOceanMonument extends MapGenStructure
 
         if (var3 == var5 && var4 == var6)
         {
-            if (this.worldObj.getWorldChunkManager().func_180300_a(new BlockPos(var3 * 16 + 8, 64, var4 * 16 + 8), (BiomeGenBase)null) != BiomeGenBase.deepOcean)
+            if (this.worldObj.getWorldChunkManager().getBiomeGenerator(new BlockPos(var3 * 16 + 8, 64, var4 * 16 + 8), (BiomeGenBase)null) != BiomeGenBase.deepOcean)
             {
                 return false;
             }

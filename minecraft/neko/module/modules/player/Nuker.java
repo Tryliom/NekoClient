@@ -41,9 +41,9 @@ public class Nuker extends Module {
 	
 	@Override
 	public void setup() {
-			Client.getNeko().settingsManager.rSetting(new Setting("OneHit", this, this.onehit));
-			Client.getNeko().settingsManager.rSetting(new Setting("Safe", this, this.safe));
-			Client.getNeko().settingsManager.rSetting(new Setting("Radius", this, this.nukerRadius, 0, 6, false));
+			Client.getNeko().settingsManager.rSetting(new Setting("Nuker_OneHit", this, this.onehit));
+			Client.getNeko().settingsManager.rSetting(new Setting("Nuker_Safe", this, this.safe));
+			Client.getNeko().settingsManager.rSetting(new Setting("Nuker_Radius", this, this.nukerRadius, 0, 6, false));
 	}
 
 	public void onEnabled() {

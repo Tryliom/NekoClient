@@ -51,6 +51,7 @@ import neko.module.modules.movements.Flight;
 import neko.module.modules.movements.Freecam;
 import neko.module.modules.movements.Glide;
 import neko.module.modules.movements.Highjump;
+import neko.module.modules.movements.InstantPortal;
 import neko.module.modules.movements.InventoryMove;
 import neko.module.modules.movements.Jetpack;
 import neko.module.modules.movements.Longjump;
@@ -148,6 +149,7 @@ public class ModuleManager {
 		Combat(); Render(); Player(); Movement(); Misc(); Hide(); Special();
 		
 		// Ajouter les modules
+		ActiveModule.add(new InstantPortal());
 		ActiveModule.add(new Sprint()); // Key K
 		ActiveModule.add(new KillAura()); // Key V
 		ActiveModule.add(new Fullbright()); // Key B

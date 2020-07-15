@@ -73,20 +73,20 @@ public abstract class World implements IBlockAccess
     protected boolean scheduledUpdatesAreImmediate;
 
     /** A list of all Entities in all currently-loaded chunks */
-    public final List loadedEntityList = Lists.newArrayList();
-    protected final List unloadedEntityList = Lists.newArrayList();
+    public final List<Entity> loadedEntityList = Lists.<Entity>newArrayList();
+    protected final List<Entity> unloadedEntityList = Lists.<Entity>newArrayList();
 
     /** A list of the loaded tile entities in the world */
-    public final List loadedTileEntityList = Lists.newArrayList();
-    public final List tickableTileEntities = Lists.newArrayList();
-    private final List addedTileEntityList = Lists.newArrayList();
-    private final List tileEntitiesToBeRemoved = Lists.newArrayList();
+    public final List<TileEntity> loadedTileEntityList = Lists.<TileEntity>newArrayList();
+    public final List<TileEntity> tickableTileEntities = Lists.<TileEntity>newArrayList();
+    private final List<TileEntity> addedTileEntityList = Lists.<TileEntity>newArrayList();
+    private final List<TileEntity> tileEntitiesToBeRemoved = Lists.<TileEntity>newArrayList();
 
     /** Array list of players in the world. */
-    public final List playerEntities = Lists.newArrayList();
+    public final List<EntityPlayer> playerEntities = Lists.<EntityPlayer>newArrayList();
 
     /** a list of all the lightning entities */
-    public final List weatherEffects = Lists.newArrayList();
+    public final List<Entity> weatherEffects = Lists.<Entity>newArrayList();
     protected final IntHashMap entitiesById = new IntHashMap();
     private long cloudColour = 16777215L;
 
@@ -120,7 +120,7 @@ public abstract class World implements IBlockAccess
 
     /** The WorldProvider instance that World uses. */
     public final WorldProvider provider;
-    protected List worldAccesses = Lists.newArrayList();
+    protected List<IWorldAccess> worldAccesses = Lists.<IWorldAccess>newArrayList();
 
     /** Handles chunk operations and caching */
     protected IChunkProvider chunkProvider;
@@ -146,7 +146,7 @@ public abstract class World implements IBlockAccess
     public final boolean isRemote;
 
     /** populated by chunks that are within 9 chunks of any player */
-    protected Set activeChunkSet = Sets.newHashSet();
+    protected Set<ChunkCoordIntPair> activeChunkSet = Sets.<ChunkCoordIntPair>newHashSet();
 
     /** number of ticks until the next random ambients play */
     private int ambientTickCountdown;
@@ -190,29 +190,29 @@ public abstract class World implements IBlockAccess
     {
         if (this.isBlockLoaded(pos))
         {
-            Chunk var2 = this.getChunkFromBlockCoords(pos);
+            Chunk chunk = this.getChunkFromBlockCoords(pos);
 
             try
             {
-                return var2.getBiome(pos, this.provider.getWorldChunkManager());
+                return chunk.getBiome(pos, this.provider.getWorldChunkManager());
             }
-            catch (Throwable var6)
+            catch (Throwable throwable)
             {
-                CrashReport var4 = CrashReport.makeCrashReport(var6, "Getting biome");
-                CrashReportCategory var5 = var4.makeCategory("Coordinates of biome request");
-                var5.addCrashSectionCallable("Location", new Callable()
+                CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Getting biome");
+                CrashReportCategory crashreportcategory = crashreport.makeCategory("Coordinates of biome request");
+                crashreportcategory.addCrashSectionCallable("Location", new Callable<String>()
                 {
-                    public String call()
+                    public String call() throws Exception
                     {
                         return CrashReportCategory.getCoordinateInfo(pos);
                     }
                 });
-                throw new ReportedException(var4);
+                throw new ReportedException(crashreport);
             }
         }
         else
         {
-            return this.provider.getWorldChunkManager().func_180300_a(pos, BiomeGenBase.plains);
+            return this.provider.getWorldChunkManager().getBiomeGenerator(pos, BiomeGenBase.plains);
         }
     }
 
@@ -241,14 +241,14 @@ public abstract class World implements IBlockAccess
 
     public Block getGroundAboveSeaLevel(BlockPos pos)
     {
-        BlockPos var2;
+        BlockPos blockpos;
 
-        for (var2 = new BlockPos(pos.getX(), 63, pos.getZ()); !this.isAirBlock(var2.offsetUp()); var2 = var2.offsetUp())
+        for (blockpos = new BlockPos(pos.getX(), 63, pos.getZ()); !this.isAirBlock(blockpos.offsetUp()); blockpos = blockpos.offsetUp())
         {
             ;
         }
 
-        return this.getBlockState(var2).getBlock();
+        return this.getBlockState(blockpos).getBlock();
     }
 
     /**
@@ -269,19 +269,19 @@ public abstract class World implements IBlockAccess
         return this.isBlockLoaded(pos, true);
     }
 
-    public boolean isBlockLoaded(BlockPos pos, boolean p_175668_2_)
+    public boolean isBlockLoaded(BlockPos pos, boolean allowEmpty)
     {
-        return !this.isValid(pos) ? false : this.isChunkLoaded(pos.getX() >> 4, pos.getZ() >> 4, p_175668_2_);
+        return !this.isValid(pos) ? false : this.isChunkLoaded(pos.getX() >> 4, pos.getZ() >> 4, allowEmpty);
     }
 
-    public boolean isAreaLoaded(BlockPos p_175697_1_, int radius)
+    public boolean isAreaLoaded(BlockPos center, int radius)
     {
-        return this.isAreaLoaded(p_175697_1_, radius, true);
+        return this.isAreaLoaded(center, radius, true);
     }
 
-    public boolean isAreaLoaded(BlockPos p_175648_1_, int radius, boolean p_175648_3_)
+    public boolean isAreaLoaded(BlockPos center, int radius, boolean allowEmpty)
     {
-        return this.isAreaLoaded(p_175648_1_.getX() - radius, p_175648_1_.getY() - radius, p_175648_1_.getZ() - radius, p_175648_1_.getX() + radius, p_175648_1_.getY() + radius, p_175648_1_.getZ() + radius, p_175648_3_);
+        return this.isAreaLoaded(center.getX() - radius, center.getY() - radius, center.getZ() - radius, center.getX() + radius, center.getY() + radius, center.getZ() + radius, allowEmpty);
     }
 
     public boolean isAreaLoaded(BlockPos p_175707_1_, BlockPos p_175707_2_)
@@ -304,20 +304,20 @@ public abstract class World implements IBlockAccess
         return this.isAreaLoaded(p_175639_1_.minX, p_175639_1_.minY, p_175639_1_.minZ, p_175639_1_.maxX, p_175639_1_.maxY, p_175639_1_.maxZ, p_175639_2_);
     }
 
-    private boolean isAreaLoaded(int p_175663_1_, int p_175663_2_, int p_175663_3_, int p_175663_4_, int p_175663_5_, int p_175663_6_, boolean p_175663_7_)
+    private boolean isAreaLoaded(int xStart, int yStart, int zStart, int xEnd, int yEnd, int zEnd, boolean allowEmpty)
     {
-        if (p_175663_5_ >= 0 && p_175663_2_ < 256)
+        if (yEnd >= 0 && yStart < 256)
         {
-            p_175663_1_ >>= 4;
-            p_175663_3_ >>= 4;
-            p_175663_4_ >>= 4;
-            p_175663_6_ >>= 4;
+            xStart >>= 4;
+            zStart >>= 4;
+            xEnd >>= 4;
+            zEnd >>= 4;
 
-            for (int var8 = p_175663_1_; var8 <= p_175663_4_; ++var8)
+            for (int var8 = xStart; var8 <= xEnd; ++var8)
             {
-                for (int var9 = p_175663_3_; var9 <= p_175663_6_; ++var9)
+                for (int var9 = zStart; var9 <= zEnd; ++var9)
                 {
-                    if (!this.isChunkLoaded(var8, var9, p_175663_7_))
+                    if (!this.isChunkLoaded(var8, var9, allowEmpty))
                     {
                         return false;
                     }

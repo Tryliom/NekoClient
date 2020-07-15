@@ -85,7 +85,7 @@ public class Blink extends Module {
 	
 	@Override
 	public void setup() {
-		Client.getNeko().settingsManager.rSetting(new Setting("BlinkFull", this, full));
+		Client.getNeko().settingsManager.rSetting(new Setting("Blink_Full", this, full));
 		
 		super.setup();
 	}

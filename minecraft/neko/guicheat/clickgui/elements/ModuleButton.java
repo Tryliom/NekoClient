@@ -128,7 +128,7 @@ public class ModuleButton {
 				mod.toggleModule();
 			}
 			
-			if(Client.Neko.settingsManager.getSettingByName("Sound").getValBoolean())
+			if(Client.Neko.settingsManager.getSettingByName("Gui_Sound").getValBoolean())
 			Minecraft.getMinecraft().thePlayer.playSound("random.click", 0.5f, 0.5f);
 		} else if (mouseButton == 1) {
 			/*
@@ -140,7 +140,7 @@ public class ModuleButton {
 				Client.Neko.clickGui.closeAllSettings();
 				this.extended = b;
 				
-				if(Client.Neko.settingsManager.getSettingByName("Sound").getValBoolean())
+				if(Client.Neko.settingsManager.getSettingByName("Gui_Sound").getValBoolean())
 				if(extended)Minecraft.getMinecraft().thePlayer.playSound("tile.piston.out", 1f, 1f);else Minecraft.getMinecraft().thePlayer.playSound("tile.piston.in", 1f, 1f);
 			}
 		} else if (mouseButton == 2) {

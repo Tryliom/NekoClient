@@ -44,7 +44,6 @@ public class Client {
 	public final static String CLIENT_NAME = "Neko";
 	public final String CLIENT_AUTHOR = "Tryliom et Marie";
 
-	
 	public static final String CLIENT_VERSION = "3.0";
 	public static String scrollingSpacer = "                   ";
 	public String strNeko = "§bNeko v" + CLIENT_VERSION;

@@ -1253,7 +1253,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 if (!this.mc.gameSettings.hideGUI || this.mc.currentScreen != null)
                 {
                     GlStateManager.alphaFunc(516, 0.1F);
-                    this.mc.ingameGUI.func_175180_a(partialTicks);
+                    this.mc.ingameGUI.renderGameOverlay(partialTicks);
                 }
 
                 this.mc.mcProfiler.endSection();
