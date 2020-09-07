@@ -94,24 +94,29 @@ public class AutoCraft extends Module {
 						    }
 							
 							try {
-								Thread.sleep(10);
+								Thread.sleep(20);
 							} catch (InterruptedException e) {}
 							
 							int slot = h*3 + w;
-							mc.playerController.windowClick(containerID, slot, 1, 0, mc.thePlayer);
+							//mc.playerController.windowClick(containerID, slot, 1, 0, mc.thePlayer);
+							mc.playerController.windowClick(containerID, slot, 0, 0, mc.thePlayer); // Put entire stack
 							
 							try {
-								Thread.sleep(10);
+								Thread.sleep(20);
 							} catch (InterruptedException e) {}
 							
 							mc.playerController.windowClick(containerID, itemSlot, 0, 0, mc.thePlayer);
 								
 						}
 						i++;
+						try {
+							Thread.sleep(500);
+						} catch (InterruptedException e) {}
 					}
 				}
 				if (AutoCraft.getInstance().isInstant())
 					mc.playerController.windowClick(containerID, 0, 0, 1, mc.thePlayer);
+				i = 0;
 			}
 		}).start();
 	}

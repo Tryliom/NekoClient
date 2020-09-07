@@ -37,6 +37,7 @@ import neko.module.modules.misc.HeadRoll;
 import neko.module.modules.misc.Nameprotect;
 import neko.module.modules.misc.Phase;
 import neko.module.modules.misc.Ping;
+import neko.module.modules.misc.PlaceAndBreak;
 import neko.module.modules.misc.Register;
 import neko.module.modules.misc.ReplyNyah;
 import neko.module.modules.misc.Switch;
@@ -269,6 +270,7 @@ public class ModuleManager {
 		ActiveModule.add(new PotionSaver()); // Key NONE
 		ActiveModule.add(Rotator.getRotator());
 		ActiveModule.add(new AutoCraft());
+		ActiveModule.add(new PlaceAndBreak());
 		
 		this.link.put(Utils.getModule("KillAura"), "ka");
 		this.link.put(Utils.getModule("FastBow"), "fb");

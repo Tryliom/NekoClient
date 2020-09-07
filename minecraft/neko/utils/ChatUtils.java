@@ -1189,7 +1189,6 @@ public class ChatUtils {
 					} else if (args[1].equalsIgnoreCase("clear")) {
 						c.getListPlayer().clear();
 						Utils.addChat("§aListe des joueurs clear");
-					} else if (args[1].equalsIgnoreCase("list")) {
 						if (c.getListPlayer().size()==0) {
 							Utils.addChat("Pas de joueurs blacklistés");
 						} else {
@@ -5632,6 +5631,30 @@ public class ChatUtils {
 					}
 				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+			}
+			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"exec")) {
+				if (args.length>=4) {
+					try {
+						ArrayList<String> cmds = new ArrayList<String>();
+						String l ="";
+						for (int i=1;i<args.length;i++) {
+							l+=args[i]+" ";
+						}
+						String s[] = l.split("&&");
+						for (int i=0;i<s.length;i++) {
+							if (s[i].startsWith(" "))
+								s[i] = s[i].replaceFirst(".", "");
+							cmds.add(s[i]);
+						}
+						for (String cmd : cmds) {
+							new ChatUtils().doCommand(cmd);
+						}
+					} catch (Exception e) {
+						Utils.addChat(err);
+					}
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				}
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"step")) {
