@@ -284,31 +284,6 @@ public class ChatUtils {
 				}
 			}
 			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"myping") || args[0].equalsIgnoreCase(var.prefixCmd+"lag")) {
-				for (Object o : mc.theWorld.playerEntities) {
-					if (o instanceof EntityPlayer) {
-						int ping=-1;
-						EntityPlayer en = (EntityPlayer) o;
-						try {
-							NetworkPlayerInfo npi = (NetworkPlayerInfo) mc.getNetHandler().getPlayerInfoMap().get(en.getGameProfile().getId());
-							ping = npi.getResponseTime();
-						} catch (Exception e) {}
-						boolean isMe=false;
-						String s = en.getName();
-						if (s.equalsIgnoreCase(mc.session.getUsername()))
-							isMe=true;
-						if (MCLeaks.isAltActive())
-							if (MCLeaks.getMCName().equalsIgnoreCase(s))
-								isMe=true;
-						if (isMe) {
-							Utils.addChat("§7Votre ping [§c"+en.getName()+"§7]: §c"+ping+"§7ms");
-							break;
-						}
-					}
-				}
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
 			if (var3.startsWith(var.prefixCmd+"myip")) {
 				new Thread(new Runnable() {
 					public void run() {

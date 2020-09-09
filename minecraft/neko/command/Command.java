@@ -1,6 +1,7 @@
 package neko.command;
 
 import neko.Client;
+import net.minecraft.client.Minecraft;
 
 public class Command {
 	private String name;
@@ -10,6 +11,7 @@ public class Command {
 	private CommandType type;
 	
 	protected Client client = Client.getNeko();
+	protected Minecraft mc = Minecraft.getMinecraft();
 	
 	public void onCommand(String[] args) {}
 
