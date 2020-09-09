@@ -283,40 +283,6 @@ public class ChatUtils {
 					return;
 				}
 			}
-
-			if (args[0].equalsIgnoreCase(var.prefixCmd + "velocity") || args[0].equalsIgnoreCase(var.prefixCmd + "velo")) {
-				Velocity v = Velocity.getVelocity();
-				if (args.length==1) {
-					Utils.toggleModule("Velocity");
-				} else if (args[1].equalsIgnoreCase("horizontal") || args[1].equalsIgnoreCase("hor")) {
-					try {
-						double d = Double.parseDouble(args[2]);
-						v.setHcoeff(d);            		
-						Utils.addChat(Utils.setColor("Le coefficient de knockback en horizontal a été changé en "+args[2]+" !", "§a"));
-					} catch (Exception e) {
-						Utils.addChat(err);
-					}
-				} else if (args[1].equalsIgnoreCase("vertical") || args[1].equalsIgnoreCase("ver")) {
-					try {
-						double d = Double.parseDouble(args[2]);
-						v.setVcoeff(d);           		
-						Utils.addChat(Utils.setColor("Le coefficient de knockback en vertical a été changé en "+args[2]+" !", "§a"));
-					} catch (Exception e) {
-						Utils.addChat(err);
-					}
-				} else {
-					try {
-						double d = Double.parseDouble(args[1]);
-						v.setHcoeff(d);
-						v.setVcoeff(d);
-						Utils.addChat(Utils.setColor("Le coefficient de knockback a été changé en "+args[1]+" !", "§a"));
-					} catch (Exception e) {
-						Utils.addChat(err);
-					}
-				}
-				Utils.checkXp(xp);
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"myping") || args[0].equalsIgnoreCase(var.prefixCmd+"lag")) {
 				for (Object o : mc.theWorld.playerEntities) {
