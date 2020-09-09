@@ -231,6 +231,10 @@ public class ChatUtils {
 		}	
 		
 		if (var3.startsWith(var.prefixCmd) && Utils.verif==null) {
+			// New command manager
+			Utils.onCommand(var3);
+			
+			// Old code
 			args = var3.split(" ");
 			if (args[0].equalsIgnoreCase(var.prefixCmd)) {
 				Utils.addChat(error); 

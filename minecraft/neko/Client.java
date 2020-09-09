@@ -17,6 +17,7 @@ import neko.event.EventManager;
 import neko.gui.RequestManager;
 import neko.guicheat.clickgui.ClickGUI;
 import neko.guicheat.clickgui.settings.SettingsManager;
+import neko.manager.CommandManager;
 import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
 import neko.manager.QuestManager;
@@ -38,6 +39,7 @@ public class Client {
 	public SettingsManager settingsManager;
 	public EventManager eventManager;
 	public ModuleManager moduleManager;
+	public CommandManager commandManager;
 	public ClickGUI clickGui;
 	
 	Minecraft mc = Minecraft.getMinecraft();

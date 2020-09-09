@@ -31,6 +31,7 @@ import neko.gui.GuiNekoAccount;
 import neko.gui.button.ButtonDiscord;
 import neko.guicheat.clickgui.ClickGUI;
 import neko.guicheat.clickgui.settings.SettingsManager;
+import neko.manager.CommandManager;
 import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
 import neko.manager.TutoManager;
@@ -273,6 +274,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         	var.eventManager = new EventManager();
         	var.eventManager.register(var);
     		var.moduleManager = new ModuleManager();
+    		var.commandManager = new CommandManager();
     		var.onlyrpg = OnlyRpgManager.getRpg();
     		if (var.rang==null)
     			for (Rank r : ModuleManager.rang) {

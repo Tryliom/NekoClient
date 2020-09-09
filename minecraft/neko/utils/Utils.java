@@ -39,7 +39,6 @@ import javax.net.ssl.HttpsURLConnection;
 import org.apache.commons.codec.binary.Base64;
 import org.darkstorm.minecraft.gui.theme.simple.SimpleTheme;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.GL11;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -53,6 +52,8 @@ import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
 import neko.Client;
 import neko.api.NekoCloud;
+import neko.command.Command;
+import neko.command.CommandType;
 import neko.gui.GuiAltManager;
 import neko.gui.GuiWikiMenu;
 import neko.gui.GuiXrayManager;
@@ -62,6 +63,7 @@ import neko.guicheat.clickgui.ClickGUI;
 import neko.guicheat.clickgui.Panel;
 import neko.guicheat.clickgui.settings.Setting;
 import neko.lock.Lock;
+import neko.manager.CommandManager;
 import neko.manager.ModuleManager;
 import neko.manager.QuestManager;
 import neko.manager.TutoManager;
@@ -3588,6 +3590,43 @@ public class Utils {
         	} catch (Exception e) {}
         	i++;
         }
+	}
+	
+	public static ArrayList<Command> getCommandByType(CommandType type) {
+		CommandManager commandManager = Client.getNeko().commandManager;
+		ArrayList<Command> list = new ArrayList<Command>();
+		for (Command cmd : commandManager.getCommands()) {
+			if (cmd.getType().equals(type))
+				list.add(cmd);
+		}
+		
+		return list;
+	}
+	
+	public static Command getCommandStartByName(String name) {
+		CommandManager commandManager = Client.getNeko().commandManager;
+		for (Command cmd : commandManager.getCommands()) {
+			if (name.startsWith(cmd.getName()))
+				return cmd;
+		}
+		
+		return null;
+	}
+	
+	public static void onCommand(String message) {
+		Command cmd = getCommandStartByName(message);
+		String[] args = message.split(" ");
+		
+		if (cmd != null) {
+			if (args.length < cmd.getMinArgs()) {
+				addChat("§cErreur, il manque des arguments");
+			} else {
+				cmd.onCommand(args);
+			}
+			
+		} else {
+			addChat("§cCommande inexistante !");
+		}
 	}
 	
 	public static String[] getRankDescription(String rank) {
