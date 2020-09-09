@@ -22,6 +22,7 @@ import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
 import neko.manager.QuestManager;
 import neko.module.other.Irc;
+import neko.module.other.ModeType;
 import neko.module.other.Necklace;
 import neko.module.other.Rank;
 import neko.module.other.TempBon;
@@ -51,7 +52,7 @@ public class Client {
 	public String strNeko = "§bNeko v" + CLIENT_VERSION;
 	public String strCreator = "§eCréé par §f§lTryliom§e et §f§lMarie";
 	public final String SCROLLING_TEXT = "§cNeko forever !                   §7Présenté sous §bNeko " + Client.CLIENT_VERSION +"                   "+strCreator;
-	public String mode = "Player";
+	public ModeType mode = ModeType.Player;
 	public Rank rang;
 	public Necklace necklace;
 	public int niveau = 1;

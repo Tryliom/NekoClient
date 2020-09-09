@@ -206,7 +206,7 @@ class cps implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		if (Utils.sword ? mc.thePlayer.getCurrentEquippedItem()!=null ? mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemSword : false : true) {
 			switch (var.mode) {
-			case "Player" :
+			case Player :
 				try {
 					for (Object theObject : mc.theWorld.playerEntities) {
 		                EntityLivingBase entity = (EntityLivingBase) theObject;
@@ -232,7 +232,7 @@ class cps implements ActionListener {
 				} catch (Exception e) {}
 				break;
 				
-			case "Mob" :
+			case Mob :
 				if (Utils.warn) {
         			if (Utils.isPlayerInRange(Utils.warnB))
         				return;
@@ -266,7 +266,7 @@ class cps implements ActionListener {
 				} catch (Exception e) {}
 				break;
 				
-			case "All" :
+			case All :
 				try {
 					for (Object theObject : mc.theWorld.loadedEntityList) {
 	        			if (theObject instanceof EntityLivingBase) {

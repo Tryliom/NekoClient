@@ -4,12 +4,13 @@ import java.util.ArrayList;
 
 import neko.command.Command;
 import neko.command.CommandType;
+import neko.module.other.enums.Chat;
 import neko.utils.Utils;
 
 public class Help extends Command {
 
 	public Help() {
-		super("help", "Affiche l'aide pour les commandes", "help [Nom de cheat]", 1, CommandType.Other);
+		super("help", "help [Nom de cheat]", "Affiche l'aide pour les commandes", 1, CommandType.Other);
 	}
 	
 	public void onCommand(String[] args) {
@@ -24,8 +25,9 @@ public class Help extends Command {
 			Utils.addChat("§cCette aide n'existe pas");
 		}
 		
+		Utils.addChat(Utils.sep);
 		for (Command cmd : list) {
-			Utils.addChat(prefix + cmd.getHelp() + ": " + cmd.getDescription());
+			Utils.addChat(prefix + cmd.getHelp() + ": " + Utils.setColor(cmd.getDescription(), "§7"));
 		}
 	}
 

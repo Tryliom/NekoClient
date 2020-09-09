@@ -283,28 +283,6 @@ public class ChatUtils {
 					return;
 				}
 			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd + "mode")) {
-				if (args.length==1) {							
-					Utils.addChat(error);
-				} else {
-					if (args[1].equalsIgnoreCase("player")) {
-						var.mode="Player";
-						Utils.addChat("§aLe mode "+args[1]+" a été activé !");
-					} else if (args[1].equalsIgnoreCase("mob")) {
-						var.mode="Mob";
-						Utils.addChat("§aLe mode "+args[1]+" a été activé !");
-					} else if (args[1].equalsIgnoreCase("all")) {
-						var.mode="All";
-						Utils.addChat("§aLe mode "+args[1]+" a été activé !");
-					} else {
-						Utils.addChat(error);
-					}
-					
-				}
-				Utils.checkXp(xp);
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
 
 			if (args[0].equalsIgnoreCase(var.prefixCmd + "velocity") || args[0].equalsIgnoreCase(var.prefixCmd + "velo")) {
 				Velocity v = Velocity.getVelocity();

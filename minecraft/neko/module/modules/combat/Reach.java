@@ -271,7 +271,7 @@ public class Reach extends Module {
         		mc.thePlayer.setPosition(lastX, lastY+0.001*Math.random(), lastZ);
 			} else if (aimbot) {
 				switch (var.mode) {
-				case "Player" :
+				case Player :
 				for (Object theObject : mc.theWorld.playerEntities) {
 	                EntityPlayer entity = (EntityPlayer) theObject;
 	                if (u.isEntityInFov(entity, fov) && !Friends.isFriend(entity.getName()) && mc.thePlayer!=entity && mc.thePlayer.getDistanceToEntity(entity)<100) {
@@ -291,7 +291,7 @@ public class Reach extends Module {
 	        	}
 				break;
 					
-				case "Mob" :
+				case Mob :
 					if (u.warn) {
 	        			if (u.isPlayerInRange(u.warnB))
 	        				return;
@@ -322,7 +322,7 @@ public class Reach extends Module {
 	                }
 					break;
 					
-				case "All" :
+				case All :
 					for (Object theObject : mc.theWorld.loadedEntityList) {
 	        			if (theObject instanceof EntityLivingBase) {
 	                        EntityLivingBase entity = (EntityLivingBase) theObject;

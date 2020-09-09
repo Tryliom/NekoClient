@@ -143,6 +143,7 @@ import neko.module.modules.special.VanillaTp;
 import neko.module.other.Active;
 import neko.module.other.Conditions;
 import neko.module.other.Irc;
+import neko.module.other.ModeType;
 import neko.module.other.Necklace;
 import neko.module.other.Quest;
 import neko.module.other.Rank;
@@ -2158,7 +2159,7 @@ public class Utils {
         	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
         }
 		if (ma)
-			for (Object o : (var.mode.equalsIgnoreCase("Player") ? mc.theWorld.playerEntities : mc.theWorld.loadedEntityList)) {
+			for (Object o : (var.mode.equals(ModeType.Player) ? mc.theWorld.playerEntities : mc.theWorld.loadedEntityList)) {
 				if (o instanceof EntityLivingBase) {
 					EntityLivingBase en = (EntityLivingBase) o;
 					if (isEntityValid(en) && mc.thePlayer.getDistanceToEntity(en) <= 6 && entity!=en) {
@@ -3627,6 +3628,7 @@ public class Utils {
 		} else {
 			addChat("§cCommande inexistante !");
 		}
+		mc.ingameGUI.getChatGUI().addToSentMessages(message);
 	}
 	
 	public static String[] getRankDescription(String rank) {
@@ -4852,7 +4854,7 @@ public class Utils {
 	            	var.prefixCmd=ligne;
 	            }
 	            if (i==7) {
-	            	var.mode=ligne;
+	            	var.mode=ModeType.valueOf(ligne);
 	            }
 	            if (i==8) {
 	            	var.ame=Integer.parseInt(ligne);
@@ -4879,6 +4881,15 @@ public class Utils {
 	        	}
 			} catch (Exception e) {}
     	}             
+	}
+	
+	/**
+	 * Capitalize the first letter of the text
+	 * @param text
+	 * @return
+	 */
+	public static String capitalize(String text) {
+		return text.substring(0, 1).toUpperCase() + text.substring(1);
 	}
 	
 	public static boolean loadRpg(String...fi) {
@@ -4925,7 +4936,7 @@ public class Utils {
                     	var.prefixCmd=ligne;
                     }
                     if (i==7) {
-                    	var.mode=ligne;
+                    	var.mode=ModeType.valueOf(ligne);
                     }
                     if (i==8) {
                     	var.ame=Integer.parseInt(ligne);

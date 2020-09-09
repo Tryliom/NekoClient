@@ -53,7 +53,7 @@ public class Command {
 		this.type = type;
 	}
 
-	public Command(String name, String description, String help, int minArgs, CommandType type) {
+	public Command(String name, String help, String description, int minArgs, CommandType type) {
 		super();
 		this.name = name;
 		this.description = description;
