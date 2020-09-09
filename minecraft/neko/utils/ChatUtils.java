@@ -232,7 +232,7 @@ public class ChatUtils {
 		
 		if (var3.startsWith(var.prefixCmd) && Utils.verif==null) {
 			// New command manager
-			Utils.onCommand(var3);
+			Utils.onCommand(var3.replaceFirst(var.prefixCmd, ""));
 			
 			// Old code
 			args = var3.split(" ");
@@ -284,30 +284,6 @@ public class ChatUtils {
 				}
 			}
 			
-			if (var3.startsWith(var.prefixCmd+"myip")) {
-				new Thread(new Runnable() {
-					public void run() {
-						try {
-					URL url = new URL("http://nekohc.fr/controler/Neko/ip.php");
-					Scanner sc = new Scanner(url.openStream());
-					String l;
-					try {
-						while ((l = sc.nextLine()) != null) {
-							Utils.addChat("Votre adresse IP: "+l);
-							break;
-						}
-					} catch (Exception e) {}
-					sc.close();
-				} catch (Exception e) {
-					Utils.addChat("§cErreur");
-				}
-					}
-				}).start();				
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			if (var3.startsWith(var.prefixCmd+"discord")) {
-				Utils.addChat("§6Meooooww voilà le discord : "+discord);
-			}
 			//TODO: BAN
 			if (var3.startsWith(var.prefixCmd+"ban")) {
 				if (args.length>=3) {
