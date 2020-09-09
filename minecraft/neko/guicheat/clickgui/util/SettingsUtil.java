@@ -3,6 +3,7 @@ package neko.guicheat.clickgui.util;
 import neko.Client;
 import neko.module.modules.combat.Reach;
 import neko.module.modules.misc.Phase;
+import neko.module.modules.misc.PlaceAndBreak;
 import neko.module.modules.movements.Blink;
 import neko.module.modules.movements.Longjump;
 import neko.module.modules.params.Gui;
@@ -51,7 +52,36 @@ public class SettingsUtil {
 		Tracers.friend = getTracers_Friends();
 		Tracers.BoolENEMIES = getTracers_Enemies(); Tracers.BoolMOBS = getTracers_Mobs(); Tracers.BoolANIMALS = getTracers_Animals();
 		Tracers.BoolGOLEM = getTracers_Golem(); Tracers.boolNPC = getTracers_NPC(); Tracers.width = (float) getTracers_Width();
+		// Place And Break
+		PlaceAndBreak.getInstance().setSlotBreak(getBreakSlot());
+		PlaceAndBreak.getInstance().setSlotPlace(getPlaceSlot());
+		PlaceAndBreak.getInstance().setAuto(isAuto());
 	}
+	
+	public static int getBreakSlot() {
+		return (int) Client.Neko.settingsManager.getSettingByName("PlaceAndBreak_Break slot").getValDouble();
+	}
+	
+	public static void setBreakSlot(int slot) {
+		Client.Neko.settingsManager.getSettingByName("PlaceAndBreak_Break slot").setValDouble(slot);
+	}
+	
+	public static int getPlaceSlot() {
+		return (int) Client.Neko.settingsManager.getSettingByName("PlaceAndBreak_Place slot").getValDouble();
+	}
+	
+	public static void setPlaceSlot(int slot) {
+		Client.Neko.settingsManager.getSettingByName("PlaceAndBreak_P slot").setValDouble(slot);
+	}
+	
+	public static boolean isAuto() {
+		return Client.Neko.settingsManager.getSettingByName("PlaceAndBreak_Auto").getValBoolean();
+	}
+	
+	public static void setAuto(boolean auto) {
+		Client.Neko.settingsManager.getSettingByName("PlaceAndBreak_Auto").setValBoolean(auto);
+	}
+	
 	//TODO : Blink
 	public static boolean getBlinkFull() {
 		return Client.Neko.settingsManager.getSettingByName("Blink_Full").getValBoolean();

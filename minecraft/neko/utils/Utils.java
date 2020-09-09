@@ -90,6 +90,7 @@ import neko.module.modules.misc.Crasher;
 import neko.module.modules.misc.Nameprotect;
 import neko.module.modules.misc.Phase;
 import neko.module.modules.misc.Ping;
+import neko.module.modules.misc.PlaceAndBreak;
 import neko.module.modules.misc.Register;
 import neko.module.modules.misc.Timer;
 import neko.module.modules.movements.Blink;
@@ -2935,6 +2936,9 @@ public class Utils {
         s+="§,"+Likaotique.getLik().isSafe()+"§,"+AutoCmd.cmd+"§,"+AutoCmd.sec+"§,"+Near.spawn.toLong()+"§,"+Near.radius;
         s+="§,"+Near.noname+"§,"+ForceTP.getForceTP().getPoint().toLong()+"§,"+ForceTP.getForceTP().isYMax();
         s+="§,"+Crasher.getInstance().isWave()+"§,"+AutoCraft.getInstance().isStack()+"§,"+Blink.full;
+        PlaceAndBreak pb = PlaceAndBreak.getInstance();
+        s+="§,"+pb.getSlotBreak()+"§,"+pb.getSlotPlace()+"§,"+pb.isAuto();
+        
         Utils.nc.saveSave("values", s);
 	}
 	
@@ -3574,8 +3578,14 @@ public class Utils {
             	if (i == 190) {
             		Blink.full = Boolean.parseBoolean(ligne);
             	}
-        	} catch (Exception e) {
-        	}                	
+            	PlaceAndBreak pb = PlaceAndBreak.getInstance();
+            	if (i == 191)
+            		pb.setSlotBreak(Integer.parseInt(ligne));
+            	if (i == 192)
+            		pb.setSlotPlace(Integer.parseInt(ligne));
+            	if (i == 193)
+            		pb.setAuto(Boolean.parseBoolean(ligne));
+        	} catch (Exception e) {}
         	i++;
         }
 	}
