@@ -2,6 +2,8 @@ package neko.gui.bindmanager;
 
 import java.io.IOException;
 
+import org.lwjgl.input.Keyboard;
+
 import neko.module.Module;
 import neko.utils.Utils;
 import net.minecraft.client.gui.GuiButton;
@@ -94,6 +96,9 @@ public class GuiBindManager extends GuiScreen {
 			
 			this.buttonId = -1;
         } else {
+        	if (keyCode == 1) {
+        		this.mc.displayGuiScreen(this.parentScreen);
+        	}
         	super.keyTyped(typedChar, keyCode);
         }
     }
@@ -120,6 +125,11 @@ public class GuiBindManager extends GuiScreen {
 		
 		this.buttonReset.enabled = !var4;
 		super.drawScreen(mouseX, mouseY, partialTicks);
+	}
+	
+	public void onGuiClosed() {
+		Keyboard.enableRepeatEvents(false);
+		super.onGuiClosed();
 	}
 
 }

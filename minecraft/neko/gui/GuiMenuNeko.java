@@ -46,27 +46,19 @@ public class GuiMenuNeko extends GuiScreen {
             case 0:
             	this.mc.displayGuiScreen(new neko.gui.bindmanager.GuiBindManager(this));
                 break;
-
             case 1:
                 this.mc.displayGuiScreen(this.prevGui);
                 break;
-            case 2:
-            case 3:
-            default:
-                break;
-
             case 4:
             	this.mc.displayGuiScreen(new GuiWikiMenu(this));
                 break;
             case 5:
-            	//this.mc.displayGuiScreen(new GuiXrayManager(this));
             	this.mc.displayGuiScreen(new GuiScreenXrayManager(this));
                 break;
             case 8:
                 this.mc.displayGuiScreen(new GuiAltManager(this));
                 break;
             case 9:
-                //this.mc.displayGuiScreen(new GuiMultiplayer(this));
             	this.mc.displayGuiScreen(new GuiRankManager(this));
                 break;
             case 10:
