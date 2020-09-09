@@ -1813,23 +1813,14 @@ public class ChatUtils {
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"crasher")) {
+				Crasher crasher = Crasher.getInstance();
 				
 				if (args.length==2 && args[1].equalsIgnoreCase("wave")) {
-					Crasher.wave = !Crasher.wave;
-					if (Crasher.wave)
+					crasher.setWave(!crasher.isWave());
+					if (crasher.isWave())
 						Utils.addChat(Utils.setColor("Mode wave du crasher activé !", "§a"));
 					else
 						Utils.addChat(Utils.setColor("Mode wave du crasher désactivé !", "§c"));
-				}
-				
-				if (args.length==2 && args[1].equalsIgnoreCase("ymax")) {
-					ForceTP f = ForceTP.getForceTP();
-					if (f.isYMax()) {
-						Utils.addChat(Utils.setColor("Hauteur maximal de Y désactivée pour les TP (ça prendra la valeur Y de la target)", "§c"));
-					} else {
-						Utils.addChat(Utils.setColor("Hauteur maximal de Y activée pour les TP (255)", "§a"));
-					}
-					f.setYMax(!f.isYMax());
 				}
 				
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);

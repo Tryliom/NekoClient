@@ -51,7 +51,7 @@ public class GuiCrafting extends GuiContainer
         	x = initX;
         	craft.drawItems(x, initX, y, this.width, buttonList, 3);
         	this.buttonList.add(new GuiButton(0, this.width - 110, 15, 100, 20, "Mode "+(craft.isCraftable() ? "Craftable" : "All")));
-        	this.buttonList.add(new GuiButton(1, this.width - 220, 15, 100, 20, (craft.isInstant() ? "§a" : "§c")+"Flash"));
+        	this.buttonList.add(new GuiButton(1, this.width - 220, 15, 100, 20, (craft.isStack() ? "§a" : "§c")+"Stack"));
         	if (craft.getPage()>1)
         		this.buttonList.add(new GuiButton(2, this.width - this.width/8 - 35, this.height - 25, 30, 20, "-"));
         	if (craft.getPage()<craft.getMaxRecipe()/craft.getMaxRecipeByPage())
@@ -79,7 +79,7 @@ public class GuiCrafting extends GuiContainer
     			craft.setCraftable(!craft.isCraftable());
     			break;
     		case 1: 
-    			craft.setInstant(!craft.isInstant());
+    			craft.setStack(!craft.isStack());
     			break;
     		case 2:
     			craft.setPage(craft.getPage()-1);

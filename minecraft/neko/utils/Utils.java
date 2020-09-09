@@ -86,11 +86,13 @@ import neko.module.modules.misc.Antiafk;
 import neko.module.modules.misc.AutoCmd;
 import neko.module.modules.misc.AutoMLG;
 import neko.module.modules.misc.CallCmd;
+import neko.module.modules.misc.Crasher;
 import neko.module.modules.misc.Nameprotect;
 import neko.module.modules.misc.Phase;
 import neko.module.modules.misc.Ping;
 import neko.module.modules.misc.Register;
 import neko.module.modules.misc.Timer;
+import neko.module.modules.movements.Blink;
 import neko.module.modules.movements.Dolphin;
 import neko.module.modules.movements.Flight;
 import neko.module.modules.movements.Freecam;
@@ -102,6 +104,7 @@ import neko.module.modules.movements.Speed709;
 import neko.module.modules.movements.Step;
 import neko.module.modules.params.Gui;
 import neko.module.modules.params.HUD;
+import neko.module.modules.player.AutoCraft;
 import neko.module.modules.player.Autoarmor;
 import neko.module.modules.player.Build;
 import neko.module.modules.player.Cheststealer;
@@ -2931,6 +2934,7 @@ public class Utils {
     	}
         s+="§,"+Likaotique.getLik().isSafe()+"§,"+AutoCmd.cmd+"§,"+AutoCmd.sec+"§,"+Near.spawn.toLong()+"§,"+Near.radius;
         s+="§,"+Near.noname+"§,"+ForceTP.getForceTP().getPoint().toLong()+"§,"+ForceTP.getForceTP().isYMax();
+        s+="§,"+Crasher.getInstance().isWave()+"§,"+AutoCraft.getInstance().isStack()+"§,"+Blink.full;
         Utils.nc.saveSave("values", s);
 	}
 	
@@ -3561,7 +3565,15 @@ public class Utils {
             	if (i==187) {
             		FTP.setYMax(Boolean.parseBoolean(ligne));
             	}
-            	
+            	if (i == 188) {
+            		Crasher.getInstance().setWave(Boolean.parseBoolean(ligne));
+            	}
+            	if (i == 189) {
+            		AutoCraft.getInstance().setStack(Boolean.parseBoolean(ligne));
+            	}
+            	if (i == 190) {
+            		Blink.full = Boolean.parseBoolean(ligne);
+            	}
         	} catch (Exception e) {
         	}                	
         	i++;

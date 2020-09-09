@@ -19,7 +19,7 @@ import net.minecraft.item.crafting.ShapedRecipes;
 
 public class AutoCraft extends Module {
 	private boolean craftable = true;
-	private boolean instant = true;
+	private boolean stack = false;
 	private int page = 1;
 	private static AutoCraft instance = null;
 	
@@ -52,12 +52,12 @@ public class AutoCraft extends Module {
 		this.craftable = craftable;
 	}
 
-	public boolean isInstant() {
-		return instant;
+	public boolean isStack() {
+		return stack;
 	}
 
-	public void setInstant(boolean instant) {
-		this.instant = instant;
+	public void setStack(boolean stack) {
+		this.stack = stack;
 	}
 
 	public int getPage() {
@@ -98,8 +98,10 @@ public class AutoCraft extends Module {
 							} catch (InterruptedException e) {}
 							
 							int slot = h*3 + w;
-							//mc.playerController.windowClick(containerID, slot, 1, 0, mc.thePlayer);
-							mc.playerController.windowClick(containerID, slot, 0, 0, mc.thePlayer); // Put entire stack
+							if (AutoCraft.getInstance().isStack())
+								mc.playerController.windowClick(containerID, slot, 0, 0, mc.thePlayer); // Put entire stack
+							else
+								mc.playerController.windowClick(containerID, slot, 1, 0, mc.thePlayer);
 							
 							try {
 								Thread.sleep(20);
@@ -114,8 +116,7 @@ public class AutoCraft extends Module {
 						} catch (InterruptedException e) {}
 					}
 				}
-				if (AutoCraft.getInstance().isInstant())
-					mc.playerController.windowClick(containerID, 0, 0, 1, mc.thePlayer);
+				mc.playerController.windowClick(containerID, 0, 0, 1, mc.thePlayer);
 				i = 0;
 			}
 		}).start();
@@ -164,7 +165,7 @@ public class AutoCraft extends Module {
 					RenderHelper.disableStandardItemLighting();
     	            GL11.glPopMatrix();
     	            
-    	            buttonList.add(new GuiButton(id,width - x, y, 20, 20, ""));
+    	            buttonList.add(new GuiButton(id, width - x, y, 20, 20, ""));
 					if (x <= 25 + (sort == 3 ? 25 : 0)) {
         				y += 20;
         				x = initX;
