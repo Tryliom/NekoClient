@@ -3626,9 +3626,44 @@ public class Utils {
 			}
 			
 		} else {
-			addChat("§cCommande inexistante !");
+			if (args.length==1) {
+				shouldToggleModule(message);
+			} else 
+				addChat("§cCommande inexistante !");
 		}
 		mc.ingameGUI.getChatGUI().addToSentMessages(var.prefixCmd+message);
+		mc.displayGuiScreen((GuiScreen)null);
+	}
+	
+	public static void shouldToggleModule(String message) {
+		String s = message.toLowerCase();
+		
+		for (Module m : ModuleManager.ActiveModule) {	
+			if (Utils.isLock(m.getName()))
+				continue;
+			Boolean alias = isAnAliasOfModule(s, m);
+			
+			if (alias || m.getName().toLowerCase().equalsIgnoreCase(s))
+				Utils.toggleModule(m.getName());
+		}
+	}
+	
+	public static Boolean isAnAliasOfModule(String text, Module m) {
+		boolean link = false;
+		HashMap<Module, String> hm = ModuleManager.link;
+		
+		if (hm.containsKey(m)) {
+			if (hm.get(m).contains(",")) {
+				for (String str : hm.get(m).split(",")) {
+					if (str.equalsIgnoreCase(text))
+						link = true;
+				}
+			} else
+				if (hm.get(m).equalsIgnoreCase(text))
+					link = true;
+		}
+		
+		return link;
 	}
 	
 	public static String[] getRankDescription(String rank) {

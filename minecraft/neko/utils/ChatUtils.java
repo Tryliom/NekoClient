@@ -243,36 +243,6 @@ public class ChatUtils {
 			if (!var3.equalsIgnoreCase(var.prefixCmd+"startquest"))
 				Utils.checkQuest(var3);
 			
-			if (args.length==1) {
-				String s = args[0].replaceFirst(var.prefixCmd, "").toLowerCase();		
-				for (Module m : ModuleManager.ActiveModule) {
-					boolean link = false;
-					HashMap<Module, String> hm = ModuleManager.link;
-					if (hm.containsKey(m)) {
-						if (hm.get(m).contains(",")) {
-							for (String str : hm.get(m).split(",")) {
-								if (str.equalsIgnoreCase(s))
-									link = true;
-							}
-						} else
-							if (hm.get(m).equalsIgnoreCase(s))
-								link = true;
-					}
-					if (link || m.getName().toLowerCase().equalsIgnoreCase(s))
-						link = true;
-					if (link && !Utils.isLock(m.getName())) {
-						Utils.toggleModule(m.getName());
-						Utils.checkXp(xp);
-						mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-						this.mc.displayGuiScreen((GuiScreen)null);
-						return;
-					} else if (link && Utils.isLock(m.getName())) {
-						Utils.addWarn(m.getName());
-					}
-				}
-				
-			}
-			
 			for (Lock l : ModuleManager.Lock) {
 				String s = l.getName();
 				if (var3.startsWith(s.replace("--", var.prefixCmd)) || l.getRaccourcis().isEmpty() ? false : var3.startsWith(var.prefixCmd+l.getRaccourcis()) && Utils.isLock(s)) {
