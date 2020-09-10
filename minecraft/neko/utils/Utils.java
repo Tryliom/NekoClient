@@ -3628,7 +3628,7 @@ public class Utils {
 		} else {
 			addChat("§cCommande inexistante !");
 		}
-		mc.ingameGUI.getChatGUI().addToSentMessages(message);
+		mc.ingameGUI.getChatGUI().addToSentMessages(var.prefixCmd+message);
 	}
 	
 	public static String[] getRankDescription(String rank) {
