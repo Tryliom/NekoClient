@@ -3617,22 +3617,37 @@ public class Utils {
 	public static void onCommand(String message) {
 		Command cmd = getCommandStartByName(message);
 		String[] args = message.split(" ");
+		Boolean locked = isCommandLock(message);
 		
-		if (cmd != null) {
-			if (args.length < cmd.getMinArgs()) {
-				addChat("§cErreur, il manque des arguments");
+		if (!locked)
+			if (cmd != null) {
+				if (args.length < cmd.getMinArgs()) {
+					addChat("§cErreur, il manque des arguments");
+				} else {
+					cmd.onCommand(args);
+				}
+				
 			} else {
-				cmd.onCommand(args);
+				if (args.length==1) {
+					shouldToggleModule(message);
+				} else 
+					addChat("§cCommande inexistante !");
 			}
-			
-		} else {
-			if (args.length==1) {
-				shouldToggleModule(message);
-			} else 
-				addChat("§cCommande inexistante !");
-		}
 		mc.ingameGUI.getChatGUI().addToSentMessages(var.prefixCmd+message);
 		mc.displayGuiScreen((GuiScreen)null);
+	}
+	
+	public static Boolean isCommandLock(String command) {
+		for (Lock l : ModuleManager.Lock) {
+			String s = l.getName();
+			if (l.getRaccourcis().isEmpty() ? false : command.startsWith(l.getRaccourcis()) && Utils.isLock(s)) {
+				Utils.addWarn(s);
+				mc.thePlayer.playSound("mob.villager.no", 1.0F, 1.0F);
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	public static void shouldToggleModule(String message) {

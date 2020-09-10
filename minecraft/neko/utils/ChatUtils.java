@@ -236,23 +236,9 @@ public class ChatUtils {
 			
 			// Old code
 			args = var3.split(" ");
-			if (args[0].equalsIgnoreCase(var.prefixCmd)) {
-				Utils.addChat(error); 
-				Utils.checkXp(xp);
-			}
+
 			if (!var3.equalsIgnoreCase(var.prefixCmd+"startquest"))
 				Utils.checkQuest(var3);
-			
-			for (Lock l : ModuleManager.Lock) {
-				String s = l.getName();
-				if (var3.startsWith(s.replace("--", var.prefixCmd)) || l.getRaccourcis().isEmpty() ? false : var3.startsWith(var.prefixCmd+l.getRaccourcis()) && Utils.isLock(s)) {
-					Utils.addWarn(s);
-					mc.thePlayer.playSound("mob.villager.no", 1.0F, 1.0F);
-				 	mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-				 	this.mc.displayGuiScreen((GuiScreen)null);
-					return;
-				}
-			}
 			
 			//TODO: BAN
 			if (var3.startsWith(var.prefixCmd+"ban")) {
