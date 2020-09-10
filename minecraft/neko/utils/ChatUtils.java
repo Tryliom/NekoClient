@@ -4465,8 +4465,8 @@ public class ChatUtils {
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"autocmd")) {
 				if (args.length>=3) {
 					if (args[1].equalsIgnoreCase("delay")) {
-						if (Utils.isInteger(args[2])) {
-							AutoCmd.sec = Integer.parseInt(args[2]);
+						if (Utils.isDouble(args[2])) {
+							AutoCmd.sec = Double.parseDouble(args[2]);
 							Utils.addChat("§aLe délai des commandes du AutoCmd a été mis à "+args[2]+" !");
 						} else {
 							Utils.addError("Les secondes doivent être un nombre entier !");

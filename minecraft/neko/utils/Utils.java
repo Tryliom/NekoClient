@@ -3554,7 +3554,7 @@ public class Utils {
             		AutoCmd.cmd = ligne;
             	}
             	if (i==182) {
-            		AutoCmd.sec = Integer.parseInt(ligne);
+            		AutoCmd.sec = Double.parseDouble(ligne);
             	}
             	if (i==183) {
             		Near.spawn = BlockPos.fromLong(Long.parseLong(ligne));

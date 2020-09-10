@@ -46,6 +46,7 @@ public class PlaceAndBreak extends Module {
 	public void onDisabled() {
 		mc.gameSettings.keyBindSneak.pressed = false;
 		mc.gameSettings.keyBindAttack.pressed = false;
+		mc.gameSettings.keyBindUseItem.pressed = false;
 		super.onDisabled();
 	}
 	
