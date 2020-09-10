@@ -312,23 +312,6 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"listping")) {
-				for (Object o : mc.theWorld.playerEntities) {
-					if (o instanceof EntityPlayer) {
-						int ping=-1;
-						EntityPlayer en = (EntityPlayer) o;
-						try {
-							NetworkPlayerInfo npi = (NetworkPlayerInfo) mc.getNetHandler().getPlayerInfoMap().get(en.getGameProfile().getId());
-							ping = npi.getResponseTime();
-						} catch (Exception e) {						
-							
-						}
-						Utils.addChat("§7Ping's §c"+en.getName()+"§7: §a"+ping+"ms");
-					}
-				}
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
 			if (args[0].equalsIgnoreCase(var.prefixCmd + "ping")) {
 				Ping p = Ping.getPing();
 				if (args[1].equalsIgnoreCase("delay")) {
