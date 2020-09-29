@@ -1139,15 +1139,15 @@ public class Utils {
 				for(Object o : mc.theWorld.playerEntities) {
 		                EntityLivingBase entity = (EntityLivingBase) o;
 		               
-		                    	if (Math.random()<Math.random()) {
-		                    		if (MCLeaks.isAltActive()) {
-		                    			if (!entity.getName().equalsIgnoreCase(MCLeaks.getMCName())) {
-		                    				return entity.getName();
-		                    			}
-		                    		} else if (!entity.getName().equalsIgnoreCase(mc.session.getUsername())) {
-		                    			return entity.getName();
-		                    		}                    		
-		                    	}            
+                    	if (Math.random()<Math.random()) {
+                    		if (MCLeaks.isAltActive()) {
+                    			if (!entity.getName().equalsIgnoreCase(MCLeaks.getMCName())) {
+                    				return entity.getName();
+                    			}
+                    		} else if (!entity.getName().equalsIgnoreCase(mc.session.getUsername())) {
+                    			return entity.getName();
+                    		}                    		
+                    	}            
 		        }
 			else {
 				for (String en : KillAura.list) {
@@ -3624,7 +3624,12 @@ public class Utils {
 				if (args.length < cmd.getMinArgs()) {
 					addChat("§cErreur, il manque des arguments");
 				} else {
-					cmd.onCommand(args);
+					try {
+						cmd.onCommand(args);
+					} catch(Exception e) {
+						e.printStackTrace();
+						addChat("§cErreur lors de l'exécution de la commande !");
+					}
 				}
 				
 			} else {

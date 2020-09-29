@@ -1,5 +1,5 @@
 package neko.command;
 
 public enum CommandType {
-	Other, Velocity;
+	Other, Velocity, Admin, Ping, Friend;
 }

@@ -1,8 +1,6 @@
 package neko.command.commands;
 
-import java.net.InetAddress;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.Scanner;
 
 import neko.command.Command;

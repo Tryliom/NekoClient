@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import neko.module.Category;
 import neko.module.Module;
+import neko.utils.Utils;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,7 +39,7 @@ public class Friends extends Module {
                     		il++;
                     	}	    
                     	if (il!=0) {
-                    		Friends.addFriend(entity.getName());
+                    		Friends.updateFriend(entity.getName());
                     		il=0;
                     	}
                         continue;
@@ -72,22 +73,20 @@ public class Friends extends Module {
 	}
 	
 	public static boolean isFriend(String name) {
-		for (int i=0;i<friend.size();i++) {
-			if (friend.get(i).equals(name)) {
-				return true;
-			}
-		}
-		return false;
+		return friend.contains(name);
 	}
 	
-	public static void addFriend(String name) {
+	public static void updateFriend(String name) {
 		for (int i=0;i<friend.size();i++) {
 			if (friend.get(i).equals(name)) {
 				friend.remove(i);
+				Utils.addChat("§5"+name + "§c a été retiré de ta liste d'amis !");
 				return;
 			}
 		}
+		
 		friend.add(name);
+		Utils.addChat("§5"+name + "§a a été ajouté à ta liste d'amis !"); 
 		u.saveFriends();
 	}
 

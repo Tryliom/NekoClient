@@ -3408,6 +3408,5 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
 	public void setProxy(Proxy proxy) {
 		this.proxy = proxy;
-		
 	}
 }
