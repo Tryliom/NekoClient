@@ -162,7 +162,7 @@ public class ModuleManager {
 		ActiveModule.add(new NoClip()); // Key N
 		ActiveModule.add(new Regen()); // Key G
 		ActiveModule.add(new Flight()); // Key R
-		ActiveModule.add(new UnclaimFinder());
+		//ActiveModule.add(new UnclaimFinder());
 		ActiveModule.add(new Autoarmor()); // Key NONE
 		ActiveModule.add(new Automine()); //Key NONE
 		ActiveModule.add(new AutoCmd()); //Key NONE

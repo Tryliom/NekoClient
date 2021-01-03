@@ -33,10 +33,8 @@ public class Antiafk extends Module {
 		if (delay>sec*20) {
 			delay=0;
 			mc.thePlayer.jump();
-			double value1 = Math.random()*1 - 0.5;
-			double value2 = Math.random()*1 - 0.5;
-			mc.thePlayer.rotationPitch+=value1;
-			mc.thePlayer.rotationYaw+=value2;
+			mc.thePlayer.rotationPitch += Math.random()*0.2 - 0.1;
+			mc.thePlayer.rotationYaw += Math.random()*0.2 - 0.1;
 		} else
 			delay++;
 	}

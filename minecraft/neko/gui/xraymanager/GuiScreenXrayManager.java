@@ -1,7 +1,5 @@
 package neko.gui.xraymanager;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,10 +23,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.RegistryNamespacedDefaultedByKey;
-import net.minecraft.util.ResourceLocation;
 
 public class GuiScreenXrayManager extends GuiScreen {
 
@@ -97,6 +91,7 @@ public class GuiScreenXrayManager extends GuiScreen {
         this.selectedXrayBlocsList.setSlotXBoundsFromLeft(this.width / 2 + 4);
         this.selectedXrayBlocsList.registerScrollButtons(7, 8);
     }
+    
     public void CreateLists(Boolean search, String text) {
     	this.availableXrayBlocs = Lists.newArrayList();
 		this.selectedXrayBlocs = Lists.newArrayList();
@@ -200,7 +195,7 @@ public class GuiScreenXrayManager extends GuiScreen {
     	return allXrayBlocs;
     }
     
-protected void keyTyped(char typedChar, int keyCode) throws IOException {
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
 		
 		if (keyCode == Keyboard.KEY_ESCAPE)
 			this.mc.displayGuiScreen(this.prevGui);
@@ -271,7 +266,7 @@ protected void keyTyped(char typedChar, int keyCode) throws IOException {
     }
     
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-    	this.drawBackground(0);
+    	this.drawRect(0, 0, this.width, this.height, 0xff282727);
     	this.buttonList.clear();
     	this.buttonList.add(new GuiButton(1, this.width/2-100, this.height - 28, "Retour"));
     	

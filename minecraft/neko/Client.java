@@ -47,7 +47,7 @@ public class Client {
 	public final static String CLIENT_NAME = "Neko";
 	public final String CLIENT_AUTHOR = "Tryliom et Marie";
 
-	public static final String CLIENT_VERSION = "3.0";
+	public static final String CLIENT_VERSION = "Pre-3.0";
 	public static String scrollingSpacer = "                   ";
 	public String strNeko = "§bNeko v" + CLIENT_VERSION;
 	public String strCreator = "§eCréé par §f§lTryliom§e et §f§lMarie";
@@ -80,7 +80,7 @@ public class Client {
 	public RequestManager rm;
 	public boolean firstServDisplay = true;
 	// Doesn't check update version if true
-	public boolean develop = true;
+	public boolean develop = false;
 	
 	public void startClient() {
 		

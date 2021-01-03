@@ -426,7 +426,6 @@ public class Utils {
 	
 
 	public static void tranferAllData() {		
-		boolean valid = true;
 		Consumer<String> check = (String cfgName) -> {
 			File f = new File(System.getenv("APPDATA") + "\\GoodNight_4\\config\\audio\\rpg\\Config\\"+cfgName);
 			if (!f.exists()) {
@@ -3604,6 +3603,15 @@ public class Utils {
 		return list;
 	}
 	
+	public static Boolean isCommandType(String type) {
+		for (CommandType command : CommandType.values()) {
+			if (command.name().equalsIgnoreCase(type))
+				return true;
+		}
+		
+		return false;
+	}
+	
 	public static Command getCommandStartByName(String name) {
 		CommandManager commandManager = Client.getNeko().commandManager;
 		for (Command cmd : commandManager.getCommands()) {
@@ -3630,8 +3638,10 @@ public class Utils {
 			} else {
 				if (args.length==1) {
 					shouldToggleModule(message);
-				} else 
-					addChat("§cCommande inexistante !");
+				} else {
+					// For pre-3.0
+					//addChat("§cCommande inexistante !");
+				}
 			}
 		mc.ingameGUI.getChatGUI().addToSentMessages(var.prefixCmd+message);
 		mc.displayGuiScreen((GuiScreen)null);

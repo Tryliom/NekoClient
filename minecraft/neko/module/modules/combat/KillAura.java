@@ -151,8 +151,6 @@ public class KillAura extends Module {
     	
     	if (premium && Utils.isPremium((en instanceof EntityPlayer) ? (EntityPlayer) en : null))
     		return false;
-    	if (en.getName().isEmpty())
-    		return false;
     	
     	return true;
     }
@@ -208,8 +206,7 @@ class cps implements ActionListener {
 			switch (var.mode) {
 			case Player :
 				try {
-					for (Object theObject : mc.theWorld.playerEntities) {
-		                EntityLivingBase entity = (EntityLivingBase) theObject;
+					for (EntityPlayer entity : mc.theWorld.playerEntities) {
 		                if(KillAura.isViable(entity)) {   
 		                	if (KillAura.lockView)
 		                		KillAura.faceEntity(entity);

@@ -62,32 +62,36 @@ public class GuiRankManager extends GuiScreen {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		drawDefaultBackground();
 		this.buttonList.clear();
-		this.buttonList.add(new GuiButton(0, this.width*3 / 4, this.height - 52, 100, 20, "Retour"));
-		if(this.Informations.equalsIgnoreCase("")) {
-			this.buttonList.add(new GuiButton(1, this.width*3 / 4, this.height - 82, 100, 20, "Toggle"));
+		this.buttonList.add(new GuiButton(0, this.width/2 - 200, this.height - 30, 100, 20, "Retour"));
+		if(this.Informations.isEmpty()) {
+			this.buttonList.add(new GuiButton(1, this.width/2 + 100, this.height - 30, 100, 20, "Toggle"));
 		}
 		this.guiList.drawScreen(mouseX, mouseY, partialTicks);
 		this.search.drawRGBATextBox(-13882323, -14737633);
 		drawCenteredString(var.NekoFont, Message, 10 + var.NekoFont.getStringWidth(Message)/2, 20, 16777215);
-		drawCenteredString(this.fontRendererObj, act, 10 + this.fontRendererObj.getStringWidth(act)/2, 42, 16777215);
-		drawCenteredString(this.fontRendererObj, ActualRankName, 10 + this.fontRendererObj.getStringWidth(ActualRankName)/2, 50, 16777215);
+		String actualRank = act + " " + ActualRankName;
+		drawCenteredString(this.fontRendererObj, actualRank, 10 + this.fontRendererObj.getStringWidth(actualRank)/2, 45, 16777215);
 		int xx = 60;
 		for(String s : ActualDesc) {
 			drawCenteredString(this.fontRendererObj, s, 10 + this.fontRendererObj.getStringWidth(s)/2, xx, 16777215);
 			xx += 8;
 		}
 		xx+=8;
-		drawHorizontalLine(10, 50, xx, 0x99ffffff);
-		xx+=8;
-		drawCenteredString(this.fontRendererObj, sel, 10 + this.fontRendererObj.getStringWidth(sel)/2, xx, 16777215);
-		xx+=8;
-		drawCenteredString(this.fontRendererObj, Utils.getRankColor2(SelectedRankName) + SelectedRankName, 10 + this.fontRendererObj.getStringWidth(SelectedRankName)/2, xx, 16777215);
-		xx += 10;
-		for(String s : SelectedDesc) {
-			drawCenteredString(this.fontRendererObj, s, 10 + this.fontRendererObj.getStringWidth(s)/2, xx, 16777215);
-			xx += 8;
+		
+		if (!this.SelectedRankName.isEmpty()) {
+			drawHorizontalLine(10, 50, xx, 0x99ffffff);
+			xx+=8;
+			String rankSelected = sel + " " + Utils.getRankColor2(SelectedRankName) + SelectedRankName;
+			drawCenteredString(this.fontRendererObj, rankSelected, 10 + this.fontRendererObj.getStringWidth(rankSelected)/2, xx, 16777215);
+			xx+=8;
+			xx += 10;
+			for(String s : SelectedDesc) {
+				drawCenteredString(this.fontRendererObj, s, 10 + this.fontRendererObj.getStringWidth(s)/2, xx, 16777215);
+				xx += 8;
+			}
+			drawCenteredString(var.NekoFont, this.Informations, this.width/2, this.height-20, 16777215);
 		}
-		drawCenteredString(var.NekoFont, this.Informations, this.width/2, this.height-20, 16777215);
+		
 		drawCenteredString(var.NekoFont, "Rank Manager", this.width / 2, 10, 16777215);
 		if (this.search.getText().isEmpty())
 			drawCenteredString(var.NekoFont, "Rechercher...", (this.width*3 / 4) -14, 16, 16777215);
@@ -122,8 +126,8 @@ public class GuiRankManager extends GuiScreen {
 	
 	public boolean isSearchSuccessful(String text, Rank r) {
 		text = text.toLowerCase();
-		String RankName = r.getName();
-		String RankRate = r.getRate().name();
+		String RankName = r.getName().toLowerCase();
+		String RankRate = r.getRate().name().toLowerCase();
 		return text.equalsIgnoreCase("") || RankName.contains(text) || RankRate.contains(text);
 	}
 	
@@ -177,7 +181,7 @@ public class GuiRankManager extends GuiScreen {
 		ArrayList<ListRankks> lr = new ArrayList<ListRankks>();
 		
 		public GuiList(GuiScreen prevGui) {
-			super(Minecraft.getMinecraft(), prevGui.width, prevGui.height, 40, prevGui.height - 26, 30);
+			super(Minecraft.getMinecraft(), prevGui.width*3/2, prevGui.height, 40, prevGui.height - 40, 40);
 			for(Rank r : ModuleManager.rang) {
 				if(!r.isLock()) {
 					this.lr.add(new ListRankks(r));
@@ -228,8 +232,12 @@ public class GuiRankManager extends GuiScreen {
 			} else {
 				GuiRankManager.this.Informations = "";
 			}
-			GuiRankManager.this.SelectedRankName = r.getName();
-			GuiRankManager.this.SelectedDesc = Utils.getRankDescription(r.getName());
+			if (GuiRankManager.this.ActualRankName.equalsIgnoreCase(Utils.getRankColor2(r.getName()) + r.getName())) {
+				GuiRankManager.this.SelectedRankName = "";
+			} else {
+				GuiRankManager.this.SelectedRankName = r.getName();
+				GuiRankManager.this.SelectedDesc = Utils.getRankDescription(r.getName());
+			}
 		}
 		
 		protected void drawBackground() {}
@@ -242,7 +250,6 @@ public class GuiRankManager extends GuiScreen {
 			}
 			Rank r = this.list.get(i);
 			boolean selected = (var.rang == r) ? true : false;
-            int var12 = this.left + this.width / 2 + this.getListWidth() / 2;
             
             int middle = x + this.getListWidth() / 2;
 			int nameY = y + this.slotHeight/2 - 12;
@@ -256,7 +263,7 @@ public class GuiRankManager extends GuiScreen {
 			} else {
 				int Chars = r.getName().length();
 				String blbl = "";
-				for(int ii = 1; i<Chars; i++) {
+				for(; i<Chars; i++) {
 					blbl = blbl + "?";
 				}
 				drawCenteredString(var.NekoFont, "§0" + blbl, middle, nameY, 10526880);

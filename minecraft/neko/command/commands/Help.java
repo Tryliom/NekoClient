@@ -19,8 +19,8 @@ public class Help extends Command {
 		
 		if (args.length == 1) {
 			list = Utils.getCommandByType(CommandType.Other);
-		} else if (CommandType.valueOf(args[1].toLowerCase()) != null) {
-			list = Utils.getCommandByType(CommandType.valueOf(args[1].toLowerCase()));
+		} else if (Utils.isCommandType(args[1])) {
+			list = Utils.getCommandByType(CommandType.valueOf(Utils.capitalize(args[1].toLowerCase())));
 		} else {
 			Utils.addChat("§cCette aide n'existe pas");
 		}

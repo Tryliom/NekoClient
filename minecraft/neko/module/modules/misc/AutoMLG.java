@@ -27,6 +27,7 @@ public class AutoMLG extends Module {
 	}
 	
 	public void onDisabled() {
+		mc.gameSettings.keyBindUseItem.pressed = false;
 		super.onDisabled();
 	}		
 	
@@ -35,6 +36,7 @@ public class AutoMLG extends Module {
 	}
 	
 	public void onUpdate() {	
+		mc.gameSettings.keyBindUseItem.pressed = true;
 		boolean bucket=false;
 		try {
 			Item i = mc.thePlayer.getCurrentEquippedItem().getItem();
