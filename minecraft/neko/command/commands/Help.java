@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import neko.command.Command;
 import neko.command.CommandType;
-import neko.module.other.enums.Chat;
 import neko.utils.Utils;
 
 public class Help extends Command {

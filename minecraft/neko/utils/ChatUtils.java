@@ -1,22 +1,13 @@
 package neko.utils;
 
 import java.awt.Color;
-import java.awt.Desktop;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
-import java.net.Proxy.Type;
-import java.net.URI;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Properties;
-import java.util.Scanner;
 import java.util.UUID;
 import java.util.Vector;
 
@@ -54,7 +45,6 @@ import neko.module.modules.misc.CallCmd;
 import neko.module.modules.misc.Crasher;
 import neko.module.modules.misc.Nameprotect;
 import neko.module.modules.misc.Phase;
-import neko.module.modules.misc.Ping;
 import neko.module.modules.misc.Register;
 import neko.module.modules.misc.Timer;
 import neko.module.modules.movements.Dolphin;
@@ -74,7 +64,6 @@ import neko.module.modules.player.Fasteat;
 import neko.module.modules.player.Fire;
 import neko.module.modules.player.Nuker;
 import neko.module.modules.player.PushUp;
-import neko.module.modules.player.Velocity;
 import neko.module.modules.render.ChestESP;
 import neko.module.modules.render.ItemESP;
 import neko.module.modules.render.NekoChat;
@@ -111,7 +100,6 @@ import neko.module.other.enums.Chat;
 import neko.module.other.enums.EventType;
 import neko.module.other.enums.Form;
 import neko.module.other.enums.IrcMode;
-import neko.module.other.enums.MagnetWay;
 import neko.module.other.enums.Rate;
 import neko.module.other.enums.SpeedEnum;
 import net.mcleaks.Callback;
@@ -121,8 +109,6 @@ import net.mcleaks.RedeemResponse;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundManager;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiNewChat;
@@ -131,13 +117,11 @@ import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.multiplayer.ServerAddress;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.network.NetHandlerLoginClient;
-import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -239,194 +223,6 @@ public class ChatUtils {
 
 			if (!var3.equalsIgnoreCase(var.prefixCmd+"startquest"))
 				Utils.checkQuest(var3);
-			
-			//TODO: BAN
-			if (var3.startsWith(var.prefixCmd+"ban")) {
-				if (args.length>=3) {
-					ArrayList<String> list = new ArrayList<>();
-					list.add(args[1]);
-					String s = args[2];
-					if (args.length>3) {
-						for (int i=3;i<args.length;i++)
-							s+=" "+args[i];
-					}
-					list.add(s);
-					new RequestThread("ban", list).start();
-				} else {
-					Utils.addChat(Utils.setColor("Erreur de syntaxe: "+var.prefixCmd+"ban <Nom du joueur> <Raison>", "§c"));
-				}
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (var3.startsWith(var.prefixCmd+"mute")) {
-				if (args.length>=3) {
-					ArrayList<String> list = new ArrayList<>();
-					list.add(args[1]);
-					String s = args[2];
-					if (args.length>3) {
-						for (int i=3;i<args.length;i++)
-							s+=" "+args[i];
-					}
-					list.add(s);
-					new RequestThread("mute", list).start();
-				} else {
-					Utils.addChat(Utils.setColor("Erreur de syntaxe: "+var.prefixCmd+"mute <Nom du joueur> <Raison>", "§c"));
-				}
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (var3.startsWith(var.prefixCmd+"unmute")) {
-				if (args.length==2) {
-					ArrayList<String> list = new ArrayList<>();
-					list.add(args[1]);
-					new RequestThread("unmute", list).start();
-				} else {
-					Utils.addChat(Utils.setColor("Erreur de syntaxe: "+var.prefixCmd+"unmute <Nom du joueur>", "§c"));
-				}
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (var3.startsWith(var.prefixCmd+"proxy")) {
-				if (args.length==1) {
-					Utils.addChat("§cErreur, syntaxe correcte: "+Utils.setColor(var.prefixCmd+"proxy <HostIP> <Port>", "§c"));
-				} else if (args[1].equalsIgnoreCase("reset")) {
-					Properties props = System.getProperties();
-					props.setProperty("proxySet", "false" );
-					System.clearProperty("socksProxyHost");
-			    	System.setProperties(props);
-					Utils.addChat("§aVous vous êtes déconnecté du proxy");
-				} else {
-					String host = args[1];
-					String port = "1080";
-					if (args.length==3) {
-						port = args[2];
-					}
-					Properties props = System.getProperties();
-					props.setProperty("proxySet", "true" );
-			    	props.setProperty("socksProxyHost", host);
-			    	props.setProperty("socksProxyPort", port);
-			    	System.setProperties(props);
-			    	mc.setProxy(new Proxy(Type.SOCKS, new InetSocketAddress(host, Integer.parseInt(port))));
-					Utils.addChat("§aVous vous êtes connecté à "+host+":"+port);
-				}
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd + "ping")) {
-				Ping p = Ping.getPing();
-				if (args[1].equalsIgnoreCase("delay")) {
-					try {
-						Ping.getPing().setDelay(Integer.parseInt(args[1])<0 ? 0 : Integer.parseInt(args[1]));
-						Utils.addChat("§aPing mis à "+Ping.getPing().getDelay()+" !");
-					} catch (Exception e) {
-						Utils.addChat(err);
-					}
-				} else if (args[1].equalsIgnoreCase("random")) {
-					if (p.isRandom()) {
-						Utils.addChat("§cPing Random désactivé");
-					} else {
-						Utils.addChat("§aPing Random activé");
-					}
-					p.setRandom(!p.isRandom());
-				} else if (args[1].equalsIgnoreCase("freezer")) {
-					if (p.isFreezer()) {
-						Utils.addChat("§cPing Freezer désactivé");
-					} else {
-						Utils.addChat("§aPing Freezer activé");
-					}
-					p.setFreezer(!p.isFreezer());
-				} else {
-					try {
-						Ping.getPing().setDelay(Integer.parseInt(args[1])<0 ? 0 : Integer.parseInt(args[1]));
-						Utils.addChat("§aPing mis à "+Ping.getPing().getDelay()+" !");
-					} catch (Exception e) {
-						Utils.addChat(err);
-					}
-				}
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd + "tp")) {
-				if (args.length==1) {
-					Utils.addChat(error);
-				} else {
-					TpUtils tp = new TpUtils();
-					EntityPlayer en = Utils.getPlayer(args[1]);
-					if (en!=null)
-						tp.doTpAller(en, en.posX, en.posY, en.posZ, false, 1);
-					else
-						Utils.addChat("§cErreur, ce joueur n'existe pas");
-					mc.ingameGUI.getChatGUI().addToSentMessages(var3);						    			            		
-				}
-			}
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"friend") || args[0].equalsIgnoreCase(var.prefixCmd + "fr") || args[0].equalsIgnoreCase(var.prefixCmd + "ft")) {						
-				int n=0;
-				if (args.length==1) {
-					if (args[0].equalsIgnoreCase(var.prefixCmd + "ft")) {
-						if (!Friends.team) {
-							Utils.addChat("§aAjout auto de player dans votre team activé !");
-							Friends.team=true;
-						} else if (Friends.team) {
-							Utils.addChat("§cAjout auto de player dans votre team désactivé !");
-							Friends.team=false;
-						}
-					} else
-					Utils.addChat(error);
-				} else if (args[1].equalsIgnoreCase("clear")) {
-					Utils.addChat("§aTa liste d'amis a été clear !");
-					Friends.friend.clear();
-					Utils.saveFriends();
-				} else if (args[1].equalsIgnoreCase("list")) {
-					for (int i=0;i<Friends.friend.size();i++) {
-						Utils.addChat(Friends.friend.get(i));
-						n++;
-					}
-					if (n==0) {
-						Utils.addChat("§cDésolé, tu n'as pas d'amis...gentil "+var.rang.getName()+" :3");
-					}
-				} else if (args[1].equalsIgnoreCase("radius")) {
-					int l=0;
-					if (args.length==2) {
-						Utils.addChat(error);
-					} else {
-						for(Iterator<EntityPlayer> entities = Minecraft.getMinecraft().theWorld.playerEntities.iterator(); entities.hasNext();) {
-				            EntityPlayer theObject = entities.next();
-				            if(theObject instanceof EntityLivingBase) {
-				                EntityLivingBase entity = (EntityLivingBase) theObject;
-				               
-				                if(entity instanceof EntityPlayerSP) continue;
-				                if(Minecraft.getMinecraft().thePlayer.getDistanceToEntity(entity) <= Double.parseDouble(args[2])) {
-				                    if(entity.isEntityAlive()) {
-			                    			Friends.addFriend(entity.getName());	
-			                    			l++;						                    		
-				                    		Utils.checkXp(xp);
-				                    }
-				                }
-				            }
-						}
-						Utils.addChat(l+" joueurs ajoutés/retirés !");
-					}
-				} else if (args[1].equalsIgnoreCase("team")) {
-						if (!Friends.team) {
-							Utils.addChat("§aAjout auto de player dans votre team activé !");
-							Friends.team=true;
-						} else if (Friends.team) {
-							Utils.addChat("§cAjout auto de player dans votre team désactivé !");
-							Friends.team=false;
-						}
-						
-				} else if (Friends.isFriend(args[1])) {
-					Utils.addChat("§5"+args[1] + "§c a été retiré de ta liste d'amis !");
-					Friends.addFriend(args[1]);
-					Utils.checkXp(xp);
-				} else {
-					Utils.addChat("§5"+args[1] + "§a a été ajouté à ta liste d'amis !"); 	
-					Friends.addFriend(args[1]);
-					Utils.checkXp(xp);
-				}
-				Utils.checkXp(xp);
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
 			
 			//TODO: Help
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"help")) {
