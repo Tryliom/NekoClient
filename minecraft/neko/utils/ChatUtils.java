@@ -90,7 +90,6 @@ import neko.module.other.Active;
 import neko.module.other.Bloc;
 import neko.module.other.DiscThread;
 import neko.module.other.Event;
-import neko.module.other.HackerDetector;
 import neko.module.other.Irc;
 import neko.module.other.PyroThread;
 import neko.module.other.Rank;
@@ -224,7 +223,6 @@ public class ChatUtils {
 			if (!var3.equalsIgnoreCase(var.prefixCmd+"startquest"))
 				Utils.checkQuest(var3);
 			
-			//TODO: Help
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"help")) {
 				// Afficher la liste des commandes non simplifiées
 				if (args.length==1) {
@@ -964,7 +962,7 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"pyro")) {
 				if (args.length==1) {
-					Utils.toggleModule("Pyro");
+					
 				} else if (args[1].equalsIgnoreCase("list")) {
 					String modes="";
 					int i=0;
@@ -1021,7 +1019,6 @@ public class ChatUtils {
 				Utils.addChat("§aPréfix changé !");
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}	
-			//TODO: OnlyRpg
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"onlyrpg")) {
 				if (args.length==1) {
 					if (var.onlyrpg.isActive()) {						
@@ -1058,7 +1055,6 @@ public class ChatUtils {
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"build")) {
 				Build b = Build.getBuild();
 				if (args.length==1) {
-					Utils.toggleModule("Build");					
 				} else if (args[1].equalsIgnoreCase("Down")) {
 					if (b.isDown()) {
 						Utils.addChat("§cMode Down désactivé");
@@ -1747,7 +1743,6 @@ public class ChatUtils {
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"dropshit") || args[0].equalsIgnoreCase(var.prefixCmd+"drop")) {
 				DropShit sh = DropShit.getShit();
 				if (args.length==1) {
-					Utils.toggleModule("DropShit");
 				} else if (args[1].equalsIgnoreCase("add")) {
 					try {
 						if (Utils.isInteger(args[2])) {
@@ -1796,8 +1791,6 @@ public class ChatUtils {
 			} else if (args[1].equalsIgnoreCase("all")) {
 				for (int i = 0; i < 45; i++) {
 					if (mc.thePlayer.inventoryContainer.getSlot(i).getStack() != null) {
-						ItemStack is = mc.thePlayer.inventoryContainer.getSlot(i).getStack();
-						Item item = is.getItem();
 						mc.playerController.windowClick(0, i, 0, 0, mc.thePlayer);
 			        	mc.playerController.windowClick(0, -999, 0, 0, mc.thePlayer);
 					}
@@ -1923,8 +1916,7 @@ public class ChatUtils {
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"radar") || args[0].equalsIgnoreCase(var.prefixCmd+"r")) {
-				if (args.length==1)
-					Utils.toggleModule("Radar");
+				if (args.length==1) {}
 				else if (args[1].equalsIgnoreCase("fr") || args[1].equalsIgnoreCase("friend") || args[1].equalsIgnoreCase("friends")) {
 					if (Radar.fr) {
 						Radar.fr=false;
@@ -2019,7 +2011,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"nametag")) {
 				if (args.length==1) {
-					Utils.toggleModule("Nametag");
 				} else {
 					try {
 						Render.varNeko=Float.parseFloat(args[1]);
@@ -2057,7 +2048,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"l") || args[0].equalsIgnoreCase(var.prefixCmd+"arraylist")) {
 				if (args.length==1) {
-					Utils.toggleModule("ArrayList");
 				} else {
 					try {
 						if(args[1].equalsIgnoreCase("unicolor")) {
@@ -2067,7 +2057,7 @@ public class ChatUtils {
 								Utils.addChat("§cLes nombres du ..araylist unicolor doivent être situés entre 0 et 255.");
 								return;
 							}
-							java.awt.Color c = new java.awt.Color(Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]));
+							java.awt.Color c = new java.awt.Color(r, g, b);
 							SettingsUtil.setArrayRed(c.getRed());
 							SettingsUtil.setArrayGreen(c.getGreen());
 							SettingsUtil.setArrayBlue(c.getBlue());
@@ -2140,7 +2130,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"autoarmor") || args[0].equalsIgnoreCase(var.prefixCmd+"aa")) {
 				if (args.length==1) {
-					Utils.toggleModule("Autoarmor");
 				} else if (args[1].equalsIgnoreCase("ec")) {
 						if (Autoarmor.ec) {
 							Autoarmor.ec=!Autoarmor.ec;
@@ -2235,7 +2224,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"clickaim")) {
 				if (args.length==1) {
-					Utils.toggleModule("ClickAim");
 				} else if (Utils.isDouble(args[1])) {
 					try {
 						ClickAim.dist=Float.parseFloat(args[1]);
@@ -2260,7 +2248,7 @@ public class ChatUtils {
 				Utils.checkXp(xp);						
 			}
 			
-			//TODO: Mcleaks
+
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"mcleaks") || args[0].equalsIgnoreCase(var.prefixCmd+"mcleak") || args[0].equalsIgnoreCase(var.prefixCmd+"mcl")) {
 				if (args.length==1) {
 					Utils.addChat("§cErreur, essayez "+var.prefixCmd+"mcleaks <token>");
@@ -2352,7 +2340,7 @@ public class ChatUtils {
 						}
 												
 						Utils.saveAccount(user, mdp);
-						ArrayList s = Utils.getAllAccount();
+						ArrayList<String> s = Utils.getAllAccount();
 						Utils.addChat("§aCompte N°"+s.size()+" ajouté !");
 					} catch (Exception e) {Utils.addChat("§cErreur d'ajout de compte");}							
 				} else if (args[1].equalsIgnoreCase("list")) {
@@ -2719,7 +2707,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"freecam")) {
 				if (args.length==1) {
-					Utils.toggleModule("Freecam");
 				} else {
 					try {
 						Freecam.speed=Float.parseFloat(args[1]);
@@ -2743,7 +2730,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"longjump")) {
 				if (args.length==1) {
-					Utils.toggleModule("longjump");
 				} else if (args[1].equalsIgnoreCase("speed")) {
 					try {
 						Longjump.speed=Float.parseFloat(args[2]);
@@ -2765,7 +2751,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"smoothaim")) {
 				if (args.length==1) {
-					Utils.toggleModule("SmoothAim");
 				} else if (args[1].equalsIgnoreCase("range")) {
 					try {
 						SmoothAim.range=Double.parseDouble(args[2]);
@@ -2794,7 +2779,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"autosoup")) {
 				if (args.length==1) {
-					Utils.toggleModule("autosoup");
 				} else if (args[1].equalsIgnoreCase("heal")) {
 					try {
 						Autosoup.heal=Integer.parseInt(args[2]);
@@ -2912,7 +2896,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"antiafk") || args[0].equalsIgnoreCase(var.prefixCmd+"afk")) {
 				if (args.length==1) {
-					Utils.toggleModule("Antiafk");
 				} else {
 					try {
 						Integer b = Integer.parseInt(args[1]);
@@ -2980,7 +2963,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"fire")) {
 				if (args.length==1) {
-					Utils.toggleModule("Fire");
 				} else {
 					try {
 						Fire.p=Integer.parseInt(args[1]);
@@ -2994,7 +2976,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"Water")) {
 				if (args.length==1) {
-					Utils.toggleModule("Water");
 				} else {
 					try {
 						Water.p=Integer.parseInt(args[1]);
@@ -3009,7 +2990,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"autoclic") || args[0].equalsIgnoreCase(var.prefixCmd+"auto")) {
 				if (args.length==1) {
-					Utils.toggleModule("AutoClic");
 				} else {
 					try {		
 						if (Integer.parseInt(args[1])<=0)
@@ -3027,7 +3007,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"push") || args[0].equalsIgnoreCase(var.prefixCmd+"pushup")) {
 				if (args.length==1) {
-					Utils.toggleModule("PushUp");
 				} else {
 					try {								
 						PushUp.getPush().setPacket(Integer.parseInt(args[1]));
@@ -3088,7 +3067,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"nekochat") || args[0].equalsIgnoreCase(var.prefixCmd+"chat")) {
 				if (args.length==1) {
-					Utils.toggleModule("NekoChat");
 				} else if (args[1].equalsIgnoreCase("color")) {
 					try {
 						int color = NekoChat.getChat().getColor();
@@ -3335,27 +3313,7 @@ public class ChatUtils {
 					Utils.addChat(Utils.setColor("Utilisation correcte: "+var.prefixCmd+"event <player:all> <server:all> <ver:all> <Type> <cmd>", "§c"));
 					Utils.addChat(Utils.setColor("Type: Unlock, RandUnlock, Rang, RangRate, Cmd, Msg, Xp, Lvl, Souls, Bonus et MeteoreRain", "§c"));
 				}
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"detector")) {
-				if (args.length==1) {
-					HackerDetector.setDetector();
-					if (HackerDetector.isOn) {
-						Utils.addChat("§aHacker Detector activé !");
-					} else {
-						Utils.addChat("§cHacker Detector désactivé !");
-					}
-				} else if (args[1].equalsIgnoreCase("alert")) {
-					if (HackerDetector.voirAlert) {
-						Utils.addChat("§cAlertes désactivées");
-					} else {
-						Utils.addChat("§aAlertes activées");
-					}
-					HackerDetector.voirAlert=!HackerDetector.voirAlert;
-				}
-				
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}			
+			}		
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"lvlup")) {
 				if (var.animation) {
@@ -3369,7 +3327,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"trade") || args[0].equalsIgnoreCase(var.prefixCmd+"shop")) {
 				if (args.length==1) {
-					//TODO: Commandes en 2
 					Utils.addChat(Utils.sep);
 					Utils.addChat("§lListe des gains:");
 					Utils.addChat2("§7Votre solde §7[§cici§7]", "", "§7Souls: §b"+var.ame+"\n§7Tickets de loteries:§6 "+var.lot, true, Chat.Click);
@@ -3924,8 +3881,7 @@ public class ChatUtils {
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"worldtime") || args[0].equalsIgnoreCase(var.prefixCmd+"time")) {
-				if (args.length==1) {
-					Utils.toggleModule("WorldTime");					
+				if (args.length==1) {				
 				} else {
 					try {
 						WorldTime.time=Long.parseLong(args[1]);
@@ -3947,8 +3903,7 @@ public class ChatUtils {
 				if (args.length==1 || Utils.isLock("reach")) {
 					if (Utils.isLock("reach")) {
 						Utils.addWarn("Reach");
-					} else
-						Utils.toggleModule("reach");
+					}
 				} else if (args[1].equalsIgnoreCase("pvp")) {
 					if (!Utils.isLock("--reach pvp")) {
 						if (Reach.pvp) {
@@ -4073,7 +4028,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"itemesp") || args[0].equalsIgnoreCase(var.prefixCmd+"item")) {
 				if (args.length==1) {					
-					Utils.toggleModule("ItemESP");
 				} else if (args.length>=3) {
 					try {
 						if (args[1].equalsIgnoreCase("color") || args[1].equalsIgnoreCase("c")) {
@@ -4102,10 +4056,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"wallhack") || args[0].equalsIgnoreCase(var.prefixCmd+"wh")) {
 				if (args.length==1 || Utils.isLock("Wallhack")) {
-					if (Utils.isLock("Wallhack")) {
-						Utils.addWarn("Wallhack");
-					} else
-						Utils.toggleModule("Wallhack");
 				} else if (args.length>=3) {
 					try {
 						if (args[1].equalsIgnoreCase("color") || args[1].equalsIgnoreCase("c")) {
@@ -4134,7 +4084,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"tracers")) {
 				if (args.length==1) {
-					Utils.toggleModule("tracers");
 				} else if (args[1].equalsIgnoreCase("fr") || args[1].equalsIgnoreCase("friend") || args[1].equalsIgnoreCase("friends")) {
 					if (Tracers.friend) {
 						Tracers.friend=false;
@@ -4214,7 +4163,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"trigger")) {
 				if (args.length==1) {
-					Utils.toggleModule("Trigger");
 				} else if (args[1].equalsIgnoreCase("cps")) {
 					try {
 						Trigger.cps=Integer.parseInt(args[2]);
@@ -4318,7 +4266,6 @@ public class ChatUtils {
 					if (args[1]!=null)
 						Utils.verif=args[1];
 					
-					//TODO: Verif
 					Event.lastEventId=-1;
 					Irc.getInstance().setLastId(-1);
 					Irc.getInstance().setLastMsg("");
@@ -4414,7 +4361,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"paint")) {
 				if (args.length==1) {
-					Utils.toggleModule("Paint");
 				} else if (args[1].equalsIgnoreCase("color")) {
 					try {
 						Paint.cR=Float.parseFloat(args[2])/100;
@@ -4476,7 +4422,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"cheststealer") || args[0].equalsIgnoreCase(var.prefixCmd+"cs")) {
 				if (args.length==1) {
-					Utils.toggleModule("Cheststealer");
 				} else {
 					try {
 						Cheststealer.waitTime=Integer.parseInt(args[1]);
@@ -4853,7 +4798,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"ka")) {
 				if (args.length==1) {
-					Utils.toggleModule("KillAura");
 				} else if (args[1].equalsIgnoreCase("lockview") || args[1].equalsIgnoreCase("lock")) {
 					if (KillAura.lockView) {
 						Utils.addChat("§cLockview du Kill Aura désactivée !");
@@ -4983,7 +4927,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"hud")) {
 				if (args.length==1) {
-					Utils.toggleModule("HUD");
 				} else if (args[1].equalsIgnoreCase("fps")) {
 					if (HUD.fps) {
 						HUD.fps=false;
@@ -5103,7 +5046,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"fasteat")) {
 				if (args.length==1) {
-					Utils.toggleModule("Fasteat");
 				} else {
 					try {
 						Fasteat.getFast().setPacket(Integer.parseInt(args[1]));
@@ -5162,7 +5104,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"dolphin")) {
 				if (args.length==1) {
-					Utils.toggleModule("Dolphin");
 				} else {
 					try {
 						Dolphin.dolph=Double.parseDouble(args[1]);
@@ -5177,7 +5118,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"regen")) {
 				if (args.length==1) {
-					Utils.toggleModule("Regen");
 				} else if (args[1].equalsIgnoreCase("bypass")){
 					if (Regen.bypass) {
 						Regen.bypass=!Regen.bypass;
@@ -5311,7 +5251,6 @@ public class ChatUtils {
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"speed")) {
 				Speed709 s = Speed709.getSpeed();
 				if (args.length==1) {
-					Utils.toggleModule("Speed");
 				} else if (args[1].equalsIgnoreCase("mode")) {
 					try {
 						s.setMode(SpeedEnum.valueOf(args[2]));
@@ -5333,7 +5272,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"noclip")) {
 				if (args.length==1) {
-					Utils.toggleModule("NoClip");
 				} else {
 					try {
 						NoClip.speed=(float) Double.parseDouble(args[1]);
@@ -5349,7 +5287,6 @@ public class ChatUtils {
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"firetrail")) {
 				FireTrail ft = FireTrail.getFireTrail();
 				if (args.length==1) {
-					Utils.toggleModule("FireTrail");
 				} else if (args[1].equalsIgnoreCase("large")) {
 					if (ft.isLarge()) {
 						Utils.addChat("§aLa trainée du FireTrail devient plus fine");
@@ -5365,7 +5302,6 @@ public class ChatUtils {
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"phase")) {
 				Phase p = Phase.getPhase();
 				if (args.length==1) {
-					Utils.toggleModule("Phase");
 				} else if (args[1].equalsIgnoreCase("vphase")) {
 					if (p.isVphase()) {
 						Utils.addChat("§cVphase désactivé");
@@ -5412,7 +5348,6 @@ public class ChatUtils {
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"tpback") || args[0].equalsIgnoreCase(var.prefixCmd+"tpb")) {
 				TpBack tp = TpBack.getInstance();
 				if (args.length==1) {
-					Utils.toggleModule("TpBack");
 				} else if (args[1].equalsIgnoreCase("classic")) {
 					if (!tp.isClassic()) {
 						Utils.addChat("§aVous retourner au mode classic !");
@@ -5453,7 +5388,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"vanillatp") || args[0].equalsIgnoreCase(var.prefixCmd+"vtp")) {
 				if (args.length==1) {
-					Utils.toggleModule("VanillaTp");
 				} else if (args[1].equalsIgnoreCase("air")) {
 					if (!VanillaTp.air) {
 						Utils.addChat("§aVous pouvez vous tp dans l'air !");
@@ -5482,7 +5416,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"automlg") || args[0].equalsIgnoreCase(var.prefixCmd+"mlg")) {
 				if (args.length==1) {
-					Utils.toggleModule("AutoMLG");
 				} else {
 					try {
 						AutoMLG mlg = AutoMLG.getMLG();
@@ -5498,7 +5431,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"timer")) {
 				if (args.length==1) {
-					Utils.toggleModule("Timer");
 				} else {
 					try {
 						float time = (float) Double.parseDouble(args[1]);
@@ -5525,7 +5457,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"flight")) {
 				if (args.length==1) {
-					Utils.toggleModule("Flight");
 				} else if (args[1].equalsIgnoreCase("blink")) {
 					 if (Flight.blink) {
 						 Flight.blink=false;
@@ -5678,7 +5609,7 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
-			//TODO: Nyah Tryliom c'est l'amour a Didi
+			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"nyah") || args[0].equalsIgnoreCase(var.prefixCmd+"nyah!") || args[0].equalsIgnoreCase(var.prefixCmd+"nyah*")) {
 				if (Utils.isLock("--nyah")) {
 					Utils.addWarn("Nyah");

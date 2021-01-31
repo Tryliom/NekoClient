@@ -411,10 +411,8 @@ public class InGameGui {
 		  for(TileEntity tile : tiles) {
 			  BlockPos b = new BlockPos(tile.getPos().getX(), tile.getPos().getY(), tile.getPos().getZ());
 			  ChunkCoordIntPair ct = mc.theWorld.getChunkFromBlockCoords(b).getChunkCoordIntPair();
-			  //Utils.addChat(ct.chunkXPos + ";" + ct.chunkZPos);
 			  int cx = chunk.xPosition; int cz = chunk.zPosition;
 			  int tx = ct.chunkXPos; int tz = ct.chunkZPos;
-			  //Utils.addChat(cx + ";" + cz + " - " + tx + ";" + tz);
 			  int seeDistance = 2;
 			  if((cx >= tx-seeDistance) && (cx <= tx+seeDistance) 
 					  && (cz >= tz-seeDistance) && (cz <= tz+seeDistance)) {

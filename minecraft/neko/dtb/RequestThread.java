@@ -436,13 +436,13 @@ public class RequestThread extends Thread {
 						        hm.put("player_name", pName);
 						        String realname = "";
 						        if (Utils.admin) {
-									realname = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/access/realname", NekoCloud.getNekoAPI().parseHashMapToJson(hm)).replaceAll("\"", "");
+									realname = Utils.getResultOfPostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/access/realname", NekoCloud.getNekoAPI().parseHashMapToJson(hm)).replaceAll("\"", "");
 									if (realname.startsWith(pName+"=")) {
 										realname = realname.replaceFirst(pName+"=", "");
 									}
 								}
 								Locale loc = new Locale("FR", "CH");
-								Utils.addChat2("§7["+(pMode.equalsIgnoreCase("§cIrc désactivé") ? "§c-" : "§a+")+"§7] "+pName+" joue sur §e"+pServer, Irc.getInstance().getPlayerClic(pName, pServer), "§7["+pRankColor+pRank+"§7]\n§d"+pName+"\n"+(realname.isEmpty() ? "" : "§cNom en jeu: "+realname+"\n")+"§bLvl."+NumberFormat.getNumberInstance(loc).format(pLvl)+" §7["+NumberFormat.getNumberInstance(loc).format(pXp)+"xp§7/"+NumberFormat.getNumberInstance(loc).format(pXpMax)+"xp§7]\n§7Serveur: "+pServer+"\n§7"+pKill+" kills\n§7"+pTime+" de temps de jeu\n§7Version: "+pVer+"\n§7Mode: "+pMode, pServer.equalsIgnoreCase("Localhost"), Chat.Summon);								
+								Utils.addChat2("§7["+(pMode.equalsIgnoreCase("§cIrc désactivé") ? "§c-" : "§a+")+"§7] "+pName+" joue sur §e"+pServer, Irc.getInstance().getPlayerClic(pServer), "§7["+pRankColor+pRank+"§7]\n§d"+pName+"\n"+(realname.isEmpty() ? "" : "§cNom en jeu: "+realname+"\n")+"§bLvl."+NumberFormat.getNumberInstance(loc).format(pLvl)+" §7["+NumberFormat.getNumberInstance(loc).format(pXp)+"xp§7/"+NumberFormat.getNumberInstance(loc).format(pXpMax)+"xp§7]\n§7Serveur: "+pServer+"\n§7"+pKill+" kills\n§7"+pTime+" de temps de jeu\n§7Version: "+pVer+"\n§7Mode: "+pMode, pServer.equalsIgnoreCase("Localhost"), Chat.Summon);								
 							}
 						}
 					}
@@ -478,14 +478,14 @@ public class RequestThread extends Thread {
 			HashMap<String, String> hm = NekoCloud.getNekoAPI().getBaseBody();
 			hm.put("message", msg.replaceAll("\"", "'"));
 			hm.put("message_type", args.size()==2 ? args.get(1) : "all");
-			Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/irc/message/send", NekoCloud.getNekoAPI().parseHashMapToJson(hm));
+			Utils.getResultOfPostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/irc/message/send", NekoCloud.getNekoAPI().parseHashMapToJson(hm));
 		}
 		
 		if (why.equalsIgnoreCase("ban")) {
 			HashMap<String, String> hm = NekoCloud.getNekoAPI().getBaseBody();
 			hm.put("player_name", args.get(0));
 			hm.put("reason", args.get(1));
-			String res = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/command/ban", NekoCloud.getNekoAPI().parseHashMapToJson(hm)).replaceAll("\"", "");
+			String res = Utils.getResultOfPostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/command/ban", NekoCloud.getNekoAPI().parseHashMapToJson(hm)).replaceAll("\"", "");
 			if (!res.equalsIgnoreCase("success")) {
 				Utils.addError(res);
 			}
@@ -495,7 +495,7 @@ public class RequestThread extends Thread {
 			HashMap<String, String> hm = NekoCloud.getNekoAPI().getBaseBody();
 			hm.put("player_name", args.get(0));
 			hm.put("reason", args.get(1));
-			String res = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/command/mute", NekoCloud.getNekoAPI().parseHashMapToJson(hm)).replaceAll("\"", "");
+			String res = Utils.getResultOfPostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/command/mute", NekoCloud.getNekoAPI().parseHashMapToJson(hm)).replaceAll("\"", "");
 			if (!res.equalsIgnoreCase("success")) {
 				Utils.addError(res);
 			}
@@ -504,7 +504,7 @@ public class RequestThread extends Thread {
 		if (why.equalsIgnoreCase("unmute")) {			
 			HashMap<String, String> hm = NekoCloud.getNekoAPI().getBaseBody();
 			hm.put("player_name", args.get(0));
-			String res = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/command/unmute", NekoCloud.getNekoAPI().parseHashMapToJson(hm)).replaceAll("\"", "");
+			String res = Utils.getResultOfPostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/command/unmute", NekoCloud.getNekoAPI().parseHashMapToJson(hm)).replaceAll("\"", "");
 			if (!res.equalsIgnoreCase("success")) {
 				Utils.addError(res);
 			}
@@ -674,211 +674,9 @@ public class RequestThread extends Thread {
 			hm.put("version", args.get(2));
 			hm.put("type", args.get(3));
 			hm.put("cmd", args.get(4));
-			String res = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/command/event", NekoCloud.getNekoAPI().parseHashMapToJson(hm)).replaceAll("\"", "");
+			String res = Utils.getResultOfPostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/command/event", NekoCloud.getNekoAPI().parseHashMapToJson(hm)).replaceAll("\"", "");
 			if (!res.equalsIgnoreCase("success")) {
 				Utils.addError(res);
-			}
-		}
-		
-		if (why.equalsIgnoreCase("displayMsg")) {
-			if (Irc.getInstance().getLastId()<=0) {
-				try {
-					URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=3dba9e35afdf13e5fef3f9471c80cf15&args=\""+Irc.getInstance().getNamePlayer()+"\"");
-					Scanner sc = new Scanner(url.openStream());	
-					String l;					
-					try {
-						while ((l = sc.nextLine()) != null) {
-							if (l.startsWith("MAX(msg_id)=")) {
-								Irc.getInstance().setLastId(Integer.parseInt(l.replaceFirst("............", "").replace("<br>", "").replaceAll("\t", "")));
-							}						
-						}
-					} catch (Exception e) {}
-					sc.close();
-				} catch (Exception e) {}
-			}
-			ArrayList<String> list = new ArrayList<>();
-			int playerId=0;
-			
-			String msg = "";
-			if (Irc.getInstance().getLastId()<0)
-				return;
-			try {
-				URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=f2400d205e10f2b0220d285fbf0f2b0e&args=\""+Irc.getInstance().getLastId()+"\",\""+URLEncoder.encode(Irc.getInstance().getNamePlayer(), "UTF-8")+"\"");
-				Scanner sc = new Scanner(url.openStream(), "UTF-8");	
-				String l;
-				
-				try {
-					while ((l = sc.nextLine()) != null) {						
-						String s[] = l.split("<br>");
-						if (s.length>1)
-							for (int i=0;i<s.length;i++) {
-								if (s[i].startsWith("player_id=")) {
-									playerId=Integer.parseInt(s[i].replaceFirst("..........", ""));
-								} 
-								i++;
-								if (s[i].startsWith("msg=")) {
-									msg=s[i].replaceFirst("....", "");
-								} 
-								if (!msg.isEmpty() && playerId!=0 && !msg.equalsIgnoreCase(Irc.getInstance().getLastMsg())) {									
-									list.add(""+playerId+" "+msg);
-									playerId=0;
-									msg="";
-									Irc.getInstance().setLastId(Irc.getInstance().getLastId()+1);
-								}
-							}
-					}
-				} catch (Exception e) {}
-				sc.close();
-			} catch (Exception e) {
-				return;
-			}
-			
-			if (list.isEmpty() || list.size()==0)
-				return;
-			for (String str : list) {
-				String s[] = str.split(" ");
-				// Player ID
-				int pid = Integer.parseInt(s[0]);
-				// Message
-				String m="";
-				if (s.length==2) {
-					m=s[1];
-				} else if (s.length>2) {
-					for (int i=1;i<s.length;i++) {
-						if (i+1==s.length) {
-							m+=s[i];
-						} else
-							m+=s[i]+" ";
-					}
-				}
-				boolean cont = false;
-				try {
-					URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=6f3444869bb758fa613c914a3620f6de&args=\""+pid+"\"");
-					Scanner sc = new Scanner(url.openStream(), "UTF-8");	
-					String l;
-					try {
-						while ((l = sc.nextLine()) != null) {
-							if (l.equalsIgnoreCase("muted=muted<br>")) {
-								cont = true;
-							} 
-						}
-					} catch (Exception e) {}
-					sc.close();
-				} catch (Exception e) {
-					return;
-				}
-				
-				if (pid==1 && !Irc.getInstance().isHideJl()) {
-					Utils.addChat2Irc(m, "", "§7"+m, true, Chat.Summon);
-				} else if (!cont && (pid==1 ? !Irc.getInstance().isHideJl() : true)) {					
-					String pRank="";
-					String pRankColor="";
-					String pName="";
-					String pServer="";
-					int pLvl=0;
-					int pXp=0;
-					int pXpMax=0;
-					int pKill=0;
-					String pTime="";
-					String pVer="";
-					String pMode="";
-					try {
-						URL url = new URL("http://nekohc.fr/CommanderSQL/main.php?token=2d29d2cf2a70b4b6112b2afef9276829&args=\""+pid+"\"");
-						Scanner sc = new Scanner(url.openStream(), "UTF-8");	
-						String l;					
-						try {
-							while ((l = sc.nextLine()) != null) {
-								int i=0;
-								String r[] = l.split("<br>");
-								if (r.length>1) {
-									if (r[i].startsWith("player_rank=")) {
-										pRank=r[i].replaceFirst("............", "");
-									}
-									i++;
-									if (r[i].startsWith("player_color_rang=")) {
-										pRankColor=r[i].replaceFirst("..................", "").replaceAll("Â", "");
-									}
-									i++;
-									if (r[i].startsWith("player_name=")) {
-										pName=r[i].replaceFirst("............", "");
-									}
-									i++;
-									if (r[i].startsWith("player_server=")) {
-										pServer=r[i].replaceFirst("..............", "");
-									}
-									i++;
-									if (r[i].startsWith("player_lvl=")) {
-										pLvl=Integer.parseInt(r[i].replaceFirst("...........", ""));
-									}
-									i++;
-									if (r[i].startsWith("player_xp=")) {
-										pXp=Integer.parseInt(r[i].replaceFirst("..........", ""));
-									}
-									i++;
-									if (r[i].startsWith("player_xpmax=")) {
-										pXpMax=Integer.parseInt(r[i].replaceFirst(".............", ""));
-									}
-									i++;
-									if (r[i].startsWith("player_kill=")) {
-										pKill=Integer.parseInt(r[i].replaceFirst("............", "").equalsIgnoreCase("NULL") ? "0" : r[i].replaceFirst("............", ""));
-									}
-									i++;
-									if (r[i].startsWith("player_time=")) {
-										pTime=r[i].replaceFirst("............", "");
-									}									
-									i++;
-									if (r[i].startsWith("player_ver=")) {
-										pVer=r[i].replaceFirst("...........", "");
-									}
-									i++;
-									if (r[i].startsWith("player_onlyrpg=")) {
-										pMode=r[i].replaceFirst("...............", "").replaceAll("Â", "");
-									}
-								}
-							}
-						} catch (Exception e) {}
-						sc.close();
-					} catch (Exception e) {
-					}
-			        Locale loc = new Locale("FR", "CH");
-			        String first="";
-			        boolean isPv=false;
-			        String msg2 = m;
-			        // When user is mentionned
-			        if (m.contains(Irc.getInstance().getNamePlayer())) {
-			        	m = m.replaceAll(" "+Irc.getInstance().getNamePlayer()+" ", " §d"+Irc.getInstance().getNamePlayer()+"§f ");
-			        	mc.thePlayer.playSound("random.successful_hit", 0.5F, 0.5F);
-			        }
-			        
-			        m = m.replaceAll("Â", "");
-			        if (m.startsWith("§§") && !m.replaceFirst("..", "").isEmpty()) {
-			        	isPv=true;
-			        	first="§9[§e"+pName+" §9-> §cMoi§9]§7 "+Utils.setColor(m.replaceFirst("..", ""), "§7");
-			        	Irc.getInstance().setPvPlayer(pName);
-			        } else {
-			        	first="§7["+pRankColor+pRank+"§7] "+pName+":§f "+m;
-			        }
-			        HashMap<String, String> hm = NekoCloud.getNekoAPI().getBaseBody();
-			        hm.put("player_name", pName);
-			        String realname = "";
-			        if (Utils.admin) {
-						realname = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/access/realname", NekoCloud.getNekoAPI().parseHashMapToJson(hm)).replaceAll("\"", "");
-						if (realname.startsWith(pName+"=") && realname.length()<64) {
-							realname = realname.replaceFirst(pName+"=", "");
-						}
-					}
-			        String sec="§7["+pRankColor+pRank+"§7]\n§d"+pName+"\n"+(realname.isEmpty() ? "" :"§cNom en jeu: "+realname+"\n")+"§bLvl."+NumberFormat.getNumberInstance(loc).format(pLvl)+" §7["+NumberFormat.getNumberInstance(loc).format(pXp)+"xp§7/"+NumberFormat.getNumberInstance(loc).format(pXpMax)+"xp§7]\n§7Serveur: 	"+pServer+"\n§7"+pKill+" kills\n§7"+pTime+" de temps de jeu\n§7Version: "+pVer+"\n§7Mode: "+pMode;
-			        
-			        if (Utils.verif==null && Irc.getInstance().isOn()) {
-				        if (!Irc.getInstance().getLastMsg().equalsIgnoreCase(msg2) && !isPv)
-				        	Utils.addChat2Irc("§6[§9IRC§6] "+first, Irc.getInstance().getPlayerClic(pName, pServer), sec, Irc.getInstance().getPClic().equalsIgnoreCase("connect") ? pServer.equalsIgnoreCase("Localhost") : false, Chat.Summon);
-				        else if (!Irc.getInstance().getLastMsg().equalsIgnoreCase(msg2) && isPv)
-				        	Utils.addChat2Irc("§6[§9IRC§6] "+first, "//w "+pName+" ", "§7Cliquez pour répondre !", false, Chat.Summon);				        
-					Irc.getInstance().setLastMsg(msg2);
-			        } else 
-						return;
-				}
-				
 			}
 		}
 		

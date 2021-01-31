@@ -6,9 +6,7 @@ import neko.module.Category;
 import neko.module.Module;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGameOver;
-import net.minecraft.client.gui.inventory.GuiBeacon;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.gui.inventory.GuiDispenser;
 import net.minecraft.client.settings.KeyBinding;
 
 public class InventoryMove extends Module {

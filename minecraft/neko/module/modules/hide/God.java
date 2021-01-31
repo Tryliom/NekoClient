@@ -76,12 +76,6 @@ public class God extends Module {
 				InGameGui.p=u.nbPack;
 				u.nbPack=0;
 				u.checkRang();
-				if (Irc.getInstance().isOn() && u.verif==null && (currentMsg!=null ? !currentMsg.isAlive() : true)) {				
-					currentMsg = new RequestThread("displaymsg", null);
-					currentMsg.start();
-				} else if (!Irc.getInstance().isOn() && (currentMsg!=null ? currentMsg.isAlive() : false)) {
-					currentMsg.stop();
-				}
 				if (u.timeInGameSec%2==0 && u.verif==null && (currentEvent!=null ? !currentEvent.isAlive() : true)) {
 					currentEvent = new RequestThread("displayEvent", null);
 					currentEvent.start();

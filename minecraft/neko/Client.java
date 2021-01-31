@@ -12,6 +12,8 @@ import javax.swing.Timer;
 
 import org.lwjgl.opengl.Display;
 
+import neko.api.NekoAPI;
+import neko.api.NekoCloud;
 import neko.dtb.RequestThread;
 import neko.event.EventManager;
 import neko.gui.RequestManager;
@@ -47,7 +49,7 @@ public class Client {
 	public final static String CLIENT_NAME = "Neko";
 	public final String CLIENT_AUTHOR = "Tryliom et Marie";
 
-	public static final String CLIENT_VERSION = "Pre-3.0";
+	public static final String CLIENT_VERSION = "Pre2-3.0";
 	public static String scrollingSpacer = "                   ";
 	public String strNeko = "§bNeko v" + CLIENT_VERSION;
 	public String strCreator = "§eCréé par §f§lTryliom§e et §f§lMarie";
@@ -67,6 +69,7 @@ public class Client {
 	public int n = 0;
 	public FontRenderer NekoFont;
 	public Timer time = new Timer(1000, new ch());
+	public Timer renewToken = new Timer(60000 * 10, new renewToken());
 	public String rec = " ";
 	public double chance = 0;
 	public int lot = 0;
@@ -164,13 +167,25 @@ public class Client {
 
 }
 
+class renewToken implements ActionListener {
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		String token = NekoCloud.getNekoAPI().getToken();
+		
+		if (!token.isEmpty()) {
+			NekoAPI.renewToken();
+		}
+	}
+}
+
 class ch implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		Minecraft mc = Minecraft.getMinecraft();
 		Client neko = Client.getNeko();			
-
+		
 		// ça set l'id tout seul
 		if (mc.thePlayer != null && Utils.verif == null
 				&& (neko.currentThread == null ? true : !neko.currentThread.isAlive())) {

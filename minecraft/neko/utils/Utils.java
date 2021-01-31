@@ -1841,7 +1841,6 @@ public class Utils {
 		v.add(new Quest("Je ne veux plus jamais tomber !", getModule("SafeWalk"), null, 3));
 		v.add(new Quest("Je ne peux pas m'arrêter d'avancer!!", getModule("AutoWalk"), null, 3));
 		v.add(new Quest("Je mine, tu mines, il mine...", getModule("Automine"), null, 3));
-		v.add(new Quest("Dis donc, ça se vend vite.", getModule("AutoSellAll"), null, 3));
 		v.add(new Quest("Mes arrières sont protégées par le Pyromaniac !", getModule("FireTrail"), null, 3));
 		v.add(new Quest("C'est de l'art ou bien un repaire ?", getModule("Paint"), null, 3));
 		v.add(new Quest("Je traite chaques morceaux avant de les essayer pour trouver le plus résistant !", getModule("AutoArmor"), null, 3));
@@ -2752,7 +2751,7 @@ public class Utils {
 		nc.saveSave("nuker", s);
 	}
 	
-	public static String preparePostRequest(String url, String body) {
+	public static String getResultOfPostRequest(String url, String body) {
         try {
             URLConnection con = (HttpsURLConnection)new URL(url).openConnection();
             con.setConnectTimeout(10000);
@@ -2778,10 +2777,40 @@ public class Utils {
         }
     }
 	
+	public static String getResultOfRequestWithAuthToken(String url, String body, String method, String token) {
+        try {
+            URLConnection con = (HttpsURLConnection)new URL(url).openConnection();
+            con.setConnectTimeout(10000);
+            con.setReadTimeout(45000);
+            HttpURLConnection conn = (HttpURLConnection) con;
+            conn.setRequestMethod(method);
+            conn.setRequestProperty("Content-Type", "application/json");
+            if (token != null && !token.isEmpty()) {
+            	conn.setRequestProperty("Authorization", "Bearer " + token);
+            }
+            con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.write(body.getBytes("UTF-8"));
+            wr.flush();
+            wr.close();
+            String line;
+            BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+            StringBuilder result = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                result.append(line);
+            }
+            reader.close();
+            return result.toString();
+        }
+        catch (Exception e) {
+            return null;
+        }
+    }
+	
 	public static String getUsername(String username, String password) {
 		try {
 		Gson gson = new Gson();
-        String requestResult = preparePostRequest("https://authserver.mojang.com/authenticate", new String("{\"agent\": { \"name\": \"Minecraft\", \"version\": 1.8}, \"username\": \"" + username + "\", \"password\": \"" + password + "\" }"));
+        String requestResult = getResultOfPostRequest("https://authserver.mojang.com/authenticate", new String("{\"agent\": { \"name\": \"Minecraft\", \"version\": 1.8}, \"username\": \"" + username + "\", \"password\": \"" + password + "\" }"));
         
         JsonElement jsonElement = (JsonElement)gson.fromJson(requestResult, (Class)JsonElement.class);        
         JsonObject profile = (JsonObject) ((JsonObject) jsonElement).get("selectedProfile");        

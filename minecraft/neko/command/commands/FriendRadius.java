@@ -10,7 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 public class FriendRadius extends Command {
 
 	public FriendRadius() {
-		super("friend radius", "friend radius []", "Ajoute/supprime les joueurs autour", 3, CommandType.Friend);
+		super("friend radius", "friend radius [Nombre]", "Ajoute/supprime les joueurs autour", 3, CommandType.Friend);
 	}
 	
 	public void onCommand(String[] args) {

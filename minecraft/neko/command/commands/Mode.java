@@ -1,5 +1,6 @@
 package neko.command.commands;
 
+import neko.Client;
 import neko.command.Command;
 import neko.command.CommandType;
 import neko.module.other.ModeType;
@@ -12,9 +13,10 @@ public class Mode extends Command {
 	}
 	
 	public void onCommand(String[] args) {
-		String name = Utils.capitalize(args[1]);
+		String name = Utils.capitalize(args[1].toLowerCase());
 		
 		if (ModeType.valueOf(name) != null) {
+			Client.getNeko().mode = ModeType.valueOf(name);
 			Utils.addChat("§aLe mode  est changé en "+name+" !");
 		} else {
 			Utils.addError("Le mode ["+name+"] est inconnu");

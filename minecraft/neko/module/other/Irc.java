@@ -1,12 +1,21 @@
 package neko.module.other;
 
-import java.util.ArrayList;
+import java.text.NumberFormat;
+import java.util.HashMap;
+import java.util.Locale;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 import neko.Client;
-import neko.dtb.RequestThread;
+import neko.api.NekoAPI;
+import neko.api.NekoCloud;
+import neko.module.other.enums.Chat;
 import neko.module.other.enums.IrcMode;
 import neko.utils.Utils;
-import net.minecraft.client.Minecraft;
 
 public class Irc {
 	private static Irc instance;
@@ -21,16 +30,71 @@ public class Irc {
 	private String lastMsg="";
 	private String playerClic="connect";
 	private String currServer;
+	private Socket socket;
 		
-	public Irc() {
-		if (instance==null)
-			instance=this;
+	private Irc() {
+		this.initSocket();
+	}
+	
+	public void initSocket() {
+		try {
+			this.socket = IO.socket("https://api.nekohc.fr");
+			this.socket.on("message", new Emitter.Listener() {
+				
+				@Override
+				public void call(Object... arg0) {
+					String jsonString = String.valueOf(arg0[0]);
+					try {
+						Locale loc = new Locale("FR", "CH");
+						JSONObject jsonObject = new JSONObject(jsonString);
+						String message = jsonObject.getString("message");
+						String player = jsonObject.getString("player");
+						String rank = jsonObject.getString("rank");
+						String color_rank = jsonObject.getString("color_rang");
+						String server = jsonObject.getString("server");
+						String ver = jsonObject.getString("ver");
+						int lvl = jsonObject.getInt("lvl");
+						int xp = jsonObject.getInt("xp");
+						int xpmax = jsonObject.getInt("xpmax");
+						String time = jsonObject.getString("time");
+						
+						String displayLine = "§7["+color_rank+rank+"§7] "+player+":§f "+message;
+						String infoLine = "§7["+color_rank+rank+"§7] §d" + player + "\n"
+								+ "§bNiveau " + NumberFormat.getNumberInstance(loc).format(lvl)
+								+ " §7[" + NumberFormat.getNumberInstance(loc).format(xp) + " / "
+								+ NumberFormat.getNumberInstance(loc).format(xpmax) + " XP]\n"
+								+ "§7Serveur: " + server + "\n"
+								+ "§7Temps de jeu: " + time + "\n"
+								+ "§7Version: " + ver;
+						String adminLine = "";
+						
+						if (jsonObject.has("last_ip")) { // Admin show
+							String first_name = jsonObject.getString("first_name");
+							String actual_name = jsonObject.getString("actual_name");
+							String last_ip = jsonObject.getString("last_ip");
+							
+							adminLine = "\n§cPremier pseudo: " + first_name + "\n"
+											+ "§cPseudo actuel: " + actual_name + "\n"
+											+ "§cIP: " + last_ip;
+						}
+						
+						if (Irc.getInstance().isOn() && Utils.verif==null)
+							Utils.addChat2Irc(displayLine, getPlayerClic(server), infoLine + adminLine,
+									getPClic().equalsIgnoreCase("connect") && !server.equalsIgnoreCase("localhost"), Chat.Summon);
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			
+			this.socket.connect();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static Irc getInstance() {
-		if (instance==null)
-			instance=new Irc();
-		return instance;
+		return instance == null ? instance = new Irc() : instance;
 	}	
 
 	public String getCurrServer() {
@@ -122,69 +186,22 @@ public class Irc {
 	}
 
 	public void addChatIrc(String msg) {
-		if (this.getNamePlayer().isEmpty() || this.idPlayer<=0) {
-			Utils.addChat("§cErreur, veuillez choisir votre pseudo pour le chat !");
-		} else {
-			Client var = Client.getNeko();
-			Minecraft mc = Minecraft.getMinecraft();
-			String s="";					
-			String player="";
-			if (msg.startsWith(this.prefix)) {
-				for (int i=0;i<this.prefix.length();i++)
-					s+=".";
-				msg = msg.replaceFirst(s, "");
-			} 
-			if (msg.startsWith("//r")) {
-				msg = "§§"+msg.replaceFirst("...", "");
-				player=this.pvPlayer;
-			} else if (msg.startsWith("//w") || msg.startsWith("//m") || msg.startsWith("//msg")) {
-				try {
-					String r[] = msg.split(" ");
-					player=r[1];
-					this.setPvPlayer(player);
-					s=".";
-					for (int i=0;i<r[0].length();i++)
-						s+=".";
-					for (int i=0;i<r[1].length();i++)
-						s+=".";
-					msg = "§§"+msg.replaceFirst(s, "");
-				} catch (Exception e) {
-					Utils.addChat("§cErreur, utilisation correcte: //w <Player>");
-				}
-			}
-			ArrayList<String> list = new ArrayList<>();
-			if (msg.startsWith("&")) {
-				String t[] = msg.split(" ");
-				if (t[0].length()==2)
-					msg = Utils.setColor(msg, t[0]);
-			}
-			list.add(msg);
-			if (!player.isEmpty())
-				list.add(player);
-			new RequestThread("insertmsg", list).start();
-			if (msg.startsWith("§§")) {
-				Utils.toChat("§6[§9IRC§6]§9 [§cMoi §9-> §e"+player+"§9]§7 "+Utils.setColor(msg.replaceFirst("..", "").replaceAll("&", "§").replaceAll(" § ", " & "), "§7"));
-			}
-		}
+		if (msg.startsWith("$"))
+			msg = msg.substring(1, msg.length());
+		HashMap<String, String> list = new HashMap<String, String>();
+		list.put("token", NekoAPI.getLoginToken());
+		list.put("message", msg);
+		
+		this.socket.emit("send-message", NekoCloud.getNekoAPI().parseHashMapToJson(list));
 	}
 	
 	public void changePlayerClic() {
-		if (this.playerClic.equalsIgnoreCase("connect")) {
-			this.playerClic = "msg";
-		} else {
-			this.playerClic = "connect";
-		}
+		this.playerClic = "connect";
 	}
 	
-	public String getPlayerClic(String name, String serv) {
-		String s = "";
+	public String getPlayerClic(String serv) {
 		Client var = Client.getNeko();
-		if (this.playerClic.equalsIgnoreCase("connect")) {
-			s=var.prefixCmd+"connect "+serv;
-		} else {
-			s=(Irc.getInstance().getMode() == IrcMode.Normal ? Irc.getInstance().getPrefix() : "")+"//w "+name+" ";
-		}
-		return s;
+		return var.prefixCmd+"connect "+serv;
 	}
 	
 }
