@@ -337,6 +337,9 @@ public class GuiAltManager extends GuiScreen {
 						if (s.length > 1)
 							pass = s[1];
 						
+						if (name.isEmpty())
+							continue;
+						
 						boolean isList = false;
 						for (Account account : GuiAltManager.this.accounts) {
 							if (account.getEmail().equalsIgnoreCase(name)) {
