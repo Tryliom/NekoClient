@@ -76,6 +76,8 @@ public class GuiUpdate extends GuiScreen {
 		String var11 = Client.getNeko().strCreator;
 		this.drawString(var.NekoFont, var11, this.width - var.NekoFont.getStringWidth(var11) - 2, this.height - 10, -1);
 		super.drawScreen(mouseX, mouseY, partialTicks);
+		
+		//Updater.update(this.version);
 	}
 	
 	protected void actionPerformed(GuiButton button) throws IOException {
