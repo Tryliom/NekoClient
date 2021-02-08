@@ -5286,7 +5286,7 @@ public class Utils {
 			
 		} else {
 		
-			int neko = (int) Math.round(Math.random()*1000);
+			int neko = (int) Math.round(Math.random()*840);
 			switch (neko) {
 			
 			case 0:nyah="Nyah nyah nyah :3";var.ame++;addChat(" +1 Soul");break;									

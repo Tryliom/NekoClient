@@ -8,6 +8,7 @@ import java.net.InetAddress;
 import java.net.Proxy;
 import java.net.SocketAddress;
 import java.net.UnknownHostException;
+import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.text.DecimalFormat;
@@ -851,7 +852,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             var4.putInt(var8 << 8 | var8 >> 24 & 255);
         }
 
-        var4.flip();
+        ((Buffer) var4).flip();
         return var4;
     }
 

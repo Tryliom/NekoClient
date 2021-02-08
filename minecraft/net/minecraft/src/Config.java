@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
+import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -1397,7 +1398,7 @@ public class Config
             var4.putInt(var8 << 8 | var8 >> 24 & 255);
         }
 
-        var4.flip();
+        ((Buffer) var4).flip();
         return var4;
     }
 
