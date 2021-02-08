@@ -709,9 +709,9 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         	
         	this.drawString(fontRendererObj, "§eConnecté en tant que: §b" + Minecraft.getMinecraft().getSession().getUsername(), 10, 40, -1);
         	
-        	if (!Client.getNeko().ver.isEmpty() && !Client.getNeko().develop) {
+        	if (!Client.getNeko().CLIENT_VERSION.isEmpty() && !Client.getNeko().develop) {
 
-        		Updater.update(Client.getNeko().ver);
+        		Updater.update(Client.getNeko().CLIENT_VERSION);
         	}
         	
         	if(Updater.ReadyToUpdate) {
