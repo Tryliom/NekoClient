@@ -166,8 +166,10 @@ public class GuiAltManager extends GuiScreen {
 					}
 				}
 				Account alt = null;
-				alt = new Account(name, pass);
-				this.accounts.add(alt);
+				if (!name.isEmpty()) {
+					alt = new Account(name, pass);
+					this.accounts.add(alt);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -337,7 +339,7 @@ public class GuiAltManager extends GuiScreen {
 						if (s.length > 1)
 							pass = s[1];
 						
-						if (name.isEmpty())
+						if (name.isEmpty() || name.matches("^\s*$"))
 							continue;
 						
 						boolean isList = false;
@@ -367,7 +369,7 @@ public class GuiAltManager extends GuiScreen {
 		protected void keyTyped(char typedChar, int keyCode) throws IOException {
 			if (this.name_mail.isFocused()) {
 				this.name_mail.textboxKeyTyped(typedChar, keyCode);
-				this.name_mail.setText(this.name_mail.getText().replaceAll(" ", ""));
+				
 				try {
 					boolean isList = false;
 					for (Account account : GuiAltManager.this.accounts) {
