@@ -12,15 +12,19 @@ import javax.swing.Timer;
 
 import org.lwjgl.opengl.Display;
 
+import neko.api.NekoAPI;
+import neko.api.NekoCloud;
 import neko.dtb.RequestThread;
 import neko.event.EventManager;
 import neko.gui.RequestManager;
 import neko.guicheat.clickgui.ClickGUI;
 import neko.guicheat.clickgui.settings.SettingsManager;
+import neko.manager.CommandManager;
 import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
 import neko.manager.QuestManager;
 import neko.module.other.Irc;
+import neko.module.other.ModeType;
 import neko.module.other.Necklace;
 import neko.module.other.Rank;
 import neko.module.other.TempBon;
@@ -38,17 +42,19 @@ public class Client {
 	public SettingsManager settingsManager;
 	public EventManager eventManager;
 	public ModuleManager moduleManager;
+	public CommandManager commandManager;
 	public ClickGUI clickGui;
 	
 	Minecraft mc = Minecraft.getMinecraft();
 	public final static String CLIENT_NAME = "Neko";
 	public final String CLIENT_AUTHOR = "Tryliom et Marie";
 
-	
-	public static final String CLIENT_VERSION = "2.8.9";
-	private static String scrollingSpacer = "                   ";
-	public static final String SCROLLING_TEXT = "§cNeko forever !"+scrollingSpacer+"§7Présenté sous §bNeko " + Client.CLIENT_VERSION +scrollingSpacer+"§eCréé par §f§lTryliom§e et §f§lMarie.";
-	public String mode = "Player";
+	public static final String CLIENT_VERSION = "Pre2-3.0";
+	public static String scrollingSpacer = "                   ";
+	public String strNeko = "§bNeko v" + CLIENT_VERSION;
+	public String strCreator = "§eCréé par §f§lTryliom§e et §f§lMarie";
+	public final String SCROLLING_TEXT = "§cNeko forever !                   §7Présenté sous §bNeko " + Client.CLIENT_VERSION +"                   "+strCreator;
+	public ModeType mode = ModeType.Player;
 	public Rank rang;
 	public Necklace necklace;
 	public int niveau = 1;
@@ -63,6 +69,7 @@ public class Client {
 	public int n = 0;
 	public FontRenderer NekoFont;
 	public Timer time = new Timer(1000, new ch());
+	public Timer renewToken = new Timer(60000 * 10, new renewToken());
 	public String rec = " ";
 	public double chance = 0;
 	public int lot = 0;
@@ -75,8 +82,8 @@ public class Client {
 	public String changelog = "";
 	public RequestManager rm;
 	public boolean firstServDisplay = true;
-	public String strNeko = "§bNeko v" + CLIENT_VERSION;
-	public String strCreator = "§eCréé par §f§lTryliom§e et §f§lMarie";
+	// Doesn't check update version if true
+	public boolean develop = false;
 	
 	public void startClient() {
 		
@@ -160,13 +167,25 @@ public class Client {
 
 }
 
+class renewToken implements ActionListener {
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		String token = NekoCloud.getNekoAPI().getToken();
+		
+		if (!token.isEmpty()) {
+			NekoAPI.renewToken();
+		}
+	}
+}
+
 class ch implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		Minecraft mc = Minecraft.getMinecraft();
 		Client neko = Client.getNeko();			
-
+		
 		// ça set l'id tout seul
 		if (mc.thePlayer != null && Utils.verif == null
 				&& (neko.currentThread == null ? true : !neko.currentThread.isAlive())) {

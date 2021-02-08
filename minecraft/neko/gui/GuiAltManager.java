@@ -166,8 +166,10 @@ public class GuiAltManager extends GuiScreen {
 					}
 				}
 				Account alt = null;
-				alt = new Account(name, pass);
-				this.accounts.add(alt);
+				if (!name.isEmpty()) {
+					alt = new Account(name, pass);
+					this.accounts.add(alt);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -328,14 +330,18 @@ public class GuiAltManager extends GuiScreen {
 				break;
 			case 1:
 				try {
-					String ms[] = this.name_mail.getText().split(",");
-					String fname = "";
-					for (String nm : ms) {
-						String s[] = nm.split(":");
+					String listAccount[] = this.name_mail.getText().split(",");
+					String accountName = "";
+					for (String singleAccount : listAccount) {
+						String s[] = singleAccount.split(":");
 						String name = s[0];
 						String pass = "";
 						if (s.length > 1)
 							pass = s[1];
+						
+						if (name.isEmpty() || name.matches("^\s*$"))
+							continue;
+						
 						boolean isList = false;
 						for (Account account : GuiAltManager.this.accounts) {
 							if (account.getEmail().equalsIgnoreCase(name)) {
@@ -349,10 +355,10 @@ public class GuiAltManager extends GuiScreen {
 						this.error = "";
 						Utils.saveAccount(name, pass);
 					}
-					if (ms.length>1)
+					if (listAccount.length>1)
 						displaytext = "Les comptes ont été ajouté !";
 					else
-						displaytext = "Le compte " + fname + " a été ajouté !";
+						displaytext = "Le compte " + accountName + " a été ajouté !";
 					this.mc.displayGuiScreen(this.prevGui);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -363,6 +369,7 @@ public class GuiAltManager extends GuiScreen {
 		protected void keyTyped(char typedChar, int keyCode) throws IOException {
 			if (this.name_mail.isFocused()) {
 				this.name_mail.textboxKeyTyped(typedChar, keyCode);
+				
 				try {
 					boolean isList = false;
 					for (Account account : GuiAltManager.this.accounts) {

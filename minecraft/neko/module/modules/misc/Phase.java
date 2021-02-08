@@ -71,7 +71,7 @@ public class Phase extends Module {
 	
 	@Override
 	public void setup() {
-		Client.Neko.settingsManager.rSetting(new Setting("PHASEVertical", this, this.vphase));
+		Client.Neko.settingsManager.rSetting(new Setting("PHASE_Vertical", this, this.vphase));
 	}
 
 	public boolean isVphase() {

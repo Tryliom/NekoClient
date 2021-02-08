@@ -30,9 +30,6 @@ public class Regen extends Module {
 	}
 	
 	public void onUpdate() {
-		if (u.limite && u.nbPack>u.limit) {
-			return;
-		}
 		if (delay<20) {
 			delay++;
 			return;
@@ -45,8 +42,6 @@ public class Regen extends Module {
 					&& mc.thePlayer.getHealth() < mc.thePlayer.getMaxHealth() && mc.thePlayer.getHealth() != 0
 					&& mc.thePlayer.onGround)
 					for(int i = 0; i < regen; i++) {
-						if (u.limite && u.nbPack>u.limit)
-							return;
 						mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer());
 					}
 		} else {
@@ -59,8 +54,6 @@ public class Regen extends Module {
 						&& mc.thePlayer.getHealth() < mc.thePlayer.getMaxHealth() && mc.thePlayer.getHealth() != 0
 						&& mc.thePlayer.onGround)
 						for(int i = 0; i < reg+rand; i++) {
-							if (u.limite && u.nbPack>u.limit)
-								return;
 							mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer());
 						}
 			}

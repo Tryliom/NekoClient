@@ -1253,7 +1253,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
                 if (!this.mc.gameSettings.hideGUI || this.mc.currentScreen != null)
                 {
                     GlStateManager.alphaFunc(516, 0.1F);
-                    this.mc.ingameGUI.func_175180_a(partialTicks);
+                    this.mc.ingameGUI.renderGameOverlay(partialTicks);
                 }
 
                 this.mc.mcProfiler.endSection();
@@ -1660,7 +1660,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
         //TODO: Render
         Client var = Client.getNeko();
         for(Module m : var.moduleManager.ActiveModule) {
-    		if(m.getToggled() && Utils.verif==null) {
+    		if(m.isToggled() && Utils.verif==null) {
     			m.onRender3D();
     			m.onRender3DA();
     		} else if (Utils.verif==null) {

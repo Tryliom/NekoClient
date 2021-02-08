@@ -103,7 +103,7 @@ public class ElementComboBox extends Element {
 			double ay = y + 15;
 			for (String slcd : set.getOptions()) {
 				if (mouseX >= x && mouseX <= x + width && mouseY >= ay && mouseY <= ay + FontUtil.getFontHeight() + 2) {
-					if(Client.Neko.settingsManager.getSettingByName("Sound").getValBoolean())
+					if(Client.Neko.settingsManager.getSettingByName("Gui_Sound").getValBoolean())
 					Minecraft.getMinecraft().thePlayer.playSound("tile.piston.in", 20.0F, 20.0F);
 					
 					if(clickgui != null && clickgui.setmgr != null)

@@ -39,8 +39,8 @@ public class Velocity extends Module {
 	@Override
 	public void setup() {
 		
-		Client.getNeko().settingsManager.rSetting(new Setting("VelocityHorizontal", this, this.hcoeff, 1, 100, false));
-		Client.getNeko().settingsManager.rSetting(new Setting("VelocityVertical", this, this.vcoeff, 1, 100, false));
+		Client.getNeko().settingsManager.rSetting(new Setting("Velocity_Horizontal", this, this.hcoeff, 1, 100, false));
+		Client.getNeko().settingsManager.rSetting(new Setting("Velocity_Vertical", this, this.vcoeff, 1, 100, false));
 		
 	}
 	

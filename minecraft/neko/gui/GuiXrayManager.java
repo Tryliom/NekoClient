@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Vector;
 
+import org.apache.commons.io.output.ThresholdingOutputStream;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
@@ -54,7 +55,9 @@ public class GuiXrayManager extends GuiScreen {
 		drawDefaultBackground();
 		this.buttonList.clear();
 		this.buttonList.add(new GuiButton(0, this.width*3 / 4, this.height - 52, 100, 20, "Retour"));
+		if(isListHasGoodSize()) {
 		this.buttonList.add(new GuiButton(1, this.width / 2 - 50, this.height - 52, 100, 20, "Toggle"));
+		}
 		this.guiList.drawScreen(mouseX, mouseY, partialTicks);
 		this.search.drawRGBATextBox(-13882323, -14737633);
 		drawCenteredString(var.NekoFont, "Xray Manager", this.width / 2, 10, 16777215);
@@ -97,6 +100,7 @@ public class GuiXrayManager extends GuiScreen {
 			mc.displayGuiScreen(this.prevGui);
 			break;
 		case 1:
+			if(!isListHasGoodSize()) return;
 			Integer i = this.guiList.getSelectedSlot();
 			Xray xray = Xray.getXray();
 			Vector<Integer> list = xray.getList();
@@ -109,6 +113,7 @@ public class GuiXrayManager extends GuiScreen {
 			}
 			break;
 		case 2:
+			if(!isListHasGoodSize()) return;
 			ArrayList<Block> abcd = new ArrayList<Block>();
 			for(int x = 0; x<this.guiList.list.size(); x++) {
 				String s = this.guiList.list.get(x).getLocalizedName();
@@ -179,6 +184,13 @@ public class GuiXrayManager extends GuiScreen {
 		super.handleMouseInput();
 		this.guiList.handleMouseInput();
 	}
+	
+	public boolean isListHasGoodSize() {
+		if(this.guiList.list.size() == 0) {
+			return false;
+		}
+		return true;
+	}
 
 	private class GuiList extends GuiSlot {
 		private int selectedSlot;
@@ -228,6 +240,9 @@ public class GuiXrayManager extends GuiScreen {
 		}
 
 		protected int getSize() {
+			if(this.list.size() == 0) {
+				return 1;
+			}
 			return this.list.size();
 		}
 
@@ -250,15 +265,20 @@ public class GuiXrayManager extends GuiScreen {
 
 		
 		protected void drawSlot(int i, int x, int y, int var4, int var5, int var6) {
-			Block block = this.list.get(i);
-			boolean selected = Xray.getXray().getList().contains(Block.getIdFromBlock(block));
-
-			ItemStack ia = new ItemStack(block);
-			
-			var.NekoFont.drawString((selected ? "§a" : "§c") + block.getLocalizedName(), x + 31, y + 9, 10526880);
-			RenderHelper.enableGUIStandardItemLighting();
-			mc.getRenderItem().renderItemIntoGUI(ia, x + 5, y + 5);
-			GL11.glDisable(3042);
+			if(this.list.size() == 0 && i == 0) {
+				var.NekoFont.drawString("§cAucun bloc trouvé avec ce nom.", x + 31, y + 3, 10526880);
+			}
+			try {
+				Block block = this.list.get(i);
+				boolean selected = Xray.getXray().getList().contains(Block.getIdFromBlock(block));
+	
+				ItemStack ia = new ItemStack(block);
+				
+				var.NekoFont.drawString((selected ? "§a" : "§c") + block.getLocalizedName(), x + 31, y + 9, 10526880);
+				RenderHelper.enableGUIStandardItemLighting();
+				mc.getRenderItem().renderItemIntoGUI(ia, x + 5, y + 5);
+				GL11.glDisable(3042);
+			} catch(Exception e) {}		
 		}
 	}
 }

@@ -53,8 +53,8 @@ public class Magnet extends Module {
 
 		java.util.ArrayList<String> ordre = new java.util.ArrayList<>();
 		ordre.add("Single"); ordre.add("Multi");
-		Client.Neko.settingsManager.rSetting(new Setting("MAGNETClassic", this, this.classic));
-		Client.Neko.settingsManager.rSetting(new Setting("MAGNETMode", this, this.getMode().name(), ordre));
+		Client.Neko.settingsManager.rSetting(new Setting("MAGNET_Classic", this, this.classic));
+		Client.Neko.settingsManager.rSetting(new Setting("MAGNET_Mode", this, this.getMode().name(), ordre));
 		
 	}
 	

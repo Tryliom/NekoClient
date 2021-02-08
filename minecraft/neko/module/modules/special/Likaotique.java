@@ -78,9 +78,9 @@ public class Likaotique extends Module {
 	@Override
 	public void setup() {
 
-		Client.getNeko().settingsManager.rSetting(new Setting("LIKSafe", this, this.safe));
-		Client.getNeko().settingsManager.rSetting(new Setting("LIKDelay", this, this.delay, 0, 1000, true));
-		Client.getNeko().settingsManager.rSetting(new Setting("LIKRadius", this, this.radius, 0, 10, true));
+		Client.getNeko().settingsManager.rSetting(new Setting("LIK_Safe", this, this.safe));
+		Client.getNeko().settingsManager.rSetting(new Setting("LIK_Delay", this, this.delay, 0, 1000, true));
+		Client.getNeko().settingsManager.rSetting(new Setting("LIK_Radius", this, this.radius, 0, 10, true));
 		
 		super.setup();
 	}
@@ -217,6 +217,7 @@ class tptimer implements ActionListener {
 	public void actionPerformed(ActionEvent ae) {
 		if (Likaotique.getLik().isSafe())
 			return;
+		
 		try {
 			boolean find = false;
 			BlockPos b = null;

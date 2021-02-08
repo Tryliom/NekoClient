@@ -246,52 +246,52 @@ public class Rank {
 	public ArrayList<String> getAllBonus(String color1, String color2) {
 		ArrayList<String> list = new ArrayList<>();
 		if (this.giftAme>0) {
-			list.add(color1+"+Météores de souls : "+color2+this.giftAme*100+"%");
+			list.add(color1+"+ Météores de souls : "+color2+this.giftAme*100+"%");
 		}
 		if (this.giftLotterie>0) {
-			list.add(color1+"+Météores de billet de loterie : "+color2+this.giftLotterie*100+"%");
+			list.add(color1+"+ Météores de billet de loterie : "+color2+this.giftLotterie*100+"%");
 		}		
 		if (this.giftPlus>0) {
-			list.add(color1+"+Météores : "+color2+this.giftPlus*100+"%");
+			list.add(color1+"+ Météores : "+color2+this.giftPlus*100+"%");
 		}
 		if (this.giftPlusAme>0) {
-			list.add(color1+"+Souls sur les météores : "+color2+this.giftPlusAme*100+"%");
+			list.add(color1+"+ Souls sur les météores : "+color2+this.giftPlusAme*100+"%");
 		}
 		if (this.giftRang>0) {
-			list.add(color1+"+Rangs sur les météores : "+color2+this.giftRang*100+"%");
+			list.add(color1+"+ Rangs sur les météores : "+color2+this.giftRang*100+"%");
 		}
 		if (this.giftXp>0) {
-			list.add(color1+"+Météores d'xp : "+color2+this.giftXp*100+"%");
+			list.add(color1+"+ Météores d'xp : "+color2+this.giftXp*100+"%");
 		}
 		if (this.radiusGift>0) {
-			list.add(color1+"+Radius pour prendre les météores : "+color2+this.radiusGift*100+"%");
+			list.add(color1+"+ Radius pour prendre les météores : "+color2+this.radiusGift*100+"%");
 		}
 		if (this.lotRang>0) {
-			list.add(color1+"+Rangs dans les lots : "+color2+this.lotRang*100+"%");
+			list.add(color1+"+ Rangs dans les lots : "+color2+this.lotRang*100+"%");
 		}
 		if (this.lotRateTitan>0) {
-			list.add(color1+"+Rangs rareté Titan dans les lots : "+color2+this.lotRateTitan*100+"%");
+			list.add(color1+"+ Rangs rareté Titan dans les lots : "+color2+this.lotRateTitan*100+"%");
 		}
 		if (this.lotRateSatanique>0) {
-			list.add(color1+"+Rangs rareté Satanique dans les lots : "+color2+this.lotRateSatanique*100+"%");
+			list.add(color1+"+ Rangs rareté Satanique dans les lots : "+color2+this.lotRateSatanique*100+"%");
 		}		
 		if (this.lotRateDivin>0) {
-			list.add(color1+"+Rangs rareté Divin dans les lots : "+color2+this.lotRateDivin*100+"%");
+			list.add(color1+"+ Rangs rareté Divin dans les lots : "+color2+this.lotRateDivin*100+"%");
 		}
 		if (this.lotRateMagical>0) {
-			list.add(color1+"+Rangs rareté Magical dans les lots : "+color2+this.lotRateMagical*100+"%");
+			list.add(color1+"+ Rangs rareté Magical dans les lots : "+color2+this.lotRateMagical*100+"%");
 		}
 		if (this.lotRateUltraRare>0) {
-			list.add(color1+"+Rangs rareté UltraRare dans les lots : "+color2+this.lotRateUltraRare*100+"%");
+			list.add(color1+"+ Rangs rareté UltraRare dans les lots : "+color2+this.lotRateUltraRare*100+"%");
 		}		
 		if (this.lotRateRare>0) {
-			list.add(color1+"+Rangs rareté Rare dans les lots : "+color2+this.lotRateRare*100+"%");
+			list.add(color1+"+ Rangs rareté Rare dans les lots : "+color2+this.lotRateRare*100+"%");
 		}
 		if (this.lotUnlock>0) {
-			list.add(color1+"+Unlock dans les lots : "+color2+this.lotUnlock*100+"%");
+			list.add(color1+"+ Unlock dans les lots : "+color2+this.lotUnlock*100+"%");
 		}	
 		if (this.luck>0) {
-			list.add(color1+"+Chance : "+color2+this.luck*100+"%");
+			list.add(color1+"+ Chance : "+color2+this.luck*100+"%");
 		}	
 		return list;
 	}

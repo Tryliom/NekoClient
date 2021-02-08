@@ -12,22 +12,22 @@ public class ResourcePackListEntryFound extends ResourcePackListEntry
         this.field_148319_c = p_i45053_2_;
     }
 
-    protected void func_148313_c()
+    protected void BindIcon()
     {
-        this.field_148319_c.bindTexturePackIcon(this.field_148317_a.getTextureManager());
+        this.field_148319_c.bindTexturePackIcon(this.mc.getTextureManager());
     }
 
-    protected String func_148311_a()
+    protected String TexturePackDescription()
     {
         return this.field_148319_c.getTexturePackDescription();
     }
 
-    protected String func_148312_b()
+    protected String TexturePackName()
     {
         return this.field_148319_c.getResourcePackName();
     }
 
-    public ResourcePackRepository.Entry func_148318_i()
+    public ResourcePackRepository.Entry RessourcePackRepo()
     {
         return this.field_148319_c;
     }

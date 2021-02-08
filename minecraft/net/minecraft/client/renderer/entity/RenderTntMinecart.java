@@ -42,7 +42,7 @@ public class RenderTntMinecart extends RenderMinecart
             GlStateManager.blendFunc(770, 772);
             GlStateManager.color(1.0F, 1.0F, 1.0F, (1.0F - ((float)var4 - p_180561_2_ + 1.0F) / 100.0F) * 0.8F);
             GlStateManager.pushMatrix();
-            var7.func_175016_a(Blocks.tnt.getDefaultState(), 1.0F);
+            var7.renderBlockBrightness(Blocks.tnt.getDefaultState(), 1.0F);
             GlStateManager.popMatrix();
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             GlStateManager.disableBlend();

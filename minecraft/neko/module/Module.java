@@ -5,13 +5,11 @@ import java.util.ArrayList;
 import neko.Client;
 import neko.event.UpdateEvent;
 import neko.gui.InGameGui;
-import neko.guicheat.clickgui.ClickGUI;
 import neko.manager.ModuleManager;
 import neko.utils.ChatUtils;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.network.play.client.C03PacketPlayer;
 
 public class Module {
 	protected Minecraft mc = Minecraft.getMinecraft();
@@ -29,19 +27,33 @@ public class Module {
 	protected String values;
 	protected int time;
 	public int toggleTime = 0;
+	protected int defaultBind;
+	private int id = 0;
 
 	public Module(String moduleName, int moduleBind, Category moduleCategory, boolean isCommand) {
 		this.moduleName = moduleName;
 		this.moduleBind = moduleBind;
 		this.moduleCategory = moduleCategory;
 		this.isCommands = isCommand;
-		setup();
+		this.defaultBind = moduleBind;
 	}
 	
 	public void setup() {}
 
 	public String getName() {
 		return this.moduleName;
+	}
+	
+	public void setId(int i) {
+		this.id = i;
+	}
+	
+	public int getId() {
+		return this.id;
+	}
+	
+	public int getDefaultBind() {
+		return this.defaultBind;
 	}
 	
 	public void setName(String modulename) {
@@ -54,6 +66,13 @@ public class Module {
 	public int getBind() {
 		return this.moduleBind;
 	}
+	
+	public boolean hasBind() {
+		if(Utils.getBind(this.moduleName).equalsIgnoreCase("None")) {
+			return false;
+		}
+		return true;
+	}
 
 	public Category getCategory() {
 		return this.moduleCategory;
@@ -63,12 +82,12 @@ public class Module {
 		this.moduleCategory = category;
 	}
 
-	public boolean getToggled() {
+	public boolean isToggled() {
 		return this.isToggled;
 	}
 	
 	public void toggle() {
-		if (this.getToggled()) {
+		if (this.isToggled()) {
 			this.setToggled(false);
 		} else {
 			this.setToggled(true);
@@ -133,7 +152,7 @@ public class Module {
 				return;
 			}
 		}
-		setToggled(!getToggled());
+		setToggled(!isToggled());
 	}
 
 	public void setWithoutToggle(boolean isToggle) {
@@ -161,19 +180,15 @@ public class Module {
 	}
 
 	public void onEnabled() {
-
 		if (Utils.shouldChat(this))
 			Utils.addChat("§a§o" + getName() + " activé !");
 		Client.getNeko().eventManager.register(this);
-
 	}
 
 	public void onDisabled() {
-
 		if (Utils.shouldChat(this))
 			Utils.addChat("§c§o" + getName() + " désactivé !");
 		Client.getNeko().eventManager.unregister(this);
-
 	}
 
 	public String getValues() {

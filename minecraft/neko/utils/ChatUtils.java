@@ -1,22 +1,13 @@
 package neko.utils;
 
 import java.awt.Color;
-import java.awt.Desktop;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
-import java.net.Proxy.Type;
-import java.net.URI;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Properties;
-import java.util.Scanner;
 import java.util.UUID;
 import java.util.Vector;
 
@@ -54,7 +45,6 @@ import neko.module.modules.misc.CallCmd;
 import neko.module.modules.misc.Crasher;
 import neko.module.modules.misc.Nameprotect;
 import neko.module.modules.misc.Phase;
-import neko.module.modules.misc.Ping;
 import neko.module.modules.misc.Register;
 import neko.module.modules.misc.Timer;
 import neko.module.modules.movements.Dolphin;
@@ -74,7 +64,6 @@ import neko.module.modules.player.Fasteat;
 import neko.module.modules.player.Fire;
 import neko.module.modules.player.Nuker;
 import neko.module.modules.player.PushUp;
-import neko.module.modules.player.Velocity;
 import neko.module.modules.render.ChestESP;
 import neko.module.modules.render.ItemESP;
 import neko.module.modules.render.NekoChat;
@@ -101,7 +90,6 @@ import neko.module.other.Active;
 import neko.module.other.Bloc;
 import neko.module.other.DiscThread;
 import neko.module.other.Event;
-import neko.module.other.HackerDetector;
 import neko.module.other.Irc;
 import neko.module.other.PyroThread;
 import neko.module.other.Rank;
@@ -111,7 +99,6 @@ import neko.module.other.enums.Chat;
 import neko.module.other.enums.EventType;
 import neko.module.other.enums.Form;
 import neko.module.other.enums.IrcMode;
-import neko.module.other.enums.MagnetWay;
 import neko.module.other.enums.Rate;
 import neko.module.other.enums.SpeedEnum;
 import net.mcleaks.Callback;
@@ -121,8 +108,6 @@ import net.mcleaks.RedeemResponse;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundManager;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiNewChat;
@@ -131,13 +116,11 @@ import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.multiplayer.ServerAddress;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.network.NetHandlerLoginClient;
-import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -231,366 +214,15 @@ public class ChatUtils {
 		}	
 		
 		if (var3.startsWith(var.prefixCmd) && Utils.verif==null) {
+			// New command manager
+			Utils.onCommand(var3.replaceFirst(var.prefixCmd, ""));
+			
+			// Old code
 			args = var3.split(" ");
-			if (args[0].equalsIgnoreCase(var.prefixCmd)) {
-				Utils.addChat(error); 
-				Utils.checkXp(xp);
-			}
+
 			if (!var3.equalsIgnoreCase(var.prefixCmd+"startquest"))
 				Utils.checkQuest(var3);
 			
-			if (args.length==1) {
-				String s = args[0].replaceFirst(var.prefixCmd, "").toLowerCase();		
-				for (Module m : ModuleManager.ActiveModule) {
-					boolean link = false;
-					HashMap<Module, String> hm = ModuleManager.link;
-					if (hm.containsKey(m)) {
-						if (hm.get(m).contains(",")) {
-							for (String str : hm.get(m).split(",")) {
-								if (str.equalsIgnoreCase(s))
-									link = true;
-							}
-						} else
-							if (hm.get(m).equalsIgnoreCase(s))
-								link = true;
-					}
-					if (link || m.getName().toLowerCase().equalsIgnoreCase(s))
-						link = true;
-					if (link && !Utils.isLock(m.getName())) {
-						Utils.toggleModule(m.getName());
-						Utils.checkXp(xp);
-						mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-						this.mc.displayGuiScreen((GuiScreen)null);
-						return;
-					} else if (link && Utils.isLock(m.getName())) {
-						Utils.addWarn(m.getName());
-					}
-				}
-				
-			}
-			
-			for (Lock l : ModuleManager.Lock) {
-				String s = l.getName();
-				if (var3.startsWith(s.replace("--", var.prefixCmd)) || l.getRaccourcis().isEmpty() ? false : var3.startsWith(var.prefixCmd+l.getRaccourcis()) && Utils.isLock(s)) {
-					Utils.addWarn(s);
-					mc.thePlayer.playSound("mob.villager.no", 1.0F, 1.0F);
-				 	mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-				 	this.mc.displayGuiScreen((GuiScreen)null);
-					return;
-				}
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd + "mode")) {
-				if (args.length==1) {							
-					Utils.addChat(error);
-				} else {
-					if (args[1].equalsIgnoreCase("player")) {
-						var.mode="Player";
-						Utils.addChat("§aLe mode "+args[1]+" a été activé !");
-					} else if (args[1].equalsIgnoreCase("mob")) {
-						var.mode="Mob";
-						Utils.addChat("§aLe mode "+args[1]+" a été activé !");
-					} else if (args[1].equalsIgnoreCase("all")) {
-						var.mode="All";
-						Utils.addChat("§aLe mode "+args[1]+" a été activé !");
-					} else {
-						Utils.addChat(error);
-					}
-					
-				}
-				Utils.checkXp(xp);
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-
-			if (args[0].equalsIgnoreCase(var.prefixCmd + "velocity") || args[0].equalsIgnoreCase(var.prefixCmd + "velo")) {
-				Velocity v = Velocity.getVelocity();
-				if (args.length==1) {
-					Utils.toggleModule("Velocity");
-				} else if (args[1].equalsIgnoreCase("horizontal") || args[1].equalsIgnoreCase("hor")) {
-					try {
-						double d = Double.parseDouble(args[2]);
-						v.setHcoeff(d);            		
-						Utils.addChat(Utils.setColor("Le coefficient de knockback en horizontal a été changé en "+args[2]+" !", "§a"));
-					} catch (Exception e) {
-						Utils.addChat(err);
-					}
-				} else if (args[1].equalsIgnoreCase("vertical") || args[1].equalsIgnoreCase("ver")) {
-					try {
-						double d = Double.parseDouble(args[2]);
-						v.setVcoeff(d);           		
-						Utils.addChat(Utils.setColor("Le coefficient de knockback en vertical a été changé en "+args[2]+" !", "§a"));
-					} catch (Exception e) {
-						Utils.addChat(err);
-					}
-				} else {
-					try {
-						double d = Double.parseDouble(args[1]);
-						v.setHcoeff(d);
-						v.setVcoeff(d);
-						Utils.addChat(Utils.setColor("Le coefficient de knockback a été changé en "+args[1]+" !", "§a"));
-					} catch (Exception e) {
-						Utils.addChat(err);
-					}
-				}
-				Utils.checkXp(xp);
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"myping") || args[0].equalsIgnoreCase(var.prefixCmd+"lag")) {
-				for (Object o : mc.theWorld.playerEntities) {
-					if (o instanceof EntityPlayer) {
-						int ping=-1;
-						EntityPlayer en = (EntityPlayer) o;
-						try {
-							NetworkPlayerInfo npi = (NetworkPlayerInfo) mc.getNetHandler().getPlayerInfoMap().get(en.getGameProfile().getId());
-							ping = npi.getResponseTime();
-						} catch (Exception e) {}
-						boolean isMe=false;
-						String s = en.getName();
-						if (s.equalsIgnoreCase(mc.session.getUsername()))
-							isMe=true;
-						if (MCLeaks.isAltActive())
-							if (MCLeaks.getMCName().equalsIgnoreCase(s))
-								isMe=true;
-						if (isMe) {
-							Utils.addChat("§7Votre ping [§c"+en.getName()+"§7]: §c"+ping+"§7ms");
-							break;
-						}
-					}
-				}
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (var3.startsWith(var.prefixCmd+"myip")) {
-				new Thread(new Runnable() {
-					public void run() {
-						try {
-					URL url = new URL("http://nekohc.fr/controler/Neko/ip.php");
-					Scanner sc = new Scanner(url.openStream());
-					String l;
-					try {
-						while ((l = sc.nextLine()) != null) {
-							Utils.addChat("Votre adresse IP: "+l);
-							break;
-						}
-					} catch (Exception e) {}
-					sc.close();
-				} catch (Exception e) {
-					Utils.addChat("§cErreur");
-				}
-					}
-				}).start();				
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			if (var3.startsWith(var.prefixCmd+"discord")) {
-				Utils.addChat("§6Meooooww voilà le discord : "+discord);
-			}
-			//TODO: BAN
-			if (var3.startsWith(var.prefixCmd+"ban")) {
-				if (args.length>=3) {
-					ArrayList<String> list = new ArrayList<>();
-					list.add(args[1]);
-					String s = args[2];
-					if (args.length>3) {
-						for (int i=3;i<args.length;i++)
-							s+=" "+args[i];
-					}
-					list.add(s);
-					new RequestThread("ban", list).start();
-				} else {
-					Utils.addChat(Utils.setColor("Erreur de syntaxe: "+var.prefixCmd+"ban <Nom du joueur> <Raison>", "§c"));
-				}
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (var3.startsWith(var.prefixCmd+"mute")) {
-				if (args.length>=3) {
-					ArrayList<String> list = new ArrayList<>();
-					list.add(args[1]);
-					String s = args[2];
-					if (args.length>3) {
-						for (int i=3;i<args.length;i++)
-							s+=" "+args[i];
-					}
-					list.add(s);
-					new RequestThread("mute", list).start();
-				} else {
-					Utils.addChat(Utils.setColor("Erreur de syntaxe: "+var.prefixCmd+"mute <Nom du joueur> <Raison>", "§c"));
-				}
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (var3.startsWith(var.prefixCmd+"unmute")) {
-				if (args.length==2) {
-					ArrayList<String> list = new ArrayList<>();
-					list.add(args[1]);
-					new RequestThread("unmute", list).start();
-				} else {
-					Utils.addChat(Utils.setColor("Erreur de syntaxe: "+var.prefixCmd+"unmute <Nom du joueur>", "§c"));
-				}
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (var3.startsWith(var.prefixCmd+"proxy")) {
-				if (args.length==1) {
-					Utils.addChat("§cErreur, syntaxe correcte: "+Utils.setColor(var.prefixCmd+"proxy <HostIP> <Port>", "§c"));
-				} else if (args[1].equalsIgnoreCase("reset")) {
-					Properties props = System.getProperties();
-					props.setProperty("proxySet", "false" );
-					System.clearProperty("socksProxyHost");
-			    	System.setProperties(props);
-					Utils.addChat("§aVous vous êtes déconnecté du proxy");
-				} else {
-					String host = args[1];
-					String port = "1080";
-					if (args.length==3) {
-						port = args[2];
-					}
-					Properties props = System.getProperties();
-					props.setProperty("proxySet", "true" );
-			    	props.setProperty("socksProxyHost", host);
-			    	props.setProperty("socksProxyPort", port);
-			    	System.setProperties(props);
-			    	mc.setProxy(new Proxy(Type.SOCKS, new InetSocketAddress(host, Integer.parseInt(port))));
-					Utils.addChat("§aVous vous êtes connecté à "+host+":"+port);
-				}
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"listping")) {
-				for (Object o : mc.theWorld.playerEntities) {
-					if (o instanceof EntityPlayer) {
-						int ping=-1;
-						EntityPlayer en = (EntityPlayer) o;
-						try {
-							NetworkPlayerInfo npi = (NetworkPlayerInfo) mc.getNetHandler().getPlayerInfoMap().get(en.getGameProfile().getId());
-							ping = npi.getResponseTime();
-						} catch (Exception e) {						
-							
-						}
-						Utils.addChat("§7Ping's §c"+en.getName()+"§7: §a"+ping+"ms");
-					}
-				}
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd + "ping")) {
-				Ping p = Ping.getPing();
-				if (args[1].equalsIgnoreCase("delay")) {
-					try {
-						Ping.getPing().setDelay(Integer.parseInt(args[1])<0 ? 0 : Integer.parseInt(args[1]));
-						Utils.addChat("§aPing mis à "+Ping.getPing().getDelay()+" !");
-					} catch (Exception e) {
-						Utils.addChat(err);
-					}
-				} else if (args[1].equalsIgnoreCase("random")) {
-					if (p.isRandom()) {
-						Utils.addChat("§cPing Random désactivé");
-					} else {
-						Utils.addChat("§aPing Random activé");
-					}
-					p.setRandom(!p.isRandom());
-				} else if (args[1].equalsIgnoreCase("freezer")) {
-					if (p.isFreezer()) {
-						Utils.addChat("§cPing Freezer désactivé");
-					} else {
-						Utils.addChat("§aPing Freezer activé");
-					}
-					p.setFreezer(!p.isFreezer());
-				} else {
-					try {
-						Ping.getPing().setDelay(Integer.parseInt(args[1])<0 ? 0 : Integer.parseInt(args[1]));
-						Utils.addChat("§aPing mis à "+Ping.getPing().getDelay()+" !");
-					} catch (Exception e) {
-						Utils.addChat(err);
-					}
-				}
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd + "tp")) {
-				if (args.length==1) {
-					Utils.addChat(error);
-				} else {
-					TpUtils tp = new TpUtils();
-					EntityPlayer en = Utils.getPlayer(args[1]);
-					if (en!=null)
-						tp.doTpAller(en, en.posX, en.posY, en.posZ, false, 1);
-					else
-						Utils.addChat("§cErreur, ce joueur n'existe pas");
-					mc.ingameGUI.getChatGUI().addToSentMessages(var3);						    			            		
-				}
-			}
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"friend") || args[0].equalsIgnoreCase(var.prefixCmd + "fr") || args[0].equalsIgnoreCase(var.prefixCmd + "ft")) {						
-				int n=0;
-				if (args.length==1) {
-					if (args[0].equalsIgnoreCase(var.prefixCmd + "ft")) {
-						if (!Friends.team) {
-							Utils.addChat("§aAjout auto de player dans votre team activé !");
-							Friends.team=true;
-						} else if (Friends.team) {
-							Utils.addChat("§cAjout auto de player dans votre team désactivé !");
-							Friends.team=false;
-						}
-					} else
-					Utils.addChat(error);
-				} else if (args[1].equalsIgnoreCase("clear")) {
-					Utils.addChat("§aTa liste d'amis a été clear !");
-					Friends.friend.clear();
-					Utils.saveFriends();
-				} else if (args[1].equalsIgnoreCase("list")) {
-					for (int i=0;i<Friends.friend.size();i++) {
-						Utils.addChat(Friends.friend.get(i));
-						n++;
-					}
-					if (n==0) {
-						Utils.addChat("§cDésolé, tu n'as pas d'amis...gentil "+var.rang.getName()+" :3");
-					}
-				} else if (args[1].equalsIgnoreCase("radius")) {
-					int l=0;
-					if (args.length==2) {
-						Utils.addChat(error);
-					} else {
-						for(Iterator<Object> entities = Minecraft.getMinecraft().theWorld.playerEntities.iterator(); entities.hasNext();) {
-				            Object theObject = entities.next();
-				            if(theObject instanceof EntityLivingBase) {
-				                EntityLivingBase entity = (EntityLivingBase) theObject;
-				               
-				                if(entity instanceof EntityPlayerSP) continue;
-				                if(Minecraft.getMinecraft().thePlayer.getDistanceToEntity(entity) <= Double.parseDouble(args[2])) {
-				                    if(entity.isEntityAlive()) {
-			                    			Friends.addFriend(entity.getName());	
-			                    			l++;						                    		
-				                    		Utils.checkXp(xp);
-				                    }
-				                }
-				            }
-						}
-						Utils.addChat(l+" joueurs ajoutés/retirés !");
-					}
-				} else if (args[1].equalsIgnoreCase("team")) {
-						if (!Friends.team) {
-							Utils.addChat("§aAjout auto de player dans votre team activé !");
-							Friends.team=true;
-						} else if (Friends.team) {
-							Utils.addChat("§cAjout auto de player dans votre team désactivé !");
-							Friends.team=false;
-						}
-						
-				} else if (Friends.isFriend(args[1])) {
-					Utils.addChat("§5"+args[1] + "§c a été retiré de ta liste d'amis !");
-					Friends.addFriend(args[1]);
-					Utils.checkXp(xp);
-				} else {
-					Utils.addChat("§5"+args[1] + "§a a été ajouté à ta liste d'amis !"); 	
-					Friends.addFriend(args[1]);
-					Utils.checkXp(xp);
-				}
-				Utils.checkXp(xp);
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			//TODO: Help
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"help")) {
 				// Afficher la liste des commandes non simplifiées
 				if (args.length==1) {
@@ -614,6 +246,18 @@ public class ChatUtils {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6"+var.prefixCmd+"Magnet classic", var.prefixCmd+"magnet classic", "§7Active/désactive le tp par diagonale", false, Chat.Summon);
 					Utils.addChat2("§6"+var.prefixCmd+"Magnet Mode <Single:Multi>", var.prefixCmd+"magnet mode ", "§7Choisis entre:\n§7Prendre les items un à un (Envoie moins de paquets)\n§7Prend tous les items en même temps (Envoie plus de paquets)", false, Chat.Summon);
+					Utils.checkXp(xp);
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				} else if (args[1].equalsIgnoreCase("radar")) {
+					Utils.addChat(Utils.sep);
+					Utils.addChat2("§6"+var.prefixCmd+"radar map/minimap", var.prefixCmd+"radar mp", "§7Affiche le radar sous forme de Map", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"radar text/textuel", var.prefixCmd+"radar text", "§7Affiche le radar sous forme textuel", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"radar fr/friends/friend", var.prefixCmd+"radar fr", "§7Affiche les amis dans les radars (Vert)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"radar joueurs/joueurs/player", var.prefixCmd+"radar joueurs", "§7Affiche les joueurs non ami dans le radar (Rouge)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"radar mobs/monstres", var.prefixCmd+"radar mobs", "§7Affiche les mobs actifs (monstres) dans le radar (Orange)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"radar animals/animaux", var.prefixCmd+"radar animals", "§7Affiche les mobs passifs (animaux) dans le radar (Bleu)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"radar golem", var.prefixCmd+"radar golem", "§7Affiche les Golems dans le radar (Gris)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"radar npc/pnj", var.prefixCmd+"radar npc", "§7Affiche les NPC / PNJ dans le radar (Rose)", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("arraylist")) {
@@ -976,9 +620,13 @@ public class ChatUtils {
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("tracers")) {
 					Utils.addChat(Utils.sep);
-					Utils.addChat2("§6"+var.prefixCmd+"Tracers color <R> <G> <B>", var.prefixCmd+"tracers color ", "§7Change la couleur de la ligne (Red Green Blue = taux de couleur, de 0 à 100)", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Tracers width <Double>", var.prefixCmd+"tracers width ", "§7Change l'épaisseur de la ligne", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Tracers friend", var.prefixCmd+"tracers friend", "§7Affiche ou non une ligne sur les friends", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Tracers width <nombre>", var.prefixCmd+"Tracers width 2", "§7Change la taille des traits.", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Tracers fr/friends/friend", var.prefixCmd+"Tracers fr", "§7Affiche une trace vers les amis (Vert)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Tracers joueurs/joueurs/player", var.prefixCmd+"Tracers joueurs", "§7Affiche une trace vers les joueurs non amis (Rouge)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Tracers mobs/monstres", var.prefixCmd+"Tracers mobs", "§7Affiche une trace vers les les mobs actifs (monstres) (Orange)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Tracers animals/animaux", var.prefixCmd+"Tracers animals", "§7Affiche une trace vers les mobs passifs (animaux) (Bleu)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Tracers golem", var.prefixCmd+"Tracers golem", "§7Affiche une trace vers les Golems (Gris)", false, Chat.Summon);
+					Utils.addChat2("§6"+var.prefixCmd+"Tracers npc/pnj", var.prefixCmd+"Tracers npc", "§7Affiche une trace vers les NPC / PNJ (Rose)", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("freecam")) {
@@ -1173,7 +821,6 @@ public class ChatUtils {
 					} else if (args[1].equalsIgnoreCase("clear")) {
 						c.getListPlayer().clear();
 						Utils.addChat("§aListe des joueurs clear");
-					} else if (args[1].equalsIgnoreCase("list")) {
 						if (c.getListPlayer().size()==0) {
 							Utils.addChat("Pas de joueurs blacklistés");
 						} else {
@@ -1315,7 +962,7 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"pyro")) {
 				if (args.length==1) {
-					Utils.toggleModule("Pyro");
+					
 				} else if (args[1].equalsIgnoreCase("list")) {
 					String modes="";
 					int i=0;
@@ -1372,7 +1019,6 @@ public class ChatUtils {
 				Utils.addChat("§aPréfix changé !");
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}	
-			//TODO: OnlyRpg
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"onlyrpg")) {
 				if (args.length==1) {
 					if (var.onlyrpg.isActive()) {						
@@ -1390,7 +1036,7 @@ public class ChatUtils {
 									v = true;
 							}
 							if (!v) {
-								if (m.getToggled()) {
+								if (m.isToggled()) {
 									boolean bl = Utils.display;
 									Utils.display = false;
 									m.onDisabled();
@@ -1409,7 +1055,6 @@ public class ChatUtils {
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"build")) {
 				Build b = Build.getBuild();
 				if (args.length==1) {
-					Utils.toggleModule("Build");					
 				} else if (args[1].equalsIgnoreCase("Down")) {
 					if (b.isDown()) {
 						Utils.addChat("§cMode Down désactivé");
@@ -1798,23 +1443,14 @@ public class ChatUtils {
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"crasher")) {
+				Crasher crasher = Crasher.getInstance();
 				
 				if (args.length==2 && args[1].equalsIgnoreCase("wave")) {
-					Crasher.wave = !Crasher.wave;
-					if (Crasher.wave)
+					crasher.setWave(!crasher.isWave());
+					if (crasher.isWave())
 						Utils.addChat(Utils.setColor("Mode wave du crasher activé !", "§a"));
 					else
 						Utils.addChat(Utils.setColor("Mode wave du crasher désactivé !", "§c"));
-				}
-				
-				if (args.length==2 && args[1].equalsIgnoreCase("ymax")) {
-					ForceTP f = ForceTP.getForceTP();
-					if (f.isYMax()) {
-						Utils.addChat(Utils.setColor("Hauteur maximal de Y désactivée pour les TP (ça prendra la valeur Y de la target)", "§c"));
-					} else {
-						Utils.addChat(Utils.setColor("Hauteur maximal de Y activée pour les TP (255)", "§a"));
-					}
-					f.setYMax(!f.isYMax());
 				}
 				
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
@@ -1904,37 +1540,6 @@ public class ChatUtils {
 				
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"update")) {				
-				  try {
-						URL url = new URL("http://neko.alwaysdata.net/ver.html");
-						Scanner sc = new Scanner(url.openStream());
-						ArrayList<String> s = new ArrayList<>();
-						String l;
-						try {
-							while ((l = sc.nextLine()) != null) {
-								s.add(l);
-							}
-						} catch (Exception e) {}
-						
-						if (!s.get(0).equals(var.CLIENT_VERSION)) {
-							Client.getNeko().ver=s.get(0);
-							Client.getNeko().changelog=s.get(1);
-							try {
-								URI url1 = URI.create("https://nekohc.fr");
-								Desktop.getDesktop().browse(url1);
-								mc.displayGuiScreen(new GuiMainMenu());
-							} catch (Exception e) {}
-						} else {
-							Utils.addChat("§dVersion à jour !");
-						}
-						sc.close();
-					} catch (Exception e) {
-						Utils.addChat("§cAdresse inateignable :c");
-					}
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"end")) {
 				Utils.dim=true;
 				Utils.checkXp(xp);												
@@ -2138,7 +1743,6 @@ public class ChatUtils {
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"dropshit") || args[0].equalsIgnoreCase(var.prefixCmd+"drop")) {
 				DropShit sh = DropShit.getShit();
 				if (args.length==1) {
-					Utils.toggleModule("DropShit");
 				} else if (args[1].equalsIgnoreCase("add")) {
 					try {
 						if (Utils.isInteger(args[2])) {
@@ -2187,8 +1791,6 @@ public class ChatUtils {
 			} else if (args[1].equalsIgnoreCase("all")) {
 				for (int i = 0; i < 45; i++) {
 					if (mc.thePlayer.inventoryContainer.getSlot(i).getStack() != null) {
-						ItemStack is = mc.thePlayer.inventoryContainer.getSlot(i).getStack();
-						Item item = is.getItem();
 						mc.playerController.windowClick(0, i, 0, 0, mc.thePlayer);
 			        	mc.playerController.windowClick(0, -999, 0, 0, mc.thePlayer);
 					}
@@ -2314,15 +1916,93 @@ public class ChatUtils {
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"radar") || args[0].equalsIgnoreCase(var.prefixCmd+"r")) {
-				if (args.length==1)
-					Utils.toggleModule("Radar");
+				if (args.length==1) {}
 				else if (args[1].equalsIgnoreCase("fr") || args[1].equalsIgnoreCase("friend") || args[1].equalsIgnoreCase("friends")) {
 					if (Radar.fr) {
 						Radar.fr=false;
+						SettingsUtil.setRadarFriends(false);
 						Utils.addChat("§cAffichage des friends dans le radar désactivé");
 					} else {
 						Radar.fr=true;
+						SettingsUtil.setRadarFriends(true);
 						Utils.addChat("§aAffichage des friends dans le radar activé");
+					}
+				}
+				else if (args[1].equalsIgnoreCase("map") || args[1].equalsIgnoreCase("minimap")) {
+					if (Radar.radarMap) {
+						Radar.radarMap = false;
+						SettingsUtil.setRadarMinimap(false);
+						Utils.addChat("§cAffichage du Radar Map désactivé");
+					} else {
+						Radar.radarMap = true;
+						SettingsUtil.setRadarMinimap(true);
+						Utils.addChat("§cAffichage du Radar Map activé");
+					}
+				}
+				else if (args[1].equalsIgnoreCase("text") || args[1].equalsIgnoreCase("textuel")) {
+					if (Radar.radarText) {
+						Radar.radarText = false;
+						SettingsUtil.setRadarText(false);
+						Utils.addChat("§cAffichage du Radar textuel désactivé");
+					} else {
+						Radar.radarText = true;
+						SettingsUtil.setRadarText(true);
+						Utils.addChat("§cAffichage du Radar textuel activé");
+					}
+				}
+				else if (args[1].equalsIgnoreCase("joueurs") || args[1].equalsIgnoreCase("player") || args[1].equalsIgnoreCase("joueur")) {
+					if (Radar.BoolENEMIES) {
+						Radar.BoolENEMIES = false;
+						SettingsUtil.setRadar_Enemies(false);
+						Utils.addChat("§cAffichage des joueurs désactivé sur le radar");
+					} else {
+						Radar.BoolENEMIES = true;
+						SettingsUtil.setRadar_Enemies(true);
+						Utils.addChat("§cAffichage des joueurs activé sur le radar");
+					}
+				}
+				else if (args[1].equalsIgnoreCase("mobs")  || args[1].equalsIgnoreCase("monstres")) {
+					if (Radar.BoolMOBS) {
+						Radar.BoolMOBS = false;
+						SettingsUtil.setRadar_Mobs(false);
+						Utils.addChat("§cAffichage des mobs désactivé sur le radar");
+					} else {
+						Radar.BoolMOBS = true;
+						SettingsUtil.setRadar_Mobs(true);
+						Utils.addChat("§cAffichage des mobs activé sur le radar");
+					}
+				}
+				else if (args[1].equalsIgnoreCase("animals")  || args[1].equalsIgnoreCase("animaux")) {
+					if (Radar.BoolANIMALS) {
+						Radar.BoolANIMALS = false;
+						SettingsUtil.setRadar_Animals(false);
+						Utils.addChat("§cAffichage des animaux désactivé sur le radar");
+					} else {
+						Radar.BoolANIMALS = true;
+						SettingsUtil.setRadar_Animals(true);
+						Utils.addChat("§cAffichage des animaux activé sur le radar");
+					}
+				}
+				else if (args[1].equalsIgnoreCase("Inpc")  || args[1].equalsIgnoreCase("golem")) {
+					if (Radar.BoolGOLEM) {
+						Radar.BoolGOLEM = false;
+						SettingsUtil.setRadar_Golem(false);
+						Utils.addChat("§cAffichage des Inpc et Golem désactivés sur le radar");
+					} else {
+						Radar.BoolGOLEM = true;
+						SettingsUtil.setRadar_Golem(true);
+						Utils.addChat("§cAffichage des Inpc et Golem activés sur le radar");
+					}
+				}
+				else if (args[1].equalsIgnoreCase("NPC")  || args[1].equalsIgnoreCase("PNJ")) {
+					if (Radar.boolNPC) {
+						Radar.boolNPC = false;
+						SettingsUtil.setRadar_NPC(false);
+						Utils.addChat("§cAffichage des NPC désactivé sur le radar");
+					} else {
+						Radar.boolNPC = true;
+						SettingsUtil.setRadar_NPC(true);
+						Utils.addChat("§cAffichage des NPC activé sur le radar");
 					}
 				}
 				Utils.checkXp(xp);						
@@ -2331,7 +2011,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"nametag")) {
 				if (args.length==1) {
-					Utils.toggleModule("Nametag");
 				} else {
 					try {
 						Render.varNeko=Float.parseFloat(args[1]);
@@ -2369,7 +2048,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"l") || args[0].equalsIgnoreCase(var.prefixCmd+"arraylist")) {
 				if (args.length==1) {
-					Utils.toggleModule("ArrayList");
 				} else {
 					try {
 						if(args[1].equalsIgnoreCase("unicolor")) {
@@ -2379,7 +2057,7 @@ public class ChatUtils {
 								Utils.addChat("§cLes nombres du ..araylist unicolor doivent être situés entre 0 et 255.");
 								return;
 							}
-							java.awt.Color c = new java.awt.Color(Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]));
+							java.awt.Color c = new java.awt.Color(r, g, b);
 							SettingsUtil.setArrayRed(c.getRed());
 							SettingsUtil.setArrayGreen(c.getGreen());
 							SettingsUtil.setArrayBlue(c.getBlue());
@@ -2452,7 +2130,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"autoarmor") || args[0].equalsIgnoreCase(var.prefixCmd+"aa")) {
 				if (args.length==1) {
-					Utils.toggleModule("Autoarmor");
 				} else if (args[1].equalsIgnoreCase("ec")) {
 						if (Autoarmor.ec) {
 							Autoarmor.ec=!Autoarmor.ec;
@@ -2484,25 +2161,6 @@ public class ChatUtils {
 					mc.thePlayer.sendChatMessage(prefix+"-[Ma chaîne YouTube: Tryliom]- ={Vidéos de cheat et tuto dév Java}=");
 				} else
 					mc.thePlayer.sendChatMessage("-[Ma chaîne YouTube: "+args[1]+"]-");
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"limit")) {
-				if (args.length==1) {
-					if (Utils.limite)
-						Utils.addChat("§cLimite désactivé !");
-					else
-						Utils.addChat("§aLimite activé !");
-					Utils.limite=!Utils.limite;
-				} else {
-					if (Utils.isInteger(args[1])) {
-						Utils.limit=Integer.parseInt(args[1]);
-						Utils.addChat("§aLimite changée à "+args[1]+" !");
-					} else 
-						Utils.addChat(err);
-				}
-				
-				
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
@@ -2547,7 +2205,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"clickaim")) {
 				if (args.length==1) {
-					Utils.toggleModule("ClickAim");
 				} else if (Utils.isDouble(args[1])) {
 					try {
 						ClickAim.dist=Float.parseFloat(args[1]);
@@ -2572,7 +2229,7 @@ public class ChatUtils {
 				Utils.checkXp(xp);						
 			}
 			
-			//TODO: Mcleaks
+
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"mcleaks") || args[0].equalsIgnoreCase(var.prefixCmd+"mcleak") || args[0].equalsIgnoreCase(var.prefixCmd+"mcl")) {
 				if (args.length==1) {
 					Utils.addChat("§cErreur, essayez "+var.prefixCmd+"mcleaks <token>");
@@ -2664,7 +2321,7 @@ public class ChatUtils {
 						}
 												
 						Utils.saveAccount(user, mdp);
-						ArrayList s = Utils.getAllAccount();
+						ArrayList<String> s = Utils.getAllAccount();
 						Utils.addChat("§aCompte N°"+s.size()+" ajouté !");
 					} catch (Exception e) {Utils.addChat("§cErreur d'ajout de compte");}							
 				} else if (args[1].equalsIgnoreCase("list")) {
@@ -2716,8 +2373,6 @@ public class ChatUtils {
 				} else {
 					Minecraft.getMinecraft().thePlayer.posY+=1.0F;
 					try {
-						if (Utils.limite && Utils.nbPack>Utils.limit)
-                			return;
 						double x = (args[1].contains("~") ? mc.thePlayer.posX+(args[1].replace("~", "").equals("") ? 0.0 : Double.parseDouble(args[1].replace("~", ""))) : Double.parseDouble(args[1]));
 						double y = (args[2].contains("~") ? mc.thePlayer.posY+(args[2].replace("~", "").equals("") ? 0.0 : Double.parseDouble(args[2].replace("~", ""))) : Double.parseDouble(args[2]));
 						double z = (args[3].contains("~") ? mc.thePlayer.posZ+(args[3].replace("~", "").equals("") ? 0.0 : Double.parseDouble(args[3].replace("~", ""))) : Double.parseDouble(args[3]));						
@@ -3031,7 +2686,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"freecam")) {
 				if (args.length==1) {
-					Utils.toggleModule("Freecam");
 				} else {
 					try {
 						Freecam.speed=Float.parseFloat(args[1]);
@@ -3055,7 +2709,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"longjump")) {
 				if (args.length==1) {
-					Utils.toggleModule("longjump");
 				} else if (args[1].equalsIgnoreCase("speed")) {
 					try {
 						Longjump.speed=Float.parseFloat(args[2]);
@@ -3077,7 +2730,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"smoothaim")) {
 				if (args.length==1) {
-					Utils.toggleModule("SmoothAim");
 				} else if (args[1].equalsIgnoreCase("range")) {
 					try {
 						SmoothAim.range=Double.parseDouble(args[2]);
@@ -3106,7 +2758,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"autosoup")) {
 				if (args.length==1) {
-					Utils.toggleModule("autosoup");
 				} else if (args[1].equalsIgnoreCase("heal")) {
 					try {
 						Autosoup.heal=Integer.parseInt(args[2]);
@@ -3137,7 +2788,6 @@ public class ChatUtils {
 						mc.thePlayer.setPosition(x, y, z);
 						Minecraft.getMinecraft().thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(x, y, z, true));
 						mc.thePlayer.sendChatMessage("/sethome");
-						Utils.addChat("§6Téléportation....");
 					} catch (Exception e) {
                         Utils.addChat(err);
                     }
@@ -3225,7 +2875,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"antiafk") || args[0].equalsIgnoreCase(var.prefixCmd+"afk")) {
 				if (args.length==1) {
-					Utils.toggleModule("Antiafk");
 				} else {
 					try {
 						Integer b = Integer.parseInt(args[1]);
@@ -3293,7 +2942,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"fire")) {
 				if (args.length==1) {
-					Utils.toggleModule("Fire");
 				} else {
 					try {
 						Fire.p=Integer.parseInt(args[1]);
@@ -3307,7 +2955,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"Water")) {
 				if (args.length==1) {
-					Utils.toggleModule("Water");
 				} else {
 					try {
 						Water.p=Integer.parseInt(args[1]);
@@ -3322,7 +2969,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"autoclic") || args[0].equalsIgnoreCase(var.prefixCmd+"auto")) {
 				if (args.length==1) {
-					Utils.toggleModule("AutoClic");
 				} else {
 					try {		
 						if (Integer.parseInt(args[1])<=0)
@@ -3340,7 +2986,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"push") || args[0].equalsIgnoreCase(var.prefixCmd+"pushup")) {
 				if (args.length==1) {
-					Utils.toggleModule("PushUp");
 				} else {
 					try {								
 						PushUp.getPush().setPacket(Integer.parseInt(args[1]));
@@ -3401,7 +3046,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"nekochat") || args[0].equalsIgnoreCase(var.prefixCmd+"chat")) {
 				if (args.length==1) {
-					Utils.toggleModule("NekoChat");
 				} else if (args[1].equalsIgnoreCase("color")) {
 					try {
 						int color = NekoChat.getChat().getColor();
@@ -3648,27 +3292,7 @@ public class ChatUtils {
 					Utils.addChat(Utils.setColor("Utilisation correcte: "+var.prefixCmd+"event <player:all> <server:all> <ver:all> <Type> <cmd>", "§c"));
 					Utils.addChat(Utils.setColor("Type: Unlock, RandUnlock, Rang, RangRate, Cmd, Msg, Xp, Lvl, Souls, Bonus et MeteoreRain", "§c"));
 				}
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"detector")) {
-				if (args.length==1) {
-					HackerDetector.setDetector();
-					if (HackerDetector.isOn) {
-						Utils.addChat("§aHacker Detector activé !");
-					} else {
-						Utils.addChat("§cHacker Detector désactivé !");
-					}
-				} else if (args[1].equalsIgnoreCase("alert")) {
-					if (HackerDetector.voirAlert) {
-						Utils.addChat("§cAlertes désactivées");
-					} else {
-						Utils.addChat("§aAlertes activées");
-					}
-					HackerDetector.voirAlert=!HackerDetector.voirAlert;
-				}
-				
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}			
+			}		
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"lvlup")) {
 				if (var.animation) {
@@ -3682,7 +3306,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"trade") || args[0].equalsIgnoreCase(var.prefixCmd+"shop")) {
 				if (args.length==1) {
-					//TODO: Commandes en 2
 					Utils.addChat(Utils.sep);
 					Utils.addChat("§lListe des gains:");
 					Utils.addChat2("§7Votre solde §7[§cici§7]", "", "§7Souls: §b"+var.ame+"\n§7Tickets de loteries:§6 "+var.lot, true, Chat.Click);
@@ -4237,8 +3860,7 @@ public class ChatUtils {
 			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"worldtime") || args[0].equalsIgnoreCase(var.prefixCmd+"time")) {
-				if (args.length==1) {
-					Utils.toggleModule("WorldTime");					
+				if (args.length==1) {				
 				} else {
 					try {
 						WorldTime.time=Long.parseLong(args[1]);
@@ -4260,8 +3882,7 @@ public class ChatUtils {
 				if (args.length==1 || Utils.isLock("reach")) {
 					if (Utils.isLock("reach")) {
 						Utils.addWarn("Reach");
-					} else
-						Utils.toggleModule("reach");
+					}
 				} else if (args[1].equalsIgnoreCase("pvp")) {
 					if (!Utils.isLock("--reach pvp")) {
 						if (Reach.pvp) {
@@ -4386,7 +4007,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"itemesp") || args[0].equalsIgnoreCase(var.prefixCmd+"item")) {
 				if (args.length==1) {					
-					Utils.toggleModule("ItemESP");
 				} else if (args.length>=3) {
 					try {
 						if (args[1].equalsIgnoreCase("color") || args[1].equalsIgnoreCase("c")) {
@@ -4415,10 +4035,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"wallhack") || args[0].equalsIgnoreCase(var.prefixCmd+"wh")) {
 				if (args.length==1 || Utils.isLock("Wallhack")) {
-					if (Utils.isLock("Wallhack")) {
-						Utils.addWarn("Wallhack");
-					} else
-						Utils.toggleModule("Wallhack");
 				} else if (args.length>=3) {
 					try {
 						if (args[1].equalsIgnoreCase("color") || args[1].equalsIgnoreCase("c")) {
@@ -4447,22 +4063,74 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"tracers")) {
 				if (args.length==1) {
-					Utils.toggleModule("tracers");
-				} else if (args[1].equalsIgnoreCase("friend") || args[1].equalsIgnoreCase("fr")) {
+				} else if (args[1].equalsIgnoreCase("fr") || args[1].equalsIgnoreCase("friend") || args[1].equalsIgnoreCase("friends")) {
 					if (Tracers.friend) {
-						Utils.addChat(Utils.setColor("Affichage des friends sur le Tracers désactivé !", "§c"));
+						Tracers.friend=false;
+						SettingsUtil.setTracers_Friends(false);
+						Utils.addChat("§cAffichage des amis sur le tracers désactivé");
 					} else {
-						Utils.addChat(Utils.setColor("Affichage des friends sur le Tracers activé !", "§a"));
+						Tracers.friend=true;
+						SettingsUtil.setTracers_Friends(true);
+						Utils.addChat("§aAffichage des amis sur le tracers activé");
 					}
-					Tracers.friend=!Tracers.friend;
-				}else if (args.length>=3) {				
+				}
+				else if (args[1].equalsIgnoreCase("joueurs") || args[1].equalsIgnoreCase("player") || args[1].equalsIgnoreCase("joueur")) {
+					if (Tracers.BoolENEMIES) {
+						Tracers.BoolENEMIES = false;
+						SettingsUtil.setTracers_Enemies(false);
+						Utils.addChat("§cAffichage des joueurs désactivé sur le tracers");
+					} else {
+						Tracers.BoolENEMIES = true;
+						SettingsUtil.setTracers_Enemies(true);
+						Utils.addChat("§cAffichage des joueurs activé sur le tracers");
+					}
+				}
+				else if (args[1].equalsIgnoreCase("mobs")  || args[1].equalsIgnoreCase("monstres")) {
+					if (Tracers.BoolMOBS) {
+						Tracers.BoolMOBS = false;
+						SettingsUtil.setTracers_Mobs(false);
+						Utils.addChat("§cAffichage des mobs désactivé sur le tracers");
+					} else {
+						Tracers.BoolMOBS = true;
+						SettingsUtil.setTracers_Mobs(true);
+						Utils.addChat("§cAffichage des mobs activé sur le tracers");
+					}
+				}
+				else if (args[1].equalsIgnoreCase("animals")  || args[1].equalsIgnoreCase("animaux")) {
+					if (Tracers.BoolANIMALS) {
+						Tracers.BoolANIMALS = false;
+						SettingsUtil.setTracers_Animals(false);
+						Utils.addChat("§cAffichage des animaux désactivé sur le tracers");
+					} else {
+						Tracers.BoolANIMALS = true;
+						SettingsUtil.setTracers_Animals(true);
+						Utils.addChat("§cAffichage des animaux activé sur le tracers");
+					}
+				}
+				else if (args[1].equalsIgnoreCase("Inpc")  || args[1].equalsIgnoreCase("golem")) {
+					if (Tracers.BoolGOLEM) {
+						Tracers.BoolGOLEM = false;
+						SettingsUtil.setTracers_Golem(false);
+						Utils.addChat("§cAffichage des Inpc et Golem désactivés sur le tracers");
+					} else {
+						Tracers.BoolGOLEM = true;
+						SettingsUtil.setTracers_Golem(true);
+						Utils.addChat("§cAffichage des Inpc et Golem activés sur le tracers");
+					}
+				}
+				else if (args[1].equalsIgnoreCase("NPC")  || args[1].equalsIgnoreCase("PNJ")) {
+					if (Tracers.boolNPC) {
+						Tracers.boolNPC = false;
+						SettingsUtil.setTracers_NPC(false);
+						Utils.addChat("§cAffichage des NPC désactivé sur le tracers");
+					} else {
+						Tracers.boolNPC = true;
+						SettingsUtil.setTracers_NPC(true);
+						Utils.addChat("§cAffichage des NPC activé sur le tracers");
+					}
+				} else if (args.length>=3) {				
 					try {
-						if (args[1].equalsIgnoreCase("color") || args[1].equalsIgnoreCase("c")) {
-							Tracers.cR=Float.parseFloat(args[2])/100;
-							Tracers.cG=Float.parseFloat(args[3])/100;
-							Tracers.cB=Float.parseFloat(args[4])/100;
-							Utils.addChat("§aCouleurs du Tracers à "+args[2]+"r, "+args[3]+"g et "+args[4]+"b !");
-						} else if (args[1].equalsIgnoreCase("width")) {
+						if (args[1].equalsIgnoreCase("width")) {
 							Tracers.width=Float.parseFloat(args[2]);
 							Utils.addChat("§aEpaisseur de la ligne mis à "+Tracers.width+" !");
 						}
@@ -4474,7 +4142,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"trigger")) {
 				if (args.length==1) {
-					Utils.toggleModule("Trigger");
 				} else if (args[1].equalsIgnoreCase("cps")) {
 					try {
 						Trigger.cps=Integer.parseInt(args[2]);
@@ -4521,8 +4188,8 @@ public class ChatUtils {
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"autocmd")) {
 				if (args.length>=3) {
 					if (args[1].equalsIgnoreCase("delay")) {
-						if (Utils.isInteger(args[2])) {
-							AutoCmd.sec = Integer.parseInt(args[2]);
+						if (Utils.isDouble(args[2])) {
+							AutoCmd.sec = Double.parseDouble(args[2]);
 							Utils.addChat("§aLe délai des commandes du AutoCmd a été mis à "+args[2]+" !");
 						} else {
 							Utils.addError("Les secondes doivent être un nombre entier !");
@@ -4578,7 +4245,6 @@ public class ChatUtils {
 					if (args[1]!=null)
 						Utils.verif=args[1];
 					
-					//TODO: Verif
 					Event.lastEventId=-1;
 					Irc.getInstance().setLastId(-1);
 					Irc.getInstance().setLastMsg("");
@@ -4674,7 +4340,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"paint")) {
 				if (args.length==1) {
-					Utils.toggleModule("Paint");
 				} else if (args[1].equalsIgnoreCase("color")) {
 					try {
 						Paint.cR=Float.parseFloat(args[2])/100;
@@ -4736,7 +4401,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"cheststealer") || args[0].equalsIgnoreCase(var.prefixCmd+"cs")) {
 				if (args.length==1) {
-					Utils.toggleModule("Cheststealer");
 				} else {
 					try {
 						Cheststealer.waitTime=Integer.parseInt(args[1]);
@@ -4843,43 +4507,6 @@ public class ChatUtils {
 				}
 				Utils.checkXp(xp);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"unlock")) {
-				if (args.length==1) {
-					Utils.addChat("§cErreur, vous avez besoin du mot de passe !");
-				} else {
-					boolean verif=false;
-					try {
-						ArrayList<String> s = Utils.getUrl("http://neko.alwaysdata.net/mdp.html");
-						for (String str : s) {
-							String arg[] = str.split(" ");
-							if (arg[0].equalsIgnoreCase(System.getProperty("user.name"))) {
-								if (args[1].equals(arg[1])) {
-									verif=true;
-								}
-							}
-						}					
-						if (verif) {
-							if (args.length==3) {
-								Utils.unlock(args[2]);
-							} else {
-								String str = "";
-								for (int i=2;i<args.length;i++) {
-									if (i+1!=args.length)
-										str+=args[i]+" ";
-									else
-										str+=args[i];
-								}
-								Utils.unlock(str);
-							}
-						} else {
-							Utils.addChat("§cErreur, faux mot de passe !");
-						} 
-					
-					} catch (Exception e) {
-					}														
-				}
 			}
 
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"version")) {
@@ -5150,7 +4777,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"ka")) {
 				if (args.length==1) {
-					Utils.toggleModule("KillAura");
 				} else if (args[1].equalsIgnoreCase("lockview") || args[1].equalsIgnoreCase("lock")) {
 					if (KillAura.lockView) {
 						Utils.addChat("§cLockview du Kill Aura désactivée !");
@@ -5192,8 +4818,8 @@ public class ChatUtils {
                     }
 				} else if (args[1].equalsIgnoreCase("live")) {
 					try {
-						KillAura.live=Integer.parseInt(args[2]);
-						Utils.addChat("§aLive du Kill Aura mis à "+args[2]+" !");
+						KillAura.live=Integer.parseInt(args[2]) * 20;
+						Utils.addChat("§aLive du Kill Aura mis à "+KillAura.live+" !");
 					} catch (Exception e) {
                         Utils.addChat(err);
                     }
@@ -5280,7 +4906,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"hud")) {
 				if (args.length==1) {
-					Utils.toggleModule("HUD");
 				} else if (args[1].equalsIgnoreCase("fps")) {
 					if (HUD.fps) {
 						HUD.fps=false;
@@ -5400,7 +5025,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"fasteat")) {
 				if (args.length==1) {
-					Utils.toggleModule("Fasteat");
 				} else {
 					try {
 						Fasteat.getFast().setPacket(Integer.parseInt(args[1]));
@@ -5459,7 +5083,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"dolphin")) {
 				if (args.length==1) {
-					Utils.toggleModule("Dolphin");
 				} else {
 					try {
 						Dolphin.dolph=Double.parseDouble(args[1]);
@@ -5474,7 +5097,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"regen")) {
 				if (args.length==1) {
-					Utils.toggleModule("Regen");
 				} else if (args[1].equalsIgnoreCase("bypass")){
 					if (Regen.bypass) {
 						Regen.bypass=!Regen.bypass;
@@ -5555,6 +5177,30 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
+			if (args[0].equalsIgnoreCase(var.prefixCmd+"exec")) {
+				if (args.length>=4) {
+					try {
+						ArrayList<String> cmds = new ArrayList<String>();
+						String l ="";
+						for (int i=1;i<args.length;i++) {
+							l+=args[i]+" ";
+						}
+						String s[] = l.split("&&");
+						for (int i=0;i<s.length;i++) {
+							if (s[i].startsWith(" "))
+								s[i] = s[i].replaceFirst(".", "");
+							cmds.add(s[i]);
+						}
+						for (String cmd : cmds) {
+							new ChatUtils().doCommand(cmd);
+						}
+					} catch (Exception e) {
+						Utils.addChat(err);
+					}
+					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
+				}
+			}
+			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"step")) {
 				if (args[1].equalsIgnoreCase("bypass")) {
 					Step s = Step.getStep();
@@ -5584,7 +5230,6 @@ public class ChatUtils {
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"speed")) {
 				Speed709 s = Speed709.getSpeed();
 				if (args.length==1) {
-					Utils.toggleModule("Speed");
 				} else if (args[1].equalsIgnoreCase("mode")) {
 					try {
 						s.setMode(SpeedEnum.valueOf(args[2]));
@@ -5606,7 +5251,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"noclip")) {
 				if (args.length==1) {
-					Utils.toggleModule("NoClip");
 				} else {
 					try {
 						NoClip.speed=(float) Double.parseDouble(args[1]);
@@ -5622,7 +5266,6 @@ public class ChatUtils {
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"firetrail")) {
 				FireTrail ft = FireTrail.getFireTrail();
 				if (args.length==1) {
-					Utils.toggleModule("FireTrail");
 				} else if (args[1].equalsIgnoreCase("large")) {
 					if (ft.isLarge()) {
 						Utils.addChat("§aLa trainée du FireTrail devient plus fine");
@@ -5638,7 +5281,6 @@ public class ChatUtils {
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"phase")) {
 				Phase p = Phase.getPhase();
 				if (args.length==1) {
-					Utils.toggleModule("Phase");
 				} else if (args[1].equalsIgnoreCase("vphase")) {
 					if (p.isVphase()) {
 						Utils.addChat("§cVphase désactivé");
@@ -5685,7 +5327,6 @@ public class ChatUtils {
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"tpback") || args[0].equalsIgnoreCase(var.prefixCmd+"tpb")) {
 				TpBack tp = TpBack.getInstance();
 				if (args.length==1) {
-					Utils.toggleModule("TpBack");
 				} else if (args[1].equalsIgnoreCase("classic")) {
 					if (!tp.isClassic()) {
 						Utils.addChat("§aVous retourner au mode classic !");
@@ -5726,7 +5367,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"vanillatp") || args[0].equalsIgnoreCase(var.prefixCmd+"vtp")) {
 				if (args.length==1) {
-					Utils.toggleModule("VanillaTp");
 				} else if (args[1].equalsIgnoreCase("air")) {
 					if (!VanillaTp.air) {
 						Utils.addChat("§aVous pouvez vous tp dans l'air !");
@@ -5755,7 +5395,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"automlg") || args[0].equalsIgnoreCase(var.prefixCmd+"mlg")) {
 				if (args.length==1) {
-					Utils.toggleModule("AutoMLG");
 				} else {
 					try {
 						AutoMLG mlg = AutoMLG.getMLG();
@@ -5771,7 +5410,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"timer")) {
 				if (args.length==1) {
-					Utils.toggleModule("Timer");
 				} else {
 					try {
 						float time = (float) Double.parseDouble(args[1]);
@@ -5798,7 +5436,6 @@ public class ChatUtils {
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"flight")) {
 				if (args.length==1) {
-					Utils.toggleModule("Flight");
 				} else if (args[1].equalsIgnoreCase("blink")) {
 					 if (Flight.blink) {
 						 Flight.blink=false;
@@ -5893,7 +5530,7 @@ public class ChatUtils {
 							} else
 							if (mod.isCmd()) {
 								s=", §9"+mod.getName()+"§8";
-							} else if (mod.getToggled()) {							
+							} else if (mod.isToggled()) {							
 								s=", §a"+mod.getName()+"§8";
 							} else {
 								s=", §7"+mod.getName()+"§8";
@@ -5951,7 +5588,7 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
-			//TODO: Nyah Tryliom c'est l'amour a Didi
+			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"nyah") || args[0].equalsIgnoreCase(var.prefixCmd+"nyah!") || args[0].equalsIgnoreCase(var.prefixCmd+"nyah*")) {
 				if (Utils.isLock("--nyah")) {
 					Utils.addWarn("Nyah");

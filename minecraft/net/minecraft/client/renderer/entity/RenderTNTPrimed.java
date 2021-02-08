@@ -45,7 +45,7 @@ public class RenderTNTPrimed extends Render
         var11 = (1.0F - ((float)p_76986_1_.fuse - p_76986_9_ + 1.0F) / 100.0F) * 0.8F;
         this.bindEntityTexture(p_76986_1_);
         GlStateManager.translate(-0.5F, -0.5F, 0.5F);
-        var10.func_175016_a(Blocks.tnt.getDefaultState(), p_76986_1_.getBrightness(p_76986_9_));
+        var10.renderBlockBrightness(Blocks.tnt.getDefaultState(), p_76986_1_.getBrightness(p_76986_9_));
         GlStateManager.translate(0.0F, 0.0F, 1.0F);
 
         if (p_76986_1_.fuse / 5 % 2 == 0)
@@ -57,7 +57,7 @@ public class RenderTNTPrimed extends Render
             GlStateManager.color(1.0F, 1.0F, 1.0F, var11);
             GlStateManager.doPolygonOffset(-3.0F, -3.0F);
             GlStateManager.enablePolygonOffset();
-            var10.func_175016_a(Blocks.tnt.getDefaultState(), 1.0F);
+            var10.renderBlockBrightness(Blocks.tnt.getDefaultState(), 1.0F);
             GlStateManager.doPolygonOffset(0.0F, 0.0F);
             GlStateManager.disablePolygonOffset();
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

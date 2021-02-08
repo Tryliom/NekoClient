@@ -60,7 +60,7 @@ public class RenderItemFrame extends Render
         GlStateManager.rotate(180.0F - p_76986_1_.rotationYaw, 0.0F, 1.0F, 0.0F);
         this.renderManager.renderEngine.bindTexture(TextureMap.locationBlocksTexture);
         BlockRendererDispatcher var17 = this.field_147917_g.getBlockRendererDispatcher();
-        ModelManager var18 = var17.func_175023_a().func_178126_b();
+        ModelManager var18 = var17.getBlockModelShapes().func_178126_b();
         IBakedModel var19;
 
         if (p_76986_1_.getDisplayedItem() != null && p_76986_1_.getDisplayedItem().getItem() == Items.filled_map)

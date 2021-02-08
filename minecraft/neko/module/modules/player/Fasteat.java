@@ -35,7 +35,7 @@ public class Fasteat extends Module {
 	}
 	
 	public void onUpdate() {
-		if (!this.getToggled())
+		if (!this.isToggled())
 			return;
 		
 		if (mc.thePlayer.isUsingItem()) {

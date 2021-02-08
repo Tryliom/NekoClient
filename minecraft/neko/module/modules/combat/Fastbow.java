@@ -6,7 +6,6 @@ import neko.utils.Utils;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
@@ -53,8 +52,6 @@ public class Fastbow extends Module {
 			return;
 		}	
 		
-		if ((u.limite && u.nbPack>u.limit))
-			return;
 		try {		
 			try {
 				Item i = mc.thePlayer.getCurrentEquippedItem().getItem();
@@ -112,7 +109,6 @@ public class Fastbow extends Module {
 		int totEnch=-1;
 		int bestPower=-1;
 		for (Integer i : list) {
-			ItemBow item =(ItemBow) mc.thePlayer.inventoryContainer.getSlot(i).getStack().getItem();
 			int lvl = 0;
 			int count = 0;
 			ItemStack is = mc.thePlayer.inventoryContainer.getSlot(i).getStack();

@@ -125,7 +125,7 @@ public class RenderMinecart extends Render
     protected void func_180560_a(EntityMinecart p_180560_1_, float p_180560_2_, IBlockState p_180560_3_)
     {
         GlStateManager.pushMatrix();
-        Minecraft.getMinecraft().getBlockRendererDispatcher().func_175016_a(p_180560_3_, p_180560_1_.getBrightness(p_180560_2_));
+        Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlockBrightness(p_180560_3_, p_180560_1_.getBrightness(p_180560_2_));
         GlStateManager.popMatrix();
     }
 

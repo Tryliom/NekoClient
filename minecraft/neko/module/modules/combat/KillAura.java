@@ -1,30 +1,23 @@
 package neko.module.modules.combat;
 
-import java.awt.AWTException;
-import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import neko.module.modules.special.FastDura;
-import neko.module.modules.special.Likaotique;
-import neko.module.modules.special.Nausicaah;
-import neko.module.modules.hide.Friends;
 import org.lwjgl.input.Keyboard;
 
 import neko.Client;
 import neko.event.UpdateEvent;
-import neko.manager.ModuleManager;
 import neko.module.Category;
 import neko.module.Module;
+import neko.module.modules.hide.Friends;
+import neko.module.modules.special.Likaotique;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemSword;
-import net.minecraft.network.play.client.C02PacketUseEntity;
-import net.minecraft.network.play.client.C02PacketUseEntity.Action;
 import net.minecraft.util.MathHelper;
 
 public class KillAura extends Module {
@@ -123,9 +116,6 @@ public class KillAura extends Module {
     }
     
     public static Boolean isViable(EntityLivingBase en) {
-    	if (!Utils.getPlayerGameType(en.getName()).isSurvivalOrAdventure())
-	    	return false;
-    	
     	if (KillAura.invi) 
     		if (en.isInvisible())
     			return false;
@@ -153,7 +143,6 @@ public class KillAura extends Module {
     	if (en.getName().isEmpty())
 			return false;
     	
-    	
     	if (verif && !Utils.IsInTab(en.getName()))
 	    	return false;
     	
@@ -161,8 +150,6 @@ public class KillAura extends Module {
     		return false;
     	
     	if (premium && Utils.isPremium((en instanceof EntityPlayer) ? (EntityPlayer) en : null))
-    		return false;
-    	if (en.getName().isEmpty())
     		return false;
     	
     	return true;
@@ -217,11 +204,10 @@ class cps implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		if (Utils.sword ? mc.thePlayer.getCurrentEquippedItem()!=null ? mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemSword : false : true) {
 			switch (var.mode) {
-			case "Player" :
+			case Player :
 				try {
-					for (Object theObject : mc.theWorld.playerEntities) {
-		                EntityLivingBase entity = (EntityLivingBase) theObject;
-		                if(KillAura.isViable(entity)) {              	                	                   
+					for (EntityPlayer entity : mc.theWorld.playerEntities) {
+		                if(KillAura.isViable(entity)) {   
 		                	if (KillAura.lockView)
 		                		KillAura.faceEntity(entity);
 		                	
@@ -243,7 +229,7 @@ class cps implements ActionListener {
 				} catch (Exception e) {}
 				break;
 				
-			case "Mob" :
+			case Mob :
 				if (Utils.warn) {
         			if (Utils.isPlayerInRange(Utils.warnB))
         				return;
@@ -277,7 +263,7 @@ class cps implements ActionListener {
 				} catch (Exception e) {}
 				break;
 				
-			case "All" :
+			case All :
 				try {
 					for (Object theObject : mc.theWorld.loadedEntityList) {
 	        			if (theObject instanceof EntityLivingBase) {

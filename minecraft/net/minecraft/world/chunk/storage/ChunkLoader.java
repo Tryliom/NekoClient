@@ -128,7 +128,7 @@ public class ChunkLoader
         {
             for (var7 = 0; var7 < 16; ++var7)
             {
-                var17[var7 << 4 | var18] = (byte)(p_76690_2_.func_180300_a(new BlockPos(p_76690_0_.x << 4 | var18, 0, p_76690_0_.z << 4 | var7), BiomeGenBase.field_180279_ad).biomeID & 255);
+                var17[var7 << 4 | var18] = (byte)(p_76690_2_.getBiomeGenerator(new BlockPos(p_76690_0_.x << 4 | var18, 0, p_76690_0_.z << 4 | var7), BiomeGenBase.field_180279_ad).biomeID & 255);
             }
         }
 

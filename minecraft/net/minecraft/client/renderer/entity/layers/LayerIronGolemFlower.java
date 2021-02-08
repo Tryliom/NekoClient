@@ -38,7 +38,7 @@ public class LayerIronGolemFlower implements LayerRenderer
             OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)var12 / 1.0F, (float)var13 / 1.0F);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             this.field_177154_a.bindTexture(TextureMap.locationBlocksTexture);
-            var9.func_175016_a(Blocks.red_flower.getDefaultState(), 1.0F);
+            var9.renderBlockBrightness(Blocks.red_flower.getDefaultState(), 1.0F);
             GlStateManager.popMatrix();
             GlStateManager.disableRescaleNormal();
         }

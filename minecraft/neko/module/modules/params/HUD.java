@@ -52,17 +52,17 @@ public class HUD extends Module {
 	
 	@Override
 	public void setup() {
-			Client.getNeko().settingsManager.rSetting(new Setting("HUDCoord", this, this.coord));
-			Client.getNeko().settingsManager.rSetting(new Setting("HUDFPS", this, this.fps));
-			Client.getNeko().settingsManager.rSetting(new Setting("HUDXP", this, this.fall));
-			Client.getNeko().settingsManager.rSetting(new Setting("HUDMS", this, this.item));
-			Client.getNeko().settingsManager.rSetting(new Setting("HUDTime", this, this.time));
-			Client.getNeko().settingsManager.rSetting(new Setting("HUDPacket", this, this.packet));
-			Client.getNeko().settingsManager.rSetting(new Setting("HUDStuff", this, this.stuff));
-			Client.getNeko().settingsManager.rSetting(new Setting("HUDSelect", this, this.select));
-			Client.getNeko().settingsManager.rSetting(new Setting("HUDRed", this, this.cR, 0, 100, true));
-			Client.getNeko().settingsManager.rSetting(new Setting("HUDGreen", this, this.cG, 0, 100, true));
-			Client.getNeko().settingsManager.rSetting(new Setting("HUDBlue", this, this.cB, 0, 100, true));
+			Client.getNeko().settingsManager.rSetting(new Setting("HUD_Coord", this, this.coord));
+			Client.getNeko().settingsManager.rSetting(new Setting("HUD_FPS", this, this.fps));
+			Client.getNeko().settingsManager.rSetting(new Setting("HUD_XP", this, this.fall));
+			Client.getNeko().settingsManager.rSetting(new Setting("HUD_MS", this, this.item));
+			Client.getNeko().settingsManager.rSetting(new Setting("HUD_Time", this, this.time));
+			Client.getNeko().settingsManager.rSetting(new Setting("HUD_Packet", this, this.packet));
+			Client.getNeko().settingsManager.rSetting(new Setting("HUD_Stuff", this, this.stuff));
+			Client.getNeko().settingsManager.rSetting(new Setting("HUD_Select", this, this.select));
+			Client.getNeko().settingsManager.rSetting(new Setting("HUD_Red", this, this.cR, 0, 100, true));
+			Client.getNeko().settingsManager.rSetting(new Setting("HUD_Green", this, this.cG, 0, 100, true));
+			Client.getNeko().settingsManager.rSetting(new Setting("HUD_Blue", this, this.cB, 0, 100, true));
 	}
 	
 	public void onRender3D() {		
@@ -85,4 +85,5 @@ public class HUD extends Module {
 		if (!mc.gameSettings.showDebugInfo)
 			g.renderHUD();
 	}
+	
 }

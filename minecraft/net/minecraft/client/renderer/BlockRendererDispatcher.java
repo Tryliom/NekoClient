@@ -31,7 +31,7 @@ public class BlockRendererDispatcher implements IResourceManagerReloadListener
         this.field_175026_b = p_i46237_2_;
     }
 
-    public BlockModelShapes func_175023_a()
+    public BlockModelShapes getBlockModelShapes()
     {
         return this.field_175028_a;
     }
@@ -93,7 +93,7 @@ public class BlockRendererDispatcher implements IResourceManagerReloadListener
         return this.blockModelRenderer;
     }
 
-    private IBakedModel func_175017_a(IBlockState p_175017_1_, BlockPos p_175017_2_)
+    private IBakedModel getBakedModel(IBlockState p_175017_1_, BlockPos p_175017_2_)
     {
         IBakedModel var3 = this.field_175028_a.func_178125_b(p_175017_1_);
 
@@ -131,7 +131,7 @@ public class BlockRendererDispatcher implements IResourceManagerReloadListener
         return var5;
     }
 
-    public void func_175016_a(IBlockState p_175016_1_, float p_175016_2_)
+    public void renderBlockBrightness(IBlockState p_175016_1_, float p_175016_2_)
     {
         int var3 = p_175016_1_.getBlock().getRenderType();
 
@@ -148,13 +148,13 @@ public class BlockRendererDispatcher implements IResourceManagerReloadListener
                     break;
 
                 case 3:
-                    IBakedModel var4 = this.func_175017_a(p_175016_1_, (BlockPos)null);
+                    IBakedModel var4 = this.getBakedModel(p_175016_1_, (BlockPos)null);
                     this.blockModelRenderer.func_178266_a(var4, p_175016_1_, p_175016_2_, true);
             }
         }
     }
 
-    public boolean func_175021_a(Block p_175021_1_, int p_175021_2_)
+    public boolean isRenderTypeChest(Block p_175021_1_, int p_175021_2_)
     {
         if (p_175021_1_ == null)
         {

@@ -5,6 +5,7 @@ import java.util.Iterator;
 import neko.Client;
 import neko.module.modules.hide.Friends;
 import neko.module.modules.render.Nametag;
+import neko.module.other.ModeType;
 import neko.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -357,7 +358,7 @@ public abstract class Render
 		    	if (Nametag.isOn && Utils.isPlayer(p_147906_1_)) {
 		    		p_147906_2_ = p_147906_2_ + " §9[§c" + Math.round(((EntityLivingBase)entity).getHealth()) +"§9] §d"+Utils.getPlayerPing(entity.getName())+"ms";
 		    	}
-		    	if (Nametag.isOn && var.mode.equalsIgnoreCase("Mob")) {
+		    	if (Nametag.isOn && var.mode.equals(ModeType.Mob)) {
 		    		p_147906_2_ = p_147906_2_ + " §9[§c" + Math.round(((EntityLivingBase)entity).getHealth()) +"§9]";
 		    	}
 	    	}
@@ -375,7 +376,7 @@ public abstract class Render
             GL11.glNormal3f(0.0F, 1.0F, 0.0F);
             GlStateManager.rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
             GlStateManager.rotate(this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
-            if (Nametag.isOn && (Utils.isPlayer(entity) || var.mode.equalsIgnoreCase("Mob"))) {
+            if (Nametag.isOn && (Utils.isPlayer(entity) || var.mode.equals(ModeType.Mob))) {
               float range = Minecraft.getMinecraft().thePlayer.getDistanceToEntity(entity) / 400.0F * Render.varNeko;
               GlStateManager.scale(-range, -range, range);
             } else 

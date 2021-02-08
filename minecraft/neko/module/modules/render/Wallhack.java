@@ -5,6 +5,7 @@ import neko.gui.InGameGui;
 import neko.manager.ModuleManager;
 import neko.module.Category;
 import neko.module.Module;
+import neko.module.other.ModeType;
 import neko.utils.RenderUtils;
 import neko.utils.Utils;
 import net.minecraft.entity.EntityLivingBase;
@@ -46,7 +47,7 @@ public class Wallhack extends Module {
 		for (Object o : var.mode.equals("Player") ? mc.theWorld.playerEntities : mc.theWorld.loadedEntityList) {
 			if (o instanceof EntityLivingBase) {
 				EntityLivingBase entity = (EntityLivingBase) o;     
-	        	if (entity!=mc.thePlayer && (var.mode.equals("Mob") ? !u.isPlayer(entity) : true))
+	        	if (entity!=mc.thePlayer && (var.mode.equals(ModeType.Mob) ? !u.isPlayer(entity) : true))
 	        		RenderUtils.drawEntityESP(u.getX(entity), u.getY(entity), u.getZ(entity), entity.width/2, entity.height+0.3F, cR, cG, cR, 0.11F, clR, clG, clB, 0.11F, width);
 			}
         }

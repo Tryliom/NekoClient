@@ -1,23 +1,17 @@
 package neko.module.modules.combat;
 
-import neko.module.modules.combat.KillAura;
-import neko.module.modules.hide.Friends;
-import neko.module.modules.special.FastDura;
-import neko.module.modules.special.Nausicaah;
-import neko.utils.Utils;
-
 import org.lwjgl.input.Keyboard;
 
 import neko.Client;
 import neko.module.Category;
 import neko.module.Module;
+import neko.module.modules.hide.Friends;
+import neko.utils.Utils;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemSword;
-import net.minecraft.network.play.client.C02PacketUseEntity;
-import net.minecraft.network.play.client.C02PacketUseEntity.Action;
 import net.minecraft.network.play.client.C03PacketPlayer;
 import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
 import net.minecraft.util.BlockPos;
@@ -65,7 +59,7 @@ public class TpKill extends Module {
 			if (u.sword ? mc.thePlayer.getCurrentEquippedItem()!=null ? mc.thePlayer.getCurrentEquippedItem().getItem() instanceof ItemSword : false : true) {
 				delay=0;
 				switch (var.mode) {
-				case "Player" :
+				case Player :
 					for (Object theObject : mc.theWorld.playerEntities) {
 		                EntityLivingBase entity = (EntityLivingBase) theObject;
 		                if(isViable(entity)) {              	                	                   
@@ -79,7 +73,7 @@ public class TpKill extends Module {
 		        	}
 					break;
 					
-				case "Mob" :
+				case Mob :
 					if (u.warn) {
 	        			if (u.isPlayerInRange(u.warnB))
 	        				return;
@@ -101,7 +95,7 @@ public class TpKill extends Module {
 	                }
 					break;
 					
-				case "All" :
+				case All :
 					for (Object theObject : mc.theWorld.loadedEntityList) {
 	        			if (theObject instanceof EntityLivingBase) {
 	                        EntityLivingBase entity = (EntityLivingBase) theObject;

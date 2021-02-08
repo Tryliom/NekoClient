@@ -29,7 +29,6 @@ public class GuiAccount extends GuiScreen {
 		this.buttonList.clear();
 		this.buttonList.add(new GuiButton(1, this.width / 2 - 25, this.height / 3 + 98, 50, 20, "Retour"));
 		this.buttonList.add(new GuiButton(4, this.width / 2 -50, this.height / 3 + 74, 100, 20, "§cSe déconnecter"));
-		this.buttonList.add(new GuiButton(5, this.width-110, 10, 100, 20, "Music Manager"));
 	}
 
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {

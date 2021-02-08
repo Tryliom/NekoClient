@@ -9,6 +9,7 @@ public class NekoCloud {
 	private String password;
 	private static NekoCloud instance = null;
 	private boolean login = false;
+	private String token = "";
 	
 	public static NekoCloud getNekoAPI() {
 		return instance==null ? instance = new NekoCloud() : instance;
@@ -20,6 +21,9 @@ public class NekoCloud {
 
 	public void setLogin(boolean login) {
 		this.login = login;
+		if (login && this.token.isEmpty()) {
+			this.token = NekoAPI.getLoginToken();
+		}
 	}
 
 	public static String getName() {
@@ -52,8 +56,8 @@ public class NekoCloud {
 	}
 	
 	public String loginAccount() {
-		String s = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/account/login", this.parseHashMapToJson(this.getBaseBody()));
-		String check = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/access/check", this.parseHashMapToJson(this.getBaseBody())).replaceAll("\"", "");
+		String s = Utils.getResultOfPostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/account/login", this.parseHashMapToJson(this.getBaseBody()));
+		String check = Utils.getResultOfPostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/admin/access/check", this.parseHashMapToJson(this.getBaseBody())).replaceAll("\"", "");
 		if (check.equalsIgnoreCase("success")) {
 			Utils.admin = true;
 		}
@@ -61,7 +65,7 @@ public class NekoCloud {
 	}
 	
 	public String createAccount() {
-		String s = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/account/create", this.parseHashMapToJson(this.getBaseBody()));
+		String s = Utils.getResultOfPostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/account/create", this.parseHashMapToJson(this.getBaseBody()));
 		return s.replaceAll("\"", "");
 	}
 	
@@ -75,14 +79,14 @@ public class NekoCloud {
 		if (config.length>0) {
 			hm.put("config", config[0]);
 		}
-		String s = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/save/get/"+name, parseHashMapToJson(hm));
+		String s = Utils.getResultOfPostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/save/get/"+name, parseHashMapToJson(hm));
 		return s.replaceAll("\"", "");
 	}
 	
 	public String getGlobalStat(String listModule) {
 		HashMap<String, String> hm = this.getBaseBody();
 		hm.put("list_module", listModule);
-		String s = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/other/stat", parseHashMapToJson(hm));
+		String s = Utils.getResultOfPostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/other/stat", parseHashMapToJson(hm));
 		return s.replaceAll("\"", "");
 	}
 	
@@ -101,21 +105,21 @@ public class NekoCloud {
 			
 			@Override
 			public void run() {
-				Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/save/update/"+name, NekoCloud.getNekoAPI().parseHashMapToJson(hm));
+				Utils.getResultOfPostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/save/update/"+name, NekoCloud.getNekoAPI().parseHashMapToJson(hm));
 			}
 		}).start();
 	}
 	
 	public String listConfig() {
 		HashMap<String, String> hm = this.getBaseBody();
-		String s = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/save/config/get", parseHashMapToJson(hm));
+		String s = Utils.getResultOfPostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/save/config/get", parseHashMapToJson(hm));
 		return s.replaceAll("\"", "");
 	}
 		
 	public String deleteConfig(String name) {
 		HashMap<String, String> hm = this.getBaseBody();
 		hm.put("configname", name);
-		String s = Utils.preparePostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/save/config/delete", parseHashMapToJson(hm));
+		String s = Utils.getResultOfPostRequest("https://qy0n81yfr7.execute-api.eu-central-1.amazonaws.com/beta/save/config/delete", parseHashMapToJson(hm));
 		return s.replaceAll("\"", "");
 	}
 	
@@ -124,6 +128,14 @@ public class NekoCloud {
 		hm.put("name", this.getName());
 		hm.put("password", this.getPassword());
 		return hm;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 	
 }

@@ -13,8 +13,10 @@ import java.util.Locale;
 import javax.tools.DocumentationTool.Location;
 
 import org.darkstorm.minecraft.gui.util.GuiManagerDisplayScreen;
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
+import javazoom.jl.player.Player;
 import neko.Client;
 import neko.guicheat.clickgui.ClickGUI;
 import neko.guicheat.clickgui.util.ColorUtil;
@@ -36,12 +38,21 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.INpc;
+import net.minecraft.entity.item.EntityArmorStand;
+import net.minecraft.entity.monster.EntityIronGolem;
+import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemBow;
@@ -88,7 +99,7 @@ public class InGameGui {
 				  movementModule = new ArrayList<String>(),paramsModule = new ArrayList<String>(),
 				  miscModule = new ArrayList<String>(),specialModule = new ArrayList<String>();
 		  for(Module module : ModuleManager.ActiveModule) {
-			    if(module.getToggled() && module.getCategory() != Category.HIDE && !module.getName().equalsIgnoreCase("VanillaTp")) {
+			    if(module.isToggled() && module.getCategory() != Category.HIDE && !module.getName().equalsIgnoreCase("VanillaTp")) {
 			    	multi++;
 			    	if(SettingsUtil.getRainbowArray()) {
 			    		temp = ColorUtil.rainbowEffekt(1L, 1.0f);
@@ -357,7 +368,7 @@ public class InGameGui {
 				  var3 = "§6Temps de jeu:§7 "+(Utils.timeInGameHour!=0 ? Utils.timeInGameHour+"h "+Utils.timeInGameMin+"min "+Utils.timeInGameSec : Utils.timeInGameMin!=0 ? Utils.timeInGameMin+"min "+Utils.timeInGameSec : Utils.timeInGameSec)+"s";
 			  else
 				  var3 = "§6Temps de bonus restant:§7 "+(Active.time/3600==0 ? Active.time/60==0 ? Active.time%60+"s" : Active.time/60+"min "+Active.time%60+"s" : Active.time/3600+"h "+Active.time%3600/60+"min "+Active.time%60+"s");
-			  var.NekoFont.drawStringWithShadow(var3, 2, yP, 0);		
+			  var.NekoFont.drawStringWithShadow(var3, 2, yP, 0);
 			  yP+=11;
 		  }
 		  
@@ -400,10 +411,8 @@ public class InGameGui {
 		  for(TileEntity tile : tiles) {
 			  BlockPos b = new BlockPos(tile.getPos().getX(), tile.getPos().getY(), tile.getPos().getZ());
 			  ChunkCoordIntPair ct = mc.theWorld.getChunkFromBlockCoords(b).getChunkCoordIntPair();
-			  //Utils.addChat(ct.chunkXPos + ";" + ct.chunkZPos);
 			  int cx = chunk.xPosition; int cz = chunk.zPosition;
 			  int tx = ct.chunkXPos; int tz = ct.chunkZPos;
-			  //Utils.addChat(cx + ";" + cz + " - " + tx + ";" + tz);
 			  int seeDistance = 2;
 			  if((cx >= tx-seeDistance) && (cx <= tx+seeDistance) 
 					  && (cz >= tz-seeDistance) && (cz <= tz+seeDistance)) {
@@ -415,7 +424,240 @@ public class InGameGui {
 		  var.NekoFont.drawString("§6"+Integer.toString(sizeNear)+"%", (scX-scX/2)-(var.NekoFont).getStringWidth("§6"+Integer.toString(sizeNear)+"%"), scY/2-170, 0);
 	}
 	
-	public static void renderRadar() {
+	public static void renderRadarMap() {
+		Minecraft mc = Minecraft.getMinecraft();
+		GL11.glPushMatrix();
+		int x1 = GuiScreen.width - 160;
+		int x2 = GuiScreen.width - 80;
+		int y1 = 0;
+		int y2 = 80;
+		if (!Utils.isToggle("ArrayList")) {
+			x1 = GuiScreen.width - 90;
+			x2 = GuiScreen.width - 10;
+		}
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glDisable(GL11.GL_CULL_FACE);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
+
+		GL11.glColor4f(0.2f, 0.2f, 0.2f, 0.5f);
+		GL11.glBegin(GL11.GL_QUADS);
+		{
+			GL11.glVertex2d(x1, y1);
+			GL11.glVertex2d(x2, y1);
+			GL11.glVertex2d(x2, y2);
+			GL11.glVertex2d(x1, y2);
+		}
+		GL11.glEnd();
+		GL11.glLineWidth(2f);
+		GL11.glColor4f(0.7f, 0.3f, 0.3f, 1f);
+		GL11.glBegin(GL11.GL_LINE_LOOP);
+		{
+			GL11.glVertex2d(x1, y1);
+			GL11.glVertex2d(x2, y1);
+			GL11.glVertex2d(x2, y2);
+			GL11.glVertex2d(x1, y2);
+		}
+		GL11.glEnd();
+		GL11.glColor4f(0.1f, 1f, 0.1f, 1f);
+		GL11.glLineWidth(1f);
+		float rotation = -((mc.thePlayer.prevRotationYawHead
+				+ (mc.thePlayer.rotationYawHead - mc.thePlayer.prevRotationYawHead) * mc.timer.renderPartialTicks));
+		for (Entity en : mc.theWorld.loadedEntityList) {
+			if (!(en instanceof EntityLivingBase)) {
+				continue;
+			}
+			if(en instanceof EntityArmorStand) {
+				continue;
+			}
+			if (en instanceof EntityPlayer) {
+				if (Utils.IsInTab(((EntityPlayer) en).getName())) {
+					if(Friends.isFriend(((EntityPlayer) en).getName())) {
+						GL11.glColor4f(Radar.friend[0], Radar.friend[1], Radar.friend[2], Radar.fr ? 1f : 0f);
+					} else {
+						if (mc.thePlayer.isOnSameTeam((EntityLivingBase) en)) {
+							GL11.glColor4f(Radar.me[0], Radar.me[1], Radar.me[2], Radar.BoolME ? 1f : 0f);
+						} else {
+							GL11.glColor4f(Radar.enemies[0], Radar.enemies[1], Radar.enemies[2], Radar.BoolENEMIES ? 1f : 0f);
+						}
+					}
+				} else {
+					GL11.glColor4f(Radar.npc[0], Radar.npc[1], Radar.npc[2], Radar.boolNPC ? 1f : 0f);
+				}
+			}
+			if (en instanceof IMob) {
+				GL11.glColor4f(Radar.mobs[0], Radar.mobs[1], Radar.mobs[2], Radar.BoolMOBS ? 1f : 0f);
+			}
+			if (en instanceof EntityAnimal) {
+				GL11.glColor4f(Radar.animals[0], Radar.animals[1], Radar.animals[2], Radar.BoolANIMALS ? 1f : 0f);
+			}
+			if (en instanceof INpc || en instanceof EntityIronGolem) {
+				GL11.glColor4f(Radar.golem[0], Radar.golem[1], Radar.golem[2], Radar.BoolGOLEM ? 1f : 0f);
+			}
+			GL11.glTranslated((x1 + x2) / 2, (y1 + y2 / 2), 0);
+			GL11.glRotatef(rotation, 0, 0, 1);
+			GL11.glRotatef(180, 0, 0, 1);
+			double posX = -(mc.thePlayer.posX
+					- ((en.lastTickPosX + (en.posX - en.lastTickPosX) * mc.timer.renderPartialTicks))) / 3.1;
+			double posZ = -(mc.thePlayer.posZ
+					- ((en.lastTickPosZ + (en.posZ - en.lastTickPosZ) * mc.timer.renderPartialTicks))) / 3.1;
+			double posY = -(mc.thePlayer.posY
+					- ((en.lastTickPosY + (en.posY - en.lastTickPosY) * mc.timer.renderPartialTicks))) / 500;
+			GL11.glPushMatrix();
+			GL11.glScaled((1.4 + posY), (1.4 + posY), 1);
+//			glEnable(GL_BLEND);
+//			GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+			GL11.glBegin(GL11.GL_TRIANGLE_FAN);
+			{
+				for (int i = 0; i <= 10; i++) {
+					double angle = 2 * Math.PI * i / 10;
+					double x = Math.cos(angle);
+					double y = Math.sin(angle);
+					GL11.glVertex3d(x + posX, y + posZ, 365 + posY);
+				}
+			}
+			GL11.glEnd();
+			GL11.glPopMatrix();
+			GL11.glRotatef(-rotation, 0, 0, 1);
+			GL11.glRotatef(-180, 0, 0, 1);
+			GL11.glTranslated(-((x1 + x2) / 2), -((y1 + y2) / 2), 0);
+		}
+		GL11.glDisable(GL11.GL_BLEND);
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		GL11.glPopMatrix();
+		GL11.glColor4f(1f, 1f, 1f, 1f);
+	}
+	
+	public static void renderRadarInfos() {
+		Minecraft mc = Minecraft.getMinecraft();
+		//Start
+		GL11.glPushMatrix();
+		int x1 = GuiScreen.width - 160;
+		int x2 = GuiScreen.width - 80;
+		int y1 = 85;
+		int y2 = 110;
+		
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glDisable(GL11.GL_CULL_FACE);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
+		
+		GL11.glColor4f(0.2f, 0.2f, 0.2f, 0.5f);
+		GL11.glBegin(GL11.GL_QUADS);
+		{
+			GL11.glVertex2d(x1, y1);
+			GL11.glVertex2d(x2, y1);
+			GL11.glVertex2d(x2, y2);
+			GL11.glVertex2d(x1, y2);
+		}
+		GL11.glEnd();
+		
+		GL11.glLineWidth(2f);
+		GL11.glColor4f(0.7f, 0.3f, 0.3f, 1f);
+		GL11.glBegin(GL11.GL_LINE_LOOP);
+		{
+			GL11.glVertex2d(x1, y1);
+			GL11.glVertex2d(x2, y1);
+			GL11.glVertex2d(x2, y2);
+			GL11.glVertex2d(x1, y2);
+		}
+		GL11.glEnd();
+		GL11.glColor4f(0.1f, 1f, 0.1f, 1f);
+		GL11.glLineWidth(1f);
+		GL11.glColor4f(Radar.npc[0], Radar.npc[1], Radar.npc[2], Radar.boolNPC ? 1f : 0f);
+		GL11.glTranslated((x1 + x2) / 2, (y1 + y2 / 2), 0);
+		GL11.glRotatef(180, 0, 0, 1);
+		GL11.glPushMatrix();
+		GL11.glScaled((1.4), (1.4), 1);
+		GL11.glBegin(GL11.GL_TRIANGLE_FAN);
+		{
+			for (int i = 0; i <= 10; i++) {
+				double angle = 2 * Math.PI * i / 10;
+				double x = Math.cos(angle);
+				double y = Math.sin(angle);
+				GL11.glVertex3d(x + 27, y + 37, 365);
+			}
+		}
+		GL11.glEnd();
+		GL11.glColor4f(Radar.mobs[0], Radar.mobs[1], Radar.mobs[2], Radar.BoolMOBS ? 1f : 0f);
+		GL11.glBegin(GL11.GL_TRIANGLE_FAN);
+		{
+			for (int i = 0; i <= 10; i++) {
+				double angle = 2 * Math.PI * i / 10;
+				double x = Math.cos(angle);
+				double y = Math.sin(angle);
+				GL11.glVertex3d(x + 27, y + 32, 365);
+			}
+		}
+		GL11.glEnd();
+		GL11.glPopMatrix();
+		GL11.glRotatef(-180, 0, 0, 1);
+		GL11.glTranslated(-((x1 + x2) / 2), -((y1 + y2) / 2), 0);
+		
+		GL11.glDisable(GL11.GL_BLEND);
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		GL11.glPopMatrix();
+		GL11.glColor4f(1f, 1f, 1f, 1f);
+		var.NekoFont.drawStringWithShadow("Test", x1+10, y1+5, 10856100);
+	}
+	
+	public static void renderRadarInformations() {
+		Minecraft mc = Minecraft.getMinecraft();
+		//Start
+		GL11.glPushMatrix();
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glDisable(GL11.GL_CULL_FACE);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
+		
+		int x1 = GuiScreen.width - 160;
+		int x2 = GuiScreen.width - 80;
+		int y1 = 85;
+		int y2 = 105;
+		//Setup quad
+		GL11.glColor4f(0.2f, 0.2f, 0.2f, 0.2f);
+		GL11.glPushMatrix();
+		GL11.glBegin(GL11.GL_QUADS);
+		{
+			GL11.glVertex2d(x1, y1);
+			GL11.glVertex2d(x2, y1);
+			GL11.glVertex2d(x2, y2);
+			GL11.glVertex2d(x1, y2);
+		}
+		GL11.glEnd();
+		GL11.glPopMatrix();
+		//Actions
+		int y = 90;
+		int x = GuiScreen.width - 160;
+		GL11.glColor4f(Radar.friend[0], Radar.friend[1], Radar.friend[2], Radar.fr ? 1f : 0f);
+		GL11.glPushMatrix();
+		//GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GL11.glBegin(GL11.GL_TRIANGLE_FAN);
+		{
+			GL11.glVertex2d(x, y);
+		}
+		GL11.glEnd();
+		GL11.glPopMatrix();
+		/*GL11.glColor4f(Radar.friend[0], Radar.friend[1], Radar.friend[2], Radar.fr ? 1f : 0f);
+		GL11.glPushMatrix();
+		Utils.drawGL2DString(var.NekoFont.getFormatFromString("Amis"), x+5, y, 7, var.NekoFont.getStringWidth("Amis"));
+		GL11.glPopMatrix();*/
+		//End
+		GL11.glDisable(GL11.GL_BLEND);
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		GL11.glPopMatrix();
+		GL11.glColor4f(1f, 1f, 1f, 1f);
+	}
+	
+	public static int ccc = 0;
+	
+	public static void renderRadarText() {
 		  Minecraft mc = Minecraft.getMinecraft();
 		  ScaledResolution scaled = new ScaledResolution(mc);
 		  ArrayList<EntityPlayer> s = Utils.getAllPlayer();
@@ -423,6 +665,8 @@ public class InGameGui {
 			  yPos=10;
 		  else
 			  yPos+=5;
+		  if(Radar.radarMap && !Utils.isToggle("ArrayList"))
+			  yPos = 100;
 		  String color="§c";		
 		  if (s.size()==0) {
 			  return;
@@ -430,29 +674,73 @@ public class InGameGui {
 		  double d=200;
 		  String f = "§d";
 		  int c=0;
+		  List<PlayerSort> PlayersStorage = new ArrayList<PlayerSort>();
 		  for (EntityPlayer en : s) {
-			  if (en.getDistanceToEntity(mc.thePlayer)>d)
-				  continue;
-			  if (en.getDistanceToEntity(mc.thePlayer)>20) {
-				  color="§a";
-			  } else 
-				  color="§c";
-			  if (Friends.isFriend(en.getName()))
-				  f="§a";
-			  else
-				  f="§7";
-			  if (c<=20) {
-				  	if (!Radar.fr && Friends.isFriend(en.getName())) {} else {
-				  		String var3 = f+en.getDisplayName().getUnformattedText()+" §8["+color+Math.round(en.getDistanceToEntity(mc.thePlayer))+"m§8]";
-				  		var.NekoFont.drawStringWithShadow(var3, ((GuiScreen.width-5)-(var.NekoFont).getStringWidth(var3)), yPos, 0);
-				  		yPos+=10;
-						c++;
-				  	}
+			  if (!en.isDead && en != mc.thePlayer && en.getDistanceToEntity(mc.thePlayer)<200) {
+				  if(c < 20) {
+					  String var3 = "null";
+					  int place = -1;
+					  String name = "null";
+					  if (Utils.IsInTab(en.getName())) {
+						  if(Friends.isFriend(en.getName())) {
+							  if(Radar.fr) {
+								  var3 = "§a"+ (Radar.radarRealName ? en.getName() : en.getDisplayName().getUnformattedText()) +" §8["+color+Math.round(en.getDistanceToEntity(mc.thePlayer))+"m§8]";
+								  c++;
+							  }
+						  } else {
+							  if(Radar.BoolENEMIES) {
+								  var3 = "§c"+ (Radar.radarRealName ? en.getName() : en.getDisplayName().getUnformattedText()) +" §8["+color+Math.round(en.getDistanceToEntity(mc.thePlayer))+"m§8]";
+								  c++;
+							  }
+						  }
+					  } else {
+						  if(Radar.boolNPC) {
+							  var3 = "§d"+ (Radar.radarRealName ? en.getName() : en.getDisplayName().getUnformattedText()) +" §8["+color+Math.round(en.getDistanceToEntity(mc.thePlayer))+"m§8]";
+							  c++;
+						  }
+					  }
+					  if(var3 != "null") {
+						  place = Math.round(en.getDistanceToEntity(mc.thePlayer));
+						  name = Radar.radarRealName ? en.getName() : en.getDisplayName().getUnformattedText();
+						  PlayersStorage.add(new PlayerSort(place, name, var3));
+					  }
+				  }
 			  }
-		  }		  
+		  }
+		  if(!PlayersStorage.isEmpty()) {
+			  Collections.sort(PlayersStorage, new SortByNumber());
+			  for (int i=0; i<PlayersStorage.size(); i++) {
+				  var.NekoFont.drawStringWithShadow(PlayersStorage.get(i).FullString, ((GuiScreen.width-5)-(var.NekoFont).getStringWidth(PlayersStorage.get(i).FullString)), yPos, 0);
+				  yPos+=10;
+			  }
+		  }
 		  
 	}
 	
+}
+
+class PlayerSort {
+	
+	int Distance;
+	String name;
+	String FullString;
+	
+	public PlayerSort(int Distance, String name, String FullString) {
+		this.Distance = Distance; this.name = name; this.FullString = FullString;
+	}
+	
+}
+
+class SortByNumber implements Comparator<PlayerSort> {
+	
+	public int compare(PlayerSort a, PlayerSort b) {
+		if(a.Distance == b.Distance) {
+			return a.name.compareTo(b.name);
+		} else {
+			return a.Distance - b.Distance;
+		}
+	}
+
 	
 }
 

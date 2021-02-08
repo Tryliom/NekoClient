@@ -37,6 +37,7 @@ import neko.module.modules.misc.HeadRoll;
 import neko.module.modules.misc.Nameprotect;
 import neko.module.modules.misc.Phase;
 import neko.module.modules.misc.Ping;
+import neko.module.modules.misc.PlaceAndBreak;
 import neko.module.modules.misc.Register;
 import neko.module.modules.misc.ReplyNyah;
 import neko.module.modules.misc.Switch;
@@ -51,6 +52,7 @@ import neko.module.modules.movements.Flight;
 import neko.module.modules.movements.Freecam;
 import neko.module.modules.movements.Glide;
 import neko.module.modules.movements.Highjump;
+import neko.module.modules.movements.InstantPortal;
 import neko.module.modules.movements.InventoryMove;
 import neko.module.modules.movements.Jetpack;
 import neko.module.modules.movements.Longjump;
@@ -101,7 +103,6 @@ import neko.module.modules.render.Rotator;
 import neko.module.modules.render.Search;
 import neko.module.modules.render.Tracers;
 import neko.module.modules.render.Trail;
-import neko.module.modules.render.UnclaimFinder;
 import neko.module.modules.render.Wallhack;
 import neko.module.modules.render.Water;
 import neko.module.modules.render.WorldTime;
@@ -111,6 +112,7 @@ import neko.module.modules.special.FastDura;
 import neko.module.modules.special.FireTrail;
 import neko.module.modules.special.ForceTP;
 import neko.module.modules.special.Likaotique;
+import neko.module.modules.special.Limit;
 import neko.module.modules.special.Magnet;
 import neko.module.modules.special.Nausicaah;
 import neko.module.modules.special.Near;
@@ -148,6 +150,7 @@ public class ModuleManager {
 		Combat(); Render(); Player(); Movement(); Misc(); Hide(); Special();
 		
 		// Ajouter les modules
+		ActiveModule.add(new InstantPortal());
 		ActiveModule.add(new Sprint()); // Key K
 		ActiveModule.add(new KillAura()); // Key V
 		ActiveModule.add(new Fullbright()); // Key B
@@ -159,7 +162,7 @@ public class ModuleManager {
 		ActiveModule.add(new NoClip()); // Key N
 		ActiveModule.add(new Regen()); // Key G
 		ActiveModule.add(new Flight()); // Key R
-		ActiveModule.add(new UnclaimFinder());
+		//ActiveModule.add(new UnclaimFinder());
 		ActiveModule.add(new Autoarmor()); // Key NONE
 		ActiveModule.add(new Automine()); //Key NONE
 		ActiveModule.add(new AutoCmd()); //Key NONE
@@ -265,8 +268,10 @@ public class ModuleManager {
 		ActiveModule.add(new Near()); // Key NONE
 		ActiveModule.add(new ForceTP()); // Key NONE
 		ActiveModule.add(new PotionSaver()); // Key NONE
-		ActiveModule.add(new Rotator());
+		ActiveModule.add(Rotator.getRotator());
 		ActiveModule.add(new AutoCraft());
+		ActiveModule.add(new PlaceAndBreak());
+		ActiveModule.add(new Limit());
 		
 		this.link.put(Utils.getModule("KillAura"), "ka");
 		this.link.put(Utils.getModule("FastBow"), "fb");
@@ -1035,5 +1040,5 @@ public class ModuleManager {
 	
 	public ArrayList<Module> getModules(){ return ActiveModule; }
 	
-	public Module getModuleByName(String name) { return ActiveModule.stream().filter(ActiveModule -> ActiveModule.getName().equalsIgnoreCase(name)).findFirst().orElse(null); }
+	public Module getModuleByName(Class<?> name) { return ActiveModule.stream().filter(ActiveModule -> name.isInstance(ActiveModule)).findFirst().orElse(null); }
 }

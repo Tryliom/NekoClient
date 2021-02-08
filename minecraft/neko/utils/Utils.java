@@ -20,8 +20,11 @@ import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Scanner;
@@ -41,6 +44,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.ibm.icu.util.StringTokenizer;
 import com.mojang.authlib.Agent;
 import com.mojang.authlib.UserAuthentication;
 import com.mojang.authlib.exceptions.AuthenticationException;
@@ -48,15 +52,18 @@ import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
 import neko.Client;
 import neko.api.NekoCloud;
+import neko.command.Command;
+import neko.command.CommandType;
 import neko.gui.GuiAltManager;
-import neko.gui.GuiBindManager;
 import neko.gui.GuiWikiMenu;
 import neko.gui.GuiXrayManager;
 import neko.gui.InGameGui;
+import neko.gui.bindmanager.GuiBindManager;
 import neko.guicheat.clickgui.ClickGUI;
 import neko.guicheat.clickgui.Panel;
 import neko.guicheat.clickgui.settings.Setting;
 import neko.lock.Lock;
+import neko.manager.CommandManager;
 import neko.manager.ModuleManager;
 import neko.manager.QuestManager;
 import neko.manager.TutoManager;
@@ -81,11 +88,14 @@ import neko.module.modules.misc.Antiafk;
 import neko.module.modules.misc.AutoCmd;
 import neko.module.modules.misc.AutoMLG;
 import neko.module.modules.misc.CallCmd;
+import neko.module.modules.misc.Crasher;
 import neko.module.modules.misc.Nameprotect;
 import neko.module.modules.misc.Phase;
 import neko.module.modules.misc.Ping;
+import neko.module.modules.misc.PlaceAndBreak;
 import neko.module.modules.misc.Register;
 import neko.module.modules.misc.Timer;
+import neko.module.modules.movements.Blink;
 import neko.module.modules.movements.Dolphin;
 import neko.module.modules.movements.Flight;
 import neko.module.modules.movements.Freecam;
@@ -97,6 +107,7 @@ import neko.module.modules.movements.Speed709;
 import neko.module.modules.movements.Step;
 import neko.module.modules.params.Gui;
 import neko.module.modules.params.HUD;
+import neko.module.modules.player.AutoCraft;
 import neko.module.modules.player.Autoarmor;
 import neko.module.modules.player.Build;
 import neko.module.modules.player.Cheststealer;
@@ -121,6 +132,7 @@ import neko.module.modules.special.FastDura;
 import neko.module.modules.special.FireTrail;
 import neko.module.modules.special.ForceTP;
 import neko.module.modules.special.Likaotique;
+import neko.module.modules.special.Limit;
 import neko.module.modules.special.Magnet;
 import neko.module.modules.special.Nausicaah;
 import neko.module.modules.special.Near;
@@ -132,7 +144,7 @@ import neko.module.modules.special.VanillaTp;
 import neko.module.other.Active;
 import neko.module.other.Conditions;
 import neko.module.other.Irc;
-import neko.module.other.Music;
+import neko.module.other.ModeType;
 import neko.module.other.Necklace;
 import neko.module.other.Quest;
 import neko.module.other.Rank;
@@ -141,8 +153,6 @@ import neko.module.other.Xp;
 import neko.module.other.enums.BowMode;
 import neko.module.other.enums.Chat;
 import neko.module.other.enums.IrcMode;
-import neko.module.other.enums.MagnetWay;
-import neko.module.other.enums.MusicMode;
 import neko.module.other.enums.Rate;
 import neko.module.other.enums.SpeedEnum;
 import net.mcleaks.MCLeaks;
@@ -150,11 +160,13 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundManager;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -235,8 +247,6 @@ public class Utils {
 	public static boolean sword=false;
 	public static int lvl=0;
 	public static boolean changeRank=true;
-	public static int limit=200;
-	public static boolean limite=false;
 	public static String version="Neko";
 	public static int kills=0;
 	public static int R=199;
@@ -415,7 +425,6 @@ public class Utils {
 	
 
 	public static void tranferAllData() {		
-		boolean valid = true;
 		Consumer<String> check = (String cfgName) -> {
 			File f = new File(System.getenv("APPDATA") + "\\GoodNight_4\\config\\audio\\rpg\\Config\\"+cfgName);
 			if (!f.exists()) {
@@ -750,7 +759,7 @@ public class Utils {
 		try {
 			for (Module mod : ModuleManager.ActiveModule) {
 				if (mod.getName().equalsIgnoreCase(module)) {
-					if (mod.getToggled()) {
+					if (mod.isToggled()) {
 						mod.setToggled(false);
 					} else {
 						mod.setToggled(true);
@@ -1108,7 +1117,7 @@ public class Utils {
 	public static String getVMod() {
 		String s="";
 		for (Module mod : ModuleManager.ActiveModule) {
-				if (mod.getToggled()) {
+				if (mod.isToggled()) {
 					s+=mod.getName()+" ";
 				}
 		}
@@ -1117,7 +1126,7 @@ public class Utils {
 	
 	public static void panic() {
 		for (Module mod : ModuleManager.ActiveModule) {
-			if (mod.getToggled() && !mod.isCmd())
+			if (mod.isToggled() && !mod.isCmd())
 				mod.setToggled(false);
 		}
 	}
@@ -1128,15 +1137,15 @@ public class Utils {
 				for(Object o : mc.theWorld.playerEntities) {
 		                EntityLivingBase entity = (EntityLivingBase) o;
 		               
-		                    	if (Math.random()<Math.random()) {
-		                    		if (MCLeaks.isAltActive()) {
-		                    			if (!entity.getName().equalsIgnoreCase(MCLeaks.getMCName())) {
-		                    				return entity.getName();
-		                    			}
-		                    		} else if (!entity.getName().equalsIgnoreCase(mc.session.getUsername())) {
-		                    			return entity.getName();
-		                    		}                    		
-		                    	}            
+                    	if (Math.random()<Math.random()) {
+                    		if (MCLeaks.isAltActive()) {
+                    			if (!entity.getName().equalsIgnoreCase(MCLeaks.getMCName())) {
+                    				return entity.getName();
+                    			}
+                    		} else if (!entity.getName().equalsIgnoreCase(mc.session.getUsername())) {
+                    			return entity.getName();
+                    		}                    		
+                    	}            
 		        }
 			else {
 				for (String en : KillAura.list) {
@@ -1279,7 +1288,6 @@ public class Utils {
 						
 		case 5:		
 			addChat2("§6"+var.prefixCmd+"Info <Player>", var.prefixCmd+"info ", "§7Permet de voir les caractéristiques du joueur", false, Chat.Summon);
-			addChat2("§6"+var.prefixCmd+"Update", var.prefixCmd+"update", "§7Check s'il y a une mise à jour disponible", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Sword", var.prefixCmd+"sword", "§7Permet d'activer certains cheat que si le joueur a une épée dans la main", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Fov3 <Double>", var.prefixCmd+"fov3 ", "§7Change la distance à laquelle vous voyez à la 3ème personne", false, Chat.Summon);
 			addChat2("§6"+var.prefixCmd+"Enchant", var.prefixCmd+"help enchant", "§7Voir l'help de l'enchant (Cliquez pour l'afficher)", false, Chat.Click);
@@ -1517,9 +1525,6 @@ public class Utils {
 		if (cheat==null) {
 			ModuleManager.values.add(displayBool(sword));
 			disV("Sword");
-			ModuleManager.values.add(limite ? "§aActivée" : "§cDésactivée");
-			ModuleManager.values.add("Limite de paquet: "+limit);
-			disV("Limit");
 			Irc irc = Irc.getInstance();
 			ModuleManager.values.add("Irc mode:§7 "+irc.getMode());
 			ModuleManager.values.add("Irc messages join/left:§7 "+(irc.isHideJl() ? "Cachés" : "Affichés"));
@@ -1735,13 +1740,13 @@ public class Utils {
 				
 			}
 			if (r.getName().equalsIgnoreCase("CrazyLove II") && !r.isLock() && r.getLvl()>=3) {
-				Rank r2 = getRank("Crazy Frog");
+				Rank r2 = getRank("Crazymeal");
 				if (r2.isLock()) {
-					setRank("Crazy Frog");
-					displayTitle("", "§4§koooo§cRang §dCrazy Frog§c débloqué !!§4§koooo");
+					setRank("Crazymeal");
+					displayTitle("", "§4§koooo§cRang §dCrazymeal§c débloqué !!§4§koooo");
 				}
 				if (r2.getLvl()!=r.getLvl()/5) {
-					addChat("§cRang §dCrazyLove Frog§c a atteint le lvl "+r.getLvl()/5+" !");
+					addChat("§cRang §dCrazymeal§c a atteint le lvl "+r.getLvl()/5+" !");
 					r2.setLvl(r.getLvl()/5);
 				}
 				
@@ -1832,7 +1837,6 @@ public class Utils {
 		v.add(new Quest("Je ne veux plus jamais tomber !", getModule("SafeWalk"), null, 3));
 		v.add(new Quest("Je ne peux pas m'arrêter d'avancer!!", getModule("AutoWalk"), null, 3));
 		v.add(new Quest("Je mine, tu mines, il mine...", getModule("Automine"), null, 3));
-		v.add(new Quest("Dis donc, ça se vend vite.", getModule("AutoSellAll"), null, 3));
 		v.add(new Quest("Mes arrières sont protégées par le Pyromaniac !", getModule("FireTrail"), null, 3));
 		v.add(new Quest("C'est de l'art ou bien un repaire ?", getModule("Paint"), null, 3));
 		v.add(new Quest("Je traite chaques morceaux avant de les essayer pour trouver le plus résistant !", getModule("AutoArmor"), null, 3));
@@ -1954,7 +1958,7 @@ public class Utils {
 	public static boolean isToggle(String module) {
 		try {
 			for (Module mod : ModuleManager.ActiveModule) {
-				if (mod.getName().equalsIgnoreCase(module) && mod.getToggled()) {
+				if (mod.getName().equalsIgnoreCase(module) && mod.isToggled()) {
 					return true;
 				}
 			}		
@@ -2149,7 +2153,7 @@ public class Utils {
         	mc.getNetHandler().addToSendQueue(new C0BPacketEntityAction(mc.thePlayer, C0BPacketEntityAction.Action.STOP_SPRINTING));
         }
 		if (ma)
-			for (Object o : (var.mode.equalsIgnoreCase("Player") ? mc.theWorld.playerEntities : mc.theWorld.loadedEntityList)) {
+			for (Object o : (var.mode.equals(ModeType.Player) ? mc.theWorld.playerEntities : mc.theWorld.loadedEntityList)) {
 				if (o instanceof EntityLivingBase) {
 					EntityLivingBase en = (EntityLivingBase) o;
 					if (isEntityValid(en) && mc.thePlayer.getDistanceToEntity(en) <= 6 && entity!=en) {
@@ -2281,6 +2285,34 @@ public class Utils {
 		} catch (IOException | NumberFormatException e) {}
 		
 		}
+	}
+	
+	public static Module getModuleById(int id) {
+		String[] abc = getAllKeybindsWithModule();
+		String select = abc[id];
+		String[] s = select.split(";"); //Name ; Bind ; Category
+		return Utils.getModule(s[0]);
+	}
+	
+	public static String[] getAllKeybindsWithModule() {
+		List<String> kb = new ArrayList<String>();
+		List<listbind> listBind = new ArrayList<listbind>();
+		for (Module m : ModuleManager.ActiveModule) {
+			if (m.getCategory() != Category.HIDE) {
+				listBind.add(new listbind(m));
+			}
+		}
+		Collections.sort(listBind, new SortByCollection());
+		int id = 0;
+		for(listbind lb : listBind) {
+			Module m = lb.m;
+			m.setId(id);
+			kb.add(m.getName()+";"+m.getBind()+";"+m.getCategory().name());
+			id++;
+		}
+		String[] kbb = new String[kb.size()];
+		kb.toArray(kbb);
+		return kbb;
 	}
 	
 	public static void saveXray(String...fi) {	
@@ -2483,24 +2515,6 @@ public class Utils {
 	
 	
 	public static void loadFrame(String...fi) {}
-
-	public static void loadCloudFrame() {
-	    String list[] = nc.getSave("frame").split("§");
-	    if (var.clickGui==null) {
-	    	var.clickGui = new ClickGUI();
-	    }
-	    for (String ligne : list)
-	    {           
-	    	String s[] = ligne.split(" ");
-	    	for(Panel f : ClickGUI.panels) {
-	    		if (f.title.equalsIgnoreCase(s[0].replaceAll("&", "§"))) {
-	    			f.x = (Integer.parseInt(s[1]));
-	    			f.y = (Integer.parseInt(s[2]));
-	    			f.extended = (Boolean.parseBoolean(s[3]));
-	    		}
-	    	}
-	    }
-	}
 	
 	public static void saveFont() {
 		if (verif!=null)
@@ -2733,7 +2747,7 @@ public class Utils {
 		nc.saveSave("nuker", s);
 	}
 	
-	public static String preparePostRequest(String url, String body) {
+	public static String getResultOfPostRequest(String url, String body) {
         try {
             URLConnection con = (HttpsURLConnection)new URL(url).openConnection();
             con.setConnectTimeout(10000);
@@ -2759,10 +2773,40 @@ public class Utils {
         }
     }
 	
+	public static String getResultOfRequestWithAuthToken(String url, String body, String method, String token) {
+        try {
+            URLConnection con = (HttpsURLConnection)new URL(url).openConnection();
+            con.setConnectTimeout(10000);
+            con.setReadTimeout(45000);
+            HttpURLConnection conn = (HttpURLConnection) con;
+            conn.setRequestMethod(method);
+            conn.setRequestProperty("Content-Type", "application/json");
+            if (token != null && !token.isEmpty()) {
+            	conn.setRequestProperty("Authorization", "Bearer " + token);
+            }
+            con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.write(body.getBytes("UTF-8"));
+            wr.flush();
+            wr.close();
+            String line;
+            BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+            StringBuilder result = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                result.append(line);
+            }
+            reader.close();
+            return result.toString();
+        }
+        catch (Exception e) {
+            return null;
+        }
+    }
+	
 	public static String getUsername(String username, String password) {
 		try {
 		Gson gson = new Gson();
-        String requestResult = preparePostRequest("https://authserver.mojang.com/authenticate", new String("{\"agent\": { \"name\": \"Minecraft\", \"version\": 1.8}, \"username\": \"" + username + "\", \"password\": \"" + password + "\" }"));
+        String requestResult = getResultOfPostRequest("https://authserver.mojang.com/authenticate", new String("{\"agent\": { \"name\": \"Minecraft\", \"version\": 1.8}, \"username\": \"" + username + "\", \"password\": \"" + password + "\" }"));
         
         JsonElement jsonElement = (JsonElement)gson.fromJson(requestResult, (Class)JsonElement.class);        
         JsonObject profile = (JsonObject) ((JsonObject) jsonElement).get("selectedProfile");        
@@ -2892,7 +2936,7 @@ public class Utils {
         s+=changeRank+"§,";
         s+=Tracers.friend+"§,"+Reach.bloc+"§,";
         s+=VanillaTp.classic+"§,"+Reach.classic+"§,"+Reach.aimbot+"§,"+Reach.fov+"§,";
-        s+=limit+"§,"+limite+"§,"+version+"§,"+kills+"§,"+HUD.stuff+"§,";
+        s+=Limit.getInstance().getLimit()+"§,§,"+version+"§,"+kills+"§,"+HUD.stuff+"§,";
         s+=R+"§,"+G+"§,"+B+"§,"+ neko.module.modules.render.Render.xp+"§,"+Reach.tnt+"§,"+Fastbow.getFast().isNobow()+"§,";
         s+=AutoPot.heal+"§,"+Pyro.mode+"§,"+Reach.mode+"§,"+Antiafk.getInstance().getSec()+"§,";
         s+=ItemESP.cR+"§,"+ItemESP.cG+"§,"+ItemESP.cB+"§,"+ItemESP.clR+"§,"+ItemESP.clG+"§,"+ItemESP.clB+"§,"+ItemESP.width+"§,";
@@ -2918,6 +2962,10 @@ public class Utils {
     	}
         s+="§,"+Likaotique.getLik().isSafe()+"§,"+AutoCmd.cmd+"§,"+AutoCmd.sec+"§,"+Near.spawn.toLong()+"§,"+Near.radius;
         s+="§,"+Near.noname+"§,"+ForceTP.getForceTP().getPoint().toLong()+"§,"+ForceTP.getForceTP().isYMax();
+        s+="§,"+Crasher.getInstance().isWave()+"§,"+AutoCraft.getInstance().isStack()+"§,"+Blink.full;
+        PlaceAndBreak pb = PlaceAndBreak.getInstance();
+        s+="§,"+pb.getSlotBreak()+"§,"+pb.getSlotPlace()+"§,"+pb.isAuto();
+        
         Utils.nc.saveSave("values", s);
 	}
 	
@@ -3336,9 +3384,7 @@ public class Utils {
             	if (i==92)
             		Reach.fov=Double.parseDouble(ligne);
             	if (i==93)
-            		limit=Integer.parseInt(ligne);
-            	if (i==94)
-            		limite=Boolean.parseBoolean(ligne);
+            		Limit.getInstance().setLimit(Integer.parseInt(ligne));
             	if (i==95)
             		version=ligne;
             	if (i==96)
@@ -3530,7 +3576,7 @@ public class Utils {
             		AutoCmd.cmd = ligne;
             	}
             	if (i==182) {
-            		AutoCmd.sec = Integer.parseInt(ligne);
+            		AutoCmd.sec = Double.parseDouble(ligne);
             	}
             	if (i==183) {
             		Near.spawn = BlockPos.fromLong(Long.parseLong(ligne));
@@ -3548,11 +3594,219 @@ public class Utils {
             	if (i==187) {
             		FTP.setYMax(Boolean.parseBoolean(ligne));
             	}
-            	
-        	} catch (Exception e) {
-        	}                	
+            	if (i == 188) {
+            		Crasher.getInstance().setWave(Boolean.parseBoolean(ligne));
+            	}
+            	if (i == 189) {
+            		AutoCraft.getInstance().setStack(Boolean.parseBoolean(ligne));
+            	}
+            	if (i == 190) {
+            		Blink.full = Boolean.parseBoolean(ligne);
+            	}
+            	PlaceAndBreak pb = PlaceAndBreak.getInstance();
+            	if (i == 191)
+            		pb.setSlotBreak(Integer.parseInt(ligne));
+            	if (i == 192)
+            		pb.setSlotPlace(Integer.parseInt(ligne));
+            	if (i == 193)
+            		pb.setAuto(Boolean.parseBoolean(ligne));
+        	} catch (Exception e) {}
         	i++;
         }
+	}
+	
+	public static ArrayList<Command> getCommandByType(CommandType type) {
+		CommandManager commandManager = Client.getNeko().commandManager;
+		ArrayList<Command> list = new ArrayList<Command>();
+		for (Command cmd : commandManager.getCommands()) {
+			if (cmd.getType().equals(type))
+				list.add(cmd);
+		}
+		
+		return list;
+	}
+	
+	public static Boolean isCommandType(String type) {
+		for (CommandType command : CommandType.values()) {
+			if (command.name().equalsIgnoreCase(type))
+				return true;
+		}
+		
+		return false;
+	}
+	
+	public static Command getCommandStartByName(String name) {
+		CommandManager commandManager = Client.getNeko().commandManager;
+		for (Command cmd : commandManager.getCommands()) {
+			if (name.startsWith(cmd.getName()))
+				return cmd;
+		}
+		
+		return null;
+	}
+	
+	public static void onCommand(String message) {
+		Command cmd = getCommandStartByName(message);
+		String[] args = message.split(" ");
+		Boolean locked = isCommandLock(message);
+		
+		if (!locked)
+			if (cmd != null) {
+				if (args.length < cmd.getMinArgs()) {
+					addChat("§cErreur, il manque des arguments");
+				} else {
+					try {
+						cmd.onCommand(args);
+					} catch(Exception e) {
+						e.printStackTrace();
+						addChat("§cErreur lors de l'exécution de la commande !");
+					}
+				}
+				
+			} else {
+				if (args.length==1) {
+					shouldToggleModule(message);
+				} else {
+					// For pre-3.0
+					//addChat("§cCommande inexistante !");
+				}
+			}
+		mc.ingameGUI.getChatGUI().addToSentMessages(var.prefixCmd+message);
+		mc.displayGuiScreen((GuiScreen)null);
+	}
+	
+	public static Boolean isCommandLock(String command) {
+		for (Lock l : ModuleManager.Lock) {
+			String s = l.getName();
+			if (l.getRaccourcis().isEmpty() ? false : command.startsWith(l.getRaccourcis()) && Utils.isLock(s)) {
+				Utils.addWarn(s);
+				mc.thePlayer.playSound("mob.villager.no", 1.0F, 1.0F);
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public static void shouldToggleModule(String message) {
+		String s = message.toLowerCase();
+		
+		for (Module m : ModuleManager.ActiveModule) {	
+			if (Utils.isLock(m.getName()))
+				continue;
+			Boolean alias = isAnAliasOfModule(s, m);
+			
+			if (alias || m.getName().toLowerCase().equalsIgnoreCase(s))
+				Utils.toggleModule(m.getName());
+		}
+	}
+	
+	public static Boolean isAnAliasOfModule(String text, Module m) {
+		boolean link = false;
+		HashMap<Module, String> hm = ModuleManager.link;
+		
+		if (hm.containsKey(m)) {
+			if (hm.get(m).contains(",")) {
+				for (String str : hm.get(m).split(",")) {
+					if (str.equalsIgnoreCase(text))
+						link = true;
+				}
+			} else
+				if (hm.get(m).equalsIgnoreCase(text))
+					link = true;
+		}
+		
+		return link;
+	}
+	
+	public static String[] getRankDescription(String rank) {
+		String desc = "";
+		Rank r = Utils.getRank(rank);
+		Boolean lock = r.isLock();
+		if (!Utils.isLock("rankmanager rate"))
+			desc+="\n§6Rareté: "+r.getColor()+r.getRate();
+		if (!Utils.isLock("rankmanager lvl"))
+			desc+="\n§6Lvl: §b"+r.getLvl();
+		if (!Utils.isLock("rankmanager bonus")) {
+			desc+="\n§6Bonus: §d"+r.getTotBonus()+"%";
+			ArrayList<String> l = r.getAllBonus("§6", "§d");
+			for (String s : l) {
+				desc+="\n"+s;
+			}
+		}
+		if (!r.getDesc().equalsIgnoreCase("null") && !Utils.isLock("rankmanager desc") && !lock) {
+			
+			desc+="\n§6Description: ";
+			String text = Utils.setColor(r.getDesc(), r.getColor().replaceAll("§n", ""));
+			int defaultLineWidth = 75;
+			int defaultSpaceWidth=1;
+			
+			StringTokenizer st = new StringTokenizer(text);
+			int SpaceLeft = defaultLineWidth;
+			int SpaceWidth = defaultSpaceWidth;
+			while(st.hasMoreTokens()) {
+				String word=st.nextToken();
+				if((word.length()+SpaceWidth)>SpaceLeft) {
+					desc+="\n"+word+" ";
+					SpaceLeft=defaultLineWidth-word.length();
+				} else {
+					desc+=word+" ";
+					SpaceLeft-=(word.length()+SpaceWidth);
+				}
+			}
+		}
+		return desc.split("\n");
+	}
+	
+	public static String getModuleColor(String module, Boolean isModule) {
+		String text = "";
+		if(isModule) {
+			Module m = Utils.getModule(module);
+			text = m.getCategory().name();
+		} else {
+			text = module.toLowerCase();
+		}
+		switch(text.toLowerCase()) {
+		case "params": return "§f";
+		case "combat": return "§c";
+		case "render": return "§e";
+		case "player": return "§3";
+		case "movement": return "§2";
+		case "misc": return "§7";
+		case "special": return "§6";
+		}
+		return "§f";
+	}
+	
+	public static Float[] getFloatColorFromInt(int color) {
+		float r = (float)(color >> 16 & 255) / 255.0f;
+	    float g = (float)(color >> 8 & 255) / 255.0f;
+	    float b = (float)(color & 255) / 255.0f;
+	    Float[] s = {(float)r, (float)g, (float)b};
+	    return s;
+	}
+	
+	public static String getRankColor2(String rank) {
+		String color = "§f";
+		try {
+			Rank r = Utils.getRank(rank);
+			switch(r.getRate().name().toLowerCase()) {
+			case "neko": color = "§5"; break;
+			case "supra": color = "§6"; break;
+			case "event": color = "§2"; break;
+			case "ordinaire": color = "§7"; break;
+			case "rare": color = "§e"; break;
+			case "ultrarare": color = "§b"; break;
+			case "magical": color = "§d"; break;
+			case "divin": color = "§d§o"; break;
+			case "satanique": color = "§c"; break;
+			case "légendaire": color = "§5§o"; break;
+			case "mythique": color = "§2"; break;
+			case "titan": color = "§4"; break;
+			case "crazylove": color = "§9"; break;
+			}
+		} catch (Exception e) {}
+		return color;
 	}
 	
 	public static void loadValues(String...fi) {
@@ -3807,9 +4061,7 @@ public class Utils {
 	                	if (i==92)
 	                		Reach.fov=Double.parseDouble(ligne);
 	                	if (i==93)
-	                		limit=Integer.parseInt(ligne);
-	                	if (i==94)
-	                		limite=Boolean.parseBoolean(ligne);
+	                		Limit.getInstance().setLimit(Integer.parseInt(ligne));
 	                	if (i==95)
 	                		version=ligne;
 	                	if (i==96)
@@ -4057,7 +4309,7 @@ public class Utils {
 	}
 	
 	public static void UnToggleGUI() {
-		if((!(mc.currentScreen instanceof ClickGUI)) && (Utils.getModule("Gui").getToggled())) {
+		if((!(mc.currentScreen instanceof ClickGUI)) && (Utils.getModule("Gui").isToggled())) {
 			Utils.getModule("Gui").setToggled(false);
 		}
 	}
@@ -4223,7 +4475,7 @@ public class Utils {
 			return;
 		String s ="";
 		for (Module m : ModuleManager.ActiveModule) {
-    		if (m.getToggled() && !m.getName().equalsIgnoreCase("VanillaTp") && !m.getCategory().name().equalsIgnoreCase("hide") && !m.isCmd()) {
+    		if (m.isToggled() && !m.getName().equalsIgnoreCase("VanillaTp") && !m.getCategory().name().equalsIgnoreCase("hide") && !m.isCmd()) {
     			s+=m.getName()+"§";
     		}
     	}
@@ -4363,9 +4615,19 @@ public class Utils {
 	public static String getBind(String mod) {
 		for (Module m : ModuleManager.ActiveModule) {
 			if (m.getName().equals(mod)) {
-				String s = Keyboard.getKeyName((m.getBind()==-1 ? 0 : m.getBind()));
-				char ch[] = s.toCharArray();
-				return s.toLowerCase().replaceFirst(".", String.valueOf(ch[0]));
+				try {
+					String s = Keyboard.getKeyName((m.getBind()==-1 ? 0 : m.getBind()));
+					char ch[] = s.toCharArray();
+					return s.toLowerCase().replaceFirst(".", String.valueOf(ch[0]));
+				} catch (Exception e) {
+					switch(m.getBind()) {
+					case -100: return "RClick";
+					case -99: return "LClick";
+					case -98: return "MClick";
+					case -1: m.setBind(-1); return "Failed to get chars";
+					}
+					return "Failed to get chars";
+				}
 			}
 		}		
 		return "None";
@@ -4542,6 +4804,24 @@ public class Utils {
 		  Utils.importMod();
 		  Utils.saveAll();
 	}
+
+	public static void loadCloudFrame() {
+	    String list[] = nc.getSave("frame").split("§");
+	    if (var.clickGui==null) {
+	    	var.clickGui = new ClickGUI();
+	    }
+	    for (String ligne : list)
+	    {           
+	    	String s[] = ligne.split(" ");
+	    	for(Panel f : ClickGUI.panels) {
+	    		if (f.title.equalsIgnoreCase(s[0].replaceAll("&", "§"))) {
+	    			f.x = (Integer.parseInt(s[1]));
+	    			f.y = (Integer.parseInt(s[2]));
+	    			f.extended = (Boolean.parseBoolean(s[3]));
+	    		}
+	    	}
+	    }
+	}
 	
 	public static void loadCloudSettings(String...fi) {
 
@@ -4549,6 +4829,10 @@ public class Utils {
 		for(String args : list) {
 			String s[] = args.split(":");
 			if(s.length == 4) {
+				String[] moduleSetting = s[0].split("_");
+				if(moduleSetting.length < 1) {
+					continue;
+				}
 				final Setting set = Client.Neko.settingsManager.getSettingByName(s[0]);
 				if(set == null) {
 					continue;
@@ -4656,7 +4940,7 @@ public class Utils {
 	            	var.prefixCmd=ligne;
 	            }
 	            if (i==7) {
-	            	var.mode=ligne;
+	            	var.mode=ModeType.valueOf(ligne);
 	            }
 	            if (i==8) {
 	            	var.ame=Integer.parseInt(ligne);
@@ -4683,6 +4967,15 @@ public class Utils {
 	        	}
 			} catch (Exception e) {}
     	}             
+	}
+	
+	/**
+	 * Capitalize the first letter of the text
+	 * @param text
+	 * @return
+	 */
+	public static String capitalize(String text) {
+		return text.substring(0, 1).toUpperCase() + text.substring(1);
 	}
 	
 	public static boolean loadRpg(String...fi) {
@@ -4729,7 +5022,7 @@ public class Utils {
                     	var.prefixCmd=ligne;
                     }
                     if (i==7) {
-                    	var.mode=ligne;
+                    	var.mode=ModeType.valueOf(ligne);
                     }
                     if (i==8) {
                     	var.ame=Integer.parseInt(ligne);
@@ -4985,7 +5278,7 @@ public class Utils {
 			
 		} else {
 		
-			int neko = (int) Math.round(Math.random()*1000);
+			int neko = (int) Math.round(Math.random()*840);
 			switch (neko) {
 			
 			case 0:nyah="Nyah nyah nyah :3";var.ame++;addChat(" +1 Soul");break;									
@@ -6025,6 +6318,10 @@ public class Utils {
 		}
 //		return "§cErreur";
 	}
+	
+	public static boolean isInGui() {
+		return mc.currentScreen instanceof GuiInventory || mc.currentScreen instanceof GuiChat || mc.currentScreen instanceof GuiContainer;
+	}
 
 	public static void displayAn() {
 		try {
@@ -6291,4 +6588,49 @@ public class Utils {
 			mc.ingameGUI.getChatGUI().printChatMessage(new ChatComponentText("§8[§9Neko§8]§6 " + e));
 		}
 	}
+}
+
+//Combat ; Render ; Player ; Movement ; Misc ; Special ; Params
+
+class listbind {
+	
+	Module m;
+	String Collection;
+	String oldCollection;
+	
+	public listbind(Module m) {
+		this.m = m;
+		this.Collection = m.getCategory().name();
+		if(Collection.equalsIgnoreCase("Params")) {
+			this.oldCollection = "aa";
+		} else if(Collection.equalsIgnoreCase("Combat")) {
+			this.oldCollection = "bb";
+		} else if(Collection.equalsIgnoreCase("Render")) {
+			this.oldCollection = "cc";
+		} else if(Collection.equalsIgnoreCase("Player")) {
+			this.oldCollection = "dd";
+		} else if(Collection.equalsIgnoreCase("Movement")) {
+			this.oldCollection = "ee";
+		} else if(Collection.equalsIgnoreCase("Misc")) {
+			this.oldCollection = "ff";
+		} else if(Collection.equalsIgnoreCase("Special")) {
+			this.oldCollection = "gg";
+		}
+	}
+	
+	public String getCollection() {
+		return this.oldCollection;
+	}
+	
+}
+
+class SortByCollection implements Comparator<listbind> {
+	
+	public int compare(listbind a, listbind b) {
+		if(a.oldCollection.equalsIgnoreCase(b.oldCollection)) {
+			return a.m.getName().compareTo(b.m.getName());
+		}
+		return a.oldCollection.compareTo(b.oldCollection);
+	}
+	
 }

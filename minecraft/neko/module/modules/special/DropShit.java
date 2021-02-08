@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import neko.module.Category;
 import neko.module.Module;
 import neko.utils.TimerUtils;
+import net.minecraft.client.Minecraft;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -48,13 +51,38 @@ public class DropShit extends Module {
 			if (mc.thePlayer.inventoryContainer.getSlot(i).getStack() != null) {
 				ItemStack is = mc.thePlayer.inventoryContainer.getSlot(i).getStack();
 				Item item = is.getItem();
-				for (int j : list)
-					if (Item.getIdFromItem(item) == j) {
-						mc.playerController.windowClick(0, i, 0, 0, mc.thePlayer);
-			        	mc.playerController.windowClick(0, -999, 0, 0, mc.thePlayer);
-					}
+				
+				if (canDrop(item)) {
+					mc.playerController.windowClick(0, i, 0, 0, mc.thePlayer);
+		        	mc.playerController.windowClick(0, -999, 0, 0, mc.thePlayer);
+				}
 			}
 		}
+		
+		Container chest = mc.thePlayer.openContainer;
+		
+		if (chest != null) {
+			for (int i = 0; i < chest.inventorySlots.size() - 36; i++) {
+				Slot slot = chest.getSlot(i);
+				
+				if (slot != null 
+						&& slot.getStack() != null 
+						&& slot.getStack().getItem() != null 
+						&& canDrop(slot.getStack().getItem())) {
+					mc.playerController.windowClick(chest.windowId, i, 0, 0, mc.thePlayer);
+		        	mc.playerController.windowClick(chest.windowId, -999, 0, 0, mc.thePlayer);
+				}
+			}
+		}
+	}
+	
+	public Boolean canDrop(Item item) {
+		for (int j : list)
+			if (Item.getIdFromItem(item) == j) {
+				return true;
+			}
+		
+		return false;
 	}
 
 	public double getDelay() {

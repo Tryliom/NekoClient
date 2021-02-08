@@ -8,6 +8,7 @@ import java.net.InetAddress;
 import java.net.Proxy;
 import java.net.SocketAddress;
 import java.net.UnknownHostException;
+import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.text.DecimalFormat;
@@ -823,7 +824,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             logger.info("Caught error stitching, removing all assigned resourcepacks", var4);
             var1.clear();
             var1.addAll(this.defaultResourcePacks);
-            this.mcResourcePackRepository.func_148527_a(Collections.emptyList());
+            this.mcResourcePackRepository.setRepositories(Collections.emptyList());
             this.mcResourceManager.reloadResources(var1);
             this.gameSettings.resourcePacks.clear();
             this.gameSettings.saveOptions();
@@ -851,7 +852,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             var4.putInt(var8 << 8 | var8 >> 24 & 255);
         }
 
-        var4.flip();
+        ((Buffer) var4).flip();
         return var4;
     }
 
@@ -1551,7 +1552,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     		
     	Client var = Client.getNeko();
     	for(Module m : var.moduleManager.ActiveModule) {
-    		if(m.getToggled() && Utils.verif==null) {
+    		if(m.isToggled() && Utils.verif==null) {
     			m.onClick();
     		}
     	}
@@ -1613,7 +1614,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     {
     	Client var = Client.getNeko();
     	for(Module m : var.moduleManager.ActiveModule) {
-    		if(m.getToggled() && Utils.verif==null) {
+    		if(m.isToggled() && Utils.verif==null) {
     			m.onRightClick();
     		}
     	}
@@ -3408,6 +3409,5 @@ public class Minecraft implements IThreadListener, IPlayerUsage
 
 	public void setProxy(Proxy proxy) {
 		this.proxy = proxy;
-		
 	}
 }

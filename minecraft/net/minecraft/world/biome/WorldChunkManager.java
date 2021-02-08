@@ -64,10 +64,10 @@ public class WorldChunkManager
 
     public BiomeGenBase func_180631_a(BlockPos p_180631_1_)
     {
-        return this.func_180300_a(p_180631_1_, (BiomeGenBase)null);
+        return this.getBiomeGenerator(p_180631_1_, (BiomeGenBase)null);
     }
 
-    public BiomeGenBase func_180300_a(BlockPos p_180300_1_, BiomeGenBase p_180300_2_)
+    public BiomeGenBase getBiomeGenerator(BlockPos p_180300_1_, BiomeGenBase p_180300_2_)
     {
         return this.biomeCache.func_180284_a(p_180300_1_.getX(), p_180300_1_.getZ(), p_180300_2_);
     }

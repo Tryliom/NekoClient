@@ -77,18 +77,18 @@ public class Reach extends Module {
 	public void setup() {
 		
 		//Distance dist, pvp, bloc, tp classic classic, aimbot, fov, tnt, multiaura, knockback
-		Client.getNeko().settingsManager.rSetting(new Setting("REACHDistance", this, this.dist, 1, 500, true));
-			Client.getNeko().settingsManager.rSetting(new Setting("REACHAimbot", this, this.aimbot));
-			Client.getNeko().settingsManager.rSetting(new Setting("REACHPvp", this, this.pvp));
-			Client.getNeko().settingsManager.rSetting(new Setting("REACHBloc", this, this.bloc));
-			Client.getNeko().settingsManager.rSetting(new Setting("REACHTpClassic", this, this.classic));
-			Client.getNeko().settingsManager.rSetting(new Setting("REACHFov", this, this.fov, 0, 360, true));
-			Client.getNeko().settingsManager.rSetting(new Setting("REACHTnt", this, this.tnt));
-			Client.getNeko().settingsManager.rSetting(new Setting("REACHMultiaura", this, this.multiaura));
-			Client.getNeko().settingsManager.rSetting(new Setting("REACHKnockback", this, this.knock));
+		Client.getNeko().settingsManager.rSetting(new Setting("REACH_Distance", this, this.dist, 1, 500, true));
+			Client.getNeko().settingsManager.rSetting(new Setting("REACH_Aimbot", this, this.aimbot));
+			Client.getNeko().settingsManager.rSetting(new Setting("REACH_Pvp", this, this.pvp));
+			Client.getNeko().settingsManager.rSetting(new Setting("REACH_Bloc", this, this.bloc));
+			Client.getNeko().settingsManager.rSetting(new Setting("REACH_Tp Classic", this, this.classic));
+			Client.getNeko().settingsManager.rSetting(new Setting("REACH_Fov", this, this.fov, 0, 360, true));
+			Client.getNeko().settingsManager.rSetting(new Setting("REACH_Tnt", this, this.tnt));
+			Client.getNeko().settingsManager.rSetting(new Setting("REACH_Multiaura", this, this.multiaura));
+			Client.getNeko().settingsManager.rSetting(new Setting("REACH_Knockback", this, this.knock));
 			java.util.ArrayList<String> ordre = new java.util.ArrayList<>();
 			ordre.add("Normal"); ordre.add("Cage");
-			Client.Neko.settingsManager.rSetting(new Setting("REACHMode", this, this.mode.name(), ordre));
+			Client.Neko.settingsManager.rSetting(new Setting("REACH_Mode (For Tnt)", this, this.mode.name(), ordre));
 		
 	}
 	
@@ -240,8 +240,6 @@ public class Reach extends Module {
 	public void onClick() {
 		if (mc.thePlayer.isSneaking())
 			return;
-		if (u.limite && u.nbPack>u.limit)
-			return;
 		if (pvp && !mc.playerController.isSpectatorMode()) {						
 			Entity en = mc.pointedEntity;
 			if (en!=null && !Friends.isFriend(en.getName()) && mc.thePlayer!=en) {
@@ -271,7 +269,7 @@ public class Reach extends Module {
         		mc.thePlayer.setPosition(lastX, lastY+0.001*Math.random(), lastZ);
 			} else if (aimbot) {
 				switch (var.mode) {
-				case "Player" :
+				case Player :
 				for (Object theObject : mc.theWorld.playerEntities) {
 	                EntityPlayer entity = (EntityPlayer) theObject;
 	                if (u.isEntityInFov(entity, fov) && !Friends.isFriend(entity.getName()) && mc.thePlayer!=entity && mc.thePlayer.getDistanceToEntity(entity)<100) {
@@ -291,7 +289,7 @@ public class Reach extends Module {
 	        	}
 				break;
 					
-				case "Mob" :
+				case Mob :
 					if (u.warn) {
 	        			if (u.isPlayerInRange(u.warnB))
 	        				return;
@@ -322,7 +320,7 @@ public class Reach extends Module {
 	                }
 					break;
 					
-				case "All" :
+				case All :
 					for (Object theObject : mc.theWorld.loadedEntityList) {
 	        			if (theObject instanceof EntityLivingBase) {
 	                        EntityLivingBase entity = (EntityLivingBase) theObject;

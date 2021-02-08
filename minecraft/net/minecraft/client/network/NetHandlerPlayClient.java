@@ -27,6 +27,7 @@ import neko.Client;
 import neko.module.modules.movements.Blink;
 import neko.module.modules.player.Velocity;
 import neko.module.modules.special.ForceTP;
+import neko.module.modules.special.Limit;
 import neko.module.modules.special.PunKeel;
 import neko.module.modules.combat.BowAimbot;
 import neko.module.modules.combat.KillAura;
@@ -888,14 +889,17 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     		}
     	}
     	
-    	if (Blink.isOn) {
-    		if (((Utils.isToggle("FastBow") && BowAimbot.getAim().haveBow()) ? true : false) || p_147297_1_ instanceof C03PacketPlayer.C04PacketPlayerPosition || p_147297_1_ instanceof C03PacketPlayer.C06PacketPlayerPosLook || p_147297_1_ instanceof C02PacketUseEntity || p_147297_1_ instanceof C08PacketPlayerBlockPlacement || p_147297_1_ instanceof C07PacketPlayerDigging || p_147297_1_ instanceof C0BPacketEntityAction || p_147297_1_ instanceof C09PacketHeldItemChange) {
+    	if (Utils.isToggle("Blink")) {
+    		if (Blink.isValidPacket(p_147297_1_)) {
+    			if (p_147297_1_ instanceof C03PacketPlayer && !mc.thePlayer.isMovingXZY() && !mc.thePlayer.isMovingCamera()) {
+    				return;
+    			}
     			Blink.packet.add(p_147297_1_);
         		return;
     		}
     	}
     	
-    	if (Utils.isToggle("Freecam") && (p_147297_1_ instanceof C03PacketPlayer || p_147297_1_ instanceof C0APacketAnimation) && !Blink.isOn) {
+    	if (Utils.isToggle("Freecam") && (p_147297_1_ instanceof C03PacketPlayer || p_147297_1_ instanceof C0APacketAnimation) && !Utils.isToggle("Blink")) {
     		return;
     	}
     	
@@ -917,10 +921,12 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     	}
     	
     	if (Utils.isToggle("PotionSaver") && p_147297_1_ instanceof C03PacketPlayer && mc.thePlayer.getActivePotionEffects().size() > 0 && !mc.thePlayer.isMovingXZ() && mc.thePlayer.isCollidedVertically
-    			&& (Utils.isToggle("NoAnim") ? true : !mc.thePlayer.isSwingInProgress) && !mc.thePlayer.isUsingItem()) {
+    			&& (Utils.isToggle("NoAnim") || !mc.thePlayer.isSwingInProgress) && !mc.thePlayer.isUsingItem()) {
     		return;
     	}
     	
+    	if (Limit.getInstance().isToggled() && Limit.getInstance().getLimit() < Utils.nbPack)
+    		return;
     	Utils.nbPack++;
         this.netManager.sendPacket(p_147297_1_);
     }

@@ -255,7 +255,7 @@ public class ClickGUI extends GuiScreen {
 						for (Element e : b.menuelements) {
 							e.offset = off;
 							e.update();
-							if(Client.Neko.settingsManager.getSettingByName("Design").getValString().equalsIgnoreCase("New")){
+							if(Client.Neko.settingsManager.getSettingByName("Gui_Design").getValString().equalsIgnoreCase("New")){
 								Gui.drawRect(e.x, e.y, e.x + e.width + 2, e.y + e.height, outlineColor);
 							}
 							e.drawScreen(mouseX, mouseY, partialTicks);
@@ -402,8 +402,8 @@ public class ClickGUI extends GuiScreen {
 		}
 		
 		if(mc.currentScreen == Client.Neko.clickGui) {
-			if(keyCode == Client.Neko.moduleManager.getModuleByName("Gui").getBind() || keyCode == Keyboard.KEY_ESCAPE) {
-				Client.Neko.moduleManager.getModuleByName("Gui").toggleModule();
+			if(keyCode == Client.Neko.moduleManager.getModuleByName(neko.module.modules.params.Gui.class).getBind() || keyCode == Keyboard.KEY_ESCAPE) {
+				Client.Neko.moduleManager.getModuleByName(neko.module.modules.params.Gui.class).toggleModule();
 				SettingsUtil.SaveGuiSettings();
 			}
 		}

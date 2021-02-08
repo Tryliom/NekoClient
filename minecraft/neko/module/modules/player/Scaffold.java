@@ -5,9 +5,16 @@ import java.util.Iterator;
 import neko.module.Category;
 import neko.module.Module;
 import neko.module.modules.movements.Safewalk;
+import neko.module.modules.render.Water;
+import neko.utils.Utils;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
+import net.minecraft.block.BlockDynamicLiquid;
+import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.BlockStaticLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.renderer.BlockFluidRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.network.play.client.C03PacketPlayer;
@@ -67,13 +74,13 @@ public class Scaffold extends Module {
             while(var5.hasNext()) {
                BlockPos posCollision = (BlockPos)var5.next();
                IBlockState blockOnCollision = p.worldObj.getBlockState(posCollision);
-               if(blockOnCollision.getBlock() instanceof BlockAir) {
+               if(blockOnCollision.getBlock() instanceof BlockAir || blockOnCollision.getBlock() instanceof BlockLiquid) {
                   Iterator var8 = blockStandOn.iterator();
 
                   while(var8.hasNext()) {
                      BlockPos posStandOn = (BlockPos)var8.next();
                      IBlockState blockInReach = p.worldObj.getBlockState(posStandOn);
-                     if(!(blockInReach.getBlock() instanceof BlockAir) && !posStandOn.equals(posCollision) && posStandOn.offset(p.func_174811_aO()).equals(posCollision)) {
+                     if(!(blockInReach.getBlock() instanceof BlockAir || blockInReach.getBlock() instanceof BlockLiquid) && !posStandOn.equals(posCollision) && posStandOn.offset(p.func_174811_aO()).equals(posCollision)) {
                         p.sendQueue.netManager.sendPacket(new C03PacketPlayer.C05PacketPlayerLook(mc.thePlayer.rotationYaw, 90.0F, true));
                         if(mc.playerController.func_178890_a(mc.thePlayer, mc.theWorld, p.inventory.getCurrentItem(), posStandOn.add(0, 0, 0), p.func_174811_aO(), new Vec3((double)posStandOn.getX(), (double)posStandOn.getY(), (double)posStandOn.getZ()))) {
                            p.swingItem();

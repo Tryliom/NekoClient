@@ -45,6 +45,10 @@ public class Element {
 		 * erweitern
 		 */
 		String sname = set.getName();
+		String[] splitname = sname.split("_");
+		if(splitname.length >= 1) {
+			sname = splitname[1];
+		}
 		if(set.isCheck()){
 			setstrg = sname.substring(0, 1).toUpperCase() + sname.substring(1, sname.length());
 			double textx = x + width - FontUtil.getStringWidth(setstrg);

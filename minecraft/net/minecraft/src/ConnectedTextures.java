@@ -954,7 +954,7 @@ public class ConnectedTextures
     private static TextureAtlasSprite getNeighbourIcon(IBlockAccess iblockaccess, BlockPos blockPos, IBlockState neighbourState, int side)
     {
         neighbourState = neighbourState.getBlock().getActualState(neighbourState, iblockaccess, blockPos);
-        IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().func_175023_a().func_178125_b(neighbourState);
+        IBakedModel model = Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelShapes().func_178125_b(neighbourState);
 
         if (model == null)
         {

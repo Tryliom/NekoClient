@@ -1,10 +1,9 @@
 package neko.module.modules.combat;
 
-import java.util.Vector;
-
 import neko.module.Category;
 import neko.module.Module;
 import neko.module.modules.hide.Friends;
+import neko.module.other.ModeType;
 import neko.module.other.enums.BowMode;
 import neko.utils.Utils;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,7 +13,6 @@ import net.minecraft.item.ItemFood;
 
 public class BowAimbot extends Module {
 	private EntityLivingBase currEn=null;
-	private Vector<EntityLivingBase> list = new Vector<EntityLivingBase>();
 	private Double fov=30.0;
 	private BowMode life=BowMode.Désactivé;
 	private BowMode armor=BowMode.Désactivé;
@@ -66,7 +64,7 @@ public class BowAimbot extends Module {
 			return false;
 		if (mc.thePlayer.getName().equalsIgnoreCase(en.getName()) || en.getName().isEmpty())
 			return false;
-		if (var.mode.equalsIgnoreCase("Mob") ? Utils.isPlayer(en) : false)
+		if (var.mode.equals(ModeType.Mob) ? Utils.isPlayer(en) : false)
 			return false;
 		if (!mc.thePlayer.canEntityBeSeen(en))
 			return false;
@@ -89,8 +87,8 @@ public class BowAimbot extends Module {
 	
 	public void aimBow() {
 		EntityLivingBase best = null;
-		boolean valid = false;
-		for (Object o : (var.mode.equalsIgnoreCase("Player") ? mc.theWorld.playerEntities : mc.theWorld.loadedEntityList)) {
+
+		for (Object o : (var.mode.equals(ModeType.Player) ? mc.theWorld.playerEntities : mc.theWorld.loadedEntityList)) {
 			if (o instanceof EntityLivingBase) {
 				EntityLivingBase en = (EntityLivingBase) o;           
 				if (!this.isValid(en)) {
