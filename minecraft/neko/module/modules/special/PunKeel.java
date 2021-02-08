@@ -59,7 +59,7 @@ public class PunKeel extends Module {
 	}
 	
 	public void onAction() {
-		if (!this.getToggled() && this.isOn)
+		if (!this.isToggled() && this.isOn)
 			this.isOn = false;
 	}
 	

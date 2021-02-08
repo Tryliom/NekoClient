@@ -5,13 +5,11 @@ import java.util.ArrayList;
 import neko.Client;
 import neko.event.UpdateEvent;
 import neko.gui.InGameGui;
-import neko.guicheat.clickgui.ClickGUI;
 import neko.manager.ModuleManager;
 import neko.utils.ChatUtils;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.network.play.client.C03PacketPlayer;
 
 public class Module {
 	protected Minecraft mc = Minecraft.getMinecraft();
@@ -84,12 +82,12 @@ public class Module {
 		this.moduleCategory = category;
 	}
 
-	public boolean getToggled() {
+	public boolean isToggled() {
 		return this.isToggled;
 	}
 	
 	public void toggle() {
-		if (this.getToggled()) {
+		if (this.isToggled()) {
 			this.setToggled(false);
 		} else {
 			this.setToggled(true);
@@ -154,7 +152,7 @@ public class Module {
 				return;
 			}
 		}
-		setToggled(!getToggled());
+		setToggled(!isToggled());
 	}
 
 	public void setWithoutToggle(boolean isToggle) {

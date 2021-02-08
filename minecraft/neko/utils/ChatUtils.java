@@ -1036,7 +1036,7 @@ public class ChatUtils {
 									v = true;
 							}
 							if (!v) {
-								if (m.getToggled()) {
+								if (m.isToggled()) {
 									boolean bl = Utils.display;
 									Utils.display = false;
 									m.onDisabled();
@@ -2164,25 +2164,6 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"limit")) {
-				if (args.length==1) {
-					if (Utils.limite)
-						Utils.addChat("§cLimite désactivé !");
-					else
-						Utils.addChat("§aLimite activé !");
-					Utils.limite=!Utils.limite;
-				} else {
-					if (Utils.isInteger(args[1])) {
-						Utils.limit=Integer.parseInt(args[1]);
-						Utils.addChat("§aLimite changée à "+args[1]+" !");
-					} else 
-						Utils.addChat(err);
-				}
-				
-				
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
 		}
 		doCommand2();
 	}
@@ -2392,8 +2373,6 @@ public class ChatUtils {
 				} else {
 					Minecraft.getMinecraft().thePlayer.posY+=1.0F;
 					try {
-						if (Utils.limite && Utils.nbPack>Utils.limit)
-                			return;
 						double x = (args[1].contains("~") ? mc.thePlayer.posX+(args[1].replace("~", "").equals("") ? 0.0 : Double.parseDouble(args[1].replace("~", ""))) : Double.parseDouble(args[1]));
 						double y = (args[2].contains("~") ? mc.thePlayer.posY+(args[2].replace("~", "").equals("") ? 0.0 : Double.parseDouble(args[2].replace("~", ""))) : Double.parseDouble(args[2]));
 						double z = (args[3].contains("~") ? mc.thePlayer.posZ+(args[3].replace("~", "").equals("") ? 0.0 : Double.parseDouble(args[3].replace("~", ""))) : Double.parseDouble(args[3]));						
@@ -4839,8 +4818,8 @@ public class ChatUtils {
                     }
 				} else if (args[1].equalsIgnoreCase("live")) {
 					try {
-						KillAura.live=Integer.parseInt(args[2]);
-						Utils.addChat("§aLive du Kill Aura mis à "+args[2]+" !");
+						KillAura.live=Integer.parseInt(args[2]) * 20;
+						Utils.addChat("§aLive du Kill Aura mis à "+KillAura.live+" !");
 					} catch (Exception e) {
                         Utils.addChat(err);
                     }
@@ -5551,7 +5530,7 @@ public class ChatUtils {
 							} else
 							if (mod.isCmd()) {
 								s=", §9"+mod.getName()+"§8";
-							} else if (mod.getToggled()) {							
+							} else if (mod.isToggled()) {							
 								s=", §a"+mod.getName()+"§8";
 							} else {
 								s=", §7"+mod.getName()+"§8";

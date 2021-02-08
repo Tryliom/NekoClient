@@ -91,7 +91,7 @@ public class ModuleButton {
 		 *  #sich der Text anders färben
 		 */
 		int textcolor = 0xffafafaf;
-		if (mod.getToggled()) {
+		if (mod.isToggled()) {
 			Gui.drawRect(x - 2, y, x + width + 2, y + height + 1, color);
 			textcolor = 0xffefefef;
 		}

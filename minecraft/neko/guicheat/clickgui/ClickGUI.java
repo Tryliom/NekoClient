@@ -402,8 +402,8 @@ public class ClickGUI extends GuiScreen {
 		}
 		
 		if(mc.currentScreen == Client.Neko.clickGui) {
-			if(keyCode == Client.Neko.moduleManager.getModuleByName("Gui").getBind() || keyCode == Keyboard.KEY_ESCAPE) {
-				Client.Neko.moduleManager.getModuleByName("Gui").toggleModule();
+			if(keyCode == Client.Neko.moduleManager.getModuleByName(neko.module.modules.params.Gui.class).getBind() || keyCode == Keyboard.KEY_ESCAPE) {
+				Client.Neko.moduleManager.getModuleByName(neko.module.modules.params.Gui.class).toggleModule();
 				SettingsUtil.SaveGuiSettings();
 			}
 		}

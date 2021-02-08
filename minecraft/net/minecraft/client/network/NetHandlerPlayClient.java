@@ -27,6 +27,7 @@ import neko.Client;
 import neko.module.modules.movements.Blink;
 import neko.module.modules.player.Velocity;
 import neko.module.modules.special.ForceTP;
+import neko.module.modules.special.Limit;
 import neko.module.modules.special.PunKeel;
 import neko.module.modules.combat.BowAimbot;
 import neko.module.modules.combat.KillAura;
@@ -924,6 +925,8 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
     		return;
     	}
     	
+    	if (Limit.getInstance().isToggled() && Limit.getInstance().getLimit() < Utils.nbPack)
+    		return;
     	Utils.nbPack++;
         this.netManager.sendPacket(p_147297_1_);
     }

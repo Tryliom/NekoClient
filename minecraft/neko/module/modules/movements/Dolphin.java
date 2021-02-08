@@ -27,7 +27,7 @@ public class Dolphin extends Module {
 	}
 	
 	public void onUpdate() {
-		if(!this.getToggled()) {
+		if(!this.isToggled()) {
 			return;
 		}
 		if (mc.thePlayer.handleWaterMovement() && mc.thePlayer.isInWater()) {

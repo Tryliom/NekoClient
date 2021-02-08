@@ -66,7 +66,7 @@ public class God extends Module {
 					var.onlyrpg.addTimer();
 				u.timeInGameSec+=1;
 				for (Module m : var.moduleManager.ActiveModule) {
-					if (m.getToggled() && m.getCategory()!=Category.HIDE && !m.isCmd()) {
+					if (m.isToggled() && m.getCategory()!=Category.HIDE && !m.isCmd()) {
 						m.incrementTime();
 					}
 				}

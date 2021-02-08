@@ -31,7 +31,7 @@ public class Water extends Module {
 	}
 	
 	public void onUpdate() {
-		if (!this.getToggled())
+		if (!this.isToggled())
 			return;
 		
 		if (!onLvl) {

@@ -103,7 +103,6 @@ import neko.module.modules.render.Rotator;
 import neko.module.modules.render.Search;
 import neko.module.modules.render.Tracers;
 import neko.module.modules.render.Trail;
-import neko.module.modules.render.UnclaimFinder;
 import neko.module.modules.render.Wallhack;
 import neko.module.modules.render.Water;
 import neko.module.modules.render.WorldTime;
@@ -113,6 +112,7 @@ import neko.module.modules.special.FastDura;
 import neko.module.modules.special.FireTrail;
 import neko.module.modules.special.ForceTP;
 import neko.module.modules.special.Likaotique;
+import neko.module.modules.special.Limit;
 import neko.module.modules.special.Magnet;
 import neko.module.modules.special.Nausicaah;
 import neko.module.modules.special.Near;
@@ -271,6 +271,7 @@ public class ModuleManager {
 		ActiveModule.add(Rotator.getRotator());
 		ActiveModule.add(new AutoCraft());
 		ActiveModule.add(new PlaceAndBreak());
+		ActiveModule.add(new Limit());
 		
 		this.link.put(Utils.getModule("KillAura"), "ka");
 		this.link.put(Utils.getModule("FastBow"), "fb");
@@ -1039,5 +1040,5 @@ public class ModuleManager {
 	
 	public ArrayList<Module> getModules(){ return ActiveModule; }
 	
-	public Module getModuleByName(String name) { return ActiveModule.stream().filter(ActiveModule -> ActiveModule.getName().equalsIgnoreCase(name)).findFirst().orElse(null); }
+	public Module getModuleByName(Class<?> name) { return ActiveModule.stream().filter(ActiveModule -> name.isInstance(ActiveModule)).findFirst().orElse(null); }
 }

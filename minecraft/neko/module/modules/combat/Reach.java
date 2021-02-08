@@ -240,8 +240,6 @@ public class Reach extends Module {
 	public void onClick() {
 		if (mc.thePlayer.isSneaking())
 			return;
-		if (u.limite && u.nbPack>u.limit)
-			return;
 		if (pvp && !mc.playerController.isSpectatorMode()) {						
 			Entity en = mc.pointedEntity;
 			if (en!=null && !Friends.isFriend(en.getName()) && mc.thePlayer!=en) {

@@ -31,6 +31,7 @@ public class CommandManager {
 		this.commands.add(new FriendClear());
 		this.commands.add(new FriendList());
 		this.commands.add(new FriendRadius());
+		this.commands.add(new LimitPacket());
 	}
 
 	public ArrayList<Command> getCommands() {

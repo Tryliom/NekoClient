@@ -1660,7 +1660,7 @@ public class EntityRenderer implements IResourceManagerReloadListener
         //TODO: Render
         Client var = Client.getNeko();
         for(Module m : var.moduleManager.ActiveModule) {
-    		if(m.getToggled() && Utils.verif==null) {
+    		if(m.isToggled() && Utils.verif==null) {
     			m.onRender3D();
     			m.onRender3DA();
     		} else if (Utils.verif==null) {

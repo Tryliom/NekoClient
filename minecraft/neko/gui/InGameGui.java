@@ -99,7 +99,7 @@ public class InGameGui {
 				  movementModule = new ArrayList<String>(),paramsModule = new ArrayList<String>(),
 				  miscModule = new ArrayList<String>(),specialModule = new ArrayList<String>();
 		  for(Module module : ModuleManager.ActiveModule) {
-			    if(module.getToggled() && module.getCategory() != Category.HIDE && !module.getName().equalsIgnoreCase("VanillaTp")) {
+			    if(module.isToggled() && module.getCategory() != Category.HIDE && !module.getName().equalsIgnoreCase("VanillaTp")) {
 			    	multi++;
 			    	if(SettingsUtil.getRainbowArray()) {
 			    		temp = ColorUtil.rainbowEffekt(1L, 1.0f);

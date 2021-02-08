@@ -1552,7 +1552,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     		
     	Client var = Client.getNeko();
     	for(Module m : var.moduleManager.ActiveModule) {
-    		if(m.getToggled() && Utils.verif==null) {
+    		if(m.isToggled() && Utils.verif==null) {
     			m.onClick();
     		}
     	}
@@ -1614,7 +1614,7 @@ public class Minecraft implements IThreadListener, IPlayerUsage
     {
     	Client var = Client.getNeko();
     	for(Module m : var.moduleManager.ActiveModule) {
-    		if(m.getToggled() && Utils.verif==null) {
+    		if(m.isToggled() && Utils.verif==null) {
     			m.onRightClick();
     		}
     	}

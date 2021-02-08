@@ -132,6 +132,7 @@ import neko.module.modules.special.FastDura;
 import neko.module.modules.special.FireTrail;
 import neko.module.modules.special.ForceTP;
 import neko.module.modules.special.Likaotique;
+import neko.module.modules.special.Limit;
 import neko.module.modules.special.Magnet;
 import neko.module.modules.special.Nausicaah;
 import neko.module.modules.special.Near;
@@ -246,8 +247,6 @@ public class Utils {
 	public static boolean sword=false;
 	public static int lvl=0;
 	public static boolean changeRank=true;
-	public static int limit=200;
-	public static boolean limite=false;
 	public static String version="Neko";
 	public static int kills=0;
 	public static int R=199;
@@ -760,7 +759,7 @@ public class Utils {
 		try {
 			for (Module mod : ModuleManager.ActiveModule) {
 				if (mod.getName().equalsIgnoreCase(module)) {
-					if (mod.getToggled()) {
+					if (mod.isToggled()) {
 						mod.setToggled(false);
 					} else {
 						mod.setToggled(true);
@@ -1118,7 +1117,7 @@ public class Utils {
 	public static String getVMod() {
 		String s="";
 		for (Module mod : ModuleManager.ActiveModule) {
-				if (mod.getToggled()) {
+				if (mod.isToggled()) {
 					s+=mod.getName()+" ";
 				}
 		}
@@ -1127,7 +1126,7 @@ public class Utils {
 	
 	public static void panic() {
 		for (Module mod : ModuleManager.ActiveModule) {
-			if (mod.getToggled() && !mod.isCmd())
+			if (mod.isToggled() && !mod.isCmd())
 				mod.setToggled(false);
 		}
 	}
@@ -1526,9 +1525,6 @@ public class Utils {
 		if (cheat==null) {
 			ModuleManager.values.add(displayBool(sword));
 			disV("Sword");
-			ModuleManager.values.add(limite ? "§aActivée" : "§cDésactivée");
-			ModuleManager.values.add("Limite de paquet: "+limit);
-			disV("Limit");
 			Irc irc = Irc.getInstance();
 			ModuleManager.values.add("Irc mode:§7 "+irc.getMode());
 			ModuleManager.values.add("Irc messages join/left:§7 "+(irc.isHideJl() ? "Cachés" : "Affichés"));
@@ -1962,7 +1958,7 @@ public class Utils {
 	public static boolean isToggle(String module) {
 		try {
 			for (Module mod : ModuleManager.ActiveModule) {
-				if (mod.getName().equalsIgnoreCase(module) && mod.getToggled()) {
+				if (mod.getName().equalsIgnoreCase(module) && mod.isToggled()) {
 					return true;
 				}
 			}		
@@ -2940,7 +2936,7 @@ public class Utils {
         s+=changeRank+"§,";
         s+=Tracers.friend+"§,"+Reach.bloc+"§,";
         s+=VanillaTp.classic+"§,"+Reach.classic+"§,"+Reach.aimbot+"§,"+Reach.fov+"§,";
-        s+=limit+"§,"+limite+"§,"+version+"§,"+kills+"§,"+HUD.stuff+"§,";
+        s+=Limit.getInstance().getLimit()+"§,§,"+version+"§,"+kills+"§,"+HUD.stuff+"§,";
         s+=R+"§,"+G+"§,"+B+"§,"+ neko.module.modules.render.Render.xp+"§,"+Reach.tnt+"§,"+Fastbow.getFast().isNobow()+"§,";
         s+=AutoPot.heal+"§,"+Pyro.mode+"§,"+Reach.mode+"§,"+Antiafk.getInstance().getSec()+"§,";
         s+=ItemESP.cR+"§,"+ItemESP.cG+"§,"+ItemESP.cB+"§,"+ItemESP.clR+"§,"+ItemESP.clG+"§,"+ItemESP.clB+"§,"+ItemESP.width+"§,";
@@ -3388,9 +3384,7 @@ public class Utils {
             	if (i==92)
             		Reach.fov=Double.parseDouble(ligne);
             	if (i==93)
-            		limit=Integer.parseInt(ligne);
-            	if (i==94)
-            		limite=Boolean.parseBoolean(ligne);
+            		Limit.getInstance().setLimit(Integer.parseInt(ligne));
             	if (i==95)
             		version=ligne;
             	if (i==96)
@@ -4067,9 +4061,7 @@ public class Utils {
 	                	if (i==92)
 	                		Reach.fov=Double.parseDouble(ligne);
 	                	if (i==93)
-	                		limit=Integer.parseInt(ligne);
-	                	if (i==94)
-	                		limite=Boolean.parseBoolean(ligne);
+	                		Limit.getInstance().setLimit(Integer.parseInt(ligne));
 	                	if (i==95)
 	                		version=ligne;
 	                	if (i==96)
@@ -4317,7 +4309,7 @@ public class Utils {
 	}
 	
 	public static void UnToggleGUI() {
-		if((!(mc.currentScreen instanceof ClickGUI)) && (Utils.getModule("Gui").getToggled())) {
+		if((!(mc.currentScreen instanceof ClickGUI)) && (Utils.getModule("Gui").isToggled())) {
 			Utils.getModule("Gui").setToggled(false);
 		}
 	}
@@ -4483,7 +4475,7 @@ public class Utils {
 			return;
 		String s ="";
 		for (Module m : ModuleManager.ActiveModule) {
-    		if (m.getToggled() && !m.getName().equalsIgnoreCase("VanillaTp") && !m.getCategory().name().equalsIgnoreCase("hide") && !m.isCmd()) {
+    		if (m.isToggled() && !m.getName().equalsIgnoreCase("VanillaTp") && !m.getCategory().name().equalsIgnoreCase("hide") && !m.isCmd()) {
     			s+=m.getName()+"§";
     		}
     	}

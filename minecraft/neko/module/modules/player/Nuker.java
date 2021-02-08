@@ -4,14 +4,12 @@ import java.util.ArrayList;
 
 import neko.Client;
 import neko.guicheat.clickgui.settings.Setting;
-import neko.guicheat.clickgui.util.SettingsUtil;
 import neko.module.Category;
 import neko.module.Module;
 import neko.utils.RenderUtils;
 import neko.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.init.Blocks;
@@ -152,14 +150,14 @@ public class Nuker extends Module {
 								if (block.getMaterial() == Material.air) {
 									continue;
 								}
-								if (Utils.limite ? Utils.nbPack<Utils.limit : true) {
+								
+								mc.thePlayer.sendQueue.addToSendQueue(
+										new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, blockPos, EnumFacing.NORTH));
+								if (block.getPlayerRelativeBlockHardness(mc.thePlayer, mc.theWorld, blockPos) < 1) {
 									mc.thePlayer.sendQueue.addToSendQueue(
-											new C07PacketPlayerDigging(Action.START_DESTROY_BLOCK, blockPos, EnumFacing.NORTH));
-									if (block.getPlayerRelativeBlockHardness(mc.thePlayer, mc.theWorld, blockPos) < 1) {
-										mc.thePlayer.sendQueue.addToSendQueue(
-											new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, blockPos, EnumFacing.NORTH));
-									}
+										new C07PacketPlayerDigging(Action.STOP_DESTROY_BLOCK, blockPos, EnumFacing.NORTH));
 								}
+								
 							}
 						}
 					}

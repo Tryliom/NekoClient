@@ -31,7 +31,7 @@ public final class Xray extends Module {
 
 	public void onEnabled() {
 		
-		if(Utils.getModule("Fullbright").getToggled() == true) {
+		if(Utils.getModule("Fullbright").isToggled() == true) {
 			this.alreadyactivated = true;
 		} else {
 			Utils.getModule("Fullbright").setToggled(true);
@@ -51,7 +51,7 @@ public final class Xray extends Module {
 	
 	public void onUpdate() {
 		
-		if(Utils.getModule("Fullbright").getToggled() == false) {
+		if(Utils.getModule("Fullbright").isToggled() == false) {
 			Utils.getModule("Fullbright").setToggled(true);
 		}
 		Utils.spectator = true;

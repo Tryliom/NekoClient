@@ -19,7 +19,7 @@ public class Plugins extends Module {
 	}
 	
 	public void onUpdate() {
-		if (this.getToggled())
+		if (this.isToggled())
 			count++;
 		
 		if (count>=120) {

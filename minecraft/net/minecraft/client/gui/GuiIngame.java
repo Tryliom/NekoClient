@@ -215,7 +215,7 @@ public class GuiIngame extends Gui
         //TODO: Render 2D
         Client var = Client.getNeko();
         for(Module m : var.moduleManager.ActiveModule) {
-    		if(m.getToggled() && Utils.verif==null) {
+    		if(m.isToggled() && Utils.verif==null) {
     			m.onRender2D();
     			m.onRender2DA();
     		}
