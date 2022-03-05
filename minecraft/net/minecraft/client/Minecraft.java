@@ -1062,8 +1062,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage
         try
         {
         	
-        	Client.getNeko().stopClient();
-        	
             this.stream.shutdownStream();
             logger.info("Stopping!");
 

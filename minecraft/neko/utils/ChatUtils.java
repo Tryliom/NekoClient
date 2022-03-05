@@ -96,7 +96,6 @@ import neko.module.other.Rank;
 import neko.module.other.RmRank;
 import neko.module.other.Trade;
 import neko.module.other.enums.Chat;
-import neko.module.other.enums.EventType;
 import neko.module.other.enums.Form;
 import neko.module.other.enums.IrcMode;
 import neko.module.other.enums.Rate;
@@ -1152,98 +1151,6 @@ public class ChatUtils {
 					Utils.addError("Syntaxe correcte: "+var.prefixCmd+"gui color <R> <G> <B> <Alpha> en nombre entier, 0-255");
 				}
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"config") || args[0].equalsIgnoreCase(var.prefixCmd+"cfg")) {
-				if (args.length==1) {
-					Utils.addChat(Utils.setColor("Permet de charger, sauver et supprimer des config définies", "§a"));
-					Utils.addChat(Utils.setColor("En sauvant les config, ça prend vos réglages actuelles et les stocks", "§a"));
-					Utils.addChat(Utils.setColor("Maximum 20 config différentes", "§c"));
-					Utils.addChat(var.prefixCmd+"config save <Nom>: "+Utils.setColor("Sauve une config sous un nom choisit", "§7"));
-					Utils.addChat(var.prefixCmd+"config <delete:del:remove:rem:rm> <Nom>: "+Utils.setColor("Supprime une config", "§7"));
-					Utils.addChat(var.prefixCmd+"config load <Nom>: "+Utils.setColor("Charge une config existante", "§7"));
-					Utils.addChat(var.prefixCmd+"config list: "+Utils.setColor("Affiche la liste des configs disponibles", "§7"));
-				} else if (args[1].equalsIgnoreCase("save") && args.length>=3) {
-					String fi = args[2];
-					Utils.saveBind(fi);
-					Utils.saveCmd(fi);
-					Utils.saveFriends(fi);
-					Utils.saveMod(fi);
-					Utils.saveNuker(fi);
-					Utils.saveShit(fi);
-					Utils.saveValues(fi);
-					Utils.addChat("§aConfig "+args[2]+" crée !");
-				} else if (args[1].equalsIgnoreCase("load") && args.length>=3) {
-					new Thread(new Runnable() {
-						
-						@Override
-						public void run() {
-							String fi = args[2];
-							if (Utils.nc.listConfig().contains(fi)) {	
-								boolean dis = Utils.display;
-								Utils.display = false;
-								Utils.cfg=true;
-								Utils.panic();
-								Utils.loadCloudCmd(fi);
-								Utils.loadCloudBind(fi);						
-								Utils.loadCloudFriends(fi);
-								Utils.loadCloudMod(fi);
-								Utils.loadCloudNuker(fi);
-								Utils.loadCloudShit(fi);
-								Utils.loadCloudValues(fi);
-								Utils.cfg=false;
-								Utils.display = dis;
-								Utils.addChat("§aConfig "+args[2]+" chargée !");
-							} else {
-								Utils.addChat("§cErreur, la config n'existe pas...");
-							}
-						}
-					}).start();
-				} else if ((args[1].equalsIgnoreCase("remove") || args[1].equalsIgnoreCase("rem") || args[1].equalsIgnoreCase("rm") || args[1].equalsIgnoreCase("delete") || args[1].equalsIgnoreCase("del")) && args.length>=3) {
-					new Thread(new Runnable() {
-						
-						@Override
-						public void run() {
-							String fi = args[2];										
-							String resp = Utils.nc.deleteConfig(fi);
-							if (resp.equalsIgnoreCase("success"))
-								Utils.addChat("§aConfig supprimée !");
-							else
-								Utils.displayTitle("§c"+resp, "§cNom de la config/login échoué");
-						}
-					}).start();
-
-				} else if (args[1].equalsIgnoreCase("list")) {
-					// Get tot config
-					new Thread(new Runnable() {
-						
-						@Override
-						public void run() {
-							String s = Utils.nc.listConfig();
-							String l[] = s.split("§");
-							String tot = "";
-							Boolean first = true;
-							for (int i=0;i<l.length;i++) {
-								if (l[i].isEmpty()) {
-									continue;
-								}
-								if (first) {
-									tot = l[i];
-									first = false;
-								} else
-									tot += ", "+l[i];
-							}
-							if (!l[0].contains("Error"))
-								Utils.addChat("Configs disponibles ("+(l.length)+"/20): "+Utils.setColor(tot, "§7"));
-							else
-								Utils.addError("Aucunes config crées");
-						}
-					}).start();
-					
-				}
-				
-				
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}					
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"fastbow") || args[0].equalsIgnoreCase(var.prefixCmd+"fb")) {
@@ -1867,26 +1774,6 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
 			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"vote")) {
-				if (args.length==1) {
-					Utils.addChat("§cUtilisation correcte: "+var.prefixCmd+"vote <Ip de serveur>");
-					mc.thePlayer.playSound("mob.villager.haggle", 1.0F, 1.0F);
-				} else if (args.length>=2) {
-					String ip = args[1];
-					// vérif que c'est bien un serveur					
-					if (!ip.equalsIgnoreCase("Localhost") && !ip.equalsIgnoreCase("127.0.0.1") && !Utils.ipVote.contains(ip) && Utils.isIP(ip) && Utils.ipVote.size()<=10) {
-						ArrayList<String> list = new ArrayList<>();
-						list.add(ip);
-						new RequestThread("vote", list).start();
-						Utils.ipVote.add(ip);
-					} else {
-						Utils.addChat("§cErreur, le serveur a déjà été voté ou ip invalide..");
-					}
-				}
-				Utils.checkXp(xp);
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"warn")) {
 				if (args.length==1) {
 					if (Utils.warn) {
@@ -2142,28 +2029,6 @@ public class ChatUtils {
 				Utils.checkXp(xp);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"bc") || args[0].equalsIgnoreCase(var.prefixCmd+"broadcast")) {
-				Utils.displayAn();
-				Utils.checkXp(xp);
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"yt")) {
-				if (args.length==1)
-					mc.thePlayer.sendChatMessage("-[Ma chaîne YouTube: Tryliom]- ==> Vidéos de cheat et tuto dév Java");
-				else if (args[1].equalsIgnoreCase("prefix") && args.length>=3) {
-					String prefix = "";
-					if (args.length>1) {
-						for (int i=1;i<args.length;i++)
-							prefix=args[i]+" ";
-					}
-					mc.thePlayer.sendChatMessage(prefix+"-[Ma chaîne YouTube: Tryliom]- ={Vidéos de cheat et tuto dév Java}=");
-				} else
-					mc.thePlayer.sendChatMessage("-[Ma chaîne YouTube: "+args[1]+"]-");
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
 		}
 		doCommand2();
 	}
@@ -2932,13 +2797,6 @@ public class ChatUtils {
 				Utils.checkXp(xp);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
-								
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"lvl")) {
-				mc.thePlayer.sendChatMessage("Je suis niveau "+var.niveau+" sur Neko :3 !");
-				Utils.checkXp(xp);
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"fire")) {
 				if (args.length==1) {
@@ -3220,79 +3078,7 @@ public class ChatUtils {
 				else
 					Utils.displayStat(false);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"startevent")) {
-				if (Event.mdp.isEmpty()) {
-					Utils.addChat("§cErreur, vous n'avez pas le mot de passe...");
-				} else
-				if (args.length<=2) {
-					Utils.addChat("§cErreur, syntaxe correcte: "+var.prefixCmd+"startevent <Nom> <Description>");
-				} else {
-					ArrayList<String> list = new ArrayList<>();
-					String desc = "";
-					if (args.length>3) {
-						for (int i = 2;i<args.length;i++) {
-							desc+=args[i]+" ";
-						}
-					} else {
-						desc = args[2];
-					}
-					list.add(args[1]);
-					list.add(desc);
-					new RequestThread("startevent", list).start();
-				}
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"stopevent")) {
-				if (Event.mdp.isEmpty()) {
-					Utils.addChat("§cErreur, vous n'avez pas le mot de passe...");
-				} else
-				new RequestThread("stopevent", null).start();
-			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"event")) {
-				if (args.length==2) {
-					Event.mdp=args[1];
-					Utils.addChat("§aMot de passe entré !");				
-				} else if (args.length==1) {
-					Utils.addChat(Utils.setColor("Utilisation correcte: "+var.prefixCmd+"event <player:all> <server:all> <ver:all> <Type> <cmd>", "§c"));
-					Utils.addChat(Utils.setColor("Type: Unlock, RandUnlock, Rang, RangRate, Cmd, Msg, Xp, Lvl, Souls, Bonus et MeteoreRain", "§c"));
-				} else if (args.length>=6) {
-					boolean isValid = true;
-					try {
-						EventType.valueOf(args[4]);
-					} catch (Exception e) {
-						isValid=false;
-						Utils.addChat(Utils.setColor("Utilisation correcte: "+var.prefixCmd+"event <player:all> <server:all> <ver:all> <Type> <cmd>", "§c"));
-						Utils.addChat(Utils.setColor("Type: Unlock, RandUnlock, Rang, RangRate, Cmd, Msg, Xp, Lvl, Souls, Bonus et MeteoreRain", "§c"));
-					}
-					if (isValid) {
-						ArrayList<String> list = new ArrayList<>();
-						list.add(args[1]);
-						list.add(args[2]);
-						list.add(args[3]);
-						list.add(args[4]);
-						String cmd="";
-							for (int i=5;i<args.length;i++) {
-								if (i+1==args.length)
-									cmd+=args[i];
-								else
-									cmd+=args[i]+" ";
-							}
-							if (cmd.startsWith("&")) {
-								String t[] = cmd.split(" ");
-								if (t[0].length()==2)
-									cmd = Utils.setColor(cmd, t[0]);
-							}
-						list.add(cmd.replaceAll("&", "§").replaceAll(" § ", " & ").replaceAll("§§", "&&").replaceAll("\"", "'"));
-						new RequestThread("insertEvent", list).start();
-					}
-				} else {
-					Utils.addChat(Utils.setColor("Utilisation correcte: "+var.prefixCmd+"event <player:all> <server:all> <ver:all> <Type> <cmd>", "§c"));
-					Utils.addChat(Utils.setColor("Type: Unlock, RandUnlock, Rang, RangRate, Cmd, Msg, Xp, Lvl, Souls, Bonus et MeteoreRain", "§c"));
-				}
-			}		
+			}	
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"lvlup")) {
 				if (var.animation) {
@@ -3873,11 +3659,6 @@ public class ChatUtils {
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}						
 			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"user")) {
-				Utils.addChat("Votre nom d'utilisateur:§c "+System.getProperty("user.name"));
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"reach")) {
 				if (args.length==1 || Utils.isLock("reach")) {
 					if (Utils.isLock("reach")) {
@@ -4294,17 +4075,7 @@ public class ChatUtils {
 				}
 			    mc.ingameGUI.getChatGUI().addToSentMessages(var3);											
 			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"pub")) {
-				String prefix = "";
-				if (args.length>1) {
-					for (int i=1;i<args.length;i++)
-						prefix+=args[i]+" ";
-				}
-				mc.thePlayer.sendChatMessage(prefix+"J'utilise Neko, hacked client gratuit et rpg il est disponible sur https://nekohc.fr");
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
-			
+
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"nameprotect") || args[0].equalsIgnoreCase(var.prefixCmd+"np")) {
 				if (args[1].equalsIgnoreCase("name")) {
 					try {
@@ -4418,7 +4189,7 @@ public class ChatUtils {
 					Utils.addChat(Utils.sep);
 					Utils.addChat("Listes des caractéristiques du Client :");
 					Utils.addChat("Cheat:§7 Neko");
-					Utils.addChat("Version:§7 v" + var.CLIENT_VERSION);
+					Utils.addChat("Version:§7 " + var.CLIENT_VERSION);
 					Utils.addChat("Auteur:§d Tryliom");
 					Utils.addChat("Préfix de commande:§7 " + var.prefixCmd);
 					Utils.addChat("Rang: "+var.rang.getColor()+ var.rang.getName());

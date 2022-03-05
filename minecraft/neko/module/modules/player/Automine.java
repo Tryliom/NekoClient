@@ -5,9 +5,6 @@ import neko.module.Category;
 import neko.module.Module;
 import neko.utils.TimerTwoUtils;
 import neko.utils.Utils;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockOre;
@@ -15,6 +12,8 @@ import net.minecraft.block.BlockRedstoneOre;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 

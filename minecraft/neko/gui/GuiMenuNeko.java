@@ -6,9 +6,7 @@ import neko.Client;
 import neko.gui.xraymanager.GuiScreenXrayManager;
 import neko.manager.OnlyRpgManager;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiScreenResourcePacks;
 
 public class GuiMenuNeko extends GuiScreen {
 	private GuiScreen prevGui;
@@ -28,7 +26,6 @@ public class GuiMenuNeko extends GuiScreen {
         this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 120 + var1, "Retour"));
 
         this.buttonList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 24 + var1, "Wiki Cheats"));
-        this.buttonList.add(new GuiButton(10, this.width / 2 - 100, this.height / 4 + 48 + var1, "Mon compte Neko"));
         this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + var1, 98, 20, "Bind Manager"));
         this.buttonList.add(new GuiButton(5, this.width / 2 + 2, this.height / 4 + 96 + var1, 98, 20, "Xray Manager"));
         	if (!OnlyRpgManager.getRpg().isActive())
@@ -60,9 +57,6 @@ public class GuiMenuNeko extends GuiScreen {
                 break;
             case 9:
             	this.mc.displayGuiScreen(new GuiRankManager(this));
-                break;
-            case 10:
-                this.mc.displayGuiScreen(new GuiAccount(this));
                 break;
         }
     }
