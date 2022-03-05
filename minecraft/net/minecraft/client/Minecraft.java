@@ -67,7 +67,6 @@ import neko.manager.TutoManager;
 import neko.module.Module;
 import neko.module.modules.combat.Reach;
 import neko.module.modules.special.Likaotique;
-import neko.module.other.Irc;
 import neko.utils.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -1012,8 +1011,6 @@ public class Minecraft implements IThreadListener, IPlayerUsage
             this.gameSettings.showDebugInfo = false;
             if (Utils.verif!=null)
             	this.ingameGUI.getChatGUI().clearChatMessages();
-            Irc.getInstance().setLastId(-1);
-			Irc.getInstance().setLastMsg("");
         }
         
         this.currentScreen = (GuiScreen)guiScreenIn;
@@ -2002,10 +1999,10 @@ public class Minecraft implements IThreadListener, IPlayerUsage
                         if (Utils.mod) {
                         	if (Utils.display) {
 	                        	Utils.display=false;
-	                        	Utils.loadCloudMod();
+	                        	Utils.loadMod();
 	                        	Utils.display=true;
                         	} else {
-                        		Utils.loadCloudMod();
+                        		Utils.loadMod();
                         	}
                         	Utils.mod=false;
                         }

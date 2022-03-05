@@ -51,7 +51,6 @@ import com.mojang.authlib.exceptions.AuthenticationException;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 
 import neko.Client;
-import neko.api.NekoCloud;
 import neko.command.Command;
 import neko.command.CommandType;
 import neko.gui.GuiAltManager;
@@ -142,17 +141,13 @@ import neko.module.modules.special.Reflect;
 import neko.module.modules.special.TpBack;
 import neko.module.modules.special.VanillaTp;
 import neko.module.other.Active;
-import neko.module.other.Conditions;
-import neko.module.other.Irc;
 import neko.module.other.ModeType;
 import neko.module.other.Necklace;
 import neko.module.other.Quest;
 import neko.module.other.Rank;
-import neko.module.other.TempBon;
 import neko.module.other.Xp;
 import neko.module.other.enums.BowMode;
 import neko.module.other.enums.Chat;
-import neko.module.other.enums.IrcMode;
 import neko.module.other.enums.Rate;
 import neko.module.other.enums.SpeedEnum;
 import net.mcleaks.MCLeaks;
@@ -261,7 +256,6 @@ public class Utils {
 	public static Client var = Client.getNeko();
 	public static Vector<String> ipVote = new Vector<String>();
 	public static int xptime = 0;
-	public static NekoCloud nc = NekoCloud.getNekoAPI();
 	public static boolean admin = false;
 	public static Color colorGui = new Color(110, 110, 200, 100);
 	public static Color colorFontGui = new Color(200, 200, 200, 255);
@@ -1391,7 +1385,7 @@ public class Utils {
 		mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY + 0.01D*Math.random(), mc.thePlayer.posZ, false));
 	    mc.thePlayer.sendQueue.addToSendQueue(new C03PacketPlayer.C04PacketPlayerPosition(mc.thePlayer.posX, mc.thePlayer.posY, mc.thePlayer.posZ, false));
 	}
-	//TODO: SaveAll
+	
 	public static void saveAll() {
 		saveBind();
 		saveFriends();
@@ -1401,12 +1395,10 @@ public class Utils {
 		saveNuker();
 		saveLock();
 		saveRank();
-		saveIrc();
 		saveFrame();
 		saveFont();
 		saveShit();
 		saveCmd();
-		saveCloudAlt();
 		saveStat();
 		saveSettings();
 		saveXray();
@@ -1524,13 +1516,7 @@ public class Utils {
 		}
 		if (cheat==null) {
 			ModuleManager.values.add(displayBool(sword));
-			disV("Sword");
-			Irc irc = Irc.getInstance();
-			ModuleManager.values.add("Irc mode:§7 "+irc.getMode());
-			ModuleManager.values.add("Irc messages join/left:§7 "+(irc.isHideJl() ? "Cachés" : "Affichés"));
-			ModuleManager.values.add("Irc playerclic:§7 "+irc.getPClic());
-			ModuleManager.values.add("Irc prefix:§7 "+irc.getPrefix());
-			disV("Irc");					
+			disV("Sword");					
 			ModuleManager.values.add("Total de bonus ramassé:§7 "+ neko.module.modules.render.Render.bonusCount);
 			ModuleManager.values.add("Bonus d'xp permanent:§7 "+ var.bonus+"%");
 			ModuleManager.values.add("Bonus d'xp du rang:§7 "+ var.rang.getTotBonus()+"%");
@@ -1599,7 +1585,7 @@ public class Utils {
 	
 	public static boolean isDouble(String s) {
 		try {
-			double l = Double.parseDouble(s);
+			Double.parseDouble(s);
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -1608,7 +1594,7 @@ public class Utils {
 	
 	public static boolean isBoolean(String s) {
 		try {
-			Boolean b = Boolean.parseBoolean(s);
+			Boolean.parseBoolean(s);
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -1625,7 +1611,6 @@ public class Utils {
 		for (Lock lock : ModuleManager.Lock) {
 			if (lock.getUnit().equalsIgnoreCase("Lvl") && lock.getCout()<=var.niveau && lock.isLock()) {
 				Utils.unlock(lock.getName());
-				//Utils.addChat("§d"+lock.getType()+" "+lock.getName().replaceAll("--", var.prefixCmd)+" débloqué"+(lock.getType().equalsIgnoreCase("Commande") ? "e" : "" )+" !");
 			}
 		}
 		
@@ -2319,43 +2304,27 @@ public class Utils {
 		if (verif!=null)
 			return;
 		String save = "";
-		for (Integer id : Xray.getXray().getList())
-			save += id+"§,";
-		nc.saveSave("xray", save.isEmpty() ? save : save.substring(0, save.length()-2));
+		for (Integer id : Xray.getXray().getList()) {
+			if (!save.isEmpty()) save += "§,";
+			save += id;
+		}
+		
+		Utils.saveFile("xray", save);
 	}
 	
-	public static void loadCloudXray() {
-		String list[] = nc.getSave("xray").split("§,");
-		Xray xray = Xray.getXray();
-        xray.setList(new Vector<Integer>());
-		for (String ligne : list) {
-            xray.getList().add(Integer.parseInt(ligne));
-		}
-	}
-	
-	public static void loadCloudRank() {
-		String list[] = nc.getSave("rank").split("§,");
-		for (String ligne : list) {
-        	String name="";          	
-        	String s[] = ligne.split(" ");
-        	if (s.length==3) {
-        		name=s[0];
-        	} else
-            	for (int j=0;j<s.length-2;j++) {
-            		if (s.length-3!=j)
-            		   name+=s[j]+" ";
-            		else
-            			name+=s[j];
-            	}
-        	if (isRank(name)) {
-        		for (Rank k : ModuleManager.rang) {
-        			if (k.getName().equalsIgnoreCase(name)) {
-        				k.setLock(Boolean.parseBoolean(s[s.length-2]));
-        				k.setLvl(Integer.parseInt(s[s.length-1]));
-        			}
-        		}
-        	}
-		}
+	public static void saveFile(String fileName, String content) {
+		if (verif!=null) return;
+		
+		File file = new File(Utils.linkSave + fileName + ".neko");
+        
+		try {
+            file.createNewFile();            
+            try (FileWriter writer = new FileWriter(file)) {
+                writer.write(content);
+                writer.flush();
+            }
+
+        } catch (IOException ex) {}
 	}
 	
 	public static void loadRank(String...fi) {
@@ -2412,7 +2381,8 @@ public class Utils {
     		if (!k.isLock())
     		s+=k.getName()+" "+k.isLock()+" "+k.getLvl()+"§,";
     	}
-		nc.saveSave("rank", s.substring(0, s.length()-2));
+		
+		Utils.saveFile("rank", s.substring(0, s.length()-2));
 	}
 	
 	public static void saveLock(String...fi) {
@@ -2423,31 +2393,9 @@ public class Utils {
     		if (!lock.isLock())
     			s+=lock.getName()+" "+lock.isLock()+"§";
     	}
-    	nc.saveSave("lock", s);
+		
+    	Utils.saveFile("lock", s);
 	}	
-	
-	public static void loadCloudLock(String... fi) {
-		 String list[] = nc.getSave("lock").split("§");
-		    for (String ligne : list) {
-            	String s[]=ligne.split(" ");
-            	String name="";
-            	if (s.length!=2) {
-            		for (int i=0;i<s.length-1;i++) {
-            			if (i!=s.length-2)
-            				name+=s[i]+" ";
-            			else
-            				name+=s[i];
-            		}
-            	} else {
-            		name=s[0];
-            	}
-            	for (Lock lock : ModuleManager.Lock) {
-            		if (name.equalsIgnoreCase(lock.getName())) {
-            			lock.setLock(Boolean.parseBoolean(s[s.length-1]));
-            		}
-            	}
-		    }
-	}
 	
 	public static void loadLock(String... fi) {
 		File dir = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"lock.neko");
@@ -2507,32 +2455,47 @@ public class Utils {
     		int y = (int)f.y;
     		s+=name+" "+x+" "+y+" "+f.extended+"§";
     	}
-    	nc.saveSave("frame", s);
+    	
+    	Utils.saveFile("frame", s);
 	}
 	
 	
-	public static void loadFrame(String...fi) {}
+	public static void loadFrame(String...fi) {
+		if (var.clickGui==null) {
+	    	var.clickGui = new ClickGUI();
+	    }
+		File dir = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"frame.neko");
+		if (dir.exists()) {
+		try { 
+            InputStream ips = new FileInputStream(dir); 
+            InputStreamReader ipsr = new InputStreamReader(ips); 
+            try (BufferedReader br = new BufferedReader(ipsr)) {
+                String ligne;
+                Integer i=0;
+                while ((ligne = br.readLine()) != null)
+                {           
+                	String s[] = ligne.split(" ");
+        	    	for(Panel f : ClickGUI.panels) {
+        	    		if (f.title.equalsIgnoreCase(s[0].replaceAll("&", "§"))) {
+        	    			f.x = (Integer.parseInt(s[1]));
+        	    			f.y = (Integer.parseInt(s[2]));
+        	    			f.extended = (Boolean.parseBoolean(s[3]));
+        	    		}
+        	    	}
+                }
+            
+		} catch (IOException | NumberFormatException e) {}		
+		} catch (IOException | NumberFormatException e) {}
+		
+		}
+	}
 	
 	public static void saveFont() {
 		if (verif!=null)
 			return;
 		String s=SimpleTheme.font+"§"+SimpleTheme.px+"§"+SimpleTheme.alpha;
-		nc.saveSave("font", s);
+		Utils.saveFile("font", s);
 	}	
-	
-	public static void loadCloudFont() {
-		int i = 0;
-		String list[] = nc.getSave("font").split("§");
-	    for (String ligne : list) {
-			if (i==0)
-				SimpleTheme.font=ligne;
-			if (i==1)
-				SimpleTheme.px=Integer.parseInt(ligne);
-			if (i==2)
-				SimpleTheme.alpha=Boolean.parseBoolean(ligne);
-			i++;
-		}
-	}
 	
 	public static void loadFont(String...fi) {
 		File dir = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"font.neko");
@@ -2559,16 +2522,6 @@ public class Utils {
 		
 		}
 	}
-	
-	public static void saveIrc(String...fi) {
-		if (verif!=null)
-			return;
-		String s="";
-		Irc	irc = Irc.getInstance();
-    	s+=nc.getName()+"§"+irc.getPrefix()+"§"+irc.getIdPlayer()+"§"+irc.isOn()+"§§"+irc.getMode()+"§"+irc.isHideJl()+"§";
-    	s+=irc.getPClic();
-    	nc.saveSave("irc", s);
-	}	
 	
 	public static String encrypt(String value) {
     	String key = "839dj398dkw29rrl";
@@ -2608,127 +2561,11 @@ public class Utils {
         }
     }
 	
-	public static void saveCredentials() {
-		if (verif!=null)
-			return;
-		String s="";
-		File file = new File(System.getenv("APPDATA")+separator+"credentials.txt");
-        try {
-            file.createNewFile();            
-            try (FileWriter writer = new FileWriter(file)) {
-            	String res = encrypt(NekoCloud.getNekoAPI().getName()+"\n"+NekoCloud.getNekoAPI().getPassword());
-                writer.write(res);
-                writer.flush();
-            }
-
-        } catch (IOException ex) {}
-	}	
-	
-	public static void loadCredentials() {
-		File dir = new File(System.getenv("APPDATA")+separator+"credentials.txt");
-		if (dir.exists()) {
-			try { 
-	            InputStream ips = new FileInputStream(dir); 
-	            InputStreamReader ipsr = new InputStreamReader(ips); 
-	            String ligne;
-	            try (BufferedReader br = new BufferedReader(ipsr)) {
-	            	ligne = br.readLine();
-	            }
-	            ligne = decrypt(ligne);
-	            String s[] = ligne.split("\n");
-	            NekoCloud nc = NekoCloud.getNekoAPI();
-	            nc.setName(s[0]);
-	            nc.setPassword(s[1]);
-			} catch (Exception e) {}		
-		}
-	}
-	
-	public static void loadCloudIrc() {
-		String list[] = nc.getSave("irc").split("§");
-        int j=0;
-        int i=0;
-        Irc	irc = Irc.getInstance();
-        for (String ligne : list)
-        {       
-        	i++;
-        	if (i==1) 
-        		irc.setNamePlayer(nc.getName());
-        	if (i==2)
-        		irc.setPrefix(ligne);
-        	if (i==3)
-        		irc.setIdPlayer(Integer.parseInt(ligne));
-        	if (i==4)
-        		irc.setOn(Boolean.parseBoolean(ligne));
-        	if (i==6) {
-        		try {
-        			irc.setMode(IrcMode.valueOf(ligne));
-        		} catch (Exception e) {}
-        	}
-        	if (i==7)
-        		irc.setHideJl(Boolean.parseBoolean(ligne));
-        	if (i==10)
-        		irc.setPlayerClic(ligne);	                	
-        }
-		if (Irc.getInstance().getNamePlayer()==null)
-			Irc.getInstance().setNamePlayer(mc.session.getUsername());
-	}
-	
-	public static void loadIrc(String...fi) {
-		File dir = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"irc.neko");
-		if (dir.exists()) {
-		try { 
-            InputStream ips = new FileInputStream(dir); 
-            InputStreamReader ipsr = new InputStreamReader(ips); 
-            try (BufferedReader br = new BufferedReader(ipsr)) {
-                String ligne;
-                int j=0;
-                int str=0;
-                int i=0;
-                Irc	irc = Irc.getInstance();
-                while ((ligne = br.readLine()) != null)
-                {       
-                	i++;
-                	if (ligne.startsWith("§")) {
-                		j = Integer.parseInt(ligne.replaceFirst("§", ""))-111;
-                		j/=666;
-                	} else {
-	                	str+=ligne.length()+1;
-	                	if (i==1) 
-	                		irc.setNamePlayer(nc.getName());
-	                	if (i==2)
-	                		irc.setPrefix(ligne);
-	                	if (i==3)
-	                		irc.setIdPlayer(Integer.parseInt(ligne));
-	                	if (i==4)
-	                		irc.setOn(Boolean.parseBoolean(ligne));
-	                	if (i==6) {
-	                		try {
-	                			irc.setMode(IrcMode.valueOf(ligne));
-	                		} catch (Exception e) {}
-	                	}
-	                	if (i==7)
-	                		irc.setHideJl(Boolean.parseBoolean(ligne));
-	                	if (i==10)
-	                		irc.setPlayerClic(ligne);	                	
-                	}
-                }
-            	if (j!=str) {
-            		irc.setPrefix("$");
-            		irc.setIdPlayer(0);
-            	}
-		} catch (IOException | NumberFormatException e) {}		
-		} catch (IOException | NumberFormatException e) {}
-		
-		}
-		if (Irc.getInstance().getNamePlayer()==null)
-			Irc.getInstance().setNamePlayer(mc.session.getUsername());
-	}
-	
 	public static void saveRpg() {
 		if (verif!=null)
 			return;
     	String res = var.rang.getName() + "§" + var.niveau + "§" + var.xp + "§" + var.xpMax + "§" + var.achievementHelp + "§" + var.prefixCmd + "§" + var.mode + "§" + var.ame + "§" + var.bonus+"§§"+var.chance+"§"+var.lot+"§"+Active.bonus+"§"+Active.time+"§"+var.CLIENT_VERSION+"§"+Lot.nbLot;
-    	nc.saveSave("rpg", res);
+    	Utils.saveFile("rpg", res);
 	}
 	
 	public static void saveNuker(String...fi) {
@@ -2738,10 +2575,8 @@ public class Utils {
 		for (int i : Nuker.nuke) {
     		s+=i + "§";
     	}
-		if (fi.length>0) {
-    		nc.saveSave("nuker", s, fi);
-    	}
-		nc.saveSave("nuker", s);
+
+		Utils.saveFile("nuker", s);
 	}
 	
 	public static String getResultOfPostRequest(String url, String body) {
@@ -2954,16 +2789,13 @@ public class Utils {
 			s+=n+"§";
 		}
         s+="§,";
-        if (fi.length>0) {
-    		Utils.nc.saveSave("values", s, fi);
-    	}
         s+="§,"+Likaotique.getLik().isSafe()+"§,"+AutoCmd.cmd+"§,"+AutoCmd.sec+"§,"+Near.spawn.toLong()+"§,"+Near.radius;
         s+="§,"+Near.noname+"§,"+ForceTP.getForceTP().getPoint().toLong()+"§,"+ForceTP.getForceTP().isYMax();
         s+="§,"+Crasher.getInstance().isWave()+"§,"+AutoCraft.getInstance().isStack()+"§,"+Blink.full;
         PlaceAndBreak pb = PlaceAndBreak.getInstance();
         s+="§,"+pb.getSlotBreak()+"§,"+pb.getSlotPlace()+"§,"+pb.isAuto();
         
-        Utils.nc.saveSave("values", s);
+        Utils.saveFile("values", s);
 	}
 	
 	//TODO: Account
@@ -3044,7 +2876,7 @@ public class Utils {
 		    	} else if (i<lastAccount){
 		    		lastAccount-=1;
 		    	}
-		    	nc.saveSave("alt", res);
+		    	Utils.saveFile("alt", res);
 			}
 		}).start();
 	}
@@ -3067,31 +2899,14 @@ public class Utils {
 			
 			@Override
 			public void run() {
-				nc.saveSave("alt", r);
+				Utils.saveFile("alt", r);
 				
 			}
 		}).start();
 	}
 	
-	public static void saveCloudAlt() {
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				ArrayList<String> s = new ArrayList<String>();
-		    	s = getAllAccount();
-		    	String res = "";          
-		    	if (s.size()>0)
-		        	for (int k=0;k<s.size();k++) {
-		        		if (k==s.size())
-		        			res+=s.get(k);
-		        		else
-		        			res+=s.get(k) +"§";
-		        	}
-				nc.saveSave("alt", res);
-				
-			}
-		}).start();
+	public static void saveAlt() {
+		Utils.saveFile("alt", String.join("§", getAllAccount()));
 	}
 	
 	public static String getAccount(int acc) {
@@ -3103,513 +2918,6 @@ public class Utils {
 	
 	public static ArrayList<String> getAllAccount() {
 		return GuiAltManager.listAcc;
-	}
-	
-	public static void loadAllAccountFromCloud() {
-		String list[] = nc.getSave("alt").split("§");
-		ArrayList<String> account = new ArrayList<String>();
-	    for (String ligne : list)
-	    	account.add(ligne);            
-	    GuiAltManager.listAcc = account;
-	}
-	
-	
-	public static void importAllAccountToCloud() {
-		String tot = "";
-		File dir = new File(Utils.linkSave+"account.neko");
-		if (dir.exists()) {
-			try { 
-	            InputStream ips = new FileInputStream(dir); 
-	            InputStreamReader ipsr = new InputStreamReader(ips); 
-	            try (BufferedReader br = new BufferedReader(ipsr)) {
-	                String ligne;
-	                while ((ligne = br.readLine()) != null) {
-	                	if (tot.isEmpty())
-	                		tot = ligne;
-	                	else
-	                		tot += "§"+ligne;
-	                }
-	                nc.saveSave("alt", tot);
-	            }
-			} catch (Exception e) {}
-		}
-	}
-	
-	public static void loadCloudValues(String...fi) {
-        String list[] = fi.length>0 ? nc.getSave("values", fi).split("§,") : nc.getSave("values").split("§,");        
-		Integer i=0;
-        for (String ligne : list) {                	
-        	try {
-        		
-            	if (i==0)
-            		Dolphin.dolph=Double.parseDouble(ligne);
-            	if (i==1)
-            		Flight.speed=Double.parseDouble(ligne);
-            	if (i==2)
-            		KillAura.cps=Integer.parseInt(ligne);
-            	if (i==3)	
-            		KillAura.range=Double.parseDouble(ligne);
-            	if (i==4)	
-            		KillAura.lockView=Boolean.valueOf(ligne);
-            	if (i==5)	
-            		Render.varNeko=Float.parseFloat(ligne);
-            	if (i==6)
-            		NoClip.speed=Float.parseFloat(ligne);
-            	if (i==7)
-            		Regen.regen=Integer.parseInt(ligne);
-            	if (i==8)
-            		Speed709.getSpeed().setSpe(Double.parseDouble(ligne));
-            	if (i==9)
-            		Step.getStep().setStep(Double.parseDouble(ligne));
-            	if (i==10) 
-            		Timer.time=Float.parseFloat(ligne);
-            	if (i==11) {
-            		Velocity v = Velocity.getVelocity();
-            		if (ligne.contains(":")) {
-                		String s[] = ligne.split(":");
-                		v.setHcoeff(Double.parseDouble(s[0]));
-                		v.setVcoeff(Double.parseDouble(s[1]));
-            		} else {
-            			v.setHcoeff(Double.parseDouble(ligne));
-                		v.setVcoeff(Double.parseDouble(ligne));
-            		}
-            	}
-            	if (i==12 && !Utils.cfg)
-            		display=Boolean.parseBoolean(ligne);
-            	if (i==13)
-            		zoom=Boolean.parseBoolean(ligne);
-            	if (i==14)
-            		xp=Boolean.parseBoolean(ligne);
-            	if (i==15)
-            		KillAura.live=Integer.parseInt(ligne);
-            	if (i==16)
-            		KillAura.invi=Boolean.parseBoolean(ligne);
-            	if (i==17) {
-            		if (!isLock("--ka onground"))
-            			KillAura.onground=Boolean.parseBoolean(ligne);
-            		else
-            			KillAura.onground=false;
-            	}
-            	if (i==18) {
-            		if (!isLock("--ka noarmor"))
-            			KillAura.noarmor=Boolean.parseBoolean(ligne);
-            		else
-            			KillAura.noarmor=false;
-            	}
-            	if (i==19)
-            		Trigger.dist=Float.parseFloat(ligne);
-            	if (i==20)
-            		Reach.dist=Float.parseFloat(ligne);
-            	if (i==21)
-            		deathoff=Boolean.parseBoolean(ligne);
-            	if (i==22)
-            		Fire.p=Integer.parseInt(ligne);
-            	if (i==23)
-            		Water.p=Integer.parseInt(ligne);
-            	if (i==24)
-            		Power.p=Integer.parseInt(ligne);
-            	if (i==25 && !Utils.cfg) {
-            		String time[] = ligne.split(":");
-            		timeInGameMs=Integer.parseInt(time[0]);
-            		timeInGameSec=Integer.parseInt(time[1]);
-            		timeInGameMin=Integer.parseInt(time[2]);
-            		timeInGameHour=Integer.parseInt(time[3]);
-            	}
-            	if (i==26 && !Utils.cfg) {
-            		String h[] = ligne.split(" ");
-            		h1=Boolean.parseBoolean(h[0]);
-            		h10=Boolean.parseBoolean(h[1]);
-            		h50=Boolean.parseBoolean(h[2]);
-            		h100=Boolean.parseBoolean(h[3]);
-            		h200=Boolean.parseBoolean(h[4]);
-            		h666=Boolean.parseBoolean(h[5]);
-            	}
-            	if (i==27) 
-            		ClickAim.dist=Float.parseFloat(ligne);
-            	if (i==28)
-            		ClickAim.multiAura=Boolean.parseBoolean(ligne);
-            	if (i==29) 
-            		VanillaTp.air=Boolean.parseBoolean(ligne);
-            	if (i==30) 
-            		Regen.bypass=Boolean.parseBoolean(ligne);
-            	if (i==31) {
-            		if (ligne.equalsIgnoreCase("multi") || ligne.equalsIgnoreCase("single"))
-            			KillAura.mode=ligne;
-            	}
-            	if (i==32) 
-            		Autoarmor.ec=Boolean.parseBoolean(ligne);
-            	if (i==35)
-            		Cheststealer.waitTime=Integer.parseInt(ligne);
-            	if (i==36)
-            		SmoothAim.range=Double.parseDouble(ligne);
-            	if (i==37)
-            		SmoothAim.degrees=Double.parseDouble(ligne);
-            	if (i==38)
-            		Autosoup.drop=Boolean.parseBoolean(ligne);
-            	if (i==39)
-            		Autosoup.heal=Integer.parseInt(ligne);
-            	if (i==40)
-            		KillAura.fov=Double.parseDouble(ligne);
-            	if (i==41)
-            		nyah=Boolean.parseBoolean(ligne);
-            	if (i==42)
-            		nyahh=ligne;
-            	if (i==43)
-            		nyahSec=Double.parseDouble(ligne);   
-            	if (i==44) 
-            		AutoClic.cps=Integer.parseInt(ligne);
-            	if (i==45) 
-            		Nuker.nukerRadius=Integer.parseInt(ligne);
-            	if (i==46) {
-            		if (!isLock("--ka random")) 
-            			KillAura.random=Boolean.parseBoolean(ligne);
-            		else
-            			KillAura.random=false;
-            	}
-            	if (i==47)
-            		Freecam.speed=Float.parseFloat(ligne);
-            	if (i==48)
-            		SmoothAim.speed=Double.parseDouble(ligne);
-            	if (i==49)
-            		Flight.blink=Boolean.parseBoolean(ligne);
-            	if (i==50)
-            		Longjump.speed=Float.parseFloat(ligne);
-            	if (i==51) 
-            		InGameGui.color=ligne;
-            	if (i==52)
-            		HUD.coord=Boolean.parseBoolean(ligne);
-            	if (i==53)
-            		HUD.fall=Boolean.parseBoolean(ligne);
-            	if (i==54)
-            		HUD.fps=Boolean.parseBoolean(ligne);
-            	if (i==55)
-            		HUD.item=Boolean.parseBoolean(ligne);
-            	if (i==56) 
-            		Radar.fr=Boolean.parseBoolean(ligne);
-            	if (i==57)
-            		HUD.packet=Boolean.parseBoolean(ligne);
-            	if (i==58) {
-            		if (!isLock("--ka random")) 
-            			sword=Boolean.parseBoolean(ligne);
-            		else
-            			sword=false;                			
-            	}
-            	if (i==59) 
-            		scoreboard=Boolean.parseBoolean(ligne);
-            	if (i==60)
-            		WorldTime.time=Long.parseLong(ligne);
-            	if (i==61)
-            		Wallhack.cR=Float.parseFloat(ligne);
-            	if (i==62)
-            		Wallhack.cG=Float.parseFloat(ligne);
-            	if (i==63)
-            		Wallhack.cB=Float.parseFloat(ligne);
-            	if (i==64)
-            		Wallhack.clR=Float.parseFloat(ligne);
-            	if (i==65)
-            		Wallhack.clG=Float.parseFloat(ligne);
-            	if (i==66)
-            		Wallhack.clB=Float.parseFloat(ligne);
-            	if (i==67)
-            		Wallhack.width=Float.parseFloat(ligne);
-            	if (i==68)
-            		Tracers.cR=Float.parseFloat(ligne);
-            	if (i==69)
-            		Tracers.cG=Float.parseFloat(ligne);
-            	if (i==70)
-            		Tracers.cB=Float.parseFloat(ligne);
-            	if (i==71)
-            		Tracers.width=Float.parseFloat(ligne);
-            	if (i==72)
-            		neko.module.modules.render.Render.bonusCount=Integer.parseInt(ligne);
-            	if (i==73)
-            		HUD.time=Boolean.parseBoolean(ligne);
-            	if (i==74) {
-            		if (!isLock("--hud select"))
-            			HUD.select=Boolean.parseBoolean(ligne);
-            		else
-            			HUD.select=false;
-            	}
-            	if (i==75)
-            		HUD.cR=Float.parseFloat(ligne);
-            	if (i==76)
-            		HUD.cG=Float.parseFloat(ligne);
-            	if (i==77)
-            		HUD.cB=Float.parseFloat(ligne);
-            	if (i==78)
-            		HUD.width=Float.parseFloat(ligne);
-            	if (i==79) {
-            		if (!isLock("--reach pvp"))
-            			Reach.pvp=Boolean.parseBoolean(ligne);
-            		else
-            			Reach.pvp=false;
-            	}
-            	if (i==80)
-            		KillAura.verif=Boolean.parseBoolean(ligne);
-            	if (i==81)
-            		Paint.cR=Float.parseFloat(ligne);
-            	if (i==82)
-            		Paint.cG=Float.parseFloat(ligne);
-            	if (i==83)
-            		Paint.cB=Float.parseFloat(ligne);
-            	if (i==84)
-            		Paint.alpha=Float.parseFloat(ligne);
-            	if (i==85)
-            		neko.module.modules.render.Render.active=Boolean.parseBoolean(ligne);
-            	if (i==86) {
-            		if (!isLock("--rankmanager"))
-            			changeRank=Boolean.parseBoolean(ligne);
-            		else
-            			changeRank=true;
-            	}
-            	if (i==87)
-            		Tracers.friend=Boolean.parseBoolean(ligne);
-            	if (i==88) 
-            		if (!isLock("--reach pvp"))
-            			Reach.bloc=Boolean.parseBoolean(ligne);
-            		else
-            			Reach.bloc = false;
-            	if (i==89)
-            		VanillaTp.classic=Boolean.parseBoolean(ligne);
-            	if (i==90)
-            		Reach.classic=Boolean.parseBoolean(ligne);
-            	if (i==91)
-            		if (!isLock("--reach pvp"))
-            			Reach.aimbot=Boolean.parseBoolean(ligne);
-            		else
-            			Reach.aimbot = false;
-            	if (i==92)
-            		Reach.fov=Double.parseDouble(ligne);
-            	if (i==93)
-            		Limit.getInstance().setLimit(Integer.parseInt(ligne));
-            	if (i==95)
-            		version=ligne;
-            	if (i==96)
-            		kills=Integer.parseInt(ligne);
-            	if (i==97)
-            		HUD.stuff=Boolean.parseBoolean(ligne);
-            	if (i==98)
-            		R=Integer.parseInt(ligne);
-            	if (i==99)
-            		G=Integer.parseInt(ligne);
-            	if (i==100)
-            		B=Integer.parseInt(ligne);
-            	if (i==101)
-            		neko.module.modules.render.Render.xp=Boolean.parseBoolean(ligne);
-            	if (i==102)
-            		if (!isLock("--reach pvp"))
-            			Reach.tnt=Boolean.parseBoolean(ligne);
-            		else 
-            			Reach.tnt = false;
-            	if (i==103)
-            		Fastbow.getFast().setNobow(Boolean.parseBoolean(ligne));
-            	if (i==104)
-            		AutoPot.heal=Integer.parseInt(ligne);
-            	if (i==105)
-            		Pyro.mode=neko.module.other.enums.Form.valueOf(ligne);
-            	if (i==106)
-            		Reach.mode=neko.module.other.enums.Form.valueOf(ligne);
-            	if (i==107)
-            		Antiafk.getInstance().setSec(Integer.parseInt(ligne));
-            	if (i==108)
-            		ItemESP.cR=Float.parseFloat(ligne);
-            	if (i==109)
-            		ItemESP.cG=Float.parseFloat(ligne);
-            	if (i==110)
-            		ItemESP.cB=Float.parseFloat(ligne);
-            	if (i==111)
-            		ItemESP.clR=Float.parseFloat(ligne);
-            	if (i==112)
-            		ItemESP.clG=Float.parseFloat(ligne);
-            	if (i==113)
-            		ItemESP.clB=Float.parseFloat(ligne);
-            	if (i==114)
-            		ItemESP.width=Float.parseFloat(ligne);
-            	if (i==115)
-            		VanillaTp.top=Boolean.parseBoolean(ligne);
-            	TpBack tp = TpBack.getInstance();
-            	if (i==116)
-            		tp.setSpawn(BlockPos.fromLong(Long.parseLong(ligne)));
-            	if (i==117)
-            		tp.setClassic(Boolean.parseBoolean(ligne));
-            	if (i==118)
-            		tp.setTop(Boolean.parseBoolean(ligne));
-            	if (i==119)
-            		tp.setVie(Integer.parseInt(ligne));
-            	if (i==120)
-            		;
-            	if (i==121)
-            		Glide.getGlide().setSpeed(Double.parseDouble(ligne));
-            	if (i==122)
-            		FireTrail.getFireTrail().setLarge(Boolean.parseBoolean(ligne));
-            	if (i==123)
-            		Phase.getPhase().setVphase(Boolean.parseBoolean(ligne));
-            	if (i==124)
-            		;
-            	if (i==125)
-            		AutoMLG.getMLG().setFall(Double.parseDouble(ligne));
-            	Build b = Build.getBuild();
-            	if (i==126)
-            		b.setDown(Boolean.parseBoolean(ligne));
-            	if (i==127)
-            		b.setSneak(Boolean.parseBoolean(ligne));
-            	if (i==128)
-            		b.setUp(Boolean.parseBoolean(ligne));
-            	if (i==129)
-            		b.setWall(Boolean.parseBoolean(ligne));
-            	if (i==130)
-            		Fasteat.getFast().setPacket(Integer.parseInt(ligne));
-            	if (i==131)
-            		PushUp.getPush().setPacket(Integer.parseInt(ligne));
-            	if (i==132)
-            		Speed709.getSpeed().setMode(SpeedEnum.valueOf(ligne));
-            	if (i==133)
-            		Reflect.getReflect().setPower(Float.parseFloat(ligne));
-            	Ping p = Ping.getPing();
-            	if (i==134)
-            		p.setDelay(Integer.parseInt(ligne));
-            	if (i==135)
-            		p.setFreezer(Boolean.parseBoolean(ligne));
-            	if (i==136)
-            		p.setRandom(Boolean.parseBoolean(ligne));
-            	if (i==137)
-            		KillAura.nobot=Boolean.parseBoolean(ligne);
-            	if (i==138)
-            		;
-            	if (i==139)
-            		var.animation=Boolean.parseBoolean(ligne);
-            	if (i==140)
-            		KillAura.premium=Boolean.parseBoolean(ligne);
-            	if (i==141)
-            		GuiAltManager.check=Boolean.parseBoolean(ligne);
-            	if (i==142)
-            		var.onlyrpg.setActive(Boolean.parseBoolean(ligne));
-            	NekoChat nc = NekoChat.getChat();
-            	if (i==143)
-            		nc.setColor(Integer.parseInt(ligne));
-            	if (i==144)
-            		nc.setHeight(Float.parseFloat(ligne));
-            	if (i==145)
-            		nc.setWidth(Float.parseFloat(ligne));
-            	CallCmd c = CallCmd.getCall();
-            	if (i==146)
-            		c.setCmd2(ligne);
-            	if (i==147) {
-            		String s[] = ligne.split(":");
-            		for (String pl : s) {
-            			c.getListPlayer().add(pl);
-            		}
-            	}
-            	if (i==148)
-            		Register.getReg().setMdp(ligne);
-            	if (i==150)
-            		Highjump.getJump().setHeight(Float.parseFloat(ligne));
-            	if (i==151)
-            		TutoManager.getTuto().setDone(Boolean.parseBoolean(ligne));
-            	if (i==152)
-            		Nuker.safe=Boolean.parseBoolean(ligne);
-            	if (i==153)
-            		KillAura.speed=Double.parseDouble(ligne);
-            	if (i==154)
-            		PunKeel.attack=Boolean.parseBoolean(ligne);
-            	if (i==155)
-            		PunKeel.delay=Double.parseDouble(ligne);
-            	if (i==156)
-            		Fastbow.getFast().setPacket(Integer.parseInt(ligne));
-            	if (i==157)
-            		Step.getStep().setBypass(Boolean.parseBoolean(ligne));
-            	if (i==158)
-            		BowAimbot.getAim().setFov(Double.parseDouble(ligne));
-            	if (i==159)
-            		BowAimbot.getAim().setLife(BowMode.valueOf(ligne));
-            	if (i==160)
-            		BowAimbot.getAim().setArmor(BowMode.valueOf(ligne));
-            	if (i==161)
-            		Reach.multiaura=Boolean.parseBoolean(ligne);
-            	if (i==162) {
-            		PunKeel.random=Boolean.parseBoolean(ligne);
-            		PunKeel.rDelay.clear();
-            	}
-            	if (i==163 || i==164)
-            		PunKeel.rDelay.addElement(Double.parseDouble(ligne));
-            	Magnet m = Magnet.getMagnet();
-            	if (i==165)
-            		m.setMode(ligne);
-            	if (i==166)
-            		m.setClassic(Boolean.parseBoolean(ligne));
-            	if (i==167)
-            		Search.getSearch().setSearchBlock(Block.getBlockById(Integer.parseInt(ligne)));
-            	if (i==168)
-            		;
-            	if (i==169)
-            		Reach.knock=Boolean.parseBoolean(ligne);
-            	if (i==170)
-            		Utils.colorGui = new Color(Integer.parseInt(ligne), 0, 0, 0);
-            	if (i==171)
-            		Utils.colorGui = new Color(Utils.colorGui.getRed(), Integer.parseInt(ligne), 0, 0);
-            	if (i==172)
-            		Utils.colorGui = new Color(Utils.colorGui.getRed(), Utils.colorGui.getGreen(), Integer.parseInt(ligne), 0);
-            	if (i==173)
-            		Utils.colorGui = new Color(Utils.colorGui.getRed(), Utils.colorGui.getGreen(), Utils.colorGui.getBlue(), Integer.parseInt(ligne));
-            	if (i==174)
-            		Utils.colorFontGui = new Color(Integer.parseInt(ligne), 0, 0, 0);
-            	if (i==175)
-            		Utils.colorFontGui = new Color(Utils.colorFontGui.getRed(), Integer.parseInt(ligne), 0, 0);
-            	if (i==176)
-            		Utils.colorFontGui = new Color(Utils.colorFontGui.getRed(), Utils.colorFontGui.getGreen(), Integer.parseInt(ligne), 0);
-            	if (i==177)
-            		Utils.colorFontGui = new Color(Utils.colorFontGui.getRed(), Utils.colorFontGui.getGreen(), Utils.colorFontGui.getBlue(), Integer.parseInt(ligne));
-            	if (i==178) {
-            		String s[] = ligne.split("§");
-            		for (String a : s) {
-            			if (a.contains("="))
-            			Nameprotect.getNP().getList().add(a);
-            		}
-            	}
-            	if (i==179) {
-            		Likaotique.getLik().setSafe(Boolean.parseBoolean(ligne));
-            	}
-            	if (i==181) {
-            		AutoCmd.cmd = ligne;
-            	}
-            	if (i==182) {
-            		AutoCmd.sec = Double.parseDouble(ligne);
-            	}
-            	if (i==183) {
-            		Near.spawn = BlockPos.fromLong(Long.parseLong(ligne));
-            	}
-            	if (i==184) {
-            		Near.radius = Integer.parseInt(ligne);
-            	}
-            	if (i==185) {
-            		Near.noname = Boolean.parseBoolean(ligne);
-            	}
-            	ForceTP FTP = ForceTP.getForceTP();
-            	if (i==186) {
-            		FTP.setPoint(BlockPos.fromLong(Long.parseLong(ligne)));
-            	}
-            	if (i==187) {
-            		FTP.setYMax(Boolean.parseBoolean(ligne));
-            	}
-            	if (i == 188) {
-            		Crasher.getInstance().setWave(Boolean.parseBoolean(ligne));
-            	}
-            	if (i == 189) {
-            		AutoCraft.getInstance().setStack(Boolean.parseBoolean(ligne));
-            	}
-            	if (i == 190) {
-            		Blink.full = Boolean.parseBoolean(ligne);
-            	}
-            	PlaceAndBreak pb = PlaceAndBreak.getInstance();
-            	if (i == 191)
-            		pb.setSlotBreak(Integer.parseInt(ligne));
-            	if (i == 192)
-            		pb.setSlotPlace(Integer.parseInt(ligne));
-            	if (i == 193)
-            		pb.setAuto(Boolean.parseBoolean(ligne));
-        	} catch (Exception e) {}
-        	i++;
-        }
 	}
 	
 	public static ArrayList<Command> getCommandByType(CommandType type) {
@@ -3663,9 +2971,6 @@ public class Utils {
 			} else {
 				if (args.length==1) {
 					shouldToggleModule(message);
-				} else {
-					// For pre-3.0
-					//addChat("§cCommande inexistante !");
 				}
 			}
 		mc.ingameGUI.getChatGUI().addToSentMessages(var.prefixCmd+message);
@@ -4179,8 +3484,6 @@ public class Utils {
 	                	}
 	                	if (i==148)
 	                		Register.getReg().setMdp(ligne);
-	                	if (i==149)
-	                		God.getInstance().setBackup(ligne);
 	                	if (i==150)
 	                		Highjump.getJump().setHeight(Float.parseFloat(ligne));
 	                	if (i==151)
@@ -4237,20 +3540,8 @@ public class Utils {
 		for (int i : DropShit.getShit().getList()) {
     		s+=i+"§";
     	}
-		if (fi.length>0) {
-    		nc.saveSave("shit", s, fi);
-    	}
-		nc.saveSave("shit", s);
-	}
-	
-	public static void loadCloudShit(String...fi) {
-		String list[] = fi.length>0 ? nc.getSave("shit", fi).split("§") : nc.getSave("shit").split("§");
-		for (String ligne : list) {
-			try {
-				DropShit.getShit().getList().add(Integer.parseInt(ligne));
-			} catch (Exception e) {
-			}
-		}
+
+		Utils.saveFile("shit", s);
 	}
 	
 	public static void loadShit(String...fi) {
@@ -4270,18 +3561,6 @@ public class Utils {
 		} catch (IOException | NumberFormatException e) {}		
 		} catch (IOException | NumberFormatException e) {}
 		
-		}
-	}
-	
-	public static void loadCloudNuker(String...fi) {
-		String test = fi.length>0 ? nc.getSave("nuker", fi) : nc.getSave("nuker");
-		String list[] = test.split("§");
-		Nuker.nuke.clear();
-		for (String ligne : list) {
-			try {
-				Nuker.nuke.add(Integer.parseInt(ligne));
-			} catch (Exception e) {
-			}
 		}
 	}
 	
@@ -4393,38 +3672,8 @@ public class Utils {
     			s+=m.getName()+" "+m.getBind()+" "+u+"§";
     		}
     	}
-		if (fi.length>0) {
-    		nc.saveSave("cmd", s, fi);
-    	}
-		nc.saveSave("cmd", s);
-	}
-	
-	@SuppressWarnings("unlikely-arg-type")
-	public static void loadCloudCmd(String...fi) {
-		Vector<Module> vm = new Vector<Module>();
-		for (Module m : ModuleManager.ActiveModule) {
-			if (m.isCmd())
-				vm.add(m);
-		}
-		for (Module m : vm) {
-			ModuleManager.ActiveModule.remove(m);
-		}
-		String list[] = fi.length>0 ? nc.getSave("cmd", fi).split("§") : nc.getSave("cmd").split("§");
-		for (String l : list) {
-			String s[] = l.split(" ");
-	    	if (s.length>=2) {
-	        	Module m = new Module(s[0], Keyboard.getKeyIndex(s[1].toUpperCase()), Category.HIDE, false);
-	        	String r="";
-	        	for (int i=2;i<s.length;i++) {
-	        		r+=s[i]+" ";
-	        	}
-	        	String t[] = r.split("&&");
-	        	for (int i=0;i<t.length;i++)
-	        		m.addCmd(t[i]);
-	        	if (!ModuleManager.ActiveModule.contains(s[0]))
-	        		ModuleManager.ActiveModule.add(m);
-	    	}
-		}
+
+		Utils.saveFile("cmd", s);
 	}
 	
 	@SuppressWarnings("unlikely-arg-type")
@@ -4476,10 +3725,8 @@ public class Utils {
     			s+=m.getName()+"§";
     		}
     	}
-		if (fi.length>0) {
-    		nc.saveSave("mod", s, fi);
-    	}
-		nc.saveSave("mod", s);
+
+		Utils.saveFile("mod", s);
 	}
 	
 	public static void saveStat() {
@@ -4491,49 +3738,20 @@ public class Utils {
     			s+=m.getName()+"="+m.getTimeStat()+"§";
     		}
     	}
-		nc.saveSave("stat", s);		
-	}
 		
-	public static void loadCloudStat() {
-		String list[] = nc.getSave("stat").split("§");
-		for (String ligne : list) {
-			String s[] = ligne.split("=");
-			try {
-				Utils.getModule(s[0]).setTime(Integer.parseInt(s[1]));
-			} catch (Exception e) {}
-		}
+		Utils.saveFile("stat", s);		
 	}
 	
 	public static void displayStat(boolean global) {
-		if (global) {
-			// Faire niveau cloud
-			String totModule = "";
-			for (Module m : var.moduleManager.ActiveModule) {
-				if (m.getCategory()!=Category.HIDE && !m.isCmd() && m.getTimeStat()!=0) {
-					totModule+=m.getName()+"§";
-				}
-			}
-			String res = NekoCloud.getNekoAPI().getGlobalStat(totModule);
-			addChat("§a[Stat de temps global]");
-			String cheat[] = res.split("§");
-			for (String b : cheat) {
-				try {
-					String c[] = b.split("=");
-					String st[] = c[1].split(",");
-					addChat(c[0]+":§c "+st[0]+"§e --> "+st[1]);
-				} catch (Exception e) {}
-			}
-		} else {
-			// Stats locale
-			addChat("§a[Stat de temps]");
-			for (Module m : var.moduleManager.ActiveModule) {
-				if (m.getCategory()!=Category.HIDE && !m.isCmd() && m.getTimeStat()!=0) {
-					int h = m.getTimeStat() / 3600;
-					int min = (m.getTimeStat() % 3600) / 60;
-					int s = (m.getTimeStat() % 3600) % 60;
-					String time = (h!=0 ? h+"h " : "")+(min!=0 ? min+"min " : "")+(s!=0 ? s+"s" : "");
-					addChat(m.getName()+":§e "+time);
-				}
+		// Stats locale
+		addChat("§a[Stat de temps]");
+		for (Module m : var.moduleManager.ActiveModule) {
+			if (m.getCategory()!=Category.HIDE && !m.isCmd() && m.getTimeStat()!=0) {
+				int h = m.getTimeStat() / 3600;
+				int min = (m.getTimeStat() % 3600) / 60;
+				int s = (m.getTimeStat() % 3600) % 60;
+				String time = (h!=0 ? h+"h " : "")+(min!=0 ? min+"min " : "")+(s!=0 ? s+"s" : "");
+				addChat(m.getName()+":§e "+time);
 			}
 		}
 	}
@@ -4561,16 +3779,10 @@ public class Utils {
 	            } catch (IOException | NumberFormatException e) {}
 			} catch (IOException | NumberFormatException e) {}			
 		}
-		nc.saveSave("mod", tot);
+		Utils.saveFile("mod", tot);
 	}
 	
-	public static void loadCloudMod(String...fi) {
-		String list[] = fi.length>0 ? nc.getSave("mod", fi).split("§") : nc.getSave("mod").split("§");
-		for (String ligne : list) {
-			if (!isLock(ligne) && !ligne.equalsIgnoreCase("VanillaTp") && !ligne.equalsIgnoreCase("Gui") && !ligne.equalsIgnoreCase("Register"))
-	    		toggleModule(ligne);
-		}
-	}
+
 	//TODO : isHalloween
 	public static LocalDate Date = LocalDate.now();
 	public static boolean isHalloween() {
@@ -4716,10 +3928,8 @@ public class Utils {
     	for (Module m : ModuleManager.ActiveModule) {
     		s+=m.getName()+" "+(m.getBind()==0 ? -1 : m.getBind()) + "§";
     	}
-    	if (fi.length>0) {
-    		nc.saveSave("bind", s, fi);
-    	}
-    	nc.saveSave("bind", s);
+
+    	Utils.saveFile("bind", s);
 	}
 	
 	public static void saveSettings(String...fi) {
@@ -4729,140 +3939,28 @@ public class Utils {
 		for(final Setting set : Client.Neko.settingsManager.getSettings()) {
 			s+=(String.valueOf(set.getName())+":"+set.getValBoolean()+":"+set.getValDouble()+":"+set.getValString()+"§");
 		}
-    	if (fi.length>0) {
-    		nc.saveSave("settings", s, fi);
-    	}
-    	nc.saveSave("settings", s);
+
+    	Utils.saveFile("settings", s);
 	}
 	
-	public static void loadSaveCloud() {
-		if (var.rang==null)
-			for (Rank r : ModuleManager.rang) {
-				if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {
-					var.rang=r;
-					r.setLvl(r.getLvl()!=1 ? r.getLvl() : 1);
-					r.setLock(false);
-				}
-			}
-		try {
-			loadAllAccountFromCloud();
-			loadCloudStat();
-			loadCloudCmd();
-			loadCloudRank();
-			loadCloudRpg();
-			loadCloudFriends();
-			loadCloudBind();
-			loadCloudLock();
-			loadCloudValues();
-			loadCloudNuker();
-			loadCloudIrc();
-			loadCloudFont();
-			loadCloudShit();
-			loadCloudFrame();
-			loadCloudSettings();
-			loadCloudXray();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		// FINISHHH
-	}
-	
-	public static void importSave() {		  
+	public static void loadSaves() {		  
 		  File f2 = new File(System.getenv("APPDATA") + "\\GoodNight_4\\config\\audio\\rpg");
 		  if (!f2.exists()) {
 			  Utils.linkSave = System.getenv("APPDATA") + "\\.minecraft\\Neko\\";
 		  }
 		  Utils.loadCmd();
 		  Utils.loadRank();
-		  boolean legit = Utils.loadRpg();
+		  Utils.loadRpg();
 		  Utils.loadFriends();
 		  Utils.loadBind();
-		  if (legit)
-			  Utils.loadLock();
-		  if (!legit) {
-			  for (Rank r : ModuleManager.rang) {
-					if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {
-						var.rang=r;
-						r.setLvl(1);
-						r.setLock(false);
-					} else {
-						r.setLvl(1);
-						r.setLock(true);
-					}
-			  }
-		  }				  
+		  Utils.loadLock();		  
 		  Utils.loadValues();
 		  Utils.loadNuker();
-		  Utils.loadIrc();
 		  Utils.loadFont();
 		  Utils.loadShit();		  
 		  Utils.loadFrame();
-		  Utils.importAllAccountToCloud();
 		  Utils.importMod();
 		  Utils.saveAll();
-	}
-
-	public static void loadCloudFrame() {
-	    String list[] = nc.getSave("frame").split("§");
-	    if (var.clickGui==null) {
-	    	var.clickGui = new ClickGUI();
-	    }
-	    for (String ligne : list)
-	    {           
-	    	String s[] = ligne.split(" ");
-	    	for(Panel f : ClickGUI.panels) {
-	    		if (f.title.equalsIgnoreCase(s[0].replaceAll("&", "§"))) {
-	    			f.x = (Integer.parseInt(s[1]));
-	    			f.y = (Integer.parseInt(s[2]));
-	    			f.extended = (Boolean.parseBoolean(s[3]));
-	    		}
-	    	}
-	    }
-	}
-	
-	public static void loadCloudSettings(String...fi) {
-
-		String list[] = fi.length>0 ? nc.getSave("settings", fi).split("§") : nc.getSave("settings").split("§");
-		for(String args : list) {
-			String s[] = args.split(":");
-			if(s.length == 4) {
-				String[] moduleSetting = s[0].split("_");
-				if(moduleSetting.length < 1) {
-					continue;
-				}
-				final Setting set = Client.Neko.settingsManager.getSettingByName(s[0]);
-				if(set == null) {
-					continue;
-				}
-				set.setValBoolean(Boolean.parseBoolean(s[1]));
-				set.setValDouble(Double.parseDouble(s[2]));
-				set.setValString(s[3]);
-			}
-		}
-	}
-	
-	
-	public static void loadCloudBind(String...fi) {
-		int i = 0;
-		String list[] = fi.length>0 ? nc.getSave("bind", fi).split("§") : nc.getSave("bind").split("§");
-		for (String ligne : list) {
-			String s[] = ligne.split(" ");
-	    	if (s.length==1) {
-	        	if (ModuleManager.ActiveModule.size()!=i) {
-	        		if (ligne.equals("0"))
-	        			ModuleManager.ActiveModule.get(i).setBind(-1);
-	        		else
-	        			ModuleManager.ActiveModule.get(i).setBind(Integer.parseInt(ligne));
-	        	}
-	        } else {
-	        	for (Module m : ModuleManager.ActiveModule) {
-	        		if (m.getName().equalsIgnoreCase(s[0])) {
-	        			m.setBind(Integer.parseInt(s[1]));
-	        		}
-	        	}
-	        }    	
-	    	i++;
-		}
 	}
 	
 	public static void loadBind(String...fi) {
@@ -4901,69 +3999,6 @@ public class Utils {
 		}
 		
 		}
-	}
-	
-	public static void loadCloudRpg() {
-		int i = 0;
-		double b = 0d;
-		String list[] = nc.getSave("rpg").split("§");
-		for (String ligne : list) {
-			try {
-	            i++;
-	            if (i==1) {
-	            	for (Rank r : ModuleManager.rang) {
-	            		if (r.getName().equalsIgnoreCase(ligne)) {
-	            			var.rang=r;
-	            		}
-	            	}
-	            }
-	            if (i==2) {
-	                var.niveau=Integer.parseInt(ligne);
-	            }
-	            if (i==3) {
-	                var.xp=Integer.parseInt(ligne);
-	            }
-	            if (i==4) {
-	                var.xpMax=Integer.parseInt(ligne);
-	            }
-	            if (i==5) {
-	            	if (ligne.equals("true")) {
-	            		var.achievementHelp=true;
-	            	} else {
-	            		var.achievementHelp=false;                    		
-	            	}
-	            }
-	            if (i==6) {
-	            	var.prefixCmd=ligne;
-	            }
-	            if (i==7) {
-	            	var.mode=ModeType.valueOf(ligne);
-	            }
-	            if (i==8) {
-	            	var.ame=Integer.parseInt(ligne);
-	            }
-	            if (i==9) {
-	            	var.bonus=Double.parseDouble(ligne);
-	            }
-	            if (i==11)
-	            	var.chance=Double.parseDouble(ligne);
-	            if (i==12)
-	            	var.lot=Integer.parseInt(ligne);
-	            if (i==13)
-	        		b=Double.parseDouble(ligne);
-	        	if (i==14) {
-	        		int time = Integer.parseInt(ligne);
-	        		if (time!=0) {
-	        			new Active(b, time);
-	        		}
-	        	}
-	        	if (i==15) 
-	        		var.prevVer=ligne;
-	        	if (i==16) {
-	        		Lot.nbLot=Integer.parseInt(ligne);
-	        	}
-			} catch (Exception e) {}
-    	}             
 	}
 	
 	/**
@@ -5097,11 +4132,6 @@ public class Utils {
     	Utils.timeInGameSec=0;
     	Utils.timeInGameMs=0;
     	Lot.nbLot=3;
-    	Irc i = Irc.getInstance();
-    	i.setIdPlayer(-1);
-    	i.setNamePlayer(mc.session.getUsername());
-    	i.setLastMsg("");
-    	i.setLastId(-1);
     	changeRank = true;
     	Utils.kills=0;
     	saveAll();
@@ -5128,18 +4158,8 @@ public class Utils {
 		for (int i=0;i<Friends.friend.size();i++) {
 			s+=Friends.friend.get(i).toString() + "§";
 		}
-		if (fi.length>0) {
-    		nc.saveSave("friend", s, fi);
-    	}
-		nc.saveSave("friend", s);		
-	}
-	
-	public static void loadCloudFriends(String...fi) {
-		String list[] = fi.length>0 ? nc.getSave("friend", fi).split("§") : nc.getSave("friend").split("§");
-		Friends.friend.clear();
-		for (String ligne : list) {
-			Friends.friend.add(ligne);
-		}
+
+		Utils.saveFile("friend", s);		
 	}
 	
 	public static void loadFriends(String...fi) {

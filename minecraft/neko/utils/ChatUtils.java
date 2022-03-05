@@ -17,7 +17,6 @@ import org.lwjgl.opengl.Display;
 import com.mojang.authlib.GameProfile;
 
 import neko.Client;
-import neko.dtb.RequestThread;
 import neko.guicheat.clickgui.util.SettingsUtil;
 import neko.lock.Lock;
 import neko.manager.LockManager;
@@ -90,14 +89,12 @@ import neko.module.other.Active;
 import neko.module.other.Bloc;
 import neko.module.other.DiscThread;
 import neko.module.other.Event;
-import neko.module.other.Irc;
 import neko.module.other.PyroThread;
 import neko.module.other.Rank;
 import neko.module.other.RmRank;
 import neko.module.other.Trade;
 import neko.module.other.enums.Chat;
 import neko.module.other.enums.Form;
-import neko.module.other.enums.IrcMode;
 import neko.module.other.enums.Rate;
 import neko.module.other.enums.SpeedEnum;
 import net.mcleaks.Callback;
@@ -149,7 +146,6 @@ public class ChatUtils {
 	int xp = 0;
 	String error;
 	String err = "§c§lErreur, valeur incorrecte";
-	Irc irc;
 	String discord = "§dhttps://discord.gg/Dt4npbR";
 	
 	public ChatUtils() {}
@@ -161,12 +157,11 @@ public class ChatUtils {
 			Utils.xptime=0;
 		}
 		error = "§c§lErreur: Essayez "+var.prefixCmd+"help";
-		irc = Irc.getInstance();
 		
 		if (var.onlyrpg.isActive()) {
 			boolean valid=false;
 			for (String cmd : var.onlyrpg.getCmd()) {
-				if (var3.startsWith(var.prefixCmd+cmd) || !var3.startsWith(var.prefixCmd) || var3.startsWith(irc.getPrefix())) {
+				if (var3.startsWith(var.prefixCmd+cmd) || !var3.startsWith(var.prefixCmd)) {
 					valid=true;
 				}
 			}
@@ -176,41 +171,6 @@ public class ChatUtils {
 				return;
 			}
 		}
-		if (irc.isOn() && !var3.startsWith(Client.getNeko().prefixCmd)) {
-			boolean inIrc=false;	
-			
-			if (irc.getMode()==IrcMode.Only && (!var3.startsWith("/") || var3.startsWith("//r") || var3.startsWith("//w") || var3.startsWith("//m") || var3.startsWith("//msg"))) {
-				if (!(var3.startsWith("//r") || var3.startsWith("//w") || var3.startsWith("//m") || var3.startsWith("//msg")))
-					var3=Irc.getInstance().getPrefix()+var3;
-				inIrc=true;			
-			}
-			if (irc.getMode()!=IrcMode.Only && (irc.getMode()==IrcMode.Hybride && !var3.startsWith(irc.getPrefix()) || irc.getMode()!=IrcMode.Hybride && var3.startsWith(irc.getPrefix())) && !var3.startsWith(Client.getNeko().prefixCmd) && (!var3.startsWith("/") || var3.startsWith("//r") || var3.startsWith("//w") || var3.startsWith("//m") || var3.startsWith("//msg"))) {
-				var3=Irc.getInstance().getPrefix()+var3;
-				inIrc=true;
-			}
-			// Chat normal sans only
-			if (irc.getMode()==IrcMode.Normal && var3.startsWith(irc.getPrefix())) {
-				inIrc=true;
-				String s ="";
-				for (int i=0;i<Irc.getInstance().getPrefix().length();i++)
-					s+=".";
-				
-				var3 = var3.replaceFirst(s, "");
-			}
-			if (irc.getMode()==IrcMode.Hybride && var3.startsWith(irc.getPrefix()) && (!var3.startsWith("/") || var3.startsWith("//r") || var3.startsWith("//w") || var3.startsWith("//m") || var3.startsWith("//msg"))) {
-				String s ="";
-				for (int i=0;i<Irc.getInstance().getPrefix().length();i++)
-					s+=".";
-				
-				var3 = var3.replaceFirst(s, "");
-			}			
-			if (inIrc && Utils.verif==null) {
-				irc.addChatIrc(var3);
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-				mc.displayGuiScreen((GuiScreen)null);
-				return;
-			}
-		}	
 		
 		if (var3.startsWith(var.prefixCmd) && Utils.verif==null) {
 			// New command manager
@@ -987,26 +947,6 @@ public class ChatUtils {
 				Utils.checkXp(xp);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}	
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"server")) {
-				String page = "1";
-				if (args.length>=2)
-					page = args[1];
-				if (Utils.isLock("--server")) {
-					Utils.addWarn("Server");
-					mc.thePlayer.playSound("mob.villager.no", 1.0F, 1.0F);
-				} else if (Utils.isInteger(page)){		
-					int p = Integer.parseInt(page);
-					page = ""+p*2;
-					ArrayList<String> list = new ArrayList<>();
-					list.add(page);
-					new RequestThread("getServer", list).start();
-					Utils.checkXp(xp);						
-					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-				} else {
-					Utils.addChat("§cErreur");
-				}
-			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"prefix")) {
 				if (args.length==1) {
@@ -4027,8 +3967,6 @@ public class ChatUtils {
 						Utils.verif=args[1];
 					
 					Event.lastEventId=-1;
-					Irc.getInstance().setLastId(-1);
-					Irc.getInstance().setLastMsg("");
 					Utils.vDisplay=Utils.display;
 					Utils.display=false;
 					Utils.vXp=Utils.xp;
@@ -4254,16 +4192,6 @@ public class ChatUtils {
 				}
 				
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}	
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"listserver")) {
-				if (args.length==1)
-					new RequestThread("listserver", null).start();
-				else if (Utils.isInteger(args[1])) {
-					ArrayList<String> list = new ArrayList<String>();
-					list.add(args[1]);
-					new RequestThread("listserver", list).start();
-				}
 			}			
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"connect") || args[0].equalsIgnoreCase(var.prefixCmd+"co")) {
@@ -5226,52 +5154,6 @@ public class ChatUtils {
 				Utils.checkXp(xp);
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"irc")) {			
-				if (args.length==1) {
-					if (irc.isOn()) {
-						Utils.addChat("§cIrc désactivé");
-						new RequestThread("insertmsgleft", null).start();
-						irc.setLastId(-1);					
-					} else {
-						Utils.addChat("§aIrc activé");
-						new RequestThread("insertmsgjoin", null).start();
-						Event.lastEventId=-1;
-					}
-					irc.setOn(!irc.isOn());
-				} else if (args[1].equalsIgnoreCase("playerclic") || args[1].equalsIgnoreCase("pc")) {
-					irc.changePlayerClic();
-					Utils.addChat("§aPlayerClic changé en "+irc.getPClic()+" !");
-				} else if (args[1].equalsIgnoreCase("hide")) {
-					if (irc.isHideJl()) {
-						Utils.addChat("§aMessage join/left affichés");
-					} else {
-						Utils.addChat("§aMessage join/left masqués");
-					}
-					irc.setHideJl(!irc.isHideJl());
-				} else if (args[1].equalsIgnoreCase("mode")) {
-					try {
-						IrcMode mode = IrcMode.valueOf(args[2]);
-						Irc.getInstance().setMode(mode);
-						Utils.addChat("§aIrc mode changé à "+args[2]+" !");
-					} catch (Exception e) {
-						Utils.addChat("§cErreur, modes disponibles:");
-						Utils.addChat(Utils.setColor("Normal: Vous devez mettre le prefix de l'irc pour parler dans l'irc", "§c"));
-						Utils.addChat(Utils.setColor("Hybride: Vous devez mettre le prefix de l'irc pour parler dans le chat normal", "§c"));
-						Utils.addChat(Utils.setColor("Only: Vous n'avez que l'irc et ne pouvez que parler dedans, aucun message du chat normal n'est affiché", "§c"));
-					}
-				} else if (args[1].equalsIgnoreCase("list")) {
-					new RequestThread("displaylist", null).start();
-				} else if (args[1].equalsIgnoreCase("prefix")) {
-					if (args.length>=3) {
-						irc.setPrefix(args[2]);
-						Utils.addChat("§aPrefix de l'irc changé !");
-					} else {
-						Utils.addError("Syntace incorrecte: "+var.prefixCmd+"irc prefix <Nouveau prefix>");
-					}
-				}
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
 
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"coord")) {
 				Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -5279,11 +5161,6 @@ public class ChatUtils {
 				Utils.addChat("§aCoordonnées copiées !");
 				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 			}		
-			
-			if (args[0].equalsIgnoreCase(var.prefixCmd+"classement") || args[0].equalsIgnoreCase(var.prefixCmd+"gl")) {
-				new RequestThread("displaygl", null).start();
-				mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-			}
 			
 			if (args[0].equalsIgnoreCase(var.prefixCmd+"list")) {
 				int a=0;

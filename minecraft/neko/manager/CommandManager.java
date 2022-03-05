@@ -16,10 +16,6 @@ public class CommandManager {
 		this.commands.add(new VelocityHorizontal());
 		this.commands.add(new VelocityVertical());
 		this.commands.add(new MyPing());
-		this.commands.add(new MyIp());
-		this.commands.add(new Ban());
-		this.commands.add(new Mute());
-		this.commands.add(new Unmute());
 		this.commands.add(new ProxySet());
 		this.commands.add(new ProxyReset());
 		this.commands.add(new PingDelay());

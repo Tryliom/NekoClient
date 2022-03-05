@@ -7,7 +7,6 @@ import javax.swing.Timer;
 
 import org.lwjgl.opengl.Display;
 
-import neko.dtb.RequestThread;
 import neko.event.EventManager;
 import neko.gui.RequestManager;
 import neko.guicheat.clickgui.ClickGUI;
@@ -63,7 +62,6 @@ public class Client {
 	public double tempBonus = 0;
 	public String prevVer = null;
 	public boolean animation = true;
-	public RequestThread currentThread = null;
 	public static OnlyRpgManager onlyrpg;
 	public String ver = "";
 	public String changelog = "";
