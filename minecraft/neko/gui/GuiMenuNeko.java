@@ -24,8 +24,6 @@ public class GuiMenuNeko extends GuiScreen {
         this.buttonList.clear();
         byte var1 = -16;
         this.buttonList.add(new GuiButton(1, this.width / 2 - 100, this.height / 4 + 120 + var1, "Retour"));
-
-        this.buttonList.add(new GuiButton(4, this.width / 2 - 100, this.height / 4 + 24 + var1, "Wiki Cheats"));
         this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 96 + var1, 98, 20, "Bind Manager"));
         this.buttonList.add(new GuiButton(5, this.width / 2 + 2, this.height / 4 + 96 + var1, 98, 20, "Xray Manager"));
         	if (!OnlyRpgManager.getRpg().isActive())
@@ -45,9 +43,6 @@ public class GuiMenuNeko extends GuiScreen {
                 break;
             case 1:
                 this.mc.displayGuiScreen(this.prevGui);
-                break;
-            case 4:
-            	this.mc.displayGuiScreen(new GuiWikiMenu(this));
                 break;
             case 5:
             	this.mc.displayGuiScreen(new GuiScreenXrayManager(this));

@@ -3,7 +3,25 @@ package neko.manager;
 import java.util.ArrayList;
 
 import neko.command.Command;
-import neko.command.commands.*;
+import neko.command.commands.FriendAdd;
+import neko.command.commands.FriendClear;
+import neko.command.commands.FriendList;
+import neko.command.commands.FriendRadius;
+import neko.command.commands.FriendTeam;
+import neko.command.commands.Help;
+import neko.command.commands.LimitPacket;
+import neko.command.commands.Mode;
+import neko.command.commands.MyPing;
+import neko.command.commands.PingDelay;
+import neko.command.commands.PingFreezer;
+import neko.command.commands.PingRandom;
+import neko.command.commands.ProxyReset;
+import neko.command.commands.ProxySet;
+import neko.command.commands.Tp;
+import neko.command.commands.UnlockAll;
+import neko.command.commands.VelocityCoeff;
+import neko.command.commands.VelocityHorizontal;
+import neko.command.commands.VelocityVertical;
 
 public class CommandManager {
 
@@ -28,6 +46,7 @@ public class CommandManager {
 		this.commands.add(new FriendList());
 		this.commands.add(new FriendRadius());
 		this.commands.add(new LimitPacket());
+		this.commands.add(new UnlockAll());
 	}
 
 	public ArrayList<Command> getCommands() {

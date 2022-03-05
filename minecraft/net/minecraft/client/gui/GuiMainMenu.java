@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
+import java.util.function.Consumer;
 
 import org.apache.commons.io.Charsets;
 import org.apache.logging.log4j.LogManager;
@@ -22,8 +23,13 @@ import com.google.common.collect.Lists;
 import neko.Client;
 import neko.gui.GuiAltManager;
 import neko.gui.GuiMenuNeko;
+import neko.guicheat.clickgui.settings.SettingsManager;
+import neko.manager.CommandManager;
+import neko.manager.ModuleManager;
 import neko.manager.OnlyRpgManager;
 import neko.manager.TutoManager;
+import neko.module.Module;
+import neko.module.other.Rank;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -233,6 +239,23 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
             this.field_92020_v = this.field_92022_t + var5;
             this.field_92019_w = this.field_92021_u + 24;
         }
+        
+        Client var = Client.getNeko();
+    	var.settingsManager = new SettingsManager();
+		var.moduleManager = new ModuleManager();
+		var.commandManager = new CommandManager();
+		var.onlyrpg = OnlyRpgManager.getRpg();
+		Utils.loadSaves();
+		if (var.rang==null)
+			for (Rank r : ModuleManager.rang) {
+				if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {
+					var.rang=r;
+					r.setLvl(r.getLvl()!=1 ? r.getLvl() : 1);
+					r.setLock(false);
+				}
+			}
+		Consumer<Module> setupModule = m -> {m.setup();};
+		var.moduleManager.getModules().forEach(setupModule);
     }
 
     /**

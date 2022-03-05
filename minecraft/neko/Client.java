@@ -8,7 +8,6 @@ import javax.swing.Timer;
 import org.lwjgl.opengl.Display;
 
 import neko.event.EventManager;
-import neko.gui.RequestManager;
 import neko.guicheat.clickgui.ClickGUI;
 import neko.guicheat.clickgui.settings.SettingsManager;
 import neko.manager.CommandManager;
@@ -65,7 +64,6 @@ public class Client {
 	public static OnlyRpgManager onlyrpg;
 	public String ver = "";
 	public String changelog = "";
-	public RequestManager rm;
 	public boolean firstServDisplay = true;
 	// Doesn't check update version if true
 	public boolean develop = false;

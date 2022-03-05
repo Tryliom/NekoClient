@@ -72,10 +72,9 @@ public class GuiChat extends GuiScreen {
 		if (Utils.verif == null) {
 			int wid = InGameGui.hudWid + 15;
 			this.buttonList.add(new GuiButton(4, wid + 110, 64, 100, 20, "Prefix Neko"));
-			this.buttonList.add(new GuiButton(6, wid + 110, 16, 100, 20, "Help"));
-			this.buttonList.add(new GuiButton(7, wid + 220, 16, 100, 20, "Clear"));
+			this.buttonList.add(new GuiButton(6, wid + 110, 40, 100, 20, "Help"));
+			this.buttonList.add(new GuiButton(7, wid + 220, 40, 100, 20, "Clear"));
 			if (!OnlyRpgManager.getRpg().isActive()) {
-				this.buttonList.add(new GuiButton(8, wid + 220, 40, 100, 20, "Log List"));
 				this.buttonList.add(new GuiButton(9, wid + 220, 64, 100, 20, "Register"));
 			}
 		}

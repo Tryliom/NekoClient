@@ -328,14 +328,6 @@ public class ChatUtils {
 					Utils.addChat2("§6"+var.prefixCmd+"Glide <Double>", var.prefixCmd+"glide ", "§7Change la vitesse du Glide, de base à -0.125", false, Chat.Summon);
 					Utils.checkXp(xp);
 					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
-				} else if (args[1].equalsIgnoreCase("log")) {
-					Utils.addChat(Utils.sep);
-					Utils.addChat2("§6"+var.prefixCmd+"Log add <Email/Username> <Mdp>", var.prefixCmd+"log add ", "§7Ajoute un compte à la liste", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Log remove <Int>", var.prefixCmd+"log remove ", "§7Supprime un compte de la liste selon son numéro dans le Log list", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Log clear", var.prefixCmd+"log clear", "§7Vide la liste de comptes", false, Chat.Summon);
-					Utils.addChat2("§6"+var.prefixCmd+"Log list", var.prefixCmd+"log list", "§7Dresse une liste de tous les comptes en cachant le mot de passe", false, Chat.Summon);
-					Utils.checkXp(xp);
-					mc.ingameGUI.getChatGUI().addToSentMessages(var3);
 				} else if (args[1].equalsIgnoreCase("reach")) {
 					Utils.addChat(Utils.sep);
 					Utils.addChat2("§6Reach pvp [info]", var.prefixCmd+"", "§7Toutes les sous commandes ci-dessous sont débloquées avec la reach pvp.\n§7Si vous voulez en savoir plus, veuillez vous renseignez sur le Guide Neko", true, Chat.Summon);

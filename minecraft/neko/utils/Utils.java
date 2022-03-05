@@ -17,6 +17,7 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -54,7 +55,6 @@ import neko.Client;
 import neko.command.Command;
 import neko.command.CommandType;
 import neko.gui.GuiAltManager;
-import neko.gui.GuiWikiMenu;
 import neko.gui.GuiXrayManager;
 import neko.gui.InGameGui;
 import neko.gui.bindmanager.GuiBindManager;
@@ -417,37 +417,6 @@ public class Utils {
 		return true;
 	}
 	
-
-	public static void tranferAllData() {		
-		Consumer<String> check = (String cfgName) -> {
-			File f = new File(System.getenv("APPDATA") + "\\GoodNight_4\\config\\audio\\rpg\\Config\\"+cfgName);
-			if (!f.exists()) {
-				f.mkdirs();
-			}
-			try {
-				Runtime.getRuntime().exec("cmd.exe /c copy /y "+System.getenv("APPDATA") + "\\.minecraft\\Neko\\Config\\"+cfgName+"\\* "
-						+System.getenv("APPDATA") + "\\GoodNight_4\\config\\audio\\rpg\\Config\\"+cfgName+"\\");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		};
-		if (new File(System.getenv("APPDATA") + "\\.minecraft\\Neko\\").exists())
-			try {
-				Runtime.getRuntime().exec("cmd.exe /c copy /y "+System.getenv("APPDATA") + "\\.minecraft\\Neko\\* "
-						+ ""+System.getenv("APPDATA") + "\\GoodNight_4\\config\\audio\\rpg\\");
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		
-		File conf = new File(System.getenv("APPDATA") + "\\.minecraft\\Neko\\Config");
-		if (conf.exists()) {
-			for (String s : conf.list()) {
-				check.accept(s);
-			}
-		}
-		
-	}
-	
 	public static int getRandInt(int i) {
 		return (int) Math.round(Math.random()*i);
 	}
@@ -523,9 +492,6 @@ public class Utils {
 		if (actual instanceof GuiBindManager) {
 			return false;
 		}
-		if (actual instanceof GuiWikiMenu.GuiWikiPart) {
-			return false;
-		}		
 		if (actual instanceof GuiXrayManager) {
 			return false;
 		}
@@ -2315,6 +2281,8 @@ public class Utils {
 	public static void saveFile(String fileName, String content) {
 		if (verif!=null) return;
 		
+		Utils.createAllFolderSave();
+		
 		File file = new File(Utils.linkSave + fileName + ".neko");
         
 		try {
@@ -2433,9 +2401,6 @@ public class Utils {
 	                	}
                 	}
                 }
-            	if (j!=str) {
-            		resetRpg();
-            	}
                 
             
 		} catch (IOException | NumberFormatException e) {}		
@@ -3599,63 +3564,6 @@ public class Utils {
 		return null;
 	}
 	
-	/***
-	 * Charge les données du fichier wiki.neko mis à la source du projet<br>
-	 * @return Une hashmap qui a comme clé les catégories sous forme de String.<br> L'objet retourné par celle ci est un Vector de tous les cheats de cette catégorie.
-	 * <br> Ce vector donne une liste de hashmap qui ont comme clé le nom du cheat et 
-	 * comme objet la description du cheat non formatée (Juste les retour à la ligne) 
-	 ***/
-	public static HashMap<String, Vector<HashMap<String, Vector<String>>>> loadWiki() {
-			try { 
-				Scanner sc = new Scanner(new URL("http://nekohc.fr/controler/Neko/wiki.neko").openStream());
-	            String l;
-	            String nom = "";
-	            Vector<String> desc = new Vector<String>();
-	            HashMap<String, Vector<String>> hm = new HashMap<String, Vector<String>>();
-	            /**
-	             *  Liste triée par catégories de cheat, par ex dans le Combat on trouve le KillAura avec sa description
-	             */
-	            HashMap<String, Vector<HashMap<String, Vector<String>>>> listTotal = new HashMap<String, Vector<HashMap<String, Vector<String>>>>();
-	            while (sc.hasNextLine())
-	            {                	
-	            	l = sc.nextLine();
-	            	if (l.equalsIgnoreCase("")) {
-	            		hm.put(nom, (Vector<String>)desc.clone());
-	            		nom = "";
-	            		desc.clear();
-	            	} else if (nom.isEmpty()) {
-	            		nom = l;
-	            	} else {
-	            		desc.add(l);
-	            	}
-	            	
-	            }	   
-        		hm.put(nom, (Vector<String>)desc.clone());
-	            sc.close();
-	            /**
-	             *  Ajout des hashmap des cheats et leur description dans les catégories
-	             */
-	            Vector<HashMap<String, Vector<String>>> listCat = new Vector<HashMap<String, Vector<String>>>();
-	            for (Category s : Category.values()) {
-	            	for (String key : hm.keySet()) {
-	            		if (Utils.isModule(key) && Utils.getModule(key).getCategory().name().equalsIgnoreCase(s.name())) {
-	            			HashMap<String, Vector<String>> tempHm = new HashMap<String, Vector<String>>();
-	            			tempHm.put(key, hm.get(key));
-	            			listCat.add((HashMap<String, Vector<String>>)tempHm.clone());
-	            			tempHm.clear();
-	            		}
-	            	}
-	            	if (!listCat.isEmpty()) {
-	            		listTotal.put(s.name(), (Vector<HashMap<String, Vector<String>>>) listCat.clone());
-	            		listCat.clear();
-	            	}
-	            }
-	            return listTotal;
-			} catch (Exception e) {
-			}	
-		return null;
-	}
-	
 	public static void saveCmd(String...fi) {
 		if (mc.thePlayer==null || verif!=null)
 			return;
@@ -3755,33 +3663,6 @@ public class Utils {
 			}
 		}
 	}
-	
-	public static void importMod(String...fi) {
-		File dir = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"mod.neko");
-		String tot = "";
-		if (dir.exists()) {
-			try { 
-	            InputStream ips = new FileInputStream(dir); 
-	            InputStreamReader ipsr = new InputStreamReader(ips); 
-	            try (BufferedReader br = new BufferedReader(ipsr)) {
-	                String ligne;
-	                Integer i=0;
-	                while ((ligne = br.readLine()) != null)
-	                {                	
-	                	i++;
-	                	if (!isLock(ligne) && !ligne.equalsIgnoreCase("VanillaTp") && !ligne.equalsIgnoreCase("Gui") && !ligne.equalsIgnoreCase("Register"))
-	                		if (tot.isEmpty())
-	                			tot = ligne;
-	                		else
-	                			tot+="§"+ligne;
-	                	
-	                }
-	            } catch (IOException | NumberFormatException e) {}
-			} catch (IOException | NumberFormatException e) {}			
-		}
-		Utils.saveFile("mod", tot);
-	}
-	
 
 	//TODO : isHalloween
 	public static LocalDate Date = LocalDate.now();
@@ -3959,8 +3840,19 @@ public class Utils {
 		  Utils.loadFont();
 		  Utils.loadShit();		  
 		  Utils.loadFrame();
-		  Utils.importMod();
-		  Utils.saveAll();
+		  Utils.loadAlt();
+	}
+	
+	public static void loadAlt() {
+		
+		String list[];
+		try {
+			list = new String(Files.readAllBytes(new File(Utils.linkSave+"alt.neko").toPath())).split("§");
+			ArrayList<String> account = new ArrayList<String>();
+		    for (String ligne : list)
+		    	account.add(ligne);            
+		    GuiAltManager.listAcc = account;
+		} catch (IOException e) {}
 	}
 	
 	public static void loadBind(String...fi) {
@@ -4093,48 +3985,10 @@ public class Utils {
                 			sum+=ch[j];
                 	}
                 }                
-                
-                if (before16) {
-	                if ((somme-323924)/382!=var.niveau) {
-	                	resetRpg();
-	                	return false;
-	                }
-                } else {
-                	if (sum!=somme) {
-	                	resetRpg();
-	                	return false;
-                	}
-                }
             } catch (IOException | NumberFormatException e) {}
 		} catch (IOException | NumberFormatException e) {}
 		}
 		return true;
-	}
-	
-	public static void resetRpg() {
-		removeAllLock();
-    	removeAllRank();
-    	setRank("Petit Neko Novice");
-    	var.niveau=1;
-    	var.xp=0;
-    	var.xpMax=300+getRandInt(100);
-    	var.achievementHelp=false;
-    	var.ame=0;
-    	var.bonus=0;    
-    	var.chance=0;
-    	var.lot=0;
-    	if (Active.t.isRunning())
-    		Active.t.stop();
-    	Active.bonus=0;
-    	Active.time=0;
-    	Utils.timeInGameHour=0;
-    	Utils.timeInGameMin=0;
-    	Utils.timeInGameSec=0;
-    	Utils.timeInGameMs=0;
-    	Lot.nbLot=3;
-    	changeRank = true;
-    	Utils.kills=0;
-    	saveAll();
 	}
 	
 	public static void removeAllLock() {
