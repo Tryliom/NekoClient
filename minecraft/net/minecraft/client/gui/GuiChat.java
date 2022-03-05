@@ -15,13 +15,9 @@ import org.lwjgl.input.Mouse;
 import com.google.common.collect.Lists;
 
 import neko.Client;
-import neko.dtb.RequestThread;
 import neko.gui.InGameGui;
 import neko.manager.OnlyRpgManager;
 import neko.module.modules.misc.Register;
-import neko.module.other.Event;
-import neko.module.other.Irc;
-import neko.module.other.enums.IrcMode;
 import neko.utils.ChatUtils;
 import neko.utils.Utils;
 import net.minecraft.network.play.client.C14PacketTabComplete;
@@ -75,15 +71,10 @@ public class GuiChat extends GuiScreen {
 		this.inputField.setCanLoseFocus(false);
 		if (Utils.verif == null) {
 			int wid = InGameGui.hudWid + 15;
-			this.buttonList.add(new GuiButton(1, wid, 64, 100, 20, "Message privé"));
-			this.buttonList.add(new GuiButton(2, wid, 40, 100, 20, (Irc.getInstance().isOn() ? "§a" : "§c") + "IRC"));
-			this.buttonList.add(new GuiButton(3, wid + 110, 40, 100, 20, "Mode " + Irc.getInstance().getMode()));
 			this.buttonList.add(new GuiButton(4, wid + 110, 64, 100, 20, "Prefix Neko"));
-			this.buttonList.add(new GuiButton(5, wid, 16, 100, 20, "Irc List"));
-			this.buttonList.add(new GuiButton(6, wid + 110, 16, 100, 20, "Help"));
-			this.buttonList.add(new GuiButton(7, wid + 220, 16, 100, 20, "Clear"));
+			this.buttonList.add(new GuiButton(6, wid + 110, 40, 100, 20, "Help"));
+			this.buttonList.add(new GuiButton(7, wid + 220, 40, 100, 20, "Clear"));
 			if (!OnlyRpgManager.getRpg().isActive()) {
-				this.buttonList.add(new GuiButton(8, wid + 220, 40, 100, 20, "Log List"));
 				this.buttonList.add(new GuiButton(9, wid + 220, 64, 100, 20, "Register"));
 			}
 		}
@@ -133,7 +124,6 @@ public class GuiChat extends GuiScreen {
 				this.inputField.textboxKeyTyped(typedChar, keyCode);
 			}
 		} else {
-			// TODO: Commandes
 			String var3 = this.inputField.getText().trim();
 
 			if (var3.length() > 0) {
@@ -187,85 +177,46 @@ public class GuiChat extends GuiScreen {
 	protected void actionPerformed(GuiButton button) throws IOException {
 		super.actionPerformed(button);
 		switch (button.id) {
-		case 1: {
-			mc.displayGuiScreen(new GuiChat(((Irc.getInstance().getMode() == IrcMode.Normal ? Irc.getInstance().getPrefix() : "")
-							+ "//w " + this.inputField.getText())));
-			// mc.displayGuiScreen(new GuiShop(mc.currentScreen));
-			break;
-		}
-		case 2: {
-			Irc irc = Irc.getInstance();
-			if (irc.isOn()) {
-				Utils.addChat("§cIrc désactivé");
-				new RequestThread("insertmsgleft", null).start();
-				irc.setLastId(-1);
-			} else {
-				Utils.addChat("§aIrc activé");
-				new RequestThread("insertmsgjoin", null).start();
-				Event.lastEventId = -1;
+		
+			case 4: {
+				mc.displayGuiScreen(new GuiChat(Client.getNeko().prefixCmd+this.inputField.getText()));
+				break;
 			}
-			irc.setOn(!irc.isOn());
-			mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
-			break;
-		}
-		case 3: {
-			Irc irc = Irc.getInstance();
-			IrcMode m = irc.getMode();
-			if (m == IrcMode.Hybride) {
-				irc.setMode(IrcMode.Normal);
+			
+			case 6: {
+				Utils.displayHelp(1);
+				int xp = 0;
+				if (Utils.xptime>=59) {
+					xp = Utils.getRandInt(5);
+					Utils.xptime=0;
+				}
+				Utils.checkXp(xp);
+				int rand = (int) Math.round(Math.random() * 1000);
+				if (!Client.getNeko().achievementHelp) {
+					Client.getNeko().achievementHelp = true;
+					Utils.addChat("§dAchievement Help get !§b +" + rand + "xp !");
+					Utils.checkXp(rand);
+				}
+	
+				mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
+				break;
 			}
-			if (m == IrcMode.Normal) {
-				irc.setMode(IrcMode.Only);
+			case 7: {
+				mc.ingameGUI.getChatGUI().clearChatMessages();
+				mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
+				break;
 			}
-			if (m == IrcMode.Only) {
-				irc.setMode(IrcMode.Hybride);
+			case 8: {
+				Utils.displayAccount();
+				mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
+				break;
 			}
-			mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
-			break;
-		}
-		case 4: {
-			mc.displayGuiScreen(new GuiChat(Client.getNeko().prefixCmd+this.inputField.getText()));
-			break;
-		}
-		case 5: {
-			new RequestThread("displaylist", null).start();
-			mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
-			break;
-		}
-		case 6: {
-			Utils.displayHelp(1);
-			int xp = 0;
-			if (Utils.xptime>=59) {
-				xp = Utils.getRandInt(5);
-				Utils.xptime=0;
+			case 9: {
+				// Active une fois le Register
+				Register.getReg().CommandAction();
+				mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
+				break;
 			}
-			Utils.checkXp(xp);
-			int rand = (int) Math.round(Math.random() * 1000);
-			if (!Client.getNeko().achievementHelp) {
-				Client.getNeko().achievementHelp = true;
-				Utils.addChat("§dAchievement Help get !§b +" + rand + "xp !");
-				Utils.checkXp(rand);
-			}
-
-			mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
-			break;
-		}
-		case 7: {
-			mc.ingameGUI.getChatGUI().clearChatMessages();
-			mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
-			break;
-		}
-		case 8: {
-			Utils.displayAccount();
-			mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
-			break;
-		}
-		case 9: {
-			// Active une fois le Register
-			Register.getReg().CommandAction();
-			mc.displayGuiScreen(new GuiChat(this.inputField.getText()));
-			break;
-		}
 		}
 	}
 

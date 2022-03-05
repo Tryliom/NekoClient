@@ -3,13 +3,11 @@ package neko.module.modules.hide;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import neko.dtb.RequestThread;
 import neko.gui.InGameGui;
 import neko.module.Category;
 import neko.module.Module;
 import neko.module.modules.misc.Timer;
 import neko.module.modules.render.Render;
-import neko.module.other.Irc;
 import neko.utils.Utils;
 
 public class God extends Module {
@@ -17,9 +15,6 @@ public class God extends Module {
 	int Tcount=0;
 	int delay=0;
 	private static God instance=null;
-	private RequestThread currentMsg=null;
-	private RequestThread currentEvent=null;
-	private String backup = "..\\Backup\\";
 
 	public God() {
 		super("God", -1, Category.HIDE, false);
@@ -76,11 +71,7 @@ public class God extends Module {
 				InGameGui.p=u.nbPack;
 				u.nbPack=0;
 				u.checkRang();
-				if (u.timeInGameSec%2==0 && u.verif==null && (currentEvent!=null ? !currentEvent.isAlive() : true)) {
-					currentEvent = new RequestThread("displayEvent", null);
-					currentEvent.start();
-				} else if (u.verif!=null)
-					currentEvent.stop();
+
 				if (Math.random()<0.0001+var.rang.getMeteoreRain()*0.0001) {
 					Utils.addChat("§9Pluie de météores !");
 					Render.MeteoreRain();
@@ -144,13 +135,4 @@ public class God extends Module {
 		}
 		
 	}
-
-	public String getBackup() {
-		return backup;
-	}
-
-	public void setBackup(String backup) {
-		this.backup = backup;
-	}			
-	
 }

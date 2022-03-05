@@ -2,7 +2,6 @@ package net.minecraft.client.network;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -24,18 +23,14 @@ import com.mojang.authlib.GameProfile;
 import io.netty.buffer.Unpooled;
 import joptsimple.internal.Strings;
 import neko.Client;
-import neko.module.modules.movements.Blink;
-import neko.module.modules.player.Velocity;
-import neko.module.modules.special.ForceTP;
-import neko.module.modules.special.Limit;
-import neko.module.modules.special.PunKeel;
-import neko.module.modules.combat.BowAimbot;
 import neko.module.modules.combat.KillAura;
+import neko.module.modules.hide.Plugins;
 import neko.module.modules.misc.Nameprotect;
 import neko.module.modules.misc.Ping;
-import neko.module.modules.hide.Plugins;
-import neko.module.other.Irc;
-import neko.module.other.enums.IrcMode;
+import neko.module.modules.movements.Blink;
+import neko.module.modules.player.Velocity;
+import neko.module.modules.special.Limit;
+import neko.module.modules.special.PunKeel;
 import neko.utils.ChatUtils;
 import neko.utils.Utils;
 import net.mcleaks.MCLeaks;
@@ -128,18 +123,11 @@ import net.minecraft.network.play.client.C00PacketKeepAlive;
 import net.minecraft.network.play.client.C01PacketChatMessage;
 import net.minecraft.network.play.client.C02PacketUseEntity;
 import net.minecraft.network.play.client.C03PacketPlayer;
-import net.minecraft.network.play.client.C07PacketPlayerDigging;
-import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement;
-import net.minecraft.network.play.client.C09PacketHeldItemChange;
 import net.minecraft.network.play.client.C0APacketAnimation;
-import net.minecraft.network.play.client.C0BPacketEntityAction;
 import net.minecraft.network.play.client.C0FPacketConfirmTransaction;
 import net.minecraft.network.play.client.C14PacketTabComplete;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
 import net.minecraft.network.play.client.C19PacketResourcePackStatus;
-import net.minecraft.network.play.client.C03PacketPlayer.C04PacketPlayerPosition;
-import net.minecraft.network.play.client.C03PacketPlayer.C05PacketPlayerLook;
-import net.minecraft.network.play.client.C03PacketPlayer.C06PacketPlayerPosLook;
 import net.minecraft.network.play.server.S00PacketKeepAlive;
 import net.minecraft.network.play.server.S01PacketJoinGame;
 import net.minecraft.network.play.server.S02PacketChat;
@@ -1031,9 +1019,6 @@ public class NetHandlerPlayClient implements INetHandlerPlayClient
         
         if (Utils.chatCC && packetIn.getChatComponent().getUnformattedText().startsWith(Utils.chatRegex))
         	Utils.claimLog += "faction: "+packetIn.getChatComponent().getUnformattedText()+"\n";
-        
-        if (Irc.getInstance().getMode()==IrcMode.Only)
-        	return;
         
         if (packetIn.func_179841_c() == 2)
         {

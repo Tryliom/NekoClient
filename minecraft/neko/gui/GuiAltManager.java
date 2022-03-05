@@ -203,7 +203,7 @@ public class GuiAltManager extends GuiScreen {
 			currentThread.interrupt();
 			currentThread.stop();
 		}
-		Utils.saveCloudAlt();
+		Utils.saveAlt();
 	}
 
 	private class GuiMcleaks extends GuiScreen {

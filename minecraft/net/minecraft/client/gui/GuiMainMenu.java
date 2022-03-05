@@ -1,6 +1,5 @@
 package net.minecraft.client.gui;
 
-import java.awt.Desktop;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,14 +21,8 @@ import org.lwjgl.util.glu.Project;
 import com.google.common.collect.Lists;
 
 import neko.Client;
-import neko.api.NekoCloud;
-import neko.event.EventManager;
 import neko.gui.GuiAltManager;
-import neko.gui.GuiConnect;
 import neko.gui.GuiMenuNeko;
-import neko.gui.GuiNekoAccount;
-import neko.gui.button.ButtonDiscord;
-import neko.guicheat.clickgui.ClickGUI;
 import neko.guicheat.clickgui.settings.SettingsManager;
 import neko.manager.CommandManager;
 import neko.manager.ModuleManager;
@@ -37,12 +30,9 @@ import neko.manager.OnlyRpgManager;
 import neko.manager.TutoManager;
 import neko.module.Module;
 import neko.module.other.Rank;
-import neko.updater.Updater;
 import neko.utils.Utils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
-import net.minecraft.client.multiplayer.GuiConnecting;
-import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -82,7 +72,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     private String field_92025_p;
     private String field_146972_A;
     private String field_104024_v;
-    private String Bc;
     private static final ResourceLocation splashTexts = new ResourceLocation("texts/splashes.txt");
     private static final ResourceLocation minecraftTitleTextures = new ResourceLocation("textures/gui/title/minecraft.png");
     
@@ -101,7 +90,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     private TutoManager tm = TutoManager.getTuto();
     
     private int scrollingTextPosX;
-    private String scrollingText = Client.getNeko().SCROLLING_TEXT;
 
     public GuiMainMenu()
     {
@@ -195,7 +183,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
      */
     public void initGui()
     {
-    	this.Bc = Utils.getAn();
         this.viewportTexture = new DynamicTexture(256, 256);
         this.field_110351_G = this.mc.getTextureManager().getDynamicTextureLocation("background", this.viewportTexture);
         Calendar var1 = Calendar.getInstance();
@@ -237,19 +224,7 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         		Utils.verif==null ? this.height - 37 : var3 + 72 + 12,
         				Utils.verif==null ? 200 : 98, 20, Utils.verif==null ? "§c§lQuitter Neko" : I18n.format("menu.quit", new Object[0])));
         if (Utils.verif==null) {
-        	//this.buttonList.add(new GuiButton(668, this.width/2, this.height - 52, 50, 20, "§5Discord"));
-        	this.buttonList.add(new ButtonDiscord(668, this.width/2, this.height - 62, 50, 20));
-        	this.buttonList.add(new GuiButton(669, this.width/2 + 50, this.height - 62, 50, 20, "§5Site Web"));
         	this.buttonList.add(new GuiButton(670, 10, 55, 130, 15, "Modifier > Alt Manager"));
-        	String s[] = this.Bc.split("\n");
-        	int h = 0;
-        	for (int i=1;i<s.length+1;i++) {
-        		if (s[i-1].startsWith("§d") && s[i-1].contains("%")) {
-        			h = this.height/2 + -60 + 15 * i;
-            		this.buttonList.add(new GuiButton(771, 5, h, 170, 11, "§6"+s[i-1]));
-        		}
-        	}
-        	
     		this.buttonList.add(new GuiButton(769, this.width/2 - 50, 40, 100, 20, tm.isDone() ? "§7Activer le tuto" : "§7Passer le tuto"));
         } else
         	this.buttonList.add(new GuiButtonLanguage(5, Utils.verif==null ? 100 : this.width / 2 - 124, Utils.verif==null ? var3+104+12 : var3 + 72 + 12));
@@ -264,41 +239,23 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
             this.field_92020_v = this.field_92022_t + var5;
             this.field_92019_w = this.field_92021_u + 24;
         }
-        NekoCloud nc = NekoCloud.getNekoAPI();
         
-        
-        
-        if (!nc.isLogin() && Utils.haveInternet()) {
-        	Client var = Client.getNeko();
-        	var.settingsManager = new SettingsManager();
-        	var.eventManager = new EventManager();
-        	var.eventManager.register(var);
-    		var.moduleManager = new ModuleManager();
-    		var.commandManager = new CommandManager();
-    		var.onlyrpg = OnlyRpgManager.getRpg();
-    		if (var.rang==null)
-    			for (Rank r : ModuleManager.rang) {
-    				if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {
-    					var.rang=r;
-    					r.setLvl(r.getLvl()!=1 ? r.getLvl() : 1);
-    					r.setLock(false);
-    				}
-    			}
-    		Consumer<Module> setupModule = m -> {m.setup();};
-    		var.moduleManager.getModules().forEach(setupModule);
-        	Utils.loadCredentials();
-    	    String res = nc.loginAccount();
-    	    if (res.equalsIgnoreCase("success")) {
-    	    	// Load save
-    	    	Utils.loadSaveCloud();
-    	    	nc.setLogin(true);
-    	    } else {
-    	    	if(var.clickGui == null) {
-        	    	var.clickGui = new ClickGUI();
-    	    	}
-    	    	mc.displayGuiScreen(new GuiConnect(this, 1));
-    	    }
-        }
+        Client var = Client.getNeko();
+    	var.settingsManager = new SettingsManager();
+		var.moduleManager = new ModuleManager();
+		var.commandManager = new CommandManager();
+		var.onlyrpg = OnlyRpgManager.getRpg();
+		Utils.loadSaves();
+		if (var.rang==null)
+			for (Rank r : ModuleManager.rang) {
+				if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {
+					var.rang=r;
+					r.setLvl(r.getLvl()!=1 ? r.getLvl() : 1);
+					r.setLock(false);
+				}
+			}
+		Consumer<Module> setupModule = m -> {m.setup();};
+		var.moduleManager.getModules().forEach(setupModule);
     }
 
     /**
@@ -311,7 +268,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
             		!tm.isDone() ? "§bCommencer le tuto !" : "§f§lSolo"));
     		this.buttonList.add(new GuiButton(2, tm.isDone() ? this.width/2 + 40 : this.width/2 + 26, 8, tm.isDone() ? 50 : 80, 20,
             				!tm.isDone() ? "§c§kdsjfnkjndsj" : "§f§lMulti"));
-    		this.buttonList.add(new GuiButton(359, 10, 8, 100, 20, NekoCloud.getName() == null ? "§b§lNeko" : "§b§l" + NekoCloud.getName()));
     	} else {
     		this.buttonList.add(new GuiButton(1, this.width / 2 - 100, p_73969_1_, I18n.format("menu.singleplayer", new Object[0])));
     		this.buttonList.add(new GuiButton(2, this.width / 2 - 100, p_73969_1_ + p_73969_2_ * 1, I18n.format("menu.multiplayer", new Object[0])));
@@ -320,7 +276,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         
         
         int wid = 5;
-        //TODO ACTIVE BUTTON
         if (Utils.verif==null) {
         	this.buttonList.add(this.field_175372_K = new GuiButton(666, this.width/2 - 100, this.height - 62, 100, 20, (!tm.isDone() ? "§k" : "§3")+"Neko..."));
         } else
@@ -332,22 +287,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         	if (button.id == 666 && tm.isDone())
             {
         		this.mc.displayGuiScreen(new GuiMenuNeko(this));
-            }
-        	
-        	if (button.id == 668)
-            {
-        		try {
-        			URI url = URI.create("https://discord.gg/Z4ddHEj");
-        			Desktop.getDesktop().browse(url);
-        		} catch (Exception e) {}	
-            }
-        	
-        	if (button.id == 669)
-            {
-        		try {
-        			URI url = URI.create("https://neko.nekohc.fr/#/login");
-        			Desktop.getDesktop().browse(url);
-        		} catch (Exception e) {}	
             }
         	
         	if (button.id == 670)
@@ -365,21 +304,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     	            this.mc.displayGuiScreen(new GuiMainMenu());
             	}
             }
-        	
-        	if (button.id == 770) {
-    			try {
-    				URI url = URI.create("https://nekohc.fr");
-    				Desktop.getDesktop().browse(url);
-    			} catch (Exception e) {}	
-    		}
-        	
-        	if (button.id == 771) {
-    			String s[] = button.displayString.split(" ");
-    			if (s.length>=2) {
-    				String ip = s[1].replaceAll("§e", "");
-    				mc.displayGuiScreen(new GuiConnecting(this, mc, new ServerData(ip, ip)));
-    			}
-    		}
         	
             if (button.id == 0)
             {
@@ -431,10 +355,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
                     this.mc.displayGuiScreen(var4);
                 }
             }
-    	if (button.id == 359)
-    	{
-    		mc.displayGuiScreen(new GuiNekoAccount(this));
-    	}
     	
     }
 
@@ -684,51 +604,20 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         {
             var10 = var10 + " Demo";
         }
-        
-        for (Object o : this.buttonList) {
-        	if (o instanceof GuiButton) {
-	        	GuiButton gb = (GuiButton) o;
-	        	if(gb.id==359) {
-	        		gb.displayString = NekoCloud.getName() == null ? "§b§lNeko" : "§b§l" + NekoCloud.getName();
-	        	}
-        	}
-        }
 
         this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, var10, 2, this.height - 10, -1);
         String var11 = "Copyright Mojang AB. Do not distribute!";
+        
         if (Utils.verif==null) {
-        	String s[] = this.Bc.split("\n");
-        	for (int i=1;i<s.length+1;i++) {
-    			if (!s[i-1].startsWith("§d") && !s[i-1].contains("%")) {
-    				this.drawString(Client.getNeko().NekoFont, "§6"+s[i-1], 5, this.height/2 - 60 + i*15, -1);
-    			}      		
-        	}
-        	
         	// Draw grey box in the main menu
         	drawRect(0, 0, this.width, 35, Integer.MIN_VALUE);
         	
         	this.drawString(fontRendererObj, "§eConnecté en tant que: §b" + Minecraft.getMinecraft().getSession().getUsername(), 10, 40, -1);
         	
-        	if (!Client.getNeko().ver.isEmpty() && !Client.getNeko().develop) {
-
-        		Updater.update(Client.getNeko().ver);
-        	}
-        	
-        	if(Updater.ReadyToUpdate) {
-        		this.drawCenteredString(Client.getNeko().NekoFont, "§3§nLa nouvelle version de Neko est prête !", this.width - 110, this.height/2 - this.height/12, -1);
-        		this.drawCenteredString(Client.getNeko().NekoFont, "§cRedémarrez votre jeu pour", this.width - 110, this.height/2 + this.height/6, -1);
-        		this.drawCenteredString(Client.getNeko().NekoFont, "§cfinaliser le téléchargement.", this.width - 110, this.height/2 + this.height/5, -1);
-        		this.drawCenteredString(Client.getNeko().NekoFont, "§eVersion supérieure: §b"+Client.getNeko().ver, this.width - 110, this.height/2 - this.height/60, -1);
-        		this.drawCenteredString(Client.getNeko().NekoFont, "§eAjout principal: §b"+Client.getNeko().changelog, this.width - 110, this.height/2 + this.height/30, -1);
-        	}
         	var11=Client.getNeko().strCreator;
             
             this.scrollingTextPosX--;
-            if(this.scrollingTextPosX < -Client.getNeko().NekoFont.getStringWidth(this.scrollingText)) {
-            	this.scrollingTextPosX = this.width;
-            }
             this.drawRect(0, this.height-12, this.width, this.height, 0x77FFFFFF);
-            this.drawString(Client.getNeko().NekoFont, this.scrollingText, this.scrollingTextPosX, this.height-10, -1);
             
             if (this.field_92025_p != null && this.field_92025_p.length() > 0)
             {
@@ -737,11 +626,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
                 this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, this.field_146972_A, (this.width - this.field_92024_r) / 2, ((GuiButton)this.buttonList.get(0)).yPosition - 12, -1);
             }
         }
-        
-        //this.drawString(Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj, var11,
-        //this.width - (Utils.verif==null ? Client.getNeko().NekoFont : this.fontRendererObj).getStringWidth(var11) - 2,
-        //this.height - 10, -1);
-        //drawEntityOnScreen(this.width/2 + 15, this.height/2 - 15, 30, mouseX, mouseY, );
         
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
