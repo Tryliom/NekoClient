@@ -66,7 +66,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     private String field_92025_p;
     private String field_146972_A;
     private String field_104024_v;
-    private String Bc;
     private static final ResourceLocation splashTexts = new ResourceLocation("texts/splashes.txt");
     private static final ResourceLocation minecraftTitleTextures = new ResourceLocation("textures/gui/title/minecraft.png");
     
@@ -587,13 +586,6 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         String var11 = "Copyright Mojang AB. Do not distribute!";
         
         if (Utils.verif==null) {
-        	String s[] = this.Bc.split("\n");
-        	for (int i=1;i<s.length+1;i++) {
-    			if (!s[i-1].startsWith("§d") && !s[i-1].contains("%")) {
-    				this.drawString(Client.getNeko().NekoFont, "§6"+s[i-1], 5, this.height/2 - 60 + i*15, -1);
-    			}      		
-        	}
-        	
         	// Draw grey box in the main menu
         	drawRect(0, 0, this.width, 35, Integer.MIN_VALUE);
         	

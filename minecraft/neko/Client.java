@@ -37,10 +37,10 @@ public class Client {
 	public final static String CLIENT_NAME = "Neko";
 	public final String CLIENT_AUTHOR = "Tryliom et Marie";
 
-	public static final String CLIENT_VERSION = "Final";
+	public static final String CLIENT_VERSION = "final";
 	public static String scrollingSpacer = "                   ";
-	public String strNeko = "ï¿½bNeko version " + CLIENT_VERSION;
-	public String strCreator = "ï¿½eCrï¿½ï¿½ par ï¿½fï¿½lTryliomï¿½e et ï¿½fï¿½lMarie";
+	public String strNeko = "§bNeko version " + CLIENT_VERSION;
+	public String strCreator = "§eCréé par §f§lTryliom§e et §f§lMarie";
 	public ModeType mode = ModeType.Player;
 	public Rank rang;
 	public Necklace necklace;
@@ -88,10 +88,10 @@ public class Client {
 		} else {
 			switch (n) {
 			case 0:
-				Display.setTitle("Tu joues ï¿½ la version divine de Neko :3");
+				Display.setTitle("Tu joues à la dernière version de Neko :3");
 				break;
 			case 1:
-				Display.setTitle("Waw quel joueur expï¿½rimentï¿½ :o");
+				Display.setTitle("Waw quel joueur expérimenté :o");
 				break;
 			case 2:
 				Display.setTitle("Kaboom !");
@@ -102,12 +102,12 @@ public class Client {
 						Display.setTitle(Utils.getNyah());
 						n = 0;
 					} catch (Exception ex) {
-						Display.setTitle("Boum boum boum !");
+						Display.setTitle("Que c'est cringe..");
 					}
 				}
 				break;
 			case 4:
-				Display.setTitle("Ne touche pas ï¿½ ï¿½a ! NYAAAAAAH");
+				Display.setTitle("Ne touche pas à ça ! NYAAAAAAH");
 				break;
 			case 5:
 				Display.setTitle("Ce jeu est si malsain...");
@@ -159,7 +159,7 @@ class ch implements ActionListener {
 			// Random quest
 			if (Utils.getRandInt(100)==1 && (QuestManager.getQM().getCurrent()==null && !QuestManager.getQM().isHasBegin())) {
 				Utils.getRandQuest();
-				Utils.addChat2("ï¿½aNouveau dï¿½fi ! (Voir ici)", neko.prefixCmd+"startquest", "ï¿½7Dï¿½fi: "+QuestManager.getQM().getCurrent().getDesc()+"\nï¿½aCliquez pour accepter le dï¿½fi (Activer le cheat ou la commande que vous pensez ï¿½tre la bonne)", false, Chat.Click);
+				Utils.addChat2("§aNouveau défi ! (Voir ici)", neko.prefixCmd+"startquest", "§7Défi: "+QuestManager.getQM().getCurrent().getDesc()+"\n§aCliquez pour accepter le défi (Activer le cheat ou la commande que vous pensez être la bonne)", false, Chat.Click);
 			}
 		}
 
