@@ -1,6 +1,9 @@
 ## Neko
 Hacked Client Neko
 
+## Disclaimer
+C'est un coktail de vieux et nouveau code donc ça peut piquer les yeux.
+
 ## Installation
 * Télécharger [MCP](http://www.mediafire.com/file/betelj9vmcjdjkm/file) pour la 1.8
 * Avoir Minecraft et lancer au moins une fois la version 1.8
