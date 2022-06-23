@@ -1366,7 +1366,6 @@ public class Utils {
 		saveShit();
 		saveCmd();
 		saveStat();
-		saveSettings();
 		saveXray();
 	}
 	
@@ -2224,13 +2223,12 @@ public class Utils {
             InputStream ips = new FileInputStream(dir); 
             InputStreamReader ipsr = new InputStreamReader(ips); 
             try (BufferedReader br = new BufferedReader(ipsr)) {
-                String ligne;
                 Xray xray = Xray.getXray();
                 xray.setList(new Vector<Integer>());
-                while ((ligne = br.readLine()) != null)
-                {                	
-                	xray.getList().add(Integer.parseInt(ligne));
-                }
+                String[] values = br.readLine().split("§,");
+                for (String ligne : values) {
+                    xray.getList().add(Integer.parseInt(ligne));
+        		}
             
             } catch (IOException | NumberFormatException e) {}		
 		} catch (IOException | NumberFormatException e) {}
@@ -2303,18 +2301,12 @@ public class Utils {
             InputStreamReader ipsr = new InputStreamReader(ips); 
             @SuppressWarnings("resource")
 			BufferedReader br = new BufferedReader(ipsr);
-            String ligne;
             String name = "";
-            int l=0;
-            int str=0;
-            while ((ligne = br.readLine()) != null)
+            String[] values = br.readLine().split("§,");
+            for (String ligne: values)
             {                	         	
             	name="";
-            	if (ligne.startsWith("§")) {
-            		l = Integer.parseInt(ligne.replaceFirst("§", ""))-69;
-            		l/=555;
-            	} else {
-	            	str+=ligne.length()+1;            	
+            	if (!ligne.startsWith("§")) {
 	            	String s[] = ligne.split(" ");
 	            	if (s.length==3) {
 	            		name=s[0];
@@ -2414,7 +2406,7 @@ public class Utils {
 			return;
 		String s="";
 		String name ="";
-    	for(Panel f : ClickGUI.panels) {
+    	for(Panel f : Client.getNeko().clickGui.panels) {
     		name = f.title.replaceAll("§", "&");
     		int x = (int)f.x;
     		int y = (int)f.y;
@@ -2432,12 +2424,11 @@ public class Utils {
             InputStream ips = new FileInputStream(dir); 
             InputStreamReader ipsr = new InputStreamReader(ips); 
             try (BufferedReader br = new BufferedReader(ipsr)) {
-                String ligne;
-                Integer i=0;
-                while ((ligne = br.readLine()) != null)
+                String[] values = br.readLine().split("§");
+                for (String ligne: values)
                 {           
                 	String s[] = ligne.split(" ");
-        	    	for(Panel f : ClickGUI.panels) {
+        	    	for(Panel f : Client.getNeko().clickGui.panels) {
         	    		if (f.title.equalsIgnoreCase(s[0].replaceAll("&", "§"))) {
         	    			f.x = (Integer.parseInt(s[1]));
         	    			f.y = (Integer.parseInt(s[2]));
@@ -2466,17 +2457,15 @@ public class Utils {
             InputStream ips = new FileInputStream(dir); 
             InputStreamReader ipsr = new InputStreamReader(ips); 
             try (BufferedReader br = new BufferedReader(ipsr)) {
-                String ligne;
-                Integer i=0;
-                while ((ligne = br.readLine()) != null)
-                {           
+            	String[] values = br.readLine().split("§");
+                for (int i = 0;i<values.length;i++) {
+                	String ligne = values[i].replaceAll("Â", "");  
                 	if (i==0)
                 		SimpleTheme.font=ligne;
                 	if (i==1)
                 		SimpleTheme.px=Integer.parseInt(ligne);
                 	if (i==2)
                 		SimpleTheme.alpha=Boolean.parseBoolean(ligne);
-                	i++;
                 }
             
 		} catch (IOException | NumberFormatException e) {}		
@@ -3075,17 +3064,18 @@ public class Utils {
 	
 	public static void loadValues(String...fi) {
 		File dir = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"values.neko");
+
 		if (dir.exists()) {
 		try { 
             InputStream ips = new FileInputStream(dir); 
             InputStreamReader ipsr = new InputStreamReader(ips); 
             try (BufferedReader br = new BufferedReader(ipsr)) {
-                String ligne;
-                Integer i=0;
-                while ((ligne = br.readLine()) != null)
-                {                	
+                String[] values = br.readLine().split("§,");
+                for (int i = 0;i < values.length;i++) {                	
                 	try {
-	                	if (i==0)
+                		String ligne = values[i].replaceAll("Â", "");  
+
+                		if (i==0)
 	                		Dolphin.dolph=Double.parseDouble(ligne);
 	                	if (i==1)
 	                		Flight.speed=Double.parseDouble(ligne);
@@ -3142,8 +3132,9 @@ public class Utils {
 	                	}
 	                	if (i==19)
 	                		Trigger.dist=Float.parseFloat(ligne);
-	                	if (i==20)
+	                	if (i==20) {
 	                		Reach.dist=Float.parseFloat(ligne);
+	                	}
 	                	if (i==21)
 	                		deathoff=Boolean.parseBoolean(ligne);
 	                	if (i==22)
@@ -3488,7 +3479,6 @@ public class Utils {
 	                	}
                 	} catch (Exception e) {
                 	}                	
-                	i++;
                 }
             } catch (Exception e) {}
 		} catch (Exception e) {}
@@ -3681,15 +3671,14 @@ public class Utils {
             InputStream ips = new FileInputStream(dir); 
             InputStreamReader ipsr = new InputStreamReader(ips); 
             try (BufferedReader br = new BufferedReader(ipsr)) {
-                String ligne;
-                Integer i=0;
-                while ((ligne = br.readLine()) != null)
-                {                	
-                	i++;
+            	String[] values = br.readLine().split("§");
+
+                for (int i = 0;i < values.length;i++) {                	
+                	String ligne = values[i].replaceAll("Â", "");     	
                 	if (!isLock(ligne) && !ligne.equalsIgnoreCase("VanillaTp") && !ligne.equalsIgnoreCase("Gui") && !ligne.equalsIgnoreCase("Register"))
-                		toggleModule(ligne);
+                		Utils.toggleModule(ligne);
                 }
-                if (i==0) {
+                if (values.length == 0) {
                 	Utils.toggleModule("HUD");
                 	Utils.toggleModule("ArrayList");
                 }
@@ -3810,22 +3799,12 @@ public class Utils {
     	Utils.saveFile("bind", s);
 	}
 	
-	public static void saveSettings(String...fi) {
-		if(verif!=null)
-			return;
-		String s = "";
-		for(final Setting set : Client.Neko.settingsManager.getSettings()) {
-			s+=(String.valueOf(set.getName())+":"+set.getValBoolean()+":"+set.getValDouble()+":"+set.getValString()+"§");
-		}
-
-    	Utils.saveFile("settings", s);
-	}
-	
 	public static void loadSaves() {		  
 		  File f2 = new File(System.getenv("APPDATA") + "\\GoodNight_4\\config\\audio\\rpg");
 		  if (!f2.exists()) {
 			  Utils.linkSave = System.getenv("APPDATA") + "\\.minecraft\\Neko\\";
 		  }
+		  
 		  Utils.loadCmd();
 		  Utils.loadRank();
 		  Utils.loadRpg();
@@ -3836,7 +3815,6 @@ public class Utils {
 		  Utils.loadNuker();
 		  Utils.loadFont();
 		  Utils.loadShit();		  
-		  Utils.loadFrame();
 		  Utils.loadAlt();
 	}
 	
@@ -3859,10 +3837,9 @@ public class Utils {
             InputStream ips = new FileInputStream(dir); 
             InputStreamReader ipsr = new InputStreamReader(ips); 
             try (BufferedReader br = new BufferedReader(ipsr)) {
-                String ligne;
-                Integer i=0;
-                while ((ligne = br.readLine()) != null)
-                {       
+            	String[] values = br.readLine().split("§");
+                for (int i = 0;i < values.length;i++) {                	
+                	String ligne = values[i].replaceAll("Â", "");       
                 	String s[] = ligne.split(" ");
                 	if (s.length==1) {
 	                	if (ModuleManager.ActiveModule.size()!=i) {
@@ -3907,15 +3884,13 @@ public class Utils {
             InputStream ips = new FileInputStream(dir);
             InputStreamReader ipsr = new InputStreamReader(ips); 
             try (BufferedReader br = new BufferedReader(ipsr)) {
-                String ligne;
-                Integer i=0;
                 int somme = 0;
                 int sum=0;
                 double b = 0D;
-                while ((ligne = br.readLine()) != null)
-                {
-                	
-                    i++;
+                String[] values = br.readLine().split("§");
+                for (int i = 1;i < values.length;i++) {                	
+                	String ligne = values[i].replaceAll("Â", "");  
+
                     if (i==1) {
                     	for (Rank r : ModuleManager.rang) {
                     		if (r.getName().equalsIgnoreCase(ligne)) {

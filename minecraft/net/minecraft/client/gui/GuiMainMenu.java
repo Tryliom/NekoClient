@@ -247,12 +247,11 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
     		var.moduleManager = new ModuleManager();
     		var.commandManager = new CommandManager();
     		var.onlyrpg = OnlyRpgManager.getRpg();
+    		Utils.loadSaves();
     		Consumer<Module> setupModule = m -> {m.setup();};
     		var.moduleManager.getModules().forEach(setupModule);
-    		if (var.clickGui == null) {
-    	    	var.clickGui = new ClickGUI();
-    	    }
-    		Utils.loadSaves();
+    	    var.clickGui = new ClickGUI();
+    	    Utils.loadFrame();
     		if (var.rang==null)
     			for (Rank r : ModuleManager.rang) {
     				if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {

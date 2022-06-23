@@ -75,7 +75,6 @@ public class Reach extends Module {
 	
 	@Override
 	public void setup() {
-		
 		//Distance dist, pvp, bloc, tp classic classic, aimbot, fov, tnt, multiaura, knockback
 		Client.getNeko().settingsManager.rSetting(new Setting("REACH_Distance", this, this.dist, 1, 500, true));
 		Client.getNeko().settingsManager.rSetting(new Setting("REACH_Aimbot", this, this.aimbot));

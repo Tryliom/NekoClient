@@ -169,7 +169,7 @@ public class InGameGui {
 				   //4) Avec Encadré Neko / Sans encadré / Avec encadré par noms
 				    
 				    if(SettingsUtil.getArrayDrawNekoBox()){
-				    	RenderUtils.drawRect(((GuiScreen.width-var.NekoFont.getStringWidth(color)-90)), yPos-2, ((GuiScreen.width)), yPos+multi*(var.NekoFont.FONT_HEIGHT + 1) - 1, c);
+				    	RenderUtils.drawRect(((GuiScreen.width-var.NekoFont.getStringWidth(color)-90)), yPos - 2, ((GuiScreen.width)), yPos+multi*(var.NekoFont.FONT_HEIGHT + 1) - 1, c);
 				    	for(String s : partie2){
 				    		DrawArray(s,yPos,false);
 				    	}
@@ -208,7 +208,7 @@ public class InGameGui {
 		} else {
 			var.NekoFont.drawStringWithShadow(moduleName, ((GuiScreen.width-5)-(var.NekoFont).getStringWidth(moduleName)), ypos, 0);
 		}
-		   yPos += var.NekoFont.FONT_HEIGHT + 1;
+		   yPos += var.NekoFont.FONT_HEIGHT + 2;
 	}
 	
 	public static void DrawRectangle(String moduleName, int ypos) {
