@@ -142,7 +142,7 @@ public class ModuleManager {
 
 	public ModuleManager() {	
 
-		ActiveModule.clear();
+		this.ActiveModule.clear();
 		this.Lock.clear();
 		this.rang.clear();
 		this.values.clear();
@@ -1037,8 +1037,7 @@ public class ModuleManager {
 		
 	}
 	
+	public ArrayList<Module> getModules(){ return this.ActiveModule; }
 	
-	public ArrayList<Module> getModules(){ return ActiveModule; }
-	
-	public Module getModuleByName(Class<?> name) { return ActiveModule.stream().filter(ActiveModule -> name.isInstance(ActiveModule)).findFirst().orElse(null); }
+	public Module getModuleByName(Class<?> name) { return this.ActiveModule.stream().filter(ActiveModule -> name.isInstance(ActiveModule)).findFirst().orElse(null); }
 }

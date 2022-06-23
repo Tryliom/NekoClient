@@ -114,12 +114,13 @@ public class Module {
 		onToggle();
 		if (shouldToggle) {
 			Utils.checkQuest(this.getName());
-			onEnabled();
+			this.onEnabled();
 			this.isToggled = true;
 		} else {
-			onDisabled();
+			this.onDisabled();
 			this.isToggled = false;
 		}
+		
 		if (this.cmd.size() != 0) {
 			for (String s : this.cmd) {
 				Boolean b = false;

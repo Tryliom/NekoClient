@@ -960,7 +960,7 @@ public class Utils {
 	    double posX = target.posX + (target.posX - target.prevPosX) * 5.0D - mc.thePlayer.posX;
 	    double posY = target.posY + (target.posY - target.prevPosY) * 5.0D + target.getEyeHeight() - 0.15D - mc.thePlayer.posY - mc.thePlayer.getEyeHeight();
 	    double posZ = target.posZ + (target.posZ - target.prevPosZ) * 5.0D - mc.thePlayer.posZ;
-	    float yaw = (float)(Math.atan2(posZ, posX) * 180.0D / 3.141592653589793D) - 90.0F;
+	    float yaw = (float) (Math.atan2(posZ, posX) * 180.0D / 3.141592653589793D) - 90.0F;
 	    double y2 = Math.sqrt(posX * posX + posZ * posZ);
 	    float g = 0.006F;
 	    float tmp = (float)(velocity * velocity * velocity * velocity - g * (g * (y2 * y2) + 2.0D * posY * (velocity * velocity)));
@@ -2426,9 +2426,6 @@ public class Utils {
 	
 	
 	public static void loadFrame(String...fi) {
-		if (var.clickGui==null) {
-	    	var.clickGui = new ClickGUI();
-	    }
 		File dir = new File((fi.length==1 ? fi[0] : Utils.linkSave)+"frame.neko");
 		if (dir.exists()) {
 		try { 

@@ -13,7 +13,6 @@ import neko.utils.Utils;
 
 public class Gui extends Module {
 	
-
 	public Gui() {
 		super("Gui", Keyboard.KEY_RCONTROL, Category.PARAMS, false);
 	}

@@ -23,6 +23,7 @@ import com.google.common.collect.Lists;
 import neko.Client;
 import neko.gui.GuiAltManager;
 import neko.gui.GuiMenuNeko;
+import neko.guicheat.clickgui.ClickGUI;
 import neko.guicheat.clickgui.settings.SettingsManager;
 import neko.manager.CommandManager;
 import neko.manager.ModuleManager;
@@ -241,21 +242,26 @@ public class GuiMainMenu extends GuiScreen implements GuiYesNoCallback
         }
         
         Client var = Client.getNeko();
-    	var.settingsManager = new SettingsManager();
-		var.moduleManager = new ModuleManager();
-		var.commandManager = new CommandManager();
-		var.onlyrpg = OnlyRpgManager.getRpg();
-		Utils.loadSaves();
-		if (var.rang==null)
-			for (Rank r : ModuleManager.rang) {
-				if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {
-					var.rang=r;
-					r.setLvl(r.getLvl()!=1 ? r.getLvl() : 1);
-					r.setLock(false);
-				}
-			}
-		Consumer<Module> setupModule = m -> {m.setup();};
-		var.moduleManager.getModules().forEach(setupModule);
+        if (var.settingsManager == null) {
+        	var.settingsManager = new SettingsManager();
+    		var.moduleManager = new ModuleManager();
+    		var.commandManager = new CommandManager();
+    		var.onlyrpg = OnlyRpgManager.getRpg();
+    		Consumer<Module> setupModule = m -> {m.setup();};
+    		var.moduleManager.getModules().forEach(setupModule);
+    		if (var.clickGui == null) {
+    	    	var.clickGui = new ClickGUI();
+    	    }
+    		Utils.loadSaves();
+    		if (var.rang==null)
+    			for (Rank r : ModuleManager.rang) {
+    				if (r.getName().equalsIgnoreCase("Petit Neko Novice")) {
+    					var.rang=r;
+    					r.setLvl(r.getLvl()!=1 ? r.getLvl() : 1);
+    					r.setLock(false);
+    				}
+    			}
+        }
     }
 
     /**

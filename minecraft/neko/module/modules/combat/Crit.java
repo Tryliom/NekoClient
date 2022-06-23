@@ -1,7 +1,5 @@
 package neko.module.modules.combat;
 
-import org.lwjgl.input.Keyboard;
-
 import neko.module.Category;
 import neko.module.Module;
 

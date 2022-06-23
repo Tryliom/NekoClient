@@ -67,7 +67,7 @@ public class ClickGUI extends GuiScreen {
 		double py = 10;
 		double pyplus = pheight + 10;
 		double pxplus = pwidth + 10;
-		
+
 		/*
 		 * Zum Sortieren der Panels einfach die Reihenfolge im Enum ndern ;)
 		 */
@@ -122,43 +122,36 @@ public class ClickGUI extends GuiScreen {
 									for(String s : combatModule) {
 										Module m = Utils.getModule(s);
 										if (!m.getCategory().equals(c))continue;
-										if(Utils.isLock(m.getName())) continue;
 										this.Elements.add(new ModuleButton(m, this));
 									}
 									for(String s : renderModule) {
 										Module m = Utils.getModule(s);
 										if (!m.getCategory().equals(c))continue;
-										if(Utils.isLock(m.getName())) continue;
 										this.Elements.add(new ModuleButton(m, this));
 									}
 									for(String s : playerModule) {
 										Module m = Utils.getModule(s);
 										if (!m.getCategory().equals(c))continue;
-										if(Utils.isLock(m.getName())) continue;
 										this.Elements.add(new ModuleButton(m, this));
 									}
 									for(String s : movementModule) {
 										Module m = Utils.getModule(s);
 										if (!m.getCategory().equals(c))continue;
-										if(Utils.isLock(m.getName())) continue;
 										this.Elements.add(new ModuleButton(m, this));
 									}
 									for(String s : paramsModule) {
 										Module m = Utils.getModule(s);
 										if (!m.getCategory().equals(c))continue;
-										if(Utils.isLock(m.getName())) continue;
 										this.Elements.add(new ModuleButton(m, this));
 									}
 									for(String s : miscModule) {
 										Module m = Utils.getModule(s);
 										if (!m.getCategory().equals(c))continue;
-										if(Utils.isLock(m.getName())) continue;
 										this.Elements.add(new ModuleButton(m, this));
 									}
 									for(String s : specialModule) {
 										Module m = Utils.getModule(s);
 										if (!m.getCategory().equals(c))continue;
-										if(Utils.isLock(m.getName())) continue;
 										this.Elements.add(new ModuleButton(m, this));
 									}
 								}
@@ -464,7 +457,7 @@ public class ClickGUI extends GuiScreen {
 			if (p != null && p.visible && p.extended && p.Elements != null
 					&& p.Elements.size() > 0) {
 				for (ModuleButton e : p.Elements) {
-					//e.extended = false;
+					e.extended = false;
 				}
 			}
 		}
